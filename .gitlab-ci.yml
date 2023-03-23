@@ -1,0 +1,94 @@
+image: dukedesigncoach/testfx-runner:bellsoftjdk17
+
+stages:
+  - validate
+  - analyze
+  - test
+  - report
+
+checkstyle_analysis:
+  stage: validate
+  script:
+   - mvn validate
+  artifacts:
+    reports:
+      codequality: target/checkstyle-result.xml
+  only:
+    - master
+
+
+sonar_analysis:
+  stage: analyze
+  script:
+    - |
+      mvn -X -ntp sonar:sonar \
+        -Dsonar.host.url=http://coursework.cs.duke.edu:9000 \
+        -Dsonar.java.binaries=. \
+        -Dsonar.exclusions=**/*.xml,**/*.css,**/test/**
+  tags:
+    - sonarqube
+  only:
+    - master
+
+
+unit_testing:
+  stage: test
+  coverage: '/Total.*?([0-9]{1,3})%/'
+  script:
+    - |
+      mvn -X -ntp test \
+        -Djava.awt.headless=true \
+        -Dtestfx.headless=true \
+        -Dtestfx.robot=glass \
+        -Dembedded=monocle \
+        -Dglass.platform=Monocle \
+        -Dprism.order=sw \
+        -Dprism.fontdir=/usr/share/fonts \
+        -Dtestfx.setup.timeout=6000 \
+        -Dheadless.geometry=1600x1200
+  allow_failure: true
+  timeout: 10 minutes
+  artifacts:
+    when: always
+    reports:
+      junit: target/surefire-reports/TEST-*.xml
+    paths:
+      - target
+  only:
+    - master
+
+
+docs:
+  stage: report
+  script:
+    - mvn javadoc:javadoc || echo 'javadoc generation failed; continuing...'
+    - mvn site || echo 'site generation failed; continuing...'
+  artifacts:
+    paths:
+      - target/site
+  only:
+    - master
+
+
+coverage_badge:
+  stage: report
+  needs:
+    - docs
+  script:
+    # gitlab gets coverage badge from reading the console output
+    - cat target/site/jacoco/index.html
+  only:
+    - master
+
+
+pages:
+  stage: report
+  needs:
+    - docs
+  script:
+    - mv target/site public
+  artifacts:
+    paths:
+      - public
+  only:
+    - master
