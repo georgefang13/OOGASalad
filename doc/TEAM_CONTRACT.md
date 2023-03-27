@@ -18,6 +18,8 @@
 ## Team Procedures
 * when and how often to meet (at least once a week)
 * preferred channel of communication (e.g., Zoom, e-mail, WhatsApp, Slack, etc.)
+  * Discord
+  * iMessage group chat
 * preferred GIT workflow
 
 
@@ -29,8 +31,14 @@
 
 ### Communications
 * decision-making policy (e.g., by consensus? by majority vote?)
+  * discuss / vote among subteams
+  * socratic discussion followed by team vote.
+  * Spending a reasonable time discussing the topic before making a final decision
 * response policy (e.g., respond within 24 hours)
+  * as fast as reasonably possible or death
 * policy for keeping everyone up-to-date on major decisions, changes, or updates
+  * Google Sheets keeping track of features done / to do with assignees
+  * Group chat communication through the correct discord channels
 
 
 ### Commitments
