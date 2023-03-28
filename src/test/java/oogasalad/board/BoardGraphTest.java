@@ -78,6 +78,24 @@ public class BoardGraphTest {
     }
 
     @Test
+    void addNullNode(){
+        try {
+            g.addNode(null);
+        }
+        catch (IllegalArgumentException e){
+            assertEquals("Node name cannot be null", e.getMessage());
+        }
+
+        try {
+            g.addNode("");
+        }
+        catch (IllegalArgumentException e){
+            assertEquals("Node name cannot be empty", e.getMessage());
+        }
+
+    }
+
+    @Test
     void addNullConnections(){
         try {
             g.addNode(null);
@@ -133,6 +151,44 @@ public class BoardGraphTest {
         assertFalse(g.addConnection("C", "A", "CA2"));
 
         assertTrue(g.addConnection("B", "A", "BA"));
+    }
+
+    @Test
+    void testEquals(){
+        g.addNode("A");
+        g.addNode("B");
+        Boolean x = true;
+        assertNotEquals(g.getNode("A"), x);
+        assertNotEquals(null, g.getNode("B"));
+        assertNotEquals(g.getNode("A"), g.getNode("B"));
+        assertEquals(g.getNode("A"), g.getNode("A"));
+
+        BoardGraph.BoardGraphNode a = new BoardGraph.BoardGraphNode("A");
+        BoardGraph.BoardGraphNode b = new BoardGraph.BoardGraphNode("B");
+        BoardGraph.BoardGraphNode a2 = new BoardGraph.BoardGraphNode("A");
+
+        assertEquals(a, a2);
+        assertNotEquals(a, b);
+    }
+
+    @Test
+    void testNodeToString(){
+        BoardGraph.BoardGraphNode a = new BoardGraph.BoardGraphNode("A");
+        BoardGraph.BoardGraphNode b = new BoardGraph.BoardGraphNode("B");
+        BoardGraph.BoardGraphNode c = new BoardGraph.BoardGraphNode("Blobfish Tails");
+
+        assertEquals("A", a.toString());
+        assertEquals("B", b.toString());
+        assertEquals("Blobfish Tails", c.toString());
+    }
+
+    @Test
+    void testNodeHashcode(){
+        BoardGraph.BoardGraphNode a = new BoardGraph.BoardGraphNode("A");
+        BoardGraph.BoardGraphNode b = new BoardGraph.BoardGraphNode("B");
+
+        assertEquals("A".hashCode(), a.hashCode());
+        assertEquals("B".hashCode(), b.hashCode());
     }
 
 }

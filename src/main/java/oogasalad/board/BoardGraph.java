@@ -37,6 +37,7 @@ public class BoardGraph {
      */
     public boolean addNode(String nodeId) {
         if (nodeId == null) throw new IllegalArgumentException("Node name cannot be null");
+        if (nodeId.isEmpty()) throw new IllegalArgumentException("Node name cannot be empty");
         return nodeMap.putIfAbsent(nodeId, new BoardGraphNode(nodeId)) == null;
     }
 
