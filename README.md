@@ -1,13 +1,26 @@
 # oogasalad
-## TEAM NAME
-## NAMES
+## duVALLEY BOYS
+## Names:
 
+- Rodrigo Bassi Guerreiro
+- Michael Bryant 
+- Joao Carvalho 
+- George Fang
+- Ethan Horowitz
+- Aryan Kothari
+- Yegor Kursakov
+- Owen MacKenzie
+- Max Meister
+- Connor Wells-Weiner
+- Han Zhang
+
+---
 
 This project implements an authoring environment and player for multiple related games.
 
 ### Timeline
 
- * Start Date: 
+ * Start Date: _March 26, 2023_
 
  * Finish Date: 
 
