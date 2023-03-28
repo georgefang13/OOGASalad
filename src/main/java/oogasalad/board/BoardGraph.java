@@ -10,6 +10,10 @@ import java.util.Map;
  * I want to program a class in Java called BoardGraph. It's a directed graph that contains nodes with IDs, whose connections can have labels from one node to another. Each node should be findable within the BoardGraph by its id. Write the code for BoardGraph
  */
 
+interface BooleanNodeFunction {
+    boolean apply(BoardGraph.BoardGraphNode node);
+}
+
 public class BoardGraph {
     private final Map<String, BoardGraphNode> nodeMap;
 
@@ -17,6 +21,10 @@ public class BoardGraph {
         nodeMap = new HashMap<>();
     }
 
+    /**
+     * Returns a list of all the node IDs in the graph.
+     * @return a list of all the node IDs in the graph
+     */
     public List<String> getNodes() {
         return new ArrayList<>(nodeMap.keySet());
     }
@@ -30,6 +38,7 @@ public class BoardGraph {
         return nodeMap.get(nodeId);
     }
 
+    // TODO: put error messages in properties file
     /**
      * Adds a node to the graph if it does not already exist.
      * @param nodeId the id of the node to add
@@ -41,6 +50,7 @@ public class BoardGraph {
         return nodeMap.putIfAbsent(nodeId, new BoardGraphNode(nodeId)) == null;
     }
 
+    // TODO: put error messages in properties file
     /**
      * Adds a connection from one node to another with a label.
      * @param fromNodeId the id of the node to connect from
@@ -57,13 +67,139 @@ public class BoardGraph {
         return fromNode.addOutgoingConnection(toNode, label);
     }
 
+    /**
+     * Follows a path of edges from a starting node.
+     * @param startNode the id of the node to start from
+     * @param path the list of labels of edges to follow
+     * @return the node at the end of the path
+     */
+    public BoardGraphNode followPath(String startNode, List<String> path) {
+        BoardGraphNode currentNode = getNode(startNode);
+        for (String s : path) {
+            if (currentNode == null) return null;
+            currentNode = currentNode.getEdges().get(s);
+        }
+        return currentNode;
+    }
+
+    /**
+     * Follows a path of edges from a starting node, tests to see if any node along the path is blocked.
+     * @param startNode the id of the node to start from
+     * @param path the list of labels of edges to follow
+     * @param isBlocked a function that takes a node and returns true if it is blocked
+     * @return true if the path is blocked, false otherwise
+     */
+    public boolean isPathBlocked(String startNode, List<String> path, BooleanNodeFunction isBlocked) {
+        BoardGraphNode currentNode = getNode(startNode);
+        if (currentNode == null) return true;
+        for (String s : path) {
+            currentNode = currentNode.getEdges().get(s);
+            if (currentNode == null) return true;
+            if (isBlocked.apply(currentNode)) return true;
+        }
+        return false;
+    }
+
+    // TODO: put text in properties file
+    /**
+     * Creates a grid graph with the given number of rows and columns. Edges are Up, Down, Left, Right, UpLeft, UpRight, DownLeft, DownRight.
+     * Node IDs start with 0,0 at the top left and increase to the right and down, with the format "y,x"
+     * <br>
+     * example:
+     * <br><br>
+     * grid with 3 rows, 5 columns:
+     * <table>
+     *      <tr>
+     *          <td>0,0</td> <td>↔</td> <td>0,1</td> <td>↔</td> <td>0,2</td> <td>↔</td> <td>0,3</td> <td>↔</td> <td>0,4</td>
+     *      </tr>
+     *      <tr>
+     *          <td>↕</td> <td>╳</td> <td>↕</td> <td>╳</td> <td>↕</td> <td>╳</td> <td>↕</td> <td>╳</td> <td>↕</td> <td></td>
+     *      </tr>
+     *      <tr>
+     *          <td>1,0</td> <td>↔</td> <td>1,1</td> <td>↔</td> <td>1,2</td> <td>↔</td> <td>1,3</td> <td>↔</td> <td>1,4</td>
+     *      </tr>
+     *      <tr>
+     *          <td>↕</td> <td>╳</td> <td>↕</td> <td>╳</td> <td>↕</td> <td>╳</td> <td>↕</td> <td>╳</td> <td>↕</td> <td></td>
+     *      </tr>
+     *      <tr>
+     *          <td>2,0</td> <td>↔</td> <td>2,1</td> <td>↔</td> <td>2,2</td> <td>↔</td> <td>2,3</td> <td>↔</td> <td>2,4</td>
+     *      </tr>
+     * </table>
+     *
+     * @param rows the number of rows
+     * @param cols the number of columns
+     * @return a grid graph with the given number of rows and columns
+     */
+    public static BoardGraph createGrid(int rows, int cols) {
+        BoardGraph graph = new BoardGraph();
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                String id = i + "," + j;
+                graph.addNode(id);
+            }
+        }
+
+        for (int i = 0; i < rows; i++){
+            for (int j = 0; j < rows; j++){
+                String id = i + "," + j;
+                if (i > 0)          graph.addConnection(id, (i - 1) + "," + j, "Up");
+                if (i < rows - 1)   graph.addConnection(id, (i + 1) + "," + j, "Down");
+                if (j > 0)          graph.addConnection(id, i + "," + (j - 1), "Left");
+                if (j < cols - 1)   graph.addConnection(id, i + "," + (j + 1), "Right");
+                if (i > 0 && j > 0) graph.addConnection(id, (i - 1) + "," + (j - 1), "UpLeft");
+                if (i > 0 && j < cols - 1)  graph.addConnection(id, (i - 1) + "," + (j + 1), "UpRight");
+                if (i < rows - 1 && j > 0)  graph.addConnection(id, (i + 1) + "," + (j - 1), "DownLeft");
+                if (i < rows - 1 && j < cols - 1)   graph.addConnection(id, (i + 1) + "," + (j + 1), "DownRight");
+            }
+        }
+
+        return graph;
+    }
+
+    /**
+     * Follows a path of edges completely and checks to see if the end node is blocked. Does this continuously until the path is repeated, blocked, or the edge of the board is reached.
+     * @param startNode the id of the node to start from
+     * @param path the list of labels of edges to follow
+     * @param isBlocked a function that takes a node and returns true if it is blocked
+     * @return a list of all the open nodes that can be reached with that path
+     */
+    public List<String> findSpotsUntilBlocked(String startNode, List<String> path, BooleanNodeFunction isBlocked) {
+        BoardGraphNode currentNode = getNode(startNode);
+        List<String> spots = new ArrayList<>();
+        while (!spots.contains(currentNode.getId())){
+            currentNode = followPath(currentNode.getId(), path);
+            if (currentNode == null) return spots;
+            spots.add(currentNode.getId());
+        }
+        return spots;
+    }
+
     public static class BoardGraphNode {
         private final String id;
         private final HashMap<String, BoardGraphNode> edges;
 
+        private final HashMap<String, Object> holding;
+
         public BoardGraphNode(String nodeId) {
             this.id = nodeId;
             edges = new HashMap<>();
+            holding = new HashMap<>();
+        }
+
+        public void putObject(String key, Object value) {
+            holding.put(key, value);
+        }
+
+        public Object removeObject(String key) {
+            return holding.remove(key);
+        }
+
+        public Object getObject(String key) {
+            return holding.get(key);
+        }
+
+        public boolean hasObject(String key) {
+            return holding.containsKey(key);
         }
 
         /**
