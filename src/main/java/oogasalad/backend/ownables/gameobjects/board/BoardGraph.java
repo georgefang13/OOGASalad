@@ -1,16 +1,20 @@
-package oogasalad.board;
+package oogasalad.backend.ownables.gameobjects.board;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import oogasalad.backend.ownables.gameobjects.GameObject;
+import oogasalad.backend.owners.Owner;
+import oogasalad.backend.owners.GameWorld;
+
 
 /**
  * Adapted from of ChatGPT response to the following prompt:
  * I want to program a class in Java called BoardGraph. It's a directed graph that contains nodes with IDs, whose connections can have labels from one node to another. Each node should be findable within the BoardGraph by its id. Write the code for BoardGraph
  */
 
-public class BoardGraph {
+public class BoardGraph extends GameObject {
     private final Map<String, BoardGraphNode> nodeMap;
 
     public BoardGraph() {
@@ -55,6 +59,14 @@ public class BoardGraph {
         if (label == null) throw new IllegalArgumentException("Edge name cannot be null");
 
         return fromNode.addOutgoingConnection(toNode, label);
+    }
+
+    /**
+     * @see oogasalad.backend.ownables.Ownable#canBeOwnedBy(oogasalad.backend.owners.Owner)
+     * BoardGraphNodes can only be owned by the game.
+     */
+    public boolean canBeOwnedBy(Owner potentialOwner) {
+        return potentialOwner instanceof GameWorld;
     }
 
     public static class BoardGraphNode {
