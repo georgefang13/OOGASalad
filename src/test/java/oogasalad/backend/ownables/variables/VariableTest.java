@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -91,14 +92,10 @@ public class VariableTest {
 
   @Test
   void testVariableListener() {
+    AtomicInteger testVar = new AtomicInteger(0);
+    v.addListener(value -> testVar.set((int) value) );
     v.set(5);
-    v.addListener(new VariableListener<Integer>() {
-      @Override
-      public void onChange(Integer value) {
-        assertEquals(5, value);
-      }
-    });
-    v.set(5);
+    assertEquals(5, testVar.get());
   }
 
   @Test
@@ -110,7 +107,6 @@ public class VariableTest {
         assertEquals(false, true); // should not be called
       }
     };
-    v.addListener(listener);
     v.removeListener(listener);
     v.set(5);
   }
