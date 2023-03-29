@@ -10,7 +10,6 @@ import oogasalad.backend.ownables.gameobjects.GameObject;
 import oogasalad.backend.owners.Owner;
 import oogasalad.backend.owners.GameWorld;
 
-
 public class BoardGraph extends GameObject {
     private final Map<String, BoardGraphNode> nodeMap;
 
@@ -165,10 +164,10 @@ public class BoardGraph extends GameObject {
     public List<String> findSpotsUntilBlocked(String startNode, List<String> path, Predicate<BoardGraphNode> isBlocked) {
         BoardGraphNode currentNode = getNode(startNode);
         List<String> spots = new ArrayList<>();
-        while (!spots.contains(currentNode.getId())){
+        if (currentNode == null) return spots;
+        while (true){
             currentNode = followPath(currentNode.getId(), path);
-            if (currentNode == null) return spots;
-            if (isBlocked.test(currentNode)) return spots;
+            if (currentNode == null || spots.contains(currentNode.getId()) || isBlocked.test(currentNode)) break;
             spots.add(currentNode.getId());
         }
         return spots;

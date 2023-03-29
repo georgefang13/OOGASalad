@@ -326,4 +326,61 @@ public class BoardGraphTest {
         assertTrue(g.isPathBlocked("A", path7, node -> node.hasObject("Obj")));
     }
 
+    @Test
+    void testFindAllSpotsUntilBlocked(){
+        g = BoardGraph.createGrid(8, 8);
+
+        /*
+        X is a bishop
+        8 is any other piece
+
+        0 0 1 2 3 4 5 6 7
+        0 - - - - - - - -
+        1 - - - - - - 8 -
+        2 - 8 - - - - - -
+        3 - - - - - - - -
+        4 - - - X - - - -
+        5 - - - - 8 - - -
+        6 - - - - - - - -
+        7 - - - - - - - -
+         */
+
+
+        g.getNode("2,1").putObject("Obj", 1);
+        g.getNode("1,6").putObject("Obj", 1);
+        g.getNode("5,4").putObject("Obj", 1);
+
+        String start = "4,3";
+
+        List<List<String>> paths = new ArrayList<>();
+        paths.add(new ArrayList<>(List.of("UpRight")));
+        paths.add(new ArrayList<>(List.of("UpLeft")));
+        paths.add(new ArrayList<>(List.of("DownRight")));
+        paths.add(new ArrayList<>(List.of("DownLeft")));
+        List<String> available = new ArrayList<>();
+        List<String> expected = new ArrayList<>(List.of("3,4", "2,5", "3,2", "5,2", "6,1", "7,0"));
+
+        for (List<String> path : paths){
+            available.addAll(g.findSpotsUntilBlocked(start, path, node -> node.hasObject("Obj")));
+        }
+
+        assertEquals(expected, available);
+
+        List<String> newPath = new ArrayList<>(List.of("Up", "UpRight"));
+        List<String> expected2 = new ArrayList<>(List.of("2,4", "0,5"));
+        List<String> available2 = g.findSpotsUntilBlocked(start, newPath, node -> node.hasObject("Obj"));
+        assertEquals(expected2, available2);
+    }
+
+    @Test
+    void testNodePutAndRemoveObject(){
+        g = BoardGraph.createGrid(4, 4);
+        g.getNode("0,0").putObject("Obj", 1);
+        assertTrue(g.getNode("0,0").hasObject("Obj"));
+        assertEquals(1, g.getNode("0,0").getObject("Obj"));
+        g.getNode("0,0").removeObject("Obj");
+        assertFalse(g.getNode("0,0").hasObject("Obj"));
+        assertNull(g.getNode("0,0").getObject("Obj"));
+    }
+
 }
