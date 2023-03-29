@@ -1,6 +1,5 @@
-package oogasalad.board;
+package oogasalad.backend.ownables.gameobjects.board;
 
-import oogasalad.backend.ownables.gameobjects.board.BoardGraph;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -213,7 +212,7 @@ public class BoardGraphTest {
     @Test
     void testCreateGrid(){
         int numRows = 3;
-        int numCols = 3;
+        int numCols = 7;
         g = BoardGraph.createGrid(numRows, numCols);
         assertEquals(numRows * numCols, g.getNodes().size());
         for (int i = 0; i < numRows; i++){
@@ -225,7 +224,15 @@ public class BoardGraphTest {
                     assertTrue(g.getNode(id).getEdges().containsKey("Up"));
                 }
                 if (i < numRows-1){
-                    assertTrue(g.getNode(id).getEdges().containsKey("Down"));
+                    try{
+                        assertTrue(g.getNode(id).getEdges().containsKey("Down"));
+                    }
+                    catch (AssertionError e){
+                        System.out.println(id);
+                        System.out.println(g.getNode(id).getEdges());
+                        throw e;
+                    }
+
                 }
                 if (j > 0){
                     assertTrue(g.getNode(id).getEdges().containsKey("Left"));

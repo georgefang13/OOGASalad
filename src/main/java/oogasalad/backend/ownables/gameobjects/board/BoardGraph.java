@@ -1,22 +1,15 @@
-package oogasalad.board;
+package oogasalad.backend.ownables.gameobjects.board;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Predicate;
+
 import oogasalad.backend.ownables.gameobjects.GameObject;
 import oogasalad.backend.owners.Owner;
 import oogasalad.backend.owners.GameWorld;
 
-
-/**
- * Adapted from of ChatGPT response to the following prompt:
- * I want to program a class in Java called BoardGraph. It's a directed graph that contains nodes with IDs, whose connections can have labels from one node to another. Each node should be findable within the BoardGraph by its id. Write the code for BoardGraph
- */
-
-interface BooleanNodeFunction {
-    boolean apply(BoardGraph.BoardGraphNode node);
-}
 
 public class BoardGraph extends GameObject {
     private final Map<String, BoardGraphNode> nodeMap;
@@ -95,13 +88,13 @@ public class BoardGraph extends GameObject {
      * @param isBlocked a function that takes a node and returns true if it is blocked
      * @return true if the path is blocked, false otherwise
      */
-    public boolean isPathBlocked(String startNode, List<String> path, BooleanNodeFunction isBlocked) {
+    public boolean isPathBlocked(String startNode, List<String> path, Predicate<BoardGraphNode> isBlocked) {
         BoardGraphNode currentNode = getNode(startNode);
         if (currentNode == null) return true;
         for (String s : path) {
             currentNode = currentNode.getEdges().get(s);
             if (currentNode == null) return true;
-            if (isBlocked.apply(currentNode)) return true;
+            if (isBlocked.test(currentNode)) return true;
         }
         return false;
     }
@@ -146,7 +139,7 @@ public class BoardGraph extends GameObject {
         }
 
         for (int i = 0; i < rows; i++){
-            for (int j = 0; j < rows; j++){
+            for (int j = 0; j < cols; j++){
                 String id = i + "," + j;
                 if (i > 0)          graph.addConnection(id, (i - 1) + "," + j, "Up");
                 if (i < rows - 1)   graph.addConnection(id, (i + 1) + "," + j, "Down");
@@ -169,12 +162,13 @@ public class BoardGraph extends GameObject {
      * @param isBlocked a function that takes a node and returns true if it is blocked
      * @return a list of all the open nodes that can be reached with that path
      */
-    public List<String> findSpotsUntilBlocked(String startNode, List<String> path, BooleanNodeFunction isBlocked) {
+    public List<String> findSpotsUntilBlocked(String startNode, List<String> path, Predicate<BoardGraphNode> isBlocked) {
         BoardGraphNode currentNode = getNode(startNode);
         List<String> spots = new ArrayList<>();
         while (!spots.contains(currentNode.getId())){
             currentNode = followPath(currentNode.getId(), path);
             if (currentNode == null) return spots;
+            if (isBlocked.test(currentNode)) return spots;
             spots.add(currentNode.getId());
         }
         return spots;
@@ -184,9 +178,28 @@ public class BoardGraph extends GameObject {
         private final String id;
         private final HashMap<String, BoardGraphNode> edges;
 
+        private final HashMap<String, Object> holding;
+
         public BoardGraphNode(String nodeId) {
             this.id = nodeId;
             edges = new HashMap<>();
+            holding = new HashMap<>();
+        }
+
+        public void putObject(String key, Object value) {
+            holding.put(key, value);
+        }
+
+        public Object removeObject(String key) {
+            return holding.remove(key);
+        }
+
+        public Object getObject(String key) {
+            return holding.get(key);
+        }
+
+        public boolean hasObject(String key) {
+            return holding.containsKey(key);
         }
 
         /**
