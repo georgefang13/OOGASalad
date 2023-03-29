@@ -10,7 +10,6 @@ import oogasalad.backend.ownables.gameobjects.GameObject;
 import oogasalad.backend.owners.Owner;
 import oogasalad.backend.owners.GameWorld;
 
-
 public class BoardGraph extends GameObject {
     private final Map<String, BoardGraphNode> nodeMap;
 
@@ -155,6 +154,101 @@ public class BoardGraph extends GameObject {
         return graph;
     }
 
+    // TODO: put text in properties file
+    /**
+     * Creates a square loop graph with the given number of rows and columns. Edges are named Clockwise or Counterclockwise.
+     * Node IDs start at 0 and increase to the length of the perimeter;
+     *
+     * @param rows the number of rows in the square
+     * @param cols the number of columns in the square
+     * @return a looped graph with the given number of rows and columns
+     */
+    public static BoardGraph createSquareLoop(int rows, int cols){
+        return createSquareLoop(rows, cols, 0, 0);
+    }
+
+    private static int[] getRowColDir(int rows, int cols, int row, int col){
+        int[] rowColDir = new int[2];
+
+        if (row == 0 && col != cols - 1) rowColDir[1] = 1;
+        if (row == rows - 1 && col != 0) rowColDir[1] = -1;
+        if (col == 0 && row != 0) rowColDir[0] = -1;
+        if (col == cols - 1 && row != rows - 1) rowColDir[0] = 1;
+
+        return rowColDir;
+    }
+
+    // TODO: put text in properties file
+    /**
+     * Creates a square loop graph with the given number of rows and columns. Edges are named Clockwise or Counterclockwise. Nodes are named from 0 to the length of the perimeter.
+     * @param rows the number of rows in the square
+     * @param cols the number of columns in the square
+     * @param rowStart the starting row
+     * @param colStart the starting column
+     * @return a looped graph with the given number of rows and columns
+     */
+    public static BoardGraph createSquareLoop(int rows, int cols, int rowStart, int colStart){
+
+        // test if the row and column are valid and on the perimeter
+        if (rowStart != 0 && rowStart != rows - 1 && colStart != 0 && colStart != cols - 1){
+            throw new IllegalArgumentException("Invalid starting row and column");
+        }
+
+        BoardGraph graph = new BoardGraph();
+
+        String pathForward = "Counterclockwise";
+        String pathBackward = "Clockwise";
+
+        int row = rowStart;
+        int col = colStart;
+        // row dir, col dir
+        int[] dirs = getRowColDir(rows, cols, row, col);
+
+        int perimeter = 2 * (rows + cols) - 4;
+
+        // make nodes
+        for (int i = 0; i < perimeter; i++){
+            graph.addNode(i + "");
+            row += dirs[0];
+            col += dirs[1];
+            dirs = getRowColDir(rows, cols, row, col);
+        }
+
+        // make connections
+        for (int i = 0; i < perimeter; i++){
+            String id = String.valueOf(i);
+            String id2 = String.valueOf((i + 1) % perimeter);
+            graph.addConnection(id, id2, pathForward);
+            graph.addConnection(id2, id, pathBackward);
+
+            row += dirs[0];
+            col += dirs[1];
+            dirs = getRowColDir(rows, cols, row, col);
+        }
+
+        return graph;
+    }
+
+    // TODO: put text in properties file
+    /**
+     * Creates a 1D loop graph with the given length. Edges are named Forward or Backward.
+     * @param length the length of the loop
+     * @return a looped graph with the given length
+     */
+    public static BoardGraph create1DLoop(int length){
+        BoardGraph graph = new BoardGraph();
+        for (int i = 0; i < length; i++){
+            graph.addNode(i + "");
+        }
+        for (int i = 0; i < length; i++){
+            String id = String.valueOf(i);
+            String id2 = String.valueOf((i + 1) % length);
+            graph.addConnection(id, id2, "Forward");
+            graph.addConnection(id2, id, "Backward");
+        }
+        return graph;
+    }
+
     /**
      * Follows a path of edges completely and checks to see if the end node is blocked. Does this continuously until the path is repeated, blocked, or the edge of the board is reached.
      * @param startNode the id of the node to start from
@@ -165,10 +259,10 @@ public class BoardGraph extends GameObject {
     public List<String> findSpotsUntilBlocked(String startNode, List<String> path, Predicate<BoardGraphNode> isBlocked) {
         BoardGraphNode currentNode = getNode(startNode);
         List<String> spots = new ArrayList<>();
-        while (!spots.contains(currentNode.getId())){
+        if (currentNode == null) return spots;
+        while (true){
             currentNode = followPath(currentNode.getId(), path);
-            if (currentNode == null) return spots;
-            if (isBlocked.test(currentNode)) return spots;
+            if (currentNode == null || spots.contains(currentNode.getId()) || isBlocked.test(currentNode)) break;
             spots.add(currentNode.getId());
         }
         return spots;

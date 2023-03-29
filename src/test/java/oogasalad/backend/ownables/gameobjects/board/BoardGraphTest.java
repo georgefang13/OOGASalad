@@ -326,4 +326,128 @@ public class BoardGraphTest {
         assertTrue(g.isPathBlocked("A", path7, node -> node.hasObject("Obj")));
     }
 
+    @Test
+    void testFindAllSpotsUntilBlocked(){
+        g = BoardGraph.createGrid(8, 8);
+
+        /*
+        X is a bishop
+        8 is any other piece
+
+        0 0 1 2 3 4 5 6 7
+        0 - - - - - - - -
+        1 - - - - - - 8 -
+        2 - 8 - - - - - -
+        3 - - - - - - - -
+        4 - - - X - - - -
+        5 - - - - 8 - - -
+        6 - - - - - - - -
+        7 - - - - - - - -
+         */
+
+
+        g.getNode("2,1").putObject("Obj", 1);
+        g.getNode("1,6").putObject("Obj", 1);
+        g.getNode("5,4").putObject("Obj", 1);
+
+        String start = "4,3";
+
+        List<List<String>> paths = new ArrayList<>();
+        paths.add(new ArrayList<>(List.of("UpRight")));
+        paths.add(new ArrayList<>(List.of("UpLeft")));
+        paths.add(new ArrayList<>(List.of("DownRight")));
+        paths.add(new ArrayList<>(List.of("DownLeft")));
+        List<String> available = new ArrayList<>();
+        List<String> expected = new ArrayList<>(List.of("3,4", "2,5", "3,2", "5,2", "6,1", "7,0"));
+
+        for (List<String> path : paths){
+            available.addAll(g.findSpotsUntilBlocked(start, path, node -> node.hasObject("Obj")));
+        }
+
+        assertEquals(expected, available);
+
+        List<String> newPath = new ArrayList<>(List.of("Up", "UpRight"));
+        List<String> expected2 = new ArrayList<>(List.of("2,4", "0,5"));
+        List<String> available2 = g.findSpotsUntilBlocked(start, newPath, node -> node.hasObject("Obj"));
+        assertEquals(expected2, available2);
+    }
+
+    @Test
+    void testNodePutAndRemoveObject(){
+        g = BoardGraph.createGrid(4, 4);
+        g.getNode("0,0").putObject("Obj", 1);
+        assertTrue(g.getNode("0,0").hasObject("Obj"));
+        assertEquals(1, g.getNode("0,0").getObject("Obj"));
+        g.getNode("0,0").removeObject("Obj");
+        assertFalse(g.getNode("0,0").hasObject("Obj"));
+        assertNull(g.getNode("0,0").getObject("Obj"));
+    }
+
+    @Test
+    void testSquareLoop(){
+        g = BoardGraph.createSquareLoop(4, 4);
+        assertEquals(12, g.getNodes().size());
+
+        List<String> path = new ArrayList<>(List.of("Counterclockwise"));
+        List<String> expected = new ArrayList<>(List.of("9", "10", "11", "0", "1", "2", "3", "4", "5", "6", "7", "8"));
+        List<String> available = g.findSpotsUntilBlocked("8", path, node -> node.hasObject("Obj"));
+        assertEquals(expected, available);
+
+        g.getNode("8").putObject("Obj", 1);
+        List<String> expected2 = new ArrayList<>(List.of("1", "2", "3", "4", "5", "6", "7"));
+        List<String> available2 = g.findSpotsUntilBlocked("0", path, node -> node.hasObject("Obj"));
+        assertEquals(expected2, available2);
+
+        g.getNode("8").removeObject("Obj");
+
+        path = new ArrayList<>(List.of("Clockwise"));
+        List<String> expected3 = new ArrayList<>(List.of("3", "2", "1", "0", "11", "10", "9", "8", "7", "6", "5", "4"));
+        List<String> available3 = g.findSpotsUntilBlocked("4", path, node -> node.hasObject("Obj"));
+        assertEquals(expected3, available3);
+
+        g.getNode("4").putObject("Obj", 1);
+        List<String> expected4 = new ArrayList<>(List.of("11", "10", "9", "8", "7", "6", "5"));
+        List<String> available4 = g.findSpotsUntilBlocked("0", path, node -> node.hasObject("Obj"));
+        assertEquals(expected4, available4);
+
+    }
+
+    @Test
+    void testCustomSquareLoop(){
+        try{
+            g = BoardGraph.createSquareLoop(4, 4, 2, 2);
+            fail("Should have thrown an exception");
+        } catch (IllegalArgumentException e){
+            assertEquals("Invalid starting row and column", e.getMessage());
+        }
+    }
+
+    @Test
+    void testCreate1DLoop(){
+        g = BoardGraph.create1DLoop(4);
+        assertEquals(4, g.getNodes().size());
+
+        List<String> path = new ArrayList<>(List.of("Forward"));
+        List<String> expected = new ArrayList<>(List.of("3", "0", "1", "2"));
+        List<String> available = g.findSpotsUntilBlocked("2", path, node -> node.hasObject("Obj"));
+        assertEquals(expected, available);
+
+        g.getNode("2").putObject("Obj", 1);
+        List<String> expected2 = new ArrayList<>(List.of("1"));
+        List<String> available2 = g.findSpotsUntilBlocked("0", path, node -> node.hasObject("Obj"));
+        assertEquals(expected2, available2);
+
+        g.getNode("2").removeObject("Obj");
+
+        path = new ArrayList<>(List.of("Backward"));
+        List<String> expected3 = new ArrayList<>(List.of("1", "0", "3", "2"));
+        List<String> available3 = g.findSpotsUntilBlocked("2", path, node -> node.hasObject("Obj"));
+        assertEquals(expected3, available3);
+
+        g.getNode("1").putObject("Obj", 1);
+        List<String> expected4 = new ArrayList<>(List.of("3", "2"));
+        List<String> available4 = g.findSpotsUntilBlocked("0", path, node -> node.hasObject("Obj"));
+        assertEquals(expected4, available4);
+    }
+
 }
