@@ -1,7 +1,9 @@
 package oogasalad.backend.ownables.variables;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -33,7 +35,7 @@ public class VariableTest {
   @Test
   void testVariableNull() {
     v.set(null);
-    assertEquals(null, v.get());
+    assertNull(v.get());
   }
 
   @Test
@@ -57,7 +59,7 @@ public class VariableTest {
   @Test
   void testVariableObject() {
     v.set(new Object());
-    assertTrue(v.get() instanceof Object);
+    assertTrue(v.get() != null);
   }
 
   @Test
@@ -74,7 +76,7 @@ public class VariableTest {
   void testVariableArrayList() {
     v.set(new ArrayList<Integer>());
     assertTrue(v.get() instanceof ArrayList<?>);
-    assertTrue(v.get().equals(new ArrayList<Integer>()));
+    assertEquals(v.get(), new ArrayList<Integer>());
   }
 
   @Test
@@ -101,11 +103,8 @@ public class VariableTest {
   @Test
   void testRemoveListener() {
     v.set(5);
-    VariableListener<Integer> listener = new VariableListener<Integer>() {
-      @Override
-      public void onChange(Integer value) {
-        assertEquals(false, true); // should not be called
-      }
+    VariableListener<Integer> listener = value -> {
+      fail(); // should not be called
     };
     v.removeListener(listener);
     v.set(5);
@@ -114,7 +113,7 @@ public class VariableTest {
   @Test
   void testNullInitial() {
     v = new Variable();
-    assertEquals(null, v.get());
+    assertNull(v.get());
   }
 
   @Test
