@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import oogasalad.backend.ownables.gameobjects.GameObject;
+import oogasalad.backend.owners.Owner;
+import oogasalad.backend.owners.GameWorld;
+
 
 /**
  * Adapted from of ChatGPT response to the following prompt:
@@ -14,17 +18,13 @@ interface BooleanNodeFunction {
     boolean apply(BoardGraph.BoardGraphNode node);
 }
 
-public class BoardGraph {
+public class BoardGraph extends GameObject {
     private final Map<String, BoardGraphNode> nodeMap;
 
     public BoardGraph() {
         nodeMap = new HashMap<>();
     }
 
-    /**
-     * Returns a list of all the node IDs in the graph.
-     * @return a list of all the node IDs in the graph
-     */
     public List<String> getNodes() {
         return new ArrayList<>(nodeMap.keySet());
     }
@@ -38,7 +38,6 @@ public class BoardGraph {
         return nodeMap.get(nodeId);
     }
 
-    // TODO: put error messages in properties file
     /**
      * Adds a node to the graph if it does not already exist.
      * @param nodeId the id of the node to add
@@ -50,7 +49,6 @@ public class BoardGraph {
         return nodeMap.putIfAbsent(nodeId, new BoardGraphNode(nodeId)) == null;
     }
 
-    // TODO: put error messages in properties file
     /**
      * Adds a connection from one node to another with a label.
      * @param fromNodeId the id of the node to connect from
@@ -65,6 +63,14 @@ public class BoardGraph {
         if (label == null) throw new IllegalArgumentException("Edge name cannot be null");
 
         return fromNode.addOutgoingConnection(toNode, label);
+    }
+
+    /**
+     * @see oogasalad.backend.ownables.Ownable#canBeOwnedBy(oogasalad.backend.owners.Owner)
+     * BoardGraphNodes can only be owned by the game.
+     */
+    public boolean canBeOwnedBy(Owner potentialOwner) {
+        return potentialOwner instanceof GameWorld;
     }
 
     /**
@@ -178,28 +184,9 @@ public class BoardGraph {
         private final String id;
         private final HashMap<String, BoardGraphNode> edges;
 
-        private final HashMap<String, Object> holding;
-
         public BoardGraphNode(String nodeId) {
             this.id = nodeId;
             edges = new HashMap<>();
-            holding = new HashMap<>();
-        }
-
-        public void putObject(String key, Object value) {
-            holding.put(key, value);
-        }
-
-        public Object removeObject(String key) {
-            return holding.remove(key);
-        }
-
-        public Object getObject(String key) {
-            return holding.get(key);
-        }
-
-        public boolean hasObject(String key) {
-            return holding.containsKey(key);
         }
 
         /**
