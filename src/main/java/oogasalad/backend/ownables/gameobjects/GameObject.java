@@ -1,5 +1,6 @@
 package oogasalad.backend.ownables.gameobjects;
 
+import oogasalad.backend.Game;
 import oogasalad.backend.ownables.Ownable;
 import oogasalad.backend.owners.Owner;
 
@@ -9,6 +10,7 @@ import oogasalad.backend.owners.Owner;
  * @author Michael Bryant
  */
 public abstract class GameObject extends Ownable {
+
 
   /**
    * @see oogasalad.backend.ownables.Ownable#canBeOwnedBy(Owner)

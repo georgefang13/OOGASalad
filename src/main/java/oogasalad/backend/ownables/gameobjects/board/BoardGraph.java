@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 
+import oogasalad.backend.Game;
 import oogasalad.backend.ownables.gameobjects.GameObject;
 import oogasalad.backend.owners.Owner;
 import oogasalad.backend.owners.GameWorld;

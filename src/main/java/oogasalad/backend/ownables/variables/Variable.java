@@ -1,5 +1,6 @@
 package oogasalad.backend.ownables.variables;
 
+import oogasalad.backend.Game;
 import oogasalad.backend.ownables.Ownable;
 import java.util.ArrayList;
 import java.util.List;
@@ -83,6 +84,7 @@ public class Variable<T> extends Ownable {
       listener.onChange(value);
     }
   }
+
 }
 
 /**

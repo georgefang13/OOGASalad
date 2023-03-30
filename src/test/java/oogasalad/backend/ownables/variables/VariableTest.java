@@ -10,6 +10,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+/**
+ * Tests the Variable class.
+ * @author Michael Bryant
+ */
 public class VariableTest {
 
   private Variable v;
