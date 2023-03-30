@@ -25,10 +25,12 @@ public abstract class Ownable {
   /**
    * The id of the Ownable.
    * This is used to identify the Ownable in the frontend and backend.
-   * Default string plus a number Ex. "BoardGraph1"
+   * Default string plus a number Ex. "BoardGraph2"
    * Can be changed -- but should be unique.
    */
   private String id;
+
+  //TODO add variables
 
   private static final String LABELS = "backend/reflection/exceptions"; //TODO hardcoded for English rn
   private ResourceBundle labels = ResourceBundle.getBundle(LABELS);

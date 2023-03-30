@@ -1,8 +1,10 @@
 package oogasalad.backend.ownables.id;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import oogasalad.backend.ownables.Ownable;
@@ -154,6 +156,21 @@ public class IdManager {
   public void clearAndLoadIds(Map<String, Ownable> ids) {
     clear();
     loadIds(ids);
+  }
+
+  /**
+   * Returns a list of all ownables owned by the given owner.
+   * @param owner the owner to get ownables for
+   * @return a list of all ownables owned by the given owner
+   */
+  public List getOwnablesForOwner(Owner owner) {
+    List<Ownable> ownables = new ArrayList<>();
+    for (Ownable ownable : ids.values()) {
+      if (ownable.getOwner() == owner) {
+        ownables.add(ownable);
+      }
+    }
+    return ownables;
   }
 
 }

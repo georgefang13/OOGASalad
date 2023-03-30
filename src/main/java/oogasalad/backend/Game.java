@@ -1,5 +1,6 @@
 package oogasalad.backend;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -36,15 +37,17 @@ public class Game {
   private final ArrayList<Player> players = new ArrayList<>();
 
   /**
-   * The GameWorld of the game.
-   * The GameWorld owns Ownables not owned by Players.
-   */
-  private final GameWorld gameWorld = new GameWorld();
-
-  /**
    * The IdManager of the game for Ownables.
    */
   private IdManager idManager = new IdManager();
+
+  /**
+   * The GameWorld of the game.
+   * The GameWorld owns Ownables not owned by Players.
+   */
+  private final GameWorld gameWorld = new GameWorld(idManager);
+
+
 
 
   /**
@@ -61,7 +64,7 @@ public class Game {
    */
   public void addNPlayers(int n) {
     for (int i = 0; i < n; i++) {
-      addPlayer(new Player());
+      addPlayer(new Player(idManager));
     }
   }
 
@@ -74,8 +77,12 @@ public class Game {
     if(!players.contains(player)) {
       return;
     }
+    //remove all ownables owned by player
+    ArrayList<Ownable> ownables = new ArrayList<>(player.getOwnables());
+    for (Ownable ownable : ownables) {
+      idManager.removeOwnable(ownable.getId());
+    }
     players.remove(player);
-    //TODO: remove all ownables owned by player
   }
 
   /**
@@ -166,7 +173,6 @@ public class Game {
   public void addOwnable(Ownable ownable, Owner owner) {
     idManager.addOwnable(ownable);
     ownable.setOwner(owner);
-    owner.addOwnable(ownable);
   }
 
   //TODO remove owner
