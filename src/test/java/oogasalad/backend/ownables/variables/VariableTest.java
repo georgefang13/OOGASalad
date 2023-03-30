@@ -105,13 +105,28 @@ public class VariableTest {
   }
 
   @Test
-  void testRemoveListener() {
+  void testClearListener() {
+    AtomicInteger testVar = new AtomicInteger(0);
+    v.addListener(value -> testVar.set((int) value) );
+    v.clearListeners();
     v.set(5);
-    VariableListener<Integer> listener = value -> {
-      fail(); // should not be called
-    };
+    assertEquals(0, testVar.get());
+  }
+
+  @Test
+  void getListeners() {
+    v.addListener(value -> {});
+    assertEquals(1, v.getListeners().size());
+  }
+
+  @Test
+  void testRemoveListener() {
+    AtomicInteger testVar = new AtomicInteger(0);
+    VariableListener listener = value -> testVar.set((int) value);
+    v.addListener(listener);
     v.removeListener(listener);
     v.set(5);
+    assertEquals(0, testVar.get());
   }
 
   @Test

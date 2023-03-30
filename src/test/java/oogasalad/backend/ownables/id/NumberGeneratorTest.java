@@ -1,6 +1,7 @@
 package oogasalad.backend.ownables.id;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -50,6 +51,22 @@ public class NumberGeneratorTest {
       gen.next();
     }
     assertEquals("", gen.next());
+  }
+
+  @Test
+  void testMultipleGenerators() {
+    NumberGenerator gen2 = new NumberGenerator();
+    assertEquals("", gen.next());
+    assertEquals("", gen2.next());
+    assertEquals("2", gen.next());
+    assertEquals("2", gen2.next());
+    assertEquals("3", gen.next());
+    assertEquals("3", gen2.next());
+  }
+
+  @Test
+  void testNumberGeneratorHasNext() {
+    assertTrue(gen.hasNext());
   }
 
 }

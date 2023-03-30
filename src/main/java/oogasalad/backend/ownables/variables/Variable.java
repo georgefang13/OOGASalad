@@ -1,5 +1,6 @@
 package oogasalad.backend.ownables.variables;
 
+import java.util.Collections;
 import oogasalad.backend.Game;
 import oogasalad.backend.ownables.Ownable;
 import java.util.ArrayList;
@@ -69,11 +70,28 @@ public class Variable<T> extends Ownable {
   }
 
   /**
-   * Removes a listener from the variable.
+   * Removes a listener from the variable, if it is there.
    * @param listener the listener to remove
    */
   public void removeListener(VariableListener<T> listener) {
-    listeners.remove(listener);
+    if(listeners.contains(listener)) {
+      listeners.remove(listener);
+    }
+  }
+
+  /**
+   * Clears all listeners from the variable.
+   */
+  public void clearListeners() {
+    listeners.clear();
+  }
+
+  /**
+   * Gets an uneditable list of all listeners.
+   * @return an uneditable list of all listeners
+   */
+  public List getListeners() {
+    return Collections.unmodifiableList(listeners);
   }
 
   /**
