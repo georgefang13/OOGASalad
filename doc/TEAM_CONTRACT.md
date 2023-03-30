@@ -1,6 +1,6 @@
 # OOGA Team Contract
 ### duVALLEY Boiz
-### Rodrigo Bassi Guerreiro (rb419), Michael Bryant (mcb115), Joao Carvalho (jc870@), George Fang (gyf2), Ethan Horowitz (ejh55), Aryan Kothari (ak616), Yegor Kursakov (ek210), Owen MacKenzie (opm7), Max Meister (mem148), Connor Wells-Weiner (cjw84), Han Zhang (hz244)
+### Rodrigo Bassi Guerreiro (rb419), Michael Bryant (mcb115), Joao Carvalho (jc870), George Fang (gyf2), Ethan Horowitz (ejh55), Aryan Kothari (ak616), Yegor Kursakov (ek210), Owen MacKenzie (opm7), Max Meister (mem148), Connor Wells-Weiner (cjw84), Han Zhang (hz244)
 
 
 ## As a project team, we promise to:
@@ -43,13 +43,23 @@
 
 ### Commitments
 * what does it mean to work to the "best of your ability"
+  * Spend a reasonable amount of time attempting to do it, research on the topic to learn as much as possible about it, and ask other teammates for help whenever necessary
+  * Address concerns brought by team members about the interaction among classes.
 * how to set internal deadlines
 * how to provide commitments others on the team can rely on
 * policy for resolving failure to meet commitments
+  * Understand why the failure happened and attempt to resolve the issue so it doesn't happen next time
 
 
 ### Helping each other
 * best ways to and when to ask for help
+  * Text in group chat or message someone who is working on a feature that is relevant to you problem 
+  * Don't wait to the last minute to reach out. 
 * responses to team member asking for help
+  * Offering advice without judgement, especially if it's a question that might seem basic
 * how to support the team priorities
+  * Work on items that are necessary for the entire team even if they haven't been explicitly assigned
+  * Double check what is priority and update the Google sheets
 * how to suggest design changes for specific pieces of code
+  * Direct communication
+  * Explain why the design change is being made
