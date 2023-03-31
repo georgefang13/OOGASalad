@@ -33,9 +33,12 @@ public interface EditorBackend {
      */
     public Ownable addOwnable(String name, Map<String, String> parameters);
 
-
-
-
+    /**
+     * Edits an ownable.
+     * @param id the id of the ownable
+     * @param modifier the modifier to apply to the ownable
+     */
+    public void editOwnable(String id, OwnableModifier modifier);
 
 
 }
