@@ -87,6 +87,10 @@ The data files used to generate and run different games will be JSON files, sepa
 
 
 ## Design Overview
+![Backend Class Interactions](\doc\plan\dependencies\backend_classes.png)
+![Frontend Class Interactions](\doc\plan\dependencies\frontend_classes.png)
+
+
 
 
 ## Design Details
@@ -95,7 +99,6 @@ The data files used to generate and run different games will be JSON files, sepa
 ### Game Runner Frontend
 
 ### Game Editor Backend
-Classes to make:
 * __IDManager__
 * Manages queries to all elements
 * Manages ownership of elements
