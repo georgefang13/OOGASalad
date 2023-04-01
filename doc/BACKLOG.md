@@ -667,21 +667,44 @@ User adds rule to apply to specific GameObject Class
 
 * Controller is updated with information on the rule if necessary
 
-User clicks on their bishop in chess while playing the game
+User clicks on their bishop while playing chess
 
-* 
+* Click event is sent to the controller, which sends the id of the clicked item to the back end
+* GameObject links to rule to find available options to click on
+* interpreter runs the rule and returns available spots
+* the IDs of the available GameObjects to click on are sent to the controller
+* controller communicates to the front end which visual elements to highlight
+* view highlights the GameObject visuals that the user can click on
 
-Use Case 5
+User maps a chat code to an action
 
+* User clicks on rules tab and launches space to edit a rule for a specific GameObject ID or class
+* User drags the onCheatCode block
+* User drags other logic blocks to manipulate items on the board
+* User presses “Save Rule”
+* Front end passes blocks to the controller
+* Controller packages data for the addOwnable backend API, with the name “Rule” and an Map<String, String> of box names and specifiers to be parsed later by the backend
 
+* Backend receives the rule and passes it to an OwnableFactory
 
-* 
+* OwnableFactory generates a rule object
 
-Use Case 6
+* Rule object is passed to the GlobalStore object
 
+* GlobalStore object stores the Rule in a HashMap
 
+* Controller is updated with information on the rule if necessary
 
-* 
+A player finishes their turn in game
+
+* Backend detects that there are no more moves to do
+* Backend loads any player-specific assets for the next player
+* Backend communicates to the controller objects to remove
+* Backend passes assets to the controller for the view to render
+* Controller  communicates with view to remove GameObjects specified that are to be removed
+* Controller communicates with view to draw new objects to the screen based on what needs to be rendered
+* View responds and deletes and adds objects as necessary
+
 
 
 ---
