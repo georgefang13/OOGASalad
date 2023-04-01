@@ -1,3 +1,32 @@
 # Rough timeline for project!
 
-Describe your plan for how to manage and prioritize the project, including a rough timeline what you expect to complete for each deadline, the extension feature(s) you want to include, and which APIs each team member plans to take primary and secondary responsibility for. Specifically, each person should take responsibility for specific features and Use Cases they intend to work on during each Sprint (i.e., each week). This requires the team to agree on the feature priorities and set goals for what to complete for each deliverable.
+Sprint 1 (4/7):
+* Tic Tac Toe
+* Editor and game basic implementation
+
+Sprint 2 (4/12):
+* Chess
+* Movement side effects
+* More complex rules / game logic api
+
+Midpoint Presentation (4/13):
+* Launch video
+* T-shirts 
+* Demo of making tic tac toe or chess and play game 
+
+Sprint 3 (4/23):
+* Monopoly, Blackjack, backgammon
+* Cards
+* Die, randomizer
+* Gameworld acts as a dealer and has turns
+
+Complete (4/30):
+* Extensions
+* Networking enabled players (and live chat?)
+* Player profiles
+* AI api
+* Leaderboard/database
+
+Demo (5/3):
+* Everyone must create a game 
+
