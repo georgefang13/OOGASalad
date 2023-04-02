@@ -1,7 +1,7 @@
 package oogasalad.frontend.components.panels;
 
-import javafx.scene.control.TitledPane;
+//import javafx.scene.control.TitledPanel;
 
-public abstract class TitledPanel extends TitledPane implements Panel {
+public abstract class TitledPanel implements Panel {
 
 }
