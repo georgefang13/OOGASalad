@@ -1,4 +1,4 @@
-package oogasalad.backend;
+package oogasalad.gamerunner.backend;
 
 /**
  * The Game class represents the game itself.

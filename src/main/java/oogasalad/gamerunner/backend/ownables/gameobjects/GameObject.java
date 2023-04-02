@@ -1,7 +1,7 @@
-package oogasalad.backend.ownables.gameobjects;
+package oogasalad.gamerunner.backend.ownables.gameobjects;
 
-import oogasalad.backend.ownables.Ownable;
-import oogasalad.backend.owners.Owner;
+import oogasalad.gamerunner.backend.ownables.Ownable;
+import oogasalad.gamerunner.backend.owners.Owner;
 
 /**
  * A GameObject is an Ownable that can be owned by an Owner
@@ -11,7 +11,7 @@ import oogasalad.backend.owners.Owner;
 public abstract class GameObject extends Ownable {
 
   /**
-   * @see oogasalad.backend.ownables.Ownable#canBeOwnedBy(Owner)
+   * @see Ownable#canBeOwnedBy(Owner)
    */
   public abstract boolean canBeOwnedBy(Owner potentialOwner);
 }

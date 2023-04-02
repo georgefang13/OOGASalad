@@ -1,4 +1,4 @@
-package oogasalad.frontend.components.panels;
+package oogasalad.gamerunner.frontend.components.panels;
 
 /*
 * Panel is an interface that defines the way that our panels work
