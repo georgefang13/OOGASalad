@@ -15,7 +15,15 @@ public abstract class Modal<T> extends Dialog<T> {
     public Modal(String title) {
         setTitle(title);
         initModality(Modality.APPLICATION_MODAL);
-        initStyle(StageStyle.DECORATED);
+        initStyle(StageStyle.UNDECORATED);
+        setResizable(false);
+        setDialogPane(createDialogPane());
+        setResultConverter(this::convertResult);
+    }
+
+    public Modal() {
+        initModality(Modality.APPLICATION_MODAL);
+        initStyle(StageStyle.UNDECORATED);
         setResizable(false);
         setDialogPane(createDialogPane());
         setResultConverter(this::convertResult);
