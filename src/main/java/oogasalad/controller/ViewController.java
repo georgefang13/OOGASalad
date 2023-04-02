@@ -17,4 +17,10 @@ public class ViewController implements EmptyController {
     views = new ArrayList<>();
     views.add(originView);
   }
+
+  public void open(View gameChooserView){
+    gameChooserView.open();
+    views.add(gameChooserView);
+  }
+
 }

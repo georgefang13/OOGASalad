@@ -80,5 +80,9 @@ public abstract class View {
     return scene;
   }
 
+  protected ViewController getController() {
+    return controller;
+  }
+
 
 }

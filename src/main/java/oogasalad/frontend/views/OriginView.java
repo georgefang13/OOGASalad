@@ -1,5 +1,7 @@
 package oogasalad.frontend.views;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
@@ -23,10 +25,17 @@ public class OriginView extends View {
   protected Scene makeScene() {
     VBox box = new VBox();
     box.getChildren().addAll(
-        ButtonFactory.makeButton("Play Game", null),
-        ButtonFactory.makeButton("Edit Game", null));
+        ButtonFactory.makeButton("Play Game", event -> openPlayGame()),
+        ButtonFactory.makeButton("Edit Game", event -> openEditGame())
+  );
     Scene scene = new Scene(box);
     return scene;
+  }
+  private void openPlayGame() {
+    getController().open(new GamePlayerView(new Stage(),getController()));
+  }
+  private void openEditGame() {
+    getController().open(new GameEditorView(new Stage(),getController()));
   }
 
   @Override
