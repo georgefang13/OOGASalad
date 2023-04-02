@@ -1,4 +1,4 @@
-package oogasalad.frontend;
+package oogasalad.gamerunner.frontend;
 
 import javafx.scene.Scene;
 import javafx.stage.Stage;

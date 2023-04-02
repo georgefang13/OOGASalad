@@ -1,4 +1,4 @@
-package oogasalad.backend.ownables.gameobjects.board;
+package oogasalad.gamerunner.backend.ownables.gameobjects.board;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,9 +6,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 
-import oogasalad.backend.ownables.gameobjects.GameObject;
-import oogasalad.backend.owners.Owner;
-import oogasalad.backend.owners.GameWorld;
+import oogasalad.gamerunner.backend.ownables.Ownable;
+import oogasalad.gamerunner.backend.ownables.gameobjects.GameObject;
+import oogasalad.gamerunner.backend.owners.Owner;
+import oogasalad.gamerunner.backend.owners.GameWorld;
 
 public class BoardGraph extends GameObject {
     private final Map<String, BoardGraphNode> nodeMap;
@@ -58,7 +59,7 @@ public class BoardGraph extends GameObject {
     }
 
     /**
-     * @see oogasalad.backend.ownables.Ownable#canBeOwnedBy(oogasalad.backend.owners.Owner)
+     * @see Ownable#canBeOwnedBy(Owner)
      * BoardGraphNodes can only be owned by the game.
      */
     public boolean canBeOwnedBy(Owner potentialOwner) {

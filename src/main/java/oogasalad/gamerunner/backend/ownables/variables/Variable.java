@@ -1,9 +1,9 @@
-package oogasalad.backend.ownables.variables;
+package oogasalad.gamerunner.backend.ownables.variables;
 
-import oogasalad.backend.ownables.Ownable;
+import oogasalad.gamerunner.backend.ownables.Ownable;
 import java.util.ArrayList;
 import java.util.List;
-import oogasalad.backend.owners.Owner;
+import oogasalad.gamerunner.backend.owners.Owner;
 
 /**
  * An Ownable variable that can be changed and listened to.

@@ -1,14 +1,15 @@
-package oogasalad.backend.ownables;
+package oogasalad.gamerunner.backend.ownables;
 
 import java.util.ResourceBundle;
-import oogasalad.backend.owners.GameWorld;
-import oogasalad.backend.owners.Owner;
+import oogasalad.gamerunner.backend.owners.GameWorld;
+import oogasalad.gamerunner.backend.owners.Owner;
+import oogasalad.gamerunner.backend.owners.Player;
 
 /**
  * An object that can be owned by an owner.
  * All Ownables are owned by a single owner.
  * This Owner can be either a Player or a Game.
- * @see oogasalad.backend.owners.Player
+ * @see Player
  * @see GameWorld
  * The Owner of an Ownable can be changed.
  * @author Michael Bryant

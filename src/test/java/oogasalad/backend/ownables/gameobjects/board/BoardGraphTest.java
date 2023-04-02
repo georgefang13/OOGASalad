@@ -1,5 +1,6 @@
 package oogasalad.backend.ownables.gameobjects.board;
 
+import oogasalad.gamerunner.backend.ownables.gameobjects.board.BoardGraph;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

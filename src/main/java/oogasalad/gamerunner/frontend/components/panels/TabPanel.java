@@ -1,4 +1,4 @@
-package oogasalad.frontend.components.panels;
+package oogasalad.gamerunner.frontend.components.panels;
 
 import javafx.scene.control.TabPane;
 
