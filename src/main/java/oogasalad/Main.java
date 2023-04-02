@@ -3,6 +3,8 @@ package oogasalad;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
+import oogasalad.controller.ViewController;
+import oogasalad.frontend.views.OriginView;
 
 /**
  * Feel free to completely change this code or delete it entirely. 
@@ -28,6 +30,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        ViewController viewController = new ViewController(stage);
 
     }
 }
