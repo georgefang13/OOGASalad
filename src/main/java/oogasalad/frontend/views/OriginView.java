@@ -1,9 +1,11 @@
 package oogasalad.frontend.views;
 
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import oogasalad.controller.ViewController;
+import oogasalad.frontend.components.factories.ButtonFactory;
 
 public class OriginView extends View {
 
@@ -19,7 +21,12 @@ public class OriginView extends View {
 
   @Override
   protected Scene makeScene() {
-    return new Scene(new VBox());
+    VBox box = new VBox();
+    box.getChildren().addAll(
+        ButtonFactory.makeButton("Play Game", null),
+        ButtonFactory.makeButton("Edit Game", null));
+    Scene scene = new Scene(box);
+    return scene;
   }
 
   @Override
