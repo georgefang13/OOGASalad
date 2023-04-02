@@ -1,7 +1,7 @@
 package oogasalad.gamerunner.frontend.components.panels;
 
-//import javafx.scene.control.TitledPanel;
+import javafx.scene.control.TitledPane;
 
-public abstract class TitledPanel implements Panel {
+public abstract class TitledPanel extends TitledPane implements Panel {
 
 }
