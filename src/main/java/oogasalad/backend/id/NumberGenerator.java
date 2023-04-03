@@ -1,4 +1,4 @@
-package oogasalad.backend.ownables.id;
+package oogasalad.backend.id;
 
 import java.util.Iterator;
 

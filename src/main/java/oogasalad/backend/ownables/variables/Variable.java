@@ -2,6 +2,7 @@ package oogasalad.backend.ownables.variables;
 
 import java.util.Collections;
 import oogasalad.backend.Game;
+import oogasalad.backend.id.IdManager;
 import oogasalad.backend.ownables.Ownable;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,16 +21,16 @@ public class Variable<T> extends Ownable {
   /**
    * Creates a new variable with no value.
    */
-  public Variable() {
-    this.value = null;
-    this.listeners = new ArrayList<>();
+  public Variable(IdManager idManager) {
+    this(idManager, null);
   }
 
   /**
    * Creates a new variable with the given value.
    * @param value the initial value of the variable
    */
-  public Variable(T value) {
+  public Variable(IdManager idManager, T value) {
+    super(idManager);
     this.value = value;
     this.listeners = new ArrayList<>();
   }

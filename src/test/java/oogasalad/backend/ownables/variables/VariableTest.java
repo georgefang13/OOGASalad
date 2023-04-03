@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
+import oogasalad.backend.id.IdManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -19,7 +20,8 @@ public class VariableTest {
 
   @BeforeEach
   void setup() {
-    v = new Variable();
+    IdManager idManager = new IdManager();
+    v = new Variable(idManager);
   }
 
   @Test
@@ -130,13 +132,13 @@ public class VariableTest {
 
   @Test
   void testNullInitial() {
-    v = new Variable();
+    v = new Variable(new IdManager());
     assertNull(v.get());
   }
 
   @Test
   void nonNullInitial() {
-    v = new Variable(5);
+    v = new Variable(new IdManager(), 5);
     assertEquals(5, v.get());
   }
 

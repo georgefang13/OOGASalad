@@ -1,12 +1,7 @@
 package oogasalad.backend.owners;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import oogasalad.backend.ownables.Ownable;
-import oogasalad.backend.ownables.id.IdManager;
+import oogasalad.backend.id.IdManager;
 
 /**
  * An Owner owns Ownables.
@@ -32,7 +27,8 @@ public abstract class Owner {
    * @return an unmodifiable list of the ownables owned by the Owner
    */
   public List getOwnables() {
-   return idManager.getOwnablesForOwner(this);
+   //TODO
+    return null;
   }
 
 
