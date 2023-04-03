@@ -2,6 +2,7 @@ package oogasalad.backend.ownables.id;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
@@ -43,6 +44,8 @@ public class IdManagerTest {
     assertFalse(manager.isIdInUse("Variable"));
     manager.addObject(variable1);
     assertTrue(manager.isIdInUse("Variable"));
+    assertThrows(IllegalArgumentException.class, () -> manager.getObject("Variable2"));
+    assertThrows(IllegalArgumentException.class, () -> manager.getId(variable2));
   }
 
   @Test
@@ -115,7 +118,7 @@ public class IdManagerTest {
     assertFalse(manager.isIdInUse("Variable"));
     manager.addObject(variable1);
     assertTrue(manager.isIdInUse("Variable"));
-    manager.addObject(variable1);
+    assertThrows(IllegalArgumentException.class, () -> manager.addObject(variable1));
     assertTrue(manager.isIdInUse("Variable"));
     //check that only one variable is added
     assertTrue(manager.getSimpleIds().size() == 1);
@@ -282,6 +285,132 @@ public class IdManagerTest {
     assertEquals(manager.getId(variable3), "EmptyGameObject.EmptyGameObject3.Variable3");
   }
 
-  //TODO finish tests
+  @Test
+  public void testRemoveObject() {
+    assertFalse(manager.isIdInUse("Variable"));
+    manager.addObject(variable1);
+    assertTrue(manager.isIdInUse("Variable"));
+    manager.removeObject(variable1);
+    assertFalse(manager.isIdInUse("Variable"));
+    assertTrue(manager.getSimpleIds().size() == 0);
+  }
+
+  @Test
+  public void testRemoveNonExisting() {
+    assertFalse(manager.isIdInUse("Variable"));
+    assertThrows(IllegalArgumentException.class, () -> manager.removeObject(variable1));
+  }
+
+  @Test
+  public void testRemoveMiddleChild() {
+    assertFalse(manager.isIdInUse("EmptyGameObject"));
+    assertFalse(manager.isIdInUse("EmptyGameObject1"));
+    assertFalse(manager.isIdInUse("EmptyGameObject2"));
+    manager.addObject(object1);
+    manager.addObject(object2, object1);
+    manager.addObject(object3, object2);
+    assertTrue(manager.isIdInUse("EmptyGameObject"));
+    assertTrue(manager.isIdInUse("EmptyGameObject2"));
+    assertTrue(manager.isIdInUse("EmptyGameObject3"));
+    manager.removeObject(object2);
+    assertFalse(manager.isIdInUse("EmptyGameObject2"));
+    assertFalse(manager.isIdInUse("EmptyGameObject3"));
+    assertTrue(manager.isIdInUse("EmptyGameObject"));
+    assertTrue(manager.getSimpleIds().size() == 1);
+  }
+
+  @Test
+  public void testRenameObject() {
+    assertFalse(manager.isIdInUse("Variable"));
+    assertFalse(manager.isIdInUse("Variable2"));
+    manager.addObject(variable1);
+    assertTrue(manager.isIdInUse("Variable"));
+    assertFalse(manager.isIdInUse("Variable2"));
+    manager.changeId("Variable", "Variable2");
+    assertFalse(manager.isIdInUse("Variable"));
+    assertTrue(manager.isIdInUse("Variable2"));
+    assertTrue(manager.getSimpleIds().size() == 1);
+  }
+
+  @Test
+  public void testRenameToFutureName() {
+    assertFalse(manager.isIdInUse("Variable"));
+    assertFalse(manager.isIdInUse("Variable2"));
+    manager.addObject(variable1);
+    assertTrue(manager.isIdInUse("Variable"));
+    assertFalse(manager.isIdInUse("Variable2"));
+    manager.changeId("Variable", "Variable2");
+    assertFalse(manager.isIdInUse("Variable"));
+    assertTrue(manager.isIdInUse("Variable2"));
+    assertTrue(manager.getSimpleIds().size() == 1);
+    manager.addObject(variable2);
+    assertTrue(manager.isIdInUse("Variable3"));
+  }
+
+  @Test
+  public void testRenameToExisting() {
+    assertFalse(manager.isIdInUse("Variable"));
+    assertFalse(manager.isIdInUse("Variable2"));
+    manager.addObject(variable1);
+    manager.addObject(variable2);
+    assertTrue(manager.isIdInUse("Variable"));
+    assertTrue(manager.isIdInUse("Variable2"));
+    assertThrows(IllegalArgumentException.class, () -> manager.changeId("Variable", "Variable2"));
+    assertTrue(manager.isIdInUse("Variable"));
+    assertTrue(manager.isIdInUse("Variable2"));
+    assertTrue(manager.getSimpleIds().size() == 2);
+  }
+
+  @Test
+  public void testRenameNonExisting() {
+    assertFalse(manager.isIdInUse("Variable"));
+    assertFalse(manager.isIdInUse("Variable2"));
+    assertThrows(IllegalArgumentException.class, () -> manager.changeId("Variable", "Variable2"));
+    assertFalse(manager.isIdInUse("Variable"));
+    assertFalse(manager.isIdInUse("Variable2"));
+    assertTrue(manager.getSimpleIds().size() == 0);
+  }
+
+  @Test
+  public void testRenameAndGetId() {
+    manager.addObject(object1);
+    manager.addObject(object2, object1);
+    manager.addObject(object3, object2);
+    assertEquals(manager.getId(object1), "EmptyGameObject");
+    assertEquals(manager.getId(object2), "EmptyGameObject.EmptyGameObject2");
+    assertEquals(manager.getId(object3), "EmptyGameObject.EmptyGameObject2.EmptyGameObject3");
+    manager.changeId("EmptyGameObject2", "EmptyGameObject2Renamed");
+    assertEquals(manager.getId(object1), "EmptyGameObject");
+    assertEquals(manager.getId(object2), "EmptyGameObject.EmptyGameObject2Renamed");
+    assertEquals(manager.getId(object3), "EmptyGameObject.EmptyGameObject2Renamed.EmptyGameObject3");
+  }
+
+  @Test
+  public void testClear() {
+    //add a bunch of objects
+    manager.addObject(object1);
+    manager.addObject(object2, object1);
+    manager.addObject(object3, object2);
+    manager.addObject(variable1, object1);
+    manager.addObject(variable2, object2);
+    manager.addObject(variable3, object3);
+    //make sure they are all there
+    assertTrue(manager.isIdInUse("EmptyGameObject"));
+    assertTrue(manager.isIdInUse("EmptyGameObject2"));
+    assertTrue(manager.isIdInUse("EmptyGameObject3"));
+    assertTrue(manager.isIdInUse("Variable"));
+    assertTrue(manager.isIdInUse("Variable2"));
+    assertTrue(manager.isIdInUse("Variable3"));
+    //clear the manager
+    manager.clear();
+    //make sure they are all gone
+    assertFalse(manager.isIdInUse("EmptyGameObject"));
+    assertFalse(manager.isIdInUse("EmptyGameObject2"));
+    assertFalse(manager.isIdInUse("EmptyGameObject3"));
+    assertFalse(manager.isIdInUse("Variable"));
+    assertFalse(manager.isIdInUse("Variable2"));
+    assertFalse(manager.isIdInUse("Variable3"));
+    assertTrue(manager.getSimpleIds().size() == 0);
+  }
 
 }

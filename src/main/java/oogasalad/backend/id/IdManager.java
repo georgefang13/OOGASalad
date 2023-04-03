@@ -11,7 +11,7 @@ import java.util.Map;
  * Supports adding SubIds to ids (such as a Player owning a Variable. In this case, the id would be OwnableId.VariableId).
  * @author Michael Bryant
  */
-public class IdManager<T extends IdManageable> {
+public class  IdManager<T extends IdManageable> {
 
   /**
    * Map of ids to Objects. Includes subIds, but not with the full id.
@@ -115,8 +115,8 @@ public class IdManager<T extends IdManageable> {
    */
   public void addObject(T obj, T parent) throws IllegalArgumentException{
     //avoid adding the same object twice
-    if (simpleIds.containsValue(obj) && !getId(obj).equals(getId(parent))) {
-      throw new IllegalArgumentException("Object with different id already exists in IdManager"); //TODO resource bundle
+    if (simpleIds.containsValue(obj)) {
+      throw new IllegalArgumentException("Object with same id already exists in IdManager"); //TODO resource bundle
     }
     String defaultId = obj.getDefaultId();
     if (!idGenerators.containsKey(defaultId)) {
@@ -160,17 +160,6 @@ public class IdManager<T extends IdManageable> {
     }
     simpleIds.put(id, obj);
     ownershipMap.put(obj, parent);
-  }
-
-  /**
-   * Adds an id to the set of ids along with the given T and parent.
-   * Adds as root object.
-   * @param id the id to add
-   * @param obj the T to add
-   * @throws IllegalArgumentException if the id is already in use
-   */
-  private void addId(String id, T obj) throws IllegalArgumentException{
-    addId(id, obj, null);
   }
 
   /**
