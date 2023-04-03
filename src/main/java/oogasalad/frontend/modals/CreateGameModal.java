@@ -22,6 +22,9 @@ public class CreateGameModal extends Modal {
 
     private ArrayList<String> stringFields = new ArrayList<>();
 
+    /**
+     * Constructor for the CreateGameModal dialog
+     */
     public CreateGameModal() {
         setTitle("New Game");
         setHeaderText("Create a new game");
@@ -91,6 +94,17 @@ public class CreateGameModal extends Modal {
     protected Object convertResult(ButtonType buttonType) {
         return null;
     }
+
+    protected void onResult(ArrayList<TextField> results) {
+        String output = "";
+        for (TextField textField : results) {
+            output += textField.getPromptText() + ": ";
+            output += textField.getText() + " | ";
+        }
+        System.out.println(output);
+    }
+
+    
 
     public static class Game {
         private final String name;
