@@ -1,14 +1,26 @@
 package oogasalad.frontend.modals;
+
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.Node;
-import javafx.geometry.Insets;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
+import javafx.geometry.Insets;
 
 public class CreateGameModal extends Modal {
 
+    final public static int GAP = 10;
+    final public static int INSET_TOP = 20;
+    final public static int INSET_RIGHT = 150;
+    final public static int INSET_BOTTOM = 10;
+    final public static int INSET_LEFT = 10;
+
     private TextField nameField;
     private TextField imageField;
+
+    private ArrayList<String> stringFields = new ArrayList<>();
 
     public CreateGameModal() {
         setTitle("New Game");
@@ -16,46 +28,64 @@ public class CreateGameModal extends Modal {
 
         this.getDialogPane().lookupButton(ButtonType.OK).setDisable(true);
 
-        setOnShowing(event -> nameField.requestFocus());
+        // setOnShowing(event -> nameField.requestFocus());
     }
-
 
     @Override
     public DialogPane createDialogPane() {
+        stringFields = new ArrayList<>(Arrays.asList("Name:", "Image URL:"));
+
         this.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
         // Create the content grid
-        GridPane grid = new GridPane();
-        grid.setHgap(10);
-        grid.setVgap(10);
-        grid.setPadding(new Insets(20, 150, 10, 10));
+        GridPane grid = createGrid();
 
-        // Create the input fields
-        nameField = new TextField();
-        nameField.setPromptText("Name");
-        imageField = new TextField();
-        imageField.setPromptText("Image URL");
-
-        // Add the input fields to the grid
-        grid.add(new Label("Name:"), 0, 0);
-        grid.add(nameField, 1, 0);
-        grid.add(new Label("Image URL:"), 0, 1);
-        grid.add(imageField, 1, 1);
+        ArrayList<TextField> textFields = setGridContent(grid, stringFields);
 
         // Enable/disable the OK button depending on whether the input fields are empty
         Node okButton = this.getDialogPane().lookupButton(ButtonType.OK);
-        okButton.setDisable(true);
-        nameField.textProperty().addListener((observable, oldValue, newValue) -> {
-            okButton.setDisable(newValue.trim().isEmpty() || imageField.getText().trim().isEmpty());
-        });
-        imageField.textProperty().addListener((observable, oldValue, newValue) -> {
-            okButton.setDisable(newValue.trim().isEmpty() || nameField.getText().trim().isEmpty());
-        });
+        addFieldButtonListeners(okButton, textFields);
 
         this.getDialogPane().setContent(grid);
 
-       return this.getDialogPane();
+        return this.getDialogPane();
     }
 
+    private TextField makeTextField(String promptText) {
+        TextField textField = new TextField();
+        textField.setPromptText(promptText);
+        textField.setPrefWidth(150);
+        return textField;
+    }
+
+    private GridPane createGrid() {
+        GridPane grid = new GridPane();
+        grid.setHgap(GAP);
+        grid.setVgap(GAP);
+        grid.setPadding(new Insets(INSET_TOP, INSET_RIGHT, INSET_BOTTOM, INSET_LEFT));
+
+        return grid;
+    }
+
+    private ArrayList<TextField> setGridContent(GridPane grid, ArrayList<String> fields) {
+        ArrayList<TextField> textFields = new ArrayList<>();
+        for (int i = 0; i < fields.size(); i++) {
+            System.out.println(fields.get(i));
+            grid.add(new Label(fields.get(i)), 0, i);
+            grid.add(makeTextField(fields.get(i)), 1, i);
+            textFields.add(makeTextField(fields.get(i)));
+        }
+        return textFields;
+    }
+
+    private void addFieldButtonListeners(Node btn, ArrayList<TextField> fields) {
+        btn.setDisable(true);
+        for (TextField field : fields) {
+            field.textProperty().addListener((observable, oldValue, newValue) -> {
+                btn.setDisable(newValue.trim().isEmpty() || field.getText().trim().isEmpty());
+            });
+        }
+
+    }
 
     @Override
     protected Object convertResult(ButtonType buttonType) {
