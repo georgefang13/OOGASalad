@@ -1,11 +1,7 @@
-package oogasalad.frontend.modals;
+package oogasalad.frontend.components.modals;
 
-import javafx.application.Application;
-import javafx.scene.Group;
-import javafx.scene.Scene;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DialogPane;
-import javafx.stage.Stage;
 
 public class AlertModal extends Modal<ButtonType> {
 
