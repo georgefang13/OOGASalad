@@ -3,7 +3,7 @@ package oogasalad.frontend.modals;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DialogPane;
 
-public class ModalFactory implements Modal{
+public class ModalFactory extends Modal {
 
   @Override
   protected DialogPane createDialogPane() {
