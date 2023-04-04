@@ -10,7 +10,7 @@ public interface DisplayableComponent extends Component {
 
   /**
    * This is the method that allows for Components that To be displayable
-   * @param visible
+   * @param visible whether the Component is visible
    */
   void setVisible(boolean visible);
   /**
