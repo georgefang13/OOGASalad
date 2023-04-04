@@ -1,6 +1,6 @@
 package oogasalad.gamerunner.backend;
 
-import oogasalad.gamerunner.backend.ownables.Ownable;
+import oogasalad.sharedDependencies.backend.ownables.Ownable;
 
 /**
  * An API for the interpreter to call to access and move game assets
