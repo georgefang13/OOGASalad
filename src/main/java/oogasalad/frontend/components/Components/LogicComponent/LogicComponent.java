@@ -1,14 +1,15 @@
-package oogasalad.frontend.components.Components;
+package oogasalad.frontend.components.Components.LogicComponent;
 
 
 import java.util.List;
+import oogasalad.frontend.components.Components.Component;
 
 /**
  *
  * @author Han, Aryan
  * These are the components of the View that represent Rule and Goal creation
  */
-public interface LogicComponent extends Components{
+public interface LogicComponent extends Component {
 
  /**
   * This is the method to get the LogicComponents contained within this LogicComponent. For example,

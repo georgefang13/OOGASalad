@@ -1,14 +1,16 @@
-package oogasalad.frontend.components.Components;
+package oogasalad.frontend.components.Components.GameObjectComponent;
 
 import java.util.List;
 import javafx.scene.Node;
+import oogasalad.frontend.components.Components.DisplayableComponents.DisplayableComponent;
+import oogasalad.frontend.components.Components.DraggableComponent.DraggableComponent;
 
 /**
  *
  * @author Han, Aryan
  * These are the components of the View that are playable objects in Gameplay
  */
-public interface GameObjectComponent extends DraggableComponent, DisplayableComponents {
+public interface GameObjectComponent extends DraggableComponent, DisplayableComponent {
 
   /**
    * This is the method that allows for position of Component in the game-editor to be changed

@@ -7,7 +7,7 @@ import javafx.scene.Node;
  * This is the base component interface that all components inherit. A component is a fundamental View
  * building block used to populate Panels
  */
-public interface Components {
+public interface Component {
 
   /**
    * In order to add and remove Components, each Component needs a JavaFX node to reference to

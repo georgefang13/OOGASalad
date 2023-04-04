@@ -1,10 +1,12 @@
-package oogasalad.frontend.components.Components;
+package oogasalad.frontend.components.Components.DisplayableComponents;
+
+import oogasalad.frontend.components.Components.Component;
 
 /**
  * @author Han, Aryan
  * This is the component for all View Elements that are visible inside the View editor.
  */
-public interface DisplayableComponents extends Components{
+public interface DisplayableComponent extends Component {
 
   /**
    * This is the method that allows for Components that To be displayable
@@ -23,7 +25,6 @@ public interface DisplayableComponents extends Components{
    * @param imagePath the path where the image is contained to represent the Component
    */
   void setView(String imagePath);
-
   /**
    * This is the method that allows Component in the game-editor to be resized
    * @param size the size of the ImageView that represents the Component

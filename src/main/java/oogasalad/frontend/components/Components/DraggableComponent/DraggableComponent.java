@@ -1,10 +1,12 @@
-package oogasalad.frontend.components.Components;
+package oogasalad.frontend.components.Components.DraggableComponent;
+
+import oogasalad.frontend.components.Components.Component;
 
 /**
  * @author Han, Aryan
  * This is the component for all View Elements that can be dragged with a mouse
  */
-public interface DraggableComponent extends Components{
+public interface DraggableComponent extends Component {
 
   /**
    * This is the method that has to be implemented in every lambda function in order to make this
