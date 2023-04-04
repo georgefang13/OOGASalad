@@ -1,4 +1,4 @@
-package oogasalad.gamerunner.frontend.components.panels.subPanels;
+package oogasalad.gameeditor.frontend.ViewObjects.panels.subPanels;
 
 import oogasalad.gameeditor.frontend.ViewObjects.panels.Panel;
 import oogasalad.gameeditor.frontend.ViewObjects.panels.TabPanel;

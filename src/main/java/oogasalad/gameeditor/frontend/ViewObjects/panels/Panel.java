@@ -1,4 +1,4 @@
-package oogasalad.gamerunner.frontend.components.panels;
+package oogasalad.gameeditor.frontend.ViewObjects.panels;
 
 /*
 * Panel is an interface that defines the way that our panels work
@@ -8,9 +8,9 @@ package oogasalad.gamerunner.frontend.components.panels;
 public interface Panel {
 
 
-  oogasalad.gameeditor.frontend.ViewObjects.panels.Panel makePanel();
+  Panel makePanel();
 
-  oogasalad.gameeditor.frontend.ViewObjects.panels.Panel refreshPanel();
+  Panel refreshPanel();
 
   String getTitle();
 

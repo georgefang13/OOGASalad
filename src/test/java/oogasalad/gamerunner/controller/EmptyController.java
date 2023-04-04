@@ -1,6 +1,6 @@
 package oogasalad.gamerunner.controller;
 
-import oogasalad.gamerunner.frontend.View;
+import oogasalad.gameeditor.frontend.View;
 
 public abstract class EmptyController {
   private View view;

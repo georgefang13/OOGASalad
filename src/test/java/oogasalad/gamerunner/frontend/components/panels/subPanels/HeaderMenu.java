@@ -1,7 +1,7 @@
 package oogasalad.gamerunner.frontend.components.panels.subPanels;
 
-import oogasalad.gamerunner.frontend.components.panels.Panel;
-import oogasalad.gamerunner.frontend.components.panels.TabPanel;
+import oogasalad.gameeditor.frontend.ViewObjects.panels.Panel;
+import oogasalad.gameeditor.frontend.ViewObjects.panels.TabPanel;
 
 public class HeaderMenu extends TabPanel {
 
