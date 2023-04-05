@@ -2,6 +2,8 @@ package oogasalad.gamerunner.backend;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import oogasalad.gameeditor.backend.goals.Goal;
 import oogasalad.gameeditor.backend.id.IdManager;
 import oogasalad.sharedDependencies.backend.owners.GameWorld;
@@ -93,21 +95,22 @@ public class Game {
 //    }
 //  }
 //
-//  /**
-//   * Gets the Players of the game.
-//   * @return unmodifiable List of Players
-//   */
-//  public List<Player> getPlayers() {
-//    return Collections.unmodifiableList(players);
-//  }
-//
-//  /**
-//   * Adds a Rule to the game.
-//   * @param rule
-//   */
-//  public void addRule(Rule rule) {
-//    rules.add(rule);
-//  }
+  /**
+   * Gets the Players of the game.
+   * @return unmodifiable List of Players
+   */
+  public List<Player> getPlayers() {
+    return Collections.unmodifiableList(players);
+  }
+
+
+  /**
+   * Adds a Rule to the game.
+   * @param rule
+   */
+  public void addRule(Rule rule) {
+    rules.addObject(rule);
+  }
 //
 //  /**
 //   * Removes a Rule from the game, if it exists there.
@@ -119,7 +122,7 @@ public class Game {
 //    }
 //    rules.remove(rule);
 //  }
-//
+
 //  /**
 //   * Gets the Rules of the game.
 //   * @return unmodifiable List of Rules
@@ -128,14 +131,14 @@ public class Game {
 //    return Collections.unmodifiableList(rules);
 //  }
 //
-//  /**
-//   * Adds a Goal to the game.
-//   * @param goal the Goal to add
-//   */
-//  public void addGoal(Goal goal) {
-//    goals.add(goal);
-//  }
-//
+  /**
+   * Adds a Goal to the game.
+   * @param goal the Goal to add
+   */
+  public void addGoal(Goal goal) {
+    goals.addObject(goal);
+  }
+
 //  /**
 //   * Removes a Goal from the game, if it exists there.
 //   * @param goal the Goal to remove
@@ -154,14 +157,15 @@ public class Game {
 //  public List<Goal> getGoals() {
 //    return Collections.unmodifiableList(goals);
 //  }
-//
-//  /**
-//   * Gets the GameWorld of the game.
-//   * @return the GameWorld
-//   */
-//  public GameWorld getGameWorld() {
-//    return gameWorld;
-//  }
+
+  /**
+   * Gets the GameWorld of the game.
+   * @return the GameWorld
+   */
+  public GameWorld getGameWorld() {
+    return gameWorld;
+  }
+
 ////
 //  /**
 //   * Adds an Ownable to the game for a specific owner.
@@ -170,13 +174,9 @@ public class Game {
 //   * @param owner the Owner of the Ownable
 //   */
 //  public void addOwnable(Owner owner) {
-//    ownable
+//    ownable make object
 //    ownableIdManager.addObject();
 //  }
-
-//  //TODO remove owner
-//
-//  //TODO changer owner
 //
 //  /**
 //   * Adds an Ownable to the GameWorld
@@ -187,28 +187,38 @@ public class Game {
 //    addOwnable(ownable, gameWorld);
 //  }
 //
-//  /**
-//   * Gets the Owner of an Ownable with id.
-//   * @param id the id of the Ownable
-//   * @return the Owner of the Ownable
-//   */
-//  public Owner getOwner(String id) { //TODO catch exception
-//    if (!ownableIdManager.isIdInUse(id)) {
-//      return null;
-//    }
-//    return ownableIdManager.getOwner(id);
-//  }
-//
-//  /**
-//   * Gets an Ownable from the IdManager for a given id.
-//   * @param id the id of the Ownable
-//   * @return the Ownable
-//   */
-//  public Ownable getOwnable(String id) { //TODO catch exception
-//    if (!ownableIdManager.isIdInUse(id)) {
-//      return null;
-//    }
-//    return ownableIdManager.getOwnable(id);
-//  }
+  /**
+   * Gets the Owner of an Ownable with id.
+   * @param id the id of the Ownable
+   * @return the Owner of the Ownable
+   */
+  public Owner getOwner(String id) { //TODO catch exception
+    if (!ownableIdManager.isIdInUse(id)) {
+      return null;
+    }
+    return ownableIdManager.getObject(id).getOwner();
+  }
+
+  /**
+   * Sets the Owner of an Ownable with id.
+   * @param id the id of the Ownable
+   * @param owner the new owner of the Ownable
+   */
+  public void setOwner(String id, Owner owner) {
+    ownableIdManager.getObject(id).setOwner(owner);
+  }
+
+
+  /**
+   * Gets an Ownable from the IdManager for a given id.
+   * @param id the id of the Ownable
+   * @return the Ownable
+   */
+  public Ownable getOwnable(String id) { //TODO catch exception
+    if (!ownableIdManager.isIdInUse(id)) {
+      return null;
+    }
+    return ownableIdManager.getObject(id);
+  }
 
 }
