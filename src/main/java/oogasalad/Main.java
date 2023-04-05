@@ -7,6 +7,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.application.Application;
 import oogasalad.frontend.components.modals.Modal;
+import oogasalad.frontend.components.modals.SubDisplayModals.AlertModal;
 import oogasalad.frontend.components.modals.SubInputModals.CreateGameModal;
 import oogasalad.frontend.components.modals.InputModal;
 
@@ -32,12 +33,18 @@ public class Main extends Application{
 //    }
     public void start(Stage stage) {
         VBox root = new VBox();
-        Button button = new Button("Click me");
+        Button button = new Button("Create Game Modal");
         button.setOnAction(e -> {
-            Modal modal = new Modal("createGame");
+            CreateGameModal modal = new CreateGameModal();
             modal.showAndWait();
         });
         root.getChildren().add(button);
+        Button errorButton = new Button("Create Error Modal");
+        errorButton.setOnAction(e -> {
+            AlertModal modal = new AlertModal();
+            modal.showAndWait();
+        });
+        root.getChildren().add(errorButton);
         Scene scene = new Scene(root, 1000, 700);
 
         stage.setScene(scene);

@@ -1,30 +1,16 @@
 package oogasalad.frontend.components.modals.SubDisplayModals;
 
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.DialogPane;
-import oogasalad.frontend.components.modals.Modal;
+import oogasalad.frontend.components.modals.DisplayModal;
 
-public class AlertModal extends Modal<ButtonType> {
 
-    private String message;
-    private ButtonType[] buttonTypes;
+public class AlertModal extends DisplayModal {
 
-    public AlertModal(String title, String message, ButtonType... buttonTypes) {
-        super(title);
-        this.message = message;
-        this.buttonTypes = buttonTypes;
+
+    /**
+     * Constructor for the CreateGameModal dialog
+     */
+    public AlertModal() {
+        super("alert");
     }
 
-    @Override
-    protected DialogPane createDialogPane() {
-        DialogPane dialogPane = new DialogPane();
-        dialogPane.setContentText(message);
-        dialogPane.getButtonTypes().addAll(buttonTypes);
-        return dialogPane;
-    }
-
-    @Override
-    protected ButtonType convertResult(ButtonType buttonType) {
-        return buttonType;
-    }
 }
