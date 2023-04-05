@@ -87,6 +87,7 @@ public class InputModal extends Modal {
         myPropertiesMap = setPropertiesMap("createGame");
 
         this.getDialogPane().setHeaderText(myPropertiesMap.get("title"));
+        myPropertiesMap.remove("title");
 
         
 
