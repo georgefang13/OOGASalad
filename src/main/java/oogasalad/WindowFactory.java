@@ -8,7 +8,7 @@ public class WindowFactory {
   public static AbstractWindow createWindow(WindowType windowType, WindowMediator mediator) {
     switch (windowType) {
       case SPLASH_WINDOW:
-        return new SplashScreenWindow(mediator);
+        return new SplashWindow(mediator);
       case EDIT_WINDOW:
         return new GameEditorWindow(mediator);
       case GAME_WINDOW:

@@ -3,16 +3,15 @@ package oogasalad;
 import java.util.HashMap;
 import java.util.Map;
 
-public class GamePlayerWindow extends AbstractWindow {
+public class SplashWindow extends AbstractWindow {
 
   public enum WindowScenes implements SceneType {
     MAIN_SCENE
   }
 
-  public GamePlayerWindow(WindowMediator windowController) {
+  public SplashWindow(WindowMediator windowController) {
     super(windowController);
-    AbstractScene scene = new SplashMainScene();
-    setScene(scene.makeScene());
+    switchToScene(WindowScenes.MAIN_SCENE);
   }
 
   @Override
