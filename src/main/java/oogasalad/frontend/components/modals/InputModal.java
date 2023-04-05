@@ -1,6 +1,8 @@
 package oogasalad.frontend.components.modals;
 
 import java.io.InputStream;
+import java.io.PipedInputStream;
+
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
@@ -83,6 +85,11 @@ public class InputModal extends Modal {
     @Override
     protected DialogPane createDialogPane() {
         myPropertiesMap = setPropertiesMap("createGame");
+
+        this.getDialogPane().setHeaderText(myPropertiesMap.get("title"));
+
+        
+
         ArrayList<String> stringFields = new ArrayList<>(myPropertiesMap.values());
 //
         this.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
