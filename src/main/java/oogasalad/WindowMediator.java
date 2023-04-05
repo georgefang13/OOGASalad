@@ -1,8 +1,14 @@
 package oogasalad;
 
+import oogasalad.WindowTypeEnum.WindowType;
+
 public interface WindowMediator {
-  String registerWindow(String windowType);
-  void showWindow(String windowType, String windowID);
+
+  String registerWindow(WindowType windowType);
+
+  void showWindow(String windowID);
+
+  public void closeWindow(String windowID);
 
   void receiveMessage();
 

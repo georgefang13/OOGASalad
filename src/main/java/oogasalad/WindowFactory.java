@@ -1,13 +1,17 @@
 package oogasalad;
 
+import oogasalad.WindowTypeEnum.WindowType;
+
 public class WindowFactory {
-  public static AbstractWindow createWindow(String windowType) {
+
+
+  public static AbstractWindow createWindow(WindowType windowType) {
     switch (windowType) {
-      case "SplashScreen":
+      case SPLASH_WINDOW:
         return new SplashScreenWindow();
-      case "GameEditor":
+      case EDIT_WINDOW:
         return new GameEditorWindow();
-      case "GamePlayer":
+      case GAME_WINDOW:
         return new GamePlayerWindow();
       default:
         throw new IllegalArgumentException("Invalid window type: " + windowType);
