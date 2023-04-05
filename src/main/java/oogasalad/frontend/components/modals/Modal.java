@@ -1,12 +1,16 @@
 package oogasalad.frontend.components.modals;
 
+import java.util.ResourceBundle;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogPane;
 import javafx.stage.Modality;
 import javafx.stage.StageStyle;
 
+
 public abstract class Modal<T> extends Dialog<T> {
+    protected static final String PROPERTIES_FILE = "frontend/modals/Modals";
+
 
     /**
      * Constructor for the modal dialog
@@ -17,6 +21,7 @@ public abstract class Modal<T> extends Dialog<T> {
         initModality(Modality.APPLICATION_MODAL);
         initStyle(StageStyle.UNDECORATED);
         setResizable(false);
+
         setDialogPane(createDialogPane());
         setResultConverter(this::convertResult);
     }
@@ -41,4 +46,6 @@ public abstract class Modal<T> extends Dialog<T> {
      * @return
      */
     protected abstract T convertResult(ButtonType buttonType);
+
+
 }

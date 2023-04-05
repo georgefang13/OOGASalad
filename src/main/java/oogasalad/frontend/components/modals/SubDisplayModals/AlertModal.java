@@ -1,7 +1,8 @@
-package oogasalad.frontend.components.modals;
+package oogasalad.frontend.components.modals.SubDisplayModals;
 
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DialogPane;
+import oogasalad.frontend.components.modals.Modal;
 
 public class AlertModal extends Modal<ButtonType> {
 

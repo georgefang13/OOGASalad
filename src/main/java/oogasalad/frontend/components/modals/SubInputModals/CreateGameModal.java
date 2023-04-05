@@ -1,4 +1,4 @@
-package oogasalad.frontend.components.modals;
+package oogasalad.frontend.components.modals.SubInputModals;
 
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import javafx.geometry.Insets;
+import oogasalad.frontend.components.modals.Modal;
 
 public class CreateGameModal extends Modal {
 
@@ -36,7 +37,7 @@ public class CreateGameModal extends Modal {
 
     @Override
     public DialogPane createDialogPane() {
-        stringFields = new ArrayList<>(Arrays.asList("Name:", "Image URL:"));
+        stringFields = new ArrayList<>(Arrays.asList("Name:", "Image URL:", "Dog"));
 
         this.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
         // Create the content grid

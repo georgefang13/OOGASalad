@@ -14,4 +14,5 @@ public class ModalFactory extends Modal {
   protected Object convertResult(ButtonType buttonType) {
     return null;
   }
+
 }
