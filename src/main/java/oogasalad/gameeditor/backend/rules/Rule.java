@@ -1,5 +1,7 @@
 package oogasalad.gameeditor.backend.rules;
 
-public abstract class Rule {
+import oogasalad.gameeditor.backend.id.IdManageable;
+
+public abstract class Rule extends IdManageable {
 
 }

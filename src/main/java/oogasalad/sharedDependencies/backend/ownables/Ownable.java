@@ -4,6 +4,7 @@ package oogasalad.sharedDependencies.backend.ownables;
 import oogasalad.gameeditor.backend.id.IdManageable;
 import oogasalad.gameeditor.backend.id.IdManager;
 import oogasalad.sharedDependencies.backend.owners.GameWorld;
+import oogasalad.sharedDependencies.backend.owners.Owner;
 import oogasalad.sharedDependencies.backend.owners.Player;
 
 
@@ -22,16 +23,23 @@ import oogasalad.sharedDependencies.backend.owners.Player;
  */
 public abstract class Ownable extends IdManageable {
 
-
+  private Owner owner;
   /**
    * Constructs an Ownable with a given IdManager.
    * @param idManager the IdManager to use
+   * @param owner for the ownable
    */
-  public Ownable(IdManager idManager) {
+  public Ownable(IdManager idManager, Owner owner) {
     super(idManager);
+    this.owner = owner;
   }
 
+  public Owner getOwner() {
+    return owner;
+  }
+
+  public void setOwner(Owner owner) {
+    this.owner = owner;
+  }
 
 }
-
-

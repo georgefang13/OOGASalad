@@ -1,9 +1,11 @@
 package oogasalad.gamerunner.backend;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import oogasalad.gameeditor.backend.goals.Goal;
 import oogasalad.gameeditor.backend.id.IdManager;
 import oogasalad.sharedDependencies.backend.owners.GameWorld;
+import oogasalad.sharedDependencies.backend.owners.Owner;
 import oogasalad.sharedDependencies.backend.owners.Player;
 import oogasalad.gameeditor.backend.rules.Rule;
 import oogasalad.sharedDependencies.backend.ownables.Ownable;
@@ -19,12 +21,12 @@ public class Game {
   /**
    * The Rules of the game.
    */
-  private final ArrayList<Rule> rules = new ArrayList<>();
+  private final IdManager<Rule> rules = new IdManager<>();
 
   /**
    * The Goals of the game.
    */
-  private final ArrayList<Goal> goals = new ArrayList<>();
+  private final IdManager<Goal> goals = new IdManager<>();
 
   /**
    * The Players of the game.
@@ -46,24 +48,25 @@ public class Game {
   //TODO worry about the below stuff later
   // Was made before refactoring to use IdManager
   // Needs updating
-//  /**
-//   * Adds a Player to the game.
-//   * @param player
-//   */
-//  public void addPlayer(Player player) {
-//    players.add(player);
-//  }
-//
-//  /**
-//   * Adds n Players to the game.
-//   * @param n the number of Players to add`
-//   */
-//  public void addNPlayers(int n) {
-//    for (int i = 0; i < n; i++) {
-//      addPlayer(new Player(ownableIdManager));
-//    }
-//  }
-//
+
+  /**
+   * Adds a Player to the game.
+   * @param player
+   */
+  public void addPlayer(Player player) {
+    players.add(player);
+  }
+
+  /**
+   * Adds n Players to the game.
+   * @param n the number of Players to add`
+   */
+  public void addNPlayers(int n) {
+    for (int i = 0; i < n; i++) {
+      addPlayer(new Player(ownableIdManager));
+    }
+  }
+
 //  /**
 //   * Removes a Player from the game, if it exists there.
 //   * Destroys all Ownables owned by the Player. //TODO throw warning about this
@@ -74,13 +77,13 @@ public class Game {
 //      return;
 //    }
 //    //remove all ownables owned by player
-//    ArrayList<Ownable> ownables = new ArrayList<>(player.getOwnables());
-//    for (Ownable ownable : ownables) {
+//    for (Ownable ownable : )
 //      ownableIdManager.removeOwnable(ownable.getId());
 //    }
+//
 //    players.remove(player);
 //  }
-//
+
 //  /**
 //   * Removes all Players from the game and their Ownables.
 //   */
@@ -159,18 +162,18 @@ public class Game {
 //  public GameWorld getGameWorld() {
 //    return gameWorld;
 //  }
-//
+////
 //  /**
 //   * Adds an Ownable to the game for a specific owner.
 //   * Adds the Ownable to the IdManager and Owner.
 //   * @param ownable the Ownable to add
 //   * @param owner the Owner of the Ownable
 //   */
-//  public void addOwnable(Ownable ownable, Owner owner) {
-//    ownableIdManager.addOwnable(ownable);
-//    ownable.setOwner(owner);
+//  public void addOwnable(Owner owner) {
+//    ownable
+//    ownableIdManager.addObject();
 //  }
-//
+
 //  //TODO remove owner
 //
 //  //TODO changer owner
