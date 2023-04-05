@@ -17,7 +17,7 @@ public class SplashMainScene extends AbstractScene {
     StackPane root = new StackPane();
     VBox vbox = new VBox(10);
     Button playButton = new Button("Play Game"); //TODO: Properties File
-    playButton.setOnAction(e -> { 
+    playButton.setOnAction(e -> { getWindow().windowController.ope
     });
     Button editButton = new Button("Edit Game"); //TODO: Properties File
     editButton.setOnAction(e -> {
