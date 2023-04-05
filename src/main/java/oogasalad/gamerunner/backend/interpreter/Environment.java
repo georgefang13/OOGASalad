@@ -1,0 +1,139 @@
+package oogasalad.gamerunner.backend.interpreter;
+
+import oogasalad.gameeditor.backend.id.IdManager;
+import oogasalad.gamerunner.backend.interpreter.tokens.ExpressionToken;
+import oogasalad.gamerunner.backend.interpreter.tokens.Token;
+import oogasalad.gamerunner.backend.interpreter.tokens.ValueToken;
+import oogasalad.gamerunner.backend.interpreter.tokens.VariableToken;
+import oogasalad.sharedDependencies.backend.ownables.Ownable;
+import oogasalad.sharedDependencies.backend.ownables.variables.Variable;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class Environment {
+    private final List<Map<String, Token>> scope = new ArrayList<>();
+    private IdManager<Ownable> game;
+
+    public Environment(){
+        scope.add(new HashMap<>());
+    }
+
+    public void linkSimulation(IdManager<Ownable> game){
+        this.game = game;
+    }
+
+    /////////////////// SCOPE ///////////////////
+
+    /**
+     * retrieve a variable from the scope (checks from most current scope to global scope)
+     * @param name the name of the variable
+     * @return the token corresponding to the variable
+     */
+    public Token getLocalVariable(String name){
+
+        if (name.startsWith("game_")){
+            name = name.substring(5);
+            if (game.isIdInUse(name)){
+                return new VariableToken(name);
+            }
+            else return null;
+        }
+
+        if (!name.startsWith("interpreter-")) name = "interpreter-" + name;
+
+        for (int i = scope.size() - 1; i >= 0; i--){
+            if (scope.get(i).containsKey(name)){
+                return scope.get(i).get(name);
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Creates a variable to the current scope
+     * @param name the name of the variable
+     * @param val the token corresponding to the variable
+     */
+    public void addVariable(String name, Token val){
+
+        name = "interpreter-" + name;
+
+        Variable<?> var = convertTokenToVariable(val);
+
+        if (var.get() != null) {
+
+            if (game.isIdInUse(name)){
+                game.removeObject(game.getObject(name));
+            }
+
+            if (game.isObjectInUse(var)){
+                var = var.copy(game);
+            }
+
+            game.addObject(var);
+            String curId = game.getId(var);
+            game.changeId(curId, name);
+        }
+
+        Map<String, Token> curScope = scope.get(scope.size() - 1);
+        if (curScope.containsKey(name + "-global")){
+            // loop through all scopes and replace the global variable, if it doesn't exist put in global
+            for (int i = scope.size() - 1; i >= 0; i--){
+                if (scope.get(i).containsKey(name) || i == 0){
+                    scope.get(i).put(name, val);
+                    return;
+                }
+            }
+        }
+        scope.get(scope.size() - 1).put(name, val);
+    }
+
+    Variable<?> convertTokenToVariable(Token t){
+        if (t.getLink() != null) return t.getLink();
+        Variable v = new Variable<>(game, t.export(this));
+        t.linkVariable(v);
+        return v;
+    }
+
+    /**
+     * Adds a new scope to the scope list (to be used when a function is called)
+     */
+    public void createLocalScope(){
+        scope.add(new HashMap<>());
+    }
+
+    /**
+     * Removes scope from the scope list (to be used after function finishes)
+     */
+    public void endLocalScope(){
+
+        Map<String, Token> curScope = scope.get(scope.size() - 1);
+
+        List<String> removed = new ArrayList<>();
+        for (String key : curScope.keySet()){
+            if (!key.contains("-global") && game.isIdInUse(key)){
+                game.removeObject(game.getObject(key));
+                removed.add(key);
+            }
+        }
+
+        scope.remove(curScope);
+
+        for (String key : removed){
+            Token var = getLocalVariable(key);
+            if (var != null){
+                Variable<?> v = convertTokenToVariable(var);
+                game.addObject(v);
+                String curId = game.getId(v);
+                game.changeId(curId, key);
+            }
+        }
+    }
+
+    /////////////////// SEND EVENTS ///////////////////
+
+}
