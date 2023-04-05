@@ -4,12 +4,7 @@ public class WindowController implements WindowMediator {
 
   @Override
   public String registerWindow(String windowType) {
-    AbstractWindow window = windowFactory.createWindow(windowType);
-    if (window == null) {
-      System.out.println("Invalid window type: " + windowType);
-      return null;
-    }
-
+    AbstractWindow window = WindowFactory.createWindow(windowType);
     int counter = windowCounters.getOrDefault(windowType, 0) + 1;
     String windowId = windowType + "_" + counter;
     windowMap.computeIfAbsent(windowType, k -> new HashMap<>()).put(windowId, window);
