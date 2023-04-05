@@ -16,7 +16,7 @@ public class WindowController implements WindowMediator {
 
   @Override
   public String registerWindow(WindowType windowType) {
-    AbstractWindow window = WindowFactory.createWindow(windowType);
+    AbstractWindow window = WindowFactory.createWindow(windowType, this);
     windowIDCounter++;
     String windowID = windowType + "_" + windowIDCounter;
     windowMap.put(windowID, window);
