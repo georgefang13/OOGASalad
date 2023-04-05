@@ -1,29 +1,32 @@
 package oogasalad;
 
+import javafx.scene.Scene;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class BaseSceneController implements SceneMediator{
-    private Map<String, AbstractWindow> sceneMap;
+    private Map<String, AbstractScene> sceneMap;
     private int sceneIDCounter;
+    private AbstractWindow sceneWindow;
+    private WindowMediator windowController;
 
     public BaseSceneController() {
         sceneMap = new HashMap<>();
-        showWindow(registerWindow(WindowTypeEnum.WindowType.SPLASH_WINDOW));
-
+        switchScene(registerScene());
     }
 
     @Override
     public String registerScene() {
-        AbstractScene scene = WindowFactory.createWindow(windowType, this);
-        windowIDCounter++;
-        String windowID = windowType + "_" + windowIDCounter;
-        return null;
+        AbstractScene scene = new SplashMainScene(); //TODO: make it so you can use enum specific to the window type
+        String sceneID = "scene_" + sceneIDCounter;
+        sceneMap.put(sceneID, scene);
+        return sceneID;
     }
-
     @Override
-    public void switchScene(String windowID) {
-
+    public void switchScene(String sceneID) {
+        AbstractScene scene = sceneMap.get(sceneID);
+        sceneWindow.setScene(scene.makeScene());
     }
 
     @Override
