@@ -6,14 +6,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class BaseSceneController implements SceneMediator{
-    private Map<String, AbstractScene> sceneMap;
-    private int sceneIDCounter;
-    private AbstractWindow sceneWindow;
-    private WindowMediator windowController;
+    protected Map<String, AbstractScene> sceneMap;
+    protected int sceneIDCounter;
+    protected AbstractWindow abstractWindow;
 
-    public BaseSceneController() {
+    public BaseSceneController(AbstractWindow abstractWindow) {
+        this.abstractWindow = abstractWindow;
         sceneMap = new HashMap<>();
         switchScene(registerScene());
+
     }
 
     @Override
