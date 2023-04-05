@@ -1,18 +1,20 @@
 package oogasalad;
 
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.text.Text;
+import javafx.scene.control.Button;
+import javafx.scene.layout.VBox;
 
-public class SplashMainScene extends AbstractScene{
-    public SplashMainScene() {
-        super();
-    }
+public class SplashMainScene extends AbstractScene {
 
-    @Override
-    public void makeScene() {
-        super
-    }
+  private Scene scene;
+
+  @Override
+  public Scene makeScene() {
+    scene = new Scene(new VBox(new Button("Play Game"), new Button("Edit Game")));
+    return getScene();
+  }
+
+  private Scene getScene() {
+    return scene;
+  }
 }
