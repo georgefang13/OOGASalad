@@ -8,7 +8,7 @@ public interface WindowMediator {
 
   void showWindow(String windowID);
 
-  public void closeWindow(String windowID);
+  void closeWindow(String windowID);
 
   void receiveMessage();
 
