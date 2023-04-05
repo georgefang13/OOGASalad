@@ -8,24 +8,25 @@ import javafx.scene.layout.VBox;
 
 public class SplashMainScene extends AbstractScene {
 
-  private Scene scene;
+  public SplashMainScene(AbstractWindow window) {
+    super(window);
+  }
 
   @Override
   public Scene makeScene() {
     StackPane root = new StackPane();
     VBox vbox = new VBox(10);
     Button playButton = new Button("Play Game"); //TODO: Properties File
-    playButton.setOnAction(e -> {});
+    playButton.setOnAction(e -> { 
+    });
     Button editButton = new Button("Edit Game"); //TODO: Properties File
-    editButton.setOnAction(e -> {  });
+    editButton.setOnAction(e -> {
+    });
     vbox.getChildren().addAll(playButton, editButton);
     vbox.setAlignment(Pos.CENTER);
     root.getChildren().add(vbox);
-    scene = new Scene(root);
+    setScene(new Scene(root));
     return getScene();
   }
 
-  private Scene getScene() {
-    return scene;
-  }
 }

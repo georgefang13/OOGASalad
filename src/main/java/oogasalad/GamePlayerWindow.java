@@ -11,14 +11,14 @@ public class GamePlayerWindow extends AbstractWindow {
 
   public GamePlayerWindow(WindowMediator windowController) {
     super(windowController);
-    AbstractScene scene = new SplashMainScene();
-    setScene(scene.makeScene());
+    switchToScene(SplashWindow.WindowScenes.MAIN_SCENE);
+
   }
 
   @Override
   public Map<SceneType, AbstractScene> defineScenes() {
     Map<SceneType, AbstractScene> scenes = new HashMap<>();
-    scenes.put(WindowScenes.MAIN_SCENE, new SplashMainScene());
+    scenes.put(WindowScenes.MAIN_SCENE, new SplashMainScene(this));
     return scenes;
   }
 
