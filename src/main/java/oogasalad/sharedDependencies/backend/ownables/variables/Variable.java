@@ -93,6 +93,15 @@ public class Variable<T> extends Ownable {
     }
   }
 
+  /**
+   * Copies the variable.
+   * @param idManager the id manager to use for the copy
+   * @return the copy of the variable
+   */
+  public Variable<T> copy(IdManager idManager){
+    return new Variable<>(idManager, value);
+  }
+
 }
 
 /**

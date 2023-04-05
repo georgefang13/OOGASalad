@@ -1,8 +1,7 @@
 package oogasalad.gameeditor.backend.ownables.gameobjects;
 
 
-import oogasalad.gameeditor.backend.ownables.gameobjects.BoardCreator;
-import oogasalad.gameeditor.backend.ownables.gameobjects.DropZone;
+import oogasalad.sharedDependencies.backend.ownables.gameobjects.DropZone;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

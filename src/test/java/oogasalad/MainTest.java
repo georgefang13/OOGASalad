@@ -29,3 +29,4 @@ class MainTest {
     assertEquals(0.001, m.getVersion(), TOLERANCE);
   }
 }
+

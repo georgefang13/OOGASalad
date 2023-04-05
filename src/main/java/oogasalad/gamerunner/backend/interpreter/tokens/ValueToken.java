@@ -14,6 +14,11 @@ public class ValueToken<T> extends Token {
         return this;
     }
 
+    @Override
+    public Object export(Environment env){
+        return VALUE;
+    }
+
 
     @Override
     public String toString(){

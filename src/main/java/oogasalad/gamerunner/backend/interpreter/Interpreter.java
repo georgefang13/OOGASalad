@@ -1,5 +1,11 @@
 package oogasalad.gamerunner.backend.interpreter;
 
+import oogasalad.gameeditor.backend.id.IdManager;
+import oogasalad.gamerunner.backend.interpreter.tokens.Token;
+import oogasalad.sharedDependencies.backend.ownables.Ownable;
+
+import java.util.List;
+
 public class Interpreter implements Runnable {
     private final Tokenizer tokenizer;
     private final Evaluator evaluator;
@@ -21,12 +27,29 @@ public class Interpreter implements Runnable {
     }
 
     /**
-     * Loads code into the interpreter without running it.
+     * Loads a string of code into the interpreter without running it.
      * @param input the code to load
      */
     public void loadCode(String input){
         Parser p = new Parser(tokenizer.tokenize(input));
         evaluator.load(p.parse(env));
+    }
+
+    /**
+     * Loads a list of tokens as code into the interpreter without running it.
+     * @param tokens the tokens to load
+     */
+    public void loadTokenizedCode(List<Token> tokens){
+        Parser p = new Parser(tokens);
+        evaluator.load(p.parse(env));
+    }
+
+    /**
+     * loades a parsed list of tokens into the interpreter without running it.
+     * @param tokens the expressions (as OperatorTokens) to load
+     */
+    public void loadParsedCode(List<Token> tokens){
+        evaluator.load(tokens);
     }
 
     /**
@@ -48,7 +71,7 @@ public class Interpreter implements Runnable {
      * Links a simulation to the interpreter so that it can post events to the simulation.
      * @param game the simulation to link to
      */
-    public void link(Object game){
+    public void link(IdManager<Ownable> game){
         env.linkSimulation(game);
     }
 
