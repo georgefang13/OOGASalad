@@ -1,7 +1,7 @@
 package oogasalad.gamerunner.backend.interpreter;
 
-import oogasalad.gamerunner.backend.interpreter.commands.MakeUserInstruction;
-import oogasalad.gamerunner.backend.interpreter.commands.UserInstruction;
+import oogasalad.gamerunner.backend.interpreter.commands.control.MakeUserInstruction;
+import oogasalad.gamerunner.backend.interpreter.commands.control.UserInstruction;
 import oogasalad.gamerunner.backend.interpreter.exceptions.InvalidSyntaxException;
 import oogasalad.gamerunner.backend.interpreter.tokens.*;
 

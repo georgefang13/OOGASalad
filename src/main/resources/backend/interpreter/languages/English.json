@@ -1,0 +1,205 @@
+{
+  "Sum": {
+    "name": "Sum",
+    "folder": "operators",
+    "str": "+",
+    "description": "Adds two numbers together"
+  },
+  "Difference": {
+    "name": "Difference",
+    "folder": "operators",
+    "str": "-",
+    "description": "Subtracts one number from another"
+  },
+  "Product": {
+    "name": "Product",
+    "folder": "operators",
+    "str": "*",
+    "description": "Multiplies two numbers together"
+  },
+  "Quotient": {
+    "name": "Quotient",
+    "folder": "operators",
+    "str": "/",
+    "description": "Divides one number by another"
+  },
+  "Remainder": {
+    "name": "Remainder",
+    "folder": "operators",
+    "str": "%",
+    "description": "Finds the remainder after division"
+  },
+  "Minus": {
+    "name": "Minus",
+    "folder": "operators",
+    "str": "~",
+    "description": "Negates a number"
+  },
+  "Random": {
+    "name": "Random",
+    "folder": "operators",
+    "str": "rand",
+    "description": "Generates a random number between 0 and 1"
+  },
+  "RandomRange": {
+    "name": "Random Range",
+    "folder": "operators",
+    "str": "randr",
+    "description": "Generates a random number within a specified range"
+  },
+  "Sine": {
+    "name": "Sine",
+    "folder": "operators",
+    "str": "sin",
+    "description": "Finds the sine of an angle"
+  },
+  "Cosine": {
+    "name": "Cosine",
+    "folder": "operators",
+    "str": "cos",
+    "description": "Finds the cosine of an angle"
+  },
+  "Tangent": {
+    "name": "Tangent",
+    "folder": "operators",
+    "str": "tan",
+    "description": "Finds the tangent of an angle"
+  },
+  "ArcTangent": {
+    "name": "ArcTangent",
+    "folder": "operators",
+    "str": "atan",
+    "description": "Finds the arctangent of a number"
+  },
+  "SquareRoot": {
+    "name": "SquareRoot",
+    "folder": "operators",
+    "str": "sqrt",
+    "description": "Finds the square root of a number"
+  },
+  "NaturalLog": {
+    "name": "NaturalLog",
+    "folder": "operators",
+    "str": "ln",
+    "description": "Finds the natural logarithm of a number"
+  },
+  "Power": {
+    "name": "Power",
+    "folder": "operators",
+    "str": "pow",
+    "description": "Raises a number to a power"
+  },
+  "LessThan": {
+    "name": "LessThan",
+    "folder": "operators",
+    "str": "<",
+    "description": "Tests whether one number is less than another"
+  },
+  "LessEqual": {
+    "name": "LessEqual",
+    "folder": "operators",
+    "str": "<=",
+    "description": "Tests whether one number is less than or equal to another"
+  },
+  "GreaterThan": {
+    "name": "GreaterThan",
+    "folder": "operators","str": ">",
+    "description": "Tests whether one number is greater than another"
+  },
+  "GreaterEqual": {
+    "name": "GreaterEqual",
+    "folder": "operators",
+    "str": ">=",
+    "description": "Tests whether one number is greater than or equal to another"
+  },
+  "Equal": {
+    "name": "Equal",
+    "folder": "operators",
+    "str": "==",
+    "description": "Tests whether two values are equal"
+  },
+  "NotEqual": {
+    "name": "NotEqual",
+    "folder": "operators",
+    "str": "!=",
+    "description": "Tests whether two values are not equal"
+  },
+  "And": {
+    "name": "And",
+    "folder": "operators",
+    "str": "and",
+    "description": "Tests whether two conditions are both true"
+  },
+  "Or": {
+    "name": "Or",
+    "folder": "operators",
+    "str": "or",
+    "description": "Tests whether at least one of two conditions is true"
+  },
+  "Not": {
+    "name": "Not",
+    "folder": "operators",
+    "str": "not",
+    "description": "Inverts the truth value of a condition"
+  },
+  "Item": {
+    "name": "Get List Item",
+    "folder": "operators",
+    "str": "item",
+    "description": "Retrieves an element from a list"
+  },
+  "SetItem": {
+    "name": "Set List Item",
+    "folder": "operators",
+    "str": "setitem",
+    "description": "Sets the value of an element in a list"
+  },
+  "MakeVariable": {
+    "name": "Make Variable",
+    "folder": "",
+    "str": "make",
+    "description": "Creates a new variable and sets its value"
+  },
+  "Global": {
+    "name": "Global",
+    "folder": "control",
+    "str": "global",
+    "description": "Declares a variable to be global"
+  },
+  "Repeat": {
+    "name": "Repeat",
+    "folder": "control",
+    "str": "repeat",
+    "description": "Repeats a set of instructions a specified number of times"
+  },
+  "DoTimes": {
+    "name": "DoTimes",
+    "folder": "control",
+    "str": "dotimes",
+    "description": "Repeats a set of instructions a specified number of times, with a counter variable"
+  },
+  "For": {
+    "name": "For",
+    "folder": "control",
+    "str": "for",
+    "description": "Repeats a set of instructions for each element in a list"
+  },
+  "If": {
+    "name": "If",
+    "folder": "control",
+    "str": "if",
+    "description": "Executes a set of instructions if a condition is true"
+  },
+  "IfElse": {
+    "name": "IfElse",
+    "folder": "control",
+    "str": "ifelse",
+    "description": "Executes one set of instructions if a condition is true, and another set if it is false"
+  },
+  "MakeUserInstruction": {
+    "name": "Make Function",
+    "folder": "control",
+    "str": "to",
+    "description": "Defines a new user-defined command"
+  }
+}

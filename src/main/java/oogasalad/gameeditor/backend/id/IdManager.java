@@ -1,5 +1,7 @@
 package oogasalad.gameeditor.backend.id;
 
+import oogasalad.sharedDependencies.backend.ownables.variables.Variable;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -43,6 +45,15 @@ public class  IdManager<T extends IdManageable> {
   }
 
   /**
+   * Tests if a given obejct is already stored in the id manager.
+   * @param obj the object to test
+   * @return true if the object is already stored in the id manager, false otherwise
+   */
+  public boolean isObjectInUse(Object obj) {
+    return simpleIds.containsValue(obj);
+  }
+
+  /**
    * Returns the T with the given id.
    * Accepts simple ids (ex. "Player1") and full ids (ex. "Player1.Variable1").
    * @param id the id of the ownable to return
@@ -53,7 +64,7 @@ public class  IdManager<T extends IdManageable> {
     //searchId is everything after the last "." in the id, to handle full ids
     String searchId = id.substring(id.lastIndexOf(".") + 1);
     if(!simpleIds.containsKey(searchId)) {
-      throw new IllegalArgumentException("Id not found"); //TODO resource bundle
+      throw new IllegalArgumentException("Id " + searchId + " not found"); //TODO resource bundle
     }
     return simpleIds.get(searchId);
   }
@@ -72,7 +83,7 @@ public class  IdManager<T extends IdManageable> {
         return entry.getKey();
       }
     }
-    throw new IllegalArgumentException("Id not found"); //TODO resource bundle
+    throw new IllegalArgumentException("Id " + simpleIds.get(obj) + " not found"); //TODO resource bundle
   }
 
   /**
@@ -101,7 +112,7 @@ public class  IdManager<T extends IdManageable> {
     }
     // If the root object was not found, the object is not in the IdManager
     if (fullId == null) {
-      throw new IllegalArgumentException("Object not found in IdManager"); //TODO resource bundle
+      throw new IllegalArgumentException("Object not found in IdManager: " + obj); //TODO resource bundle
     }
     return fullId;
   }
@@ -114,9 +125,14 @@ public class  IdManager<T extends IdManageable> {
    * @throws IllegalArgumentException if the id is already in use
    */
   public void addObject(T obj, T parent) throws IllegalArgumentException{
+
+    if (obj == null) {
+      throw new IllegalArgumentException("Object cannot be null"); //TODO resource bundle
+    }
+
     //avoid adding the same object twice
     if (simpleIds.containsValue(obj)) {
-      throw new IllegalArgumentException("Object with same id already exists in IdManager"); //TODO resource bundle
+      throw new IllegalArgumentException("Object with same id already exists in IdManager: " + getId(obj)); //TODO resource bundle
     }
     String defaultId = obj.getDefaultId();
     if (!idGenerators.containsKey(defaultId)) {
@@ -175,7 +191,7 @@ public class  IdManager<T extends IdManageable> {
     }
     //if old id is not in use throw exception
     if (!isIdInUse(oldId)) {
-      throw new IllegalArgumentException("Given Id not found"); //TODO put in resource bundle
+      throw new IllegalArgumentException("Given Id not found: " + oldId); //TODO put in resource bundle
     }
     T obj = simpleIds.get(oldId);
     simpleIds.remove(oldId);
@@ -192,7 +208,7 @@ public class  IdManager<T extends IdManageable> {
   public void removeObject(T obj) throws IllegalArgumentException {
     // Check if the object is present in the simpleIds map
     if (!simpleIds.containsValue(obj)) {
-      throw new IllegalArgumentException("Object not found in IdManager");
+      throw new IllegalArgumentException("Object not found in IdManager: " + obj);
     }
 
     // Get the simpleId of the object
