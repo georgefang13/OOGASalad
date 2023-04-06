@@ -1,6 +1,7 @@
 package oogasalad;
 
 
+import java.util.Objects;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
@@ -16,6 +17,9 @@ import oogasalad.frontend.components.modals.InputModal;
  * Feel free to completely change this code or delete it entirely. 
  */
 public class Main extends Application{
+    private final String MODAL_STYLE_SHEET = Objects
+        .requireNonNull(getClass().getClassLoader().getResource("stylesheets/modalStyles.css")).toExternalForm();
+
     /**
      * A method to test (and a joke :).
      */
@@ -46,6 +50,7 @@ public class Main extends Application{
         });
         root.getChildren().add(errorButton);
         Scene scene = new Scene(root, 1000, 700);
+        scene.getStylesheets().add(MODAL_STYLE_SHEET);
 
         stage.setScene(scene);
         stage.show();
