@@ -17,7 +17,7 @@ public class GameEditorMainScene extends AbstractScene {
     BorderPane root = new BorderPane();
     root.setTop(new Label("Game Editor - HOME GAME CHOOSER SCENE"));
     root.setLeft(new VBox(new Button("Edit Grid")));
-    Button goButton = new Button("SELECT GAME"); //TODO: Properties File
+    Button goButton = new Button("SELECT GAMEt"); //TODO: Properties File
 
     String newsceneID = "new";
     getWindow().addAndLinkScene(GameEditorWindow.WindowScenes.EDITOR_SCENE,newsceneID);
