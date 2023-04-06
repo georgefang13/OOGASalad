@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+import java.util.ResourceBundle;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogPane;
@@ -18,6 +19,10 @@ import javafx.stage.StageStyle;
 public class Modal<T> extends Dialog<T> {
     private Map<String, String> myPropertiesMap;
     private String myTitle;
+    private static String MODAL_FILE_PATH = "frontend/modals/Modals.properties";
+    private static final ResourceBundle MODAL_BUNDLE = ResourceBundle.getBundle("frontend/modals/Modals");
+    private static final String CANT_LOAD_FILE_ID = "unableToLoadPropertiesFile";
+    private static final String ERROR_LOADING_FILE_ID = "Error loading properties file";
 
     /**
      * Constructor for the modal dialog with a title parameter
@@ -73,14 +78,14 @@ public class Modal<T> extends Dialog<T> {
         Properties properties = new Properties();
         try {
             InputStream inputStream = getClass().getClassLoader()
-                    .getResourceAsStream("frontend/modals/Modals.properties");
+                    .getResourceAsStream(MODAL_FILE_PATH);
             if (inputStream != null) {
                 properties.load(inputStream);
             } else {
-                System.err.println("Error: unable to load properties file");
+                System.err.println(MODAL_BUNDLE.getString(CANT_LOAD_FILE_ID));
             }
         } catch (Exception e) {
-            System.out.println("Error loading properties file");
+            System.out.println(MODAL_BUNDLE.getString(ERROR_LOADING_FILE_ID));
         }
 
         HashMap<String, String> myPropertiesMap = new HashMap<>();
