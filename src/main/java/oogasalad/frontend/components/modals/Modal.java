@@ -2,7 +2,6 @@ package oogasalad.frontend.components.modals;
 
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -12,20 +11,11 @@ import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.StageStyle;
-import javafx.geometry.Insets;
 
 public class Modal<T> extends Dialog<T> {
-    protected static final String PROPERTIES_FILE = "frontend/modals/Modals";
-    final public static int GAP = 10;
-    final public static int INSET_TOP = 20;
-    final public static int INSET_RIGHT = 150;
-    final public static int INSET_BOTTOM = 10;
-    final public static int INSET_LEFT = 10;
-
     private Map<String, String> myPropertiesMap;
     private String myTitle;
 
@@ -65,13 +55,11 @@ public class Modal<T> extends Dialog<T> {
      * @return
      */
     protected DialogPane createDialogPane() {
-        // DialogPane dialogPane = new DialogPane();
         this.getDialogPane().setHeaderText(myPropertiesMap.get("title"));
         myPropertiesMap.remove("title");
         this.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
         ArrayList<String> stringFields = new ArrayList<>(myPropertiesMap.values());
         setContentAsLabels(stringFields);
-        // setContentAsTextField(stringFields);
         return this.getDialogPane();
     }
 
@@ -119,11 +107,9 @@ public class Modal<T> extends Dialog<T> {
         for (String s : content) {
             vBox.getChildren().add(makeLabel(s));
         }
-
         this.getDialogPane().setContent(vBox);
     }
 
-    
     /**
      * Creates a text field with a prompt text
      * 
@@ -159,10 +145,6 @@ public class Modal<T> extends Dialog<T> {
     protected Map<String, String> getPropertiesMap() {
         return new HashMap<>(myPropertiesMap);
     }
-    
-
-
-    
 
     /**
      * Converts the button type to the result
@@ -176,5 +158,4 @@ public class Modal<T> extends Dialog<T> {
         }
         return null;
     }
-
 }

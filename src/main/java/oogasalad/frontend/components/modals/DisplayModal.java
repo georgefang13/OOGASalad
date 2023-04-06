@@ -1,11 +1,7 @@
 package oogasalad.frontend.components.modals;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DialogPane;
 
