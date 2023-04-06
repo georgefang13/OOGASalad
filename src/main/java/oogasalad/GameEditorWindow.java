@@ -2,11 +2,10 @@ package oogasalad;
 
 import java.util.HashMap;
 import java.util.Map;
-import oogasalad.SplashWindow.WindowScenes;
 
 public class GameEditorWindow extends AbstractWindow {
 
-  public enum WindowScenes implements SceneType {
+  public enum WindowScenes implements SceneTypes {
     MAIN_SCENE
   }
 
@@ -16,8 +15,8 @@ public class GameEditorWindow extends AbstractWindow {
   }
 
   @Override
-  public Map<SceneType, AbstractScene> defineScenes() {
-    Map<SceneType, AbstractScene> scenes = new HashMap<>();
+  public Map<SceneTypes, AbstractScene> defineScenes() {
+    Map<SceneTypes, AbstractScene> scenes = new HashMap<>();
     scenes.put(WindowScenes.MAIN_SCENE, new GameEditorMainScene(this));
     return scenes;
   }

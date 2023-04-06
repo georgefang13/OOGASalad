@@ -2,7 +2,7 @@ package oogasalad;
 
 import java.util.HashMap;
 import java.util.Map;
-import oogasalad.WindowTypeEnum.WindowType;
+import oogasalad.WindowTypes.WindowType;
 
 public class WindowController implements WindowMediator {
 

@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class SplashWindow extends AbstractWindow {
 
-  public enum WindowScenes implements SceneType {
+  public enum WindowScenes implements SceneTypes {
     MAIN_SCENE
   }
 
@@ -15,8 +15,8 @@ public class SplashWindow extends AbstractWindow {
   }
 
   @Override
-  public Map<SceneType, AbstractScene> defineScenes() {
-    Map<SceneType, AbstractScene> scenes = new HashMap<>();
+  public Map<SceneTypes, AbstractScene> defineScenes() {
+    Map<SceneTypes, AbstractScene> scenes = new HashMap<>();
     scenes.put(WindowScenes.MAIN_SCENE, new SplashMainScene(this));
     return scenes;
   }

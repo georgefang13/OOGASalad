@@ -1,6 +1,6 @@
 package oogasalad;
 
-import oogasalad.WindowTypeEnum.WindowType;
+import oogasalad.WindowTypes.WindowType;
 
 public class WindowFactory {
 
