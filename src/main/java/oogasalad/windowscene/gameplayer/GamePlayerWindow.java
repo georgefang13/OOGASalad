@@ -1,11 +1,11 @@
 package oogasalad.windowscene.gameplayer;
 
-import java.util.HashMap;
-import java.util.Map;
 import oogasalad.windowscene.AbstractScene;
 import oogasalad.windowscene.AbstractWindow;
+import oogasalad.windowscene.gameeditor.GameEditorEditorScene;
 import oogasalad.windowscene.controllers.SceneTypes;
 import oogasalad.windowscene.controllers.WindowMediator;
+import oogasalad.windowscene.gameeditor.GameEditorMainScene;
 
 /**
  * @author Connor Wells

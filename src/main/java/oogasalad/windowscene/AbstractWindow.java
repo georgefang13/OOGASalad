@@ -33,7 +33,7 @@ public abstract class AbstractWindow extends Stage {
   protected abstract SceneTypes getDefaultSceneType();
   protected abstract AbstractScene addNewScene(SceneTypes sceneType);
 
-  protected void addAndLinkScene(SceneTypes sceneType,String sceneID){
+  public void addAndLinkScene(SceneTypes sceneType, String sceneID){
     AbstractScene newScene = addNewScene(sceneType);
     scenes.put(sceneID,newScene);
   }

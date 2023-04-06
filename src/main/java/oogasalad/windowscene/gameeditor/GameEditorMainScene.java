@@ -27,7 +27,10 @@ public class GameEditorMainScene extends AbstractScene {
   @Override
   public Scene makeScene() {
     BorderPane root = new BorderPane();
+
     editGridButton = new Button();
+    editGridButton.setOnAction(e -> openEditorSceneOnClick());
+
     gameEditorLabel = new Label();
     root.setTop(gameEditorLabel);
     root.setLeft(new VBox(editGridButton));
@@ -42,4 +45,12 @@ public class GameEditorMainScene extends AbstractScene {
     editGridButton.setText(PropertiesManager.getText("GameEditorMainScene.EditGridButton"));
     gameEditorLabel.setText(PropertiesManager.getText("GameEditorMainScene.GameEditorLabel"));
   }
+
+  private void openEditorSceneOnClick(){
+    String newsceneID = "new";
+    AbstractWindow gameEditorWindow = getWindow();
+    gameEditorWindow.addAndLinkScene(GameEditorWindow.WindowScenes.EDITOR_SCENE,newsceneID);
+    gameEditorWindow.switchToScene(newsceneID);
+  }
+
 }

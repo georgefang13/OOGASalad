@@ -1,7 +1,5 @@
 package oogasalad.windowscene.gameeditor;
 
-import java.util.HashMap;
-import java.util.Map;
 import oogasalad.windowscene.AbstractScene;
 import oogasalad.windowscene.AbstractWindow;
 import oogasalad.windowscene.controllers.SceneTypes;
