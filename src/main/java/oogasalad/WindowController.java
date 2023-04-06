@@ -11,9 +11,13 @@ public class WindowController implements WindowMediator {
 
   public WindowController() {
     windowMap = new HashMap<>();
-    showWindow(registerWindow(WindowType.SPLASH_WINDOW));
+    registerAndShow(WindowType.SPLASH_WINDOW);
   }
 
+  @Override
+  public void registerAndShow(WindowType windowType){
+    showWindow(registerWindow(windowType));
+  }
   @Override
   public String registerWindow(WindowType windowType) {
     AbstractWindow window = WindowFactory.createWindow(windowType, this);

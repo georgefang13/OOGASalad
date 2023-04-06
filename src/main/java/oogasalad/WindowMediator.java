@@ -8,6 +8,8 @@ public interface WindowMediator {
 
   void showWindow(String windowID);
 
+  void registerAndShow(WindowType windowType);
+
   void closeWindow(String windowID);
 
   void receiveMessage();
