@@ -20,6 +20,7 @@ import oogasalad.sharedDependencies.backend.owners.Player;
  * @see GameWorld
  * The Owner of an Ownable can be changed.
  * @author Michael Bryant
+ * @author Max Meister
  */
 public abstract class Ownable extends IdManageable {
 
@@ -32,6 +33,10 @@ public abstract class Ownable extends IdManageable {
   public Ownable(IdManager idManager, Owner owner) {
     super(idManager);
     this.owner = owner;
+  }
+
+  public Ownable(IdManager idManager) {
+    super(idManager);
   }
 
   public Owner getOwner() {

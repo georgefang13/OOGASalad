@@ -4,8 +4,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import oogasalad.gameeditor.backend.goals.Goal;
 import oogasalad.gameeditor.backend.id.IdManager;
+import oogasalad.sharedDependencies.backend.ownables.gameobjects.GameObject;
+import oogasalad.sharedDependencies.backend.ownables.variables.Variable;
 import oogasalad.sharedDependencies.backend.owners.GameWorld;
 import oogasalad.sharedDependencies.backend.owners.Owner;
 import oogasalad.sharedDependencies.backend.owners.Player;
@@ -17,6 +20,7 @@ import oogasalad.sharedDependencies.backend.ownables.Ownable;
  * It contains Owners such as the GameWorld and Players.
  * It contains the Rules and Goals.
  * @author Michael Bryant
+ * @author Max Meister
  */
 public class Game {
 
@@ -47,10 +51,6 @@ public class Game {
    */
   private final GameWorld gameWorld = new GameWorld(ownableIdManager);
 
-  //TODO worry about the below stuff later
-  // Was made before refactoring to use IdManager
-  // Needs updating
-
   /**
    * Adds a Player to the game.
    * @param player
@@ -69,32 +69,34 @@ public class Game {
     }
   }
 
-//  /**
-//   * Removes a Player from the game, if it exists there.
-//   * Destroys all Ownables owned by the Player. //TODO throw warning about this
-//   * @param player
-//   */
-//  public void removePlayer(Player player) {
-//    if(!players.contains(player)) {
-//      return;
-//    }
-//    //remove all ownables owned by player
-//    for (Ownable ownable : )
-//      ownableIdManager.removeOwnable(ownable.getId());
-//    }
-//
-//    players.remove(player);
-//  }
+  /**
+   * Removes a Player from the game, if it exists there.
+   * Destroys all Ownables owned by the Player. //TODO throw warning about this
+   * @param player
+   */
+  public void removePlayer(Player player) {
+    if(!players.contains(player)) {
+      return;
+    }
+    //remove all ownables owned by player
+    for(Map.Entry<String, Ownable> entry : ownableIdManager) {
+      if (entry.getValue().getOwner() == player) {
+        ownableIdManager.removeObject(entry.getValue());
+      }
+    }
+    players.remove(player);
+  }
 
-//  /**
-//   * Removes all Players from the game and their Ownables.
-//   */
-//  public void removeAllPlayers() {
-//    while (!players.isEmpty()) {
-//      removePlayer(players.get(0));
-//    }
-//  }
-//
+  /**
+   * Removes all Players from the game and their Ownables.
+   */
+  public void removeAllPlayers() {
+    while (!players.isEmpty()) {
+      removePlayer(players.get(0));
+    }
+    ownableIdManager.clear();
+  }
+
   /**
    * Gets the Players of the game.
    * @return unmodifiable List of Players
@@ -111,26 +113,30 @@ public class Game {
   public void addRule(Rule rule) {
     rules.addObject(rule);
   }
-//
-//  /**
-//   * Removes a Rule from the game, if it exists there.
-//   * @param rule
-//   */
-//  public void removeRule(Rule rule) {
-//    if(!rules.contains(rule)) {
-//      return;
-//    }
-//    rules.remove(rule);
-//  }
 
-//  /**
-//   * Gets the Rules of the game.
-//   * @return unmodifiable List of Rules
-//   */
-//  public List<Rule> getRules() {
-//    return Collections.unmodifiableList(rules);
-//  }
-//
+  /**
+   * Removes a Rule from the game, if it exists there.
+   * @param rule
+   */
+  public void removeRule(Rule rule) {
+    if(!rules.isIdInUse(rules.getId(rule))) {
+      return;
+    }
+    rules.removeObject(rule);
+  }
+
+  /**
+   * Gets the Rules of the game.
+   * @return unmodifiable List of Rules
+   */
+  public List<Rule> getRules() {
+    ArrayList<Rule> listRules= new ArrayList<>();
+    for(Map.Entry<String, Rule> entry : rules) {
+      listRules.add(entry.getValue());
+    }
+    return Collections.unmodifiableList(listRules);
+  }
+
   /**
    * Adds a Goal to the game.
    * @param goal the Goal to add
@@ -139,24 +145,28 @@ public class Game {
     goals.addObject(goal);
   }
 
-//  /**
-//   * Removes a Goal from the game, if it exists there.
-//   * @param goal the Goal to remove
-//   */
-//  public void removeGoal(Goal goal) {
-//    if(!goals.contains(goal)) {
-//      return;
-//    }
-//    goals.remove(goal);
-//  }
-//
-//  /**
-//   * Gets the Goals of the game.
-//   * @return unmodifiable List of Goals
-//   */
-//  public List<Goal> getGoals() {
-//    return Collections.unmodifiableList(goals);
-//  }
+  /**
+   * Removes a Goal from the game, if it exists there.
+   * @param goal the Goal to remove
+   */
+  public void removeGoal(Goal goal) {
+    if(!goals.isIdInUse(goals.getId(goal))) {
+      return;
+    }
+    goals.removeObject(goal);
+  }
+
+  /**
+   * Gets the Goals of the game.
+   * @return unmodifiable List of Goals
+   */
+  public List<Goal> getGoals() {
+    ArrayList<Goal> listGoals= new ArrayList<>();
+    for(Map.Entry<String, Goal> entry : goals) {
+      listGoals.add(entry.getValue());
+    }
+    return Collections.unmodifiableList(listGoals);
+  }
 
   /**
    * Gets the GameWorld of the game.
@@ -166,18 +176,17 @@ public class Game {
     return gameWorld;
   }
 
-////
-//  /**
-//   * Adds an Ownable to the game for a specific owner.
-//   * Adds the Ownable to the IdManager and Owner.
-//   * @param ownable the Ownable to add
-//   * @param owner the Owner of the Ownable
-//   */
-//  public void addOwnable(Owner owner) {
-//    ownable make object
-//    ownableIdManager.addObject();
-//  }
-//
+
+  /**
+   * Adds an Ownable to the game for a specific owner.
+   * Adds the Ownable to the IdManager and Owner.
+   * @param owner the Owner of the Ownable
+   */
+  public void addOwnable(Owner owner) {
+    //GameObject gameObject = new GameObject();
+    //ownableIdManager.addObject();
+  }
+
 //  /**
 //   * Adds an Ownable to the GameWorld
 //   * Adds the Ownable to the IdManager and GameWorld.
