@@ -1,7 +1,5 @@
 package oogasalad.gameeditor.backend.id;
 
-import oogasalad.sharedDependencies.backend.ownables.variables.Variable;
-
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -85,7 +83,7 @@ public class  IdManager<T extends IdManageable> implements Iterable<Map.Entry<St
         return entry.getKey();
       }
     }
-    throw new IllegalArgumentException("Id " + simpleIds.get(obj) + " not found"); //TODO resource bundle
+    throw new IllegalArgumentException("Id for " + obj + " not found"); //TODO resource bundle
   }
 
   /**
@@ -134,7 +132,7 @@ public class  IdManager<T extends IdManageable> implements Iterable<Map.Entry<St
    * @param obj the T to add
    * @param parent the parent of the T to be logged in the ownership map
    * @param id the id to add the T to
-   * @throws IllegalArgumentException
+   * @throws IllegalArgumentException if the id or object is already in use
    */
   public void addObject(T obj, String id, T parent) throws IllegalArgumentException{
     logIdName(obj, parent, id);
@@ -161,14 +159,12 @@ public class  IdManager<T extends IdManageable> implements Iterable<Map.Entry<St
     if (!idGenerators.containsKey(defaultId)) {
       idGenerators.put(defaultId, new NumberGenerator());
     }
-    String itemNum = idGenerators.get(defaultId).next();
+    String itemNum = simpleIds.containsKey(defaultId) ? idGenerators.get(defaultId).next() : "";
     String fullId;
     do {
       try {
         fullId = defaultId + itemNum;
-        System.out.println("Adding " + fullId);
         addId(fullId, obj, parent);
-        System.out.println("Added " + fullId);
         break;
       } catch (Exception e) {
         // Handle exception, e.g. generate a new itemNum and try again
@@ -267,8 +263,6 @@ public class  IdManager<T extends IdManageable> implements Iterable<Map.Entry<St
 
     // Remove the object from the simpleIds map
     simpleIds.remove(simpleId);
-
-    System.out.println("Removing " + simpleId);
 
     // Check if the object is present in the ownershipMap map
     if (ownershipMap.containsKey(obj)) {

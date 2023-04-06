@@ -1200,7 +1200,6 @@ public class CommandsTest {
         input = "make :y :game_" + name;
         interpreter.interpret(input);
         Variable<List<Double>> yList = (Variable<List<Double>>) idManager.getObject("interpreter-:y");
-        System.out.println(yList.get().get(0).getClass());
         assertEquals(expected, yList.get());
 
     }

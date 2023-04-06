@@ -343,7 +343,7 @@ public class IdManagerTest {
     assertTrue(manager.isIdInUse("Variable2"));
     assertTrue(manager.getSimpleIds().size() == 1);
     manager.addObject(variable2);
-    assertTrue(manager.isIdInUse("Variable3"));
+    assertTrue(manager.isIdInUse("Variable"));
   }
 
   @Test

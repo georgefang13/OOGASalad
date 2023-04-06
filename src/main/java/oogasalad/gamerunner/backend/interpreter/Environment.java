@@ -4,7 +4,6 @@ import oogasalad.gameeditor.backend.id.IdManager;
 import oogasalad.gamerunner.backend.interpreter.tokens.ExpressionToken;
 import oogasalad.gamerunner.backend.interpreter.tokens.Token;
 import oogasalad.gamerunner.backend.interpreter.tokens.ValueToken;
-import oogasalad.gamerunner.backend.interpreter.tokens.VariableToken;
 import oogasalad.sharedDependencies.backend.ownables.Ownable;
 import oogasalad.sharedDependencies.backend.ownables.variables.Variable;
 
@@ -73,17 +72,14 @@ public class Environment {
         if (var.get() != null) {
 
             if (game.isIdInUse(name)){
-                game.removeObject(game.getObject(name));
+                game.removeObject(name);
             }
 
             if (game.isObjectInUse(var)){
                 var = var.copy(game);
             }
 
-//            game.addObject(var, name);
-            game.addObject(var);
-            String curId = game.getId(var);
-            game.changeId(curId, name);
+            game.addObject(var, name);
         }
 
         Map<String, Token> curScope = scope.get(scope.size() - 1);
@@ -111,12 +107,11 @@ public class Environment {
             }
             return list;
         }
-        else return new ValueToken(obj);
+        else return new ValueToken<>(obj);
     }
 
     Variable<?> convertTokenToVariable(Token t){
-//        if (t.getLink() != null) return t.getLink();
-        Variable v = new Variable<>(game, t.export(this));
+        Variable<?> v = new Variable<>(game, t.export(this));
         t.linkVariable(v);
         return v;
     }
@@ -138,7 +133,7 @@ public class Environment {
         List<String> removed = new ArrayList<>();
         for (String key : curScope.keySet()){
             if (!key.contains("-global") && game.isIdInUse(key)){
-                game.removeObject(game.getObject(key));
+                game.removeObject(key);
                 removed.add(key);
             }
         }
@@ -149,9 +144,7 @@ public class Environment {
             Token var = getLocalVariable(key);
             if (var != null){
                 Variable<?> v = convertTokenToVariable(var);
-                game.addObject(v);
-                String curId = game.getId(v);
-                game.changeId(curId, key);
+                game.addObject(v, key);
             }
         }
     }
