@@ -8,6 +8,10 @@ import javafx.scene.layout.VBox;
 
 public class GameEditorMainScene extends AbstractScene {
 
+  private Button editGridButton;
+
+  private Label gameEditorLabel;
+
   public GameEditorMainScene(AbstractWindow window) {
     super(window);
   }
@@ -15,10 +19,18 @@ public class GameEditorMainScene extends AbstractScene {
   @Override
   public Scene makeScene() {
     BorderPane root = new BorderPane();
-    root.setTop(new Label("Game Editor"));
-    root.setLeft(new VBox(new Button("Edit Grid")));
+    editGridButton = new Button();
+    gameEditorLabel = new Label();
+    updateText();
+    root.setTop(gameEditorLabel);
+    root.setLeft(new VBox(editGridButton));
     setScene(new Scene(root));
     return getScene();
   }
 
+  @Override
+  public void updateText() {
+    editGridButton.setText(Properties.getText("GameEditorMainScene.EditGridButton"));
+    gameEditorLabel.setText(Properties.getText("GameEditorMainScene.GameEditorLabel"));
+  }
 }

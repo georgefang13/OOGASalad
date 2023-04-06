@@ -4,7 +4,7 @@ package oogasalad.windowscene;
 import java.util.ResourceBundle;
 import javafx.scene.Scene;
 
-public abstract class AbstractScene {
+public abstract class AbstractScene implements LanguageObserver {
 
   protected AbstractWindow window;
 
@@ -16,6 +16,7 @@ public abstract class AbstractScene {
   public AbstractScene(AbstractWindow window) {
     this.window = window;
     setTheme("dark");
+    Properties.addObserver(this);
   }
 
   public abstract Scene makeScene();

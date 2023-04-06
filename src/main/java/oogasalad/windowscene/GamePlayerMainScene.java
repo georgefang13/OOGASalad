@@ -7,6 +7,11 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
 public class GamePlayerMainScene extends AbstractScene {
+
+    private Button playGameButton;
+
+    private Label gamePlayerLabel;
+
     public GamePlayerMainScene(AbstractWindow window) {
         super(window);
     }
@@ -14,10 +19,18 @@ public class GamePlayerMainScene extends AbstractScene {
     @Override
     public Scene makeScene() {
         BorderPane root = new BorderPane();
-        root.setTop(new Label("Game Player"));
-        root.setLeft(new VBox(new Button("Edit Grid")));
+        playGameButton = new Button();
+        gamePlayerLabel = new Label();
+        updateText();
+        root.setTop(gamePlayerLabel);
+        root.setLeft(new VBox(playGameButton));
         setScene(new Scene(root));
         return getScene();
     }
 
+    @Override
+    public void updateText() {
+        playGameButton.setText(Properties.getText("GamePlayerMainScene.PlayGameButton"));
+        gamePlayerLabel.setText(Properties.getText("GamePlayerMainScene.GamePlayerLabel"));
+    }
 }

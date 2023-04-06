@@ -1,13 +1,19 @@
 package oogasalad.windowscene;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class Properties {
 
+  private static final String RESOURCE_PROPERTIES = "frontend/properties/";
+  private static final String NUMERIC_RESOURCES = RESOURCE_PROPERTIES + "numeric/";
+  private static final String TEXT_RESOURCES = RESOURCE_PROPERTIES + "text/";
   private static ResourceBundle numericResources = ResourceBundle.getBundle(
-      "frontend/properties/numeric/numeric");
+      NUMERIC_RESOURCES + "numeric");
   private static ResourceBundle textResources = ResourceBundle.getBundle(
-      "frontend/properties/text/english");
+      TEXT_RESOURCES + "spanish");
+  private static List<LanguageObserver> observers = new ArrayList<>();
 
   public static double getNumeric(String key) {
     return Double.parseDouble(numericResources.getString(key));
@@ -18,10 +24,21 @@ public class Properties {
   }
 
   public static void setTextResources(String resource) {
-    textResources = ResourceBundle.getBundle(resource);
+    textResources = ResourceBundle.getBundle(TEXT_RESOURCES + resource);
+    notifyObservers();
   }
 
-  public static void setNumericResources(String resource) {
-    numericResources = ResourceBundle.getBundle(resource);
+  public static void addObserver(LanguageObserver observer) {
+    observers.add(observer);
+  }
+
+  public static void removeObserver(LanguageObserver observer) {
+    observers.remove(observer);
+  }
+
+  private static void notifyObservers() {
+    for (LanguageObserver observer : observers) {
+      observer.updateText();
+    }
   }
 }
