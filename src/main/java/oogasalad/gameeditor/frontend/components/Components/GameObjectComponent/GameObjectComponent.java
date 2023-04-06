@@ -1,9 +1,9 @@
-package oogasalad.gameeditor.frontend.ViewObjects.Components.GameObjectComponent;
+package oogasalad.gameeditor.frontend.components.Components.GameObjectComponent;
 
 import java.util.List;
 import javafx.scene.Node;
-import oogasalad.gameeditor.frontend.ViewObjects.Components.DisplayableComponents.DisplayableComponent;
-import oogasalad.gameeditor.frontend.ViewObjects.Components.DraggableComponent.DraggableComponent;
+import oogasalad.gameeditor.frontend.components.Components.DisplayableComponents.DisplayableComponent;
+import oogasalad.gameeditor.frontend.components.Components.DraggableComponent.DraggableComponent;
 
 /**
  *

@@ -1,6 +1,7 @@
-package oogasalad.gameeditor.frontend.ViewObjects.Components.DraggableComponent;
+package oogasalad.gameeditor.frontend.components.Components.DraggableComponent;
 
-import oogasalad.gameeditor.frontend.ViewObjects.Components.Component;
+
+import oogasalad.gameeditor.frontend.components.Components.Component;
 
 /**
  * @author Han, Aryan

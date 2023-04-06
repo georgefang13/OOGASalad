@@ -1,11 +1,15 @@
-package oogasalad.gameeditor.frontend.ViewObjects.Components.GameObjectComponent;
+package oogasalad.gameeditor.frontend.components.Components.GameObjectComponent;
 
 import javafx.scene.Node;
-import oogasalad.gameeditor.frontend.ViewObjects.Components.AbstractComponent;
+import oogasalad.gameeditor.frontend.components.Components.AbstractComponent;
 
-public class AbstractGameObject extends AbstractComponent {
+public abstract class AbstractGameObject extends AbstractComponent {
 
   public AbstractGameObject(int num, Node container) {
     super(num, container);
   }
+
+  public abstract void followMouse();
+
+  public abstract void setDraggable(boolean drag);
 }

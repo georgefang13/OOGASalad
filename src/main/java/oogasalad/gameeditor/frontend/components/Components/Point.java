@@ -1,4 +1,4 @@
-package oogasalad.gameeditor.frontend.ViewObjects.Components;
+package oogasalad.gameeditor.frontend.components.Components;
 
 public class Point {
   double x;

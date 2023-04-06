@@ -1,10 +1,10 @@
-package oogasalad.gameeditor.frontend.ViewObjects.Components.GameObjectComponent;
+package oogasalad.gameeditor.frontend.components.Components.GameObjectComponent;
 
 import java.util.List;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import oogasalad.gameeditor.frontend.ViewObjects.Components.Point;
+import oogasalad.gameeditor.frontend.components.Components.Point;
 
 
 /**
