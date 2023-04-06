@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import oogasalad.gameeditor.backend.goals.Goal;
 import oogasalad.gameeditor.backend.id.IdManager;
+import oogasalad.sharedDependencies.backend.ownables.OwnableFactory;
 import oogasalad.sharedDependencies.backend.ownables.gameobjects.GameObject;
 import oogasalad.sharedDependencies.backend.ownables.variables.Variable;
 import oogasalad.sharedDependencies.backend.owners.GameWorld;
@@ -194,13 +195,14 @@ public class Game {
 //    ownableIdManager.addObject(ownable, gameWorld);
 //  }
 //
-//  /**
-//   * Creates an ownable using ownableFactory
-//   * @param ?
-//   */
-//  public void createOwnable(){
-//    // TODO Make factory
-//  }
+  /**
+   * Creates an ownable using ownableFactory
+   * @param ?
+   */
+  public void createOwnable(){
+    OwnableFactory ownable = new OwnableFactory();
+    // TODO Make factory
+  }
 
   /**
    * Gets the Owner of an Ownable with id.
