@@ -34,10 +34,16 @@ public class Environment {
      */
     public Token getLocalVariable(String name){
 
-        if (name.startsWith("game_")){
-            name = name.substring(5);
+        if (name.startsWith(":game_")){
+            name = name.substring(6);
             if (game.isIdInUse(name)){
-                return new VariableToken(name);
+                Ownable v = game.getObject(name);
+                if (v instanceof Variable<?> var){
+                    Token t = convertVariableToToken(var);
+                    t.linkVariable(var);
+                    return t;
+                }
+                return new ValueToken<>(v);
             }
             else return null;
         }
@@ -74,6 +80,7 @@ public class Environment {
                 var = var.copy(game);
             }
 
+//            game.addObject(var, name);
             game.addObject(var);
             String curId = game.getId(var);
             game.changeId(curId, name);
@@ -92,8 +99,23 @@ public class Environment {
         scope.get(scope.size() - 1).put(name, val);
     }
 
+    Token convertVariableToToken(Variable<?> var){
+        Object obj = var.get();
+        if (obj instanceof Integer i){ return new ValueToken<>(i.doubleValue()); }
+        else if (obj instanceof List<?>){
+            ExpressionToken list = new ExpressionToken();
+            for (Object o : (List<?>) obj){
+                if (o instanceof Variable<?> v) list.addToken(convertVariableToToken(v));
+                if (o instanceof Integer) list.addToken(new ValueToken<>((double) ((int) o)));
+                else list.addToken(new ValueToken<>(o));
+            }
+            return list;
+        }
+        else return new ValueToken(obj);
+    }
+
     Variable<?> convertTokenToVariable(Token t){
-        if (t.getLink() != null) return t.getLink();
+//        if (t.getLink() != null) return t.getLink();
         Variable v = new Variable<>(game, t.export(this));
         t.linkVariable(v);
         return v;

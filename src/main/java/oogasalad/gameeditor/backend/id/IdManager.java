@@ -268,6 +268,8 @@ public class  IdManager<T extends IdManageable> implements Iterable<Map.Entry<St
     // Remove the object from the simpleIds map
     simpleIds.remove(simpleId);
 
+    System.out.println("Removing " + simpleId);
+
     // Check if the object is present in the ownershipMap map
     if (ownershipMap.containsKey(obj)) {
       // Remove the object from the ownershipMap map

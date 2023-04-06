@@ -1173,4 +1173,35 @@ public class CommandsTest {
             assertEquals("Invalid syntax: Not enough arguments for operator Tangent", e.getMessage());
         }
     }
+
+    @Test
+    public void testGetGameVariable(){
+        Variable<Double> x = new Variable<>(idManager, 5.0);
+        idManager.addObject(x);
+        String name = idManager.getId(x);
+        String input = "make :y :game_" + name;
+        interpreter.interpret(input);
+        Variable<Double> y = (Variable<Double>) idManager.getObject("interpreter-:y");
+        assertEquals(5.0, y.get());
+
+        Variable<Integer> x2 = new Variable<>(idManager, 2);
+        idManager.addObject(x2);
+        name = idManager.getId(x2);
+        input = "make :y :game_" + name;
+        interpreter.interpret(input);
+        y = (Variable<Double>) idManager.getObject("interpreter-:y");
+        assertEquals(2, y.get());
+
+        List<Integer> list = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5));
+        List<Double> expected = new ArrayList<>(Arrays.asList(1., 2., 3., 4., 5.));
+        Variable<List<Integer>> listVar = new Variable<>(idManager, list);
+        idManager.addObject(listVar);
+        name = idManager.getId(listVar);
+        input = "make :y :game_" + name;
+        interpreter.interpret(input);
+        Variable<List<Double>> yList = (Variable<List<Double>>) idManager.getObject("interpreter-:y");
+        System.out.println(yList.get().get(0).getClass());
+        assertEquals(expected, yList.get());
+
+    }
 }
