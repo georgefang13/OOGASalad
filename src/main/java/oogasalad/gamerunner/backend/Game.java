@@ -205,7 +205,7 @@ public class Game {
     if (!ownableIdManager.isIdInUse(id)) {
       return null;
     }
-    return ownableIdManager.getObject(id).getOwner();
+    return getOwnable(id).getOwner();
   }
 
   /**
@@ -214,7 +214,7 @@ public class Game {
    * @param owner the new owner of the Ownable
    */
   public void setOwner(String id, Owner owner) {
-    ownableIdManager.getObject(id).setOwner(owner);
+    getOwnable(id).setOwner(owner);
   }
 
 
