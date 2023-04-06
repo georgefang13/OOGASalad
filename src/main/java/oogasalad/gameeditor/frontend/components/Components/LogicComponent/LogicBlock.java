@@ -1,4 +1,4 @@
-package oogasalad.gameeditor.frontend.components.Components.LogicComponent;
+package oogasalad.gameeditor.frontend.ViewObjects.Components.LogicComponent;
 
 import java.util.List;
 import javafx.scene.Node;
@@ -55,7 +55,7 @@ public class LogicBlock implements LogicComponent{
   }
 
   @Override
-  public void setView(String imagePath) {
+  public void setImage(String imagePath) {
 
   }
 

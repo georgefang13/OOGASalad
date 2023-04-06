@@ -1,16 +1,16 @@
-package oogasalad.gameeditor.frontend.components.Components.LogicComponent;
+package oogasalad.gameeditor.frontend.ViewObjects.Components.LogicComponent;
 
 
 import java.util.List;
-import oogasalad.gameeditor.frontend.components.Components.DisplayableComponents.DisplayableComponent;
-import oogasalad.gameeditor.frontend.components.Components.DraggableComponent.DraggableComponent;
+import oogasalad.gameeditor.frontend.ViewObjects.Components.DisplayableComponents.DisplayableComponent;
+import oogasalad.gameeditor.frontend.ViewObjects.Components.DraggableComponent.DraggableComponent;
 
 /**
  *
  * @author Han, Aryan
  * These are the components of the View that represent Rule and Goal creation
  */
-public interface LogicComponent extends DisplayableComponent, DraggableComponent {
+public interface LogicComponent extends DisplayableComponent, DraggableComponent{
 
  /**
   * This is the method to get the LogicComponents contained within this LogicComponent. For example,

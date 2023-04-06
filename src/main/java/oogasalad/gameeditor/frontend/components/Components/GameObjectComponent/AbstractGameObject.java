@@ -1,7 +1,7 @@
-package oogasalad.gameeditor.frontend.components.Components.GameObjectComponent;
+package oogasalad.gameeditor.frontend.ViewObjects.Components.GameObjectComponent;
 
 import javafx.scene.Node;
-import oogasalad.gameeditor.frontend.components.Components.AbstractComponent;
+import oogasalad.gameeditor.frontend.ViewObjects.Components.AbstractComponent;
 
 public class AbstractGameObject extends AbstractComponent {
 

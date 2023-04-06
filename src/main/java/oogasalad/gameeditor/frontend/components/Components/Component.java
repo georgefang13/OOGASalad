@@ -1,4 +1,4 @@
-package oogasalad.gameeditor.frontend.components.Components;
+package oogasalad.gameeditor.frontend.ViewObjects.Components;
 
 import javafx.scene.Node;
 

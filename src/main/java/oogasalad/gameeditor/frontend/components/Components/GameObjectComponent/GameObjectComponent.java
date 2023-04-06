@@ -1,9 +1,9 @@
-package oogasalad.gameeditor.frontend.components.Components.GameObjectComponent;
+package oogasalad.gameeditor.frontend.ViewObjects.Components.GameObjectComponent;
 
 import java.util.List;
 import javafx.scene.Node;
-import oogasalad.gameeditor.frontend.components.Components.DisplayableComponents.DisplayableComponent;
-import oogasalad.gameeditor.frontend.components.Components.DraggableComponent.DraggableComponent;
+import oogasalad.gameeditor.frontend.ViewObjects.Components.DisplayableComponents.DisplayableComponent;
+import oogasalad.gameeditor.frontend.ViewObjects.Components.DraggableComponent.DraggableComponent;
 
 /**
  *
@@ -12,11 +12,6 @@ import oogasalad.gameeditor.frontend.components.Components.DraggableComponent.Dr
  */
 public interface GameObjectComponent extends DraggableComponent, DisplayableComponent {
 
-  /**
-   * This is the method that allows for position of Component in the game-editor to be changed
-   * @param position
-   */
-  void setPos(int position);
 
   /**
    * Change the name of the GameObject being edited

@@ -1,4 +1,4 @@
-package oogasalad.gameeditor.frontend.components.Components;
+package oogasalad.gameeditor.frontend.ViewObjects.Components;
 
 /**
  * @author hanzh
@@ -6,6 +6,7 @@ package oogasalad.gameeditor.frontend.components.Components;
  * given any input parameters
  */
 public class ComponentsFactory {
+
   public ComponentsFactory(){
 
   }
