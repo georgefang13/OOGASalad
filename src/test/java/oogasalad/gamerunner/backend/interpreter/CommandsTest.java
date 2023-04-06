@@ -1,24 +1,54 @@
 package oogasalad.gamerunner.backend.interpreter;
 import oogasalad.gameeditor.backend.id.IdManager;
+import oogasalad.gamerunner.backend.interpreter.commands.operators.Sum;
+import oogasalad.gamerunner.backend.interpreter.tokens.*;
 import oogasalad.sharedDependencies.backend.ownables.Ownable;
 import oogasalad.sharedDependencies.backend.ownables.variables.Variable;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CommandsTest {
     private Interpreter interpreter;
     private IdManager<Ownable> idManager;
+    private static final String LANGUAGE_RESOURCE_PATH = "backend.interpreter.languages";
+    ResourceBundle resources;
+    private String language = "English";
     @BeforeEach
     public void setUp() {
         interpreter = new Interpreter();
         idManager = new IdManager<>();
         interpreter.link(idManager);
+        language = "English";
+        resources = ResourceBundle.getBundle(LANGUAGE_RESOURCE_PATH + "." + language);
+    }
+
+    private void setLanguage(String language){
+        this.language = language;
+        resources = ResourceBundle.getBundle(LANGUAGE_RESOURCE_PATH + "." + language);
+    }
+
+    private <T> T getVar(String name){
+        return (T) idManager.getObject(name);
+    }
+
+    private String checkSubtypeErrorMsg(Token t, String NAME, Class<?> type, Class<?> subtype){
+        String s = resources.getString("argumentSubtypeError");
+        s = String.format(s, t, NAME, type.getSimpleName(), subtype.getName(), t.getClass().getSimpleName(), t.SUBTYPE);
+        return s;
+    }
+
+    private String checkTypeErrorMsg(Token t, String NAME, Class<?> type){
+        String s = resources.getString("argumentTypeError");
+        s = String.format(s, t, NAME, type.getSimpleName(), t == null ? "null" : t.getClass().getSimpleName());
+        return s;
     }
 
     @Test
@@ -26,13 +56,13 @@ public class CommandsTest {
         // true and
         String input = "make :a < 1 2 make :b < 2 3 make :x and :a :b";
         interpreter.interpret(input);
-        Variable<Boolean> x = (Variable<Boolean>) idManager.getObject("interpreter-:x");
+        Variable<Boolean> x = getVar("interpreter-:x");
         assertTrue(x.get());
 
         // false and
         input = "make :a < 1 2 make :b < 3 2 make :x and :a :b";
         interpreter.interpret(input);
-        x = (Variable<Boolean>) idManager.getObject("interpreter-:x");
+        x = getVar("interpreter-:x");
         assertFalse(x.get());
 
         // and with non-booleans
@@ -41,7 +71,8 @@ public class CommandsTest {
             interpreter.interpret(input);
             fail();
         } catch (Exception e){
-            assertEquals("Cannot take AND of non-boolean from <Variable :a> = <Value 1.0>", e.getMessage());
+            Token t = new ValueToken<>(1.);
+            assertEquals(checkSubtypeErrorMsg(t, "And", ValueToken.class, Boolean.class), e.getMessage());
         }
     }
 
@@ -50,7 +81,7 @@ public class CommandsTest {
         // arc tangent
         String input = "make :x 1 make :z atan :x";
         interpreter.interpret(input);
-        Variable<Double> z = (Variable<Double>) idManager.getObject("interpreter-:z");
+        Variable<Double> z = getVar("interpreter-:z");
         assertEquals(45.0, z.get());
 
         // arc tangent with non-numbers
@@ -59,7 +90,8 @@ public class CommandsTest {
             interpreter.interpret(input);
             fail();
         } catch (Exception e){
-            assertEquals("Cannot take arctan of non-number from <Variable :x> = <Value false>", e.getMessage());
+            ValueToken<?> t = new ValueToken<>(false);
+            assertEquals(checkSubtypeErrorMsg(t, "ArcTangent", ValueToken.class, Double.class), e.getMessage());
         }
     }
 
@@ -68,7 +100,7 @@ public class CommandsTest {
         // cosine
         String input = "make :x 38 make :z cos :x";
         interpreter.interpret(input);
-        Variable<Double> z = (Variable<Double>) idManager.getObject("interpreter-:z");
+        Variable<Double> z = getVar("interpreter-:z");
         assertEquals(0.788010753606722, z.get());
 
         // cosine with non-numbers
@@ -77,7 +109,8 @@ public class CommandsTest {
             interpreter.interpret(input);
             fail();
         } catch (Exception e){
-            assertEquals("Cannot take cosine of non-number from <Variable :x> = <Value false>", e.getMessage());
+            ValueToken<?> t = new ValueToken<>(false);
+            assertEquals(checkSubtypeErrorMsg(t, "Cosine", ValueToken.class, Double.class), e.getMessage());
         }
     }
 
@@ -86,7 +119,7 @@ public class CommandsTest {
         // difference
         String input = "make :x 1 make :y 2 make :z - :x :y";
         interpreter.interpret(input);
-        Variable<Double> z = (Variable<Double>) idManager.getObject("interpreter-:z");
+        Variable<Double> z = getVar("interpreter-:z");
         assertEquals(-1.0, z.get());
 
         // difference with non-numbers
@@ -95,7 +128,8 @@ public class CommandsTest {
             interpreter.interpret(input);
             fail();
         } catch (Exception e){
-            assertEquals("Cannot take difference of non-number from <Variable :x> = <Value false>", e.getMessage());
+            ValueToken<?> t = new ValueToken<>(false);
+            assertEquals(checkSubtypeErrorMsg(t, "Difference", ValueToken.class, Double.class), e.getMessage());
         }
     }
 
@@ -104,7 +138,7 @@ public class CommandsTest {
         // do times
         String input = "make :x [ -1 -1 -1 -1 -1 ] dotimes [ :i 5 ] [ setitem :i :x :i ]";
         interpreter.interpret(input);
-        Variable<List<Object>> x = (Variable<List<Object>>) idManager.getObject("interpreter-:x");
+        Variable<List<Object>> x = getVar("interpreter-:x");
         for (int i = 0; i < 5; i++){
             assertEquals((double)i, x.get().get(i));
         }
@@ -115,7 +149,8 @@ public class CommandsTest {
             interpreter.interpret(input);
             fail();
         } catch (Exception e){
-            assertEquals("Cannot repeat non-number of times from <Operator LessThan[2]> = <Value false>", e.getMessage());
+            ValueToken<?> t = new ValueToken<>(false);
+            assertEquals(checkSubtypeErrorMsg(t, "DoTimes", ValueToken.class, Double.class), e.getMessage());
         }
 
         // dotimes with non-variable
@@ -124,7 +159,8 @@ public class CommandsTest {
             interpreter.interpret(input);
             fail();
         } catch (Exception e){
-            assertEquals("Cannot repeat with non-variable <Value 6.0>", e.getMessage());
+            ValueToken<?> t = new ValueToken<>(6.);
+            assertEquals(checkTypeErrorMsg(t, "DoTimes", VariableToken.class), e.getMessage());
         }
 
         //dotimes with no variable
@@ -160,13 +196,13 @@ public class CommandsTest {
         // equal
         String input = "make :x 1 make :y 1 make :z == :x :y";
         interpreter.interpret(input);
-        Variable<Boolean> z = (Variable<Boolean>) idManager.getObject("interpreter-:z");
+        Variable<Boolean> z = getVar("interpreter-:z");
         assertTrue(z.get());
 
         // not equal
         input = "make :x 1 make :y 2 make :z == :x :y";
         interpreter.interpret(input);
-        z = (Variable<Boolean>) idManager.getObject("interpreter-:z");
+        z = getVar("interpreter-:z");
         assertFalse(z.get());
 
         // equal with non-numbers
@@ -175,7 +211,8 @@ public class CommandsTest {
             interpreter.interpret(input);
             fail();
         } catch (Exception e){
-            assertEquals("Cannot take equality of non-number from <Variable :x> = <Value false>", e.getMessage());
+            ValueToken<?> t = new ValueToken<>(false);
+            assertEquals(checkSubtypeErrorMsg(t, "Equal", ValueToken.class, Double.class), e.getMessage());
         }
 
         // equal with incorrect number of parameters
@@ -193,7 +230,7 @@ public class CommandsTest {
         // for
         String input = "make :x [ 0 0 0 0 0 ] for [ :i 0 5 1 ] [ global :x setitem :i :x :i ]";
         interpreter.interpret(input);
-        Variable<List<Object>> x = (Variable<List<Object>>) idManager.getObject("interpreter-:x");
+        Variable<List<Object>> x = getVar("interpreter-:x");
         for (int i = 0; i < 5; i++){
             assertEquals((double)i, x.get().get(i));
         }
@@ -204,7 +241,8 @@ public class CommandsTest {
             interpreter.interpret(input);
             fail();
         } catch (Exception e){
-            assertEquals("Cannot repeat non-number of times from <Operator LessThan[2]> = <Value false>", e.getMessage());
+            ValueToken<?> t = new ValueToken<>(false);
+            assertEquals(checkSubtypeErrorMsg(t, "For", ValueToken.class, Double.class), e.getMessage());
         }
 
         // for with non-variable
@@ -213,7 +251,8 @@ public class CommandsTest {
             interpreter.interpret(input);
             fail();
         } catch (Exception e){
-            assertEquals("Cannot loop with non-variable <Value 6.0>", e.getMessage());
+            ValueToken<?> t = new ValueToken<>(6.);
+            assertEquals(checkTypeErrorMsg(t, "For", VariableToken.class), e.getMessage());
         }
 
         //for with no variable
@@ -277,19 +316,19 @@ public class CommandsTest {
         // greater equal
         String input = "make :x 1 make :y 1 make :z >= :x :y";
         interpreter.interpret(input);
-        Variable<Boolean> z = (Variable<Boolean>) idManager.getObject("interpreter-:z");
+        Variable<Boolean> z = getVar("interpreter-:z");
         assertTrue(z.get());
 
         // greater
         input = "make :x 2 make :y 1 make :z >= :x :y";
         interpreter.interpret(input);
-        z = (Variable<Boolean>) idManager.getObject("interpreter-:z");
+        z = getVar("interpreter-:z");
         assertTrue(z.get());
 
         // not greater equal
         input = "make :x 1 make :y 2 make :z >= :x :y";
         interpreter.interpret(input);
-        z = (Variable<Boolean>) idManager.getObject("interpreter-:z");
+        z = getVar("interpreter-:z");
         assertFalse(z.get());
 
         // greater equal with non-numbers
@@ -298,7 +337,8 @@ public class CommandsTest {
             interpreter.interpret(input);
             fail();
         } catch (Exception e){
-            assertEquals("Cannot take >= of non-number from <Variable :x> = <Value false>", e.getMessage());
+            ValueToken<?> t = new ValueToken<>(false);
+            assertEquals(checkSubtypeErrorMsg(t, "GreaterEqual", ValueToken.class, Double.class), e.getMessage());
         }
 
         // greater equal with incorrect number of parameters
@@ -316,19 +356,19 @@ public class CommandsTest {
         // greater than
         String input = "make :x 2 make :y 1 make :z > :x :y";
         interpreter.interpret(input);
-        Variable<Boolean> z = (Variable<Boolean>) idManager.getObject("interpreter-:z");
+        Variable<Boolean> z = getVar("interpreter-:z");
         assertTrue(z.get());
 
         // not greater than
         input = "make :x 1 make :y 2 make :z > :x :y";
         interpreter.interpret(input);
-        z = (Variable<Boolean>) idManager.getObject("interpreter-:z");
+        z = getVar("interpreter-:z");
         assertFalse(z.get());
 
         // not greater than (equals)
         input = "make :x 1 make :y 1 make :z > :x :y";
         interpreter.interpret(input);
-        z = (Variable<Boolean>) idManager.getObject("interpreter-:z");
+        z = getVar("interpreter-:z");
         assertFalse(z.get());
 
         // greater than with non-numbers
@@ -337,7 +377,8 @@ public class CommandsTest {
             interpreter.interpret(input);
             fail();
         } catch (Exception e){
-            assertEquals("Cannot take > of non-number from <Variable :x> = <Value false>", e.getMessage());
+            ValueToken<?> t = new ValueToken<>(false);
+            assertEquals(checkSubtypeErrorMsg(t, "GreaterThan", ValueToken.class, Double.class), e.getMessage());
         }
 
         // greater than with incorrect number of parameters
@@ -355,13 +396,13 @@ public class CommandsTest {
         // if true
         String input = "make :x 1 make :y < 1 2 if :y [ make :x 3 ]";
         interpreter.interpret(input);
-        Variable<Double> x = (Variable<Double>) idManager.getObject("interpreter-:x");
+        Variable<Double> x = getVar("interpreter-:x");
         assertEquals(3.0, x.get());
 
         // if false
         input = "make :x 1 make :y < 2 1 if :y [ make :x 3 ]";
         interpreter.interpret(input);
-        x = (Variable<Double>) idManager.getObject("interpreter-:x");
+        x = getVar("interpreter-:x");
         assertEquals(1.0, x.get());
 
         // if with non-boolean
@@ -370,7 +411,8 @@ public class CommandsTest {
             interpreter.interpret(input);
             fail();
         } catch (Exception e){
-            assertEquals("Cannot take if of non-boolean from <Variable :y> = <Value 2.0>", e.getMessage());
+            ValueToken<?> t = new ValueToken<>(2.0);
+            assertEquals(checkSubtypeErrorMsg(t, "If", ValueToken.class, Boolean.class), e.getMessage());
         }
 
         // if with incorrect number of parameters
@@ -388,12 +430,12 @@ public class CommandsTest {
         // if true
         String input = "make :x 1 make :y < 1 2 ifelse :y [ global :x make :x 3 ] [ global :x make :x 4 ]";
         interpreter.interpret(input);
-        Variable<Double> x = (Variable<Double>) idManager.getObject("interpreter-:x");
+        Variable<Double> x = getVar("interpreter-:x");
         assertEquals(3.0, x.get(), 0.0001);
         // if false
         input = "make :x 1 make :y < 2 1 ifelse :y [ global :x make :x 3 ] [ global :x make :x 4 ]";
         interpreter.interpret(input);
-        x = (Variable<Double>) idManager.getObject("interpreter-:x");
+        x = getVar("interpreter-:x");
         assertEquals(4.0, x.get(), 0.0001);
 
         // if with non-boolean
@@ -402,7 +444,8 @@ public class CommandsTest {
             interpreter.interpret(input);
             fail();
         } catch (Exception e){
-            assertEquals("Cannot take if of non-boolean from <Variable :y> = <Value 2.0>", e.getMessage());
+            ValueToken<?> t = new ValueToken<>(2.0);
+            assertEquals(checkSubtypeErrorMsg(t, "IfElse", ValueToken.class, Boolean.class), e.getMessage());
         }
 
         // if with incorrect number of parameters
@@ -415,13 +458,12 @@ public class CommandsTest {
         }
     }
 
-
     @Test
     public void testItem(){
         // item
         String input = "make :x [ 1 2 3 ] make :y item 1 :x";
         interpreter.interpret(input);
-        Variable<Double> y = (Variable<Double>) idManager.getObject("interpreter-:y");
+        Variable<Double> y = getVar("interpreter-:y");
         assertEquals(2.0, y.get(), 0.0001);
 
         // item with non-list
@@ -430,7 +472,8 @@ public class CommandsTest {
             interpreter.interpret(input);
             fail();
         } catch (Exception e){
-            assertEquals("Cannot take item from non-list <Value 1.0>", e.getMessage());
+            ValueToken<?> t = new ValueToken<>(1.0);
+            assertEquals(checkTypeErrorMsg(t, "Item", ExpressionToken.class), e.getMessage());
         }
 
         // item with non-number
@@ -439,7 +482,12 @@ public class CommandsTest {
             interpreter.interpret(input);
             fail();
         } catch (Exception e){
-            assertEquals("Cannot get index non-number from <Variable :x> = <Expression <Value 1.0> <Value 2.0> <Value 3.0> >", e.getMessage());
+            ExpressionToken t = new ExpressionToken();
+            t.addToken(new ValueToken<>(1.));
+            t.addToken(new ValueToken<>(2.));
+            t.addToken(new ValueToken<>(3.));
+
+            assertEquals(checkSubtypeErrorMsg(t, "Item", ValueToken.class, Double.class), e.getMessage());
         }
 
         // item out of bounds
@@ -457,19 +505,19 @@ public class CommandsTest {
         // less equal
         String input = "make :x 1 make :y 2 make :z <= :x :y";
         interpreter.interpret(input);
-        Variable<Boolean> z = (Variable<Boolean>) idManager.getObject("interpreter-:z");
+        Variable<Boolean> z = getVar("interpreter-:z");
         assertTrue(z.get());
 
         // not less equal
         input = "make :x 2 make :y 1 make :z <= :x :y";
         interpreter.interpret(input);
-        z = (Variable<Boolean>) idManager.getObject("interpreter-:z");
+        z = getVar("interpreter-:z");
         assertFalse(z.get());
 
         // not less equal (equals)
         input = "make :x 1 make :y 1 make :z <= :x :y";
         interpreter.interpret(input);
-        z = (Variable<Boolean>) idManager.getObject("interpreter-:z");
+        z = getVar("interpreter-:z");
         assertTrue(z.get());
 
         // less equal with non-numbers
@@ -478,7 +526,8 @@ public class CommandsTest {
             interpreter.interpret(input);
             fail();
         } catch (Exception e){
-            assertEquals("Cannot take <= of non-number from <Variable :x> = <Value false>", e.getMessage());
+            ValueToken<?> t = new ValueToken<>(false);
+            assertEquals(checkSubtypeErrorMsg(t, "LessEqual", ValueToken.class, Double.class), e.getMessage());
         }
 
         // less equal with incorrect number of parameters
@@ -496,19 +545,19 @@ public class CommandsTest {
         // less than
         String input = "make :x 1 make :y 2 make :z < :x :y";
         interpreter.interpret(input);
-        Variable<Boolean> z = (Variable<Boolean>) idManager.getObject("interpreter-:z");
+        Variable<Boolean> z = getVar("interpreter-:z");
         assertTrue(z.get());
 
         // not less than
         input = "make :x 2 make :y 1 make :z < :x :y";
         interpreter.interpret(input);
-        z = (Variable<Boolean>) idManager.getObject("interpreter-:z");
+        z = getVar("interpreter-:z");
         assertFalse(z.get());
 
         // not less than (equals)
         input = "make :x 1 make :y 1 make :z < :x :y";
         interpreter.interpret(input);
-        z = (Variable<Boolean>) idManager.getObject("interpreter-:z");
+        z = getVar("interpreter-:z");
         assertFalse(z.get());
 
         // less than with non-numbers
@@ -517,7 +566,8 @@ public class CommandsTest {
             interpreter.interpret(input);
             fail();
         } catch (Exception e){
-            assertEquals("Cannot take < of non-number from <Variable :x> = <Value false>", e.getMessage());
+            ValueToken<?> t = new ValueToken<>(false);
+            assertEquals(checkSubtypeErrorMsg(t, "LessThan", ValueToken.class, Double.class), e.getMessage());
         }
 
         // less than with incorrect number of parameters
@@ -535,32 +585,32 @@ public class CommandsTest {
         // make user instruction, don't make global variable
         String input = "make :x 5 to test [ ] [ make :x + :x 2 ] test";
         interpreter.interpret(input);
-        Variable<Double> x = (Variable<Double>) idManager.getObject("interpreter-:x");
+        Variable<Double> x = getVar("interpreter-:x");
         assertEquals(5.0, x.get());
 
         // make user instruction
         input = "make :x 5 to test [ ] [ global :x make :x + :x 2 ] test";
         interpreter.interpret(input);
-        x = (Variable<Double>) idManager.getObject("interpreter-:x");
+        x = getVar("interpreter-:x");
         assertEquals(7.0, x.get());
 
         // make user instruction that returns a value
         input = "to test [ ] [ 1 ] make :x test";
         interpreter.interpret(input);
-        x = (Variable<Double>) idManager.getObject("interpreter-:x");
+        x = getVar("interpreter-:x");
         assertEquals(1.0, x.get());
 
         // make user instruction that returns pythagorean distance
         input = "to pythag [ :a :b ] [ sqrt + * :a :a * :b :b ] make :a pythag 3 4";
         interpreter.interpret(input);
-        x = (Variable<Double>) idManager.getObject("interpreter-:a");
+        x = getVar("interpreter-:a");
         assertEquals(5.0, x.get());
 
 
         // pass variables into user instruction
         input = "make :z 0 to test [ :x ] [ global :z make :z :x ] make :y 1 test :y";
         interpreter.interpret(input);
-        x = (Variable<Double>) idManager.getObject("interpreter-:z");
+        x = getVar("interpreter-:z");
         assertEquals(1.0, x.get());
 
         // make user instruction with incorrect number of parameters
@@ -587,13 +637,14 @@ public class CommandsTest {
             interpreter.interpret(input);
             fail();
         } catch (Exception e){
-            assertEquals("Cannot create function with non-variable argument <Value 1.0>", e.getMessage());
+            ValueToken<?> t = new ValueToken<>(1.0);
+            assertEquals(checkTypeErrorMsg(t, "MakeUserInstruction", VariableToken.class), e.getMessage());
         }
 
         // make user instruction with input
         input = "to test [ :x ] [ global :z make :z + :z :x ] test 1";
         interpreter.interpret(input);
-        x = (Variable<Double>) idManager.getObject("interpreter-:z");
+        x = getVar("interpreter-:z");
         assertEquals(2.0, x.get());
 
         // make user instruction with input and incorrect number of parameters
@@ -612,7 +663,7 @@ public class CommandsTest {
         // minus
         String input = "make :x 1 make :y ~ :x";
         interpreter.interpret(input);
-        Variable<Double> y = (Variable<Double>) idManager.getObject("interpreter-:y");
+        Variable<Double> y = getVar("interpreter-:y");
         assertEquals(-1.0, y.get());
 
         // minus with non-numbers
@@ -621,7 +672,8 @@ public class CommandsTest {
             interpreter.interpret(input);
             fail();
         } catch (Exception e){
-            assertEquals("Cannot negate non-number <Variable :x> = <Value false>", e.getMessage());
+            ValueToken<?> t = new ValueToken<>(false);
+            assertEquals(checkSubtypeErrorMsg(t, "Minus", ValueToken.class, Double.class), e.getMessage());
         }
 
         // minus with incorrect number of parameters
@@ -639,13 +691,13 @@ public class CommandsTest {
         // natural log
         String input = "make :x 1 make :y ln :x";
         interpreter.interpret(input);
-        Variable<Double> y = (Variable<Double>) idManager.getObject("interpreter-:y");
+        Variable<Double> y = getVar("interpreter-:y");
         assertEquals(0.0, y.get());
 
         // natural log of 3
         input = "make :x 3 make :y ln :x";
         interpreter.interpret(input);
-        y = (Variable<Double>) idManager.getObject("interpreter-:y");
+        y = getVar("interpreter-:y");
         assertEquals(1.0986122886681096, y.get());
 
         // natural log with non-numbers
@@ -654,7 +706,8 @@ public class CommandsTest {
             interpreter.interpret(input);
             fail();
         } catch (Exception e){
-            assertEquals("Cannot take natural log of non-number <Variable :x> = <Value false>", e.getMessage());
+            ValueToken<?> t = new ValueToken<>(false);
+            assertEquals(checkSubtypeErrorMsg(t, "NaturalLog", ValueToken.class, Double.class), e.getMessage());
         }
 
         // natural log with incorrect number of parameters
@@ -672,7 +725,7 @@ public class CommandsTest {
         // not
         String input = "make :x < 1 2 make :y not :x";
         interpreter.interpret(input);
-        Variable<Boolean> y = (Variable<Boolean>) idManager.getObject("interpreter-:y");
+        Variable<Boolean> y = getVar("interpreter-:y");
         assertEquals(false, y.get());
 
         // not with non-booleans
@@ -681,7 +734,8 @@ public class CommandsTest {
             interpreter.interpret(input);
             fail();
         } catch (Exception e){
-            assertEquals("Cannot take not of non-boolean <Variable :x> = <Value 1.0>", e.getMessage());
+            ValueToken<?> t = new ValueToken<>(1.0);
+            assertEquals(checkSubtypeErrorMsg(t, "Not", ValueToken.class, Boolean.class), e.getMessage());
         }
 
         // not with incorrect number of parameters
@@ -699,7 +753,7 @@ public class CommandsTest {
         // not equal
         String input = "make :x 1 make :y 2 make :z != :x :y";
         interpreter.interpret(input);
-        Variable<Boolean> z = (Variable<Boolean>) idManager.getObject("interpreter-:z");
+        Variable<Boolean> z = getVar("interpreter-:z");
         assertEquals(true, z.get());
 
         // not equal with non-numbers
@@ -708,7 +762,8 @@ public class CommandsTest {
             interpreter.interpret(input);
             fail();
         } catch (Exception e){
-            assertEquals("Cannot take != of non-number from <Variable :x> = <Value false>", e.getMessage());
+            ValueToken<?> t = new ValueToken<>(false);
+            assertEquals(checkSubtypeErrorMsg(t, "NotEqual", ValueToken.class, Double.class), e.getMessage());
         }
 
         // not equal with incorrect number of parameters
@@ -726,19 +781,19 @@ public class CommandsTest {
         // true or
         String input = "make :a < 1 2 make :b < 2 3 make :x or :a :b";
         interpreter.interpret(input);
-        Variable<Boolean> x = (Variable<Boolean>) idManager.getObject("interpreter-:x");
+        Variable<Boolean> x = getVar("interpreter-:x");
         assertEquals(true, x.get());
 
         // true or
         input = "make :a < 1 2 make :b < 3 2 make :x or :a :b";
         interpreter.interpret(input);
-        x = (Variable<Boolean>) idManager.getObject("interpreter-:x");
+        x = getVar("interpreter-:x");
         assertEquals(true, x.get());
 
         // false or
         input = "make :a < 2 1 make :b < 3 2 make :x or :a :b";
         interpreter.interpret(input);
-        x = (Variable<Boolean>) idManager.getObject("interpreter-:x");
+        x = getVar("interpreter-:x");
         assertEquals(false, x.get());
 
         // or with non-booleans
@@ -746,7 +801,8 @@ public class CommandsTest {
         try{
             interpreter.interpret(input);
         } catch (Exception e){
-            assertEquals("Cannot take OR of non-boolean from <Variable :a> = <Value 1.0>", e.getMessage());
+            ValueToken<?> t = new ValueToken<>(1.0);
+            assertEquals(checkSubtypeErrorMsg(t, "Or", ValueToken.class, Boolean.class), e.getMessage());
         }
     }
 
@@ -755,13 +811,13 @@ public class CommandsTest {
         // power
         String input = "make :x 2 make :y 3 make :z pow :x :y";
         interpreter.interpret(input);
-        Variable<Double> z = (Variable<Double>) idManager.getObject("interpreter-:z");
+        Variable<Double> z = getVar("interpreter-:z");
         assertEquals(8.0, z.get());
 
         // power multiple times with set
         input = "make :x 2 make :y 3 make :z ( pow :x :y 2 )";
         interpreter.interpret(input);
-        z = (Variable<Double>) idManager.getObject("interpreter-:z");
+        z = getVar("interpreter-:z");
         assertEquals(64.0, z.get());
 
         // power with non-numbers
@@ -770,7 +826,8 @@ public class CommandsTest {
             interpreter.interpret(input);
             fail();
         } catch (Exception e){
-            assertEquals("Cannot take power of non-number <Variable :x> = <Value false>", e.getMessage());
+            ValueToken<?> t = new ValueToken<>(false);
+            assertEquals(checkSubtypeErrorMsg(t, "Power", ValueToken.class, Double.class), e.getMessage());
         }
 
         // power with incorrect number of parameters
@@ -788,19 +845,19 @@ public class CommandsTest {
         // product
         String input = "make :x 2 make :y 3 make :z * :x :y";
         interpreter.interpret(input);
-        Variable<Double> z = (Variable<Double>) idManager.getObject("interpreter-:z");
+        Variable<Double> z = getVar("interpreter-:z");
         assertEquals(6.0, z.get());
 
         // product with non-numbers
         input = "make :x < 2 1 make :y 3 make :z * :x :y";
         interpreter.interpret(input);
-        z = (Variable<Double>) idManager.getObject("interpreter-:z");
+        z = getVar("interpreter-:z");
         assertEquals(0.0, z.get());
 
         // product with set notation
         input = "make :x 2 make :y 3 make :z ( * :x :y 3 )";
         interpreter.interpret(input);
-        z = (Variable<Double>) idManager.getObject("interpreter-:z");
+        z = getVar("interpreter-:z");
         assertEquals(18.0, z.get());
 
         // product with incorrect number of parameters
@@ -818,7 +875,7 @@ public class CommandsTest {
         // quotient
         String input = "make :x 2 make :y 3 make :z / :x :y";
         interpreter.interpret(input);
-        Variable<Double> z = (Variable<Double>) idManager.getObject("interpreter-:z");
+        Variable<Double> z = getVar("interpreter-:z");
         assertEquals(2./3., z.get());
 
         // quotient with non-numbers
@@ -827,7 +884,8 @@ public class CommandsTest {
             interpreter.interpret(input);
             fail();
         } catch (Exception e){
-            assertEquals("Cannot take quotient of non-number <Variable :x> = <Value false>", e.getMessage());
+            ValueToken<?> t = new ValueToken<>(false);
+            assertEquals(checkSubtypeErrorMsg(t, "Quotient", ValueToken.class, Double.class), e.getMessage());
         }
 
         // quotient with incorrect number of parameters
@@ -845,17 +903,17 @@ public class CommandsTest {
         // random
         String input = "make :x rand 1";
         interpreter.interpret(input);
-        Variable<Double> x = (Variable<Double>) idManager.getObject("interpreter-:x");
+        Variable<Double> x = getVar("interpreter-:x");
         assertTrue(x.get() < 1);
 
         input = "make :x rand 0.01";
         interpreter.interpret(input);
-        x = (Variable<Double>) idManager.getObject("interpreter-:x");
+        x = getVar("interpreter-:x");
         assertTrue(x.get() < 0.01);
 
         input = "make :x rand 10000000";
         interpreter.interpret(input);
-        x = (Variable<Double>) idManager.getObject("interpreter-:x");
+        x = getVar("interpreter-:x");
         assertTrue(x.get() > 100);
 
         // random with non-numbers
@@ -864,7 +922,8 @@ public class CommandsTest {
             interpreter.interpret(input);
             fail();
         } catch (Exception e){
-            assertEquals("Cannot take random with max of non-number <Operator LessThan[2]> = <Value true>", e.getMessage());
+            ValueToken<?> t = new ValueToken<>(true);
+            assertEquals(checkSubtypeErrorMsg(t, "Random", ValueToken.class, Double.class), e.getMessage());
         }
 
         // random with incorrect number of parameters
@@ -882,19 +941,19 @@ public class CommandsTest {
         // random range
         String input = "make :x randr 1 2";
         interpreter.interpret(input);
-        Variable<Double> x = (Variable<Double>) idManager.getObject("interpreter-:x");
+        Variable<Double> x = getVar("interpreter-:x");
         assertTrue(x.get() < 2);
         assertTrue(x.get() > 1);
 
         input = "make :x randr 0.01 0.02";
         interpreter.interpret(input);
-        x = (Variable<Double>) idManager.getObject("interpreter-:x");
+        x = getVar("interpreter-:x");
         assertTrue(x.get() < 0.02);
         assertTrue(x.get() > 0.01);
 
         input = "make :x randr 10000000 10000001";
         interpreter.interpret(input);
-        x = (Variable<Double>) idManager.getObject("interpreter-:x");
+        x = getVar("interpreter-:x");
         assertTrue(x.get() > 10000000);
         assertTrue(x.get() < 10000001);
 
@@ -904,7 +963,8 @@ public class CommandsTest {
             interpreter.interpret(input);
             fail();
         } catch (Exception e){
-            assertEquals("Cannot take random range with min of non-number <Operator LessThan[2]> = <Value true>", e.getMessage());
+            ValueToken<?> t = new ValueToken<>(true);
+            assertEquals(checkSubtypeErrorMsg(t, "RandomRange", ValueToken.class, Double.class), e.getMessage());
         }
 
         // random range with incorrect number of parameters
@@ -922,7 +982,7 @@ public class CommandsTest {
         // remainder
         String input = "make :x 2 make :y 3 make :z % :x :y";
         interpreter.interpret(input);
-        Variable<Double> z = (Variable<Double>) idManager.getObject("interpreter-:z");
+        Variable<Double> z = getVar("interpreter-:z");
         assertEquals(2.0, z.get());
 
         // remainder with non-numbers
@@ -931,7 +991,8 @@ public class CommandsTest {
             interpreter.interpret(input);
             fail();
         } catch (Exception e){
-            assertEquals("Cannot take remainder of non-number <Variable :x> = <Value false>", e.getMessage());
+            ValueToken<?> t = new ValueToken<>(false);
+            assertEquals(checkSubtypeErrorMsg(t, "Remainder", ValueToken.class, Double.class), e.getMessage());
         }
 
         // remainder with incorrect number of parameters
@@ -949,13 +1010,13 @@ public class CommandsTest {
         // repeat
         String input = "make :x 0 repeat 3 [ global :x make :x + :x 1 ]";
         interpreter.interpret(input);
-        Variable<Double> x = (Variable<Double>) idManager.getObject("interpreter-:x");
+        Variable<Double> x = getVar("interpreter-:x");
         assertEquals(3.0, x.get());
 
         // repeat multiple times with set notation
         input = "make :x 0 ( repeat 3 [ make :x + :x 50 ] 2 [ make :x - :x 20 ] 1 [ make :x + :x 2 ] ) ";
         interpreter.interpret(input);
-        x = (Variable<Double>) idManager.getObject("interpreter-:x");
+        x = getVar("interpreter-:x");
         assertEquals(112.0, x.get());
 
         // repeat with non-numbers
@@ -964,7 +1025,8 @@ public class CommandsTest {
             interpreter.interpret(input);
             fail();
         } catch (Exception e){
-            assertEquals("Cannot repeat non-number <Operator LessThan[2]> = <Value true> times", e.getMessage());
+            ValueToken<?> t = new ValueToken<>(true);
+            assertEquals(checkSubtypeErrorMsg(t, "Repeat", ValueToken.class, Double.class), e.getMessage());
         }
 
         // repeat with incorrect parameters
@@ -973,7 +1035,8 @@ public class CommandsTest {
             interpreter.interpret(input);
             fail();
         } catch (Exception e){
-            assertEquals("Cannot repeat non-block <Operator Sum[2]>", e.getMessage());
+            OperatorToken t = new Sum();
+            assertEquals(checkTypeErrorMsg(t, "Repeat", ExpressionToken.class), e.getMessage());
         }
 
         // repeat with incorrect number of parameters
@@ -991,7 +1054,7 @@ public class CommandsTest {
         // setitem
         String input = "make :x [ 1 2 3 ] make :y 4 setitem 1 :x :y";
         interpreter.interpret(input);
-        Variable<List<Object>> x = (Variable<List<Object>>) idManager.getObject("interpreter-:x");
+        Variable<List<Object>> x = getVar("interpreter-:x");
         List<Double> expected = new ArrayList<>(Arrays.asList(1.0, 4.0, 3.0));
         assertEquals(expected, x.get());
 
@@ -1001,7 +1064,8 @@ public class CommandsTest {
             interpreter.interpret(input);
             fail();
         } catch (Exception e){
-            assertEquals("Cannot take item from non-list <Value 1.0>", e.getMessage());
+            ValueToken<?> t = new ValueToken<>(1.);
+            assertEquals(checkTypeErrorMsg(t, "SetItem", ExpressionToken.class), e.getMessage());
         }
 
         // setitem with incorrect number of parameters
@@ -1019,13 +1083,13 @@ public class CommandsTest {
         // sine
         String input = "make :x 0 make :y sin :x";
         interpreter.interpret(input);
-        Variable<Double> y = (Variable<Double>) idManager.getObject("interpreter-:y");
+        Variable<Double> y = getVar("interpreter-:y");
         assertEquals(0.0, y.get(), 0.0001);
 
         // sine of 3
         input = "make :x 117 make :y sin :x";
         interpreter.interpret(input);
-        y = (Variable<Double>) idManager.getObject("interpreter-:y");
+        y = getVar("interpreter-:y");
         assertEquals(0.8910065241883679, y.get());
 
         // sine with non-numbers
@@ -1034,7 +1098,8 @@ public class CommandsTest {
             interpreter.interpret(input);
             fail();
         } catch (Exception e){
-            assertEquals("Cannot take sine of non-number <Variable :x> = <Value true>", e.getMessage());
+            ValueToken<?> t = new ValueToken<>(true);
+            assertEquals(checkSubtypeErrorMsg(t, "Sine", ValueToken.class, Double.class), e.getMessage());
         }
 
         // sine with incorrect number of parameters
@@ -1052,19 +1117,19 @@ public class CommandsTest {
         // square root
         String input = "make :x 0 make :y sqrt :x";
         interpreter.interpret(input);
-        Variable<Double> x = (Variable<Double>) idManager.getObject("interpreter-:x");
+        Variable<Double> x = getVar("interpreter-:x");
         assertEquals(0.0, x.get(), 0.0001);
 
         // square root of 4
         input = "make :x 4 make :y sqrt :x";
         interpreter.interpret(input);
-        x = (Variable<Double>) idManager.getObject("interpreter-:y");
+        x = getVar("interpreter-:y");
         assertEquals(2.0, x.get(), 0.0001);
 
         // square root of 84
         input = "make :x 84 make :y sqrt :x";
         interpreter.interpret(input);
-        x = (Variable<Double>) idManager.getObject("interpreter-:y");
+        x = getVar("interpreter-:y");
         assertEquals(9.16515138991168, x.get(), 0.0001);
 
         // square root with set notation
@@ -1082,7 +1147,8 @@ public class CommandsTest {
             interpreter.interpret(input);
             fail();
         } catch (Exception e){
-            assertEquals("Cannot take square root of non-number <Variable :x> = <Value true>", e.getMessage());
+            ValueToken<?> t = new ValueToken<>(true);
+            assertEquals(checkSubtypeErrorMsg(t, "SquareRoot", ValueToken.class, Double.class), e.getMessage());
         }
 
         // square root with incorrect number of parameters
@@ -1100,26 +1166,26 @@ public class CommandsTest {
         // sum
         String input = "make :x 0 make :y 0 make :z + :x :y";
         interpreter.interpret(input);
-        Variable<Double> i = (Variable<Double>) idManager.getObject("interpreter-:z");
+        Variable<Double> i = getVar("interpreter-:z");
 
         assertEquals(0.0, i.get());
 
         // sum of 1 and 2
         input = "make :x 1 make :y 2 make :z + :x :y";
         interpreter.interpret(input);
-        i = (Variable<Double>) idManager.getObject("interpreter-:z");
+        i = getVar("interpreter-:z");
         assertEquals(3.0, i.get());
 
         // test with set notation
         input = "make :z ( + 1 2 )";
         interpreter.interpret(input);
-        i = (Variable<Double>) idManager.getObject("interpreter-:z");
+        i = getVar("interpreter-:z");
         assertEquals(3.0, i.get());
 
         // test with more set notation
         input = "make :z ( + 1 2 3 4 5 )";
         interpreter.interpret(input);
-        i = (Variable<Double>) idManager.getObject("interpreter-:z");
+        i = getVar("interpreter-:z");
         assertEquals(15.0, i.get());
 
         // sum with non-numbers
@@ -1128,7 +1194,8 @@ public class CommandsTest {
             interpreter.interpret(input);
             fail();
         } catch (Exception e){
-            assertEquals("Cannot add non-number <Variable :x> = <Value true>", e.getMessage());
+            ValueToken<?> t = new ValueToken<>(true);
+            assertEquals(checkSubtypeErrorMsg(t, "Sum", ValueToken.class, Double.class), e.getMessage());
         }
 
         // sum with incorrect number of parameters
@@ -1146,13 +1213,13 @@ public class CommandsTest {
         // tangent
         String input = "make :x 0 make :y tan :x";
         interpreter.interpret(input);
-        Variable<Double> i = (Variable<Double>) idManager.getObject("interpreter-:y");
+        Variable<Double> i = getVar("interpreter-:y");
         assertEquals(0.0, i.get());
 
         // tangent of 3
         input = "make :x 199 make :y tan :x";
         interpreter.interpret(input);
-        i = (Variable<Double>) idManager.getObject("interpreter-:y");
+        i = getVar("interpreter-:y");
         assertEquals(0.3443276132896654, i.get());
 
         // tangent with non-numbers
@@ -1161,7 +1228,8 @@ public class CommandsTest {
             interpreter.interpret(input);
             fail();
         } catch (Exception e){
-            assertEquals("Cannot take tangent of non-number <Variable :x> = <Value true>", e.getMessage());
+            ValueToken<?> t = new ValueToken<>(true);
+            assertEquals(checkSubtypeErrorMsg(t, "Tangent", ValueToken.class, Double.class), e.getMessage());
         }
 
         // tangent with incorrect number of parameters
@@ -1181,7 +1249,7 @@ public class CommandsTest {
         String name = idManager.getId(x);
         String input = "make :y :game_" + name;
         interpreter.interpret(input);
-        Variable<Double> y = (Variable<Double>) idManager.getObject("interpreter-:y");
+        Variable<Double> y = getVar("interpreter-:y");
         assertEquals(5.0, y.get());
 
         Variable<Integer> x2 = new Variable<>(idManager, 2);
@@ -1189,7 +1257,7 @@ public class CommandsTest {
         name = idManager.getId(x2);
         input = "make :y :game_" + name;
         interpreter.interpret(input);
-        y = (Variable<Double>) idManager.getObject("interpreter-:y");
+        y = getVar("interpreter-:y");
         assertEquals(2, y.get());
 
         List<Integer> list = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5));
@@ -1199,8 +1267,39 @@ public class CommandsTest {
         name = idManager.getId(listVar);
         input = "make :y :game_" + name;
         interpreter.interpret(input);
-        Variable<List<Double>> yList = (Variable<List<Double>>) idManager.getObject("interpreter-:y");
+        Variable<List<Double>> yList = getVar("interpreter-:y");
         assertEquals(expected, yList.get());
 
+    }
+
+    @Test
+    public void testErrorsInOtherLanguages(){
+
+        String[] languages = {"Spanish", "Portuguese", "Chinese"};
+
+        for (String language : languages) {
+            interpreter.setLanguage(language);
+            setLanguage(language);
+
+            String input = "make :x < 1 2 make :y 3 make :z + :x :y";
+            try {
+                interpreter.interpret(input);
+                fail();
+            } catch (Exception e) {
+                ValueToken<?> t = new ValueToken<>(true);
+                assertEquals(checkSubtypeErrorMsg(t, "Sum", ValueToken.class, Double.class), e.getMessage());
+                System.out.println(e.getMessage());
+            }
+
+            input = "dotimes [ 6 5 ] [ 5 ]";
+            try {
+                interpreter.interpret(input);
+                fail();
+            } catch (Exception e) {
+                ValueToken<?> t = new ValueToken<>(6.);
+                assertEquals(checkTypeErrorMsg(t, "DoTimes", VariableToken.class), e.getMessage());
+                System.out.println(e.getMessage());
+            }
+        }
     }
 }

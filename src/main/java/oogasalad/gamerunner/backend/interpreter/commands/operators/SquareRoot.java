@@ -16,8 +16,7 @@ public class SquareRoot extends OperatorToken {
     public Token evaluate(Environment env){
         Token t = getArg(0).evaluate(env);
 
-        ValueToken<Double> x1 = checkArgumentWithSubtype(t, ValueToken.class, Double.class.getName(),
-                "Cannot take square root of non-number " + getArg(0) + " = " + t);
+        ValueToken<Double> x1 = checkArgumentWithSubtype(t, ValueToken.class, Double.class.getName(), env);
 
         return new ValueToken<>(Math.sqrt(x1.VALUE));
     }

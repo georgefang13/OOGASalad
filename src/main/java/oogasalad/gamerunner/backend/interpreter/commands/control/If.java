@@ -17,10 +17,8 @@ public class If extends OperatorToken {
     public Token evaluate(Environment env) throws IllegalArgumentException{
         Token t = getArg(0).evaluate(env);
 
-        ValueToken<Boolean> b = checkArgumentWithSubtype(t, ValueToken.class, Boolean.class.getName(),
-                "Cannot take if of non-boolean from " + getArg(0) + " = " + t);
-
-        ExpressionToken exprs =  checkArgument(getArg(1), ExpressionToken.class, "Cannot take if of non-expression " + getArg(1));
+        ValueToken<Boolean> b = checkArgumentWithSubtype(t, ValueToken.class, Boolean.class.getName(), env);
+        ExpressionToken exprs =  checkArgument(getArg(1), ExpressionToken.class, env);
 
         if (b.VALUE) {
             exprs.evaluate(env);

@@ -18,10 +18,9 @@ public class IfElse extends OperatorToken {
 
         Token t = getArg(0).evaluate(env);
 
-        ExpressionToken exprs1 = checkArgument(getArg(1), ExpressionToken.class, "Cannot repeat with non-expression " + getArg(1));
-        ExpressionToken exprs2 = checkArgument(getArg(2), ExpressionToken.class, "Cannot repeat with non-expression " + getArg(2));
-        ValueToken<Boolean> b = checkArgumentWithSubtype(t, ValueToken.class, Boolean.class.getName(),
-                "Cannot take if of non-boolean from " + getArg(0) + " = " + t);
+        ExpressionToken exprs1 = checkArgument(getArg(1), ExpressionToken.class, env);
+        ExpressionToken exprs2 = checkArgument(getArg(2), ExpressionToken.class, env);
+        ValueToken<Boolean> b = checkArgumentWithSubtype(t, ValueToken.class, Boolean.class.getName(), env);
 
         if (b.VALUE) {
             exprs1.evaluate(env);

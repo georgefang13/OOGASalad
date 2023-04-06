@@ -18,8 +18,7 @@ public class Cosine extends OperatorToken {
     public Token evaluate(Environment env) throws IllegalArgumentException{
         Token t = getArg(0).evaluate(env);
 
-        ValueToken<Double> x1 = checkArgumentWithSubtype(t, ValueToken.class, Double.class.getName(),
-                "Cannot take cosine of non-number from " + getArg(0) + " = " + t);
+        ValueToken<Double> x1 = checkArgumentWithSubtype(t, ValueToken.class, Double.class.getName(), env);
 
         return new ValueToken<>(Math.cos(x1.VALUE*Math.PI/180.));
     }

@@ -19,10 +19,8 @@ public class And extends OperatorToken {
         Token t1 = getArg(0).evaluate(env);
         Token t2 = getArg(1).evaluate(env);
 
-        ValueToken<Boolean> x1 = checkArgumentWithSubtype(t1, ValueToken.class, Boolean.class.getName(),
-                "Cannot take AND of non-boolean from " + getArg(0) + " = " + t1);
-        ValueToken<Boolean> x2 = checkArgumentWithSubtype(t2, ValueToken.class, Boolean.class.getName(),
-                "Cannot take AND of non-boolean from " + getArg(1) + " = " + t2);
+        ValueToken<Boolean> x1 = checkArgumentWithSubtype(t1, ValueToken.class, Boolean.class.getName(), env);
+        ValueToken<Boolean> x2 = checkArgumentWithSubtype(t2, ValueToken.class, Boolean.class.getName(), env);
 
         return new ValueToken<>(x1.VALUE && x2.VALUE);
     }

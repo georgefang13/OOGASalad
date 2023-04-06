@@ -13,19 +13,17 @@ public class DoTimes extends OperatorToken {
 
     public Token evaluate(Environment env) throws IllegalArgumentException{
 
-        ExpressionToken repeats = checkArgument(getArg(0), ExpressionToken.class, "Cannot repeat with non-expression " + getArg(0));
-        ExpressionToken exprs = checkArgument(getArg(1), ExpressionToken.class, "Cannot repeat a non-expression " + getArg(1));
+        ExpressionToken repeats = checkArgument(getArg(0), ExpressionToken.class, env);
+        ExpressionToken exprs = checkArgument(getArg(1), ExpressionToken.class, env);
 
         if (repeats.size() != 2) throwError(new IllegalArgumentException("Cannot repeat with " + repeats.size() + " arguments"));
 
-        checkArgument(repeats.get(0), VariableToken.class, "Cannot repeat with non-variable " + repeats.get(0));
+        checkArgument(repeats.get(0), VariableToken.class, env);
 
         VariableToken var = (VariableToken) repeats.get(0);
-
         Token t = repeats.get(1).evaluate(env);
 
-        ValueToken<Double> times = checkArgumentWithSubtype(t, ValueToken.class, Double.class.getName(),
-                "Cannot repeat non-number of times from " + repeats.get(1) + " = " + t);
+        ValueToken<Double> times = checkArgumentWithSubtype(t, ValueToken.class, Double.class.getName(), env);
 
         int reps = (int) Math.floor(times.VALUE);
 

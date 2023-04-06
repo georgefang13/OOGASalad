@@ -13,12 +13,11 @@ public class Repeat extends OperatorToken {
 
     @Override
     public Token evaluate(Environment env) {
-        ExpressionToken exprs = checkArgument(getArg(1), ExpressionToken.class, "Cannot repeat non-block " + getArg(1));
+        ExpressionToken exprs = checkArgument(getArg(1), ExpressionToken.class, env);
 
         Token t = getArg(0).evaluate(env);
 
-        ValueToken<Double> repeats = checkArgumentWithSubtype(t, ValueToken.class, Double.class.getName(),
-                "Cannot repeat non-number " + getArg(0) + " = " + t + " times");
+        ValueToken<Double> repeats = checkArgumentWithSubtype(t, ValueToken.class, Double.class.getName(), env);
 
         int reps = repeats.VALUE.intValue();
 

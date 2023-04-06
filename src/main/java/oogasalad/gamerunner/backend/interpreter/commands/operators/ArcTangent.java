@@ -18,8 +18,7 @@ public class ArcTangent extends OperatorToken {
     public Token evaluate(Environment env) throws IllegalArgumentException{
         Token t = getArg(0).evaluate(env);
 
-        ValueToken<Double> x1 = checkArgumentWithSubtype(t, ValueToken.class, Double.class.getName(),
-                "Cannot take arctan of non-number from " + getArg(0) + " = " + t);
+        ValueToken<Double> x1 = checkArgumentWithSubtype(t, ValueToken.class, Double.class.getName(), env);
 
         return new ValueToken<>(Math.atan(x1.VALUE)*180/Math.PI);
     }

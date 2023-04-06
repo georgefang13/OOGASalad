@@ -24,10 +24,9 @@ public class SetItem extends OperatorToken {
             t3 = t3.evaluate(env);
         }
 
-        ExpressionToken list = checkArgument(t2, ExpressionToken.class, "Cannot take item from non-list " + t2);
+        ExpressionToken list = checkArgument(t2, ExpressionToken.class, env);
 
-        ValueToken<Double> dindex = checkArgumentWithSubtype(t1, ValueToken.class, Double.class.getName(),
-                "Cannot get index non-number from " + getArg(0) + " = " + t1);
+        ValueToken<Double> dindex = checkArgumentWithSubtype(t1, ValueToken.class, Double.class.getName(), env);
 
         int index = dindex.VALUE.intValue();
         list.set(index, t3, env);

@@ -55,23 +55,20 @@ abstract public class OperatorToken extends Token {
   /**
    * Checks if the given token is of the given type and subtype. Throws an
    * exception if it is not.
-   * 
-   * @param t        token to check
-   * @param type     type to check
-   * @param subtype  subtype to check - Class.getName()
-   * @param errorMsg error message to throw if the token is not of the given type
-   *                 and subtype
+   *
+   * @param t       token to check
+   * @param type    type to check
+   * @param subtype subtype to check - Class.getName()
+   * @param env
    * @throws IllegalArgumentException if the token is not of the given type and
    *                                  subtype
    */
-  protected <T> T checkArgumentWithSubtype(Token t, Class<?> type, String subtype, String errorMsg)
+  protected <T> T checkArgumentWithSubtype(Token t, Class<?> type, String subtype, Environment env)
       throws IllegalArgumentException {
-    if (t.getClass().equals(type)) {
-      if (!t.SUBTYPE.equals(subtype)) {
-        throwError(new IllegalArgumentException(errorMsg));
-      }
-    } else {
-      throwError(new IllegalTokenTypeException(errorMsg));
+    if (!t.getClass().equals(type) || !t.SUBTYPE.equals(subtype)) {
+      String s = env.getLanguageResource("argumentSubtypeError");
+      s = String.format(s, t, NAME, type.getSimpleName(), subtype, t.getClass().getSimpleName(), t.SUBTYPE);
+      throwError(new IllegalArgumentException(s));
     }
     return (T) t;
   }
@@ -79,15 +76,17 @@ abstract public class OperatorToken extends Token {
   /**
    * Checks if the given token is of the given type. Throws an exception if it is
    * not.
-   * 
-   * @param t        token to check
-   * @param type     type to check
-   * @param errorMsg error message to throw if the token is not of the given type
+   *
+   * @param t    token to check
+   * @param type type to check
+   * @param env
    * @throws IllegalArgumentException if the token is not of the given type
    */
-  protected <T> T checkArgument(Token t, Class<?> type, String errorMsg) throws IllegalArgumentException {
+  protected <T> T checkArgument(Token t, Class<?> type, Environment env) throws IllegalArgumentException {
     if (t == null || !t.getClass().equals(type)) {
-      throw new IllegalTokenTypeException(errorMsg);
+      String s = env.getLanguageResource("argumentTypeError");
+      s = String.format(s, t, NAME, type.getSimpleName(), t == null ? "null" : t.getClass().getSimpleName());
+      throw new IllegalTokenTypeException(s);
     }
     return (T) t;
   }

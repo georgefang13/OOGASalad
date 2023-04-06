@@ -15,7 +15,7 @@ public class MakeVariable extends OperatorToken {
 
     @Override
     public ValueToken<?> evaluate(Environment env) {
-        VariableToken v = checkArgument(getArg(0), VariableToken.class, "Cannot create variable with non-variable name " + getArg(0));
+        VariableToken v = checkArgument(getArg(0), VariableToken.class, env);
 
         String name = v.NAME;
 

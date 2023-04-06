@@ -21,10 +21,10 @@ public class Item extends OperatorToken {
             t2 = t2.evaluate(env);
         }
 
-        ExpressionToken x2 = checkArgument(t2, ExpressionToken.class, "Cannot take item from non-list " + t2);
+        ExpressionToken x2 = checkArgument(t2, ExpressionToken.class, env);
 
         ValueToken<Double> d = checkArgumentWithSubtype(t1, ValueToken.class, Double.class.getName(),
-                "Cannot get index non-number from " + getArg(0) + " = " + t1);
+                env);
 
         int index = d.VALUE.intValue();
 

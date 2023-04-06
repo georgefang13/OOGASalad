@@ -26,8 +26,8 @@ public class Product extends OperatorToken {
         Token t1 = getArg(0).evaluate(env);
         Token t2 = getArg(1).evaluate(env);
 
-        ValueToken<?> x1 = checkArgument(t1, ValueToken.class, "Cannot take product of non-value " + getArg(0) + " = " + t1);
-        ValueToken<?> x2 = checkArgument(t2, ValueToken.class, "Cannot take product of non-value " + getArg(1) + " = " + t2);
+        ValueToken<?> x1 = checkArgument(t1, ValueToken.class, env);
+        ValueToken<?> x2 = checkArgument(t2, ValueToken.class, env);
 
         double x = getNumber(x1);
         double y = getNumber(x2);

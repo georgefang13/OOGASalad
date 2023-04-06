@@ -7,17 +7,29 @@ import oogasalad.gamerunner.backend.interpreter.tokens.ValueToken;
 import oogasalad.sharedDependencies.backend.ownables.Ownable;
 import oogasalad.sharedDependencies.backend.ownables.variables.Variable;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Environment {
     private final List<Map<String, Token>> scope = new ArrayList<>();
     private IdManager<Ownable> game;
 
+    private static final String LANGUAGE_RESOURCE_PATH = "backend.interpreter.languages";
+    private String language = "English";
+
+    ResourceBundle resources;
+
     public Environment(){
         scope.add(new HashMap<>());
+        resources = ResourceBundle.getBundle(LANGUAGE_RESOURCE_PATH + "." + language);
+    }
+
+    public void setLanguage(String language){
+        this.language = language;
+        resources = ResourceBundle.getBundle(LANGUAGE_RESOURCE_PATH + "." + language);
+    }
+
+    public String getLanguageResource(String key){
+        return resources.getString(key);
     }
 
     public void linkSimulation(IdManager<Ownable> game){
@@ -64,6 +76,20 @@ public class Environment {
      * @param val the token corresponding to the variable
      */
     public void addVariable(String name, Token val){
+
+        if (name.startsWith(":game_")) {
+
+            name = name.substring(6);
+
+            if (game.isIdInUse(name)) {
+                game.removeObject(name);
+            }
+
+            Variable<?> var = convertTokenToVariable(val);
+            game.addObject(var, name);
+
+            return;
+        }
 
         name = "interpreter-" + name;
 

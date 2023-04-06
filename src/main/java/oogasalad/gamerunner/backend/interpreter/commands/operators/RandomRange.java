@@ -17,11 +17,8 @@ public class RandomRange extends OperatorToken {
         Token t1 = getArg(0).evaluate(env);
         Token t2 = getArg(1).evaluate(env);
 
-        ValueToken<Double> min = checkArgumentWithSubtype(t1, ValueToken.class, Double.class.getName(),
-                "Cannot take random range with min of non-number " + getArg(0) + " = " + t1);
-
-        ValueToken<Double> max = checkArgumentWithSubtype(t2, ValueToken.class, Double.class.getName(),
-                "Cannot take random range with max of non-number " + getArg(1) + " = " + t2);
+        ValueToken<Double> min = checkArgumentWithSubtype(t1, ValueToken.class, Double.class.getName(), env);
+        ValueToken<Double> max = checkArgumentWithSubtype(t2, ValueToken.class, Double.class.getName(), env);
 
         double rand = Math.random() * (max.VALUE - min.VALUE) + min.VALUE;
         return new ValueToken<>(rand);

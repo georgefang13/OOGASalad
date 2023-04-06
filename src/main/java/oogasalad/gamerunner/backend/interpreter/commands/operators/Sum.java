@@ -17,11 +17,9 @@ public class Sum extends OperatorToken {
     Token t1 = getArg(0).evaluate(env);
     Token t2 = getArg(1).evaluate(env);
 
-    ValueToken<Double> x1 = checkArgumentWithSubtype(t1, ValueToken.class, Double.class.getName(),
-        "Cannot add non-number " + getArg(0) + " = " + t1);
+    ValueToken<Double> x1 = checkArgumentWithSubtype(t1, ValueToken.class, Double.class.getName(), env);
 
-    ValueToken<Double> x2 = checkArgumentWithSubtype(t2, ValueToken.class, Double.class.getName(),
-        "Cannot add non-number " + getArg(1) + " = " + t2);
+    ValueToken<Double> x2 = checkArgumentWithSubtype(t2, ValueToken.class, Double.class.getName(), env);
 
     return new ValueToken<>(x1.VALUE + x2.VALUE);
   }

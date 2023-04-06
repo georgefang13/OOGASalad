@@ -15,8 +15,7 @@ public class Sine extends OperatorToken {
     public Token evaluate(Environment env){
         Token t = getArg(0).evaluate(env);
 
-        ValueToken<Double> x1 = checkArgumentWithSubtype(t, ValueToken.class, Double.class.getName(),
-                "Cannot take sine of non-number " + getArg(0) + " = " + t);
+        ValueToken<Double> x1 = checkArgumentWithSubtype(t, ValueToken.class, Double.class.getName(), env);
 
         return new ValueToken<>(Math.sin(x1.VALUE * Math.PI/180.));
     }
