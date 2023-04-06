@@ -59,8 +59,11 @@ public class ExpressionToken extends Token implements Iterable<Token> {
    * @param i index of token to set
    * @param t token to set at index i
    */
-  public void set(int i, Token t) {
+  public void set(int i, Token t, Environment env) {
     tokens.set(i, t);
+    if (link != null){
+      link.set(export(env));
+    }
   }
 
   @Override
@@ -75,6 +78,15 @@ public class ExpressionToken extends Token implements Iterable<Token> {
   @Override
   public Iterator<Token> iterator() {
     return tokens.iterator();
+  }
+
+  @Override
+  public Object export(Environment env) {
+    List<Object> list = new ArrayList<>();
+    for (Token t : tokens) {
+      list.add(t.export(env));
+    }
+    return list;
   }
 
   @Override

@@ -15,6 +15,12 @@ public class VariableToken extends Token{
     }
 
     @Override
+    public Object export(Environment env){
+        Token t = env.getLocalVariable(NAME);
+        return t.export(env);
+    }
+
+    @Override
     public String toString(){
         return "<" + TYPE + " " + NAME + ">";
     }

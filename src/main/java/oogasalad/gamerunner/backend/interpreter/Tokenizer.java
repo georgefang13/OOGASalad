@@ -1,17 +1,21 @@
 package oogasalad.gamerunner.backend.interpreter;
 
 
+import com.google.gson.*;
 import oogasalad.gamerunner.backend.interpreter.exceptions.TokenNotRecognizedException;
 import oogasalad.gamerunner.backend.interpreter.tokens.Token;
 
+import java.io.IOException;
 import java.lang.reflect.Constructor;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.regex.Pattern;
 
 public class Tokenizer {
     // NOTE: make ONE chooser since generally accepted behavior is that it remembers where user left it last
     // command variations per class
-    private static final String LANGUAGE_RESOURCE_PATH = Tokenizer.class.getPackageName();
+    private static final String SYNTAX_RESOURCE_PATH = "backend.interpreter.Syntax";
 
     // token types and the regular expression patterns that recognize those types
     // note, it is a list because order matters (some patterns may be more generic and so should be added last)
@@ -73,7 +77,7 @@ public class Tokenizer {
     private Token extractToken(String key, String match) throws RuntimeException {
         try {
             if (builtinFunctions.contains(match)){
-                Class<?> clazz = Class.forName("slogo.model.interpreter.commands." + match);
+                Class<?> clazz = Class.forName("oogasalad.gamerunner.backend.interpreter.commands." + match);
                 Constructor<?> constructor = clazz.getConstructor();
                 return (Token) constructor.newInstance();
             }
@@ -109,23 +113,24 @@ public class Tokenizer {
         syntaxTokens.clear();
 
         // add in the built-in functions
-        for (Map.Entry<String, Pattern> p : getPatterns(language, true)){
+        for (Map.Entry<String, Pattern> p : getLanguagePatterns(language)){
             myTokenOptions.add(p);
             builtinFunctions.add(p.getKey());
         }
 
         // add in the general syntax types
-        for (Map.Entry<String, Pattern> p : getPatterns("Syntax", false)){
+        for (Map.Entry<String, Pattern> p : getSyntaxPatterns()){
             myTokenOptions.add(p);
             syntaxTokens.add(p.getKey());
         }
     }
 
     // Add given resource file to this language's recognized types
-    private List<Map.Entry<String, Pattern>> getPatterns (String language, boolean languageFile) {
+    private List<Map.Entry<String, Pattern>> getSyntaxPatterns () {
         List<Map.Entry<String, Pattern>> tokens = new ArrayList<>();
-        String path = LANGUAGE_RESOURCE_PATH + (languageFile ? ".languages." : ".") + language;
-        ResourceBundle resources = ResourceBundle.getBundle(path);
+
+        ResourceBundle resources = ResourceBundle.getBundle(SYNTAX_RESOURCE_PATH);
+
         for (String key : Collections.list(resources.getKeys())) {
             tokens.add(new AbstractMap.SimpleEntry<>(key,
                     Pattern.compile(resources.getString(key), Pattern.CASE_INSENSITIVE)));
@@ -134,5 +139,50 @@ public class Tokenizer {
             }
         }
         return tokens;
+    }
+
+    private List<Map.Entry<String, Pattern>> getLanguagePatterns (String language) {
+        List<Map.Entry<String, Pattern>> tokens = new ArrayList<>();
+
+        String filePath = "backend/interpreter/languages/" + language + ".json";
+        String absoluteFilePath = Objects.requireNonNull(Tokenizer.class.getClassLoader().getResource(filePath)).getPath();
+
+        String fileContent = "";
+        // Read the entire file content
+        try {
+            fileContent = Files.readString(Paths.get(absoluteFilePath));
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+
+        JsonElement json = JsonParser.parseString(fileContent);
+
+        JsonObject obj = json.getAsJsonObject();
+
+        for (String key : obj.keySet()){
+            JsonObject value = (JsonObject) obj.get(key);
+            String folder = value.get("folder").getAsString();
+            String str = value.get("str").getAsString();
+            str = sanitizeRegex(str);
+
+            String name = (folder.isEmpty() ? "" : folder + ".") + key;
+
+            AbstractMap.SimpleEntry<String, Pattern> entry = new AbstractMap.SimpleEntry<>(
+                    name,
+                    Pattern.compile(str, Pattern.CASE_INSENSITIVE)
+            );
+            tokens.add(entry);
+        }
+
+        return tokens;
+    }
+
+    String sanitizeRegex(String str){
+        String specialChars = "[]{}()\\^$.|?*+";
+        for (int i = 0; i < specialChars.length(); i++){
+            str = str.replace(specialChars.charAt(i) + "", "\\" + specialChars.charAt(i));
+        }
+        return str;
     }
 }

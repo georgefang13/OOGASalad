@@ -1,7 +1,7 @@
 package oogasalad.gamerunner.backend.interpreter.tokens;
 
 import oogasalad.gamerunner.backend.interpreter.Environment;
-import oogasalad.gamerunner.backend.interpreter.commands.UserInstruction;
+import oogasalad.gamerunner.backend.interpreter.commands.control.UserInstruction;
 
 public class TempFunctionToken extends OperatorToken {
   public final String NAME;
