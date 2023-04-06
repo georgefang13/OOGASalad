@@ -16,9 +16,9 @@ public class SplashMainScene extends AbstractScene {
   public Scene makeScene() {
     StackPane root = new StackPane();
     VBox vbox = new VBox(10);
-    Button playButton = new Button(getText("PlayGameButton"));
+    Button playButton = new Button(Properties.getText("PlayGameButton"));
     playButton.setOnAction(e -> getWindow().windowController.registerAndShow(WindowTypes.WindowType.GAME_WINDOW));
-    Button editButton = new Button(getText("EditGameButton"));
+    Button editButton = new Button(Properties.getText("EditGameButton"));
     editButton.setOnAction(e -> getWindow().windowController.registerAndShow(WindowTypes.WindowType.EDIT_WINDOW));
     vbox.getChildren().addAll(playButton, editButton);
     vbox.setAlignment(Pos.CENTER);
