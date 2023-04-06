@@ -1,16 +1,15 @@
-package oogasalad.frontend.components.modals.SubInputModals;
+package oogasalad.gameeditor.frontend.components.modals.SubInputModals;
 
 import java.util.ArrayList;
 import java.util.Map;
 
-import java.util.Objects;
 import java.util.ResourceBundle;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
-import oogasalad.frontend.components.modals.InputModal;
+import oogasalad.gameeditor.frontend.components.modals.InputModal;
 
 public class CreateGameModal extends InputModal {
     private static final ResourceBundle MODAL_ID_BUNDLE = ResourceBundle.getBundle("frontend/modals/ModalStylingID");

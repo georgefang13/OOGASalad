@@ -1,4 +1,4 @@
-package oogasalad.frontend.components.modals;
+package oogasalad.gameeditor.frontend.components.modals;
 
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DialogPane;

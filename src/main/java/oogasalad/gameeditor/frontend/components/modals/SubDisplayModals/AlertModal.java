@@ -1,6 +1,6 @@
-package oogasalad.frontend.components.modals.SubDisplayModals;
+package oogasalad.gameeditor.frontend.components.modals.SubDisplayModals;
 
-import oogasalad.frontend.components.modals.DisplayModal;
+import oogasalad.gameeditor.frontend.components.modals.DisplayModal;
 
 
 public class AlertModal extends DisplayModal {

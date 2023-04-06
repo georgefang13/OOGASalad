@@ -1,4 +1,4 @@
-package oogasalad.frontend.components.Components;
+package oogasalad.gameeditor.frontend.components.Components;
 
 /**
  * @author hanzh

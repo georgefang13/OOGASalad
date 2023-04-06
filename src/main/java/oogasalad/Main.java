@@ -1,16 +1,13 @@
 package oogasalad;
 
 
-import java.util.Objects;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.application.Application;
-import oogasalad.frontend.components.modals.Modal;
-import oogasalad.frontend.components.modals.SubDisplayModals.AlertModal;
-import oogasalad.frontend.components.modals.SubInputModals.CreateGameModal;
-import oogasalad.frontend.components.modals.InputModal;
+import oogasalad.gameeditor.frontend.components.modals.SubDisplayModals.AlertModal;
+import oogasalad.gameeditor.frontend.components.modals.SubInputModals.CreateGameModal;
 
 
 /**

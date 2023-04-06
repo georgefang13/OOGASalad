@@ -1,4 +1,4 @@
-package oogasalad.frontend.components.Components.LogicComponent;
+package oogasalad.gameeditor.frontend.components.Components.LogicComponent;
 
 import java.util.List;
 import javafx.scene.Node;

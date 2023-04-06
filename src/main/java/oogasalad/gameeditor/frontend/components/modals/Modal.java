@@ -1,4 +1,4 @@
-package oogasalad.frontend.components.modals;
+package oogasalad.gameeditor.frontend.components.modals;
 
 import java.io.InputStream;
 import java.util.ArrayList;

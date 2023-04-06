@@ -1,6 +1,6 @@
-package oogasalad.frontend.components.Components.DisplayableComponents;
+package oogasalad.gameeditor.frontend.components.Components.DisplayableComponents;
 
-import oogasalad.frontend.components.Components.Component;
+import oogasalad.gameeditor.frontend.components.Components.Component;
 
 /**
  * @author Han, Aryan
