@@ -9,12 +9,18 @@ import java.util.ResourceBundle;
  */
 public class GraphicHandler {
 
-  ResourceBundle SizeBundle;
-  int windowSize;
+  //TODO add the SIZE_FILE and set the file names based on convention
+  final static public String FILE_LOCATION = "";
+  final static public String SIZE_FILE = FILE_LOCATION + "";
+  private ResourceBundle SizeBundle;
+  private int windowSize;
   //TODO rename this AreaSize based on what the Panel will be called
-  int editingAreaSize;
+  private int editingAreaSize;
+  private int scalingFactor;
   public GraphicHandler(){
-
+    SizeBundle = ResourceBundle.getBundle(SIZE_FILE);
+    windowSize = Integer.parseInt(SizeBundle.getString("WindowSize"));
+    editingAreaSize = Integer.parseInt(SizeBundle.getString("editingAreaSize"));
   }
 
   /**
@@ -24,7 +30,7 @@ public class GraphicHandler {
    * @return the Point that is displayed in the Editor
    */
   public Point absoluteCoordinatesToEditor(Point absoluteCoord){
-
+    return absoluteCoord.scale(scalingFactor);
   }
 
   /**
@@ -33,7 +39,7 @@ public class GraphicHandler {
    * @return the size of the Component it should be in the Editor
    */
   public double absoluteSizeToEditor(double size){
-
+    return size*scalingFactor;
   }
 
   /**

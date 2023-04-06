@@ -6,6 +6,7 @@ package oogasalad.gameeditor.frontend.ViewObjects.Components;
  * given any input parameters
  */
 public class ComponentsFactory {
+
   public ComponentsFactory(){
 
   }
