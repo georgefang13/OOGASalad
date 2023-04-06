@@ -24,7 +24,7 @@ public interface DisplayableComponent extends Component {
    * This is the method that allows for visual for DisplayableComponent to be changed
    * @param imagePath the path where the image is contained to represent the Component
    */
-  void setView(String imagePath);
+  void setImage(String imagePath);
   /**
    * This is the method that allows Component in the game-editor to be resized
    * @param size the size of the ImageView that represents the Component

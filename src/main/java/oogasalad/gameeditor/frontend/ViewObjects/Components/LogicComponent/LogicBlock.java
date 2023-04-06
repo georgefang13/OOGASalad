@@ -55,7 +55,7 @@ public class LogicBlock implements LogicComponent{
   }
 
   @Override
-  public void setView(String imagePath) {
+  public void setImage(String imagePath) {
 
   }
 
