@@ -177,28 +177,31 @@ public class Game {
   }
 
 
-  /**
-   * Adds an Ownable to the game for a specific owner.
-   * Adds the Ownable to the IdManager and Owner.
-   * @param owner the Owner of the Ownable
-   */
-  public void addOwnable(Owner owner) {
-    //GameObject gameObject = new GameObject();
-    //ownableIdManager.addObject();
-  }
-
 //  /**
-//   * Adds an Ownable to the GameWorld
+//   * Adds an Ownable to the IdManager and Owner.
+//   * @param owner the Owner of the Ownable
+//   * @param ownable the Ownable being added to owner
+//   */
+//  public void addOwnableToPlayer(Owner owner, Ownable ownable) {
+//    ownableIdManager.addObject(ownable, owner);
+//  }
+//
+//  /**
 //   * Adds the Ownable to the IdManager and GameWorld.
 //   * @param ownable the Ownable to add
 //   */
-//  public void addOwnable(Ownable ownable) {
-//    addOwnable(ownable, gameWorld);
+//  public void addOwnableToGameworld(Ownable ownable) {
+//    ownableIdManager.addObject(ownable, gameWorld);
 //  }
 //
+//  /**
+//   * Creates an ownable using ownableFactory
+//   * @param ?
+//   */
+//  public void createOwnable(){
+//    // TODO Make factory
+//  }
 
-  // TODO Make factory
-  // TODO Create ownable method
   /**
    * Gets the Owner of an Ownable with id.
    * @param id the id of the Ownable
