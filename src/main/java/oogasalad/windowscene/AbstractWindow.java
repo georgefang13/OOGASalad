@@ -10,7 +10,7 @@ public abstract class AbstractWindow extends Stage {
 
   public AbstractWindow(WindowMediator windowController) {
     this.windowController = windowController;
-    scenes = defineScenes();
+    this.scenes = defineScenes();
     setWidth(PropertiesManager.getNumeric("WindowHeight"));
     setHeight(PropertiesManager.getNumeric("WindowWidth"));
   }

@@ -2,7 +2,6 @@ package oogasalad.windowscene;
 
 import java.util.ArrayList;
 import java.util.List;
-import javafx.scene.Scene;
 
 public class ThemeManager {
 
@@ -12,9 +11,8 @@ public class ThemeManager {
 
   private static List<ThemeObserver> observers = new ArrayList<>();
 
-  public static void applyTheme(Scene scene) {
-    scene.getStylesheets().clear();
-    scene.getStylesheets().add(theme + ".css");
+  public static String getTheme() {
+    return theme;
   }
 
   public static void setTheme(String newTheme) {

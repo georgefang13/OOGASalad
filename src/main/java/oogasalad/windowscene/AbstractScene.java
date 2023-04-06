@@ -1,7 +1,5 @@
 package oogasalad.windowscene;
 
-
-import java.util.ResourceBundle;
 import javafx.scene.Scene;
 
 public abstract class AbstractScene implements PropertiesObserver, ThemeObserver {
@@ -9,21 +7,15 @@ public abstract class AbstractScene implements PropertiesObserver, ThemeObserver
   protected AbstractWindow window;
 
   protected Scene scene;
-  protected ResourceBundle textResources;
-  protected ResourceBundle numericResources;
-  protected String stylesheet;
 
   public AbstractScene(AbstractWindow window) {
     this.window = window;
-    setTheme("dark");
+    this.scene = makeScene();
     PropertiesManager.addObserver(this);
+    ThemeManager.addObserver(this);
   }
 
   public abstract Scene makeScene();
-
-  public void setTheme(String theme) {
-    stylesheet = theme + ".css";
-  }
 
   protected Scene getScene() {
     return scene;
@@ -39,7 +31,7 @@ public abstract class AbstractScene implements PropertiesObserver, ThemeObserver
 
   public final void setTheme() {
     scene.getStylesheets().clear();
-    scene.getStylesheets().add(stylesheet);
+    scene.getStylesheets().add(ThemeManager.getTheme());
   }
 
 }

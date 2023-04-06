@@ -36,7 +36,7 @@ public class SplashMainScene extends AbstractScene {
     themeDropdown.getItems().addAll("light", "dark");
     themeDropdown.getSelectionModel().selectedItemProperty()
         .addListener((observable, oldValue, newValue) -> {
-
+          ThemeManager.setTheme(newValue);
         });
     themeDropdown.setValue("light");
     vbox.getChildren().addAll(playButton, editButton, languageDropdown, themeDropdown);
@@ -44,6 +44,7 @@ public class SplashMainScene extends AbstractScene {
     root.getChildren().add(vbox);
     setScene(new Scene(root));
     setText();
+    setTheme();
     return getScene();
   }
 

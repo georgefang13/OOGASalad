@@ -25,6 +25,7 @@ public class GameEditorMainScene extends AbstractScene {
     root.setLeft(new VBox(editGridButton));
     setScene(new Scene(root));
     setText();
+    setTheme();
     return getScene();
   }
 

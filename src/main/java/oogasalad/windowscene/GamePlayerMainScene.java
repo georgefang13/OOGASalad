@@ -25,6 +25,7 @@ public class GamePlayerMainScene extends AbstractScene {
         root.setLeft(new VBox(playGameButton));
         setScene(new Scene(root));
         setText();
+        setTheme();
         return getScene();
     }
 
