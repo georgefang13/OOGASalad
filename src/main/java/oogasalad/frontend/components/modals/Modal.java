@@ -4,6 +4,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Properties;
 
 import java.util.ResourceBundle;
@@ -17,6 +18,8 @@ import javafx.stage.Modality;
 import javafx.stage.StageStyle;
 
 public class Modal<T> extends Dialog<T> {
+    private final String MODAL_STYLE_SHEET = Objects
+        .requireNonNull(getClass().getClassLoader().getResource("stylesheets/modalStyles.css")).toExternalForm();
     private Map<String, String> myPropertiesMap;
     private String myTitle;
     private static String MODAL_FILE_PATH = "frontend/modals/Modals.properties";
@@ -37,6 +40,8 @@ public class Modal<T> extends Dialog<T> {
         initStyle(StageStyle.UNDECORATED);
         setResizable(false);
         setDialogPane(createDialogPane());
+        getDialogPane().getStylesheets().add(MODAL_STYLE_SHEET);
+
         setResultConverter(this::convertResult);
     }
 

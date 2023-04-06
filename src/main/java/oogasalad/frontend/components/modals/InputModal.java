@@ -1,5 +1,6 @@
 package oogasalad.frontend.components.modals;
 
+import java.util.ResourceBundle;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
@@ -18,7 +19,8 @@ import java.util.Map;
 import java.util.ArrayList;
 
 public class InputModal extends Modal {
-
+    private static final ResourceBundle MODAL_ID_BUNDLE = ResourceBundle.getBundle("frontend/modals/ModalStylingID");
+    private static final String IMAGE_PICKER_ID = "ImagePickerID";
     final public static int GAP = 10;
     final public static int INSET_TOP = 20;
     final public static int INSET_RIGHT = 150;
@@ -155,6 +157,7 @@ public class InputModal extends Modal {
             fileChooser.getExtensionFilters().addAll(
                     new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif"));
         });
+        ImageButton.setId(MODAL_ID_BUNDLE.getString(IMAGE_PICKER_ID));
         return ImageButton;
     }
 

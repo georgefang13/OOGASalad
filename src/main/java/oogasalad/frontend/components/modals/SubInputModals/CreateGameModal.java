@@ -3,6 +3,9 @@ package oogasalad.frontend.components.modals.SubInputModals;
 import java.util.ArrayList;
 import java.util.Map;
 
+import java.util.Objects;
+import java.util.ResourceBundle;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
@@ -10,7 +13,8 @@ import javafx.scene.layout.GridPane;
 import oogasalad.frontend.components.modals.InputModal;
 
 public class CreateGameModal extends InputModal {
-
+    private static final ResourceBundle MODAL_ID_BUNDLE = ResourceBundle.getBundle("frontend/modals/ModalStylingID");
+    private static final String IMAGE_PICKER_ID = "ImagePickerID";
     private Map<String, String> myPropertiesMap;
 
     /**
@@ -60,8 +64,12 @@ public class CreateGameModal extends InputModal {
         grid.add(new Label(myPropertiesMap.get("Template")), 0, 3);
         grid.add(makeDropdown(myPropertiesMap.get("Template")), 1, 3);
         grid.add(new Label(myPropertiesMap.get("SetImage")), 0, 4);
-        grid.add(makeImagePicker(myPropertiesMap.get("SetImage")), 1, 4);
-        
+//        grid.add(makeImagePicker(myPropertiesMap.get("SetImage")), 1, 4);
+        Button imagePicker = makeImagePicker(myPropertiesMap.get("SetImage"));
+        imagePicker.setId(MODAL_ID_BUNDLE.getString(IMAGE_PICKER_ID));
+        grid.add(imagePicker, 1, 4);
+
+
         this.getDialogPane().setContent(grid);
     }
 
