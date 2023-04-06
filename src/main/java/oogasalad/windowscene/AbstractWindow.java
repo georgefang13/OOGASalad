@@ -3,6 +3,14 @@ package oogasalad.windowscene;
 import java.util.HashMap;
 import java.util.Map;
 import javafx.stage.Stage;
+import oogasalad.windowscene.controllers.SceneTypes;
+import oogasalad.windowscene.controllers.WindowMediator;
+import oogasalad.windowscene.managers.PropertiesManager;
+
+/**
+ * @author Connor Wells
+ * @author Owen MacKenzie
+ */
 
 public abstract class AbstractWindow extends Stage {
   private static final String MAIN_ID = "main";
@@ -10,15 +18,16 @@ public abstract class AbstractWindow extends Stage {
   protected WindowMediator windowController;
   protected Map<String, AbstractScene> scenes;
 
+  //protected Manager manager = PropertiesFactory.createManager(); //TODO: pass in factory DI
+
   public AbstractWindow(WindowMediator windowController) {
     this.windowController = windowController;
     scenes = new HashMap<>();
     SceneTypes mainSceneType = getDefaultSceneType();
     addAndLinkScene(mainSceneType,MAIN_ID);
-
-    setWidth(500); //TODO: Properties File
-    setHeight(500); //TODO: Properties File
     switchToScene(MAIN_ID);
+    setWidth(PropertiesManager.getNumeric("WindowHeight"));
+    setHeight(PropertiesManager.getNumeric("WindowWidth"));
   }
 
   protected abstract SceneTypes getDefaultSceneType();
@@ -31,5 +40,9 @@ public abstract class AbstractWindow extends Stage {
 
   public void switchToScene(String sceneID) {
     setScene(scenes.get(sceneID).makeScene());
+  }
+
+  public WindowMediator getWindowController() {
+    return windowController;
   }
 }

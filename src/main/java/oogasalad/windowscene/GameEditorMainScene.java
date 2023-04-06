@@ -5,6 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import oogasalad.windowscene.gameeditor.GameEditorWindow;
 
 public class GameEditorMainScene extends AbstractScene {
 
@@ -28,4 +29,8 @@ public class GameEditorMainScene extends AbstractScene {
     return getScene();
   }
 
+  @Override
+  public void setText() {
+
+  }
 }

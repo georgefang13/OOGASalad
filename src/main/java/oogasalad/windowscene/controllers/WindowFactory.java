@@ -1,6 +1,15 @@
-package oogasalad.windowscene;
+package oogasalad.windowscene.controllers;
 
-import oogasalad.windowscene.WindowTypes.WindowType;
+import oogasalad.windowscene.AbstractWindow;
+import oogasalad.windowscene.controllers.WindowTypes.WindowType;
+import oogasalad.windowscene.gameeditor.GameEditorWindow;
+import oogasalad.windowscene.gameplayer.GamePlayerWindow;
+import oogasalad.windowscene.splash.SplashWindow;
+
+/**
+ * @author Connor Wells
+ * @author Owen MacKenzie
+ */
 
 public class WindowFactory {
 
