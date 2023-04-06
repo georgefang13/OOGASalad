@@ -71,6 +71,7 @@ public class CreateGameModal extends InputModal {
 
 
         this.getDialogPane().setContent(grid);
-    }
+    } // TODO: make classes for each of these elements and use java reflection to create them. for
+    // TODO: styling use the last .NAME in the properties file to get the styling id
 
 }
