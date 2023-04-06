@@ -1,6 +1,6 @@
 package oogasalad;
 
-public class WindowTypeEnum {
+public class WindowTypes {
   public enum WindowType {
     SPLASH_WINDOW,
     EDIT_WINDOW,
