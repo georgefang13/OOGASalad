@@ -196,6 +196,9 @@ public class Game {
 //    addOwnable(ownable, gameWorld);
 //  }
 //
+
+  // TODO Make factory
+  // TODO Create ownable method
   /**
    * Gets the Owner of an Ownable with id.
    * @param id the id of the Ownable
