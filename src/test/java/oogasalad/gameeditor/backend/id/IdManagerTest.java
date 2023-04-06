@@ -499,5 +499,13 @@ public class IdManagerTest {
     assertEquals(manager.getId(object3), "x.amazingObject.amazingObject2");
   }
 
+  @Test
+  public void RemoveObjectById() {
+    assertFalse(manager.isIdInUse("Variable"));
+    manager.addObject(variable1);
+    assertTrue(manager.isIdInUse("Variable"));
+    manager.removeObject("Variable");
+  }
+
 }
 
