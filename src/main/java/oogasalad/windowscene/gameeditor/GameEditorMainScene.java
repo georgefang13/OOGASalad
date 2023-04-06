@@ -1,10 +1,18 @@
-package oogasalad.windowscene;
+package oogasalad.windowscene.gameeditor;
 
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import oogasalad.windowscene.AbstractScene;
+import oogasalad.windowscene.AbstractWindow;
+import oogasalad.windowscene.managers.PropertiesManager;
+
+/**
+ * @author Connor Wells
+ * @author Owen MacKenzie
+ */
 
 public class GameEditorMainScene extends AbstractScene {
 

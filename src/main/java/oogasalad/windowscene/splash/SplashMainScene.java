@@ -1,4 +1,4 @@
-package oogasalad.windowscene;
+package oogasalad.windowscene.splash;
 
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -6,6 +6,16 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import oogasalad.windowscene.AbstractScene;
+import oogasalad.windowscene.AbstractWindow;
+import oogasalad.windowscene.controllers.WindowTypes;
+import oogasalad.windowscene.managers.PropertiesManager;
+import oogasalad.windowscene.managers.ThemeManager;
+
+/**
+ * @author Connor Wells
+ * @author Owen MacKenzie
+ */
 
 public class SplashMainScene extends AbstractScene {
 
@@ -21,10 +31,10 @@ public class SplashMainScene extends AbstractScene {
     VBox vbox = new VBox(10);
     playButton = new Button();
     playButton.setOnAction(
-        e -> getWindow().windowController.registerAndShow(WindowTypes.WindowType.GAME_WINDOW));
+        e -> getWindow().getWindowController().registerAndShow(WindowTypes.WindowType.GAME_WINDOW));
     editButton = new Button();
     editButton.setOnAction(
-        e -> getWindow().windowController.registerAndShow(WindowTypes.WindowType.EDIT_WINDOW));
+        e -> getWindow().getWindowController().registerAndShow(WindowTypes.WindowType.EDIT_WINDOW));
     ComboBox<String> languageDropdown = new ComboBox<>();
     languageDropdown.getItems().addAll("english", "spanish");
     languageDropdown.getSelectionModel().selectedItemProperty()

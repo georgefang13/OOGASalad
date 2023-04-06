@@ -1,6 +1,12 @@
-package oogasalad.windowscene;
+package oogasalad.windowscene.controllers;
+
+/**
+ * @author Connor Wells
+ * @author Owen MacKenzie
+ */
 
 public class WindowTypes {
+
   public enum WindowType {
     SPLASH_WINDOW,
     EDIT_WINDOW,

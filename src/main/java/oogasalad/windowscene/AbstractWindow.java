@@ -2,6 +2,14 @@ package oogasalad.windowscene;
 
 import java.util.Map;
 import javafx.stage.Stage;
+import oogasalad.windowscene.controllers.SceneTypes;
+import oogasalad.windowscene.controllers.WindowMediator;
+import oogasalad.windowscene.managers.PropertiesManager;
+
+/**
+ * @author Connor Wells
+ * @author Owen MacKenzie
+ */
 
 public abstract class AbstractWindow extends Stage {
 
@@ -19,5 +27,9 @@ public abstract class AbstractWindow extends Stage {
 
   public void switchToScene(SceneTypes sceneTypes) {
     setScene(scenes.get(sceneTypes).makeScene());
+  }
+
+  public WindowMediator getWindowController() {
+    return windowController;
   }
 }

@@ -1,6 +1,15 @@
 package oogasalad.windowscene;
 
 import javafx.scene.Scene;
+import oogasalad.windowscene.managers.PropertiesManager;
+import oogasalad.windowscene.managers.PropertiesObserver;
+import oogasalad.windowscene.managers.ThemeManager;
+import oogasalad.windowscene.managers.ThemeObserver;
+
+/**
+ * @author Connor Wells
+ * @author Owen MacKenzie
+ */
 
 public abstract class AbstractScene implements PropertiesObserver, ThemeObserver {
 

@@ -1,7 +1,16 @@
-package oogasalad.windowscene;
+package oogasalad.windowscene.gameplayer;
 
 import java.util.HashMap;
 import java.util.Map;
+import oogasalad.windowscene.AbstractScene;
+import oogasalad.windowscene.AbstractWindow;
+import oogasalad.windowscene.controllers.SceneTypes;
+import oogasalad.windowscene.controllers.WindowMediator;
+
+/**
+ * @author Connor Wells
+ * @author Owen MacKenzie
+ */
 
 public class GamePlayerWindow extends AbstractWindow {
 

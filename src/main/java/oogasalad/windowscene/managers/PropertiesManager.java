@@ -1,8 +1,13 @@
-package oogasalad.windowscene;
+package oogasalad.windowscene.managers;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+
+/**
+ * @author Connor Wells
+ * @author Owen MacKenzie
+ */
 
 public class PropertiesManager {
 

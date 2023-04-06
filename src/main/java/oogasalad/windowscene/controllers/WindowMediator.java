@@ -1,6 +1,11 @@
-package oogasalad.windowscene;
+package oogasalad.windowscene.controllers;
 
-import oogasalad.windowscene.WindowTypes.WindowType;
+import oogasalad.windowscene.controllers.WindowTypes.WindowType;
+
+/**
+ * @author Connor Wells
+ * @author Owen MacKenzie
+ */
 
 public interface WindowMediator {
 
@@ -11,7 +16,5 @@ public interface WindowMediator {
   void registerAndShow(WindowType windowType);
 
   void closeWindow(String windowID);
-
-  void receiveMessage();
 
 }

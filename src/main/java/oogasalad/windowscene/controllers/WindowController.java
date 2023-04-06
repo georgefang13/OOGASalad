@@ -1,8 +1,14 @@
-package oogasalad.windowscene;
+package oogasalad.windowscene.controllers;
 
 import java.util.HashMap;
 import java.util.Map;
-import oogasalad.windowscene.WindowTypes.WindowType;
+import oogasalad.windowscene.AbstractWindow;
+import oogasalad.windowscene.controllers.WindowTypes.WindowType;
+
+/**
+ * @author Connor Wells
+ * @author Owen MacKenzie
+ */
 
 public class WindowController implements WindowMediator {
 
@@ -15,9 +21,10 @@ public class WindowController implements WindowMediator {
   }
 
   @Override
-  public void registerAndShow(WindowType windowType){
+  public void registerAndShow(WindowType windowType) {
     showWindow(registerWindow(windowType));
   }
+
   @Override
   public String registerWindow(WindowType windowType) {
     AbstractWindow window = WindowFactory.createWindow(windowType, this);
@@ -38,9 +45,4 @@ public class WindowController implements WindowMediator {
     windowMap.remove(windowID);
   }
 
-  @Override
-  public void receiveMessage() {
-    System.out.println("Received message!");
-
-  }
 }

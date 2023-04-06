@@ -1,7 +1,12 @@
-package oogasalad.windowscene;
+package oogasalad.windowscene.managers;
 
 import java.util.ArrayList;
 import java.util.List;
+
+/**
+ * @author Connor Wells
+ * @author Owen MacKenzie
+ */
 
 public class ThemeManager {
 
