@@ -16,6 +16,8 @@ public abstract class AbstractWindow extends Stage {
   protected WindowMediator windowController;
   protected Map<SceneTypes, AbstractScene> scenes;
 
+  //protected Manager manager = PropertiesFactory.createManager(); //TODO: pass in factory DI
+
   public AbstractWindow(WindowMediator windowController) {
     this.windowController = windowController;
     this.scenes = defineScenes();
