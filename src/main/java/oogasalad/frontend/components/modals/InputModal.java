@@ -1,13 +1,24 @@
 package oogasalad.frontend.components.modals;
 
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import javafx.geometry.Insets;
 
 import java.util.Map;
+import java.io.File;
 import java.util.ArrayList;
 
 public class InputModal extends Modal {
@@ -18,7 +29,7 @@ public class InputModal extends Modal {
     final public static int INSET_BOTTOM = 10;
     final public static int INSET_LEFT = 10;
 
-    private Map<String, String> myPropertiesMap;
+    protected Map<String, String> myPropertiesMap;
     private String myTitle;
 
     /**
@@ -91,6 +102,64 @@ public class InputModal extends Modal {
         grid.setPadding(new Insets(INSET_TOP, INSET_RIGHT, INSET_BOTTOM, INSET_LEFT));
 
         return grid;
+    }
+
+    /**
+     * Creates dropdown menu for the modal
+     * 
+     * @param dropdownName
+     * @return
+     */
+    protected ChoiceBox<String> makeDropdown(String dropdownName) {
+        ChoiceBox<String> dropdown = new ChoiceBox<>();
+        dropdown.getItems().addAll("1", "2", "3", "4", "5");
+        dropdown.setValue("1");
+        return dropdown;
+    }
+
+    /**
+     * Creates a toggle group of radio buttons for the modal
+     * 
+     * @param fieldName
+     * @return
+     */
+    protected VBox makeRadioButtons(String fieldName) {
+        ToggleGroup toggleGroup = new ToggleGroup();
+
+        RadioButton radioButton1 = new RadioButton("Option 1");
+        radioButton1.setToggleGroup(toggleGroup);
+        radioButton1.setSelected(true);
+
+        RadioButton radioButton2 = new RadioButton("Option 2");
+        radioButton2.setToggleGroup(toggleGroup);
+
+        RadioButton radioButton3 = new RadioButton("Option 3");
+        radioButton3.setToggleGroup(toggleGroup);
+
+        HBox radioBox = new HBox(radioButton1, radioButton2, radioButton3);
+        radioBox.setSpacing(10);
+
+        VBox root = new VBox(radioBox);
+
+        return root;
+
+    }
+
+    /**
+     * Creates a field for selecting an image
+     * 
+     * @param fieldName
+     * @return
+     */
+    protected Button makeImagePicker(String fieldName) {
+        Button ImageButton = new Button("Select Image");
+        ImageButton.setOnAction(event -> {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Open Image File");
+            fileChooser.getExtensionFilters().addAll(
+                    new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif"));
+        });
+        return ImageButton;
     }
 
     @Override
