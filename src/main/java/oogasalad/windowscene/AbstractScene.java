@@ -15,26 +15,23 @@ public abstract class AbstractScene {
 
   public AbstractScene(AbstractWindow window) {
     this.window = window;
-    setTextResources("english.properties");
-    setNumericResources("numeric.properties");
-    setTheme("default.css");
+    setTextResources("spanish");
+    setNumericResources("numeric");
+    setTheme("dark");
   }
 
   public abstract Scene makeScene();
 
   public void setTheme(String theme) {
     stylesheet = theme + ".css";
-    updateStylesheet();
   }
 
   public void setTextResources(String resource) {
-    textResources = ResourceBundle.getBundle(resource);
-    updateTextResources();
+    textResources = ResourceBundle.getBundle("frontend/properties/text/" + resource);
   }
 
   public void setNumericResources(String resource) {
-    numericResources = ResourceBundle.getBundle(resource);
-    updateNumericResources();
+    numericResources = ResourceBundle.getBundle("frontend/properties/numeric/" + resource);
   }
 
   protected Scene getScene() {
@@ -45,13 +42,17 @@ public abstract class AbstractScene {
     return window;
   }
 
+  protected String getText(String key) {
+    return textResources.getString(key);
+  }
+
+  protected String getNumeric(String key) {
+    return numericResources.getString(key);
+  }
+
   protected void setScene(Scene scene) {
     this.scene = scene;
   }
-  
-  protected abstract void updateTextResources();
-
-  protected abstract void updateNumericResources();
 
   protected void updateStylesheet() {
     scene.getStylesheets().clear();
