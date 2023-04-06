@@ -1,6 +1,6 @@
-package oogasalad;
+package oogasalad.windowscene;
 
-import oogasalad.WindowTypes.WindowType;
+import oogasalad.windowscene.WindowTypes.WindowType;
 
 public class WindowFactory {
 

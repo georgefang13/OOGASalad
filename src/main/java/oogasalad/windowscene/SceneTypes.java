@@ -1,4 +1,4 @@
-package oogasalad;
+package oogasalad.windowscene;
 
 public interface SceneTypes {
 

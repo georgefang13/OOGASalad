@@ -1,8 +1,8 @@
-package oogasalad;
+package oogasalad.windowscene;
 
 import java.util.HashMap;
 import java.util.Map;
-import oogasalad.WindowTypes.WindowType;
+import oogasalad.windowscene.WindowTypes.WindowType;
 
 public class WindowController implements WindowMediator {
 

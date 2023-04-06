@@ -1,4 +1,4 @@
-package oogasalad;
+package oogasalad.windowscene;
 
 
 import javafx.scene.Scene;

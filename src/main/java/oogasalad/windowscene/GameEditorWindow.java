@@ -1,15 +1,15 @@
-package oogasalad;
+package oogasalad.windowscene;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class SplashWindow extends AbstractWindow {
+public class GameEditorWindow extends AbstractWindow {
 
   public enum WindowScenes implements SceneTypes {
     MAIN_SCENE
   }
 
-  public SplashWindow(WindowMediator windowController) {
+  public GameEditorWindow(WindowMediator windowController) {
     super(windowController);
     switchToScene(WindowScenes.MAIN_SCENE);
   }
@@ -17,8 +17,9 @@ public class SplashWindow extends AbstractWindow {
   @Override
   public Map<SceneTypes, AbstractScene> defineScenes() {
     Map<SceneTypes, AbstractScene> scenes = new HashMap<>();
-    scenes.put(WindowScenes.MAIN_SCENE, new SplashMainScene(this));
+    scenes.put(WindowScenes.MAIN_SCENE, new GameEditorMainScene(this));
     return scenes;
   }
+
 
 }

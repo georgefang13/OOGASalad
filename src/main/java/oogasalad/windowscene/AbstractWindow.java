@@ -1,4 +1,4 @@
-package oogasalad;
+package oogasalad.windowscene;
 
 import java.util.Map;
 import javafx.stage.Stage;
