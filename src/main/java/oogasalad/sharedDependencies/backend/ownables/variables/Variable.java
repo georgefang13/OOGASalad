@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.List;
 import oogasalad.gameeditor.backend.id.IdManager;
 import oogasalad.sharedDependencies.backend.ownables.Ownable;
+import oogasalad.sharedDependencies.backend.owners.Owner;
 
 /**
  * An Ownable variable that can be changed and listened to.
@@ -20,16 +21,18 @@ public class Variable<T> extends Ownable {
   /**
    * Creates a new variable with no value.
    */
-  public Variable(IdManager idManager) {
-    this(idManager, null);
+  public Variable(IdManager idManager, Owner owner) {
+    this(idManager, null, owner);
   }
 
   /**
    * Creates a new variable with the given value.
+   * @param idManager the ownable idmanager
    * @param value the initial value of the variable
+   * @param owner the owner of the ownable
    */
-  public Variable(IdManager idManager, T value) {
-    super(idManager);
+  public Variable(IdManager idManager, T value, Owner owner) {
+    super(idManager, owner);
     this.value = value;
     this.listeners = new ArrayList<>();
   }

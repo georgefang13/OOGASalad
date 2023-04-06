@@ -47,6 +47,11 @@ public class Game {
   private final IdManager<Ownable> ownableIdManager = new IdManager();
 
   /**
+   * The OwnableFactory of the game.
+   */
+  OwnableFactory ownableFactory = new OwnableFactory();
+
+  /**
    * The GameWorld of the game.
    * The GameWorld owns Ownables not owned by Players.
    */
@@ -178,38 +183,40 @@ public class Game {
   }
 
 
-//  /**
-//   * Adds an Ownable to the IdManager and Owner.
-//   * @param owner the Owner of the Ownable
-//   * @param ownable the Ownable being added to owner
-//   */
-//  public void addOwnableToPlayer(Owner owner, Ownable ownable) {
-//    ownableIdManager.addObject(ownable, owner);
-//  }
-//
-//  /**
-//   * Adds the Ownable to the IdManager and GameWorld.
-//   * @param ownable the Ownable to add
-//   */
-//  public void addOwnableToGameworld(Ownable ownable) {
-//    ownableIdManager.addObject(ownable, gameWorld);
-//  }
-//
   /**
-   * Creates an ownable using ownableFactory
-   * @param ?
+   * Adds an Ownable to the IdManager and Owner.
+   * @param owner the Owner of the Ownable
+   * @param ownable the Ownable being added to owner
    */
-  public void createOwnable(){
-    OwnableFactory ownable = new OwnableFactory();
-    // TODO Make factory
+  public void changeOwner(Owner owner, Ownable ownable) {
+    ownable.setOwner(owner);
+  }
+
+  /**
+   * Creates an ownable using ownableFactory for player
+   * @param type the string type of ownable
+   * @param owner the owner of the ownable
+   */
+  public void createOwnable(String type, Owner owner){
+    Ownable newOwnable = ownableFactory.createOwnable(type, ownableIdManager, owner);
+    ownableIdManager.addObject(newOwnable);
+  }
+
+  /**
+   * Creates an ownable using ownableFactory for gameworld
+   * @param type the string type of ownable
+   */
+  public void createOwnable(String type){
+    createOwnable(type, gameWorld);
   }
 
   /**
    * Gets the Owner of an Ownable with id.
    * @param id the id of the Ownable
    * @return the Owner of the Ownable
+   * @throws IllegalArgumentException if the id is not in use
    */
-  public Owner getOwner(String id) { //TODO catch exception
+  public Owner getOwner(String id) throws IllegalArgumentException {
     if (!ownableIdManager.isIdInUse(id)) {
       return null;
     }
@@ -220,8 +227,9 @@ public class Game {
    * Sets the Owner of an Ownable with id.
    * @param id the id of the Ownable
    * @param owner the new owner of the Ownable
+   * @throws IllegalArgumentException if owner is null, the Ownable is owned by the GameWorld
    */
-  public void setOwner(String id, Owner owner) {
+  public void setOwner(String id, Owner owner) throws IllegalArgumentException{
     getOwnable(id).setOwner(owner);
   }
 
@@ -230,12 +238,14 @@ public class Game {
    * Gets an Ownable from the IdManager for a given id.
    * @param id the id of the Ownable
    * @return the Ownable
+   * @throws IllegalArgumentException if the id is not in use
    */
-  public Ownable getOwnable(String id) { //TODO catch exception
+  public Ownable getOwnable(String id) throws IllegalArgumentException {
     if (!ownableIdManager.isIdInUse(id)) {
       return null;
     }
     return ownableIdManager.getObject(id);
   }
 
+  //TODO TURN
 }

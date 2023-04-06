@@ -1,7 +1,9 @@
 package oogasalad.gameeditor.backend.ownables.gameobjects;
 
 import oogasalad.gameeditor.backend.id.IdManager;
+import oogasalad.sharedDependencies.backend.ownables.Ownable;
 import oogasalad.sharedDependencies.backend.ownables.gameobjects.GameObject;
+import oogasalad.sharedDependencies.backend.owners.Owner;
 
 /**
  * An EmptyGameObject is a GameObject that can be owned by any Owner.
@@ -10,8 +12,8 @@ import oogasalad.sharedDependencies.backend.ownables.gameobjects.GameObject;
  */
 public class EmptyGameObject extends GameObject {
 
-  public EmptyGameObject(IdManager idManager) {
-    super(idManager);
+  public EmptyGameObject(IdManager idManager, Owner owner) {
+    super(idManager, owner);
   }
 
 }

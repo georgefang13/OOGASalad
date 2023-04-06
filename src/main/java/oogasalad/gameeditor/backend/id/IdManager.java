@@ -271,7 +271,7 @@ public class  IdManager<T extends IdManageable> implements Iterable<Map.Entry<St
    * @throws IllegalArgumentException if the id is already in use
    */
   private void throwExceptionIfAlreadyInUse(String id) throws IllegalArgumentException {
-    StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
+    StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace(); //TODO refactor
     if (stackTraceElements[3].getClassName().equals(this.getClass().getName())) {
       if(isIdInUse(id)) {
         throw new IllegalArgumentException("Id \"" + id + "\" already in use"); //TODO resource bundle

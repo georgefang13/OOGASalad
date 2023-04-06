@@ -35,14 +35,18 @@ public abstract class Ownable extends IdManageable {
     this.owner = owner;
   }
 
-  public Ownable(IdManager idManager) {
-    super(idManager);
-  }
-
+  /**
+   * Gets the owner of the ownable.
+   * @return the owner of the ownable
+   */
   public Owner getOwner() {
     return owner;
   }
 
+  /**
+   * Sets the owner of the ownable.
+   * @param owner the new owner of the ownable
+   */
   public void setOwner(Owner owner) {
     this.owner = owner;
   }

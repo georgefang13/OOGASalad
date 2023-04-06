@@ -31,12 +31,12 @@ public class IdManagerTest {
   @BeforeEach
   public void setUp() {
     manager = new IdManager<>();
-    variable1 = new Variable(manager);
-    variable2 = new Variable(manager);
-    variable3 = new Variable(manager);
-    object1 = new EmptyGameObject(manager);
-    object2 = new EmptyGameObject(manager);
-    object3 = new EmptyGameObject(manager);
+    variable1 = new Variable(manager, null);
+    variable2 = new Variable(manager, null);
+    variable3 = new Variable(manager, null);
+    object1 = new EmptyGameObject(manager, null);
+    object2 = new EmptyGameObject(manager, null);
+    object3 = new EmptyGameObject(manager, null);
   }
 
   @Test
