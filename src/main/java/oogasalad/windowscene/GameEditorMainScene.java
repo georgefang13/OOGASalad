@@ -21,16 +21,16 @@ public class GameEditorMainScene extends AbstractScene {
     BorderPane root = new BorderPane();
     editGridButton = new Button();
     gameEditorLabel = new Label();
-    updateText();
     root.setTop(gameEditorLabel);
     root.setLeft(new VBox(editGridButton));
     setScene(new Scene(root));
+    setText();
     return getScene();
   }
 
   @Override
-  public void updateText() {
-    editGridButton.setText(Properties.getText("GameEditorMainScene.EditGridButton"));
-    gameEditorLabel.setText(Properties.getText("GameEditorMainScene.GameEditorLabel"));
+  public void setText() {
+    editGridButton.setText(PropertiesManager.getText("GameEditorMainScene.EditGridButton"));
+    gameEditorLabel.setText(PropertiesManager.getText("GameEditorMainScene.GameEditorLabel"));
   }
 }

@@ -25,24 +25,31 @@ public class SplashMainScene extends AbstractScene {
     editButton = new Button();
     editButton.setOnAction(
         e -> getWindow().windowController.registerAndShow(WindowTypes.WindowType.EDIT_WINDOW));
-    updateText();
     ComboBox<String> languageDropdown = new ComboBox<>();
     languageDropdown.getItems().addAll("english", "spanish");
     languageDropdown.getSelectionModel().selectedItemProperty()
         .addListener((observable, oldValue, newValue) -> {
-          Properties.setTextResources(newValue);
+          PropertiesManager.setTextResources(newValue);
         });
     languageDropdown.setValue("english");
-    vbox.getChildren().addAll(playButton, editButton, languageDropdown);
+    ComboBox<String> themeDropdown = new ComboBox<>();
+    themeDropdown.getItems().addAll("light", "dark");
+    themeDropdown.getSelectionModel().selectedItemProperty()
+        .addListener((observable, oldValue, newValue) -> {
+
+        });
+    themeDropdown.setValue("light");
+    vbox.getChildren().addAll(playButton, editButton, languageDropdown, themeDropdown);
     vbox.setAlignment(Pos.CENTER);
     root.getChildren().add(vbox);
     setScene(new Scene(root));
+    setText();
     return getScene();
   }
 
   @Override
-  public void updateText() {
-    playButton.setText(Properties.getText("SplashMainScene.PlayGameButton"));
-    editButton.setText(Properties.getText("SplashMainScene.EditGameButton"));
+  public void setText() {
+    playButton.setText(PropertiesManager.getText("SplashMainScene.PlayGameButton"));
+    editButton.setText(PropertiesManager.getText("SplashMainScene.EditGameButton"));
   }
 }

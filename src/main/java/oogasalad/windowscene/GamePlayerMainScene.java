@@ -21,16 +21,16 @@ public class GamePlayerMainScene extends AbstractScene {
         BorderPane root = new BorderPane();
         playGameButton = new Button();
         gamePlayerLabel = new Label();
-        updateText();
         root.setTop(gamePlayerLabel);
         root.setLeft(new VBox(playGameButton));
         setScene(new Scene(root));
+        setText();
         return getScene();
     }
 
     @Override
-    public void updateText() {
-        playGameButton.setText(Properties.getText("GamePlayerMainScene.PlayGameButton"));
-        gamePlayerLabel.setText(Properties.getText("GamePlayerMainScene.GamePlayerLabel"));
+    public void setText() {
+        playGameButton.setText(PropertiesManager.getText("GamePlayerMainScene.PlayGameButton"));
+        gamePlayerLabel.setText(PropertiesManager.getText("GamePlayerMainScene.GamePlayerLabel"));
     }
 }
