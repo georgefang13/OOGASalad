@@ -19,7 +19,7 @@ import oogasalad.windowscene.managers.ThemeManager;
 
 public class SplashMainScene extends AbstractScene {
 
-  private Button playButton, editButton;
+  private Button playButton, editButton, modalButton;
 
   public SplashMainScene(AbstractWindow window) {
     super(window);
@@ -35,6 +35,12 @@ public class SplashMainScene extends AbstractScene {
     editButton = new Button();
     editButton.setOnAction(
         e -> getWindow().getWindowController().registerAndShow(WindowTypes.WindowType.EDIT_WINDOW));
+
+    modalButton = new Button(); //ADD NEW WINDOW
+    modalButton.setOnAction(
+            e -> getWindow().getWindowController().registerAndShow(WindowTypes.WindowType.MODAL_WINDOW));
+
+
     ComboBox<String> languageDropdown = new ComboBox<>();
     languageDropdown.getItems().addAll("english", "spanish");
     languageDropdown.getSelectionModel().selectedItemProperty()
@@ -49,7 +55,7 @@ public class SplashMainScene extends AbstractScene {
           ThemeManager.setTheme(newValue);
         });
     themeDropdown.setValue("light");
-    vbox.getChildren().addAll(playButton, editButton, languageDropdown, themeDropdown);
+    vbox.getChildren().addAll(playButton, editButton, modalButton, languageDropdown, themeDropdown);
     vbox.setAlignment(Pos.CENTER);
     root.getChildren().add(vbox);
     setScene(new Scene(root));
@@ -62,5 +68,6 @@ public class SplashMainScene extends AbstractScene {
   public void setText() {
     playButton.setText(PropertiesManager.getText("SplashMainScene.PlayGameButton"));
     editButton.setText(PropertiesManager.getText("SplashMainScene.EditGameButton"));
+    modalButton.setText(PropertiesManager.getText("SplashMainScene.ModalButton"));
   }
 }

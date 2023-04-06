@@ -4,6 +4,7 @@ import oogasalad.windowscene.AbstractWindow;
 import oogasalad.windowscene.controllers.WindowTypes.WindowType;
 import oogasalad.windowscene.gameeditor.GameEditorWindow;
 import oogasalad.windowscene.gameplayer.GamePlayerWindow;
+import oogasalad.windowscene.modal.ModalWindow;
 import oogasalad.windowscene.splash.SplashWindow;
 
 /**
@@ -22,6 +23,8 @@ public class WindowFactory {
         return new GameEditorWindow(mediator);
       case GAME_WINDOW:
         return new GamePlayerWindow(mediator);
+      case MODAL_WINDOW:
+        return new ModalWindow(mediator);
       default:
         throw new IllegalArgumentException("Invalid window type: " + windowType);
     }
