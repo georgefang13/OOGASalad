@@ -20,15 +20,13 @@ import java.util.ResourceBundle;
  **/
 public class FileManager {
   protected static String SEPARATOR = ",";
-  protected static String RESOURCES_PATH = "backend/filemanager/ValidTags";
+  protected static String RESOURCES_PATH = "backend.filemanager.ValidTags";
 
   private JsonObject myFileInfo;
-  private JsonParser myParser;
   private Collection<String> myValidTags;
 
   public FileManager() {
     myFileInfo = new JsonObject();
-    myParser = new JsonParser();
     myValidTags = new ArrayList<>();
   }
 
@@ -63,8 +61,7 @@ public class FileManager {
    * @param path file and directory where JSON file should be stored
    */
   public void saveToFile(String path) {
-    try {
-      Writer writer = new FileWriter(path);
+    try (Writer writer = new FileWriter(path)) {
       writer.write(myFileInfo.toString());
     }
     catch (IOException e) {
