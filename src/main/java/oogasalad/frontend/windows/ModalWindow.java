@@ -13,12 +13,12 @@ public class ModalWindow extends AbstractWindow {
         MAIN_SCENE
     }
     @Override
-    protected SceneTypes getDefaultSceneType() {
+    public SceneTypes getDefaultSceneType() {
         return WindowScenes.MAIN_SCENE;
     }
 
     @Override
-    protected AbstractScene addNewScene(SceneTypes sceneType) {
+    public AbstractScene addNewScene(SceneTypes sceneType) {
         if (sceneType.equals(WindowScenes.MAIN_SCENE)) {
             return new ModalScene(this);
         }

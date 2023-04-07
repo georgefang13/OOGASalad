@@ -22,12 +22,12 @@ public class GamePlayerWindow extends AbstractWindow {
   }
 
   @Override
-  protected SceneTypes getDefaultSceneType() {
+  public SceneTypes getDefaultSceneType() {
     return WindowScenes.MAIN_SCENE;
   }
 
   @Override
-  protected AbstractScene addNewScene(SceneTypes sceneType) {
+  public AbstractScene addNewScene(SceneTypes sceneType) {
     if (sceneType.equals(WindowScenes.MAIN_SCENE)) {
       return new GameEditorMainScene(this);
     } else if (sceneType.equals(WindowScenes.PLAY_SCENE)) {
