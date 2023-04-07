@@ -1,9 +1,9 @@
 package oogasalad.frontend.panels.subPanels;
 
 import oogasalad.frontend.panels.Panel;
-import oogasalad.frontend.panels.TitledPanel;
+import oogasalad.frontend.panels.AccordionPanel;
 
-public class SceneEditor extends TitledPanel {
+public class SceneEditorPanel extends AccordionPanel {
 
   @Override
   public Panel makePanel() {
