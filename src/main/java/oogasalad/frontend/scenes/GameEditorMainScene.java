@@ -5,9 +5,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import oogasalad.frontend.windows.GameEditorWindow;
 import oogasalad.frontend.windows.AbstractWindow;
-import oogasalad.frontend.managers.PropertiesManager;
+import oogasalad.frontend.windows.GameEditorWindow;
 
 /**
  * @author Connor Wells
@@ -42,8 +41,8 @@ public class GameEditorMainScene extends AbstractScene {
 
   @Override
   public void setText() {
-    editGridButton.setText(PropertiesManager.getText("GameEditorMainScene.EditGridButton"));
-    gameEditorLabel.setText(PropertiesManager.getText("GameEditorMainScene.GameEditorLabel"));
+    editGridButton.setText(getPropertyManager().getText("GameEditorMainScene.EditGridButton"));
+    gameEditorLabel.setText(getPropertyManager().getText("GameEditorMainScene.GameEditorLabel"));
   }
 
   private void openEditorSceneOnClick(){

@@ -6,10 +6,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import oogasalad.frontend.managers.ThemeManagerOld;
 import oogasalad.frontend.windows.AbstractWindow;
 import oogasalad.frontend.windows.WindowTypes;
-import oogasalad.frontend.managers.PropertiesManager;
-import oogasalad.frontend.managers.ThemeManager;
 
 /**
  * @author Connor Wells
@@ -44,14 +43,14 @@ public class SplashMainScene extends AbstractScene {
     languageDropdown.getItems().addAll("english", "spanish");
     languageDropdown.getSelectionModel().selectedItemProperty()
         .addListener((observable, oldValue, newValue) -> {
-          PropertiesManager.setTextResources(newValue);
+          getPropertyManager().setTextResources(newValue);
         });
     languageDropdown.setValue("english");
     ComboBox<String> themeDropdown = new ComboBox<>();
     themeDropdown.getItems().addAll("light", "dark");
     themeDropdown.getSelectionModel().selectedItemProperty()
         .addListener((observable, oldValue, newValue) -> {
-          ThemeManager.setTheme(newValue);
+          ThemeManagerOld.setTheme(newValue);
         });
     themeDropdown.setValue("light");
     vbox.getChildren().addAll(playButton, editButton, modalButton, languageDropdown, themeDropdown);
@@ -65,8 +64,8 @@ public class SplashMainScene extends AbstractScene {
 
   @Override
   public void setText() {
-    playButton.setText(PropertiesManager.getText("SplashMainScene.PlayGameButton"));
-    editButton.setText(PropertiesManager.getText("SplashMainScene.EditGameButton"));
-    modalButton.setText(PropertiesManager.getText("SplashMainScene.ModalButton"));
+    playButton.setText(getPropertyManager().getText("SplashMainScene.PlayGameButton"));
+    editButton.setText(getPropertyManager().getText("SplashMainScene.EditGameButton"));
+    modalButton.setText(getPropertyManager().getText("SplashMainScene.ModalButton"));
   }
 }

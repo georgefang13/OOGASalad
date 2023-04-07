@@ -3,9 +3,10 @@ package oogasalad.frontend.windows;
 import java.util.HashMap;
 import java.util.Map;
 import javafx.stage.Stage;
-import oogasalad.frontend.scenes.SceneTypes;
-import oogasalad.frontend.managers.PropertiesManager;
+import oogasalad.frontend.managers.PropertyManager;
+import oogasalad.frontend.managers.StandardPropertyManager;
 import oogasalad.frontend.scenes.AbstractScene;
+import oogasalad.frontend.scenes.SceneTypes;
 
 /**
  * @author Connor Wells
@@ -13,29 +14,32 @@ import oogasalad.frontend.scenes.AbstractScene;
  */
 
 public abstract class AbstractWindow extends Stage {
+
   private static final String MAIN_ID = "main";
 
   protected WindowMediator windowController;
+
   protected Map<String, AbstractScene> scenes;
 
-  //protected Manager manager = PropertiesFactory.createManager(); //TODO: pass in factory DI
+  protected PropertyManager propertyManager = StandardPropertyManager.getInstance();
 
   public AbstractWindow(WindowMediator windowController) {
     this.windowController = windowController;
     scenes = new HashMap<>();
     SceneTypes mainSceneType = getDefaultSceneType();
-    addAndLinkScene(mainSceneType,MAIN_ID);
+    addAndLinkScene(mainSceneType, MAIN_ID);
     switchToScene(MAIN_ID);
-    setWidth(PropertiesManager.getNumeric("WindowHeight"));
-    setHeight(PropertiesManager.getNumeric("WindowWidth"));
+    setWidth(propertyManager.getNumeric("WindowWidth"));
+    setHeight(propertyManager.getNumeric("WindowHeight"));
   }
 
   protected abstract SceneTypes getDefaultSceneType();
+
   protected abstract AbstractScene addNewScene(SceneTypes sceneType);
 
-  public void addAndLinkScene(SceneTypes sceneType, String sceneID){
+  public void addAndLinkScene(SceneTypes sceneType, String sceneID) {
     AbstractScene newScene = addNewScene(sceneType);
-    scenes.put(sceneID,newScene);
+    scenes.put(sceneID, newScene);
   }
 
   public void switchToScene(String sceneID) {

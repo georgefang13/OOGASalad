@@ -6,7 +6,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import oogasalad.frontend.windows.AbstractWindow;
-import oogasalad.frontend.managers.PropertiesManager;
 
 /**
  * @author Connor Wells
@@ -38,7 +37,7 @@ public class GamePlayerMainScene extends AbstractScene {
 
   @Override
   public void setText() {
-    playGameButton.setText(PropertiesManager.getText("GamePlayerMainScene.PlayGameButton"));
-    gamePlayerLabel.setText(PropertiesManager.getText("GamePlayerMainScene.GamePlayerLabel"));
+    playGameButton.setText(getPropertyManager().getText("GamePlayerMainScene.PlayGameButton"));
+    gamePlayerLabel.setText(getPropertyManager().getText("GamePlayerMainScene.GamePlayerLabel"));
   }
 }
