@@ -18,7 +18,7 @@ import java.util.ResourceBundle;
  *
  * Abstract implementation for class used to save JSON files as user is creating games
  **/
-public abstract class FileManager {
+public class FileManager {
   protected static String SEPARATOR = ",";
   protected static String RESOURCES_PATH = "backend/filemanager/ValidTags";
 
@@ -37,29 +37,7 @@ public abstract class FileManager {
    * @param tag key name in JSON file where data should go
    * @param content information to be stored in file
    */
-  public abstract void addContent(String tag, String content);
-
-  /**
-   * Saves currently stored JSON content into a file in the system
-   * @param path file and directory where JSON file should be stored
-   */
-  public void saveToFile(String path) {
-    try {
-      Writer writer = new FileWriter(path);
-      writer.write(myFileInfo.toString());
-    }
-    catch (IOException e) {
-      // TODO: maybe make this into a custom exception for Controller to handle
-      throw new RuntimeException(e);
-    }
-  }
-
-  /**
-   * Internally accessible modifier method that updates JSONObject while checking for tag validity
-   * @param tag String specifying key inside JSON file where info should be added
-   * @param content JsonElement containing information to be added to JSON file
-   */
-  protected void addToContent(String tag, JsonElement content) {
+  public void addContent(String tag, JsonElement content) {
     if (! myValidTags.isEmpty() && ! isValid(tag)) {
       // TODO: make custom exception for this
     }
@@ -77,6 +55,21 @@ public abstract class FileManager {
     }
     else {
       myFileInfo.add(tag, content);
+    }
+  };
+
+  /**
+   * Saves currently stored JSON content into a file in the system
+   * @param path file and directory where JSON file should be stored
+   */
+  public void saveToFile(String path) {
+    try {
+      Writer writer = new FileWriter(path);
+      writer.write(myFileInfo.toString());
+    }
+    catch (IOException e) {
+      // TODO: maybe make this into a custom exception for Controller to handle
+      throw new RuntimeException(e);
     }
   }
 
