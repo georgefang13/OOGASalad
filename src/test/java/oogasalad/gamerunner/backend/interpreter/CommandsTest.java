@@ -1320,5 +1320,11 @@ public class CommandsTest {
     @Test
     public void getObjectAttribute(){
         GameObject obj = new GameObject(idManager);
+        Variable<Double> score = new Variable<>(idManager, 5.0);
+        idManager.addObject(obj, "obj");
+        idManager.addObject(score, "score", obj);
+        String input = "attr :game_obj \"score";
+        interpreter.interpret(input);
+
     }
 }

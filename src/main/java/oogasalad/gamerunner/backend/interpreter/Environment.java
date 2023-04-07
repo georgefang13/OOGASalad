@@ -12,7 +12,6 @@ import java.util.*;
 public class Environment {
     private final List<Map<String, Token>> scope = new ArrayList<>();
     private IdManager<Ownable> game;
-
     private static final String LANGUAGE_RESOURCE_PATH = "backend.interpreter.languages";
     private String language = "English";
 
@@ -30,6 +29,10 @@ public class Environment {
 
     public String getLanguageResource(String key){
         return resources.getString(key);
+    }
+
+    public IdManager<Ownable> getGame(){
+        return game;
     }
 
     public void linkSimulation(IdManager<Ownable> game){
