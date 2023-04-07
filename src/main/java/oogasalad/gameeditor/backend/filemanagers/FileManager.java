@@ -25,9 +25,17 @@ public class FileManager {
   private JsonObject myFileInfo;
   private Collection<String> myValidTags;
 
+  /**
+   * Standard constructor
+   */
   public FileManager() {
     myFileInfo = new JsonObject();
     myValidTags = new ArrayList<>();
+  }
+
+  public FileManager(String validTagsKey) {
+    this();
+    setValidTagsFromResources(validTagsKey);
   }
 
   /**
@@ -37,7 +45,8 @@ public class FileManager {
    */
   public void addContent(String tag, JsonElement content) {
     if (! myValidTags.isEmpty() && ! isValid(tag)) {
-      // TODO: make custom exception for this
+      // TODO: maybe make this into a custom exception
+      throw new RuntimeException("Invalid tag!");
     }
     if (myFileInfo.has(tag)) {
       JsonArray array;
@@ -79,7 +88,7 @@ public class FileManager {
     myValidTags = tags;
   }
 
-  protected void setValidTagsFromResources(String key) {
+  public void setValidTagsFromResources(String key) {
     ResourceBundle resources = ResourceBundle.getBundle(RESOURCES_PATH);
     String[] validTags = resources.getString(key).split(SEPARATOR);
     this.setValidTags(new HashSet<>(List.of(validTags)));
