@@ -17,9 +17,7 @@ import java.util.Set;
 public class GeneralFileManager extends FileManager {
   public GeneralFileManager() {
     super();
-    ResourceBundle resources = ResourceBundle.getBundle("backend/filemanager/ValidTags");
-    String[] validTags = resources.getString("General").split(",");
-    super.setValidTags(new HashSet<>(List.of(validTags)));
+    setValidTagsFromResources("General");
   }
 
   @Override

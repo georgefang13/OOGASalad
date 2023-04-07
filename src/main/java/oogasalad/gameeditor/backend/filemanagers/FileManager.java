@@ -9,6 +9,9 @@ import java.io.IOException;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.ResourceBundle;
 
 /**
  * @author Rodrigo Bassi Guerreiro
@@ -16,9 +19,12 @@ import java.util.Collection;
  * Abstract implementation for class used to save JSON files as user is creating games
  **/
 public abstract class FileManager {
-  JsonObject myFileInfo;
-  JsonParser myParser;
-  Collection<String> myValidTags;
+  protected static String SEPARATOR = ",";
+  protected static String RESOURCES_PATH = "backend/filemanager/ValidTags";
+
+  private JsonObject myFileInfo;
+  private JsonParser myParser;
+  private Collection<String> myValidTags;
 
   public FileManager() {
     myFileInfo = new JsonObject();
@@ -80,6 +86,12 @@ public abstract class FileManager {
    */
   protected void setValidTags(Collection<String> tags) {
     myValidTags = tags;
+  }
+
+  protected void setValidTagsFromResources(String key) {
+    ResourceBundle resources = ResourceBundle.getBundle(RESOURCES_PATH);
+    String[] validTags = resources.getString(key).split(SEPARATOR);
+    this.setValidTags(new HashSet<>(List.of(validTags)));
   }
 
   /**
