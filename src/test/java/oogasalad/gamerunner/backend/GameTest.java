@@ -130,28 +130,69 @@ class GameTest {
     game.addGoal(goal);
     assertEquals(goal, game.getGoals().get(0));
   }
-//
-//  @Test
-//  void getGameWorld() {
-//    assertEquals(gameworld, game.getGameWorld());
-  // in instance of
-//  }
-//
-//  @Test
-//  void addOwnable() {
-//  }
-//
-//  @Test
-//  void getOwner() {
-//    Player player1 = new Player(ownableIdManager);
-//
-//  }
-//
-//  @Test
-//  void setOwner() {
-//  }
-//
-//  @Test
-//  void getOwnable() {
-//  }
+
+  @Test
+  void getGameWorld() {
+    assertInstanceOf(GameWorld.class, game.getGameWorld());
+  }
+
+  @Test
+  void changeOwner() {
+    assertNull(game.getOwnable("EmptyGameObject"));
+    Player player1 = new Player(ownableIdManager);
+    Player player2 = new Player(ownableIdManager);
+    game.addPlayer(player1);
+    game.addPlayer(player2);
+    game.createOwnable("GameObject", player1);
+    assertEquals(player1, game.getOwnable("EmptyGameObject").getOwner());
+    assertNotEquals(player2, game.getOwnable("EmptyGameObject").getOwner());
+    game.changeOwner(player2, game.getOwnable("EmptyGameObject"));
+    assertEquals(player2, game.getOwnable("EmptyGameObject").getOwner());
+    assertNotEquals(player1, game.getOwnable("EmptyGameObject").getOwner());
+  }
+
+  @Test
+  void createOwnable() {
+    assertNull(game.getOwnable("EmptyGameObject"));
+    Player player = new Player(ownableIdManager);
+    game.addPlayer(player);
+    game.createOwnable("GameObject", player);
+    assertNotNull(game.getOwnable("EmptyGameObject"));
+    assertEquals(player, game.getOwnable("EmptyGameObject").getOwner());
+    assertNull(game.getOwnable("EmptyGameObject2"));
+    game.createOwnable("GameObject");
+    assertNotNull(game.getOwnable("EmptyGameObject2"));
+    assertEquals(game.getGameWorld(), game.getOwnable("EmptyGameObject2").getOwner());
+  }
+
+  @Test
+  void getOwner() {
+    assertNull(game.getOwnable("EmptyGameObject"));
+    Player player1 = new Player(ownableIdManager);
+    game.addPlayer(player1);
+    game.createOwnable("GameObject", player1);
+    assertEquals(player1, game.getOwnable("EmptyGameObject").getOwner());
+  }
+
+  @Test
+  void setOwner() {
+    assertNull(game.getOwnable("EmptyGameObject"));
+    Player player1 = new Player(ownableIdManager);
+    Player player2 = new Player(ownableIdManager);
+    game.addPlayer(player1);
+    game.addPlayer(player2);
+    game.createOwnable("GameObject", player1);
+    game.setOwner("EmptyGameObject", player2);
+    assertNotEquals(player1, game.getOwnable("EmptyGameObject").getOwner());
+    assertEquals(player2, game.getOwnable("EmptyGameObject").getOwner());
+  }
+
+  @Test
+  void getOwnable() {
+    assertNull(game.getOwnable("EmptyGameObject"));
+    Player player1 = new Player(ownableIdManager);
+    game.addPlayer(player1);
+    game.createOwnable("GameObject", player1);
+    assertEquals("EmptyGameObject", game.getOwnable("EmptyGameObject").getDefaultId());
+  }
 }
