@@ -7,6 +7,8 @@ import com.google.gson.JsonElement;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
+import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * @author Rodrigo Bassi Guerreiro
@@ -16,10 +18,12 @@ import java.io.Writer;
 public abstract class FileManager {
   JsonObject myFileInfo;
   JsonParser myParser;
+  Collection<String> myValidTags;
 
   public FileManager() {
     myFileInfo = new JsonObject();
     myParser = new JsonParser();
+    myValidTags = new ArrayList<>();
   }
 
   /**
@@ -45,11 +49,14 @@ public abstract class FileManager {
   }
 
   /**
-   * Internally accessible modifier method that updates JSONObject
+   * Internally accessible modifier method that updates JSONObject while checking for tag validity
    * @param tag String specifying key inside JSON file where info should be added
    * @param content JsonElement containing information to be added to JSON file
    */
   protected void addToContent(String tag, JsonElement content) {
+    if (! myValidTags.isEmpty() && ! isValid(tag)) {
+      // TODO: make custom exception for this
+    }
     if (myFileInfo.has(tag)) {
       JsonArray array;
       if (myFileInfo.get(tag).isJsonArray()) {
@@ -65,5 +72,22 @@ public abstract class FileManager {
     else {
       myFileInfo.add(tag, content);
     }
+  }
+
+  /**
+   * Define collection of acceptable tags for FileManager instance
+   * @param tags Collection of Strings containing all valid tags
+   */
+  protected void setValidTags(Collection<String> tags) {
+    myValidTags = tags;
+  }
+
+  /**
+   * Check whether tag is valid
+   * @param tag String containing tag to be checked
+   * @return Returns true if tag is valid, else false
+   */
+  protected boolean isValid(String tag) {
+    return myValidTags.contains(tag);
   }
 }

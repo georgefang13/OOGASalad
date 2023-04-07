@@ -3,6 +3,10 @@ package oogasalad.gameeditor.backend.filemanagers;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
+import java.util.HashSet;
+import java.util.List;
+import java.util.ResourceBundle;
+import java.util.Set;
 
 /**
  * @author Rodrigo Bassi Guerreiro
@@ -13,6 +17,9 @@ import com.google.gson.JsonPrimitive;
 public class GeneralFileManager extends FileManager {
   public GeneralFileManager() {
     super();
+    ResourceBundle resources = ResourceBundle.getBundle("backend/filemanager/ValidTags");
+    String[] validTags = resources.getString("General").split(",");
+    super.setValidTags(new HashSet<>(List.of(validTags)));
   }
 
   @Override
