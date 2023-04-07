@@ -18,9 +18,9 @@ public class IfElse extends OperatorToken {
 
         Token t = getArg(0).evaluate(env);
 
-        ExpressionToken exprs1 = checkArgument(getArg(1), ExpressionToken.class, env);
-        ExpressionToken exprs2 = checkArgument(getArg(2), ExpressionToken.class, env);
-        ValueToken<Boolean> b = checkArgumentWithSubtype(t, ValueToken.class, Boolean.class.getName(), env);
+        ExpressionToken exprs1 = checkArgument(env, getArg(1), ExpressionToken.class);
+        ExpressionToken exprs2 = checkArgument(env, getArg(2), ExpressionToken.class);
+        ValueToken<Boolean> b = checkArgumentWithSubtype(env, t, ValueToken.class, Boolean.class.getName());
 
         if (b.VALUE) {
             exprs1.evaluate(env);

@@ -13,12 +13,12 @@ public class MakeUserInstruction extends OperatorToken {
 
     public Token evaluate(Environment env) {
 
-        CommandToken name = checkArgument(getArg(0), CommandToken.class, env);
-        ExpressionToken argTokens = checkArgument(getArg(1), ExpressionToken.class, env);
-        ExpressionToken exprs = checkArgument(getArg(2), ExpressionToken.class, env);
+        CommandToken name = checkArgument(env, getArg(0), CommandToken.class);
+        ExpressionToken argTokens = checkArgument(env, getArg(1), ExpressionToken.class);
+        ExpressionToken exprs = checkArgument(env, getArg(2), ExpressionToken.class);
 
         for (int i = 0; i < argTokens.size(); i++){
-            checkArgument(argTokens.get(i), VariableToken.class, env);
+            checkArgument(env, argTokens.get(i), VariableToken.class);
         }
 
         UserInstruction instruction = new UserInstruction(name.NAME, argTokens, exprs);

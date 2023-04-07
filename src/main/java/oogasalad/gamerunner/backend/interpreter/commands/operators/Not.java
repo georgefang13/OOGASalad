@@ -16,7 +16,7 @@ public class Not extends OperatorToken {
     public Token evaluate(Environment env) {
         Token t = getArg(0).evaluate(env);
 
-        ValueToken<Boolean> x1 = checkArgumentWithSubtype(t, ValueToken.class, Boolean.class.getName(), env);
+        ValueToken<Boolean> x1 = checkArgumentWithSubtype(env, t, ValueToken.class, Boolean.class.getName());
 
         return new ValueToken<>(!x1.VALUE);
     }

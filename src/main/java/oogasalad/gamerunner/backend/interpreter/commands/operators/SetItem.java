@@ -24,9 +24,9 @@ public class SetItem extends OperatorToken {
             t3 = t3.evaluate(env);
         }
 
-        ExpressionToken list = checkArgument(t2, ExpressionToken.class, env);
+        ExpressionToken list = checkArgument(env, t2, ExpressionToken.class);
 
-        ValueToken<Double> dindex = checkArgumentWithSubtype(t1, ValueToken.class, Double.class.getName(), env);
+        ValueToken<Double> dindex = checkArgumentWithSubtype(env, t1, ValueToken.class, Double.class.getName());
 
         int index = dindex.VALUE.intValue();
         list.set(index, t3, env);

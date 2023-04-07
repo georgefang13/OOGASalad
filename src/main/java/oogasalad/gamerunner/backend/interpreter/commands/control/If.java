@@ -17,8 +17,8 @@ public class If extends OperatorToken {
     public Token evaluate(Environment env) throws IllegalArgumentException{
         Token t = getArg(0).evaluate(env);
 
-        ValueToken<Boolean> b = checkArgumentWithSubtype(t, ValueToken.class, Boolean.class.getName(), env);
-        ExpressionToken exprs =  checkArgument(getArg(1), ExpressionToken.class, env);
+        ValueToken<Boolean> b = checkArgumentWithSubtype(env, t, ValueToken.class, Boolean.class.getName());
+        ExpressionToken exprs =  checkArgument(env, getArg(1), ExpressionToken.class);
 
         if (b.VALUE) {
             exprs.evaluate(env);

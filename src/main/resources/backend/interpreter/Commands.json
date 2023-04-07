@@ -154,6 +154,12 @@
     "str": "setitem",
     "description": "Sets the value of an element in a list"
   },
+  "GetAttribute": {
+    "name": "Get Attribute",
+    "folder": "operators",
+    "str": "attr",
+    "description": "Retrieves an attribute from a GameObject"
+  },
   "MakeVariable": {
     "name": "Make Variable",
     "folder": "",

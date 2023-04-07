@@ -16,7 +16,7 @@ public class Random extends OperatorToken {
     public ValueToken<Double> evaluate(Environment env){
         Token t = getArg(0).evaluate(env);
 
-        ValueToken<Double> range = checkArgumentWithSubtype(t, ValueToken.class, Double.class.getName(), env);
+        ValueToken<Double> range = checkArgumentWithSubtype(env, t, ValueToken.class, Double.class.getName());
 
         double rand = Math.random() * range.VALUE;
         return new ValueToken<>(rand);

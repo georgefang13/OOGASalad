@@ -13,11 +13,11 @@ public class Repeat extends OperatorToken {
 
     @Override
     public Token evaluate(Environment env) {
-        ExpressionToken exprs = checkArgument(getArg(1), ExpressionToken.class, env);
+        ExpressionToken exprs = checkArgument(env, getArg(1), ExpressionToken.class);
 
         Token t = getArg(0).evaluate(env);
 
-        ValueToken<Double> repeats = checkArgumentWithSubtype(t, ValueToken.class, Double.class.getName(), env);
+        ValueToken<Double> repeats = checkArgumentWithSubtype(env, t, ValueToken.class, Double.class.getName());
 
         int reps = repeats.VALUE.intValue();
 

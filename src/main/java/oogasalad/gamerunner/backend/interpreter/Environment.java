@@ -46,17 +46,7 @@ public class Environment {
     public Token getLocalVariable(String name){
 
         if (name.startsWith(":game_")){
-            name = name.substring(6);
-            if (game.isIdInUse(name)){
-                Ownable v = game.getObject(name);
-                if (v instanceof Variable<?> var){
-                    Token t = convertVariableToToken(var);
-                    t.linkVariable(var);
-                    return t;
-                }
-                return new ValueToken<>(v);
-            }
-            else return null;
+            return getGameVariableToken(name);
         }
 
         if (!name.startsWith("interpreter-")) name = "interpreter-" + name;
@@ -70,6 +60,20 @@ public class Environment {
         return null;
     }
 
+    private Token getGameVariableToken(String name) {
+        name = name.substring(6);
+        if (game.isIdInUse(name)){
+            Ownable v = game.getObject(name);
+            if (v instanceof Variable<?> var){
+                Token t = convertVariableToToken(var);
+                t.linkVariable(var);
+                return t;
+            }
+            return new ValueToken<>(v);
+        }
+        else return null;
+    }
+
     /**
      * Creates a variable to the current scope
      * @param name the name of the variable
@@ -78,16 +82,7 @@ public class Environment {
     public void addVariable(String name, Token val){
 
         if (name.startsWith(":game_")) {
-
-            name = name.substring(6);
-
-            if (game.isIdInUse(name)) {
-                game.removeObject(name);
-            }
-
-            Variable<?> var = convertTokenToVariable(val);
-            game.addObject(var, name);
-
+            addGameVariable(name, val);
             return;
         }
 
@@ -96,16 +91,12 @@ public class Environment {
         Variable<?> var = convertTokenToVariable(val);
 
         if (var.get() != null) {
-
-            if (game.isIdInUse(name)){
-                game.removeObject(name);
+            if (!game.isIdInUse(name) && !game.isObjectInUse(var)){
+                game.addObject(var, name);
             }
-
-            if (game.isObjectInUse(var)){
-                var = var.copy(game);
+            else if (game.isIdInUse(name)){
+                ((Variable)game.getObject(name)).set(var.get());
             }
-
-            game.addObject(var, name);
         }
 
         Map<String, Token> curScope = scope.get(scope.size() - 1);
@@ -119,6 +110,18 @@ public class Environment {
             }
         }
         scope.get(scope.size() - 1).put(name, val);
+    }
+
+    private void addGameVariable(String name, Token val) {
+        name = name.substring(6);
+        if (game.isIdInUse(name)) {
+            Variable setter = convertTokenToVariable(val);
+            ((Variable)game.getObject(name)).set(setter.get());
+        }
+        else{
+            Variable<?> var = convertTokenToVariable(val);
+            game.addObject(var, name);
+        }
     }
 
     Token convertVariableToToken(Variable<?> var){

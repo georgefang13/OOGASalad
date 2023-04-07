@@ -3,8 +3,8 @@ import oogasalad.gameeditor.backend.id.IdManager;
 import oogasalad.gamerunner.backend.interpreter.commands.operators.Sum;
 import oogasalad.gamerunner.backend.interpreter.tokens.*;
 import oogasalad.sharedDependencies.backend.ownables.Ownable;
+import oogasalad.sharedDependencies.backend.ownables.gameobjects.GameObject;
 import oogasalad.sharedDependencies.backend.ownables.variables.Variable;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -39,9 +39,13 @@ public class CommandsTest {
         return (T) idManager.getObject(name);
     }
 
-    private String checkSubtypeErrorMsg(Token t, String NAME, Class<?> type, Class<?> subtype){
+    private String checkSubtypeErrorMsg(Token t, String NAME, Class<?> type, Class<?>... subtype){
         String s = resources.getString("argumentSubtypeError");
-        s = String.format(s, t, NAME, type.getSimpleName(), subtype.getName(), t.getClass().getSimpleName(), t.SUBTYPE);
+        String[] simplenames = new String[subtype.length];
+        for (int i = 0; i < subtype.length; i++){
+            simplenames[i] = subtype[i].getName();
+        }
+        s = String.format(s, t, NAME, type.getSimpleName(), String.join(" or ", simplenames), t.getClass().getSimpleName(), t.SUBTYPE);
         return s;
     }
 
@@ -868,6 +872,16 @@ public class CommandsTest {
         } catch (Exception e){
             assertEquals("Invalid syntax: Not enough arguments for operator Product", e.getMessage());
         }
+
+        // product with a string
+        input = "make :x 1 make :y \"hello make :z * :x :y";
+        try{
+            interpreter.interpret(input);
+            fail();
+        } catch(Exception e){
+            ValueToken<?> t = new ValueToken<>("hello");
+            assertEquals(checkSubtypeErrorMsg(t, "Product", ValueToken.class, Double.class, Boolean.class), e.getMessage());
+        }
     }
 
     @Test
@@ -1301,5 +1315,10 @@ public class CommandsTest {
                 System.out.println(e.getMessage());
             }
         }
+    }
+
+    @Test
+    public void getObjectAttribute(){
+        GameObject obj = new GameObject(idManager);
     }
 }
