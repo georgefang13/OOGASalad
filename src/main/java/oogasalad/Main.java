@@ -2,15 +2,8 @@ package oogasalad;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import oogasalad.windowscene.controllers.WindowController;
-import oogasalad.windowscene.controllers.WindowMediator;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
-import javafx.application.Application;
-import oogasalad.gameeditor.frontend.components.modals.SubDisplayModals.AlertModal;
-import oogasalad.gameeditor.frontend.components.modals.SubInputModals.CreateGameModal;
+import oogasalad.frontend.windows.WindowController;
+import oogasalad.frontend.windows.WindowMediator;
 
 
 /**
