@@ -49,7 +49,7 @@ public class GraphEditorTutorial extends Application
         GModel model = GraphFactory.eINSTANCE.createGModel();
         graphEditor.setModel(model);
         addNodes(model);
-        scene.getStylesheets().add(getClass().getResource("/tree-node.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getResource("/frontend/css/tree-node.css").toExternalForm());
         System.out.println(scene.getStylesheets());
 
     }
