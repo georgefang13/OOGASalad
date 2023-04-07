@@ -4,21 +4,35 @@ import oogasalad.gameeditor.backend.id.IdManager;
 import oogasalad.gamerunner.backend.interpreter.tokens.ExpressionToken;
 import oogasalad.gamerunner.backend.interpreter.tokens.Token;
 import oogasalad.gamerunner.backend.interpreter.tokens.ValueToken;
-import oogasalad.gamerunner.backend.interpreter.tokens.VariableToken;
 import oogasalad.sharedDependencies.backend.ownables.Ownable;
 import oogasalad.sharedDependencies.backend.ownables.variables.Variable;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Environment {
     private final List<Map<String, Token>> scope = new ArrayList<>();
     private IdManager<Ownable> game;
+    private static final String LANGUAGE_RESOURCE_PATH = "backend.interpreter.languages";
+    private String language = "English";
+
+    ResourceBundle resources;
 
     public Environment(){
         scope.add(new HashMap<>());
+        resources = ResourceBundle.getBundle(LANGUAGE_RESOURCE_PATH + "." + language);
+    }
+
+    public void setLanguage(String language){
+        this.language = language;
+        resources = ResourceBundle.getBundle(LANGUAGE_RESOURCE_PATH + "." + language);
+    }
+
+    public String getLanguageResource(String key){
+        return resources.getString(key);
+    }
+
+    public IdManager<Ownable> getGame(){
+        return game;
     }
 
     public void linkSimulation(IdManager<Ownable> game){
@@ -34,12 +48,8 @@ public class Environment {
      */
     public Token getLocalVariable(String name){
 
-        if (name.startsWith("game_")){
-            name = name.substring(5);
-            if (game.isIdInUse(name)){
-                return new VariableToken(name);
-            }
-            else return null;
+        if (name.startsWith(":game_")){
+            return getGameVariableToken(name);
         }
 
         if (!name.startsWith("interpreter-")) name = "interpreter-" + name;
@@ -53,6 +63,20 @@ public class Environment {
         return null;
     }
 
+    private Token getGameVariableToken(String name) {
+        name = name.substring(6);
+        if (game.isIdInUse(name)){
+            Ownable v = game.getObject(name);
+            if (v instanceof Variable<?> var){
+                Token t = convertVariableToToken(var);
+                t.linkVariable(var);
+                return t;
+            }
+            return new ValueToken<>(v);
+        }
+        else return null;
+    }
+
     /**
      * Creates a variable to the current scope
      * @param name the name of the variable
@@ -60,23 +84,22 @@ public class Environment {
      */
     public void addVariable(String name, Token val){
 
+        if (name.startsWith(":game_")) {
+            addGameVariable(name, val);
+            return;
+        }
+
         name = "interpreter-" + name;
 
         Variable<?> var = convertTokenToVariable(val);
 
         if (var.get() != null) {
-
-            if (game.isIdInUse(name)){
-                game.removeObject(game.getObject(name));
+            if (!game.isIdInUse(name) && !game.isObjectInUse(var)){
+                game.addObject(var, name);
             }
-
-            if (game.isObjectInUse(var)){
-                var = var.copy(game);
+            else if (game.isIdInUse(name)){
+                ((Variable)game.getObject(name)).set(var.get());
             }
-
-            game.addObject(var);
-            String curId = game.getId(var);
-            game.changeId(curId, name);
         }
 
         Map<String, Token> curScope = scope.get(scope.size() - 1);
@@ -92,9 +115,35 @@ public class Environment {
         scope.get(scope.size() - 1).put(name, val);
     }
 
+    private void addGameVariable(String name, Token val) {
+        name = name.substring(6);
+        if (game.isIdInUse(name)) {
+            Variable setter = convertTokenToVariable(val);
+            ((Variable)game.getObject(name)).set(setter.get());
+        }
+        else{
+            Variable<?> var = convertTokenToVariable(val);
+            game.addObject(var, name);
+        }
+    }
+
+    Token convertVariableToToken(Variable<?> var){
+        Object obj = var.get();
+        if (obj instanceof Integer i){ return new ValueToken<>(i.doubleValue()); }
+        else if (obj instanceof List<?>){
+            ExpressionToken list = new ExpressionToken();
+            for (Object o : (List<?>) obj){
+                if (o instanceof Variable<?> v) list.addToken(convertVariableToToken(v));
+                if (o instanceof Integer) list.addToken(new ValueToken<>((double) ((int) o)));
+                else list.addToken(new ValueToken<>(o));
+            }
+            return list;
+        }
+        else return new ValueToken<>(obj);
+    }
+
     Variable<?> convertTokenToVariable(Token t){
-        if (t.getLink() != null) return t.getLink();
-        Variable v = new Variable<>(game, t.export(this));
+        Variable<?> v = new Variable<>(game, t.export(this));
         t.linkVariable(v);
         return v;
     }
@@ -116,7 +165,7 @@ public class Environment {
         List<String> removed = new ArrayList<>();
         for (String key : curScope.keySet()){
             if (!key.contains("-global") && game.isIdInUse(key)){
-                game.removeObject(game.getObject(key));
+                game.removeObject(key);
                 removed.add(key);
             }
         }
@@ -127,9 +176,7 @@ public class Environment {
             Token var = getLocalVariable(key);
             if (var != null){
                 Variable<?> v = convertTokenToVariable(var);
-                game.addObject(v);
-                String curId = game.getId(v);
-                game.changeId(curId, key);
+                game.addObject(v, key);
             }
         }
     }

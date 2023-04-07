@@ -8,7 +8,7 @@ import oogasalad.sharedDependencies.backend.ownables.Ownable;
  * Represents an object such as a game piece
  * @author Michael Bryant
  */
-public abstract class GameObject extends Ownable {
+public class GameObject extends Ownable {
 
   /**
    * Creates a new GameObject.
