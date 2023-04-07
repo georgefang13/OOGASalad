@@ -36,7 +36,7 @@ public class GameEditorEditorScene extends AbstractScene {
     @Override
     public void setText() {
         editGridButton.setText(PropertiesManager.getText("GameEditorMainScene.EditGridButton"));
-        gameEditorLabel.setText(PropertiesManager.getText("GameEditorMainScene.GameEditorLabel"));
+        gameEditorLabel.setText("This is new scene");
     }
 
 }
