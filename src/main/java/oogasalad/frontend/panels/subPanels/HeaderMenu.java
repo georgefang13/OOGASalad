@@ -1,10 +1,28 @@
 package oogasalad.frontend.panels.subPanels;
 
+import javafx.scene.layout.HBox;
+import oogasalad.frontend.factories.ButtonFactory;
 import oogasalad.frontend.panels.Panel;
-import oogasalad.frontend.panels.TabPanel;
+import oogasalad.frontend.panels.HBoxPanel;
 
-public class HeaderMenu extends TabPanel {
+public class HeaderMenu extends HBoxPanel {
+  ButtonFactory buttonFactory = new ButtonFactory();
 
+  /**
+   * Constructor for HeaderMenu
+   */
+  public HeaderMenu() {
+    super();
+  }
+  /**
+   * Creates the menu for the header
+   * @return
+   */
+  public HBox createMenu() {
+    HBox menu = new HBox();
+    menu.getChildren().addAll(buttonFactory.createDefaultButton("VisualEditor"), buttonFactory.createDefaultButton("RulesEditor")); //TODO: export these
+    return menu;
+  }
   @Override
   public Panel makePanel() {
     return null;
@@ -25,3 +43,4 @@ public class HeaderMenu extends TabPanel {
 
   }
 }
+

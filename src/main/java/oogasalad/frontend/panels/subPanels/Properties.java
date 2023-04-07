@@ -1,9 +1,9 @@
 package oogasalad.frontend.panels.subPanels;
 
 import oogasalad.frontend.panels.Panel;
-import oogasalad.frontend.panels.TabPanel;
+import oogasalad.frontend.panels.HBoxPanel;
 
-public class Properties extends TabPanel {
+public class Properties extends HBoxPanel {
 
   @Override
   public Panel makePanel() {

@@ -4,10 +4,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import oogasalad.frontend.panels.subPanels.HeaderMenu;
 import oogasalad.frontend.windows.AbstractWindow;
-import oogasalad.frontend.managers.PropertiesManager;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,6 +18,7 @@ public class GameEditorEditorScene extends AbstractScene {
     private VBox leftTab; //REPLACE WITH A PANEL
     private VBox visualPanel; //REPLACE WITH A PANEL
     private Map<Button,VBox> buttonVBoxMap;
+    private HeaderMenu headerMenu;
 
     public GameEditorEditorScene(AbstractWindow window) {
         super(window);
@@ -42,13 +42,10 @@ public class GameEditorEditorScene extends AbstractScene {
     @Override
     public Scene makeScene() {
         root = new BorderPane();
-
+        headerMenu = new HeaderMenu();
         //left sidebar
-
         leftTab = new VBox();
-
-        buttonVBoxMap = new HashMap<>();
-
+        buttonVBoxMap = new HashMap<>(); //TODO: what does this do?
         Button boardButton = new Button("Board");
         setButtonVisualPanel(boardButton, "Board");
         Button variableButton = new Button("Variable");
@@ -57,7 +54,6 @@ public class GameEditorEditorScene extends AbstractScene {
         setButtonVisualPanel(playerButton, "Player");
         Button backButton = new Button("Back");
         backButton.setOnAction(e -> getWindow().switchToScene("main"));
-
         leftTab.getChildren().addAll(boardButton,variableButton,playerButton,backButton);
 
         //main body
@@ -74,6 +70,7 @@ public class GameEditorEditorScene extends AbstractScene {
     private void refreshScene(){
         root.setLeft(leftTab);
         root.setCenter(visualPanel);
+        root.setTop(headerMenu.createMenu());
         setScene(new Scene(root));
         setText();
         setTheme();
