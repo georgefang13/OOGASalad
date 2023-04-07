@@ -6,7 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import oogasalad.frontend.managers.ThemeManagerOld;
+import oogasalad.frontend.managers.StandardThemeManager;
 import oogasalad.frontend.windows.AbstractWindow;
 import oogasalad.frontend.windows.WindowTypes;
 
@@ -36,8 +36,8 @@ public class SplashMainScene extends AbstractScene {
 
     modalButton = new Button(); //ADD NEW WINDOW
     modalButton.setOnAction(
-            e -> getWindow().getWindowController().registerAndShow(WindowTypes.WindowType.MODAL_WINDOW));
-
+        e -> getWindow().getWindowController()
+            .registerAndShow(WindowTypes.WindowType.MODAL_WINDOW));
 
     ComboBox<String> languageDropdown = new ComboBox<>();
     languageDropdown.getItems().addAll("english", "spanish");
@@ -50,7 +50,7 @@ public class SplashMainScene extends AbstractScene {
     themeDropdown.getItems().addAll("light", "dark");
     themeDropdown.getSelectionModel().selectedItemProperty()
         .addListener((observable, oldValue, newValue) -> {
-          ThemeManagerOld.setTheme(newValue);
+          getThemeManager().setTheme(newValue);
         });
     themeDropdown.setValue("light");
     vbox.getChildren().addAll(playButton, editButton, modalButton, languageDropdown, themeDropdown);

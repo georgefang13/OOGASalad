@@ -16,33 +16,36 @@ import oogasalad.frontend.windows.AbstractWindow;
 
 public class ModalScene extends AbstractScene {
 
-    public ModalScene(AbstractWindow window) {
-        super(window);
-    }
+  private Button createGameButton, errorButton;
 
-    @Override
-    public Scene makeScene() {
-        VBox root = new VBox();
-        Button button = new Button("Create Game Modal");
-        button.setOnAction(e -> {
-            CreateGameModal modal = new CreateGameModal();
-            modal.showAndWait();
-        });
-        root.getChildren().add(button);
-        Button errorButton = new Button("Create Error Modal");
-        errorButton.setOnAction(e -> {
-            AlertModal modal = new AlertModal();
-            modal.showAndWait();
-        });
-        root.getChildren().add(errorButton);
-        setScene(new Scene(root));
-        setText();
-        setTheme();
-        return getScene();
-    }
+  public ModalScene(AbstractWindow window) {
+    super(window);
+  }
 
-    @Override
-    public void setText() {
-    }
+  @Override
+  public Scene makeScene() {
+    VBox root = new VBox();
+    createGameButton = new Button();
+    createGameButton.setOnAction(e -> {
+      CreateGameModal modal = new CreateGameModal();
+      modal.showAndWait();
+    });
+    errorButton = new Button();
+    errorButton.setOnAction(e -> {
+      AlertModal modal = new AlertModal();
+      modal.showAndWait();
+    });
+    root.getChildren().addAll(errorButton, createGameButton);
+    setScene(new Scene(root));
+    setText();
+    setTheme();
+    return getScene();
+  }
+
+  @Override
+  public void setText() {
+    createGameButton.setText(getPropertyManager().getText("ModalScene.CreateGameButton"));
+    errorButton.setText(getPropertyManager().getText("ModalScene.ErrorButton"));
+  }
 }
 

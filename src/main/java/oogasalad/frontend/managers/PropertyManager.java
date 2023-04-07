@@ -1,5 +1,7 @@
 package oogasalad.frontend.managers;
 
+import java.util.Set;
+
 public interface PropertyManager {
 
   double getNumeric(String key);
@@ -9,5 +11,7 @@ public interface PropertyManager {
   void setTextResources(String resource);
 
   void addObserver(PropertiesObserver observer);
+
+  Set<String> getTextKeys();
 
 }

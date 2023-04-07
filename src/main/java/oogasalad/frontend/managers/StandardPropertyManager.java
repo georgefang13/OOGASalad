@@ -3,6 +3,7 @@ package oogasalad.frontend.managers;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 /**
  * @author Connor Wells
@@ -41,6 +42,10 @@ public class StandardPropertyManager implements PropertyManager {
   @Override
   public String getText(String key) {
     return textResources.getString(key);
+  }
+
+  public Set<String> getTextKeys() {
+    return textResources.keySet();
   }
 
   @Override
