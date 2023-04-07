@@ -1,6 +1,7 @@
 package oogasalad.frontend.scenes;
 
 import oogasalad.frontend.windows.AbstractWindow;
+import oogasalad.frontend.windows.WindowMediator;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,9 +11,11 @@ public class SceneController {
     private AbstractScene currentScene;
     private Map<String, AbstractScene> scenes;
     private AbstractWindow window;
+    private WindowMediator windowController;
 
-    public SceneController(AbstractWindow window) {
+    public SceneController(AbstractWindow window,WindowMediator windowController) {
         this.window = window;
+        this.windowController = windowController;
         scenes = new HashMap<>();
         addAndLinkScene(this.window.getDefaultSceneType(),MAIN_ID);
         switchToScene(MAIN_ID);

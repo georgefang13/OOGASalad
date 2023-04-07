@@ -14,12 +14,12 @@ import oogasalad.frontend.windows.AbstractWindow;
 
 public abstract class AbstractScene implements PropertiesObserver, ThemeObserver {
 
-  protected AbstractWindow window;
+  protected SceneMediator sceneController;
 
   protected Scene scene;
 
-  public AbstractScene(AbstractWindow window) {
-    this.window = window;
+  public AbstractScene(SceneMediator sceneController) {
+    this.sceneController = sceneController;
     this.scene = makeScene();
     PropertiesManager.addObserver(this);
     ThemeManager.addObserver(this);

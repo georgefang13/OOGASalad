@@ -13,11 +13,9 @@ import oogasalad.frontend.scenes.AbstractScene;
 
 public abstract class AbstractWindow extends Stage {
   private SceneController sceneController;
-  private WindowMediator windowController;
 
   public AbstractWindow(WindowMediator windowController) {
-    this.windowController = windowController;
-    sceneController = new SceneController(this);
+    sceneController = new SceneController(this,windowController); //maybe add just window controller and then the window id to get window from the window controller
     setWidth(PropertiesManager.getNumeric("WindowHeight"));
     setHeight(PropertiesManager.getNumeric("WindowWidth"));
   }
