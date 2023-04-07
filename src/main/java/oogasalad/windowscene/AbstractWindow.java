@@ -17,6 +17,7 @@ public abstract class AbstractWindow extends Stage {
 
   protected WindowMediator windowController;
   protected Map<String, AbstractScene> scenes;
+  private AbstractScene currentScene;
 
   //protected Manager manager = PropertiesFactory.createManager(); //TODO: pass in factory DI
 
@@ -39,7 +40,12 @@ public abstract class AbstractWindow extends Stage {
   }
 
   public void switchToScene(String sceneID) {
-    setScene(scenes.get(sceneID).makeScene());
+    currentScene = scenes.get(sceneID);
+    refreshScene();
+  }
+
+  public void refreshScene(){
+    setScene(currentScene.makeScene());
   }
 
   public WindowMediator getWindowController() {
