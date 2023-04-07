@@ -3,20 +3,30 @@ package oogasalad.gameeditor.backend.filemanager;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import com.google.gson.JsonPrimitive;
 import java.io.File;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import oogasalad.gameeditor.backend.filemanagers.FileManager;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+/**
+ * Class for testing FileManager and other JSON data file-related actions
+ *
+ * @author Rodrigo Bassi Guerreiro
+ */
 public class FilesTest {
   private static final String FILE_FOLDER = System.getProperty("user.dir") + "/data/testfiles";
   private static final String TEST_FILE_NAME = "test.json";
   private static final String EMPTY_FILE_NAME = "empty.json";
+  private static final String SINGLE_TAG_FILE_NAME = "single.json";
+  private static final String DIFFERENT_TAG_FILE_NAME = "difftags.json";
+  private static final String SAME_TAG_FILE_NAME = "sametag.json";
   FileManager fileManager;
   Gson gson;
 
@@ -24,13 +34,9 @@ public class FilesTest {
   void initialize() {
     fileManager = new FileManager();
     gson = new Gson();
-  }
-
-  @AfterEach
-  void removeTestFile() {
     File file = new File(FILE_FOLDER + "/" + TEST_FILE_NAME);
     if (file.exists()) {
-      boolean inferno = file.delete();
+      file.delete();
     }
   }
 
@@ -39,8 +45,36 @@ public class FilesTest {
     fileManager.saveToFile(FILE_FOLDER + "/" + TEST_FILE_NAME);
     JsonElement empty = getJsonFromFile(FILE_FOLDER + "/" + EMPTY_FILE_NAME);
     JsonElement test = getJsonFromFile(FILE_FOLDER + "/" + TEST_FILE_NAME);
-    assertTrue(inDirectory(FILE_FOLDER, TEST_FILE_NAME));
     assertEquals(empty, test);
+  }
+
+  @Test
+  void singleTagTest() {
+    fileManager.addContent("name", new JsonPrimitive("Rodrigo"));
+    fileManager.saveToFile(FILE_FOLDER + "/" + TEST_FILE_NAME);
+    JsonElement singleTag = getJsonFromFile(FILE_FOLDER + "/" + SINGLE_TAG_FILE_NAME);
+    JsonElement test = getJsonFromFile(FILE_FOLDER + "/" + TEST_FILE_NAME);
+    assertEquals(singleTag, test);
+  }
+
+  @Test
+  void differentTagTest() {
+    fileManager.addContent("name", new JsonPrimitive("Rodrigo"));
+    fileManager.addContent("nickname", new JsonPrimitive("Hot Rod"));
+    fileManager.saveToFile(FILE_FOLDER + "/" + TEST_FILE_NAME);
+    JsonElement singleTag = getJsonFromFile(FILE_FOLDER + "/" + DIFFERENT_TAG_FILE_NAME);
+    JsonElement test = getJsonFromFile(FILE_FOLDER + "/" + TEST_FILE_NAME);
+    assertEquals(singleTag, test);
+  }
+
+  @Test
+  void sameTagTest() {
+    fileManager.addContent("name", new JsonPrimitive("Rodrigo"));
+    fileManager.addContent("name", new JsonPrimitive("Hot Rod"));
+    fileManager.saveToFile(FILE_FOLDER + "/" + TEST_FILE_NAME);
+    JsonElement singleTag = getJsonFromFile(FILE_FOLDER + "/" + SAME_TAG_FILE_NAME);
+    JsonElement test = getJsonFromFile(FILE_FOLDER + "/" + TEST_FILE_NAME);
+    assertEquals(singleTag, test);
   }
 
   private JsonElement getJsonFromFile(String path) {

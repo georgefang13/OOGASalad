@@ -47,8 +47,9 @@ public class FileManager {
       }
       else {
         array = new JsonArray();
+        array.add(myFileInfo.get(tag));
         array.add(content);
-        myFileInfo.add(tag, new JsonArray());
+        myFileInfo.add(tag, array);
       }
     }
     else {
