@@ -14,11 +14,11 @@ import oogasalad.frontend.windows.AbstractWindow;
 
 public abstract class AbstractScene implements PropertiesObserver, ThemeObserver {
 
-  protected SceneMediator sceneController;
+  protected SceneController sceneController;
 
   protected Scene scene;
 
-  public AbstractScene(SceneMediator sceneController) {
+  public AbstractScene(SceneController sceneController) {
     this.sceneController = sceneController;
     this.scene = makeScene();
     PropertiesManager.addObserver(this);
@@ -31,10 +31,6 @@ public abstract class AbstractScene implements PropertiesObserver, ThemeObserver
     return scene;
   }
 
-  protected AbstractWindow getWindow() {
-    return window;
-  }
-
   protected void setScene(Scene scene) {
     this.scene = scene;
   }
@@ -43,5 +39,7 @@ public abstract class AbstractScene implements PropertiesObserver, ThemeObserver
     scene.getStylesheets().clear();
     scene.getStylesheets().add(ThemeManager.getTheme());
   }
-
+  public SceneController getSceneController() {
+    return sceneController;
+  }
 }

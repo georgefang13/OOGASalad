@@ -20,8 +20,8 @@ public class GameEditorEditorScene extends AbstractScene {
     private VBox visualPanel; //REPLACE WITH A PANEL
     private Map<Button,VBox> buttonVBoxMap;
 
-    public GameEditorEditorScene(AbstractWindow window) {
-        super(window);
+    public GameEditorEditorScene(SceneController sceneController) {
+        super(sceneController);
     }
 
     private void setButtonVisualPanel(Button button, String title){
@@ -35,7 +35,7 @@ public class GameEditorEditorScene extends AbstractScene {
         System.out.print(button.getText());
         visualPanel = buttonVBoxMap.get(button);
         refreshScene();
-        getWindow().refreshScene();
+        //sceneController.wirefreshScene();
     }
 
 
@@ -56,7 +56,7 @@ public class GameEditorEditorScene extends AbstractScene {
         Button playerButton = new Button("Player");
         setButtonVisualPanel(playerButton, "Player");
         Button backButton = new Button("Back");
-        backButton.setOnAction(e -> getWindow().switchToScene("main"));
+        backButton.setOnAction(e -> sceneController.switchToScene("main"));
 
         leftTab.getChildren().addAll(boardButton,variableButton,playerButton,backButton);
 

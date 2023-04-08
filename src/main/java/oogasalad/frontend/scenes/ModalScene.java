@@ -16,8 +16,8 @@ import oogasalad.frontend.windows.AbstractWindow;
 
 public class ModalScene extends AbstractScene {
 
-    public ModalScene(AbstractWindow window) {
-        super(window);
+    public ModalScene(SceneController sceneController) {
+        super(sceneController);
     }
 
     @Override

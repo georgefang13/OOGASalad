@@ -1,9 +1,6 @@
 package oogasalad.frontend.windows;
 
-import oogasalad.frontend.scenes.AbstractScene;
-import oogasalad.frontend.scenes.GameEditorEditorScene;
-import oogasalad.frontend.scenes.SceneTypes;
-import oogasalad.frontend.scenes.GameEditorMainScene;
+import oogasalad.frontend.scenes.*;
 
 /**
  * @author Connor Wells
@@ -17,8 +14,8 @@ public class GamePlayerWindow extends AbstractWindow {
     PLAY_SCENE
   }
 
-  public GamePlayerWindow(WindowMediator windowController) {
-    super(windowController);
+  public GamePlayerWindow(String windowID, WindowMediator windowController) {
+    super(windowID,windowController);
   }
 
   @Override
@@ -29,9 +26,9 @@ public class GamePlayerWindow extends AbstractWindow {
   @Override
   public AbstractScene addNewScene(SceneTypes sceneType) {
     if (sceneType.equals(WindowScenes.MAIN_SCENE)) {
-      return new GameEditorMainScene(this);
+      return new GamePlayerMainScene(this.sceneController);
     } else if (sceneType.equals(WindowScenes.PLAY_SCENE)) {
-      return new GameEditorEditorScene(this);
+      return new GameEditorEditorScene(this.sceneController);
     }
     throw new IllegalArgumentException("Invalid scene type: " + sceneType);
   }

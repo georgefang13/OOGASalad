@@ -17,8 +17,8 @@ public class GameEditorWindow extends AbstractWindow {
     EDITOR_SCENE
   }
 
-  public GameEditorWindow(WindowMediator windowController) {
-    super(windowController);
+  public GameEditorWindow(String windowID, WindowMediator windowController) {
+    super(windowID,windowController);
   }
 
   @Override
@@ -29,9 +29,9 @@ public class GameEditorWindow extends AbstractWindow {
   @Override
   public AbstractScene addNewScene(SceneTypes sceneType) {
     if (sceneType.equals(WindowScenes.MAIN_SCENE)) {
-      return new GameEditorMainScene(this);
+      return new GameEditorMainScene(this.sceneController);
     } else if (sceneType.equals(WindowScenes.EDITOR_SCENE)) {
-      return new GameEditorEditorScene(this);
+      return new GameEditorEditorScene(this.sceneController);
     }
     throw new IllegalArgumentException("Invalid scene type: " + sceneType);
 
