@@ -1,6 +1,7 @@
 package oogasalad.gameeditor.backend.ownables.gameobjects;
 
 
+import oogasalad.gameeditor.backend.id.IdManager;
 import oogasalad.sharedDependencies.backend.ownables.gameobjects.DropZone;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,6 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class BoardGraphTest {
 
   private List<DropZone> g;
+  private IdManager idManager;
 
   private DropZone getNodeWithId(String id){
     for (DropZone node : g){
@@ -27,6 +29,7 @@ public class BoardGraphTest {
   @BeforeEach
   void setup () {
     g = new ArrayList<>();
+    idManager = new IdManager();
   }
   ArrayList<Map.Entry<String, DropZone>> getSortedEdges(DropZone node){
     ArrayList<Map.Entry<String, DropZone>> sortedEdges = new ArrayList<>(node.getEdges().entrySet());
@@ -36,9 +39,9 @@ public class BoardGraphTest {
 
   @Test
   void addConnections(){
-    DropZone a = new DropZone("A");
-    DropZone b = new DropZone("B");
-    DropZone c = new DropZone("C");
+    DropZone a = new DropZone(idManager,"A");
+    DropZone b = new DropZone(idManager,"B");
+    DropZone c = new DropZone(idManager,"C");
 
     a.addOutgoingConnection(b, "AB");
     b.addOutgoingConnection(c, "BC");
@@ -55,9 +58,9 @@ public class BoardGraphTest {
 
   @Test
   void addNullAndRedundantConnections(){
-    DropZone a = new DropZone("A");
-    DropZone b = new DropZone("B");
-    DropZone c = new DropZone("C");
+    DropZone a = new DropZone(idManager,"A");
+    DropZone b = new DropZone(idManager,"B");
+    DropZone c = new DropZone(idManager,"C");
 
     try { a.addOutgoingConnection(null, "AB"); }
     catch (IllegalArgumentException e) {
@@ -86,12 +89,12 @@ public class BoardGraphTest {
 
   @Test
   void testEquals(){
-    DropZone a = new DropZone("A");
+    DropZone a = new DropZone(idManager,"A");
     assertFalse(a.equals(true));
     assertEquals(a, a);
 
-    DropZone b = new DropZone("B");
-    DropZone a2 = new DropZone("A");
+    DropZone b = new DropZone(idManager,"B");
+    DropZone a2 = new DropZone(idManager,"A");
 
     assertEquals(a, a2);
     assertNotEquals(a, b);
@@ -99,9 +102,9 @@ public class BoardGraphTest {
 
   @Test
   void testNodeToString(){
-    DropZone a = new DropZone("A");
-    DropZone b = new DropZone("B");
-    DropZone c = new DropZone("Blobfish Tails");
+    DropZone a = new DropZone(idManager,"A");
+    DropZone b = new DropZone(idManager,"B");
+    DropZone c = new DropZone(idManager,"Blobfish Tails");
 
     assertEquals("A", a.toString());
     assertEquals("B", b.toString());
@@ -110,18 +113,18 @@ public class BoardGraphTest {
 
   @Test
   void testNodeHashcode(){
-    DropZone a = new DropZone("A");
-    DropZone b = new DropZone("B");
+    DropZone a = new DropZone(idManager,"A");
+    DropZone b = new DropZone(idManager,"B");
 
     assertEquals("A".hashCode(), a.hashCode());
     assertEquals("B".hashCode(), b.hashCode());
   }
 
   void makeConnectedSquare(){
-    DropZone a = new DropZone("A");
-    DropZone b = new DropZone("B");
-    DropZone c = new DropZone("C");
-    DropZone d = new DropZone("D");
+    DropZone a = new DropZone(idManager,"A");
+    DropZone b = new DropZone(idManager,"B");
+    DropZone c = new DropZone(idManager,"C");
+    DropZone d = new DropZone(idManager,"D");
 
     a.addOutgoingConnection(b, "F");
     b.addOutgoingConnection(c, "F");
@@ -143,7 +146,7 @@ public class BoardGraphTest {
   void testCreateGrid(){
     int numRows = 3;
     int numCols = 7;
-    g = BoardCreator.createGrid(numRows, numCols);
+    g = BoardCreator.createGrid(idManager, numRows, numCols);
     assertEquals(numRows * numCols, g.size());
     for (int i = 0; i < numRows; i++){
       for (int j = 0; j < numCols; j++){
@@ -258,7 +261,7 @@ public class BoardGraphTest {
 
   @Test
   void testFindAllSpotsUntilBlocked(){
-    g = BoardCreator.createGrid(8, 8);
+    g = BoardCreator.createGrid(idManager, 8, 8);
 
         /*
         X is a bishop
@@ -305,7 +308,7 @@ public class BoardGraphTest {
 
   @Test
   void testNodePutAndRemoveObject(){
-    g = BoardCreator.createGrid(4, 4);
+    g = BoardCreator.createGrid(idManager, 4, 4);
     Objects.requireNonNull(getNodeWithId("0,0")).putObject("Obj", 1);
     assertTrue(Objects.requireNonNull(getNodeWithId("0,0")).hasObject("Obj"));
     assertEquals(1, Objects.requireNonNull(getNodeWithId("0,0")).getObject("Obj"));
@@ -316,7 +319,7 @@ public class BoardGraphTest {
 
   @Test
   void testSquareLoop(){
-    g = BoardCreator.createSquareLoop(4, 4);
+    g = BoardCreator.createSquareLoop(idManager, 4, 4);
     assertEquals(12, g.size());
 
     List<String> path = new ArrayList<>(List.of("Counterclockwise"));
@@ -345,7 +348,7 @@ public class BoardGraphTest {
 
   @Test
   void testCreate1DLoop(){
-    g = BoardCreator.create1DLoop(4);
+    g = BoardCreator.create1DLoop(idManager, 4);
     assertEquals(4, g.size());
 
     List<String> path = new ArrayList<>(List.of("Forward"));

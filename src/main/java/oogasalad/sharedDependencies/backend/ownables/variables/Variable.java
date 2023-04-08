@@ -104,15 +104,3 @@ public class Variable<T> extends Ownable {
 
 }
 
-/**
- * A listener for a variable.
- * @param <T> the type of the variable
- */
-interface VariableListener<T> {
-
-  /**
-   * Called when the variable changes.
-   * @param value the new value of the variable
-   */
-  void onChange(T value);
-}
