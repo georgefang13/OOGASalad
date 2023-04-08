@@ -4,7 +4,6 @@ import oogasalad.gamerunner.backend.interpreter.Environment;
 import oogasalad.gamerunner.backend.interpreter.tokens.OperatorToken;
 import oogasalad.gamerunner.backend.interpreter.tokens.Token;
 import oogasalad.gamerunner.backend.interpreter.tokens.ValueToken;
-import oogasalad.sharedDependencies.backend.ownables.Ownable;
 import oogasalad.sharedDependencies.backend.ownables.gameobjects.GameObject;
 
 public class GetAttribute extends OperatorToken {

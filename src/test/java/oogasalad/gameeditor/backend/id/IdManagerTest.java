@@ -30,12 +30,12 @@ public class IdManagerTest {
   @BeforeEach
   public void setUp() {
     manager = new IdManager<>();
-    variable1 = new Variable(manager);
-    variable2 = new Variable(manager);
-    variable3 = new Variable(manager);
-    object1 = new EmptyGameObject(manager);
-    object2 = new EmptyGameObject(manager);
-    object3 = new EmptyGameObject(manager);
+    variable1 = new Variable(manager, null);
+    variable2 = new Variable(manager, null);
+    variable3 = new Variable(manager, null);
+    object1 = new EmptyGameObject(null);
+    object2 = new EmptyGameObject(null);
+    object3 = new EmptyGameObject(null);
   }
 
   @Test
@@ -497,6 +497,24 @@ public class IdManagerTest {
     assertEquals(manager.getId(object1), "x");
     assertEquals(manager.getId(object2), "x.amazingObject");
     assertEquals(manager.getId(object3), "x.amazingObject.amazingObject2");
+  }
+
+  @Test
+  public void testCheckClasses() {
+    variable1.addClass("test");
+    variable1.addClass("test2");
+    variable1.addClass("test3");
+    variable2.addClass("test");
+    manager.addObject(variable1);
+    manager.addObject(variable2, variable1);
+    assertTrue(manager.getIdsOfObjectsOfClass("test").size() == 2);
+    assertTrue(manager.getIdsOfObjectsOfClass("test2").size() == 1);
+    assertTrue(manager.getIdsOfObjectsOfClass("test3").size() == 1);
+    assertTrue(manager.getIdsOfObjectsOfClass("test4").size() == 0);
+    assertTrue(manager.getIdsOfObjectsOfClass("test").contains("Variable"));
+    assertTrue(manager.getIdsOfObjectsOfClass("test").contains("Variable.Variable2"));
+    assertFalse(manager.getIdsOfObjectsOfClass("invalid").contains("Variable"));
+
   }
 
 }

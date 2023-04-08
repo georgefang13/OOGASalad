@@ -1258,7 +1258,7 @@ public class CommandsTest {
 
     @Test
     public void testGetGameVariable(){
-        Variable<Double> x = new Variable<>(idManager, 5.0);
+        Variable<Double> x = new Variable<>(5.0);
         idManager.addObject(x);
         String name = idManager.getId(x);
         String input = "make :y :game_" + name;
@@ -1266,7 +1266,7 @@ public class CommandsTest {
         Variable<Double> y = getVar("interpreter-:y");
         assertEquals(5.0, y.get());
 
-        Variable<Integer> x2 = new Variable<>(idManager, 2);
+        Variable<Integer> x2 = new Variable<>(2);
         idManager.addObject(x2);
         name = idManager.getId(x2);
         input = "make :y :game_" + name;
@@ -1276,7 +1276,7 @@ public class CommandsTest {
 
         List<Integer> list = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5));
         List<Double> expected = new ArrayList<>(Arrays.asList(1., 2., 3., 4., 5.));
-        Variable<List<Integer>> listVar = new Variable<>(idManager, list);
+        Variable<List<Integer>> listVar = new Variable<>(list);
         idManager.addObject(listVar);
         name = idManager.getId(listVar);
         input = "make :y :game_" + name;
@@ -1319,8 +1319,8 @@ public class CommandsTest {
 
     @Test
     public void getObjectAttribute(){
-        GameObject obj = new GameObject(idManager);
-        Variable<Double> score = new Variable<>(idManager, 5.0);
+        GameObject obj = new GameObject(null);
+        Variable<Double> score = new Variable<>(5.0);
         idManager.addObject(obj, "obj");
         idManager.addObject(score, "score", obj);
         String input = "attr :game_obj \"score";

@@ -1,6 +1,7 @@
 package oogasalad.gameeditor.backend.ownables.gameobjects;
 
 
+import oogasalad.gameeditor.backend.id.IdManager;
 import oogasalad.sharedDependencies.backend.ownables.gameobjects.DropZone;
 
 import java.util.ArrayList;
@@ -40,7 +41,7 @@ public class BoardCreator {
      * @param cols the number of columns
      * @return a grid graph with the given number of rows and columns
      */
-    public static List<DropZone> createGrid(int rows, int cols) {
+    public static List<DropZone> createGrid(IdManager manager, int rows, int cols) {
         DropZone[][] nodes = new DropZone[rows][cols];
 
         for (int i = 0; i < rows; i++) {
@@ -90,14 +91,14 @@ public class BoardCreator {
      * @param cols the number of columns in the square
      * @return a looped graph with the given number of rows and columns
      */
-    public static List<DropZone> createSquareLoop(int rows, int cols){
+    public static List<DropZone> createSquareLoop(IdManager manager, int rows, int cols){
 
         String pathForward = "Counterclockwise";
         String pathBackward = "Clockwise";
 
         int perimeter = 2 * (rows + cols) - 4;
 
-        return create1DLoop(perimeter, pathForward, pathBackward);
+        return create1DLoop(manager, perimeter, pathForward, pathBackward);
     }
 
     // TODO: put text in properties file
@@ -106,8 +107,8 @@ public class BoardCreator {
      * @param length the length of the loop
      * @return a list of nodes representing the looped graph
      */
-    public static List<DropZone> create1DLoop(int length){
-        return create1DLoop(length, "Forward", "Backward");
+    public static List<DropZone> create1DLoop(IdManager manager, int length){
+        return create1DLoop(manager, length, "Forward", "Backward");
     }
 
     /**
@@ -115,7 +116,7 @@ public class BoardCreator {
      * @param length the length of the loop
      * @return a list of nodes representing the looped graph
      */
-    public static List<DropZone> create1DLoop(int length, String forward, String backward){
+    public static List<DropZone> create1DLoop(IdManager manager, int length, String forward, String backward){
         List<DropZone> nodes = new ArrayList<>();
         for (int i = 0; i < length; i++){
             nodes.add(new DropZone(i + ""));

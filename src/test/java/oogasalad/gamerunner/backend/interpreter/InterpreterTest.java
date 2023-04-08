@@ -32,8 +32,8 @@ public class InterpreterTest {
 
     @Test
     public void testInterpret(){
-        Variable<?> x = new Variable<>(idManager, 5.);
-        Variable<?> y = new Variable<>(idManager, 10.);
+        Variable<?> x = new Variable<>(5.);
+        Variable<?> y = new Variable<>(10.);
         idManager.addObject(x, "x");
         idManager.addObject(y, "y");
         String input = "make :game_z sqrt + pow :game_x 2 pow :game_y 2 ";
@@ -44,8 +44,8 @@ public class InterpreterTest {
 
     @Test
     public void testLoadCode(){
-        Variable<?> x = new Variable<>(idManager, 5.);
-        Variable<?> y = new Variable<>(idManager, 10.);
+        Variable<?> x = new Variable<>(5.);
+        Variable<?> y = new Variable<>(10.);
         idManager.addObject(x, "x");
         idManager.addObject(y, "y");
         String input = "make :game_z sqrt + pow :game_x 2 pow :game_y 2 ";
@@ -57,8 +57,8 @@ public class InterpreterTest {
 
     @Test
     public void testLoadTokenizedCode(){
-        Variable<?> x = new Variable<>(idManager, 5.);
-        Variable<?> y = new Variable<>(idManager, 10.);
+        Variable<?> x = new Variable<>(5.);
+        Variable<?> y = new Variable<>(10.);
         idManager.addObject(x, "x");
         idManager.addObject(y, "y");
         String input = "make :game_z sqrt + pow :game_x 2 pow :game_y 2 ";
@@ -70,8 +70,8 @@ public class InterpreterTest {
 
     @Test
     public void testLoadParsedCode(){
-        Variable<?> x = new Variable<>(idManager, 5.);
-        Variable<?> y = new Variable<>(idManager, 10.);
+        Variable<?> x = new Variable<>(5.);
+        Variable<?> y = new Variable<>(10.);
         idManager.addObject(x, "x");
         idManager.addObject(y, "y");
         String input = "make :game_z sqrt + pow :game_x 2 pow :game_y 2 ";
