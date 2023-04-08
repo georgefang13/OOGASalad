@@ -46,7 +46,7 @@ public class GameEditorEditorScene extends AbstractScene {
     @Override
     public Scene makeScene() {
         root = new BorderPane();
-        headerMenu = new HeaderMenuPanel();
+        headerMenu = new HeaderMenuPanel(sceneController);
         propertiesPanel = new PropertiesPanel();
         environmentPanel = new EnvironmentPanel();
         //left sidebar

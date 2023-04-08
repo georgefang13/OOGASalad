@@ -1,18 +1,23 @@
 package oogasalad.frontend.panels.subPanels;
 
+import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import oogasalad.frontend.factories.ButtonFactory;
 import oogasalad.frontend.panels.Panel;
 import oogasalad.frontend.panels.HBoxPanel;
+import oogasalad.frontend.scenes.SceneController;
+import oogasalad.frontend.windows.GameEditorWindow;
 
 public class HeaderMenuPanel extends HBoxPanel {
   ButtonFactory buttonFactory = new ButtonFactory();
+  SceneController sceneController;
 
   /**
    * Constructor for HeaderMenu
    */
-  public HeaderMenuPanel() {
+  public HeaderMenuPanel(SceneController sceneController) {
     super();
+    this.sceneController = sceneController;
   }
   /**
    * Creates the menu for the header
@@ -20,7 +25,9 @@ public class HeaderMenuPanel extends HBoxPanel {
    */
   public HBox createMenu() {
     HBox menu = new HBox();
-    menu.getChildren().addAll(buttonFactory.createDefaultButton("VisualEditor"), buttonFactory.createDefaultButton("RulesEditor")); //TODO: export these
+    Button rulesbutton = buttonFactory.createDefaultButton("RulesEditor");
+    rulesbutton.setOnAction(e-> openLogicSceneOnClick());
+    menu.getChildren().addAll(buttonFactory.createDefaultButton("VisualEditor"),rulesbutton); //TODO: export these
     return menu;
   }
   @Override
@@ -40,7 +47,12 @@ public class HeaderMenuPanel extends HBoxPanel {
 
   @Override
   public void save() {
+  }
 
+  private void openLogicSceneOnClick(){
+    String newsceneID = "logic";
+    sceneController.addAndLinkScene(GameEditorWindow.WindowScenes.LOGIC_SCENE,newsceneID);
+    sceneController.switchToScene(newsceneID);
   }
 }
 
