@@ -7,10 +7,9 @@ package oogasalad.sharedDependencies.backend.ownables.variables;
  */
 public interface VariableListener<T> {
 
-    /**
-     * Called when the variable changes.
-     *
-     * @param value the new value of the variable
-     */
-    void onChange(T value);
+  /**
+   * Called when the variable changes.
+   * @param value the new value of the variable
+   */
+  void onChange(T value);
 }

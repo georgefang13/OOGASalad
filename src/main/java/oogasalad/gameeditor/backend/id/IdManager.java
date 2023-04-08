@@ -1,8 +1,10 @@
 package oogasalad.gameeditor.backend.id;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -281,7 +283,7 @@ public class  IdManager<T extends IdManageable> implements Iterable<Map.Entry<St
    * @throws IllegalArgumentException if the id is already in use
    */
   private void throwExceptionIfAlreadyInUse(String id) throws IllegalArgumentException {
-    StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
+    StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace(); //TODO refactor
     if (stackTraceElements[3].getClassName().equals(this.getClass().getName())) {
       if(isIdInUse(id)) {
         throw new IllegalArgumentException("Id \"" + id + "\" already in use"); //TODO resource bundle
@@ -345,6 +347,23 @@ public class  IdManager<T extends IdManageable> implements Iterable<Map.Entry<St
   @Override
   public Iterator<Entry<String, T>> iterator() {
     return simpleIds.entrySet().iterator();
+  }
+
+  /**
+   * Returns a List of all ids of objects of the given class in the IdManager.
+   * @param c the class to check for
+   * You're welcome Ethan
+   * @return a List of all ids of objects of the given class in the IdManager
+   */
+  public List getIdsOfObjectsOfClass(String c) {
+//    loop through all ids and check if they are of the given class using usesClass
+    List ids = new ArrayList();
+    for (Map.Entry<String, T> entry : simpleIds.entrySet()) {
+      if (entry.getValue().usesClass(c)) {
+        ids.add(getId(getObject(entry.getKey())));
+      }
+    }
+    return ids;
   }
 
   //TODO return multiple maps based on ownership (recursive)

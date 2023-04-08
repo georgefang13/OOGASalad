@@ -1,9 +1,11 @@
 package oogasalad.sharedDependencies.backend.ownables;
 
 
+import java.util.HashSet;
 import oogasalad.gameeditor.backend.id.IdManageable;
 import oogasalad.gameeditor.backend.id.IdManager;
 import oogasalad.sharedDependencies.backend.owners.GameWorld;
+import oogasalad.sharedDependencies.backend.owners.Owner;
 import oogasalad.sharedDependencies.backend.owners.Player;
 
 
@@ -19,19 +21,35 @@ import oogasalad.sharedDependencies.backend.owners.Player;
  * @see GameWorld
  * The Owner of an Ownable can be changed.
  * @author Michael Bryant
+ * @author Max Meister
  */
 public abstract class Ownable extends IdManageable {
 
+  private Owner owner;
 
   /**
    * Constructs an Ownable with a given IdManager.
-   * @param idManager the IdManager to use
+   * @param owner for the ownable
    */
-  public Ownable(IdManager idManager) {
-    super(idManager);
+  public Ownable(Owner owner) {
+    this.owner = owner;
+  }
+
+  /**
+   * Gets the owner of the ownable.
+   * @return the owner of the ownable
+   */
+  public Owner getOwner() {
+    return owner;
+  }
+
+  /**
+   * Sets the owner of the ownable.
+   * @param owner the new owner of the ownable
+   */
+  public void setOwner(Owner owner) {
+    this.owner = owner;
   }
 
 
 }
-
-
