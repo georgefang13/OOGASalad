@@ -4,10 +4,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import oogasalad.frontend.panels.VisualPanel;
+import oogasalad.frontend.panels.subPanels.EnvironmentPanel;
+import oogasalad.frontend.panels.subPanels.HeaderMenuPanel;
+import oogasalad.frontend.panels.subPanels.PropertiesPanel;
 import oogasalad.frontend.windows.AbstractWindow;
-import oogasalad.frontend.managers.PropertiesManager;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,8 +19,10 @@ public class GameEditorEditorScene extends AbstractScene {
     private Label gameEditorLabel;
     private BorderPane root;
     private VBox leftTab; //REPLACE WITH A PANEL
-    private VBox visualPanel; //REPLACE WITH A PANEL
     private Map<Button,VBox> buttonVBoxMap;
+    private HeaderMenuPanel headerMenu;
+    private PropertiesPanel propertiesPanel;
+    private EnvironmentPanel environmentPanel;
 
     public GameEditorEditorScene(SceneController sceneController) {
         super(sceneController);
@@ -33,7 +37,7 @@ public class GameEditorEditorScene extends AbstractScene {
 
     private void updateVisualPanel(Button button){
         System.out.print(button.getText());
-        visualPanel = buttonVBoxMap.get(button);
+//        visualPanel = buttonVBoxMap.get(button);
         refreshScene();
         //sceneController.wirefreshScene();
     }
@@ -42,13 +46,12 @@ public class GameEditorEditorScene extends AbstractScene {
     @Override
     public Scene makeScene() {
         root = new BorderPane();
-
+        headerMenu = new HeaderMenuPanel();
+        propertiesPanel = new PropertiesPanel();
+        environmentPanel = new EnvironmentPanel();
         //left sidebar
-
         leftTab = new VBox();
-
-        buttonVBoxMap = new HashMap<>();
-
+        buttonVBoxMap = new HashMap<>(); //TODO: what does this do?
         Button boardButton = new Button("Board");
         setButtonVisualPanel(boardButton, "Board");
         Button variableButton = new Button("Variable");
@@ -57,14 +60,13 @@ public class GameEditorEditorScene extends AbstractScene {
         setButtonVisualPanel(playerButton, "Player");
         Button backButton = new Button("Back");
         backButton.setOnAction(e -> sceneController.switchToScene("main"));
-
         leftTab.getChildren().addAll(boardButton,variableButton,playerButton,backButton);
 
         //main body
 
-        visualPanel = new VBox();
-        Label mainLabel = new Label("MAIN");
-        visualPanel.getChildren().add(mainLabel);
+//        visualPanel = new VBox();
+//        Label mainLabel = new Label("MAIN");
+//        visualPanel.getChildren().add(mainLabel);
 
         //put it together
 
@@ -72,8 +74,11 @@ public class GameEditorEditorScene extends AbstractScene {
         return getScene();
     }
     private void refreshScene(){
-        root.setLeft(leftTab);
-        root.setCenter(visualPanel);
+        root.setRight(leftTab);
+//        root.setCenter(environmentPanel.createPanel());
+        root.setTop(headerMenu.createMenu());
+        root.setLeft(propertiesPanel.createAccordion());
+        root.setCenter(environmentPanel.createEnvironment());
         setScene(new Scene(root));
         setText();
         setTheme();
