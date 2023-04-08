@@ -37,6 +37,14 @@ public class Variable<T> extends Ownable {
   }
 
   /**
+   * Creates a new variable with the given value and no (null) owner.
+   * @param value the initial value of the variable
+   */
+  public Variable(T value){
+    this(value, null);
+  }
+
+  /**
    * Gets the current value of the variable.
    * @return the current value of the variable
    */

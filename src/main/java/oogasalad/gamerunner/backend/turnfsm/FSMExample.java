@@ -91,11 +91,11 @@ public class FSMExample {
 
         FSM<States> fsm = new FSM<>(idManager);
 
-        Variable<Integer> turn = new Variable<>(idManager, 0);
+        Variable<Integer> turn = new Variable<>(0);
         turn.addListener((value) -> fsm.setState(States.INIT));
 
-        Variable<Integer> numPlayers = new Variable<>(idManager, 2);
-        Variable<List<GameObject>> availableVar = new Variable<>(idManager, new ArrayList<>());
+        Variable<Integer> numPlayers = new Variable<>(2);
+        Variable<List<GameObject>> availableVar = new Variable(new ArrayList<>());
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 addDropZone(i, j, idManager);
@@ -147,7 +147,7 @@ public class FSMExample {
     }
 
     private static void addDropZone(int y, int x, IdManager idManager){
-        DropZone dropZone = new DropZone(idManager, y + "," + x);
+        DropZone dropZone = new DropZone(y + "," + x);
         idManager.addObject(dropZone, y + "," + x);
     }
 }

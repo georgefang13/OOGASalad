@@ -143,7 +143,7 @@ public class Environment {
     }
 
     Variable<?> convertTokenToVariable(Token t){
-        Variable<?> v = new Variable<>(game, t.export(this));
+        Variable<?> v = new Variable<>(t.export(this));
         t.linkVariable(v);
         return v;
     }

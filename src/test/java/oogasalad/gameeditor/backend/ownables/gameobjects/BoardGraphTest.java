@@ -39,9 +39,9 @@ public class BoardGraphTest {
 
   @Test
   void addConnections(){
-    DropZone a = new DropZone(idManager,"A");
-    DropZone b = new DropZone(idManager,"B");
-    DropZone c = new DropZone(idManager,"C");
+    DropZone a = new DropZone("A");
+    DropZone b = new DropZone("B");
+    DropZone c = new DropZone("C");
 
     a.addOutgoingConnection(b, "AB");
     b.addOutgoingConnection(c, "BC");
@@ -58,9 +58,9 @@ public class BoardGraphTest {
 
   @Test
   void addNullAndRedundantConnections(){
-    DropZone a = new DropZone(idManager,"A");
-    DropZone b = new DropZone(idManager,"B");
-    DropZone c = new DropZone(idManager,"C");
+    DropZone a = new DropZone("A");
+    DropZone b = new DropZone("B");
+    DropZone c = new DropZone("C");
 
     try { a.addOutgoingConnection(null, "AB"); }
     catch (IllegalArgumentException e) {
@@ -89,12 +89,12 @@ public class BoardGraphTest {
 
   @Test
   void testEquals(){
-    DropZone a = new DropZone(idManager,"A");
+    DropZone a = new DropZone("A");
     assertFalse(a.equals(true));
     assertEquals(a, a);
 
-    DropZone b = new DropZone(idManager,"B");
-    DropZone a2 = new DropZone(idManager,"A");
+    DropZone b = new DropZone("B");
+    DropZone a2 = new DropZone("A");
 
     assertEquals(a, a2);
     assertNotEquals(a, b);
@@ -102,9 +102,9 @@ public class BoardGraphTest {
 
   @Test
   void testNodeToString(){
-    DropZone a = new DropZone(idManager,"A");
-    DropZone b = new DropZone(idManager,"B");
-    DropZone c = new DropZone(idManager,"Blobfish Tails");
+    DropZone a = new DropZone("A");
+    DropZone b = new DropZone("B");
+    DropZone c = new DropZone("Blobfish Tails");
 
     assertEquals("A", a.toString());
     assertEquals("B", b.toString());
@@ -113,18 +113,18 @@ public class BoardGraphTest {
 
   @Test
   void testNodeHashcode(){
-    DropZone a = new DropZone(idManager,"A");
-    DropZone b = new DropZone(idManager,"B");
+    DropZone a = new DropZone("A");
+    DropZone b = new DropZone("B");
 
     assertEquals("A".hashCode(), a.hashCode());
     assertEquals("B".hashCode(), b.hashCode());
   }
 
   void makeConnectedSquare(){
-    DropZone a = new DropZone(idManager,"A");
-    DropZone b = new DropZone(idManager,"B");
-    DropZone c = new DropZone(idManager,"C");
-    DropZone d = new DropZone(idManager,"D");
+    DropZone a = new DropZone("A");
+    DropZone b = new DropZone("B");
+    DropZone c = new DropZone("C");
+    DropZone d = new DropZone("D");
 
     a.addOutgoingConnection(b, "F");
     b.addOutgoingConnection(c, "F");

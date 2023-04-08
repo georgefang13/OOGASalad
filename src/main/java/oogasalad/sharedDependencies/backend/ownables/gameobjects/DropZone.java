@@ -1,6 +1,7 @@
 package oogasalad.sharedDependencies.backend.ownables.gameobjects;
 
 import oogasalad.gameeditor.backend.id.IdManager;
+import oogasalad.sharedDependencies.backend.owners.Owner;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,8 +14,11 @@ public class DropZone extends GameObject {
     private final HashMap<String, DropZone> edges;
     private final HashMap<String, Object> holding;
 
-    public DropZone(IdManager<?> manager, String nodeId) {
-        super(manager);
+    public DropZone(String nodeId) {
+        this(nodeId, null);
+    }
+    public DropZone(String nodeId, Owner owner) {
+        super(owner);
         this.id = nodeId;
         edges = new HashMap<>();
         holding = new HashMap<>();
