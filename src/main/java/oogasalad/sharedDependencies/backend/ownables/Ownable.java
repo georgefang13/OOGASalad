@@ -1,6 +1,7 @@
 package oogasalad.sharedDependencies.backend.ownables;
 
 
+import java.util.HashSet;
 import oogasalad.gameeditor.backend.id.IdManageable;
 import oogasalad.gameeditor.backend.id.IdManager;
 import oogasalad.sharedDependencies.backend.owners.GameWorld;
@@ -25,13 +26,12 @@ import oogasalad.sharedDependencies.backend.owners.Player;
 public abstract class Ownable extends IdManageable {
 
   private Owner owner;
+
   /**
    * Constructs an Ownable with a given IdManager.
-   * @param idManager the IdManager to use
    * @param owner for the ownable
    */
-  public Ownable(IdManager idManager, Owner owner) {
-    super(idManager);
+  public Ownable(Owner owner) {
     this.owner = owner;
   }
 
@@ -50,5 +50,6 @@ public abstract class Ownable extends IdManageable {
   public void setOwner(Owner owner) {
     this.owner = owner;
   }
+
 
 }

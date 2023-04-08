@@ -12,8 +12,8 @@ import oogasalad.sharedDependencies.backend.owners.Owner;
  */
 public class EmptyGameObject extends GameObject {
 
-  public EmptyGameObject(IdManager idManager, Owner owner) {
-    super(idManager, owner);
+  public EmptyGameObject(Owner owner) {
+    super(owner);
   }
 
 }

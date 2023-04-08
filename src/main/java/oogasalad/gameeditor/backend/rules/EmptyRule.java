@@ -10,12 +10,4 @@ import oogasalad.gameeditor.backend.id.IdManager;
 
 public class EmptyRule extends Rule{
 
-  /**
-   * Constructs an IdManageable using the given IdManager.
-   *
-   * @param idManager the IdManager to use #NOTE: dependency injection
-   */
-  public EmptyRule(IdManager idManager) {
-    super(idManager);
-  }
 }

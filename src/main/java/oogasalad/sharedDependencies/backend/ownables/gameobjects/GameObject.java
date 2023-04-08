@@ -14,8 +14,8 @@ public abstract class GameObject extends Ownable {
   /**
    * Creates a new GameObject.
    */
-  public GameObject(IdManager idManager, Owner owner) {
-    super(idManager, owner);
+  public GameObject(Owner owner) {
+    super(owner);
   }
 
 }

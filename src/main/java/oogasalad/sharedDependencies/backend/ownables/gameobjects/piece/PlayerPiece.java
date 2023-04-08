@@ -1,6 +1,5 @@
 package oogasalad.sharedDependencies.backend.ownables.gameobjects.piece;
 
-import oogasalad.gameeditor.backend.id.IdManager;
 import oogasalad.sharedDependencies.backend.owners.Owner;
 
 /**
@@ -9,7 +8,7 @@ import oogasalad.sharedDependencies.backend.owners.Owner;
  */
 public class PlayerPiece extends Piece{
 
-  public PlayerPiece(IdManager idManager, Owner owner) {
-    super(idManager, owner);
+  public PlayerPiece(Owner owner) {
+    super(owner);
   }
 }

@@ -21,18 +21,17 @@ public class Variable<T> extends Ownable {
   /**
    * Creates a new variable with no value.
    */
-  public Variable(IdManager idManager, Owner owner) {
-    this(idManager, null, owner);
+  public Variable(Owner owner) {
+    this(null, owner);
   }
 
   /**
    * Creates a new variable with the given value.
-   * @param idManager the ownable idmanager
    * @param value the initial value of the variable
    * @param owner the owner of the ownable
    */
-  public Variable(IdManager idManager, T value, Owner owner) {
-    super(idManager, owner);
+  public Variable(T value, Owner owner) {
+    super(owner);
     this.value = value;
     this.listeners = new ArrayList<>();
   }
@@ -98,15 +97,3 @@ public class Variable<T> extends Ownable {
 
 }
 
-/**
- * A listener for a variable.
- * @param <T> the type of the variable
- */
-interface VariableListener<T> {
-
-  /**
-   * Called when the variable changes.
-   * @param value the new value of the variable
-   */
-  void onChange(T value);
-}

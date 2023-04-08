@@ -10,7 +10,6 @@ import oogasalad.gameeditor.backend.ownables.gameobjects.EmptyGameObject;
 import oogasalad.sharedDependencies.backend.ownables.Ownable;
 import oogasalad.sharedDependencies.backend.ownables.gameobjects.GameObject;
 import oogasalad.sharedDependencies.backend.ownables.variables.Variable;
-import oogasalad.sharedDependencies.backend.owners.Owner;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -34,9 +33,9 @@ public class IdManagerTest {
     variable1 = new Variable(manager, null);
     variable2 = new Variable(manager, null);
     variable3 = new Variable(manager, null);
-    object1 = new EmptyGameObject(manager, null);
-    object2 = new EmptyGameObject(manager, null);
-    object3 = new EmptyGameObject(manager, null);
+    object1 = new EmptyGameObject(null);
+    object2 = new EmptyGameObject(null);
+    object3 = new EmptyGameObject(null);
   }
 
   @Test
@@ -498,6 +497,24 @@ public class IdManagerTest {
     assertEquals(manager.getId(object1), "x");
     assertEquals(manager.getId(object2), "x.amazingObject");
     assertEquals(manager.getId(object3), "x.amazingObject.amazingObject2");
+  }
+
+  @Test
+  public void testCheckClasses() {
+    variable1.addClass("test");
+    variable1.addClass("test2");
+    variable1.addClass("test3");
+    variable2.addClass("test");
+    manager.addObject(variable1);
+    manager.addObject(variable2, variable1);
+    assertTrue(manager.getIdsOfObjectsOfClass("test").size() == 2);
+    assertTrue(manager.getIdsOfObjectsOfClass("test2").size() == 1);
+    assertTrue(manager.getIdsOfObjectsOfClass("test3").size() == 1);
+    assertTrue(manager.getIdsOfObjectsOfClass("test4").size() == 0);
+    assertTrue(manager.getIdsOfObjectsOfClass("test").contains("Variable"));
+    assertTrue(manager.getIdsOfObjectsOfClass("test").contains("Variable.Variable2"));
+    assertFalse(manager.getIdsOfObjectsOfClass("invalid").contains("Variable"));
+
   }
 
 }

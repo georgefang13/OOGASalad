@@ -18,34 +18,34 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class GameTest {
-  Game game;
-  IdManager<Ownable> ownableIdManager;
-  IdManager<Rule> ruleIdManager;
-  IdManager<Goal> goalIdManager;
-  GameWorld gameworld;
-  ArrayList<Player> players;
+  public Game game;
+  public IdManager<Ownable> ownableIdManager;
+  public IdManager<Rule> ruleIdManager;
+  public IdManager<Goal> goalIdManager;
+  public IdManager<Player> playerIdManager;
+  public GameWorld gameworld;
 
   @BeforeEach
-  void setUp() {
+  public void setUp() {
     game = new Game();
     ownableIdManager = new IdManager<>();
     ruleIdManager = new IdManager<>();
     goalIdManager = new IdManager<>();
-    gameworld = new GameWorld(ownableIdManager);
-    players = new ArrayList<>();
+    playerIdManager = new IdManager<>();
+    gameworld = new GameWorld();
   }
 
   @Test
-  void addPlayer() {
+  public void addPlayer() {
     assertTrue(game.getPlayers().isEmpty());
-    game.addPlayer(new Player(ownableIdManager));
+    game.addPlayer(new Player());
     assertEquals(1, game.getPlayers().size());
-    game.addPlayer(new Player(ownableIdManager));
+    game.addPlayer(new Player());
     assertEquals(2, game.getPlayers().size());
   }
 
   @Test
-  void addNPlayers() {
+  public void addNPlayers() {
     assertTrue(game.getPlayers().isEmpty());
     game.addNPlayers(5);
     assertEquals(5, game.getPlayers().size());
@@ -54,7 +54,7 @@ class GameTest {
   }
 
   @Test
-  void removePlayer() {
+  public void removePlayer() {
     assertTrue(game.getPlayers().isEmpty());
     game.addNPlayers(5);
     assertEquals(5, game.getPlayers().size());
@@ -63,7 +63,7 @@ class GameTest {
   }
 
   @Test
-  void removeAllPlayers() {
+  public void removeAllPlayers() {
     assertTrue(game.getPlayers().isEmpty());
     game.addNPlayers(5);
     assertEquals(5, game.getPlayers().size());
@@ -72,78 +72,78 @@ class GameTest {
   }
 
   @Test
-  void getPlayers() {
+  public void getPlayers() {
     assertTrue(game.getPlayers().isEmpty());
-    Player player = new Player(ownableIdManager);
+    Player player = new Player();
     game.addPlayer(player);
     assertEquals(player, game.getPlayers().get(0));
   }
 
   @Test
-  void addRule() {
+  public void addRule() {
     assertTrue(game.getRules().isEmpty());
-    game.addRule(new EmptyRule(ruleIdManager));
+    game.addRule(new EmptyRule());
     assertEquals(1, game.getRules().size());
-    game.addRule(new EmptyRule(ruleIdManager));
+    game.addRule(new EmptyRule());
     assertEquals(2, game.getRules().size());
   }
 
   @Test
-  void removeRule() {
+  public void removeRule() {
     assertTrue(game.getRules().isEmpty());
-    game.addRule(new EmptyRule(ruleIdManager));
+    game.addRule(new EmptyRule());
     assertEquals(1, game.getRules().size());
     game.removeRule(game.getRules().get(0));
     assertTrue(game.getRules().isEmpty());
   }
 
   @Test
-  void getRules() {
+  public void getRules() {
     assertTrue(game.getRules().isEmpty());
-    EmptyRule rule = new EmptyRule(ruleIdManager);
+    EmptyRule rule = new EmptyRule();
     game.addRule(rule);
     assertEquals(rule, game.getRules().get(0));
   }
 
   @Test
-  void addGoal() {
+  public void addGoal() {
     assertTrue(game.getGoals().isEmpty());
-    game.addGoal(new EmptyGoal(goalIdManager));
+    game.addGoal(new EmptyGoal());
     assertEquals(1, game.getGoals().size());
-    game.addGoal(new EmptyGoal(goalIdManager));
+    game.addGoal(new EmptyGoal());
     assertEquals(2, game.getGoals().size());
   }
 
   @Test
-  void removeGoal() {
+  public void removeGoal() {
     assertTrue(game.getGoals().isEmpty());
-    game.addGoal(new EmptyGoal(goalIdManager));
+    game.addGoal(new EmptyGoal());
     assertEquals(1, game.getGoals().size());
     game.removeGoal(game.getGoals().get(0));
     assertTrue(game.getGoals().isEmpty());
   }
 
   @Test
-  void getGoals() {
+  public void getGoals() {
     assertTrue(game.getGoals().isEmpty());
-    EmptyGoal goal = new EmptyGoal(goalIdManager);
+    EmptyGoal goal = new EmptyGoal();
     game.addGoal(goal);
     assertEquals(goal, game.getGoals().get(0));
   }
 
   @Test
-  void getGameWorld() {
+  public void getGameWorld() {
     assertInstanceOf(GameWorld.class, game.getGameWorld());
   }
 
   @Test
-  void changeOwner() {
+  public void changeOwner() {
     assertNull(game.getOwnable("EmptyGameObject"));
-    Player player1 = new Player(ownableIdManager);
-    Player player2 = new Player(ownableIdManager);
+    Player player1 = new Player();
+    Player player2 = new Player();
     game.addPlayer(player1);
     game.addPlayer(player2);
-    game.createOwnable("GameObject", player1);
+    game.sendObject("GameObject", "owner=Player;parentOwnable=NULL");
     assertEquals(player1, game.getOwnable("EmptyGameObject").getOwner());
     assertNotEquals(player2, game.getOwnable("EmptyGameObject").getOwner());
     game.changeOwner(player2, game.getOwnable("EmptyGameObject"));
@@ -152,47 +152,59 @@ class GameTest {
   }
 
   @Test
-  void createOwnable() {
-    assertNull(game.getOwnable("EmptyGameObject"));
-    Player player = new Player(ownableIdManager);
+  public void createOwnable() {
+    Player player = new Player();
     game.addPlayer(player);
-    game.createOwnable("GameObject", player);
+
+    assertNull(game.getOwnable("EmptyGameObject"));
+    game.sendObject("GameObject", "owner=Player;parentOwnable=NULL"); //TODO CHANGE ; OR MAKE MAP
     assertNotNull(game.getOwnable("EmptyGameObject"));
     assertEquals(player, game.getOwnable("EmptyGameObject").getOwner());
+
     assertNull(game.getOwnable("EmptyGameObject2"));
-    game.createOwnable("GameObject");
+    game.sendObject("GameObject", "owner=NULL;parentOwnable=NULL");
     assertNotNull(game.getOwnable("EmptyGameObject2"));
     assertEquals(game.getGameWorld(), game.getOwnable("EmptyGameObject2").getOwner());
+
+    assertNull(game.getOwnable("PlayerPiece"));
+    game.sendObject("PlayerPiece", "owner=Player;parentOwnable=NULL");
+    assertNotNull(game.getOwnable("PlayerPiece"));
+    assertEquals(player, game.getOwnable("PlayerPiece").getOwner());
+
+    assertNull(game.getOwnable("PlayerPiece2"));
+    game.sendObject("PlayerPiece", "owner=NULL;parentOwnable=NULL");
+    assertNotNull(game.getOwnable("PlayerPiece2"));
+    assertEquals(game.getGameWorld(), game.getOwnable("PlayerPiece2").getOwner());
   }
 
   @Test
-  void getOwner() {
+  public void getOwner() {
     assertNull(game.getOwnable("EmptyGameObject"));
-    Player player1 = new Player(ownableIdManager);
+    Player player1 = new Player();
     game.addPlayer(player1);
-    game.createOwnable("GameObject", player1);
+    game.sendObject("GameObject", "owner=Player;parentOwnable=NULL");
     assertEquals(player1, game.getOwnable("EmptyGameObject").getOwner());
   }
 
   @Test
-  void setOwner() {
+  public void setOwner() {
     assertNull(game.getOwnable("EmptyGameObject"));
-    Player player1 = new Player(ownableIdManager);
-    Player player2 = new Player(ownableIdManager);
+    Player player1 = new Player();
+    Player player2 = new Player();
     game.addPlayer(player1);
     game.addPlayer(player2);
-    game.createOwnable("GameObject", player1);
+    game.sendObject("GameObject", "owner=Player;parentOwnable=NULL");
     game.setOwner("EmptyGameObject", player2);
     assertNotEquals(player1, game.getOwnable("EmptyGameObject").getOwner());
     assertEquals(player2, game.getOwnable("EmptyGameObject").getOwner());
   }
 
   @Test
-  void getOwnable() {
+  public void getOwnable() {
     assertNull(game.getOwnable("EmptyGameObject"));
-    Player player1 = new Player(ownableIdManager);
+    Player player1 = new Player();
     game.addPlayer(player1);
-    game.createOwnable("GameObject", player1);
+    game.sendObject("GameObject", "owner=Player;parentOwnable=NULL");
     assertEquals("EmptyGameObject", game.getOwnable("EmptyGameObject").getDefaultId());
   }
 }

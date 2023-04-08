@@ -11,12 +11,4 @@ import oogasalad.gameeditor.backend.rules.Rule;
 
 public class EmptyGoal extends Goal {
 
-  /**
-   * Constructs an IdManageable using the given IdManager.
-   *
-   * @param idManager the IdManager to use #NOTE: dependency injection
-   */
-  public EmptyGoal(IdManager idManager) {
-    super(idManager);
-  }
 }

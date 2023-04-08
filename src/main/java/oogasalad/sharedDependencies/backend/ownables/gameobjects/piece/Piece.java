@@ -9,10 +9,9 @@ public abstract class Piece extends GameObject {
   /**
    * Creates a new GameObject.
    *
-   * @param idManager
    * @param owner
    */
-  public Piece(IdManager idManager, Owner owner) {
-    super(idManager, owner);
+  public Piece(Owner owner) {
+    super(owner);
   }
 }

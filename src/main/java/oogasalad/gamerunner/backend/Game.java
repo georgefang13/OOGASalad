@@ -1,6 +1,7 @@
 package oogasalad.gamerunner.backend;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -39,7 +40,7 @@ public class Game {
    * The Players of the game.
    * Players own Ownables.
    */
-  private final ArrayList<Player> players = new ArrayList<>();
+  private final IdManager<Player> playerIdManager = new IdManager();
 
   /**
    * The IdManager of the game for Ownables.
@@ -55,14 +56,14 @@ public class Game {
    * The GameWorld of the game.
    * The GameWorld owns Ownables not owned by Players.
    */
-  private final GameWorld gameWorld = new GameWorld(ownableIdManager);
+  private final GameWorld gameWorld = new GameWorld();
 
   /**
    * Adds a Player to the game.
    * @param player
    */
   public void addPlayer(Player player) {
-    players.add(player);
+    playerIdManager.addObject(player);
   }
 
   /**
@@ -71,7 +72,7 @@ public class Game {
    */
   public void addNPlayers(int n) {
     for (int i = 0; i < n; i++) {
-      addPlayer(new Player(ownableIdManager));
+      addPlayer(new Player());
     }
   }
 
@@ -81,7 +82,7 @@ public class Game {
    * @param player
    */
   public void removePlayer(Player player) {
-    if(!players.contains(player)) {
+    if(!playerIdManager.isIdInUse(playerIdManager.getId(player))) {
       return;
     }
     //remove all ownables owned by player
@@ -90,17 +91,16 @@ public class Game {
         ownableIdManager.removeObject(entry.getValue());
       }
     }
-    players.remove(player);
+    playerIdManager.removeObject(player);
   }
 
   /**
    * Removes all Players from the game and their Ownables.
    */
   public void removeAllPlayers() {
-    while (!players.isEmpty()) {
-      removePlayer(players.get(0));
-    }
+    playerIdManager.clear();
     ownableIdManager.clear();
+    // TODO reconsider
   }
 
   /**
@@ -108,7 +108,11 @@ public class Game {
    * @return unmodifiable List of Players
    */
   public List<Player> getPlayers() {
-    return Collections.unmodifiableList(players);
+    ArrayList<Player> listPlayers= new ArrayList<>();
+    for(Map.Entry<String, Player> entry : playerIdManager) {
+      listPlayers.add(entry.getValue());
+    }
+    return Collections.unmodifiableList(listPlayers);
   }
 
 
@@ -194,29 +198,54 @@ public class Game {
 
   /**
    * Creates an ownable using ownableFactory for player
+   * Pass in null for any unused parameters (cannot pass null for type)
    * @param type the string type of ownable
    * @param owner the owner of the ownable
+   * @param parentOwnable the parent of the ownable
    */
-  public void createOwnable(String type, Owner owner){
-    Ownable newOwnable = ownableFactory.createOwnable(type, ownableIdManager, owner);
-    ownableIdManager.addObject(newOwnable);
+  private void createOwnable(String type, Owner owner, Ownable parentOwnable) {
+    Owner destinationOwner = owner;
+    if (owner == null){
+      destinationOwner = gameWorld;
+    }
+    Ownable newOwnable = ownableFactory.createOwnable(type, destinationOwner);
+    ownableIdManager.addObject(newOwnable, parentOwnable);
   }
 
   /**
-   * Creates an ownable using ownableFactory for gameworld
-   * @param type the string type of ownable
-   */
-  public void createOwnable(String type){
-    createOwnable(type, gameWorld);
+   Method is called in order to send information about a newly constructed   object that was made in the front end sent to the backend. The
+   controller sends to the backend for the backend to input these into a
+   file
+   @Type The class the object belongs to
+   @Params The params of the object
+   **/
+  public void sendObject(String type, String params) {
+    //TODO this sucks and is sorta hardcoded
+    List<String> parameters = Arrays.asList(params.split(";"));
+    //{"owner=id1", "parentOwnable=id2"}
+    String ownerID = parameters.get(0).substring(parameters.get(0).indexOf("=") + 1);
+    String parentOwnableID = parameters.get(1).substring(parameters.get(1).indexOf("=") + 1);
+    if (ownerID.equals("NULL")){
+      if (parentOwnableID.equals("NULL")){
+        createOwnable(type, null, null);
+      }
+      createOwnable(type, null, getOwnable(parentOwnableID));
+    }
+    else if (parentOwnableID.equals("NULL")) {
+      createOwnable(type, playerIdManager.getObject(ownerID), null);
+    }
+    else {
+      createOwnable(type, playerIdManager.getObject(ownerID), getOwnable(parentOwnableID));
+    }
   }
+
 
   /**
    * Gets the Owner of an Ownable with id.
    * @param id the id of the Ownable
-   * @return the Owner of the Ownable
-   * @throws IllegalArgumentException if the id is not in use
+   * @return the Owner of the Ownable, null if the id is not in use
    */
-  public Owner getOwner(String id) throws IllegalArgumentException {
+  public Owner getOwner(String id) {
     if (!ownableIdManager.isIdInUse(id)) {
       return null;
     }

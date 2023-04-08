@@ -17,20 +17,23 @@ public class OwnableFactory {
 
   /**
    * @param ownableType string that represents which ownable to use
-   * @param idManager   idmanager used for param of ownable
    * @param owner the owner for the ownable
    * @return Ownable
    */
-  public static Ownable createOwnable(String ownableType, IdManager idManager, Owner owner) {
+  public static Ownable createOwnable(String ownableType, Owner owner) {
     if (ownableType.equals("GameObject")) {
-      return new EmptyGameObject(idManager, owner);
+      return new EmptyGameObject(owner);
     }
 
     try {
-      Class<?> clazz = Class.forName(ownableType);
+      //get class from string (potentially in different package)
+      Class<?> clazz = Class.forName("oogasalad.sharedDependencies.backend.ownables.gameobjects.piece." + ownableType);
+      //print clazz name
+      System.out.println("class: " + clazz.getName());
+
       if (Ownable.class.isAssignableFrom(clazz)) {
-        Constructor<?> constructor = clazz.getConstructor(IdManager.class, Owner.class);
-        return (Ownable) constructor.newInstance(idManager, owner);
+        Constructor<?> constructor = clazz.getConstructor(Owner.class);
+        return (Ownable) constructor.newInstance(owner);
       } else {
         throw new IllegalArgumentException(
             "Class " + ownableType + " is not a subclass of Ownable"); //TODO add to properties file
