@@ -29,7 +29,7 @@ public class GameEditorLogicScene extends AbstractScene {
         BorderPane root = new BorderPane();
 
         editGridButton = new Button();
-        editGridButton.setOnAction(e -> openEditorSceneOnClick());
+        editGridButton.setOnAction(e -> panelController.newSceneFromPanel("test", GameEditorWindow.WindowScenes.EDITOR_SCENE));
 
         gameEditorLabel = new Label();
         root.setTop(gameEditorLabel);
@@ -46,10 +46,5 @@ public class GameEditorLogicScene extends AbstractScene {
         gameEditorLabel.setText("switched to logic scene");
     }
 
-    private void openEditorSceneOnClick(){
-        String newsceneID = "new";
-        sceneController.addAndLinkScene(GameEditorWindow.WindowScenes.EDITOR_SCENE,newsceneID);
-        sceneController.switchToScene(newsceneID);
-    }
 
 }

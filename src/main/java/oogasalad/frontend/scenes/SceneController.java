@@ -26,8 +26,10 @@ public class SceneController {
     }
 
     public void addAndLinkScene(SceneTypes sceneType, String sceneID){
-        AbstractScene newScene = getWindow().addNewScene(sceneType);
-        scenes.put(sceneID,newScene);
+        if (!scenes.containsKey(sceneID)) {
+            AbstractScene newScene = getWindow().addNewScene(sceneType);
+            scenes.put(sceneID,newScene);
+        }
     }
     public void setDefaultScene(SceneTypes defaultSceneType){
         addAndLinkScene(defaultSceneType,MAIN_ID);
@@ -38,9 +40,7 @@ public class SceneController {
         return windowController.getWindow(windowID);
     }
 
-    public WindowController getWindowController(){
-        return (WindowController) windowController;
+    public WindowMediator getWindowController() {
+        return windowController;
     }
-
-
 }
