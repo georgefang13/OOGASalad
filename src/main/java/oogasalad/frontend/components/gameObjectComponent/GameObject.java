@@ -10,34 +10,20 @@ import oogasalad.frontend.components.draggableComponent.DraggableObject;
 
 
 /**
- * @author Han
+ * @author Han, Aryan
  * Concrete Class for GameObject, a reflection of what is going to be a "GameObject" on the backend
  */
-public class GameObject extends DraggableObject implements GameObjectComponent {
-
-  private final String DEFAULT_FILE_PATH = "frontend/properties/Defaults/GameObject.properties";
-  final private ResourceBundle DEFAULT_BUNDLE = ResourceBundle.getBundle(DEFAULT_FILE_PATH);
-  private ImageView image;
-  private double size;
+public class GameObject extends DraggableObject implements GameObjectComponent{
   private String name;
-  private boolean visible;
-  private boolean draggable;
-  private boolean active;
   private List<Node> children;
   private boolean playable;
-  private Point absolute;
-  private Point editor;
-  private double xOffset;
-  private double yOffset;
 
   public GameObject(int ID){
     super(ID);
-    Image newImage = new Image(DEFAULT_BUNDLE.getString("DEFAULT_IMAGE"));
-    image.setImage(newImage);
-
     children = null;
-
+    followMouse();
   }
+  
   public GameObject(int ID, Node container){
     super(ID, container);
   }

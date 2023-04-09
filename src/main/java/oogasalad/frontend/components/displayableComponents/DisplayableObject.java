@@ -3,9 +3,12 @@ package oogasalad.frontend.components.displayableComponents;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import oogasalad.frontend.components.AbstractComponent;
 import oogasalad.frontend.components.Point;
 
-public class DisplayableObject extends AbstractDisplayableObject implements DisplayableComponent {
+import java.util.ResourceBundle;
+
+public class DisplayableObject extends AbstractComponent implements DisplayableComponent {
     private boolean visible;
     private int zIndex;
     private int size;
@@ -14,11 +17,16 @@ public class DisplayableObject extends AbstractDisplayableObject implements Disp
     private Point editor;
     private double xOffset;
     private double yOffset;
+    private final String DEFAULT_FILE_PATH = "frontend/properties/Defaults/GameObject.properties";
+    final private ResourceBundle DEFAULT_BUNDLE = ResourceBundle.getBundle(DEFAULT_FILE_PATH);
 
 
     public DisplayableObject(int num, Node container) {
         super(num, container);
+        Image newImage = new Image(DEFAULT_BUNDLE.getString("DEFAULT_IMAGE"));
+        image.setImage(newImage);
     }
+
     public DisplayableObject(int ID) {
         super(ID);
     }
