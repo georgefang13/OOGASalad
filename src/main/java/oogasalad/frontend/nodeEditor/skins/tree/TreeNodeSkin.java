@@ -216,6 +216,8 @@ public class TreeNodeSkin extends GNodeSkin {
 
             selectionHalo.setStrokeDashOffset(HALO_CORNER_SIZE);
             selectionHalo.getStrokeDashArray().setAll(cornerLength, yGap, cornerLength, xGap);
+
+            selectionHalo.toBack();
         }
     }
 
