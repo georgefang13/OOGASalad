@@ -13,6 +13,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import oogasalad.frontend.panels.VisualPanel;
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.edit.command.AddCommand;
@@ -86,41 +87,20 @@ public class TreeNodeSkin extends GNodeSkin {
 
         super(node);
 
-        background.setFill(Color.NAVAJOWHITE);
-        background.setStyle("-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 10, 0, 0, 0);");
-        background.setOnMouseEntered(event -> background.setCursor(Cursor.HAND));
-        background.setOnMouseExited(event -> background.setCursor(Cursor.DEFAULT));
+//        handleFormatting();
 
-        selectionHalo.setFill(Color.GREEN);
-
-        background.widthProperty().bind(border.widthProperty().subtract(border.strokeWidthProperty().multiply(2)));
-        background.heightProperty().bind(border.heightProperty().subtract(border.strokeWidthProperty().multiply(2)));
-
-        border.widthProperty().bind(getRoot().widthProperty());
-        border.heightProperty().bind(getRoot().heightProperty());
-
-
-        getRoot().getChildren().addAll(border, background);
-
-        getRoot().setMinSize(MIN_WIDTH, MIN_HEIGHT);
-
-        addSelectionHalo();
 
         final Region vFiller = new Region();
         VBox.setVgrow(vFiller, Priority.ALWAYS);
 
-
         getRoot().getChildren().add(content);
 
-
+        content.getStyleClass().add("tree-node-content");
 
         content.getChildren().addAll(header(), vFiller);
 
-
-
         addButton();
 
-        background.addEventFilter(MouseEvent.MOUSE_DRAGGED, this::filterMouseDragged);
     }
 
     @Override
@@ -229,9 +209,11 @@ public class TreeNodeSkin extends GNodeSkin {
             selectionHalo.setVisible(true);
             layoutSelectionHalo();
             getRoot().toFront();
+            content.getStyleClass().add("tree-node-content-selected");
         } else {
             background.pseudoClassStateChanged(PSEUDO_CLASS_SELECTED, false);
             selectionHalo.setVisible(false);
+            content.getStyleClass().remove("tree-node-content-selected");
         }
     }
 
@@ -392,6 +374,37 @@ public class TreeNodeSkin extends GNodeSkin {
 
         return closeButton;
 
+    }
+
+
+    private void handleFormatting(){
+        background.setFill(Color.NAVAJOWHITE);
+        background.setStyle("-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 10, 0, 0, 0);");
+        background.setOnMouseEntered(event -> background.setCursor(Cursor.HAND));
+        background.setOnMouseExited(event -> background.setCursor(Cursor.DEFAULT));
+
+        selectionHalo.setFill(Color.GREEN);
+
+        background.widthProperty().bind(border.widthProperty().subtract(border.strokeWidthProperty().multiply(2)));
+        background.heightProperty().bind(border.heightProperty().subtract(border.strokeWidthProperty().multiply(2)));
+
+        border.widthProperty().bind(getRoot().widthProperty());
+        border.heightProperty().bind(getRoot().heightProperty());
+
+//        getRoot().getChildren().addAll(border, background);
+
+        getRoot().setMinSize(MIN_WIDTH, MIN_HEIGHT);
+
+        addSelectionHalo();
+
+        background.addEventFilter(MouseEvent.MOUSE_DRAGGED, this::filterMouseDragged);
+
+
+    }
+
+
+    protected VBox getContent(){
+        return content;
     }
 
 }

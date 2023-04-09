@@ -26,3 +26,15 @@
     -fx-font-weight: bold;
     -fx-text-fill: #333333;
 }
+
+
+.tree-node-content {
+    -fx-background-color: navajowhite;
+    -fx-padding: 5;
+}
+
+.tree-node-content-selected{
+    -fx-background-color: #dfffa6;
+    -fx-border-color: #000000;
+    -fx-border-width: 2;
+}

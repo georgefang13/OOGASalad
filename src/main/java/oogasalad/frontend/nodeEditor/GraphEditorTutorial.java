@@ -63,14 +63,15 @@ public class GraphEditorTutorial extends Application
 
         GConnector input = GraphFactory.eINSTANCE.createGConnector();
         GConnector output = GraphFactory.eINSTANCE.createGConnector();
+        GConnector output2 = GraphFactory.eINSTANCE.createGConnector();
 
         input.setType(TreeSkinConstants.TREE_INPUT_CONNECTOR);
         output.setType(TreeSkinConstants.TREE_OUTPUT_CONNECTOR);
+        output2.setType(TreeSkinConstants.TREE_OUTPUT_CONNECTOR);
 
         node.getConnectors().add(input);
         node.getConnectors().add(output);
-
-
+        // node.getConnectors().add(output2);
 
         return node;
     }
