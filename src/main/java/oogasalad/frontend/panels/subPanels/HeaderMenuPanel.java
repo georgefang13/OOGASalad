@@ -25,9 +25,11 @@ public class HeaderMenuPanel extends HBoxPanel {
    */
   public HBox createMenu() {
     HBox menu = new HBox();
-    Button rulesbutton = buttonFactory.createDefaultButton("RulesEditor");
+    Button rulesbutton = buttonFactory.createDefaultButton("RulesEditor"); //TODO: export these
     rulesbutton.setOnAction(e-> openLogicSceneOnClick());
-    menu.getChildren().addAll(buttonFactory.createDefaultButton("VisualEditor"),rulesbutton); //TODO: export these
+    Button visualbutton = buttonFactory.createDefaultButton("VisualEditor"); //TODO: export these
+    menu.getChildren().addAll(visualbutton, rulesbutton);
+
     return menu;
   }
   @Override

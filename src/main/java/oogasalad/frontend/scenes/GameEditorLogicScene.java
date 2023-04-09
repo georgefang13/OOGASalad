@@ -12,6 +12,7 @@ import oogasalad.frontend.managers.PropertiesManager;
 /**
  * @author Connor Wells
  * @author Owen MacKenzie
+ * @author George Fang
  */
 
 public class GameEditorLogicScene extends AbstractScene {
