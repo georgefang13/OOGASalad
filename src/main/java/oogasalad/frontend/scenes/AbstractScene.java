@@ -1,6 +1,8 @@
 package oogasalad.frontend.scenes;
 
 import javafx.scene.Scene;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import oogasalad.frontend.managers.PropertiesObserver;
 import oogasalad.frontend.managers.PropertyManager;
 import oogasalad.frontend.managers.StandardPropertyManager;
@@ -30,6 +32,17 @@ public abstract class AbstractScene implements PropertiesObserver, ThemeObserver
   }
 
   public abstract Scene makeScene();
+
+  public void showModal(AbstractScene modalScene) {
+    Stage modalStage = new Stage();
+    modalStage.initModality(Modality.APPLICATION_MODAL);
+    modalStage.initOwner(window);
+    modalStage.setScene(modalScene.getScene());
+    modalStage.setResizable(false);
+    modalStage.setWidth(propertyManager.getNumeric("ModalWidth"));
+    modalStage.setHeight(propertyManager.getNumeric("ModalHeight"));
+    modalStage.showAndWait();
+  }
 
   protected Scene getScene() {
     return scene;
