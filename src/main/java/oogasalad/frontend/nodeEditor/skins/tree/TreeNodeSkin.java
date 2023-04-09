@@ -5,9 +5,13 @@ package oogasalad.frontend.nodeEditor.skins.tree;
 
 import java.util.List;
 
+import io.github.eckig.grapheditor.Commands;
+import javafx.geometry.Insets;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.ecore.EReference;
@@ -31,7 +35,6 @@ import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
 
 
@@ -72,6 +75,8 @@ public class TreeNodeSkin extends GNodeSkin {
     private final Rectangle border = new Rectangle();
     private final Rectangle background = new Rectangle();
 
+    private final VBox content = new VBox();
+
     /**
      * Creates a new {@link TreeNodeSkin} instance.
      *
@@ -100,6 +105,19 @@ public class TreeNodeSkin extends GNodeSkin {
         getRoot().setMinSize(MIN_WIDTH, MIN_HEIGHT);
 
         addSelectionHalo();
+
+        final Region vFiller = new Region();
+        VBox.setVgrow(vFiller, Priority.ALWAYS);
+
+
+        getRoot().getChildren().add(content);
+
+
+
+        content.getChildren().addAll(header(), vFiller);
+
+
+
         addButton();
 
         background.addEventFilter(MouseEvent.MOUSE_DRAGGED, this::filterMouseDragged);
@@ -243,13 +261,16 @@ public class TreeNodeSkin extends GNodeSkin {
         addChildButton.setPickOnBounds(false);
 
         addChildButton.setGraphic(AwesomeIcon.PLUS.node());
+        addChildButton.setPadding(new Insets(5, 5, 5, 5));
 
 //        addChildButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/add.png"), 20, 20, true, true)));
 //        addChildButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/plus.jpeg"))));
 
         addChildButton.setOnAction(event -> addChildNode());
 
-        getRoot().getChildren().add(addChildButton);
+        content.getChildren().add(addChildButton);
+
+//        getRoot().getChildren().add(addChildButton);
     }
 
     /**
@@ -257,6 +278,7 @@ public class TreeNodeSkin extends GNodeSkin {
      */
     private void addChildNode() {
 
+        System.out.println("pressed");
         final GNode childNode = GraphFactory.eINSTANCE.createGNode();
 
         childNode.setType(TreeSkinConstants.TREE_NODE);
@@ -335,4 +357,41 @@ public class TreeNodeSkin extends GNodeSkin {
             event.consume();
         }
     }
+
+    protected HBox header(){
+        final Region filler = new Region();
+        HBox.setHgrow(filler, Priority.ALWAYS);
+
+
+        Button closeButton = closeButton();
+
+
+        HBox header = new HBox();
+        header.setPrefHeight(20);
+        Label title = new Label();
+        title.setText("Title");
+
+
+        header.getChildren().addAll(title, filler, closeButton);
+
+        return header;
+    }
+
+
+    protected Button closeButton(){
+
+        final Button closeButton = new Button();
+        closeButton.getStyleClass().setAll(STYLE_CLASS_BUTTON);
+
+
+        closeButton.setGraphic(AwesomeIcon.TIMES.node());
+        closeButton.setPadding(new Insets(5, 5, 5, 5));
+
+        closeButton.setCursor(Cursor.DEFAULT);
+        closeButton.setOnAction(event -> Commands.removeNode(getGraphEditor().getModel(), this.getItem()));
+
+        return closeButton;
+
+    }
+
 }

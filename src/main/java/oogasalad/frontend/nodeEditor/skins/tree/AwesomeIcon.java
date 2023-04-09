@@ -21,7 +21,7 @@ public enum AwesomeIcon {
     /**
      * A times / cross icon.
      */
-    TIMES(0xf00d),
+    TIMES(0x0058),
 
     /**
      * A map icon.
