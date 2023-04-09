@@ -20,11 +20,8 @@ public class Difference extends OperatorToken {
         Token t1 = getArg(0).evaluate(env);
         Token t2 = getArg(1).evaluate(env);
 
-        ValueToken<Double> x1 = checkArgumentWithSubtype(t1, ValueToken.class, Double.class.getName(),
-                "Cannot take difference of non-number from " + getArg(0) + " = " + t1);
-
-        ValueToken<Double> x2 = checkArgumentWithSubtype(t2, ValueToken.class, Double.class.getName(),
-                "Cannot take difference of non-number from " + getArg(1) + " = " + t2);
+        ValueToken<Double> x1 = checkArgumentWithSubtype(env, t1, ValueToken.class, Double.class.getName());
+        ValueToken<Double> x2 = checkArgumentWithSubtype(env, t2, ValueToken.class, Double.class.getName());
 
         return new ValueToken<>(x1.VALUE - x2.VALUE);
     }

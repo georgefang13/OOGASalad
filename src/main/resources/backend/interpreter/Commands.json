@@ -154,6 +154,54 @@
     "str": "setitem",
     "description": "Sets the value of an element in a list"
   },
+  "RemoveItem": {
+    "name": "Remove List Item",
+    "folder": "operators",
+    "str": "delitem",
+    "description": "Removes the value of at index i in a list"
+  },
+  "AddItem": {
+    "name": "Add List Item",
+    "folder": "operators",
+    "str": "additem",
+    "description": "Adds the value of an element in a list"
+  },
+  "GetAttribute": {
+    "name": "Get Attribute",
+    "folder": "operators",
+    "str": "attr",
+    "description": "Retrieves an attribute from a GameObject"
+  },
+  "GetGameVariable": {
+    "name": "Get Game Object",
+    "folder": "operators",
+    "str": "fromgame",
+    "description": "Retrieves an item from the id manager"
+  },
+  "GetDropZoneItems": {
+      "name": "Get Drop Zone Items",
+      "folder": "operators",
+      "str": "dzitems",
+      "description": "Retrieves all the items in a drop zone"
+  },
+  "GetDropZoneItem": {
+      "name": "Get Drop Zone Item",
+      "folder": "operators",
+      "str": "dzitem",
+      "description": "Retrieves the item with a specific name within in a drop zone"
+  },
+  "AddDropZoneItem": {
+    "name": "Add Drop Zone Item",
+    "folder": "operators",
+    "str": "putdzitem",
+    "description": "Puts an item with a specific name within in a drop zone"
+  },
+  "Length": {
+    "name": "Length",
+    "folder": "operators",
+    "str": "len",
+    "description": "Gets the length of a list"
+  },
   "MakeVariable": {
     "name": "Make Variable",
     "folder": "",

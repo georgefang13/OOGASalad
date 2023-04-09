@@ -9,7 +9,6 @@ import oogasalad.frontend.managers.StandardPropertyManager;
 import oogasalad.frontend.managers.StandardThemeManager;
 import oogasalad.frontend.managers.ThemeManager;
 import oogasalad.frontend.managers.ThemeObserver;
-import oogasalad.frontend.windows.AbstractWindow;
 
 /**
  * @author Connor Wells
@@ -18,14 +17,14 @@ import oogasalad.frontend.windows.AbstractWindow;
 
 public abstract class AbstractScene implements PropertiesObserver, ThemeObserver {
 
-  protected AbstractWindow window;
+  protected SceneController sceneController;
 
   protected Scene scene;
   protected PropertyManager propertyManager = StandardPropertyManager.getInstance();
   protected ThemeManager themeManager = StandardThemeManager.getInstance();
 
-  public AbstractScene(AbstractWindow window) {
-    this.window = window;
+  public AbstractScene(SceneController sceneController) {
+    this.sceneController = sceneController;
     this.scene = makeScene();
     propertyManager.addObserver(this);
     themeManager.addObserver(this);
@@ -36,7 +35,7 @@ public abstract class AbstractScene implements PropertiesObserver, ThemeObserver
   public void showModal(AbstractScene modalScene) {
     Stage modalStage = new Stage();
     modalStage.initModality(Modality.APPLICATION_MODAL);
-    modalStage.initOwner(window);
+    modalStage.initOwner(modalStage);
     modalStage.setScene(modalScene.getScene());
     modalStage.setResizable(false);
     modalStage.setWidth(propertyManager.getNumeric("ModalWidth"));
@@ -46,10 +45,6 @@ public abstract class AbstractScene implements PropertiesObserver, ThemeObserver
 
   protected Scene getScene() {
     return scene;
-  }
-
-  protected AbstractWindow getWindow() {
-    return window;
   }
 
   protected PropertyManager getPropertyManager() {
@@ -69,4 +64,7 @@ public abstract class AbstractScene implements PropertiesObserver, ThemeObserver
     scene.getStylesheets().add(themeManager.getTheme());
   }
 
+  public SceneController getSceneController() {
+    return sceneController;
+  }
 }

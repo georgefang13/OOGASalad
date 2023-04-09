@@ -17,6 +17,7 @@ public class SyntaxTokenFactory {
             case "Constant" -> new ValueToken<>(Double.parseDouble(value));
             case "SquareBracket" -> new BracketToken(commandType, value);
             case "Parentheses" -> new ParenthesisToken(value);
+            case "String" -> new ValueToken<>(value.substring(1));
             default -> throw new TokenNotRecognizedException(value);
         };
     }

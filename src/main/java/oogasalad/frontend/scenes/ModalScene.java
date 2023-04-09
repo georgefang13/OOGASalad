@@ -18,8 +18,8 @@ public class ModalScene extends AbstractScene {
 
   private Button createGameButton, errorButton;
 
-  public ModalScene(AbstractWindow window) {
-    super(window);
+  public ModalScene(SceneController sceneController) {
+    super(sceneController);
   }
 
   @Override

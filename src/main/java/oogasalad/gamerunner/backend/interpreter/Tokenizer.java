@@ -16,6 +16,7 @@ public class Tokenizer {
     // NOTE: make ONE chooser since generally accepted behavior is that it remembers where user left it last
     // command variations per class
     private static final String SYNTAX_RESOURCE_PATH = "backend.interpreter.Syntax";
+    private static final String COMMANDS_RESOURCE_PATH = "backend/interpreter/Commands.json";
 
     // token types and the regular expression patterns that recognize those types
     // note, it is a list because order matters (some patterns may be more generic and so should be added last)
@@ -29,10 +30,25 @@ public class Tokenizer {
     private final List<Token> tokens = new ArrayList<>();
 
     public Tokenizer(){
-        this("English");
+        init();
     }
-    public Tokenizer(String patternLanguage){
-        setLanguage(patternLanguage);
+
+    public void init() {
+        myTokenOptions.clear();
+        builtinFunctions.clear();
+        syntaxTokens.clear();
+
+        // add in the built-in functions
+        for (Map.Entry<String, Pattern> p : getCommands()){
+            myTokenOptions.add(p);
+            builtinFunctions.add(p.getKey());
+        }
+
+        // add in the general syntax types
+        for (Map.Entry<String, Pattern> p : getSyntaxPatterns()){
+            myTokenOptions.add(p);
+            syntaxTokens.add(p.getKey());
+        }
     }
 
     /**
@@ -103,28 +119,6 @@ public class Tokenizer {
         return text != null && regex.matcher(text.trim()).matches();
     }
 
-    /**
-     * set the language of the tokenizer
-     * @param language the language to set the tokenizer to
-     */
-    public void setLanguage(String language) {
-        myTokenOptions.clear();
-        builtinFunctions.clear();
-        syntaxTokens.clear();
-
-        // add in the built-in functions
-        for (Map.Entry<String, Pattern> p : getLanguagePatterns(language)){
-            myTokenOptions.add(p);
-            builtinFunctions.add(p.getKey());
-        }
-
-        // add in the general syntax types
-        for (Map.Entry<String, Pattern> p : getSyntaxPatterns()){
-            myTokenOptions.add(p);
-            syntaxTokens.add(p.getKey());
-        }
-    }
-
     // Add given resource file to this language's recognized types
     private List<Map.Entry<String, Pattern>> getSyntaxPatterns () {
         List<Map.Entry<String, Pattern>> tokens = new ArrayList<>();
@@ -141,11 +135,10 @@ public class Tokenizer {
         return tokens;
     }
 
-    private List<Map.Entry<String, Pattern>> getLanguagePatterns (String language) {
+    private List<Map.Entry<String, Pattern>> getCommands() {
         List<Map.Entry<String, Pattern>> tokens = new ArrayList<>();
 
-        String filePath = "backend/interpreter/languages/" + language + ".json";
-        String absoluteFilePath = Objects.requireNonNull(Tokenizer.class.getClassLoader().getResource(filePath)).getPath();
+        String absoluteFilePath = Objects.requireNonNull(Tokenizer.class.getClassLoader().getResource(COMMANDS_RESOURCE_PATH)).getPath();
 
         String fileContent = "";
         // Read the entire file content

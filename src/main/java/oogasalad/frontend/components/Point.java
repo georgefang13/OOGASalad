@@ -19,4 +19,5 @@ public class Point {
   public Point scale(int scalingFactor) {
     return new Point(x*scalingFactor, y*scalingFactor);
   }
+
 }

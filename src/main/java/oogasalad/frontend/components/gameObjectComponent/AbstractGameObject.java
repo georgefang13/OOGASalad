@@ -9,6 +9,10 @@ public abstract class AbstractGameObject extends AbstractComponent {
     super(num, container);
   }
 
+  public AbstractGameObject(int ID) {
+    super(ID);
+  }
+
   public abstract void followMouse();
 
   public abstract void setDraggable(boolean drag);
