@@ -23,8 +23,7 @@ public class Item extends OperatorToken {
 
         ExpressionToken x2 = checkArgument(env, t2, ExpressionToken.class);
 
-        ValueToken<Double> d = checkArgumentWithSubtype(env, t1, ValueToken.class, Double.class.getName()
-        );
+        ValueToken<Double> d = checkArgumentWithSubtype(env, t1, ValueToken.class, Double.class.getName());
 
         int index = d.VALUE.intValue();
 

@@ -1,6 +1,5 @@
 package oogasalad.sharedDependencies.backend.ownables.gameobjects;
 
-import oogasalad.gameeditor.backend.id.IdManager;
 import oogasalad.sharedDependencies.backend.owners.Owner;
 
 import java.util.ArrayList;

@@ -98,7 +98,9 @@ public class Environment {
                 game.addObject(var, name);
             }
             else if (game.isIdInUse(name)){
-                ((Variable)game.getObject(name)).set(var.get());
+                Variable v = (Variable) game.getObject(name);
+                val.linkVariable(v);
+                v.set(var.get());
             }
         }
 
@@ -119,7 +121,9 @@ public class Environment {
         name = name.substring(6);
         if (game.isIdInUse(name)) {
             Variable setter = convertTokenToVariable(val);
-            ((Variable)game.getObject(name)).set(setter.get());
+            Variable v = (Variable) game.getObject(name);
+            v.set(setter.get());
+            val.linkVariable(v);
         }
         else{
             Variable<?> var = convertTokenToVariable(val);
@@ -127,22 +131,22 @@ public class Environment {
         }
     }
 
-    Token convertVariableToToken(Variable<?> var){
+    public Token convertVariableToToken(Variable<?> var){
         Object obj = var.get();
         if (obj instanceof Integer i){ return new ValueToken<>(i.doubleValue()); }
         else if (obj instanceof List<?>){
             ExpressionToken list = new ExpressionToken();
             for (Object o : (List<?>) obj){
-                if (o instanceof Variable<?> v) list.addToken(convertVariableToToken(v));
-                if (o instanceof Integer) list.addToken(new ValueToken<>((double) ((int) o)));
-                else list.addToken(new ValueToken<>(o));
+                if (o instanceof Variable<?> v) list.addToken(convertVariableToToken(v), this);
+                if (o instanceof Integer) list.addToken(new ValueToken<>((double) ((int) o)), this);
+                else list.addToken(new ValueToken<>(o), this);
             }
             return list;
         }
         else return new ValueToken<>(obj);
     }
 
-    Variable<?> convertTokenToVariable(Token t){
+    public Variable<?> convertTokenToVariable(Token t){
         Variable<?> v = new Variable<>(t.export(this));
         t.linkVariable(v);
         return v;
