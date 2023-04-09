@@ -5,7 +5,6 @@ import oogasalad.frontend.managers.PropertiesManager;
 import oogasalad.frontend.managers.PropertiesObserver;
 import oogasalad.frontend.managers.ThemeManager;
 import oogasalad.frontend.managers.ThemeObserver;
-import oogasalad.frontend.windows.AbstractWindow;
 
 /**
  * @author Connor Wells

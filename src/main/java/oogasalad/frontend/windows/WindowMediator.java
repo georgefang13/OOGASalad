@@ -18,5 +18,4 @@ public interface WindowMediator {
   void closeWindow(String windowID);
 
   AbstractWindow getWindow(String windowID);
-
 }
