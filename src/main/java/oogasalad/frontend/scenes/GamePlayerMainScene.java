@@ -19,8 +19,8 @@ public class GamePlayerMainScene extends AbstractScene {
 
   private Label gamePlayerLabel;
 
-  public GamePlayerMainScene(AbstractWindow window) {
-    super(window);
+  public GamePlayerMainScene(SceneController sceneController) {
+    super(sceneController);
   }
 
   @Override

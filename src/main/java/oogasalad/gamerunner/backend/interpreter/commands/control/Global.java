@@ -20,7 +20,7 @@ public class Global extends OperatorToken {
 
         Token t = getArg(0);
 
-        VariableToken x = checkArgument(t, VariableToken.class, "Cannot make non-variable global " + t);
+        VariableToken x = checkArgument(env, t, VariableToken.class);
 
         env.addVariable(x.NAME + "-global", t);
         return null;

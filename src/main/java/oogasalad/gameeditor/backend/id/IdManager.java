@@ -1,10 +1,12 @@
 package oogasalad.gameeditor.backend.id;
 
-import oogasalad.sharedDependencies.backend.ownables.variables.Variable;
-
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  * Manages the ids of all Objects of type T (such as an Ownable).
@@ -13,7 +15,7 @@ import java.util.Map;
  * Supports adding SubIds to ids (such as a Player owning a Variable. In this case, the id would be OwnableId.VariableId).
  * @author Michael Bryant
  */
-public class  IdManager<T extends IdManageable> {
+public class  IdManager<T extends IdManageable> implements Iterable<Map.Entry<String, T>> {
 
   /**
    * Map of ids to Objects. Includes subIds, but not with the full id.
@@ -64,7 +66,7 @@ public class  IdManager<T extends IdManageable> {
     //searchId is everything after the last "." in the id, to handle full ids
     String searchId = id.substring(id.lastIndexOf(".") + 1);
     if(!simpleIds.containsKey(searchId)) {
-      throw new IllegalArgumentException("Id " + searchId + " not found"); //TODO resource bundle
+      throw new IllegalArgumentException("Id \"" + id + "\" not found."); //TODO resource bundle
     }
     return simpleIds.get(searchId);
   }
@@ -83,7 +85,7 @@ public class  IdManager<T extends IdManageable> {
         return entry.getKey();
       }
     }
-    throw new IllegalArgumentException("Id " + simpleIds.get(obj) + " not found"); //TODO resource bundle
+    throw new IllegalArgumentException("Id for " + obj + " not found"); //TODO resource bundle
   }
 
   /**
@@ -112,11 +114,10 @@ public class  IdManager<T extends IdManageable> {
     }
     // If the root object was not found, the object is not in the IdManager
     if (fullId == null) {
-      throw new IllegalArgumentException("Object not found in IdManager: " + obj); //TODO resource bundle
+      throw new IllegalArgumentException("Object \"" + obj + "\" not found in IdManager"); //TODO resource bundle
     }
     return fullId;
   }
-
 
   /**
    * Generates a default simple id for an Object of type T and adds it to the set of ids.
@@ -125,25 +126,47 @@ public class  IdManager<T extends IdManageable> {
    * @throws IllegalArgumentException if the id is already in use
    */
   public void addObject(T obj, T parent) throws IllegalArgumentException{
+    addObject(obj, obj.getDefaultId(), parent);
+  }
 
+  /**
+   * Adds an object with a given id to the set of ids.
+   * @param obj the T to add
+   * @param parent the parent of the T to be logged in the ownership map
+   * @param id the id to add the T to
+   * @throws IllegalArgumentException if the id or object is already in use
+   */
+  public void addObject(T obj, String id, T parent) throws IllegalArgumentException{
+    logIdName(obj, parent, id);
+  }
+
+  /**
+   * Helper method for addObject.
+   * @param obj the T to add
+   * @param parent the parent of the T to be logged in the ownership map
+   * @param defaultId the default id to add the T to
+   */
+  private void logIdName(T obj, T parent, String defaultId) {
     if (obj == null) {
       throw new IllegalArgumentException("Object cannot be null"); //TODO resource bundle
     }
-
-    //avoid adding the same object twice
-    if (simpleIds.containsValue(obj)) {
-      throw new IllegalArgumentException("Object with same id already exists in IdManager: " + getId(obj)); //TODO resource bundle
+    //if defaultId contains a ".", then it is not allowed
+    if (defaultId.contains(".")) {
+      throw new IllegalArgumentException("Id \"" + defaultId + "\" cannot contain a '.'"); //TODO resource bundle
     }
-    String defaultId = obj.getDefaultId();
+    //check if obj is already in the id manager
+    if (simpleIds.containsValue(obj)) {
+      throw new IllegalArgumentException("Object \"" + obj +  "\" already in IdManager"); //TODO resource bundle
+    }
     if (!idGenerators.containsKey(defaultId)) {
       idGenerators.put(defaultId, new NumberGenerator());
     }
-    String itemNum = idGenerators.get(defaultId).next();
-    String id;
+    String itemNum = simpleIds.containsKey(defaultId) ? idGenerators.get(defaultId).next() : "";
+    String fullId;
     do {
       try {
-        id = defaultId + itemNum;
-        addId(id, obj, parent);
+        fullId = defaultId + itemNum;
+        addId(fullId, obj, parent);
         break;
       } catch (Exception e) {
         // Handle exception, e.g. generate a new itemNum and try again
@@ -159,7 +182,18 @@ public class  IdManager<T extends IdManageable> {
    * @throws IllegalArgumentException if the id is already in use
    */
   public void addObject(T obj) throws IllegalArgumentException{
-    addObject(obj, null);
+    logIdName(obj, null, obj.getDefaultId());
+  }
+
+  /**
+   * Adds an id to the set of ids along with the given T.
+   * @param obj the T to add
+   * @param id the id to add
+   * @throws IllegalArgumentException if the id is already in use
+   */
+  public void addObject(T obj, String id) throws IllegalArgumentException{
+    throwExceptionIfAlreadyInUse(id);
+    logIdName(obj, null, id);
   }
 
   /**
@@ -170,12 +204,27 @@ public class  IdManager<T extends IdManageable> {
    * @throws IllegalArgumentException if the id is already in use
    */
   private void addId(String id, T obj, T parent) throws IllegalArgumentException{
-    //if id is in use throw exception
-    if (isIdInUse(id)) {
-      throw new IllegalArgumentException("Id already in use"); //TODO put in resource bundle
+    if(simpleIds.containsKey(id)) {
+      throw new IllegalArgumentException("Id \"" + id + "\" already in use"); //TODO resource bundle
     }
     simpleIds.put(id, obj);
     ownershipMap.put(obj, parent);
+  }
+
+  /**
+   * Adds an Object to the set of ids along with the given T and parent id.
+   * @param obj the T to add
+   * @param id the id to add
+   * @param parentId the id of the parent of the T to be logged in the ownership map
+   * @throws IllegalArgumentException if the id is already in use
+   */
+  public void addObject(T obj, String id, String parentId) throws IllegalArgumentException{
+    throwExceptionIfAlreadyInUse(id);
+    T parent = null;
+    if (parentId != null) {
+      parent = simpleIds.get(parentId);
+    }
+    logIdName(obj, parent, id);
   }
 
   /**
@@ -187,11 +236,11 @@ public class  IdManager<T extends IdManageable> {
   public void changeId(String oldId, String newId) throws IllegalArgumentException{
     //if new id is in use throw exception
     if (isIdInUse(newId)) {
-      throw new IllegalArgumentException("Id already in use"); //TODO put in resource bundle
+      throw new IllegalArgumentException("Id \"" + newId + "\" already in use"); //TODO resource bundle
     }
     //if old id is not in use throw exception
     if (!isIdInUse(oldId)) {
-      throw new IllegalArgumentException("Given Id not found: " + oldId); //TODO put in resource bundle
+      throw new IllegalArgumentException("Given id \"" + oldId + "\" not found."); //TODO put in resource bundle
     }
     T obj = simpleIds.get(oldId);
     simpleIds.remove(oldId);
@@ -208,7 +257,7 @@ public class  IdManager<T extends IdManageable> {
   public void removeObject(T obj) throws IllegalArgumentException {
     // Check if the object is present in the simpleIds map
     if (!simpleIds.containsValue(obj)) {
-      throw new IllegalArgumentException("Object not found in IdManager: " + obj);
+      throw new IllegalArgumentException("Object \"" + obj + "\" not found in IdManager");
     }
 
     // Get the simpleId of the object
@@ -225,6 +274,30 @@ public class  IdManager<T extends IdManageable> {
       // Recursively delete any child objects of the removed object
       deleteChildren(obj);
     }
+  }
+
+  /**
+   * Helper method to check if an id is already in use.
+   * Checks iff the callee came from inside the class, if so, throws an exception as this means we don't care if we add a number to the end of the id.
+   * @param id the id to check
+   * @throws IllegalArgumentException if the id is already in use
+   */
+  private void throwExceptionIfAlreadyInUse(String id) throws IllegalArgumentException {
+    StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace(); //TODO refactor
+    if (stackTraceElements[3].getClassName().equals(this.getClass().getName())) {
+      if(isIdInUse(id)) {
+        throw new IllegalArgumentException("Id \"" + id + "\" already in use"); //TODO resource bundle
+      }
+    }
+  }
+
+  /**
+   * Recursively removes the T with the given id and all of its sub-objects from the IdManager
+   * @param id the id of the T to remove
+   * @throws IllegalArgumentException if the T is not in the set of ids
+   */
+  public void removeObject(String id) throws IllegalArgumentException {
+    removeObject(getObject(id));
   }
 
   /**
@@ -266,6 +339,33 @@ public class  IdManager<T extends IdManageable> {
     ownershipMap.clear();
   }
 
+
+  /**
+   * Returns the iterator for the simpleIds map.
+   * @return an iterator of type Entry<String, T>
+   */
+  @Override
+  public Iterator<Entry<String, T>> iterator() {
+    return simpleIds.entrySet().iterator();
+  }
+
+  /**
+   * Returns a List of all ids of objects of the given class in the IdManager.
+   * @param c the class to check for
+   * You're welcome Ethan
+   * @return a List of all ids of objects of the given class in the IdManager
+   */
+  public List getIdsOfObjectsOfClass(String c) {
+//    loop through all ids and check if they are of the given class using usesClass
+    List ids = new ArrayList();
+    for (Map.Entry<String, T> entry : simpleIds.entrySet()) {
+      if (entry.getValue().usesClass(c)) {
+        ids.add(getId(getObject(entry.getKey())));
+      }
+    }
+    return ids;
+  }
+
   //TODO return multiple maps based on ownership (recursive)
 
   //TODO manipulate graph
@@ -273,4 +373,8 @@ public class  IdManager<T extends IdManageable> {
   //TODO check for loops in graph
 
   //TODO get an unmodifiable list of all things owned by a given object
+
+  //TODO every Ownable will have Owner variable, use idmanager to search
+
+
 }
