@@ -38,11 +38,10 @@ public class GameEditorEditorScene extends AbstractScene {
     //sceneController.wirefreshScene();
   }
 
-
   @Override
   public Scene makeScene() {
     root = new BorderPane();
-    headerMenu = new HeaderMenuPanel(sceneController);
+    headerMenu = new HeaderMenuPanel(panelController);
     propertiesPanel = new PropertiesPanel();
     environmentPanel = new EnvironmentPanel();
     //left sidebar
@@ -55,7 +54,7 @@ public class GameEditorEditorScene extends AbstractScene {
     Button playerButton = new Button("Player");
     setButtonVisualPanel(playerButton, "Player");
     Button backButton = new Button("Back");
-    backButton.setOnAction(e -> sceneController.switchToScene("main"));
+    backButton.setOnAction(e -> panelController.switchSceneFromPanel("main"));
     leftTab.getChildren().addAll(boardButton, variableButton, playerButton, backButton);
 
     //main body

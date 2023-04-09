@@ -28,13 +28,16 @@ public class SplashMainScene extends AbstractScene {
     VBox vbox = new VBox(10);
     playButton = new Button();
     playButton.setOnAction(
-        e -> getSceneController().getWindowController().registerAndShow(WindowTypes.WindowType.GAME_WINDOW));
+        e -> panelController.getSceneController().getWindowController()
+            .registerAndShow(WindowTypes.WindowType.GAME_WINDOW));
     editButton = new Button();
     editButton.setOnAction(
-        e -> getSceneController().getWindowController().registerAndShow(WindowTypes.WindowType.EDIT_WINDOW));
+        e -> panelController.getSceneController().getWindowController()
+            .registerAndShow(WindowTypes.WindowType.EDIT_WINDOW));
     modalButton = new Button(); //ADD NEW WINDOW
     modalButton.setOnAction(
-            e -> sceneController.getWindowController().registerAndShow(WindowTypes.WindowType.MODAL_WINDOW));
+        e -> panelController.getSceneController().getWindowController()
+            .registerAndShow(WindowTypes.WindowType.MODAL_WINDOW));
     ComboBox<String> languageDropdown = new ComboBox<>();
     languageDropdown.getItems().addAll("english", "spanish");
     languageDropdown.getSelectionModel().selectedItemProperty()
