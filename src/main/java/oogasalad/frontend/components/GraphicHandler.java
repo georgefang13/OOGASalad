@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
  * The purpose of this class is to handle the conversion of inputs from the user into proper JavaFX
  * coordinates that will be contained in the editor region
  */
+
 public class GraphicHandler {
 
   //TODO add the SIZE_FILE and set the file names based on convention
