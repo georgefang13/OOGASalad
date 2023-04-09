@@ -30,8 +30,9 @@ public class ExpressionToken extends Token implements Iterable<Token> {
    * 
    * @param t token to add to expression
    */
-  public void addToken(Token t) {
+  public void addToken(Token t, Environment env) {
     tokens.add(t);
+    exportSelf(env);
   }
 
   /**
@@ -61,6 +62,19 @@ public class ExpressionToken extends Token implements Iterable<Token> {
    */
   public void set(int i, Token t, Environment env) {
     tokens.set(i, t);
+    exportSelf(env);
+  }
+
+  public void remove(int i, Environment env) {
+    tokens.remove(i);
+    exportSelf(env);
+  }
+
+  public int length(){
+    return tokens.size();
+  }
+
+  private void exportSelf(Environment env){
     if (link != null){
       link.set(export(env));
     }

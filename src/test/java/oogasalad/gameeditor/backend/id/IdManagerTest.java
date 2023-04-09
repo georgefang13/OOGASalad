@@ -30,12 +30,12 @@ public class IdManagerTest {
   @BeforeEach
   public void setUp() {
     manager = new IdManager<>();
-    variable1 = new Variable(manager);
-    variable2 = new Variable(manager);
-    variable3 = new Variable(manager);
-    object1 = new EmptyGameObject(manager);
-    object2 = new EmptyGameObject(manager);
-    object3 = new EmptyGameObject(manager);
+    variable1 = new Variable(manager, null);
+    variable2 = new Variable(manager, null);
+    variable3 = new Variable(manager, null);
+    object1 = new EmptyGameObject(null);
+    object2 = new EmptyGameObject(null);
+    object3 = new EmptyGameObject(null);
   }
 
   @Test
@@ -343,7 +343,7 @@ public class IdManagerTest {
     assertTrue(manager.isIdInUse("Variable2"));
     assertTrue(manager.getSimpleIds().size() == 1);
     manager.addObject(variable2);
-    assertTrue(manager.isIdInUse("Variable3"));
+    assertTrue(manager.isIdInUse("Variable"));
   }
 
   @Test
@@ -410,6 +410,111 @@ public class IdManagerTest {
     assertFalse(manager.isIdInUse("Variable2"));
     assertFalse(manager.isIdInUse("Variable3"));
     assertTrue(manager.getSimpleIds().size() == 0);
+  }
+
+  @Test
+  public void testIterator() {
+    manager.addObject(object1);
+    manager.addObject(object2, object1);
+    manager.addObject(object3, object2);
+    manager.addObject(variable1, object1);
+    manager.addObject(variable2, object2);
+    manager.addObject(variable3, object3);
+    int num = 0;
+    for(Map.Entry<String, Ownable> entry : manager) {
+      num++;
+      //check that it is one of the objects
+      assertTrue(entry.getValue() == object1 || entry.getValue() == object2 || entry.getValue() == object3 || entry.getValue() == variable1 || entry.getValue() == variable2 || entry.getValue() == variable3);
+    }
+    assertTrue(num == 6);
+  }
+
+  @Test
+  public void testAddWithId() {
+    assertFalse(manager.isIdInUse("Variable"));
+    assertFalse(manager.isIdInUse("random"));
+    manager.addObject(variable1, "Variable");
+    manager.addObject(variable2, "random");
+    assertTrue(manager.isIdInUse("Variable"));
+    assertTrue(manager.isIdInUse("random"));
+    assertTrue(manager.getSimpleIds().size() == 2);
+  }
+
+  @Test
+  public void testAddWithIdAndParent() {
+    assertFalse(manager.isIdInUse("this_is_a_test"));
+    assertFalse(manager.isIdInUse("this_is_a_test_random"));
+    manager.addObject(variable1, "this_is_a_test");
+    manager.addObject(variable2, "this_is_a_test_random", variable1);
+    assertTrue(manager.isIdInUse("this_is_a_test"));
+    assertTrue(manager.isIdInUse("this_is_a_test_random"));
+  }
+
+  @Test
+  public void testAddWithParentId() {
+    assertFalse(manager.isIdInUse("this_is_a_test"));
+    assertFalse(manager.isIdInUse("this_is_a_test_random"));
+    manager.addObject(variable1, "this_is_a_test");
+    manager.addObject(variable2, "this_is_a_test_random", "this_is_a_test");
+    assertTrue(manager.isIdInUse("this_is_a_test"));
+    assertTrue(manager.isIdInUse("this_is_a_test_random"));
+    //make sure the parent is correct
+    assertEquals(manager.getId(variable2), "this_is_a_test.this_is_a_test_random");
+  }
+
+  @Test
+  public void testCannotContainDot() {
+    assertFalse(manager.isIdInUse("this.is.a.test"));
+    assertThrows(IllegalArgumentException.class, () -> manager.addObject(variable1, "this.is.a.test"));
+    assertFalse(manager.isIdInUse("this.is.a.test"));
+    assertThrows(IllegalArgumentException.class, () -> manager.addObject(variable1, "this.is.a.test", "this.is.a.test"));
+    assertFalse(manager.isIdInUse("this.is.a.test"));
+    assertThrows(IllegalArgumentException.class, () -> manager.addObject(variable1, "this.is.a.test", variable1));
+    assertFalse(manager.isIdInUse("this.is.a.test"));
+    manager.addObject(variable1);
+    assertTrue(manager.isIdInUse("Variable"));
+  }
+
+  @Test
+  public void addManyInDifferentWays() {
+    manager.addObject(variable1);
+    manager.addObject(variable2);
+    manager.addObject(variable3, variable1);
+    manager.addObject(object1, "x");
+    manager.addObject(object2, "amazingObject", "x");
+    manager.addObject(object3, "amazingObject2", "amazingObject");
+    assertTrue(manager.isIdInUse("Variable"));
+    assertTrue(manager.isIdInUse("Variable2"));
+    assertTrue(manager.isIdInUse("Variable3"));
+    assertTrue(manager.isIdInUse("x"));
+    assertTrue(manager.isIdInUse("amazingObject"));
+    assertTrue(manager.isIdInUse("amazingObject2"));
+    assertTrue(manager.getSimpleIds().size() == 6);
+    //test that the parents are correct
+    assertEquals(manager.getId(variable1), "Variable");
+    assertEquals(manager.getId(variable2), "Variable2");
+    assertEquals(manager.getId(variable3), "Variable.Variable3");
+    assertEquals(manager.getId(object1), "x");
+    assertEquals(manager.getId(object2), "x.amazingObject");
+    assertEquals(manager.getId(object3), "x.amazingObject.amazingObject2");
+  }
+
+  @Test
+  public void testCheckClasses() {
+    variable1.addClass("test");
+    variable1.addClass("test2");
+    variable1.addClass("test3");
+    variable2.addClass("test");
+    manager.addObject(variable1);
+    manager.addObject(variable2, variable1);
+    assertTrue(manager.getIdsOfObjectsOfClass("test").size() == 2);
+    assertTrue(manager.getIdsOfObjectsOfClass("test2").size() == 1);
+    assertTrue(manager.getIdsOfObjectsOfClass("test3").size() == 1);
+    assertTrue(manager.getIdsOfObjectsOfClass("test4").size() == 0);
+    assertTrue(manager.getIdsOfObjectsOfClass("test").contains("Variable"));
+    assertTrue(manager.getIdsOfObjectsOfClass("test").contains("Variable.Variable2"));
+    assertFalse(manager.getIdsOfObjectsOfClass("invalid").contains("Variable"));
+
   }
 
 }
