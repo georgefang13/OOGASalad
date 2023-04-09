@@ -3,6 +3,7 @@ import oogasalad.gameeditor.backend.id.IdManager;
 import oogasalad.gamerunner.backend.interpreter.commands.operators.Sum;
 import oogasalad.gamerunner.backend.interpreter.tokens.*;
 import oogasalad.sharedDependencies.backend.ownables.Ownable;
+import oogasalad.sharedDependencies.backend.ownables.gameobjects.DropZone;
 import oogasalad.sharedDependencies.backend.ownables.gameobjects.GameObject;
 import oogasalad.sharedDependencies.backend.ownables.variables.Variable;
 import org.junit.jupiter.api.BeforeEach;
@@ -49,10 +50,41 @@ public class CommandsTest {
         return s;
     }
 
-    private String checkTypeErrorMsg(Token t, String NAME, Class<?> type){
+    private String checkTypeErrorMsg(Token t, String NAME, Class<?>... type){
         String s = resources.getString("argumentTypeError");
-        s = String.format(s, t, NAME, type.getSimpleName(), t == null ? "null" : t.getClass().getSimpleName());
+        String[] simplenames = new String[type.length];
+        for (int i = 0; i < type.length; i++){
+            simplenames[i] = type[i].getSimpleName();
+        }
+        s = String.format(s, t, NAME, String.join(" or ", simplenames), t == null ? "null" : t.getClass().getSimpleName());
         return s;
+    }
+
+    @Test
+    public void testAddItem(){
+        // add item to list
+        String input = "make :x [ ] additem 1 :x";
+        interpreter.interpret(input);
+        Variable<List> a = getVar("interpreter-:x");
+        List<Double> expected = new ArrayList<>(List.of(1.));
+        assertEquals(expected, a.get());
+
+        // add item to list with non-list
+        input = "make :x 1 additem 1 :x";
+        try{
+            interpreter.interpret(input);
+            fail();
+        } catch (Exception e){
+            Token t = new ValueToken<>(1.);
+            assertEquals(checkTypeErrorMsg(t, "AddItem", ExpressionToken.class), e.getMessage());
+        }
+
+        // add item to list with non-number
+        input = "make :x [ ] additem \"1 :x additem \"hello :x";
+        interpreter.interpret(input);
+        List<String> expected2 = new ArrayList<>(List.of("1", "hello"));
+        a = getVar("interpreter-:x");
+        assertEquals(expected2, a.get());
     }
 
     @Test
@@ -316,6 +348,40 @@ public class CommandsTest {
     }
 
     @Test
+    public void testGetAttribute(){
+        GameObject dropZone = new DropZone("A");
+        Class<?> c = GameObject.class;
+        System.out.println(c.isInstance(dropZone));
+        idManager.addObject(dropZone, "dz");
+        String input = "make :x attr :game_dz \"id";
+        interpreter.interpret(input);
+        Variable<String> x = getVar("interpreter-:x");
+        assertEquals("A", x.get());
+
+        idManager.removeObject(dropZone);
+
+        dropZone = new DropZone("Banana");
+        System.out.println(c.isInstance(dropZone));
+        idManager.addObject(dropZone, "dz");
+        input = "make :x attr :game_dz \"id";
+        interpreter.interpret(input);
+        x = getVar("interpreter-:x");
+        assertEquals("Banana", x.get());
+
+    }
+
+    @Test
+    public void testGetFromGameVariable(){
+        Variable<?> xvar = new Variable<>("test");
+        idManager.addObject(xvar, "0,1");
+
+        String input = "make :x fromgame + + 0 \", 1";
+        interpreter.interpret(input);
+        Variable<String> x = getVar("interpreter-:x");
+        assertEquals("test", x.get());
+    }
+
+    @Test
     public void testGreaterEqual(){
         // greater equal
         String input = "make :x 1 make :y 1 make :z >= :x :y";
@@ -486,12 +552,13 @@ public class CommandsTest {
             interpreter.interpret(input);
             fail();
         } catch (Exception e){
+            Environment env = new Environment();
             ExpressionToken t = new ExpressionToken();
-            t.addToken(new ValueToken<>(1.));
-            t.addToken(new ValueToken<>(2.));
-            t.addToken(new ValueToken<>(3.));
+            t.addToken(new ValueToken<>(1.), env);
+            t.addToken(new ValueToken<>(2.), env);
+            t.addToken(new ValueToken<>(3.), env);
 
-            assertEquals(checkSubtypeErrorMsg(t, "Item", ValueToken.class, Double.class), e.getMessage());
+            assertEquals(checkTypeErrorMsg(t, "Item", ValueToken.class), e.getMessage());
         }
 
         // item out of bounds
@@ -1020,6 +1087,38 @@ public class CommandsTest {
     }
 
     @Test
+    public void RemoveItem(){
+        // remove item
+        String input = "make :x [ 1 2 3 ] delitem 1 :x";
+        interpreter.interpret(input);
+        Variable<List<Double>> y = getVar("interpreter-:x");
+        assertEquals(2, y.get().size());
+        assertEquals(1.0, y.get().get(0), 0.0001);
+        assertEquals(3.0, y.get().get(1), 0.0001);
+
+        // remove item with non-numbers
+        input = "make :x [ 1 2 3 ] delitem [ 1 2 ] :x ";
+        try{
+            interpreter.interpret(input);
+            fail();
+        } catch (Exception e){
+            ExpressionToken t = new ExpressionToken();
+            t.addToken(new ValueToken<>(1.), new Environment());
+            t.addToken(new ValueToken<>(2.), new Environment());
+            assertEquals(checkTypeErrorMsg(t, "RemoveItem", ValueToken.class, VariableToken.class), e.getMessage());
+        }
+
+        // remove item with incorrect number of parameters
+        input = "make :x [ 1 2 3 ] make :y delitem :x";
+        try{
+            interpreter.interpret(input);
+            fail();
+        } catch (Exception e){
+            assertEquals("Invalid syntax: Not enough arguments for operator RemoveItem", e.getMessage());
+        }
+    }
+
+    @Test
     public void testRepeat(){
         // repeat
         String input = "make :x 0 repeat 3 [ global :x make :x + :x 1 ]";
@@ -1209,7 +1308,7 @@ public class CommandsTest {
             fail();
         } catch (Exception e){
             ValueToken<?> t = new ValueToken<>(true);
-            assertEquals(checkSubtypeErrorMsg(t, "Sum", ValueToken.class, Double.class), e.getMessage());
+            assertEquals(checkSubtypeErrorMsg(t, "Sum", ValueToken.class, Double.class, String.class), e.getMessage());
         }
 
         // sum with incorrect number of parameters
@@ -1301,7 +1400,7 @@ public class CommandsTest {
                 fail();
             } catch (Exception e) {
                 ValueToken<?> t = new ValueToken<>(true);
-                assertEquals(checkSubtypeErrorMsg(t, "Sum", ValueToken.class, Double.class), e.getMessage());
+                assertEquals(checkSubtypeErrorMsg(t, "Sum", ValueToken.class, Double.class, String.class), e.getMessage());
                 System.out.println(e.getMessage());
             }
 

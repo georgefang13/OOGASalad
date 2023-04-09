@@ -1,5 +1,6 @@
 package oogasalad.gamerunner.backend.interpreter.tokens;
 
+import com.sun.jdi.Value;
 import oogasalad.gamerunner.backend.interpreter.Environment;
 import oogasalad.gamerunner.backend.interpreter.exceptions.IllegalTokenTypeException;
 
@@ -63,23 +64,57 @@ abstract public class OperatorToken extends Token {
    * @throws IllegalArgumentException if the token is not of the given type and
    *                                  subtype
    */
-  protected <T> T checkArgumentWithSubtype(Environment env, Token t, Class<?> type, String... subtype)
-      throws IllegalArgumentException {
-    boolean containsSubtype = false;
+  protected <T> T checkArgumentWithSubtype(Environment env, Token t, Class<?> type, String... subtype) throws IllegalArgumentException {
+
+    checkArgument(env, t, type);
+
+    boolean works = false;
+
     for (String s : subtype) {
-      if (t.SUBTYPE.equals(s)) {
-        containsSubtype = true;
+      try {
+        checkArgumentWithSubtype(env, t, type, s);
+        works = true;
         break;
-      }
+      } catch (IllegalArgumentException ignored) {}
     }
 
-    if (!t.getClass().equals(type) || !containsSubtype) {
+    if (!works) {
       String s = env.getLanguageResource("argumentSubtypeError");
       s = String.format(s, t, NAME, type.getSimpleName(), String.join(" or ", subtype), t.getClass().getSimpleName(), t.SUBTYPE);
       throwError(new IllegalArgumentException(s));
     }
+
+
     return (T) t;
   }
+
+  protected <T> T checkArgumentWithSubtype(Environment env, Token t, Class<?> type, String subtype) throws IllegalArgumentException {
+
+    checkArgument(env, t, type);
+
+    boolean containsSubtype = false;
+
+    Class<?> c = null;
+    try {
+      c = Class.forName(subtype);
+    } catch (ClassNotFoundException ignored) {}
+
+    if (t instanceof ValueToken v && c != null) {
+        if (c.isInstance(v.VALUE)) containsSubtype = true;
+    }
+    else if (t.SUBTYPE.equals(subtype)) containsSubtype = true;
+
+    if (!containsSubtype){
+      String s = env.getLanguageResource("argumentSubtypeError");
+      s = String.format(s, t, NAME, type.getSimpleName(), String.join(" or ", subtype), t.getClass().getSimpleName(), t.SUBTYPE);
+      throwError(new IllegalArgumentException(s));
+    }
+
+
+    return (T) t;
+  }
+
+
 
   /**
    * Checks if the given token is of the given type. Throws an exception if it is

@@ -1,4 +1,4 @@
-package oogasalad.gamerunner.backend.turnfsm;
+package oogasalad.gamerunner.backend.fsm;
 
 abstract class State {
 
@@ -10,8 +10,8 @@ abstract class State {
         // any cleanup code
     }
 
-    public abstract Object getState();
+    public abstract Object getValue();
 
-    public void setState(Object state){}
+    public void setInnerValue(FSM.StateData data, Object value){}
 
 }

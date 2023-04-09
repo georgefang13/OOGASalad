@@ -1,4 +1,4 @@
-package oogasalad.gamerunner.backend.turnfsm;
+package oogasalad.gamerunner.backend.fsm;
 
 import oogasalad.gameeditor.backend.id.IdManager;
 import oogasalad.sharedDependencies.backend.ownables.Ownable;
@@ -17,13 +17,13 @@ enum States {
 class TurnState extends State {
     DropZone selected;
     @Override
-    public Object getState() {
+    public Object getValue() {
         return selected;
     }
 
     @Override
-    public void setState(Object obj) {
-        selected = (DropZone) obj;
+    public void setInnerValue(FSM.StateData data, Object value) {
+        selected = (DropZone) value;
     }
 
     @Override
@@ -52,7 +52,7 @@ class DoneState extends State {
     }
 
     @Override
-    public Object getState() {
+    public Object getValue() {
         return null;
     }
 }
@@ -80,7 +80,7 @@ class InitState extends State {
     }
 
     @Override
-    public Object getState() {
+    public Object getValue() {
         return null;
     }
 }
@@ -106,9 +106,9 @@ public class FSMExample {
         idManager.addObject(numPlayers, "numPlayers");
         idManager.addObject(availableVar, "available");
 
-        fsm.addState(States.INIT, new InitState(), States.MOVE1);
-        fsm.addState(States.MOVE1, new TurnState(), States.DONE);
-        fsm.addState(States.DONE, new DoneState(), States.DONE);
+        fsm.putState(States.INIT, new InitState(), States.MOVE1);
+        fsm.putState(States.MOVE1, new TurnState(), States.DONE);
+        fsm.putState(States.DONE, new DoneState(), States.DONE);
 
         fsm.setState(States.INIT);
 
@@ -141,7 +141,7 @@ public class FSMExample {
             }
             System.out.println("\nSelect a spot: ");
             String s = in.nextLine();
-            fsm.setCurrentState(idManager.getObject(s));
+            fsm.setStateInnerValue(idManager.getObject(s));
             fsm.transition();
         }
     }
