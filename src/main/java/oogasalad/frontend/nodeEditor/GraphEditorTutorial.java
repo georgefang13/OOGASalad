@@ -2,6 +2,7 @@ package oogasalad.frontend.nodeEditor;
 
 import io.github.eckig.grapheditor.Commands;
 import io.github.eckig.grapheditor.GNodeSkin;
+import io.github.eckig.grapheditor.core.view.GraphEditorContainer;
 import io.github.eckig.grapheditor.model.GConnector;
 import io.github.eckig.grapheditor.model.GModel;
 import io.github.eckig.grapheditor.model.GNode;
@@ -28,6 +29,8 @@ public class GraphEditorTutorial extends Application
     public void start(final Stage primaryStage) throws Exception
     {
         GraphEditor graphEditor = new DefaultGraphEditor();
+        GraphEditorContainer container = new GraphEditorContainer();
+        container.setGraphEditor(graphEditor);
 
 
         graphEditor.setNodeSkinFactory(node -> new TreeNodeSkin(node));
@@ -43,7 +46,7 @@ public class GraphEditorTutorial extends Application
 
         // Register GNodeSkin implementation(s)
 
-        Scene scene = new Scene(graphEditor.getView(), 800, 600);
+        Scene scene = new Scene(container, 800, 600);
         primaryStage.setScene(scene);
         primaryStage.show();
         GModel model = GraphFactory.eINSTANCE.createGModel();

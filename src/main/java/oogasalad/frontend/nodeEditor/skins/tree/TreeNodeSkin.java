@@ -83,15 +83,10 @@ public class TreeNodeSkin extends GNodeSkin {
 
         background.setFill(Color.NAVAJOWHITE);
         background.setStyle("-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 10, 0, 0, 0);");
-//        make it so that when it is selected it has a different color
         background.setOnMouseEntered(event -> background.setCursor(Cursor.HAND));
         background.setOnMouseExited(event -> background.setCursor(Cursor.DEFAULT));
 
         selectionHalo.setFill(Color.GREEN);
-
-
-        background.getStyleClass().clear();
-        background.getStyleClass().add("bcg");
 
         background.widthProperty().bind(border.widthProperty().subtract(border.strokeWidthProperty().multiply(2)));
         background.heightProperty().bind(border.heightProperty().subtract(border.strokeWidthProperty().multiply(2)));
@@ -99,22 +94,10 @@ public class TreeNodeSkin extends GNodeSkin {
         border.widthProperty().bind(getRoot().widthProperty());
         border.heightProperty().bind(getRoot().heightProperty());
 
-        border.getStyleClass().setAll(STYLE_CLASS_BORDER);
-        background.getStyleClass().setAll(STYLE_CLASS_BACKGROUND);
 
         getRoot().getChildren().addAll(border, background);
+
         getRoot().setMinSize(MIN_WIDTH, MIN_HEIGHT);
-
-        TextField textField = new TextField();
-
-        // Add a change listener to the text field to handle input
-        textField.textProperty().addListener((observable, oldValue, newValue) -> {
-            // Print the new value to the console
-            System.out.println("New value: " + newValue);
-        });
-
-        // Add the text field to the skin
-        getRoot().getChildren().add(textField);
 
         addSelectionHalo();
         addButton();
@@ -339,6 +322,8 @@ public class TreeNodeSkin extends GNodeSkin {
             return null;
         }
     }
+
+
 
     /**
      * Stops the node being dragged if it isn't selected.
