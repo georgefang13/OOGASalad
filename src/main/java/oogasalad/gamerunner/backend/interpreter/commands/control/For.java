@@ -14,7 +14,7 @@ public class For extends OperatorToken {
 
     // returns [var, start, stop, increment]
     private Token[] repeatArgs(Environment env) throws IllegalArgumentException{
-        checkArgument(getArg(0), ExpressionToken.class, "Cannot repeat with non-expression " + getArg(0));
+        checkArgument(env, getArg(0), ExpressionToken.class);
         ExpressionToken repeats = (ExpressionToken) getArg(0);
 
         if (repeats.size() < 3 || repeats.size() > 4){
@@ -23,16 +23,13 @@ public class For extends OperatorToken {
 
         Token[] ret = new Token[repeats.size()];
 
-        checkArgument(repeats.get(0), VariableToken.class, "Cannot loop with non-variable " + repeats.get(0));
+        checkArgument(env, repeats.get(0), VariableToken.class);
 
         Token tstart = repeats.get(1).evaluate(env);
         Token tstop = repeats.get(2).evaluate(env);
 
-        checkArgumentWithSubtype(tstart, ValueToken.class, Double.class.getName(),
-                "Cannot repeat non-number of times from " + repeats.get(1) + " = " + tstart);
-
-        checkArgumentWithSubtype(tstop, ValueToken.class, Double.class.getName(),
-                "Cannot repeat non-number of times to " + repeats.get(2) + " = " + tstop);
+        checkArgumentWithSubtype(env, tstart, ValueToken.class, Double.class.getName());
+        checkArgumentWithSubtype(env, tstop, ValueToken.class, Double.class.getName());
 
         ret[0] = repeats.get(0);
         ret[1] = tstart;
@@ -40,10 +37,7 @@ public class For extends OperatorToken {
 
         if (repeats.size() == 4){
             Token tinc = repeats.get(3).evaluate(env);
-
-            checkArgumentWithSubtype(tinc, ValueToken.class, Double.class.getName(),
-                    "Cannot repeat non-number of times by " + repeats.get(3) + " = " + tinc);
-
+            checkArgumentWithSubtype(env, tinc, ValueToken.class, Double.class.getName());
             ret[3] = tinc;
         }
 

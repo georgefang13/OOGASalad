@@ -15,19 +15,19 @@ public class SplashWindow extends AbstractWindow {
     MAIN_SCENE
   }
 
-  public SplashWindow(WindowMediator windowController) {
-    super(windowController);
+  public SplashWindow(String windowID, WindowMediator windowController) {
+    super(windowID,windowController);
   }
 
   @Override
-  protected SceneTypes getDefaultSceneType() {
+  public SceneTypes getDefaultSceneType() {
     return WindowScenes.MAIN_SCENE;
   }
 
   @Override
-  protected AbstractScene addNewScene(SceneTypes sceneType) {
+  public AbstractScene addNewScene(SceneTypes sceneType) {
     if (sceneType.equals(WindowScenes.MAIN_SCENE)) {
-      return new SplashMainScene(this);
+      return new SplashMainScene(this.sceneController);
     }
     throw new IllegalArgumentException("Invalid scene type: " + sceneType.toString());
   }

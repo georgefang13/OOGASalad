@@ -20,8 +20,8 @@ public class GameEditorMainScene extends AbstractScene {
 
   private Label gameEditorLabel;
 
-  public GameEditorMainScene(AbstractWindow window) {
-    super(window);
+  public GameEditorMainScene(SceneController sceneController) {
+    super(sceneController);
   }
 
   @Override
@@ -48,9 +48,8 @@ public class GameEditorMainScene extends AbstractScene {
 
   private void openEditorSceneOnClick(){
     String newsceneID = "new";
-    AbstractWindow gameEditorWindow = getWindow();
-    gameEditorWindow.addAndLinkScene(GameEditorWindow.WindowScenes.EDITOR_SCENE,newsceneID);
-    gameEditorWindow.switchToScene(newsceneID);
+    sceneController.addAndLinkScene(GameEditorWindow.WindowScenes.EDITOR_SCENE,newsceneID);
+    sceneController.switchToScene(newsceneID);
   }
 
 }

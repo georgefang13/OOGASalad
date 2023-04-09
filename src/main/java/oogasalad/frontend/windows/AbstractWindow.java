@@ -1,8 +1,7 @@
 package oogasalad.frontend.windows;
 
-import java.util.HashMap;
-import java.util.Map;
 import javafx.stage.Stage;
+import oogasalad.frontend.scenes.SceneController;
 import oogasalad.frontend.scenes.SceneTypes;
 import oogasalad.frontend.managers.PropertiesManager;
 import oogasalad.frontend.scenes.AbstractScene;
@@ -13,42 +12,20 @@ import oogasalad.frontend.scenes.AbstractScene;
  */
 
 public abstract class AbstractWindow extends Stage {
-  private static final String MAIN_ID = "main";
+  protected SceneController sceneController;
+  protected String windowID;
 
-  protected WindowMediator windowController;
-  protected Map<String, AbstractScene> scenes;
-  private AbstractScene currentScene;
-
-  //protected Manager manager = PropertiesFactory.createManager(); //TODO: pass in factory DI
-
-  public AbstractWindow(WindowMediator windowController) {
-    this.windowController = windowController;
-    scenes = new HashMap<>();
-    SceneTypes mainSceneType = getDefaultSceneType();
-    addAndLinkScene(mainSceneType,MAIN_ID);
-    switchToScene(MAIN_ID);
+  public AbstractWindow(String windowID, WindowMediator windowController) {
+    this.windowID = windowID;
+    sceneController = new SceneController(windowID,windowController); //maybe add just window controller and then the window id to get window from the window controller
     setWidth(PropertiesManager.getNumeric("WindowHeight"));
     setHeight(PropertiesManager.getNumeric("WindowWidth"));
   }
 
-  protected abstract SceneTypes getDefaultSceneType();
-  protected abstract AbstractScene addNewScene(SceneTypes sceneType);
+  public abstract SceneTypes getDefaultSceneType();
+  public abstract AbstractScene addNewScene(SceneTypes sceneType);
 
-  public void addAndLinkScene(SceneTypes sceneType, String sceneID){
-    AbstractScene newScene = addNewScene(sceneType);
-    scenes.put(sceneID,newScene);
-  }
-
-  public void switchToScene(String sceneID) {
-    currentScene = scenes.get(sceneID);
-    refreshScene();
-  }
-
-  public void refreshScene(){
-    setScene(currentScene.makeScene());
-  }
-
-  public WindowMediator getWindowController() {
-    return windowController;
+  public void showScene(AbstractScene scene){
+    setScene(scene.makeScene());
   }
 }

@@ -24,8 +24,8 @@ public class GameEditorEditorScene extends AbstractScene {
     private PropertiesPanel propertiesPanel;
     private EnvironmentPanel environmentPanel;
 
-    public GameEditorEditorScene(AbstractWindow window) {
-        super(window);
+    public GameEditorEditorScene(SceneController sceneController) {
+        super(sceneController);
     }
 
     private void setButtonVisualPanel(Button button, String title){
@@ -39,14 +39,14 @@ public class GameEditorEditorScene extends AbstractScene {
         System.out.print(button.getText());
 //        visualPanel = buttonVBoxMap.get(button);
         refreshScene();
-        getWindow().refreshScene();
+        //sceneController.wirefreshScene();
     }
 
 
     @Override
     public Scene makeScene() {
         root = new BorderPane();
-        headerMenu = new HeaderMenuPanel();
+        headerMenu = new HeaderMenuPanel(sceneController);
         propertiesPanel = new PropertiesPanel();
         environmentPanel = new EnvironmentPanel();
         //left sidebar
@@ -59,7 +59,7 @@ public class GameEditorEditorScene extends AbstractScene {
         Button playerButton = new Button("Player");
         setButtonVisualPanel(playerButton, "Player");
         Button backButton = new Button("Back");
-        backButton.setOnAction(e -> getWindow().switchToScene("main"));
+        backButton.setOnAction(e -> sceneController.switchToScene("main"));
         leftTab.getChildren().addAll(boardButton,variableButton,playerButton,backButton);
 
         //main body

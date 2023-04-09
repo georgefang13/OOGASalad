@@ -80,6 +80,6 @@ public class Interpreter implements Runnable {
      * @param language the language to set the interpreter to
      */
     public void setLanguage(String language){
-        tokenizer.setLanguage(language);
+        env.setLanguage(language);
     }
 }
