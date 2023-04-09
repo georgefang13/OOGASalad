@@ -5,6 +5,7 @@ import oogasalad.frontend.managers.PropertiesManager;
 import oogasalad.frontend.managers.PropertiesObserver;
 import oogasalad.frontend.managers.ThemeManager;
 import oogasalad.frontend.managers.ThemeObserver;
+import oogasalad.frontend.panels.PanelController;
 
 /**
  * @author Connor Wells
@@ -13,12 +14,12 @@ import oogasalad.frontend.managers.ThemeObserver;
 
 public abstract class AbstractScene implements PropertiesObserver, ThemeObserver {
 
-  protected SceneController sceneController;
+  protected PanelController panelController;
 
   protected Scene scene;
 
   public AbstractScene(SceneController sceneController) {
-    this.sceneController = sceneController;
+    this.panelController = new PanelController(sceneController);
     this.scene = makeScene();
     PropertiesManager.addObserver(this);
     ThemeManager.addObserver(this);
@@ -37,8 +38,5 @@ public abstract class AbstractScene implements PropertiesObserver, ThemeObserver
   public final void setTheme() {
     scene.getStylesheets().clear();
     scene.getStylesheets().add(ThemeManager.getTheme());
-  }
-  public SceneController getSceneController() {
-    return sceneController;
   }
 }
