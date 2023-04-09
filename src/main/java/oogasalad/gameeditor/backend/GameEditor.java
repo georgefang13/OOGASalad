@@ -1,16 +1,15 @@
-package oogasalad.gamerunner.backend;
+package oogasalad.gameeditor.backend;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import oogasalad.gameeditor.backend.goals.EmptyGoal;
 import oogasalad.gameeditor.backend.goals.Goal;
 import oogasalad.gameeditor.backend.id.IdManager;
+import oogasalad.gameeditor.backend.rules.EmptyRule;
 import oogasalad.sharedDependencies.backend.ownables.OwnableFactory;
-import oogasalad.sharedDependencies.backend.ownables.gameobjects.GameObject;
-import oogasalad.sharedDependencies.backend.ownables.variables.Variable;
 import oogasalad.sharedDependencies.backend.owners.GameWorld;
 import oogasalad.sharedDependencies.backend.owners.Owner;
 import oogasalad.sharedDependencies.backend.owners.Player;
@@ -24,7 +23,7 @@ import oogasalad.sharedDependencies.backend.ownables.Ownable;
  * @author Michael Bryant
  * @author Max Meister
  */
-public class Game {
+public class GameEditor {
 
   /**
    * The Rules of the game.
@@ -196,6 +195,9 @@ public class Game {
     ownable.setOwner(owner);
   }
 
+  //region sendObject API
+
+
   /**
    * Creates an ownable using ownableFactory for player
    * Pass in null for any unused parameters (cannot pass null for type)
@@ -211,6 +213,28 @@ public class Game {
     Ownable newOwnable = ownableFactory.createOwnable(type, destinationOwner);
     ownableIdManager.addObject(newOwnable, parentOwnable);
   }
+
+  /**
+   * Creates a new player and adds it to the game
+   */
+  private void createPlayer() {
+    addPlayer(new Player());
+  }
+
+  /**
+   * Creates a new rule and adds it to the game
+   */
+  private void createRule() {
+    addRule(new EmptyRule()); //TODO
+  }
+
+  /**
+   * Creates a new goal and adds it to the game
+   */
+  private void createGoal() {
+    addGoal(new EmptyGoal()); //TODO
+  }
+
 
   /**
    Method is called in order to send information about a newly constructed   object that was made in the front end sent to the backend. The
@@ -238,6 +262,8 @@ public class Game {
       createOwnable(type, playerIdManager.getObject(ownerID), getOwnable(parentOwnableID));
     }
   }
+
+  //endregion sendObject API
 
 
   /**
