@@ -5,19 +5,19 @@ import javafx.scene.layout.HBox;
 import oogasalad.frontend.factories.ButtonFactory;
 import oogasalad.frontend.panels.Panel;
 import oogasalad.frontend.panels.HBoxPanel;
-import oogasalad.frontend.scenes.SceneController;
+import oogasalad.frontend.panels.PanelController;
 import oogasalad.frontend.windows.GameEditorWindow;
 
 public class HeaderMenuPanel extends HBoxPanel {
   ButtonFactory buttonFactory = new ButtonFactory();
-  SceneController sceneController;
+  PanelController panelController;
 
   /**
    * Constructor for HeaderMenu
    */
-  public HeaderMenuPanel(SceneController sceneController) {
+  public HeaderMenuPanel(PanelController panelController) {
     super();
-    this.sceneController = sceneController;
+    this.panelController = panelController;
   }
   /**
    * Creates the menu for the header
@@ -53,8 +53,7 @@ public class HeaderMenuPanel extends HBoxPanel {
 
   private void openLogicSceneOnClick(){
     String newsceneID = "logic";
-    sceneController.addAndLinkScene(GameEditorWindow.WindowScenes.LOGIC_SCENE,newsceneID);
-    sceneController.switchToScene(newsceneID);
+    panelController.newSceneFromPanel(newsceneID, GameEditorWindow.WindowScenes.LOGIC_SCENE);
   }
 }
 

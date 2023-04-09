@@ -1,0 +1,40 @@
+/* Define a custom style for the node */
+.tree-node {
+    -fx-background-color: #cf2424 !important;
+    -fx-background-radius: 10;
+    -fx-border-color: #d64f4f !important;
+    -fx-border-width: 2;
+    -fx-fill: blue;
+}
+
+.rectangle {
+    -fx-fill: #cf2424 !important;
+}
+
+/*.root {*/
+/*    -fx-background-color: red;*/
+/*}*/
+
+.bcg {
+    -fx-fill: #cf2424 !important;
+}
+
+
+/* Define a custom style for the label in the node */
+.custom-node .label {
+    -fx-font-size: 123 !important;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+}
+
+
+.tree-node-content {
+    -fx-background-color: navajowhite;
+    -fx-padding: 5;
+}
+
+.tree-node-content-selected{
+    -fx-background-color: #dfffa6;
+    -fx-border-color: #000000;
+    -fx-border-width: 2;
+}
