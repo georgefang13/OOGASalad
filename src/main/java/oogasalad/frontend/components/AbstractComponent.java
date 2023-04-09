@@ -8,7 +8,6 @@ import javafx.scene.Node;
  */
 public class AbstractComponent {
 
-
   protected int ID;
   protected Node node;
   public AbstractComponent(int id) {
