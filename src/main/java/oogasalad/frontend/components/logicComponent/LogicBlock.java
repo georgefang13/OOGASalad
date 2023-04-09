@@ -7,21 +7,10 @@ import javafx.scene.Node;
  * @author Han
  * Concrete Class of a LogicBLocks
  */
-public class LogicBlock implements LogicComponent{
+public class LogicBlock extends AbstractLogicBlock implements LogicComponent{
 
-  @Override
-  public Node getNode() {
-    return null;
-  }
-
-  @Override
-  public int getID() {
-    return 0;
-  }
-
-  @Override
-  public void setID(int id) {
-
+  public LogicBlock(int num, Node container) {
+    super(num, container);
   }
 
   @Override

@@ -13,12 +13,6 @@ import oogasalad.frontend.components.draggableComponent.DraggableComponent;
  */
 public interface LogicComponent extends DisplayableComponent, DraggableComponent {
 
- Node getNode();
-
- int getID();
-
- void setID(int id);
-
  /**
   * This is the method to get the LogicComponents contained within this LogicComponent. For example,
   * getChildren for an if block returns all the LogicComponents contained within the ifBlock.
@@ -47,17 +41,4 @@ public interface LogicComponent extends DisplayableComponent, DraggableComponent
   */
  String getParams();
 
- void setVisible(boolean visible);
-
- void setZIndex(int zIndex);
-
- void setImage(String imagePath);
-
- void setSize(int size);
-
- void followMouse();
-
- void setDraggable(boolean draggable);
-
- void setActiveSelected(boolean active);
 }

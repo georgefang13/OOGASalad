@@ -7,8 +7,9 @@ public abstract class AbstractDraggableObject extends AbstractComponent {
     public AbstractDraggableObject(int num, Node container) {
         super(num, container);
     }
-
     public AbstractDraggableObject(int ID) {
         super(ID);
     }
+
+
 }

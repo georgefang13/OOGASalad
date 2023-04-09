@@ -1,8 +1,12 @@
 package oogasalad.frontend.components.draggableComponent;
 
 import javafx.scene.Node;
+import oogasalad.frontend.components.displayableComponents.DisplayableObject;
 
-public class DraggableObject extends AbstractDraggableObject implements DraggableComponent {
+public class DraggableObject extends DisplayableObject implements DraggableComponent {
+    private boolean draggable;
+    private boolean active;
+
     public DraggableObject(int num, Node container) {
         super(num, container);
     }
@@ -11,32 +15,28 @@ public class DraggableObject extends AbstractDraggableObject implements Draggabl
     }
 
     @Override
-    public Node getNode() {
-        return null;
-    }
-
-    @Override
-    public int getID() {
-        return 0;
-    }
-
-    @Override
-    public void setID(int id) {
-
-    }
-
-    @Override
     public void followMouse() {
+        getImage().setOnMousePressed(e -> {
+            double xOffset = e.getSceneX() - (getImage().getTranslateX() - getImage().getBoundsInLocal().getWidth()/2);
+            double yOffset = e.getSceneY() - (getImage().getTranslateY() - getImage().getBoundsInLocal().getHeight()/2);
+            setxOffset(xOffset);
+            setyOffset(yOffset);
+        });
+        getImage().setOnMouseDragged(e -> {
+            getImage().setTranslateX(e.getSceneX() - getxOffset());
+            getImage().setTranslateY(e.getSceneY() - getyOffset());
+        });
 
     }
 
     @Override
     public void setDraggable(boolean draggable) {
-
+        this.draggable = draggable;
     }
 
     @Override
     public void setActiveSelected(boolean active) {
+        this.active = active;
 
     }
 }
