@@ -5,6 +5,7 @@ package oogasalad.frontend.nodeEditor.skins.tree;
 
 import java.util.List;
 
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
@@ -103,6 +104,17 @@ public class TreeNodeSkin extends GNodeSkin {
 
         getRoot().getChildren().addAll(border, background);
         getRoot().setMinSize(MIN_WIDTH, MIN_HEIGHT);
+
+        TextField textField = new TextField();
+
+        // Add a change listener to the text field to handle input
+        textField.textProperty().addListener((observable, oldValue, newValue) -> {
+            // Print the new value to the console
+            System.out.println("New value: " + newValue);
+        });
+
+        // Add the text field to the skin
+        getRoot().getChildren().add(textField);
 
         addSelectionHalo();
         addButton();
