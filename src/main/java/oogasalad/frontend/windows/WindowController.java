@@ -43,5 +43,8 @@ public class WindowController implements WindowMediator {
     windowMap.get(windowID).close();
     windowMap.remove(windowID);
   }
-
+  @Override
+  public AbstractWindow getWindow(String windowID) {
+    return windowMap.get(windowID);
+  }
 }
