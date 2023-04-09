@@ -2,15 +2,12 @@ package oogasalad.gameeditor.backend;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import oogasalad.gameeditor.backend.goals.Goal;
 import oogasalad.gameeditor.backend.id.IdManager;
 import oogasalad.sharedDependencies.backend.ownables.OwnableFactory;
-import oogasalad.sharedDependencies.backend.ownables.gameobjects.GameObject;
-import oogasalad.sharedDependencies.backend.ownables.variables.Variable;
 import oogasalad.sharedDependencies.backend.owners.GameWorld;
 import oogasalad.sharedDependencies.backend.owners.Owner;
 import oogasalad.sharedDependencies.backend.owners.Player;
@@ -24,7 +21,7 @@ import oogasalad.sharedDependencies.backend.ownables.Ownable;
  * @author Michael Bryant
  * @author Max Meister
  */
-public class Game {
+public class GameEditor {
 
   /**
    * The Rules of the game.
