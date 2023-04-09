@@ -5,7 +5,6 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import oogasalad.frontend.modals.subDisplayModals.AlertModal;
 import oogasalad.frontend.modals.subInputModals.CreateGameModal;
-import oogasalad.frontend.windows.AbstractWindow;
 
 /**
  * @author George Fang
