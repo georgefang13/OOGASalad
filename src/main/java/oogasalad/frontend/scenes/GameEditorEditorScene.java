@@ -47,7 +47,8 @@ public class GameEditorEditorScene extends AbstractScene {
     public Scene makeScene() {
         root = new BorderPane();
         headerMenu = new HeaderMenuPanel(panelController);
-        propertiesPanel = new PropertiesPanel();
+        propertiesPanel = new PropertiesPanel(panelController);
+
         environmentPanel = new EnvironmentPanel();
         //left sidebar
         leftTab = new VBox();
