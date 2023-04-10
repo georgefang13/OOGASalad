@@ -28,8 +28,8 @@ public class GraphEditorTutorial extends Application
     @Override
     public void start(final Stage primaryStage) throws Exception
     {
-        GraphEditor graphEditor = new DefaultGraphEditor();
         GraphEditorContainer container = new GraphEditorContainer();
+        GraphEditor graphEditor = new DefaultGraphEditor();
         container.setGraphEditor(graphEditor);
 
         container.getStyleClass().add("graph-editor-container");
@@ -100,7 +100,7 @@ public class GraphEditorTutorial extends Application
 
         node.getConnectors().add(input);
         node.getConnectors().add(output);
-        // node.getConnectors().add(output2);
+//        node.getConnectors().add(output2);
 
         return node;
     }

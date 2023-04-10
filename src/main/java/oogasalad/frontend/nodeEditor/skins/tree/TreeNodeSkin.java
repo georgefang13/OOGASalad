@@ -103,6 +103,14 @@ public class TreeNodeSkin extends GNodeSkin {
 
     }
 
+    /**
+     * Creates a new {@link TreeNodeSkin} instance.
+     * Acts as default constructor
+     */
+    public TreeNodeSkin() {
+        super(GraphFactory.eINSTANCE.createGNode());
+    }
+
     @Override
     public void setConnectorSkins(final List<GConnectorSkin> connectorSkins) {
 
