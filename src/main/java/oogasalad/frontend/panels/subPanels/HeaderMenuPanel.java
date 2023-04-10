@@ -7,6 +7,7 @@ import oogasalad.frontend.panels.Panel;
 import oogasalad.frontend.panels.HBoxPanel;
 import oogasalad.frontend.panels.PanelController;
 import oogasalad.frontend.windows.GameEditorWindow;
+import oogasalad.frontend.windows.GameEditorWindow.WindowScenes;
 
 public class HeaderMenuPanel extends HBoxPanel {
   ButtonFactory buttonFactory = new ButtonFactory();
@@ -26,12 +27,12 @@ public class HeaderMenuPanel extends HBoxPanel {
   public HBox createMenu() {
     HBox menu = new HBox();
     Button rulesbutton = buttonFactory.createDefaultButton("RulesEditor"); //TODO: export these
-    rulesbutton.setOnAction(e-> openLogicSceneOnClick());
+    rulesbutton.setOnAction(e-> panelController.newSceneFromPanel("logic", WindowScenes.LOGIC_SCENE));
     Button visualbutton = buttonFactory.createDefaultButton("VisualEditor"); //TODO: export these
+    visualbutton.setOnAction(e-> panelController.newSceneFromPanel("visual", WindowScenes.EDITOR_SCENE));
     menu.getChildren().addAll(visualbutton, rulesbutton);
-
     return menu;
-  }
+  } //TODO: i dont know what "visual" and "logic" do here, does this actaully work as the Scene ID?
   @Override
   public Panel makePanel() {
     return null;
@@ -51,9 +52,5 @@ public class HeaderMenuPanel extends HBoxPanel {
   public void save() {
   }
 
-  private void openLogicSceneOnClick(){
-    String newsceneID = "logic";
-    panelController.newSceneFromPanel(newsceneID, GameEditorWindow.WindowScenes.LOGIC_SCENE);
-  }
 }
 

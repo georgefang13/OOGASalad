@@ -75,7 +75,7 @@ public class GameEditorEditorScene extends AbstractScene {
     }
     private void refreshScene(){
         root.setRight(leftTab);
-//        root.setCenter(environmentPanel.createPanel());
+        root.setCenter(environmentPanel);
         root.setTop(headerMenu.createMenu());
         root.setLeft(propertiesPanel.createAccordion());
         root.setCenter(environmentPanel.createEnvironment());
