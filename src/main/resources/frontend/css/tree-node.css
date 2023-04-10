@@ -27,6 +27,10 @@
     -fx-text-fill: #333333;
 }
 
+.graph-editor-container {
+    -fx-background-color: #be2929;
+    -fx-fill: #be2929;
+}
 
 .tree-node-content {
     -fx-background-color: navajowhite;

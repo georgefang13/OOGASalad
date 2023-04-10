@@ -32,6 +32,8 @@ public class GraphEditorTutorial extends Application
         GraphEditorContainer container = new GraphEditorContainer();
         container.setGraphEditor(graphEditor);
 
+        container.getStyleClass().add("graph-editor-container");
+
 
         graphEditor.setNodeSkinFactory(node -> new TreeNodeSkin(node));
 
@@ -55,6 +57,33 @@ public class GraphEditorTutorial extends Application
         scene.getStylesheets().add(getClass().getResource("/frontend/css/tree-node.css").toExternalForm());
         System.out.println(scene.getStylesheets());
 
+    }
+
+    public GraphEditorContainer getContainer() {
+        GraphEditor graphEditor = new DefaultGraphEditor();
+        GraphEditorContainer container = new GraphEditorContainer();
+        container.setGraphEditor(graphEditor);
+        container.getStyleClass().add("graph-editor-container");
+
+
+        graphEditor.setNodeSkinFactory(node -> new TreeNodeSkin(node));
+
+        // Register GConnectorSkin implementation(s)
+        graphEditor.setConnectorSkinFactory(connector -> new TreeConnectorSkin(connector));
+
+        // Register GConnectionSkin implementation(s)
+        graphEditor.setConnectionSkinFactory(connection -> new TreeConnectionSkin(connection));
+
+        // Register GTailSkin implementation(s)
+        graphEditor.setTailSkinFactory(tail -> new TreeTailSkin(tail));
+
+        // Register GNodeSkin implementation(s)
+
+        GModel model = GraphFactory.eINSTANCE.createGModel();
+        graphEditor.setModel(model);
+        addNodes(model);
+
+        return container;
     }
 
     private GNode createNode()
