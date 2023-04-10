@@ -21,12 +21,7 @@ import oogasalad.frontend.managers.PropertiesManager;
  */
 
 public class GameEditorLogicScene extends AbstractScene {
-
-    private Button editGridButton;
-    private Label gameEditorLabel;
     private BorderPane root;
-    private VBox leftTab; //REPLACE WITH A PANEL
-    private Map<Button,VBox> buttonVBoxMap;
     private HeaderMenuPanel headerMenu;
     private PropertiesPanel propertiesPanel;
     private EnvironmentPanel environmentPanel;
@@ -41,16 +36,10 @@ public class GameEditorLogicScene extends AbstractScene {
         headerMenu = new HeaderMenuPanel(panelController);
         propertiesPanel = new PropertiesPanel();
         environmentPanel = new EnvironmentPanel();
-
-        leftTab = new VBox();
-        Button boardButton = new Button("Board");
-        leftTab.getChildren().addAll(boardButton);
-
         refreshScene();
         return getScene();
     }
     private void refreshScene(){
-        root.setRight(leftTab);
         root.setCenter(environmentPanel);
         root.setTop(headerMenu.createMenu());
         root.setLeft(propertiesPanel.createAccordion());
