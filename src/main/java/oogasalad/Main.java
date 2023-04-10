@@ -15,9 +15,9 @@ public class Main extends Application {
   @Override
   public void start(Stage primaryStage) throws Exception {
     WindowMediator mediator = new WindowController();
-    }
+  }
 
-    public static void main(String[] args) {
-        launch(args);
-    }
+  public static void main(String[] args) {
+    launch(args);
+  }
 }
