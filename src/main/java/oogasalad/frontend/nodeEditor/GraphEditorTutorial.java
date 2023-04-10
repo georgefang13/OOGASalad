@@ -83,8 +83,6 @@ public class GraphEditorTutorial extends Application
         graphEditor.setModel(model);
         addNodes(model);
 
-        container.setPrefHeight(600);
-        container.setPrefWidth(800);
         return container;
     }
 
