@@ -1,18 +1,10 @@
 package oogasalad.frontend.scenes;
 
-import java.util.HashMap;
-import java.util.Map;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
 import oogasalad.frontend.panels.subPanels.EnvironmentPanel;
 import oogasalad.frontend.panels.subPanels.HeaderMenuPanel;
 import oogasalad.frontend.panels.subPanels.PropertiesPanel;
-import oogasalad.frontend.windows.GameEditorWindow;
-import oogasalad.frontend.windows.AbstractWindow;
-import oogasalad.frontend.managers.PropertiesManager;
 
 /**
  * @author Connor Wells

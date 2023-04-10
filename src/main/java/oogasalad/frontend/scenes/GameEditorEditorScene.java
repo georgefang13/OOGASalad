@@ -5,18 +5,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import oogasalad.frontend.panels.VisualPanel;
 import oogasalad.frontend.panels.subPanels.EnvironmentPanel;
 import oogasalad.frontend.panels.subPanels.HeaderMenuPanel;
 import oogasalad.frontend.panels.subPanels.PropertiesPanel;
-import oogasalad.frontend.windows.AbstractWindow;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class GameEditorEditorScene extends AbstractScene {
-    private Button editGridButton;
-    private Label gameEditorLabel;
     private BorderPane root;
     private VBox leftTab; //REPLACE WITH A PANEL
     private Map<Button,VBox> buttonVBoxMap;
@@ -61,14 +57,6 @@ public class GameEditorEditorScene extends AbstractScene {
         Button backButton = new Button("Back");
         backButton.setOnAction(e -> panelController.switchSceneFromPanel("main"));
         leftTab.getChildren().addAll(boardButton,variableButton,playerButton,backButton);
-
-        //main body
-
-//        visualPanel = new VBox();
-//        Label mainLabel = new Label("MAIN");
-//        visualPanel.getChildren().add(mainLabel);
-
-        //put it together
 
         refreshScene();
         return getScene();
