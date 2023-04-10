@@ -35,6 +35,7 @@
 .tree-node-content {
     -fx-background-color: navajowhite;
     -fx-padding: 5;
+
 }
 
 .tree-node-content-selected{
