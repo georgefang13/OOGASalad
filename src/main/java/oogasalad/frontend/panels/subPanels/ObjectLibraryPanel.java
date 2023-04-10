@@ -3,18 +3,17 @@ package oogasalad.frontend.panels.subPanels;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.TitledPane;
-import javafx.scene.layout.HBox;
 import oogasalad.frontend.factories.ButtonFactory;
 import oogasalad.frontend.panels.Panel;
 import oogasalad.frontend.panels.HBoxPanel;
 
-public class PropertiesPanel extends HBoxPanel {
+public class ObjectLibraryPanel extends HBoxPanel {
   ButtonFactory buttonFactory = new ButtonFactory();
 
   /**
    * Constructor for HeaderMenu
    */
-  public PropertiesPanel() {
+  public ObjectLibraryPanel() {
     super();
   }
   /**

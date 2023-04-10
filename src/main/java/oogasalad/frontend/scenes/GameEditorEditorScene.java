@@ -7,17 +7,17 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import oogasalad.frontend.panels.subPanels.EnvironmentPanel;
 import oogasalad.frontend.panels.subPanels.HeaderMenuPanel;
-import oogasalad.frontend.panels.subPanels.PropertiesPanel;
+import oogasalad.frontend.panels.subPanels.ObjectLibraryPanel;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class GameEditorEditorScene extends AbstractScene {
     private BorderPane root;
-    private VBox leftTab; //REPLACE WITH A PANEL
+    private VBox rightTab; //REPLACE WITH A PANEL
     private Map<Button,VBox> buttonVBoxMap;
     private HeaderMenuPanel headerMenu;
-    private PropertiesPanel propertiesPanel;
+    private ObjectLibraryPanel objectLibraryPanel;
     private EnvironmentPanel environmentPanel;
 
     public GameEditorEditorScene(SceneController sceneController) {
@@ -43,10 +43,10 @@ public class GameEditorEditorScene extends AbstractScene {
     public Scene makeScene() {
         root = new BorderPane();
         headerMenu = new HeaderMenuPanel(panelController);
-        propertiesPanel = new PropertiesPanel();
+        objectLibraryPanel = new ObjectLibraryPanel();
         environmentPanel = new EnvironmentPanel();
         //left sidebar
-        leftTab = new VBox();
+        rightTab = new VBox();
         buttonVBoxMap = new HashMap<>(); //TODO: what does this do?
         Button boardButton = new Button("Board");
         setButtonVisualPanel(boardButton, "Board");
@@ -56,16 +56,16 @@ public class GameEditorEditorScene extends AbstractScene {
         setButtonVisualPanel(playerButton, "Player");
         Button backButton = new Button("Back");
         backButton.setOnAction(e -> panelController.switchSceneFromPanel("main"));
-        leftTab.getChildren().addAll(boardButton,variableButton,playerButton,backButton);
+        rightTab.getChildren().addAll(boardButton,variableButton,playerButton,backButton);
 
         refreshScene();
         return getScene();
     }
     private void refreshScene(){
-        root.setRight(leftTab);
+        root.setRight(rightTab);
         root.setCenter(environmentPanel);
         root.setTop(headerMenu.createMenu());
-        root.setLeft(propertiesPanel.createAccordion());
+        root.setLeft(objectLibraryPanel.createAccordion());
         root.setCenter(environmentPanel.createEnvironment());
         setScene(new Scene(root));
         setText();

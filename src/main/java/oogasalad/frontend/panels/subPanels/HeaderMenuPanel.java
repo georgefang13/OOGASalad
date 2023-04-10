@@ -1,5 +1,6 @@
 package oogasalad.frontend.panels.subPanels;
 
+import java.util.ResourceBundle;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import oogasalad.frontend.factories.ButtonFactory;
@@ -10,6 +11,12 @@ import oogasalad.frontend.windows.GameEditorWindow;
 import oogasalad.frontend.windows.GameEditorWindow.WindowScenes;
 
 public class HeaderMenuPanel extends HBoxPanel {
+  private static final ResourceBundle ELEMENT_LABELS = ResourceBundle.getBundle("frontend/properties/text/english");
+//  private static final String SAVE_COMMAND = "SaveCommand"; //example
+  private static final ResourceBundle ID_BUNDLE = ResourceBundle.getBundle("frontend/properties/StylingIDs/CSS_ID");
+//  private static final String CANVAS_PANE_ID = "CanvasPaneID"; //example
+
+
   ButtonFactory buttonFactory = new ButtonFactory();
   PanelController panelController;
 
