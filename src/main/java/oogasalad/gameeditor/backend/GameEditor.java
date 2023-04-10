@@ -1,15 +1,13 @@
 package oogasalad.gameeditor.backend;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import oogasalad.gameeditor.backend.goals.EmptyGoal;
 import oogasalad.gameeditor.backend.goals.Goal;
 import oogasalad.gameeditor.backend.id.IdManager;
-import oogasalad.gameeditor.backend.rules.EmptyRule;
-import oogasalad.sharedDependencies.backend.ownables.OwnableFactory;
+import oogasalad.sharedDependencies.backend.ownables.ObjectFactory;
 import oogasalad.sharedDependencies.backend.owners.GameWorld;
 import oogasalad.sharedDependencies.backend.owners.Owner;
 import oogasalad.sharedDependencies.backend.owners.Player;
@@ -28,34 +26,34 @@ public class GameEditor {
   /**
    * The Rules of the game.
    */
-  private final IdManager<Rule> rules = new IdManager<>();
+  private final IdManager<Rule> ruleIdManager = new IdManager<>();
 
   /**
    * The Goals of the game.
    */
-  private final IdManager<Goal> goals = new IdManager<>();
+  private final IdManager<Goal> goalIdManager = new IdManager<>();
 
   /**
    * The Players of the game.
    * Players own Ownables.
    */
-  private final IdManager<Player> playerIdManager = new IdManager();
+  private final IdManager<Player> playerIdManager = new IdManager<>(); //TODO set to make number of players, make arraylist
 
   /**
    * The IdManager of the game for Ownables.
    */
-  private final IdManager<Ownable> ownableIdManager = new IdManager();
-
-  /**
-   * The OwnableFactory of the game.
-   */
-  OwnableFactory ownableFactory = new OwnableFactory();
+  private final IdManager<Ownable> ownableIdManager = new IdManager<>();
 
   /**
    * The GameWorld of the game.
    * The GameWorld owns Ownables not owned by Players.
    */
   private final GameWorld gameWorld = new GameWorld();
+
+  /**
+   * The ObjectFactory of the game.
+   */
+  private final ObjectFactory objectFactory = new ObjectFactory(gameWorld);
 
   /**
    * Adds a Player to the game.
@@ -120,7 +118,7 @@ public class GameEditor {
    * @param rule
    */
   public void addRule(Rule rule) {
-    rules.addObject(rule);
+    ruleIdManager.addObject(rule);
   }
 
   /**
@@ -128,19 +126,19 @@ public class GameEditor {
    * @param rule
    */
   public void removeRule(Rule rule) {
-    if(!rules.isIdInUse(rules.getId(rule))) {
+    if(!ruleIdManager.isIdInUse(ruleIdManager.getId(rule))) {
       return;
     }
-    rules.removeObject(rule);
+    ruleIdManager.removeObject(rule);
   }
 
   /**
    * Gets the Rules of the game.
    * @return unmodifiable List of Rules
    */
-  public List<Rule> getRules() {
+  public List<Rule> getRuleIdManager() {
     ArrayList<Rule> listRules= new ArrayList<>();
-    for(Map.Entry<String, Rule> entry : rules) {
+    for(Map.Entry<String, Rule> entry : ruleIdManager) {
       listRules.add(entry.getValue());
     }
     return Collections.unmodifiableList(listRules);
@@ -151,7 +149,7 @@ public class GameEditor {
    * @param goal the Goal to add
    */
   public void addGoal(Goal goal) {
-    goals.addObject(goal);
+    goalIdManager.addObject(goal);
   }
 
   /**
@@ -159,19 +157,19 @@ public class GameEditor {
    * @param goal the Goal to remove
    */
   public void removeGoal(Goal goal) {
-    if(!goals.isIdInUse(goals.getId(goal))) {
+    if(!goalIdManager.isIdInUse(goalIdManager.getId(goal))) {
       return;
     }
-    goals.removeObject(goal);
+    goalIdManager.removeObject(goal);
   }
 
   /**
    * Gets the Goals of the game.
    * @return unmodifiable List of Goals
    */
-  public List<Goal> getGoals() {
+  public List<Goal> getGoalIdManager() {
     ArrayList<Goal> listGoals= new ArrayList<>();
-    for(Map.Entry<String, Goal> entry : goals) {
+    for(Map.Entry<String, Goal> entry : goalIdManager) {
       listGoals.add(entry.getValue());
     }
     return Collections.unmodifiableList(listGoals);
@@ -198,20 +196,26 @@ public class GameEditor {
   //region sendObject API
 
 
-  /**
-   * Creates an ownable using ownableFactory for player
-   * Pass in null for any unused parameters (cannot pass null for type)
-   * @param type the string type of ownable
-   * @param owner the owner of the ownable
-   * @param parentOwnable the parent of the ownable
-   */
-  private void createOwnable(String type, Owner owner, Ownable parentOwnable) {
-    Owner destinationOwner = owner;
-    if (owner == null){
-      destinationOwner = gameWorld;
-    }
-    Ownable newOwnable = ownableFactory.createOwnable(type, destinationOwner);
-    ownableIdManager.addObject(newOwnable, parentOwnable);
+//  /**
+//   * Creates an ownable using ownableFactory for player
+//   * Pass in null for any unused parameters (cannot pass null for type)
+//   * @param type the string type of ownable
+//   * @param owner the owner of the ownable
+//   * @param parentOwnable the parent of the ownable
+//   */
+//  @Deprecated
+//  private void createOwnable(String type, Owner owner, Ownable parentOwnable) {
+//    Owner destinationOwner = owner;
+//    if (owner == null){
+//      destinationOwner = gameWorld;
+//    }
+//    Ownable newOwnable = OwnableFactory.createOwnable(type, destinationOwner);
+//    ownableIdManager.addObject(newOwnable, parentOwnable);
+//  }
+
+  private void createOwnable(Map<String, String> params) {
+    Ownable newOwnable = objectFactory.createOwnable(params);
+    ownableIdManager.addObject(newOwnable);
   }
 
   /**
@@ -224,15 +228,17 @@ public class GameEditor {
   /**
    * Creates a new rule and adds it to the game
    */
-  private void createRule() {
-    addRule(new EmptyRule()); //TODO
+  private void createRule(Map<String, String> params) {
+    Rule newRule = ObjectFactory.createRule(params);
+    ruleIdManager.addObject(newRule);
   }
 
   /**
    * Creates a new goal and adds it to the game
    */
-  private void createGoal() {
-    addGoal(new EmptyGoal()); //TODO
+  private void createGoal(Map<String, String> params) {
+    Goal newGoal = ObjectFactory.createGoal(params);
+    goalIdManager.addObject(newGoal);
   }
 
 
@@ -243,24 +249,37 @@ public class GameEditor {
    @Type The class the object belongs to
    @Params The params of the object
    **/
-  public void sendObject(String type, String params) {
-    //TODO this sucks and is sorta hardcoded
-    List<String> parameters = Arrays.asList(params.split(";"));
-    //{"owner=id1", "parentOwnable=id2"}
-    String ownerID = parameters.get(0).substring(parameters.get(0).indexOf("=") + 1);
-    String parentOwnableID = parameters.get(1).substring(parameters.get(1).indexOf("=") + 1);
-    if (ownerID.equals("NULL")){
-      if (parentOwnableID.equals("NULL")){
-        createOwnable(type, null, null);
-      }
-      createOwnable(type, null, getOwnable(parentOwnableID));
+  public void sendObject(ObjectType type, Map<String, String> params) throws IllegalArgumentException{
+    switch (type) {
+      case PLAYER -> createPlayer();
+      case OWNABLE -> createOwnable(params);
+      case RULE -> createRule(params);
+      case GOAL -> createGoal(params);
+      default -> throw new IllegalArgumentException("Invalid type"); //TODO add to properties
     }
-    else if (parentOwnableID.equals("NULL")) {
-      createOwnable(type, playerIdManager.getObject(ownerID), null);
-    }
-    else {
-      createOwnable(type, playerIdManager.getObject(ownerID), getOwnable(parentOwnableID));
-    }
+
+
+
+
+
+
+//    //TODO this sucks and is sorta hardcoded
+//    List<String> parameters = Arrays.asList(params.split(";"));
+//    //{"owner=id1", "parentOwnable=id2"}
+//    String ownerID = parameters.get(0).substring(parameters.get(0).indexOf("=") + 1);
+//    String parentOwnableID = parameters.get(1).substring(parameters.get(1).indexOf("=") + 1);
+//    if (ownerID.equals("NULL")){
+//      if (parentOwnableID.equals("NULL")){
+//        createOwnable(type, null, null);
+//      }
+//      createOwnable(type, null, getOwnable(parentOwnableID));
+//    }
+//    else if (parentOwnableID.equals("NULL")) {
+//      createOwnable(type, playerIdManager.getObject(ownerID), null);
+//    }
+//    else {
+//      createOwnable(type, playerIdManager.getObject(ownerID), getOwnable(parentOwnableID));
+//    }
   }
 
   //endregion sendObject API
