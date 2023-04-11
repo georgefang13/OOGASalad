@@ -101,7 +101,7 @@ public class Game {
     return -1;
   }
 
-  /////////////////// LOADING ///////////////////
+  // region LOADING
 
     /**
      * Loads a Game from a file.
@@ -127,7 +127,9 @@ public class Game {
 
     private void initRulesAndGoals(JsonObject json) {}
 
-  /////////////////// PLAYERS ///////////////////
+  //endregion
+
+  // region PLAYERS
 
   /**
    * Adds a Player to the game.
@@ -176,7 +178,9 @@ public class Game {
     return Collections.unmodifiableList(listPlayers);
   }
 
-  /////////////////// RULES AND GOALS ///////////////////
+  //endregion
+
+  // region RULES AND GOALS
 
   /**
    * Adds a Rule to the game.
@@ -236,7 +240,9 @@ public class Game {
     return gameWorld;
   }
 
-  /////////////////// OWNABLES ///////////////////
+  // endregion
+
+  // region OWNABLES
 
   /**
    * Adds an Ownable to the IdManager and Owner.
@@ -284,5 +290,7 @@ public class Game {
   public void setOwner(String id, Owner owner) throws IllegalArgumentException{
     ownableIdManager.getObject(id).setOwner(owner);
   }
+
+  // endregion
 
 }
