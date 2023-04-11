@@ -18,8 +18,7 @@ public class DisplayableObject extends AbstractComponent implements DisplayableC
     private double xOffset;
     private double yOffset;
     private final String DEFAULT_FILE_PATH = "frontend/properties/Defaults/GameObject.properties";
-    final private ResourceBundle DEFAULT_BUNDLE = ResourceBundle.getBundle(DEFAULT_FILE_PATH);
-
+    private ResourceBundle DEFAULT_BUNDLE = ResourceBundle.getBundle(DEFAULT_FILE_PATH);
 
     public DisplayableObject(int num, Node container) {
         super(num, container);
