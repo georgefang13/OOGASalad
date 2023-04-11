@@ -15,7 +15,7 @@ public class EnvironmentPanel extends VisualPanel {
   }
   public Pane createEnvironment() {
     Pane environment = new Pane();
-    environment.setStyle("-fx-background-color: #0000FF;"); //TODO: delete, here just so we can see the pane
+    environment.setStyle("-fx-background-color: #24252e;"); //TODO: delete, here just so we can see the pane
     return environment;
   }
 
