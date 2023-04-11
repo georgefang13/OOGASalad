@@ -7,7 +7,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import oogasalad.frontend.panels.subPanels.EnvironmentPanel;
 import oogasalad.frontend.panels.subPanels.HeaderMenuPanel;
-import oogasalad.frontend.panels.subPanels.ObjectLibraryPanel;
+import oogasalad.frontend.panels.subPanels.ComponentLibraryPanel;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,7 +17,7 @@ public class GameEditorEditorScene extends AbstractScene {
     private VBox rightTab; //REPLACE WITH A PANEL
     private Map<Button,VBox> buttonVBoxMap;
     private HeaderMenuPanel headerMenu;
-    private ObjectLibraryPanel objectLibraryPanel;
+    private ComponentLibraryPanel componentLibraryPanel;
     private EnvironmentPanel environmentPanel;
 
     public GameEditorEditorScene(SceneController sceneController) {
@@ -43,7 +43,7 @@ public class GameEditorEditorScene extends AbstractScene {
     public Scene makeScene() {
         root = new BorderPane();
         headerMenu = new HeaderMenuPanel(panelController);
-        objectLibraryPanel = new ObjectLibraryPanel();
+        componentLibraryPanel = new ComponentLibraryPanel();
         environmentPanel = new EnvironmentPanel();
         //left sidebar
         rightTab = new VBox();
@@ -65,7 +65,7 @@ public class GameEditorEditorScene extends AbstractScene {
         root.setRight(rightTab);
         root.setCenter(environmentPanel);
         root.setTop(headerMenu.createMenu());
-        root.setLeft(objectLibraryPanel.createAccordion());
+        root.setLeft(componentLibraryPanel.createAccordion());
         root.setCenter(environmentPanel.createEnvironment());
         setScene(new Scene(root));
         setText();

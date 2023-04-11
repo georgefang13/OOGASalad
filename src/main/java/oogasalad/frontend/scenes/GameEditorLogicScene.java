@@ -4,7 +4,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import oogasalad.frontend.panels.subPanels.EnvironmentPanel;
 import oogasalad.frontend.panels.subPanels.HeaderMenuPanel;
-import oogasalad.frontend.panels.subPanels.ObjectLibraryPanel;
+import oogasalad.frontend.panels.subPanels.ComponentLibraryPanel;
 
 /**
  * @author Connor Wells
@@ -15,7 +15,7 @@ import oogasalad.frontend.panels.subPanels.ObjectLibraryPanel;
 public class GameEditorLogicScene extends AbstractScene {
     private BorderPane root;
     private HeaderMenuPanel headerMenu;
-    private ObjectLibraryPanel objectLibraryPanel;
+    private ComponentLibraryPanel componentLibraryPanel;
     private EnvironmentPanel environmentPanel;
 
     public GameEditorLogicScene(SceneController sceneController) {
@@ -26,7 +26,7 @@ public class GameEditorLogicScene extends AbstractScene {
     public Scene makeScene() {
         root = new BorderPane();
         headerMenu = new HeaderMenuPanel(panelController);
-        objectLibraryPanel = new ObjectLibraryPanel();
+        componentLibraryPanel = new ComponentLibraryPanel();
         environmentPanel = new EnvironmentPanel();
         refreshScene();
         return getScene();
@@ -34,7 +34,7 @@ public class GameEditorLogicScene extends AbstractScene {
     private void refreshScene(){
         root.setCenter(environmentPanel);
         root.setTop(headerMenu.createMenu());
-        root.setLeft(objectLibraryPanel.createAccordion());
+        root.setLeft(componentLibraryPanel.createAccordion());
         root.setCenter(environmentPanel.createEnvironment());
         setScene(new Scene(root));
         setTheme();

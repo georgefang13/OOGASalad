@@ -40,6 +40,18 @@ public class ButtonFactory {
     defaultButton.setText(myButtonPropertiesMap.get(property));
     return defaultButton;
   }
+  /**
+   * Creates a button with the given text, font size, and text color
+   *
+   * @param property the key value in the label bundle representing the text of
+   *                 the button
+   * @return the Button
+   */
+  public Button createComponentButton(String property) {
+    Button componentButton = new Button();
+    componentButton.setText(myButtonPropertiesMap.get(property));
+    return componentButton;
+  }
 
   /**
    * Creates a tooltop with the given text

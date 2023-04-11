@@ -7,13 +7,13 @@ import oogasalad.frontend.factories.ButtonFactory;
 import oogasalad.frontend.panels.Panel;
 import oogasalad.frontend.panels.HBoxPanel;
 
-public class ObjectLibraryPanel extends HBoxPanel {
+public class ComponentLibraryPanel extends HBoxPanel {
   ButtonFactory buttonFactory = new ButtonFactory();
 
   /**
    * Constructor for HeaderMenu
    */
-  public ObjectLibraryPanel() {
+  public ComponentLibraryPanel() {
     super();
   }
   /**
