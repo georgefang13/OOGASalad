@@ -10,17 +10,19 @@ import java.util.ResourceBundle;
 public class GraphicHandler {
 
   //TODO add the SIZE_FILE and set the file names based on convention
-  final static public String FILE_LOCATION = "";
-  final static public String SIZE_FILE = FILE_LOCATION + "";
-  private ResourceBundle SizeBundle;
-  private int windowSize;
-  //TODO rename this AreaSize based on what the Panel will be called
-  private int editingAreaSize;
+  final static public String FILE_LOCATION = "frontend/properties/numeric";
+  final static public String SIZE_FILE = FILE_LOCATION + "numeric.properties";
   private int scalingFactor;
+  private int LeftBound;
+  private int RightBound;
+  private int TopBound;
+  private int BottomBound;
   public GraphicHandler(){
-    SizeBundle = ResourceBundle.getBundle(SIZE_FILE);
-    windowSize = Integer.parseInt(SizeBundle.getString("WindowSize"));
-    editingAreaSize = Integer.parseInt(SizeBundle.getString("editingAreaSize"));
+    ResourceBundle sizeBundle = ResourceBundle.getBundle(SIZE_FILE);
+    int windowSize = Integer.parseInt(sizeBundle.getString("WindowSize"));
+    //TODO rename this AreaSize based on what the Panel will be called
+    int editingAreaSize = Integer.parseInt(sizeBundle.getString("editingAreaSize"));
+    scalingFactor = editingAreaSize / windowSize;
   }
 
   /**
@@ -43,11 +45,19 @@ public class GraphicHandler {
   }
 
   /**
-   *
-   * @param coord
-   * @return
+   * Checks if the given Component exists within the bounds of the editor
+   * @param editorCoord editorCoord is the coordinates of the components on the editor scale
+   * @param size This is the point that contains the sizes of the Component, in the x and y scale
+   * @return whether or not the component is in bounds
    */
-  public boolean inBounds(int coord){
-    return false;
+  public boolean inBounds(Point editorCoord, Point size){
+    if(editorCoord.getX() - size.getX()/2 <LeftBound || editorCoord.getX() + size.getX()/2 >RightBound){
+      //TODO figure out error?
+      return false;
+    }
+    if(editorCoord.getY() - size.getY()/2<TopBound || editorCoord.getY() + size.getY()/2 > BottomBound){
+      return false;
+    }
+    return true;
   }
 }
