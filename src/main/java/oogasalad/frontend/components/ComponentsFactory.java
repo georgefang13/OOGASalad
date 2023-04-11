@@ -16,13 +16,11 @@ public class ComponentsFactory {
    * @return the Component the client wanted
    */
   public Component create(String type){
-    //TODO properly cite Chat GPT here
     Component component = null;
     try{
       Class<?> c = Class.forName(type + "Component");
       component = (Component) c.getDeclaredConstructor().newInstance();
     } catch (Exception e){
-      //TODO add logging code
       System.out.println("Failed");
     }
     return component;

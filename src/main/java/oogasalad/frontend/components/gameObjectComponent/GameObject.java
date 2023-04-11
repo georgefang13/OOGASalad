@@ -17,13 +17,17 @@ public class GameObject extends DraggableObject implements GameObjectComponent{
   private String name;
   private List<Node> children;
   private boolean playable;
+  private final String DEFAULT_FILE_PATH = "frontend/properties/Defaults/GameObject.properties";
+  private ResourceBundle DEFAULT_BUNDLE = ResourceBundle.getBundle(DEFAULT_FILE_PATH);
 
   public GameObject(int ID){
     super(ID);
     children = null;
+    Image newImage = new Image(DEFAULT_BUNDLE.getString("DEFAULT_IMAGE"));
+    this.getImage().setImage(newImage);
     followMouse();
   }
-  
+
   public GameObject(int ID, Node container){
     super(ID, container);
   }

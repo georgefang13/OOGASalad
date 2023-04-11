@@ -1,12 +1,38 @@
 package oogasalad.Controller;
 
+import java.io.File;
+import java.util.ResourceBundle;
+import oogasalad.gameeditor.backend.filemanagers.FileManager;
+
 /**
  * @author Han
  * This class is made to update any File information from the Front End to the backend
  */
 public class FilesController {
-  public FilesController(){
 
+  private FileManager manager;
+  private final String GAMES_PATH = "src/main/resources/";
+  private String gameFolder;
+  private final String FILES_NAMES = "Controller/FilesConfig.properties";
+  private final ResourceBundle filesBundle = ResourceBundle.getBundle(FILES_NAMES);
+  /**
+   * Sets up the FileController
+   * @param fileManager This is the fileManager that controls this fileCOntroller, actually doing the work
+   * to work on everything
+   * @param name Game Name
+   */
+  public FilesController(FileManager fileManager, String name){
+    manager = fileManager;
+    gameFolder = GAMES_PATH + name;
+    File directory = new File(gameFolder);
+    boolean valid = directory.mkdir();
+
+    if(valid){
+      //TODO log file made successfully
+    }
+    else{
+      //TODO log file not made successfully
+    }
   }
 
   /**
@@ -14,7 +40,10 @@ public class FilesController {
    is called whenever a new game is created.
    **/
   public void createGame(){
-
+    String[] fileNames = filesBundle.getStringArray("FileNames");
+    for(String file: fileNames){
+      manager.saveToFile(gameFolder+"\n"+file);
+    }
   }
 
   /**

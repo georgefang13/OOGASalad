@@ -1,5 +1,6 @@
 package oogasalad.Controller;
 
+import java.util.Map;
 import oogasalad.frontend.windows.AbstractWindow;
 
 /**
@@ -8,7 +9,8 @@ import oogasalad.frontend.windows.AbstractWindow;
  */
 public class GameItemsController {
 
-  AbstractWindow window;
+  private AbstractWindow window;
+  private ConvertingStrategy convert;
   /**
    * Initializes the GameItemsController with the Window with the Window it's attached to
    */
@@ -22,7 +24,7 @@ public class GameItemsController {
    @param type The class the object belongs to
    @param params The params of the object
    **/
-  public void sendObject(String type, String params){
+  public void sendObject(String type, Map<String, String> map){
 
   };
   /**
