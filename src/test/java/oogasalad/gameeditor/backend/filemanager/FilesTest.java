@@ -10,9 +10,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import oogasalad.gameeditor.backend.filemanagers.FileManager;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
+import oogasalad.sharedDependencies.backend.filemanagers.FileMaker;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -28,12 +26,12 @@ public class FilesTest {
   private static final String SINGLE_TAG_FILE_NAME = "single.json";
   private static final String DIFFERENT_TAG_FILE_NAME = "difftags.json";
   private static final String SAME_TAG_FILE_NAME = "sametag.json";
-  FileManager fileManager;
+  FileMaker fileMaker;
   Gson gson;
 
   @BeforeEach
   void initialize() {
-    fileManager = new FileManager();
+    fileMaker = new FileMaker();
     gson = new Gson();
     File file = new File(FILE_FOLDER + "/" + TEST_FILE_NAME);
     if (file.exists()) {
@@ -48,37 +46,37 @@ public class FilesTest {
 
   @Test
   void singleTagTest() {
-    fileManager.addContent("name", new JsonPrimitive("Rodrigo"));
+    fileMaker.addContent("name", new JsonPrimitive("Rodrigo"));
     saveAndCompare(SINGLE_TAG_FILE_NAME);
   }
 
   @Test
   void differentTagTest() {
-    fileManager.addContent("name", new JsonPrimitive("Rodrigo"));
-    fileManager.addContent("nickname", new JsonPrimitive("Hot Rod"));
+    fileMaker.addContent("name", new JsonPrimitive("Rodrigo"));
+    fileMaker.addContent("nickname", new JsonPrimitive("Hot Rod"));
     saveAndCompare(DIFFERENT_TAG_FILE_NAME);
   }
 
   @Test
   void sameTagTest() {
-    fileManager.addContent("name", new JsonPrimitive("Rodrigo"));
-    fileManager.addContent("name", new JsonPrimitive("Hot Rod"));
+    fileMaker.addContent("name", new JsonPrimitive("Rodrigo"));
+    fileMaker.addContent("name", new JsonPrimitive("Hot Rod"));
     saveAndCompare(SAME_TAG_FILE_NAME);
   }
 
   @Test
   void validTagTest() {
-    fileManager.setValidTagsFromResources("General");
-    fileManager.addContent("name", new JsonPrimitive("Rodrigo"));
+    fileMaker.setValidTagsFromResources("General");
+    fileMaker.addContent("name", new JsonPrimitive("Rodrigo"));
     assertThrows(RuntimeException.class, () -> {
-      fileManager.addContent("invalid tag", new JsonPrimitive("oops"));
+      fileMaker.addContent("invalid tag", new JsonPrimitive("oops"));
     });
-    fileManager.addContent("name", new JsonPrimitive("Hot Rod"));
+    fileMaker.addContent("name", new JsonPrimitive("Hot Rod"));
     saveAndCompare(SAME_TAG_FILE_NAME);
   }
 
   private void saveAndCompare(String sameTagFileName) {
-    fileManager.saveToFile(FILE_FOLDER + "/" + TEST_FILE_NAME);
+    fileMaker.saveToFile(FILE_FOLDER + "/" + TEST_FILE_NAME);
     JsonElement singleTag = getJsonFromFile(FILE_FOLDER + "/" + sameTagFileName);
     JsonElement test = getJsonFromFile(FILE_FOLDER + "/" + TEST_FILE_NAME);
     assertEquals(singleTag, test);

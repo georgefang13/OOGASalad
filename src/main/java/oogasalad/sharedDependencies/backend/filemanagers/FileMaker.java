@@ -1,8 +1,7 @@
-package oogasalad.gameeditor.backend.filemanagers;
+package oogasalad.sharedDependencies.backend.filemanagers;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.google.gson.JsonElement;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -18,7 +17,7 @@ import java.util.ResourceBundle;
  *
  * Abstract implementation for class used to save JSON files as user is creating games
  **/
-public class FileManager {
+public class FileMaker {
   protected static String SEPARATOR = ",";
   protected static String RESOURCES_PATH = "backend.filemanager.ValidTags";
 
@@ -28,12 +27,12 @@ public class FileManager {
   /**
    * Standard constructor
    */
-  public FileManager() {
+  public FileMaker() {
     myFileInfo = new JsonObject();
     myValidTags = new ArrayList<>();
   }
 
-  public FileManager(String validTagsKey) {
+  public FileMaker(String validTagsKey) {
     this();
     setValidTagsFromResources(validTagsKey);
   }
