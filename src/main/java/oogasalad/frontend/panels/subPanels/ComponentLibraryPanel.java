@@ -4,10 +4,10 @@ import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.TitledPane;
 import oogasalad.frontend.factories.ButtonFactory;
+import oogasalad.frontend.panels.AccordionPanel;
 import oogasalad.frontend.panels.Panel;
-import oogasalad.frontend.panels.HBoxPanel;
 
-public class ComponentLibraryPanel extends HBoxPanel {
+public class ComponentLibraryPanel extends AccordionPanel {
   ButtonFactory buttonFactory = new ButtonFactory();
 
   /**
@@ -21,9 +21,9 @@ public class ComponentLibraryPanel extends HBoxPanel {
    * @return
    */
   public Accordion createAccordion() {
-    TitledPane t1 = new TitledPane("T1", new Button("B1"));
-    TitledPane t2 = new TitledPane("T2", new Button("B2"));
-    TitledPane t3 = new TitledPane("T3", new Button("B3"));
+    TitledPane t1 = new TitledPane("Game Objects", new Button("B1"));
+    TitledPane t2 = new TitledPane("Players", new Button("B2"));
+    TitledPane t3 = new TitledPane("Memes", new Button("B3"));
     Accordion accordion = new Accordion();
     accordion.getPanes().addAll(t1, t2, t3);
     return accordion;
