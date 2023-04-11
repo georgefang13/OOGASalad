@@ -15,7 +15,7 @@ import java.util.ResourceBundle;
 /**
  * @author Rodrigo Bassi Guerreiro
  *
- * Abstract implementation for class used to save JSON files as user is creating games
+ * Class used to programatically store information in JSON files
  **/
 public class FileMaker {
   protected static String SEPARATOR = ",";
