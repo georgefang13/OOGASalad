@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.ResourceBundle;
 import javafx.scene.control.Button;
-import javafx.scene.control.ToggleButton;
 import javafx.scene.control.Tooltip;
 
 /**
@@ -22,7 +21,6 @@ public class ButtonFactory {
   private Map<String, String> myTooltipPropertiesMap;
   private static final String BUTTON_PREFIX = "Button";
   private static final String TOOLTIP_PREFIX = "Tooltip";
-
 
   public ButtonFactory() {
     this.textBundle = ResourceBundle.getBundle(ENGLISH_PROPERTIES);
@@ -43,7 +41,6 @@ public class ButtonFactory {
     return defaultButton;
   }
 
-
   /**
    * Creates a tooltop with the given text
    * @param text
@@ -55,7 +52,7 @@ public class ButtonFactory {
     return tooltip;
   }
 
-  private HashMap<String, String> setPropertiesMap(String prefix) {
+  private HashMap<String, String> setPropertiesMap(String prefix) { //TODO: this is reused from MODAL.java...fix that so its not repeated code
     Properties properties = new Properties();
     try {
       InputStream inputStream = getClass().getClassLoader()

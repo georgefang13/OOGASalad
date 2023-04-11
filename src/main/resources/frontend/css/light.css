@@ -1,3 +1,24 @@
+/* Overall */
 .root {
   -fx-background-color: white;
+}
+
+/* HeaderMenuPanel */
+.menu-hbox {
+  -fx-background-color: #4A4F76;
+  -fx-border-width: 2;
+  -fx-border-color: #4A4F76;
+}
+.deselected-header-menu-button {
+  -fx-border-radius: 0;
+  -fx-border-width: 0;
+  -fx-background-color: #4A4F76;
+  -fx-text-fill: white;
+}
+.selected-header-menu-button {
+  -fx-border-radius: 0;
+  -fx-border-width: 1;
+  -fx-background-color: #4A4F76;
+  -fx-border-color: white;
+  -fx-text-fill: white;
 }
