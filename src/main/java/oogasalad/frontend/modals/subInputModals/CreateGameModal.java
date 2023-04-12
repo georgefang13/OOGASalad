@@ -12,7 +12,7 @@ import javafx.scene.layout.GridPane;
 import oogasalad.frontend.modals.InputModal;
 
 public class CreateGameModal extends InputModal {
-    private static final ResourceBundle MODAL_ID_BUNDLE = ResourceBundle.getBundle("frontend/modals/ModalStylingID");
+//    private static final ResourceBundle MODAL_ID_BUNDLE = ResourceBundle.getBundle("frontend/modals/ModalStylingID");
     private static final String IMAGE_PICKER_ID = "ImagePickerID";
     private Map<String, String> myPropertiesMap;
 
@@ -65,7 +65,7 @@ public class CreateGameModal extends InputModal {
         grid.add(new Label(myPropertiesMap.get("SetImage")), 0, 4);
 //        grid.add(makeImagePicker(myPropertiesMap.get("SetImage")), 1, 4);
         Button imagePicker = makeImagePicker(myPropertiesMap.get("SetImage"));
-        imagePicker.setId(MODAL_ID_BUNDLE.getString(IMAGE_PICKER_ID));
+//        imagePicker.setId(MODAL_ID_BUNDLE.getString(IMAGE_PICKER_ID));
         grid.add(imagePicker, 1, 4);
 
 

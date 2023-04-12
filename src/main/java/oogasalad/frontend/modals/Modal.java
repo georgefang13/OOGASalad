@@ -18,12 +18,17 @@ import javafx.stage.Modality;
 import javafx.stage.StageStyle;
 
 public class Modal<T> extends Dialog<T> {
+
+    public static final String MODAL_PROPERTIES_FILE_PATH = "frontend/properties/text/Modals.properties";
+    public static final String MODAL_STYlE_FILE_PATH = "frontend/css/modalStyles.css";
+
+
     private final String MODAL_STYLE_SHEET = Objects
-        .requireNonNull(getClass().getClassLoader().getResource("stylesheets/modalStyles.css")).toExternalForm();
+        .requireNonNull(getClass().getClassLoader().getResource(MODAL_STYlE_FILE_PATH)).toExternalForm();
     private Map<String, String> myPropertiesMap;
     private String myTitle;
-    private static String MODAL_FILE_PATH = "frontend/modals/Modals.properties";
-    private static final ResourceBundle MODAL_BUNDLE = ResourceBundle.getBundle("frontend/modals/Modals");
+    private static String MODAL_FILE_PATH = MODAL_PROPERTIES_FILE_PATH;
+//    private static final ResourceBundle MODAL_BUNDLE = ResourceBundle.getBundle("frontend/properties/text/");
     private static final String CANT_LOAD_FILE_ID = "unableToLoadPropertiesFile";
     private static final String ERROR_LOADING_FILE_ID = "Error loading properties file";
 
@@ -87,10 +92,10 @@ public class Modal<T> extends Dialog<T> {
             if (inputStream != null) {
                 properties.load(inputStream);
             } else {
-                System.err.println(MODAL_BUNDLE.getString(CANT_LOAD_FILE_ID));
+//                System.err.println(MODAL_BUNDLE.getString(CANT_LOAD_FILE_ID));
             }
         } catch (Exception e) {
-            System.out.println(MODAL_BUNDLE.getString(ERROR_LOADING_FILE_ID));
+//            System.out.println(MODAL_BUNDLE.getString(ERROR_LOADING_FILE_ID));
         }
 
         HashMap<String, String> myPropertiesMap = new HashMap<>();
