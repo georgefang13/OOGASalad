@@ -26,9 +26,9 @@ public class GameEditorLogicScene extends AbstractScene {
     @Override
     public Scene makeScene() {
         root = new BorderPane();
-        headerMenu = new HeaderMenuPanel(panelController, LOGIC_EDITOR_SCENE);
-        componentLibraryPanel = new ComponentLibraryPanel();
-        environmentPanel = new EnvironmentPanel();
+        createTopPanel();
+        createLeftPanel();
+        createCenterPanel();
         refreshScene();
         return getScene();
     }
@@ -39,6 +39,15 @@ public class GameEditorLogicScene extends AbstractScene {
         root.setCenter(environmentPanel.createEnvironment());
         setScene(new Scene(root));
         setTheme();
+    }
+    private void createCenterPanel(){
+        environmentPanel = new EnvironmentPanel();
+    }
+    private void createTopPanel(){
+        headerMenu = new HeaderMenuPanel(panelController, LOGIC_EDITOR_SCENE);
+    }
+    private void createLeftPanel(){
+        componentLibraryPanel = new ComponentLibraryPanel();
     }
     @Override
     public void setText() {

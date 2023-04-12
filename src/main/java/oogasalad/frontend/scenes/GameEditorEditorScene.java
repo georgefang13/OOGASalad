@@ -41,7 +41,7 @@ public class GameEditorEditorScene extends AbstractScene {
     }
     private void updateVisualPanel(Button button){
         System.out.print(button.getText());
-//        visualPanel = buttonVBoxMap.get(button);
+        //visualPanel = buttonVBoxMap.get(button);
         refreshScene();
         //sceneController.wirefreshScene();
     }
