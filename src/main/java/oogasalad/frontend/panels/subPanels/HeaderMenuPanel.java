@@ -18,17 +18,19 @@ public class HeaderMenuPanel extends HBoxPanel {
   private static final String MENU_HBOX_ID = "MenuHboxID";
   private static final String DESELECTED_HEADER_MENU_BUTTON_ID = "DeselectedHeaderMenuButtonID";
   private static final String SELECTED_HEADER_MENU_BUTTON_ID = "SelectedHeaderMenuButtonID";
-
-
+  private static final String LOGIC_SCENE = "logic";
+  private static final String EDITOR_SCENE = "visual";
   ButtonFactory buttonFactory = new ButtonFactory();
   PanelController panelController;
+  private static String sceneID;
 
   /**
    * Constructor for HeaderMenu
    */
-  public HeaderMenuPanel(PanelController panelController) {
+  public HeaderMenuPanel(PanelController panelController, String sceneID) {
     super();
     this.panelController = panelController;
+    this.sceneID = sceneID;
   }
   /**
    * Creates the menu for the header
@@ -39,23 +41,34 @@ public class HeaderMenuPanel extends HBoxPanel {
     menu.getStyleClass().add(ID_BUNDLE.getString(MENU_HBOX_ID));
     Button rulesButton = buttonFactory.createDefaultButton(RULES_EDITOR);
     Button visualButton = buttonFactory.createDefaultButton(VISUAL_EDITOR);
-    rulesButton.getStyleClass().add(ID_BUNDLE.getString(DESELECTED_HEADER_MENU_BUTTON_ID));
+    selectSceneButtonSettings(rulesButton, visualButton);
     rulesButton.setOnAction(e -> {
-      visualButton.getStyleClass().remove(SELECTED_HEADER_MENU_BUTTON_ID);
-      visualButton.getStyleClass().add(DESELECTED_HEADER_MENU_BUTTON_ID);
-      rulesButton.getStyleClass().add(SELECTED_HEADER_MENU_BUTTON_ID);
-      panelController.newSceneFromPanel("logic", WindowScenes.LOGIC_SCENE);
+      panelController.newSceneFromPanel(LOGIC_SCENE, WindowScenes.LOGIC_SCENE);
     });
-    visualButton.getStyleClass().add(ID_BUNDLE.getString(SELECTED_HEADER_MENU_BUTTON_ID));
+
     visualButton.setOnAction(e -> {
-      rulesButton.getStyleClass().remove(SELECTED_HEADER_MENU_BUTTON_ID);
-      rulesButton.getStyleClass().add(DESELECTED_HEADER_MENU_BUTTON_ID);
-      visualButton.getStyleClass().add(SELECTED_HEADER_MENU_BUTTON_ID);
-      panelController.newSceneFromPanel("visual", WindowScenes.EDITOR_SCENE);
+      panelController.newSceneFromPanel(EDITOR_SCENE, WindowScenes.EDITOR_SCENE);
     });
     menu.getChildren().addAll(visualButton, rulesButton);
     return menu;
-  } //TODO: i dont know what "visual" and "logic" do here, does this actaully work as the Scene ID?
+  }
+
+  private static void selectSceneButtonSettings(Button rulesButton, Button visualButton) {
+    switch (sceneID) {
+      case LOGIC_SCENE:
+        rulesButton.getStyleClass().add(ID_BUNDLE.getString(SELECTED_HEADER_MENU_BUTTON_ID));
+        visualButton.getStyleClass().add(ID_BUNDLE.getString(DESELECTED_HEADER_MENU_BUTTON_ID));
+        break;
+      case EDITOR_SCENE:
+        rulesButton.getStyleClass().add(ID_BUNDLE.getString(DESELECTED_HEADER_MENU_BUTTON_ID));
+        visualButton.getStyleClass().add(ID_BUNDLE.getString(SELECTED_HEADER_MENU_BUTTON_ID));
+        break;
+      default:
+        break;
+    }
+
+  }
+
   @Override
   public Panel makePanel() {
     return null;

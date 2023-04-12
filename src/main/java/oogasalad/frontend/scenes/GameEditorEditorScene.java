@@ -19,6 +19,7 @@ public class GameEditorEditorScene extends AbstractScene {
     private HeaderMenuPanel headerMenu;
     private ComponentLibraryPanel componentLibraryPanel;
     private EnvironmentPanel environmentPanel;
+    private static final String VISUAL_EDITOR_SCENE = "visual";
 
     public GameEditorEditorScene(SceneController sceneController) {
         super(sceneController);
@@ -42,7 +43,7 @@ public class GameEditorEditorScene extends AbstractScene {
     @Override
     public Scene makeScene() {
         root = new BorderPane();
-        headerMenu = new HeaderMenuPanel(panelController);
+        headerMenu = new HeaderMenuPanel(panelController, VISUAL_EDITOR_SCENE);
         componentLibraryPanel = new ComponentLibraryPanel();
         environmentPanel = new EnvironmentPanel();
         //left sidebar
