@@ -1,13 +1,11 @@
 package oogasalad.frontend.modals;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Properties;
+import java.util.*;
 
-import java.util.ResourceBundle;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogPane;
@@ -84,7 +82,7 @@ public class Modal<T> extends Dialog<T> {
      * 
      * @return
      */
-    protected HashMap<String, String> setPropertiesMap(String title) {
+    protected Map<String, String> setPropertiesMap(String title) {
         Properties properties = new Properties();
         try {
             InputStream inputStream = getClass().getClassLoader()
@@ -97,25 +95,24 @@ public class Modal<T> extends Dialog<T> {
         } catch (Exception e) {
 //            System.out.println(MODAL_BUNDLE.getString(ERROR_LOADING_FILE_ID));
         }
-
-        HashMap<String, String> myPropertiesMap = new HashMap<>();
-
+        Map<String, List<String>> myPropertiesMap = new TreeMap<>();
         for (String key : properties.stringPropertyNames()) {
             if (key.startsWith(title)) {
-                String newKey = key.substring(title.length() + 1);
-                myPropertiesMap.put(newKey, properties.getProperty(key));
+                String newKey = key.split("\\.")[1];
+                myPropertiesMap.put(newKey, List.of(key, properties.getProperty(key)));
             }
         }
-        return myPropertiesMap;
 
+        Map<String, String> returnMap = new TreeMap<>();
+        for (String key : myPropertiesMap.keySet()) {
+            returnMap.put(myPropertiesMap.get(key).get(0), myPropertiesMap.get(key).get(1));
+        }
+
+//        System.out.println(returnMap);
+
+        return returnMap;
     }
 
-    /**
-     * Uses the array list of strings to create labels and add them to the dialog
-     * pane
-     * 
-     * @return
-     */
     protected void setContentAsLabels(ArrayList<String> content) {
 
         VBox vBox = new VBox();
@@ -158,7 +155,7 @@ public class Modal<T> extends Dialog<T> {
      * @return
      */
     protected Map<String, String> getPropertiesMap() {
-        return new HashMap<>(myPropertiesMap);
+        return new TreeMap<>(myPropertiesMap);
     }
 
     /**

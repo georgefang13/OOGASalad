@@ -16,11 +16,15 @@ public class CreateGameModal extends InputModal {
     private static final String IMAGE_PICKER_ID = "ImagePickerID";
     private Map<String, String> myPropertiesMap;
 
+    private String myTitle;
+
     /**
      * Constructor for the CreateGameModal dialog
      */
     public CreateGameModal() {
-        super("createGame");
+        super("Create_Game_Modal");
+        myTitle = "Create_Game_Modal";
+//        myPropertiesMap = super.setPropertiesMap(myTitle
     }
 
     /**
@@ -31,6 +35,14 @@ public class CreateGameModal extends InputModal {
     @Override
     protected DialogPane createDialogPane() {
         myPropertiesMap = super.getPropertiesMap();
+
+        System.out.println(myPropertiesMap);
+
+        for (String key: myPropertiesMap.keySet()) {
+
+            System.out.println(key + " " + myPropertiesMap.get(key));
+
+        }
 
         this.getDialogPane().setHeaderText(myPropertiesMap.get("title"));
         myPropertiesMap.remove("title");
