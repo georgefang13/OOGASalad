@@ -285,6 +285,13 @@
     "description": "Executes one set of instructions if a condition is true, and another set if it is false",
     "example": "ifelse [ >= :x  :y ] [ ... ] [ ... ] # ifelse [ <condition> ] [ <instructions if true> ] [ <instructions if false> ]"
   },
+  "Del": {
+    "name": "Del",
+    "folder": "control",
+    "str": "del",
+    "description": "Removes a variable form scope",
+    "example": "del :x # del <var_name>"
+  },
   "MakeUserInstruction": {
     "name": "Make Function",
     "folder": "control",

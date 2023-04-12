@@ -173,6 +173,29 @@ public class CommandsTest {
     }
 
     @Test
+    public void testDel(){
+        // del
+        String input = "make :x 1 del :x";
+        interpreter.interpret(input);
+        try {
+            getVar("interpreter-:x");
+            fail();
+        } catch (Exception e){
+            assertEquals("Id \"interpreter-:x\" not found.", e.getMessage());
+        }
+
+        // del with non-variables
+        input = "make :x 1 del 1";
+        try{
+            interpreter.interpret(input);
+            fail();
+        } catch (Exception e){
+            Token t = new ValueToken<>(1.);
+            assertEquals(checkTypeErrorMsg(t, "Del", VariableToken.class), e.getMessage());
+        }
+    }
+
+    @Test
     public void testDifference(){
         // difference
         String input = "make :x 1 make :y 2 make :z - :x :y";
