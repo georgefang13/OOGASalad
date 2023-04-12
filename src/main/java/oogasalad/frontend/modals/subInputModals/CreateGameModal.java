@@ -36,11 +36,11 @@ public class CreateGameModal extends InputModal {
     protected DialogPane createDialogPane() {
         myPropertiesMap = super.getPropertiesMap();
 
-        System.out.println(myPropertiesMap);
+        for (Map.Entry entry: myPropertiesMap.entrySet()) {
 
-        for (String key: myPropertiesMap.keySet()) {
+            int start = entry.getKey().toString().indexOf("*") + 1;
 
-            System.out.println(key + " " + myPropertiesMap.get(key));
+            System.out.println(entry.getKey().toString().substring(start) + " " + entry.getValue());
 
         }
 

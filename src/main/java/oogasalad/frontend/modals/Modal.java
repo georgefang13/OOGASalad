@@ -99,13 +99,16 @@ public class Modal<T> extends Dialog<T> {
         for (String key : properties.stringPropertyNames()) {
             if (key.startsWith(title)) {
                 String newKey = key.split("\\.")[1];
+//                String startKey = key.substring(title.length() + 1 + newKey.length() + 1);
                 myPropertiesMap.put(newKey, List.of(key, properties.getProperty(key)));
             }
         }
 
-        Map<String, String> returnMap = new TreeMap<>();
+        Map<String, String> returnMap = new LinkedHashMap<>();
         for (String key : myPropertiesMap.keySet()) {
+            System.out.println(key + " " + myPropertiesMap.get(key).get(0) + " " + myPropertiesMap.get(key).get(1));
             returnMap.put(myPropertiesMap.get(key).get(0), myPropertiesMap.get(key).get(1));
+
         }
 
 //        System.out.println(returnMap);
