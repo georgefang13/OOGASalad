@@ -57,6 +57,7 @@ public class CreateGameModal extends InputModal {
     }
 
 
+
     /**
      * Makes the appropriate types of input fields for the CreateGameModal dialog
      * 
