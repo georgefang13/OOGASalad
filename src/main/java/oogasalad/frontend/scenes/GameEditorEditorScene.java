@@ -78,6 +78,18 @@ public class GameEditorEditorScene extends AbstractScene {
         setText();
         setTheme();
     }
+    private void createLeftPanel(){
+
+    }
+    private void createRightPanel(){
+
+    }
+    private void createCenterPanel(){
+
+    }
+    private void createTopPanel(){
+
+    }
 
     @Override
     public void setText() {

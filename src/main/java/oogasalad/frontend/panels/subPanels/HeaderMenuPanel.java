@@ -11,7 +11,7 @@ import oogasalad.frontend.windows.GameEditorWindow.WindowScenes;
 
 public class HeaderMenuPanel extends HBoxPanel {
   private static final ResourceBundle ELEMENT_LABELS = ResourceBundle.getBundle("frontend/properties/text/english");
-  private static final String RULES_EDITOR = "RulesEditor";
+  private static final String LOGIC_EDITOR = "LogicEditor";
   private static final String VISUAL_EDITOR = "VisualEditor";
   private static final ResourceBundle ID_BUNDLE = ResourceBundle.getBundle(
       "frontend/properties/StylingIDs/CSS_ID");
@@ -39,28 +39,28 @@ public class HeaderMenuPanel extends HBoxPanel {
   public HBox createMenu() {
     HBox menu = new HBox();
     menu.getStyleClass().add(ID_BUNDLE.getString(MENU_HBOX_ID));
-    Button rulesButton = buttonFactory.createDefaultButton(RULES_EDITOR);
+    Button logicButton = buttonFactory.createDefaultButton(LOGIC_EDITOR);
     Button visualButton = buttonFactory.createDefaultButton(VISUAL_EDITOR);
-    selectSceneButtonSettings(rulesButton, visualButton);
-    rulesButton.setOnAction(e -> {
+    selectSceneButtonSettings(logicButton, visualButton);
+    logicButton.setOnAction(e -> {
       panelController.newSceneFromPanel(logic, WindowScenes.LOGIC_SCENE);
     });
 
     visualButton.setOnAction(e -> {
       panelController.newSceneFromPanel(editor, WindowScenes.EDITOR_SCENE);
     });
-    menu.getChildren().addAll(visualButton, rulesButton);
+    menu.getChildren().addAll(visualButton, logicButton);
     return menu;
   }
 
-  private static void selectSceneButtonSettings(Button rulesButton, Button visualButton) {
+  private static void selectSceneButtonSettings(Button logicButton, Button visualButton) {
     switch (sceneID) {
       case logic:
-        rulesButton.getStyleClass().add(ID_BUNDLE.getString(SELECTED_HEADER_MENU_BUTTON_ID));
+        logicButton.getStyleClass().add(ID_BUNDLE.getString(SELECTED_HEADER_MENU_BUTTON_ID));
         visualButton.getStyleClass().add(ID_BUNDLE.getString(DESELECTED_HEADER_MENU_BUTTON_ID));
         break;
       case editor:
-        rulesButton.getStyleClass().add(ID_BUNDLE.getString(DESELECTED_HEADER_MENU_BUTTON_ID));
+        logicButton.getStyleClass().add(ID_BUNDLE.getString(DESELECTED_HEADER_MENU_BUTTON_ID));
         visualButton.getStyleClass().add(ID_BUNDLE.getString(SELECTED_HEADER_MENU_BUTTON_ID));
         break;
       default:
