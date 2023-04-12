@@ -1,5 +1,9 @@
 package oogasalad.sharedDependencies.backend.ownables.gameobjects;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
+import oogasalad.sharedDependencies.backend.filemanagers.FileManager;
 import oogasalad.sharedDependencies.backend.owners.Owner;
 
 import java.util.ArrayList;
@@ -140,6 +144,32 @@ public class DropZone extends GameObject {
         }
         return spots;
     }
+
+    @Override
+    public void buildFromJson(JsonObject object) {
+        // TODO: make validation check, likely as static method of FileManager
+        // TODO: pass ID into IdManager (maybe change constructor?)
+        String id = FileManager.getStringByKey(object, "id");
+
+        for (JsonElement edgeEntry : object.get("connections").getAsJsonArray()) {
+            JsonObject edge = edgeEntry.getAsJsonObject();
+//            edges.put(edge.get("edgeId"))
+        }
+    }
+
+    @Override
+    public JsonObject getAsJson() {
+        FileManager fileManager = new FileManager();
+        fileManager.addContent("id", new JsonPrimitive(id));
+        for (String edgeId : edges.keySet()) {
+            JsonObject edge = new JsonObject();
+            edge.add("edgeId", new JsonPrimitive(edgeId));
+            edge.add("nodeId", new JsonPrimitive(edges.get(edgeId).getId()));
+            fileManager.addContent("connections", edge);
+        }
+        return fileManager.getJson();
+    }
+
 
     @Override
     public boolean equals(Object o) {

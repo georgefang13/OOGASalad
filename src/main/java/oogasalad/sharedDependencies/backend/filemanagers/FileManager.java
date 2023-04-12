@@ -17,7 +17,7 @@ import java.util.ResourceBundle;
  *
  * Class used to programatically store information in JSON files
  **/
-public class FileMaker {
+public class FileManager {
   protected static String SEPARATOR = ",";
   protected static String RESOURCES_PATH = "backend.filemanager.ValidTags";
 
@@ -27,12 +27,12 @@ public class FileMaker {
   /**
    * Standard constructor
    */
-  public FileMaker() {
+  public FileManager() {
     myFileInfo = new JsonObject();
     myValidTags = new ArrayList<>();
   }
 
-  public FileMaker(String validTagsKey) {
+  public FileManager(String validTagsKey) {
     this();
     setValidTagsFromResources(validTagsKey);
   }
@@ -91,6 +91,28 @@ public class FileMaker {
     ResourceBundle resources = ResourceBundle.getBundle(RESOURCES_PATH);
     String[] validTags = resources.getString(key).split(SEPARATOR);
     this.setValidTags(new HashSet<>(List.of(validTags)));
+  }
+
+  /**
+   * Finds element in a Json object based on given key, checks whether it exists and is a String,
+   * and returns its content
+   * @param object Json object to be searched into
+   * @param key identifier inside Json object
+   * @return value associated with given key
+   */
+  public static String getStringByKey(JsonObject object, String key) {
+    if (! object.get(key).isJsonPrimitive() || ! object.get(key).getAsJsonPrimitive().isString()) {
+      // TODO: throw custom exception
+    }
+    return object.get(key).getAsJsonPrimitive().toString();
+  }
+
+  /**
+   * Directly access stored information in Json format
+   * @return JsonObject containing saved information
+   */
+  public JsonObject getJson() {
+    return myFileInfo;
   }
 
   /**

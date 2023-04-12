@@ -1,6 +1,7 @@
 package oogasalad.sharedDependencies.backend.ownables.variables;
 
 
+import com.google.gson.JsonObject;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -103,5 +104,14 @@ public class Variable<T> extends Ownable {
     }
   }
 
+  @Override
+  public void buildFromJson(JsonObject element) {
+
+  }
+
+  @Override
+  public JsonObject getAsJson() {
+    return null;
+  }
 }
 
