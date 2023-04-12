@@ -1,6 +1,9 @@
 package oogasalad.frontend.components.gameObjectComponent;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
+import java.util.Properties;
 import java.util.ResourceBundle;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
@@ -24,7 +27,19 @@ public class GameObject extends DraggableObject implements GameObjectComponent{
     children = null;
     followMouse();
   }
-
+  @Override
+  public void setDefault() {
+    Properties properties = new Properties();
+    try (InputStream inputStream = getClass().getResourceAsStream(DEFAULT_FILE_PATH)) {
+      properties.load(inputStream);
+      setVisibleBool(Boolean.valueOf(properties.getProperty("VISIBLE")));
+      setZIndex(Integer.parseInt(properties.getProperty("Z_INDEX")));
+      setSize(Integer.parseInt(properties.getProperty("SIZE")));
+      getImage().setImage(new Image(properties.getProperty("DEFAULT_IMAGE")));
+    } catch (IOException e) {
+      System.out.println("Failed");
+    }
+  }
   public GameObject(int ID, Node container){
     super(ID, container);
   }
@@ -44,8 +59,5 @@ public class GameObject extends DraggableObject implements GameObjectComponent{
     playable = play;
   }
 
-  @Override
-  public void setDefault() {
-  }
 
 }

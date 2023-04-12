@@ -25,9 +25,8 @@ public class DisplayableObject extends AbstractComponent implements DisplayableC
     private Point editor;
     private double xOffset;
     private double yOffset;
-    private final String DEFAULT_FILE_PATH = "frontend/properties/Defaults/GameObject.properties";
+    public final String DEFAULT_FILE_PATH = "frontend/properties/Defaults/GameObject.properties";
     final private ResourceBundle DEFAULT_BUNDLE = ResourceBundle.getBundle(DEFAULT_FILE_PATH);
-
 
     public DisplayableObject(int num, Node container) {
         super(num, container);
@@ -104,4 +103,16 @@ public class DisplayableObject extends AbstractComponent implements DisplayableC
         this.xOffset = xOffset;
     }
 
+    protected void setVisibleBool(boolean vis){
+        visible = vis;
+    }
+    protected void setzIndex(int z){
+        zIndex = z;
+    }
+    protected void setAbsolutePoint(Point abs){
+        absolute = abs;
+    }
+    protected void setEditorPoint(Point ed){
+        editor = ed;
+    }
 }
