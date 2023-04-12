@@ -8,7 +8,6 @@ package oogasalad.frontend.components;
 public class ComponentsFactory {
 
   public ComponentsFactory(){
-
   }
   /**
    * Use Reflection to determine the Component type and construct the proper type of Component
@@ -27,5 +26,4 @@ public class ComponentsFactory {
     }
     return component;
   }
-
 }

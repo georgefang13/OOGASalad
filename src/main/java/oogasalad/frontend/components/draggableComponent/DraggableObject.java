@@ -3,6 +3,11 @@ package oogasalad.frontend.components.draggableComponent;
 import javafx.scene.Node;
 import oogasalad.frontend.components.displayableComponents.DisplayableObject;
 
+/**
+ * @author Han, Aryan
+ * Concrete Class for DraggableObject, which represents any component that can be dragged
+ */
+
 public class DraggableObject extends DisplayableObject implements DraggableComponent {
     private boolean draggable;
     private boolean active;

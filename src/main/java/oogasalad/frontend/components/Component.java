@@ -26,4 +26,6 @@ public interface Component {
    * @param id the Int to represent the ID
    */
   void setID(int id);
+
+  void setDefault();
 }

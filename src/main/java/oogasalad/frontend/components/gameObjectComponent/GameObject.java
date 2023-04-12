@@ -13,6 +13,7 @@ import oogasalad.frontend.components.draggableComponent.DraggableObject;
  * @author Han, Aryan
  * Concrete Class for GameObject, a reflection of what is going to be a "GameObject" on the backend
  */
+
 public class GameObject extends DraggableObject implements GameObjectComponent{
   private String name;
   private List<Node> children;
@@ -23,7 +24,7 @@ public class GameObject extends DraggableObject implements GameObjectComponent{
     children = null;
     followMouse();
   }
-  
+
   public GameObject(int ID, Node container){
     super(ID, container);
   }
@@ -41,6 +42,10 @@ public class GameObject extends DraggableObject implements GameObjectComponent{
   @Override
   public void setPlayable(boolean play) {
     playable = play;
+  }
+
+  @Override
+  public void setDefault() {
   }
 
 }
