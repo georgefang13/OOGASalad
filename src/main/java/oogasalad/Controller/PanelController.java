@@ -20,6 +20,6 @@ public class PanelController {
     controller = windowController;
   }
   public void switchScenes(String WindowID, String SceneID){
-    controller.getWindow(WindowID).switchToScene(SceneID);
+    //controller.getWindow(WindowID).switchToScene(SceneID);
   }
 }

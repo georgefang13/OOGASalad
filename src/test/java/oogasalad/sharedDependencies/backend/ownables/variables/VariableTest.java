@@ -21,8 +21,7 @@ public class VariableTest {
 
   @BeforeEach
   void setup() {
-    IdManager idManager = new IdManager();
-    v = new Variable(idManager);
+    v = new Variable(null);
   }
 
   @Test
@@ -133,13 +132,13 @@ public class VariableTest {
 
   @Test
   void testNullInitial() {
-    v = new Variable(new IdManager());
+    v = new Variable(null);
     assertNull(v.get());
   }
 
   @Test
   void nonNullInitial() {
-    v = new Variable(new IdManager(), 5);
+    v = new Variable(5, null);
     assertEquals(5, v.get());
   }
 

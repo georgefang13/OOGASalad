@@ -5,9 +5,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import oogasalad.frontend.windows.GameEditorWindow;
 import oogasalad.frontend.windows.AbstractWindow;
-import oogasalad.frontend.managers.PropertiesManager;
+import oogasalad.frontend.windows.GameEditorWindow;
 
 /**
  * @author Connor Wells
@@ -20,8 +19,8 @@ public class GameEditorMainScene extends AbstractScene {
 
   private Label gameEditorLabel;
 
-  public GameEditorMainScene(AbstractWindow window) {
-    super(window);
+  public GameEditorMainScene(SceneController sceneController) {
+    super(sceneController);
   }
 
   @Override
@@ -29,7 +28,7 @@ public class GameEditorMainScene extends AbstractScene {
     BorderPane root = new BorderPane();
 
     editGridButton = new Button();
-    editGridButton.setOnAction(e -> openEditorSceneOnClick());
+    editGridButton.setOnAction(e -> panelController.newSceneFromPanel("test", GameEditorWindow.WindowScenes.EDITOR_SCENE));
 
     gameEditorLabel = new Label();
     root.setTop(gameEditorLabel);
@@ -42,15 +41,8 @@ public class GameEditorMainScene extends AbstractScene {
 
   @Override
   public void setText() {
-    editGridButton.setText(PropertiesManager.getText("GameEditorMainScene.EditGridButton"));
-    gameEditorLabel.setText(PropertiesManager.getText("GameEditorMainScene.GameEditorLabel"));
-  }
-
-  private void openEditorSceneOnClick(){
-    String newsceneID = "new";
-    AbstractWindow gameEditorWindow = getWindow();
-    gameEditorWindow.addAndLinkScene(GameEditorWindow.WindowScenes.EDITOR_SCENE,newsceneID);
-    gameEditorWindow.switchToScene(newsceneID);
+    editGridButton.setText(getPropertyManager().getText("GameEditorMainScene.EditGridButton"));
+    gameEditorLabel.setText(getPropertyManager().getText("GameEditorMainScene.GameEditorLabel"));
   }
 
 }

@@ -84,7 +84,7 @@ public class Parser {
     private ExpressionToken parseBracketToken(BracketToken b, Environment env){
         if (!b.isOpen()) throw new InvalidSyntaxException("Unexpected closing bracket");
         ExpressionToken expr = new ExpressionToken();
-        createExpression(expr);
+        createExpression(expr, env);
         Parser tempParser = new Parser(expr);
         List<Token> tokens = tempParser.parse(env);
         expr.passTokens(tokens);
@@ -112,7 +112,7 @@ public class Parser {
             if (op.getNumArgs() == 0) throw new InvalidSyntaxException("Set called with operator " + op + " that takes zero arguments");
 
             ExpressionToken expr = new ExpressionToken();
-            createExpression(expr);
+            createExpression(expr, env);
             Parser tempParser = new Parser(expr);
             List<Token> tokens = tempParser.parse(env);
             set.passTokens(tokens);
@@ -128,19 +128,19 @@ public class Parser {
      * Gets all code inside brackets
      * @param expr the ExpressionToken to add the tokens to
      */
-    private void createExpression(ExpressionToken expr) {
+    private void createExpression(ExpressionToken expr,  Environment env) {
         int openBrackets = 1;
         while (openBrackets > 0 && hasNext()) {
             Token t = next();
             if (t instanceof OpenCloseToken b){
                 if (b.isOpen()) {
                     openBrackets++;
-                    expr.addToken(t);
+                    expr.addToken(t, env);
                 } else if (--openBrackets > 0){
-                    expr.addToken(t);
+                    expr.addToken(t, env);
                 }
             } else {
-                expr.addToken(t);
+                expr.addToken(t, env);
             }
         }
         if(openBrackets > 0) throw new InvalidSyntaxException("Bracket not closed: " + openBrackets);

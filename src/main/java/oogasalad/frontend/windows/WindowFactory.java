@@ -10,16 +10,16 @@ import oogasalad.frontend.windows.WindowTypes.WindowType;
 public class WindowFactory {
 
 
-  public static AbstractWindow createWindow(WindowType windowType, WindowMediator mediator) {
+  public static AbstractWindow createWindow(WindowType windowType, String windowID, WindowMediator mediator) {
     switch (windowType) {
       case SPLASH_WINDOW:
-        return new SplashWindow(mediator);
+        return new SplashWindow(windowID,mediator);
       case EDIT_WINDOW:
-        return new GameEditorWindow(mediator);
+        return new GameEditorWindow(windowID,mediator);
       case GAME_WINDOW:
-        return new GamePlayerWindow(mediator);
+        return new GamePlayerWindow(windowID,mediator);
       case MODAL_WINDOW:
-        return new ModalWindow(mediator);
+        return new ModalWindow(windowID,mediator);
       default:
         throw new IllegalArgumentException("Invalid window type: " + windowType);
     }
