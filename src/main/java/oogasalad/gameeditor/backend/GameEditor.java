@@ -1,19 +1,18 @@
-package oogasalad.gamerunner.backend;
+package oogasalad.gameeditor.backend;
 
-import com.google.gson.JsonObject;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 import oogasalad.gameeditor.backend.goals.Goal;
 import oogasalad.gameeditor.backend.id.IdManager;
-import oogasalad.gameeditor.backend.rules.Rule;
-import oogasalad.gamerunner.backend.fsm.FSM;
-import oogasalad.sharedDependencies.backend.ownables.Ownable;
 import oogasalad.sharedDependencies.backend.ownables.OwnableFactory;
-import oogasalad.sharedDependencies.backend.ownables.gameobjects.GameObject;
-import oogasalad.sharedDependencies.backend.ownables.variables.Variable;
 import oogasalad.sharedDependencies.backend.owners.GameWorld;
 import oogasalad.sharedDependencies.backend.owners.Owner;
 import oogasalad.sharedDependencies.backend.owners.Player;
-
-import java.util.*;
+import oogasalad.gameeditor.backend.rules.Rule;
+import oogasalad.sharedDependencies.backend.ownables.Ownable;
 
 /**
  * The Game class represents the game itself.
@@ -22,7 +21,7 @@ import java.util.*;
  * @author Michael Bryant
  * @author Max Meister
  */
-public class Game {
+public class GameEditor {
 
   /**
    * The Rules of the game.
@@ -38,12 +37,17 @@ public class Game {
    * The Players of the game.
    * Players own Ownables.
    */
-  private final IdManager<Player> playerIdManager = new IdManager<>();
+  private final IdManager<Player> playerIdManager = new IdManager();
 
   /**
    * The IdManager of the game for Ownables.
    */
-  private final IdManager<Ownable> ownableIdManager = new IdManager<>();
+  private final IdManager<Ownable> ownableIdManager = new IdManager();
+
+  /**
+   * The OwnableFactory of the game.
+   */
+  OwnableFactory ownableFactory = new OwnableFactory();
 
   /**
    * The GameWorld of the game.
@@ -51,98 +55,28 @@ public class Game {
    */
   private final GameWorld gameWorld = new GameWorld();
 
-  private final FSM<String> fsm = new FSM<>(ownableIdManager);
-
-  private int numPlayers = 1;
-
-
-  /////////////////// PLAY THE GAME ///////////////////
-
-  public void initGame() {
-    Variable<Double> turn = new Variable<>(0.);
-    turn.setOwner(gameWorld);
-    ownableIdManager.addObject(turn, "turn");
-
-    Variable<Double> numPlayersVar = new Variable<>((double) numPlayers);
-    numPlayersVar.setOwner(gameWorld);
-    ownableIdManager.addObject(numPlayersVar, "playerCount");
-
-    Variable<List<GameObject>> available = new Variable<>(new ArrayList<>());
-    available.setOwner(gameWorld);
-    ownableIdManager.addObject(available, "available");
-
-    fsm.setState("INIT");
-    fsm.transition();
-  }
-  /**
-   * reacts to clicking a piece
-   */
-  public void clickPiece(String selectedObject) {
-    fsm.setStateInnerValue(selectedObject);
-    fsm.transition();
-
-    if (fsm.getCurrentState().equals("DONE")){
-      fsm.setState("INIT");
-      // check goals
-      if (checkGoals() != -1){
-        // TODO end game
-      }
-    }
-  }
-
-  private int checkGoals() {
-    for (Map.Entry<String, Goal> goal : goals){
-      Goal g = goal.getValue();
-      int player = g.evaluate(ownableIdManager, playerIdManager);
-      if (player != -1){
-        return player;
-      }
-    }
-    return -1;
-  }
-
-  // region LOADING
-
-    /**
-     * Loads a Game from a file.
-     * @param directory the name of the file to load from
-     */
-    public void loadGame(String directory) {
-      // TODO
-      // get num players
-
-      // load in players and player FSM
-
-      // load in ownables
-
-
-      // load in rules and goals
-    }
-
-    private void initPlayers(JsonObject json) {
-      numPlayers = 1;
-    }
-
-    private void initOwnables(JsonObject json) {}
-
-    private void initRulesAndGoals(JsonObject json) {}
-
-  //endregion
-
-  // region PLAYERS
-
   /**
    * Adds a Player to the game.
-   * @param player the Player to add
+   * @param player
    */
   public void addPlayer(Player player) {
     playerIdManager.addObject(player);
   }
 
   /**
+   * Adds n Players to the game.
+   * @param n the number of Players to add`
+   */
+  public void addNPlayers(int n) {
+    for (int i = 0; i < n; i++) {
+      addPlayer(new Player());
+    }
+  }
+
+  /**
    * Removes a Player from the game, if it exists there.
    * Destroys all Ownables owned by the Player. //TODO throw warning about this
-   * @param player the Player to remove
+   * @param player
    */
   public void removePlayer(Player player) {
     if(!playerIdManager.isIdInUse(playerIdManager.getId(player))) {
@@ -178,13 +112,10 @@ public class Game {
     return Collections.unmodifiableList(listPlayers);
   }
 
-  //endregion
-
-  // region RULES AND GOALS
 
   /**
    * Adds a Rule to the game.
-   * @param rule the Rule to add
+   * @param rule
    */
   public void addRule(Rule rule) {
     rules.addObject(rule);
@@ -192,7 +123,7 @@ public class Game {
 
   /**
    * Removes a Rule from the game, if it exists there.
-   * @param rule the Rule to remove
+   * @param rule
    */
   public void removeRule(Rule rule) {
     if(!rules.isIdInUse(rules.getId(rule))) {
@@ -233,6 +164,18 @@ public class Game {
   }
 
   /**
+   * Gets the Goals of the game.
+   * @return unmodifiable List of Goals
+   */
+  public List<Goal> getGoals() {
+    ArrayList<Goal> listGoals= new ArrayList<>();
+    for(Map.Entry<String, Goal> entry : goals) {
+      listGoals.add(entry.getValue());
+    }
+    return Collections.unmodifiableList(listGoals);
+  }
+
+  /**
    * Gets the GameWorld of the game.
    * @return the GameWorld
    */
@@ -240,9 +183,6 @@ public class Game {
     return gameWorld;
   }
 
-  // endregion
-
-  // region OWNABLES
 
   /**
    * Adds an Ownable to the IdManager and Owner.
@@ -265,9 +205,37 @@ public class Game {
     if (owner == null){
       destinationOwner = gameWorld;
     }
-    Ownable newOwnable = OwnableFactory.createOwnable(type, destinationOwner);
+    Ownable newOwnable = ownableFactory.createOwnable(type, destinationOwner);
     ownableIdManager.addObject(newOwnable, parentOwnable);
   }
+
+  /**
+   Method is called in order to send information about a newly constructed   object that was made in the front end sent to the backend. The
+   controller sends to the backend for the backend to input these into a
+   file
+   @Type The class the object belongs to
+   @Params The params of the object
+   **/
+  public void sendObject(String type, String params) {
+    //TODO this sucks and is sorta hardcoded
+    List<String> parameters = Arrays.asList(params.split(";"));
+    //{"owner=id1", "parentOwnable=id2"}
+    String ownerID = parameters.get(0).substring(parameters.get(0).indexOf("=") + 1);
+    String parentOwnableID = parameters.get(1).substring(parameters.get(1).indexOf("=") + 1);
+    if (ownerID.equals("NULL")){
+      if (parentOwnableID.equals("NULL")){
+        createOwnable(type, null, null);
+      }
+      createOwnable(type, null, getOwnable(parentOwnableID));
+    }
+    else if (parentOwnableID.equals("NULL")) {
+      createOwnable(type, playerIdManager.getObject(ownerID), null);
+    }
+    else {
+      createOwnable(type, playerIdManager.getObject(ownerID), getOwnable(parentOwnableID));
+    }
+  }
+
 
   /**
    * Gets the Owner of an Ownable with id.
@@ -278,7 +246,7 @@ public class Game {
     if (!ownableIdManager.isIdInUse(id)) {
       return null;
     }
-    return ownableIdManager.getObject(id).getOwner();
+    return getOwnable(id).getOwner();
   }
 
   /**
@@ -288,9 +256,22 @@ public class Game {
    * @throws IllegalArgumentException if owner is null, the Ownable is owned by the GameWorld
    */
   public void setOwner(String id, Owner owner) throws IllegalArgumentException{
-    ownableIdManager.getObject(id).setOwner(owner);
+    getOwnable(id).setOwner(owner);
   }
 
-  // endregion
 
+  /**
+   * Gets an Ownable from the IdManager for a given id.
+   * @param id the id of the Ownable
+   * @return the Ownable
+   * @throws IllegalArgumentException if the id is not in use
+   */
+  public Ownable getOwnable(String id) throws IllegalArgumentException {
+    if (!ownableIdManager.isIdInUse(id)) {
+      return null;
+    }
+    return ownableIdManager.getObject(id);
+  }
+
+  //TODO TURN
 }

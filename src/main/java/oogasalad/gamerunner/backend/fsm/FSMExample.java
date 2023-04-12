@@ -44,7 +44,7 @@ class TurnState extends State {
 
 class DoneState extends State {
     @Override
-    public void onInit(FSM.StateData data) {
+    public void onEnter(FSM.StateData data) {
         IdManager<?> idManager = (IdManager<?>) data.get("idManager");
         Variable<Integer> turn = (Variable<Integer>) idManager.getObject("turn");
         Variable<Integer> numPlayers = (Variable<Integer>) idManager.getObject("numPlayers");
@@ -59,7 +59,7 @@ class DoneState extends State {
 
 class InitState extends State {
     @Override
-    public void onInit(FSM.StateData data) {
+    public void onEnter(FSM.StateData data) {
         IdManager<?> idManager = (IdManager<?>) data.get("idManager");
 
         List<GameObject> available = new ArrayList<>();
@@ -106,9 +106,9 @@ public class FSMExample {
         idManager.addObject(numPlayers, "numPlayers");
         idManager.addObject(availableVar, "available");
 
-        fsm.putState(States.INIT, new InitState(), States.MOVE1);
-        fsm.putState(States.MOVE1, new TurnState(), States.DONE);
-        fsm.putState(States.DONE, new DoneState(), States.DONE);
+        fsm.putState(States.INIT, new InitState(), (state, data) -> States.MOVE1);
+        fsm.putState(States.MOVE1, new TurnState(), (state, data) -> States.DONE);
+        fsm.putState(States.DONE, new DoneState(), (state, data) -> States.DONE);
 
         fsm.setState(States.INIT);
 
