@@ -1,9 +1,26 @@
 package oogasalad.sharedDependencies.backend;
 
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.net.JarURLConnection;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.net.URLDecoder;
 import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
+import javax.tools.DiagnosticCollector;
+import javax.tools.JavaCompiler;
+import javax.tools.JavaFileObject;
+import javax.tools.StandardJavaFileManager;
+import javax.tools.ToolProvider;
+import org.reflections.Reflections;
 import oogasalad.gameeditor.backend.ObjectParameter;
 import oogasalad.gameeditor.backend.goals.Goal;
 import oogasalad.gameeditor.backend.id.IdManager;
@@ -11,6 +28,7 @@ import oogasalad.gameeditor.backend.ownables.gameobjects.EmptyGameObject;
 import oogasalad.gameeditor.backend.rules.Rule;
 import oogasalad.sharedDependencies.backend.ownables.Ownable;
 import oogasalad.sharedDependencies.backend.ownables.gameobjects.GameObject;
+import oogasalad.sharedDependencies.backend.ownables.variables.Variable;
 import oogasalad.sharedDependencies.backend.owners.GameWorld;
 import oogasalad.sharedDependencies.backend.owners.Owner;
 import oogasalad.sharedDependencies.backend.owners.Player;
@@ -77,9 +95,14 @@ public class ObjectFactory {
 
   public Ownable createOwnable(String ownableType, Owner owner) {
     try {
-      //print all classes accessible from the context class loader
-
-      Class<?> clazz = Class.forName("oogasalad.sharedDependencies.backend.*." + ownableType); //TODO FIXME
+      String basePackage = "oogasalad.sharedDependencies.backend.ownables."; //TODO make less ugly
+      if (ownableType.contains("Variable")) {
+        basePackage += "variables.";
+      } else {
+        basePackage += "gameobjects.";
+      }
+      Class<?> clazz = Class.forName(basePackage + ownableType);
+      System.out.println(clazz.getName());
       if (Ownable.class.isAssignableFrom(clazz)) {
         Constructor<?> constructor = clazz.getConstructor(Owner.class);
         return (Ownable) constructor.newInstance(owner);
@@ -87,11 +110,7 @@ public class ObjectFactory {
         throw new IllegalArgumentException(
             "Class " + ownableType + " is not a subclass of Ownable"); //TODO add to properties file
       }
-    } catch (ClassNotFoundException e) {
-      throw new IllegalArgumentException("Invalid ownable type: " + ownableType, e);
-    } catch (NoSuchMethodException | SecurityException | InstantiationException |
-             IllegalAccessException | IllegalArgumentException |
-             InvocationTargetException e) {
+    } catch (Exception e) {
       throw new RuntimeException("Error instantiating " + ownableType, e); //TODO add to properties file
     }
   } //TODO
@@ -127,17 +146,15 @@ public class ObjectFactory {
       }
     }
     Ownable newOwnable = createOwnable(ownableType, Owner);
-    if (id != null) {
-      ownableIdManager.addObject(newOwnable, id, parentOwnable);
-    }
+    ownableIdManager.addObject(newOwnable, id, parentOwnable);
   }
 
   public static Rule createRule(Map<ObjectParameter, String> params) {
-    return null;
+    return null; //TODO move to shared dependencies
   }
 
   public static Goal createGoal(Map<ObjectParameter, String> params) {
-    return null; //TODO
+    return null; //TODO move to shared dependencies
   }
 
 

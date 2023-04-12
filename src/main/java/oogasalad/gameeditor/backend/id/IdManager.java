@@ -137,6 +137,9 @@ public class  IdManager<T extends IdManageable> implements Iterable<Map.Entry<St
    * @throws IllegalArgumentException if the id or object is already in use
    */
   public void addObject(T obj, String id, T parent) throws IllegalArgumentException{
+    if (id == null) {
+      id = obj.getDefaultId();
+    }
     logIdName(obj, parent, id);
   }
 
@@ -144,7 +147,7 @@ public class  IdManager<T extends IdManageable> implements Iterable<Map.Entry<St
    * Helper method for addObject.
    * @param obj the T to add
    * @param parent the parent of the T to be logged in the ownership map
-   * @param defaultId the default id to add the T to
+   * @param defaultId the default id to add the T to. Non-null.
    */
   private void logIdName(T obj, T parent, String defaultId) {
     if (obj == null) {

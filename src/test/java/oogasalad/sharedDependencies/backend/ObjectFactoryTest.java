@@ -8,6 +8,8 @@ import oogasalad.gameeditor.backend.GameEditor;
 import oogasalad.gameeditor.backend.ObjectParameter;
 import oogasalad.gameeditor.backend.id.IdManager;
 import oogasalad.sharedDependencies.backend.ownables.Ownable;
+import oogasalad.sharedDependencies.backend.ownables.gameobjects.GameObject;
+import oogasalad.sharedDependencies.backend.ownables.variables.Variable;
 import oogasalad.sharedDependencies.backend.owners.GameWorld;
 import oogasalad.sharedDependencies.backend.owners.Player;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,11 +33,54 @@ public class ObjectFactoryTest {
   }
 
   @Test
-  public void testCreateOwnable() {
+  public void testCreateOwnables() {
     Map<ObjectParameter, String> params = Map.of(ObjectParameter.OWNABLE_TYPE, "Variable");
     factory.createOwnable(params);
     //check that the ownable was created by looking at the idManager
     assertEquals(1, idManager.getSimpleIds().size());
+    params = Map.of(ObjectParameter.OWNABLE_TYPE, "GameObject", ObjectParameter.OWNER, "Player1");
+    factory.createOwnable(params);
+    assertEquals(2, idManager.getSimpleIds().size());
+    Ownable ownable = idManager.getObject("GameObject");
+    //check that the owner is type Player
+    assertEquals(Player.class, ownable.getOwner().getClass());
+    params = Map.of(ObjectParameter.OWNABLE_TYPE, "GameObject", ObjectParameter.OWNER, "");
+    factory.createOwnable(params);
+    assertEquals(3, idManager.getSimpleIds().size());
+    ownable = idManager.getObject("GameObject2");
+    //check that the owner is type GameWorld
+    assertEquals(GameWorld.class, ownable.getOwner().getClass());
+  }
+
+  @Test
+  public void testCreateWithId() {
+    Map<ObjectParameter, String> params = Map.of(ObjectParameter.OWNABLE_TYPE, "Variable", ObjectParameter.ID, "test");
+    factory.createOwnable(params);
+    assertEquals(1, idManager.getSimpleIds().size());
+    Ownable ownable = idManager.getObject("test");
+    //check that the ownable is not null
+    assertEquals(Variable.class, ownable.getClass());
+    params = Map.of(ObjectParameter.OWNABLE_TYPE, "GameObject", ObjectParameter.ID, "test2");
+    factory.createOwnable(params);
+    assertEquals(2, idManager.getSimpleIds().size());
+    ownable = idManager.getObject("test2");
+    //check that the ownable is not null
+    assertEquals(GameObject.class, ownable.getClass());
+  }
+
+  @Test
+  public void testParentOwnable() {
+    Map<ObjectParameter, String> params = Map.of(ObjectParameter.OWNABLE_TYPE, "GameObject", ObjectParameter.ID, "parent");
+    factory.createOwnable(params);
+    assertEquals(1, idManager.getSimpleIds().size());
+    params = Map.of(ObjectParameter.OWNABLE_TYPE, "Variable", ObjectParameter.PARENT_OWNABLE, "parent");
+    factory.createOwnable(params);
+    assertEquals(2, idManager.getSimpleIds().size());
+    Ownable ownable = idManager.getObject("Variable");
+    //check that the ownable is not null
+    assertEquals(Variable.class, ownable.getClass());
+    //check that child.getId() contains parent.getId()
+    assertEquals("parent.Variable", idManager.getId(ownable));
   }
 
 }
