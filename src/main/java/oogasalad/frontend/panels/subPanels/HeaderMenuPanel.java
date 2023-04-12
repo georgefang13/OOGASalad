@@ -55,11 +55,11 @@ public class HeaderMenuPanel extends HBoxPanel {
 
   private static void selectSceneButtonSettings(Button rulesButton, Button visualButton) {
     switch (sceneID) {
-      case LOGIC_SCENE:
+      case logic:
         rulesButton.getStyleClass().add(ID_BUNDLE.getString(SELECTED_HEADER_MENU_BUTTON_ID));
         visualButton.getStyleClass().add(ID_BUNDLE.getString(DESELECTED_HEADER_MENU_BUTTON_ID));
         break;
-      case EDITOR_SCENE:
+      case editor:
         rulesButton.getStyleClass().add(ID_BUNDLE.getString(DESELECTED_HEADER_MENU_BUTTON_ID));
         visualButton.getStyleClass().add(ID_BUNDLE.getString(SELECTED_HEADER_MENU_BUTTON_ID));
         break;
