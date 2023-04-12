@@ -18,8 +18,8 @@ public class HeaderMenuPanel extends HBoxPanel {
   private static final String MENU_HBOX_ID = "MenuHboxID";
   private static final String DESELECTED_HEADER_MENU_BUTTON_ID = "DeselectedHeaderMenuButtonID";
   private static final String SELECTED_HEADER_MENU_BUTTON_ID = "SelectedHeaderMenuButtonID";
-  private static final String LOGIC_SCENE = "logic";
-  private static final String EDITOR_SCENE = "visual";
+  private static final String logic = "logic";
+  private static final String editor = "visual";
   ButtonFactory buttonFactory = new ButtonFactory();
   PanelController panelController;
   private static String sceneID;
@@ -43,11 +43,11 @@ public class HeaderMenuPanel extends HBoxPanel {
     Button visualButton = buttonFactory.createDefaultButton(VISUAL_EDITOR);
     selectSceneButtonSettings(rulesButton, visualButton);
     rulesButton.setOnAction(e -> {
-      panelController.newSceneFromPanel(LOGIC_SCENE, WindowScenes.LOGIC_SCENE);
+      panelController.newSceneFromPanel(logic, WindowScenes.LOGIC_SCENE);
     });
 
     visualButton.setOnAction(e -> {
-      panelController.newSceneFromPanel(EDITOR_SCENE, WindowScenes.EDITOR_SCENE);
+      panelController.newSceneFromPanel(editor, WindowScenes.EDITOR_SCENE);
     });
     menu.getChildren().addAll(visualButton, rulesButton);
     return menu;
