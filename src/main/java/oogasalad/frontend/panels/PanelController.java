@@ -28,4 +28,8 @@ public class PanelController {
     public SceneController getSceneController() {
         return sceneController;
     }
+
+    public void addPanel(String panelID, Panel panel){
+        panelMap.put(panelID,panel);
+    }
 }

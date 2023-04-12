@@ -1,5 +1,7 @@
 package oogasalad.frontend.scenes;
 
+import java.util.HashMap;
+import java.util.Map;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -9,9 +11,6 @@ import oogasalad.frontend.panels.subPanels.EnvironmentPanel;
 import oogasalad.frontend.panels.subPanels.HeaderMenuPanel;
 import oogasalad.frontend.panels.subPanels.ComponentLibraryPanel;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class GameEditorEditorScene extends AbstractScene {
     private BorderPane root;
     private VBox rightTab; //REPLACE WITH A PANEL
@@ -20,34 +19,33 @@ public class GameEditorEditorScene extends AbstractScene {
     private ComponentLibraryPanel componentLibraryPanel;
     private EnvironmentPanel environmentPanel;
 
-    public GameEditorEditorScene(SceneController sceneController) {
-        super(sceneController);
-    }
+  public GameEditorEditorScene(SceneController sceneController) {
+    super(sceneController);
+  }
 
-    private void setButtonVisualPanel(Button button, String title){
-        VBox newVisualPanel = new VBox();
-        newVisualPanel.getChildren().add(new Label(title));
-        button.setOnAction(e -> updateVisualPanel(button));
-        buttonVBoxMap.put(button,newVisualPanel);
-    }
+  private void setButtonVisualPanel(Button button, String title) {
+    VBox newVisualPanel = new VBox();
+    newVisualPanel.getChildren().add(new Label(title));
+    button.setOnAction(e -> updateVisualPanel(button));
+    buttonVBoxMap.put(button, newVisualPanel);
+  }
 
-    private void updateVisualPanel(Button button){
-        System.out.print(button.getText());
+  private void updateVisualPanel(Button button) {
+    System.out.print(button.getText());
 //        visualPanel = buttonVBoxMap.get(button);
-        refreshScene();
-        //sceneController.wirefreshScene();
-    }
-
-
-    @Override
-    public Scene makeScene() {
-        root = new BorderPane();
-        headerMenu = new HeaderMenuPanel(panelController);
-        componentLibraryPanel = new ComponentLibraryPanel();
-        environmentPanel = new EnvironmentPanel();
-        //left sidebar
-        rightTab = new VBox();
-        buttonVBoxMap = new HashMap<>(); //TODO: what does this do?
+    refreshScene();
+    //sceneController.wirefreshScene();
+  }
+  @Override
+  public Scene makeScene() {
+      root = new BorderPane();
+      headerMenu = new HeaderMenuPanel(panelController);
+      componentLibraryPanel = new ComponentLibraryPanel();
+      //propertiesPanel = new PropertiesPanel(panelController);
+      environmentPanel = new EnvironmentPanel();
+      //left sidebar
+      rightTab = new VBox();
+      buttonVBoxMap = new HashMap<>(); //TODO: what does this do?
         Button boardButton = new Button("Board");
         setButtonVisualPanel(boardButton, "Board");
         Button variableButton = new Button("Variable");
@@ -60,7 +58,7 @@ public class GameEditorEditorScene extends AbstractScene {
 
         refreshScene();
         return getScene();
-    }
+  }
     private void refreshScene(){
         root.setRight(rightTab);
         root.setCenter(environmentPanel);
@@ -71,10 +69,10 @@ public class GameEditorEditorScene extends AbstractScene {
         setText();
         setTheme();
     }
-
-    @Override
-    public void setText() {
-        //need this
-    }
+  @Override
+  public void setText() {
+    //editGridButton.setText(getPropertyManager().getText("GameEditorMainScene.EditGridButton"));
+    //gameEditorLabel.setText(getPropertyManager().getText("GameEditorMainScene.GameEditorLabel"));
+  }
 
 }
