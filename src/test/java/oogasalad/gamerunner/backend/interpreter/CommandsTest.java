@@ -265,16 +265,18 @@ public class CommandsTest {
 
         // equal with non-numbers
         input = "make :x < 2 1 make :y 2 make :z == :x :y";
-        try{
-            interpreter.interpret(input);
-            fail();
-        } catch (Exception e){
-            ValueToken<?> t = new ValueToken<>(false);
-            assertEquals(checkSubtypeErrorMsg(t, "Equal", ValueToken.class, Double.class), e.getMessage());
-        }
+        interpreter.interpret(input);
+        z = getVar("interpreter-:z");
+        assertFalse(z.get());
+
+        // equal with non-numbers
+        input = "make :x < 2 1 make :y < 3 2 make :z == :x :y";
+        interpreter.interpret(input);
+        z = getVar("interpreter-:z");
+        assertTrue(z.get());
 
         // equal with incorrect number of parameters
-        input = "make :x 1 make :y 2 make :z == :x";
+        input = "make :x > 1 2 make :y > 3 4 make :z == :x";
         try{
             interpreter.interpret(input);
             fail();
