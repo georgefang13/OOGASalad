@@ -95,25 +95,15 @@ public class Modal<T> extends Dialog<T> {
         } catch (Exception e) {
 //            System.out.println(MODAL_BUNDLE.getString(ERROR_LOADING_FILE_ID));
         }
-        Map<String, List<String>> myPropertiesMap = new TreeMap<>();
+        Map<String, String> myPropertiesMap = new TreeMap<>();
         for (String key : properties.stringPropertyNames()) {
             if (key.startsWith(title)) {
-                String newKey = key.split("\\.")[1];
-//                String startKey = key.substring(title.length() + 1 + newKey.length() + 1);
-                myPropertiesMap.put(newKey, List.of(key, properties.getProperty(key)));
+                    myPropertiesMap.put(key, properties.getProperty(key));
             }
         }
+        
 
-        Map<String, String> returnMap = new LinkedHashMap<>();
-        for (String key : myPropertiesMap.keySet()) {
-            System.out.println(key + " " + myPropertiesMap.get(key).get(0) + " " + myPropertiesMap.get(key).get(1));
-            returnMap.put(myPropertiesMap.get(key).get(0), myPropertiesMap.get(key).get(1));
-
-        }
-
-//        System.out.println(returnMap);
-
-        return returnMap;
+        return myPropertiesMap;
     }
 
     protected void setContentAsLabels(ArrayList<String> content) {
