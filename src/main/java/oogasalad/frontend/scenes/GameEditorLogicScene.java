@@ -7,9 +7,9 @@ import oogasalad.frontend.panels.subPanels.HeaderMenuPanel;
 import oogasalad.frontend.panels.subPanels.ComponentLibraryPanel;
 
 /**
+ * @author George Fang
  * @author Connor Wells
  * @author Owen MacKenzie
- * @author George Fang
  */
 
 public class GameEditorLogicScene extends AbstractScene {

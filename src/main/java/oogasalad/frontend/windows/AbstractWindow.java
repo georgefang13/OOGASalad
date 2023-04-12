@@ -18,8 +18,8 @@ public abstract class AbstractWindow extends Stage {
   public AbstractWindow(String windowID, WindowMediator windowController) {
     this.windowID = windowID;
     sceneController = new SceneController(windowID,windowController); //maybe add just window controller and then the window id to get window from the window controller
-    setWidth(PropertiesManager.getNumeric("WindowHeight"));
-    setHeight(PropertiesManager.getNumeric("WindowWidth"));
+    setWidth(PropertiesManager.getNumeric("WindowWidth"));
+    setHeight(PropertiesManager.getNumeric("WindowHeight"));
   }
 
   public abstract SceneTypes getDefaultSceneType();

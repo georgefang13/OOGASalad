@@ -37,5 +37,11 @@
 }
 .accordion {
   -fx-background-color: #201616;
+  -fx-pref-height: 334; /* calculated from 700 (screen height) minus 32 (menu hbox height) divided by 2 for each accordion*/
+}
+
+/* GameEditorEditorScene */
+.accordion-vbox {
+  -fx-pref-height: 100%;
 }
 

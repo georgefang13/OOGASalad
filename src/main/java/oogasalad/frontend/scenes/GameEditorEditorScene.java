@@ -1,10 +1,10 @@
 package oogasalad.frontend.scenes;
 
+import java.util.ResourceBundle;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import oogasalad.frontend.panels.subPanels.ActiveComponenetsPanel;
 import oogasalad.frontend.panels.subPanels.EnvironmentPanel;
@@ -14,7 +14,15 @@ import oogasalad.frontend.panels.subPanels.ComponentLibraryPanel;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @author George Fang
+ * @author Owen MacKenzie
+ */
 public class GameEditorEditorScene extends AbstractScene {
+    private static final ResourceBundle ID_BUNDLE = ResourceBundle.getBundle(
+        "frontend/properties/StylingIDs/CSS_ID");
+    private static final String ACCORDION_VBOX_ID = "AccordionVBoxId";
+    private static final String VISUAL_EDITOR_SCENE = "visual";
     private BorderPane root;
     private VBox rightTab; //REPLACE WITH A PANEL
     private VBox leftTab;
@@ -23,7 +31,6 @@ public class GameEditorEditorScene extends AbstractScene {
     private ComponentLibraryPanel componentLibraryPanel;
     private ActiveComponenetsPanel activeComponenetsPanel;
     private EnvironmentPanel environmentPanel;
-    private static final String VISUAL_EDITOR_SCENE = "visual";
 
     /**
      * Constructor for the visual editor scene
@@ -74,6 +81,7 @@ public class GameEditorEditorScene extends AbstractScene {
         componentLibraryPanel = new ComponentLibraryPanel();
         activeComponenetsPanel = new ActiveComponenetsPanel();
         leftTab = new VBox();
+        leftTab.getStyleClass().add(ID_BUNDLE.getString(ACCORDION_VBOX_ID));
         leftTab.getChildren().addAll(componentLibraryPanel.createAccordion(), activeComponenetsPanel.createAccordion());
     }
     private void createRightPanel(){
