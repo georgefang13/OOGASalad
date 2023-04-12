@@ -101,7 +101,7 @@ public class Modal<T> extends Dialog<T> {
                     myPropertiesMap.put(key, properties.getProperty(key));
             }
         }
-        
+
 
         return myPropertiesMap;
     }

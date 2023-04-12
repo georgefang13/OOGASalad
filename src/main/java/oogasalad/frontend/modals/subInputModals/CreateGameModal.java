@@ -40,12 +40,12 @@ public class CreateGameModal extends InputModal {
 
             int start = entry.getKey().toString().indexOf("*") + 1;
 
-            System.out.println(entry.getKey().toString().substring(start) + " " + entry.getValue());
+//            System.out.println(entry.getKey().toString().substring(start) + " " + entry.getValue());
 
         }
 
-        this.getDialogPane().setHeaderText(myPropertiesMap.get("title"));
-        myPropertiesMap.remove("title");
+        this.getDialogPane().setHeaderText(myTitle);
+        System.out.println(this.getDialogPane().getHeaderText());
 
         ArrayList<String> stringFields = new ArrayList<>(myPropertiesMap.values());
 
