@@ -32,4 +32,8 @@ public class AbstractComponent implements Component {
   public void setID(int id) {
     ID = id;
   }
+
+  @Override
+  public void setDefault() {}
+
 }
