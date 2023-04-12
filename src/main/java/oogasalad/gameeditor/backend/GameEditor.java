@@ -4,10 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import oogasalad.gameeditor.backend.goals.EmptyGoal;
 import oogasalad.gameeditor.backend.goals.Goal;
 import oogasalad.gameeditor.backend.id.IdManager;
-import oogasalad.sharedDependencies.backend.ownables.ObjectFactory;
+import oogasalad.sharedDependencies.backend.ObjectFactory;
 import oogasalad.sharedDependencies.backend.owners.GameWorld;
 import oogasalad.sharedDependencies.backend.owners.Owner;
 import oogasalad.sharedDependencies.backend.owners.Player;
@@ -36,8 +35,10 @@ public class GameEditor {
   /**
    * The Players of the game.
    * Players own Ownables.
+   * Ids of Players are their index in the list. Ex: Player0, Player1, Player2, etc.
+   * These Ids are constant
    */
-  private final IdManager<Player> playerIdManager = new IdManager<>(); //TODO set to make number of players, make arraylist
+  private final ArrayList<Player> players = new ArrayList<>(); //TODO set to make number of players, make arraylist
 
   /**
    * The IdManager of the game for Ownables.
@@ -53,14 +54,14 @@ public class GameEditor {
   /**
    * The ObjectFactory of the game.
    */
-  private final ObjectFactory objectFactory = new ObjectFactory(gameWorld);
+  private final ObjectFactory objectFactory = new ObjectFactory(gameWorld, ownableIdManager, players);
 
   /**
    * Adds a Player to the game.
    * @param player
    */
   public void addPlayer(Player player) {
-    playerIdManager.addObject(player);
+    players.add(player);
   }
 
   /**
@@ -74,28 +75,22 @@ public class GameEditor {
   }
 
   /**
-   * Removes a Player from the game, if it exists there.
-   * Destroys all Ownables owned by the Player. //TODO throw warning about this
-   * @param player
+   * Removes a Player from the game, if there is one.
+   * Destroys all Ownables owned by the Player.
    */
-  public void removePlayer(Player player) {
-    if(!playerIdManager.isIdInUse(playerIdManager.getId(player))) {
-      return;
+  public void removePlayer() {
+    if(players.size() > 0) {
+      //remove the last player
+      players.remove(players.size() - 1);
     }
-    //remove all ownables owned by player
-    for(Map.Entry<String, Ownable> entry : ownableIdManager) {
-      if (entry.getValue().getOwner() == player) {
-        ownableIdManager.removeObject(entry.getValue());
-      }
-    }
-    playerIdManager.removeObject(player);
+
   }
 
   /**
    * Removes all Players from the game and their Ownables.
    */
   public void removeAllPlayers() {
-    playerIdManager.clear();
+    players.clear();
     ownableIdManager.clear();
     // TODO reconsider
   }
@@ -105,11 +100,7 @@ public class GameEditor {
    * @return unmodifiable List of Players
    */
   public List<Player> getPlayers() {
-    ArrayList<Player> listPlayers= new ArrayList<>();
-    for(Map.Entry<String, Player> entry : playerIdManager) {
-      listPlayers.add(entry.getValue());
-    }
-    return Collections.unmodifiableList(listPlayers);
+    return Collections.unmodifiableList(players);
   }
 
 
@@ -213,9 +204,13 @@ public class GameEditor {
 //    ownableIdManager.addObject(newOwnable, parentOwnable);
 //  }
 
-  private void createOwnable(Map<String, String> params) {
-    Ownable newOwnable = objectFactory.createOwnable(params);
-    ownableIdManager.addObject(newOwnable);
+  /**
+   * Creates an ownable using objectFactory and adds it to the game through the IdManager
+   * (IdManager will configure the owner, id, etc. all within the factory)
+   * @param params the parameters of the ownable
+   */
+  private void createOwnable(Map<ObjectParameter, String> params) {
+    objectFactory.createOwnable(params);
   }
 
   /**
@@ -228,7 +223,7 @@ public class GameEditor {
   /**
    * Creates a new rule and adds it to the game
    */
-  private void createRule(Map<String, String> params) {
+  private void createRule(Map<ObjectParameter, String> params) {
     Rule newRule = ObjectFactory.createRule(params);
     ruleIdManager.addObject(newRule);
   }
@@ -236,7 +231,7 @@ public class GameEditor {
   /**
    * Creates a new goal and adds it to the game
    */
-  private void createGoal(Map<String, String> params) {
+  private void createGoal(Map<ObjectParameter, String> params) {
     Goal newGoal = ObjectFactory.createGoal(params);
     goalIdManager.addObject(newGoal);
   }
@@ -246,10 +241,13 @@ public class GameEditor {
    Method is called in order to send information about a newly constructed   object that was made in the front end sent to the backend. The
    controller sends to the backend for the backend to input these into a
    file
+   Note: currently it only constructs Ownables with default values. Ex. a variable has no initialized value
+   In the future this would be added
+   Currently, this responsibility is handled by the updateObjectProperties API call
    @Type The class the object belongs to
    @Params The params of the object
    **/
-  public void sendObject(ObjectType type, Map<String, String> params) throws IllegalArgumentException{
+  public void sendObject(ObjectType type, Map<ObjectParameter, String> params) throws IllegalArgumentException{
     switch (type) {
       case PLAYER -> createPlayer();
       case OWNABLE -> createOwnable(params);

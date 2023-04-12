@@ -58,7 +58,7 @@ public class  IdManager<T extends IdManageable> implements Iterable<Map.Entry<St
   /**
    * Returns the T with the given id.
    * Accepts simple ids (ex. "Player1") and full ids (ex. "Player1.Variable1").
-   * @param id the id of the ownable to return
+   * @param id the non-null id of the ownable to return
    * @return the T with the given id
    * @throws IllegalArgumentException if the id is not in the set of ids
    */

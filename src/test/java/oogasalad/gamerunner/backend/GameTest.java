@@ -55,7 +55,7 @@ class GameTest {
     assertTrue(game.getPlayers().isEmpty());
     game.addNPlayers(5);
     assertEquals(5, game.getPlayers().size());
-    game.removePlayer(game.getPlayers().get(0));
+    game.removePlayer();
     assertEquals(4, game.getPlayers().size());
   }
 
