@@ -149,7 +149,8 @@ public class DropZone extends GameObject {
     public void buildFromJson(JsonObject object) {
         // TODO: make validation check, likely as static method of FileManager
         // TODO: pass ID into IdManager (maybe change constructor?)
-        String id = FileManager.getStringByKey(object, "id");
+        // this.id = FileManager.getStringByKey(object, "id");
+
 
         for (JsonElement edgeEntry : object.get("connections").getAsJsonArray()) {
             JsonObject edge = edgeEntry.getAsJsonObject();
