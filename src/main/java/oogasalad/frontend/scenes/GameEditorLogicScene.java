@@ -17,6 +17,7 @@ public class GameEditorLogicScene extends AbstractScene {
     private HeaderMenuPanel headerMenu;
     private ComponentLibraryPanel componentLibraryPanel;
     private EnvironmentPanel environmentPanel;
+    private static final String LOGIC_EDITOR_SCENE = "logic";
 
     public GameEditorLogicScene(SceneController sceneController) {
         super(sceneController);
@@ -25,7 +26,7 @@ public class GameEditorLogicScene extends AbstractScene {
     @Override
     public Scene makeScene() {
         root = new BorderPane();
-        headerMenu = new HeaderMenuPanel(panelController);
+        headerMenu = new HeaderMenuPanel(panelController, LOGIC_EDITOR_SCENE);
         componentLibraryPanel = new ComponentLibraryPanel();
         environmentPanel = new EnvironmentPanel();
         refreshScene();
