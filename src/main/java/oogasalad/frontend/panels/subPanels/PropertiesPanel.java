@@ -20,9 +20,12 @@ public class PropertiesPanel extends HBoxPanel {
   private static final String PROPERTIES_BUTTON_TEXT_ID = "Properties";
   private static final String PROPERTIES_BUTTON_CSS_ID = "PropertiesButtonID";
   private static final String POPOUT_BUTTON_BOX_ID = "PopoutButtonBoxID";
-  private static final String PROPERTIES_BOX = "PropertiesBoxID";
+  private static final String PROPERTIES_BOX_CLOSED_ID = "PropertiesBoxClosedID";
+  private static final String PROPERTIES_BOX_OPEN_ID = "PropertiesBoxOpenID";
+  private static final String PROPERTIES_TAB_PANE_ID = "PropertiesTabPaneID";
 
   ButtonFactory buttonFactory = new ButtonFactory();
+  HBox propertiesPanel;
 
   /**
    * Constructor for PropertiesPanel
@@ -36,27 +39,43 @@ public class PropertiesPanel extends HBoxPanel {
    * @return
    */
   public HBox createPanel() {
-    HBox propertiesPanel = new HBox();
-    propertiesPanel.getStyleClass().add(ID_BUNDLE.getString(PROPERTIES_BOX));
-    propertiesPanel.getChildren().addAll(createPopOutButtonBox());
+    propertiesPanel = new HBox();
+    propertiesPanel.getStyleClass().add(ID_BUNDLE.getString(PROPERTIES_BOX_OPEN_ID));
+    propertiesPanel.getChildren().addAll(createPopOutButtonBox(), createPropertiesTabPane());
     return propertiesPanel;
   }
   private VBox createPopOutButtonBox() {
     VBox popOutButtonBox = new VBox();
     popOutButtonBox.getStyleClass().add(ID_BUNDLE.getString(POPOUT_BUTTON_BOX_ID));
-    Button popOutButton = buttonFactory.createVeritcalButton(PROPERTIES_BUTTON_TEXT_ID);
+    Button popOutButton = new Button("P"+"\n"+"R"+"\n"+"O"+"\n"+"P"+"\n"+"E"+"\n"+"R"+"\n"+"T"+"\n"+"I"+"\n"+"E"+"\n"+"S"); //TODO: put in properties file so you can make it a button factory again
     popOutButton.getStyleClass().add(ID_BUNDLE.getString(PROPERTIES_BUTTON_CSS_ID));
+    popOutButton.setOnAction(e -> toggleStyleSheets());
     popOutButtonBox.getChildren().add(popOutButton);
     return popOutButtonBox;
   }
   private TabPane createPropertiesTabPane() {
     TabPane propertiesTabPane = new TabPane();
+    propertiesTabPane.getStyleClass().add(ID_BUNDLE.getString(PROPERTIES_TAB_PANE_ID));
     Tab tab1 = new Tab("Tab 1"); // TODO: export these texts, and also make the creating of tabs come from properties files
     Tab tab2 = new Tab("Tab 2");
     Tab tab3 = new Tab("Tab 3");
+    tab1.setClosable(false);
+    tab2.setClosable(false);
+    tab3.setClosable(false); // TODO: this will be part of the
+    propertiesTabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
+    propertiesTabPane.getTabs().addAll(tab1, tab2, tab3);
     return propertiesTabPane;
   }
-
+  private void toggleStyleSheets() {
+    if (propertiesPanel.getStyleClass().contains(ID_BUNDLE.getString(PROPERTIES_BOX_CLOSED_ID))) {
+      propertiesPanel.getStyleClass().remove(ID_BUNDLE.getString(PROPERTIES_BOX_CLOSED_ID));
+      propertiesPanel.getStyleClass().add(ID_BUNDLE.getString(PROPERTIES_BOX_OPEN_ID));
+    }
+    else {
+      propertiesPanel.getStyleClass().remove(ID_BUNDLE.getString(PROPERTIES_BOX_OPEN_ID));
+      propertiesPanel.getStyleClass().add(ID_BUNDLE.getString(PROPERTIES_BOX_CLOSED_ID));
+    }
+  }
 
   @Override
   public Panel makePanel() {
