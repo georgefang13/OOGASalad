@@ -45,7 +45,8 @@ public class ComponentsFactory {
     return component;
   }
   /**
-   * Takes in Inputs of parameters to create a Component type
+   * Takes in Inputs of parameters to create a Component type. This can either establish the default
+   * Component or create the input
    */
   public Component create(String type, ArrayList<String> params){
     Component component = null;

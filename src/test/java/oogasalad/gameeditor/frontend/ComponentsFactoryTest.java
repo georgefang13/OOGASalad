@@ -32,13 +32,11 @@ public class ComponentsFactoryTest extends DukeApplicationTest {
     Platform.runLater(()-> {
       root.getChildren().add(c.getNode());
     });
-    System.out.println(c.getNode().getLayoutX());
-    sleep(100);
+    System.out.println(c.getNode().getBoundsInLocal().getMinX());
     simulateMousePress(c.getNode(), MouseButton.PRIMARY, 0, 0);
     simulateMouseDrag(c.getNode(), MouseButton.PRIMARY, 500,500);
     simulateMouseRelease(c.getNode(), MouseButton.PRIMARY, 500,500);
-    sleep(100);
-    System.out.println(c.getNode().getLayoutX());
+    System.out.println(c.getNode().getBoundsInLocal().getMinX());
   }
 
   private void simulateMousePress(Node node, MouseButton button, double x, double y) {
