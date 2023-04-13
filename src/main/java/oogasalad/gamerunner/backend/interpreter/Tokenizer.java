@@ -16,7 +16,7 @@ public class Tokenizer {
     // NOTE: make ONE chooser since generally accepted behavior is that it remembers where user left it last
     // command variations per class
     private static final String SYNTAX_RESOURCE_PATH = "backend.interpreter.Syntax";
-    private static final String COMMANDS_RESOURCE_PATH = "backend/interpreter/Commands.json";
+    private static final String COMMANDS_RESOURCE_PATH = "/src/main/resources/backend/interpreter/Commands.json";
 
     // token types and the regular expression patterns that recognize those types
     // note, it is a list because order matters (some patterns may be more generic and so should be added last)
@@ -138,7 +138,8 @@ public class Tokenizer {
     private List<Map.Entry<String, Pattern>> getCommands() {
         List<Map.Entry<String, Pattern>> tokens = new ArrayList<>();
 
-        String absoluteFilePath = Objects.requireNonNull(Tokenizer.class.getClassLoader().getResource(COMMANDS_RESOURCE_PATH)).getPath();
+//        String absoluteFilePath = Objects.requireNonNull(Tokenizer.class.getClassLoader().getResource(COMMANDS_RESOURCE_PATH)).getPath();
+        String absoluteFilePath = System.getProperty("user.dir") + COMMANDS_RESOURCE_PATH;
 
         String fileContent = "";
         // Read the entire file content

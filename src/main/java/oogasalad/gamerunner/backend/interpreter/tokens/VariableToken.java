@@ -21,6 +21,13 @@ public class VariableToken extends Token{
     }
 
     @Override
+    public boolean equals(Token t, Environment env){
+        Token t1 = evaluate(env);
+        Token t2 = t.evaluate(env);
+        return t1.equals(t2, env);
+    }
+
+    @Override
     public String toString(){
         return "<" + TYPE + " " + NAME + ">";
     }
