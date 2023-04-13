@@ -151,10 +151,9 @@ public class DropZone extends GameObject {
         // TODO: pass ID into IdManager (maybe change constructor?)
         // this.id = FileManager.getStringByKey(object, "id");
 
-
         for (JsonElement edgeEntry : object.get("connections").getAsJsonArray()) {
             JsonObject edge = edgeEntry.getAsJsonObject();
-//            edges.put(edge.get("edgeId"))
+//            edges.put(FileManager.getStringByKey(edge, "edgeId"));
         }
     }
 
