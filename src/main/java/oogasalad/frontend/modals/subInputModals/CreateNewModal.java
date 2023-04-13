@@ -4,19 +4,15 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
-import java.util.ResourceBundle;
-import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DialogPane;
-import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import oogasalad.frontend.modals.InputModal;
 
-public class CreateGameModal extends InputModal {
+public class CreateNewModal extends InputModal {
 //    private static final ResourceBundle MODAL_ID_BUNDLE = ResourceBundle.getBundle("frontend/modals/ModalStylingID");
     private static final String IMAGE_PICKER_ID = "ImagePickerID";
     private Map<String, String> myPropertiesMap;
@@ -26,9 +22,9 @@ public class CreateGameModal extends InputModal {
     /**
      * Constructor for the CreateGameModal dialog
      */
-    public CreateGameModal(String title) {
+    public CreateNewModal(String title) {
         super(title);
-        myTitle = title;
+        myTitle = super.getMyTitle();
 //        myPropertiesMap = super.setPropertiesMap(myTitle
     }
 
@@ -41,19 +37,9 @@ public class CreateGameModal extends InputModal {
     protected DialogPane createDialogPane() {
         myPropertiesMap = super.getPropertiesMap();
 
-        for (Map.Entry entry: myPropertiesMap.entrySet()) {
-
-//            int start = entry.getKey().toString().indexOf("*") + 1;
-//
-//            System.out.println(entry.getKey().toString().substring(start) + " " + entry.getValue());
-
-        }
-
-        this.getDialogPane().setHeaderText(myTitle);
-        System.out.println(this.getDialogPane().getHeaderText());
+        this.getDialogPane().setHeaderText(super.getMyTitle());
 
         ArrayList<String> stringFields = new ArrayList<>(myPropertiesMap.values());
-        System.out.println("map: " + myPropertiesMap);
 
         this.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
 
@@ -62,8 +48,6 @@ public class CreateGameModal extends InputModal {
         } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
             e.printStackTrace();
         }
-
-//        makeFields(myPropertiesMap);
 
         return this.getDialogPane();
     }
@@ -86,11 +70,9 @@ public class CreateGameModal extends InputModal {
             String propertyValue = entry.getValue();
 
             int start = entry.getKey().toString().indexOf("*") + 1;
-            System.out.println("start = " + start);
 
             String labelName = entry.getKey().toString().substring(start);
             labelName = labelName.split("\\.")[0];
-            System.out.println("labelName = " + labelName);
 //            Class<?> topClass = Class.forName("oogasalad.frontend.modals.fields.Field");
 
             // Get the field class corresponding to the property name using reflection
