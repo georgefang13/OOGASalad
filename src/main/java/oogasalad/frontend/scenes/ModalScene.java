@@ -4,7 +4,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import oogasalad.frontend.modals.subDisplayModals.AlertModal;
-import oogasalad.frontend.modals.subInputModals.CreateGameModal;
+import oogasalad.frontend.modals.subInputModals.CreateNewModal;
 
 /**
  * @author George Fang
@@ -24,12 +24,18 @@ public class ModalScene extends AbstractScene {
   @Override
   public Scene makeScene() {
     VBox root = new VBox();
-    createGameButton = new Button();
+    createGameButton = new Button("Create New Game");
     createGameButton.setOnAction(e -> {
-      CreateGameModal modal = new CreateGameModal();
+      CreateNewModal modal = new CreateNewModal("Create_Game_Modal");
       modal.showAndWait();
     });
-    errorButton = new Button();
+    Button playerButton = new Button("Create New Player");
+    playerButton.setOnAction(e -> {
+      CreateNewModal modal = new CreateNewModal("Create_Player_Modal");
+      modal.showAndWait();
+    });
+    root.getChildren().add(playerButton);
+    errorButton = new Button("Alert Modal");
     errorButton.setOnAction(e -> {
       AlertModal modal = new AlertModal();
       modal.showAndWait();
@@ -43,8 +49,8 @@ public class ModalScene extends AbstractScene {
 
   @Override
   public void setText() {
-    createGameButton.setText(getPropertyManager().getText("ModalScene.CreateGameButton"));
-    errorButton.setText(getPropertyManager().getText("ModalScene.ErrorButton"));
+//    createGameButton.setText(getPropertyManager().getText("ModalScene.CreateGameButton"));
+//    errorButton.setText(getPropertyManager().getText("ModalScene.ErrorButton"));
   }
 }
 

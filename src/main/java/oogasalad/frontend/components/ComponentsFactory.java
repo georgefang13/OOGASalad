@@ -19,8 +19,7 @@ public class ComponentsFactory {
   private ResourceBundle bundle;
   private int ID;
   private Stage stage;
-  public ComponentsFactory(Stage sg){
-    stage = sg;
+  public ComponentsFactory(){
     ID = 0;
     bundle = ResourceBundle.getBundle(FACTOR_PROPERTIES);
   }
@@ -45,7 +44,8 @@ public class ComponentsFactory {
     return component;
   }
   /**
-   * Takes in Inputs of parameters to create a Component type
+   * Takes in Inputs of parameters to create a Component type. This can either establish the default
+   * Component or create the input
    */
   public Component create(String type, ArrayList<String> params){
     Component component = null;
@@ -61,6 +61,17 @@ public class ComponentsFactory {
       component = (Component) constructor.newInstance(map);
     } catch (Exception e){
       System.out.println("Failed");
+    }
+    return component;
+  }
+  public Component create(String type, Map<String, String> map){
+    Component component = null;
+    try{
+      Class<?> c = Class.forName(type);
+      Constructor<?> constructor = c.getConstructor(map.getClass());
+      component = (Component) constructor.newInstance(map);
+    } catch (Exception e){
+      e.printStackTrace();
     }
     return component;
   }

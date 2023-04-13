@@ -1,13 +1,18 @@
 package oogasalad.sharedDependencies.backend;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import oogasalad.gameeditor.backend.ObjectParameter;
 import oogasalad.gameeditor.backend.id.IdManager;
+import oogasalad.gameeditor.backend.ownables.gameobjects.BoardCreator;
 import oogasalad.gameeditor.backend.rules.Rule;
 import oogasalad.gamerunner.backend.interpretables.Goal;
 import oogasalad.sharedDependencies.backend.ownables.Ownable;
+import oogasalad.sharedDependencies.backend.ownables.gameobjects.DropZone;
 import oogasalad.sharedDependencies.backend.owners.GameWorld;
 import oogasalad.sharedDependencies.backend.owners.Owner;
 import oogasalad.sharedDependencies.backend.owners.Player;
@@ -72,6 +77,60 @@ public class ObjectFactory {
     }
   }
 
+  private void handleBoardCreator(Map<ObjectParameter, String> params) {
+    Owner owner = gameWorld;
+
+    String type = getWithNull(params, ObjectParameter.BOARD_CREATOR_TYPE);
+    String param1 = getWithNull(params, ObjectParameter.BOARD_CREATOR_PARAM_1);
+    String param2 = getWithNull(params, ObjectParameter.BOARD_CREATOR_PARAM_2);
+    String param3 = getWithNull(params, ObjectParameter.BOARD_CREATOR_PARAM_3);
+
+    List<DropZone> dropZones = new ArrayList<>();
+
+    try {
+      // Get the method from BoardCreator matching type
+      Method boardCreatorMethod;
+
+      if (type.equals("createGrid")) {
+        int param1Int = Integer.parseInt(param1);
+        int param2Int = Integer.parseInt(param2);
+        boardCreatorMethod = BoardCreator.class.getMethod(type, int.class, int.class);
+        dropZones = (List<DropZone>) boardCreatorMethod.invoke(null, param1Int, param2Int);
+      } else if (type.equals("createSquareLoop")) {
+        int param1Int = Integer.parseInt(param1);
+        int param2Int = Integer.parseInt(param2);
+        boardCreatorMethod = BoardCreator.class.getMethod(type, int.class, int.class);
+        dropZones = (List<DropZone>) boardCreatorMethod.invoke(null, param1Int, param2Int);
+      } else if (type.equals("create1DLoop")) {
+        if(param3 == null) {
+          boardCreatorMethod = BoardCreator.class.getMethod(type, int.class);
+          int param1Int = Integer.parseInt(param1);
+          dropZones = (List<DropZone>) boardCreatorMethod.invoke(null, param1Int);
+        }
+        else {
+          boardCreatorMethod = BoardCreator.class.getMethod(type, int.class, String.class, String.class);
+          int param1Int = Integer.parseInt(param1);
+          dropZones = (List<DropZone>) boardCreatorMethod.invoke(null, param1Int, param2, param3);
+        }
+
+      } else {
+        throw new RuntimeException("Unsupported BoardCreator type: " + type);
+      }
+    } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+      e.printStackTrace();
+    } catch (Exception e) {
+      throw new RuntimeException("Error creating game board", e);
+    }
+    //we have all the dropzones, now we need to add them to game manager (with owner as game world)
+    for (DropZone dropZone : dropZones) {
+      dropZone.setOwner(owner);
+      ownableIdManager.addObject(dropZone);
+      //get id of dropZone and print
+      System.out.println("DropZone ID: " + dropZone.getId());
+    }
+  }
+
+
   public Ownable createOwnable(String ownableType, Owner owner) {
     try {
       String basePackage = "oogasalad.sharedDependencies.backend.ownables."; //TODO make less ugly
@@ -124,8 +183,16 @@ public class ObjectFactory {
         Owner = gameWorld;
       }
     }
-    Ownable newOwnable = createOwnable(ownableType, Owner);
-    ownableIdManager.addObject(newOwnable, id, parentOwnable);
+    //if ownableType is BoardCreator
+    if(ownableType.equals("BoardCreator")) {
+      handleBoardCreator(params);
+    }
+    else {
+      Ownable newOwnable = createOwnable(ownableType, Owner);
+      ownableIdManager.addObject(newOwnable, id, parentOwnable);
+    }
+
+
   }
 
   public static Rule createRule(Map<ObjectParameter, String> params) {

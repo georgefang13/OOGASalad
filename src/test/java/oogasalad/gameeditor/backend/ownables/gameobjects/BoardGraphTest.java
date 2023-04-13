@@ -13,7 +13,6 @@ import static org.junit.jupiter.api.Assertions.*;
 public class BoardGraphTest {
 
   private List<DropZone> g;
-  private IdManager idManager;
 
   private DropZone getNodeWithId(String id){
     for (DropZone node : g){
@@ -29,7 +28,6 @@ public class BoardGraphTest {
   @BeforeEach
   void setup () {
     g = new ArrayList<>();
-    idManager = new IdManager();
   }
   ArrayList<Map.Entry<String, DropZone>> getSortedEdges(DropZone node){
     ArrayList<Map.Entry<String, DropZone>> sortedEdges = new ArrayList<>(node.getEdges().entrySet());
@@ -319,7 +317,7 @@ public class BoardGraphTest {
 
   @Test
   void testSquareLoop(){
-    g = BoardCreator.createSquareLoop(idManager, 4, 4);
+    g = BoardCreator.createSquareLoop(4, 4);
     assertEquals(12, g.size());
 
     List<String> path = new ArrayList<>(List.of("Counterclockwise"));
@@ -348,7 +346,7 @@ public class BoardGraphTest {
 
   @Test
   void testCreate1DLoop(){
-    g = BoardCreator.create1DLoop(idManager, 4);
+    g = BoardCreator.create1DLoop(4);
     assertEquals(4, g.size());
 
     List<String> path = new ArrayList<>(List.of("Forward"));

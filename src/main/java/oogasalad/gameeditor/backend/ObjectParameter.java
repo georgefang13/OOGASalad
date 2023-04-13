@@ -27,7 +27,17 @@ public enum ObjectParameter {
    * The name of parent of the Ownable. If not present in the map, no parent Ownable will be set.
    * Ex. the parent ownable for a variable representing the value of a card is the card itself
    */
-  PARENT_OWNABLE
+  PARENT_OWNABLE,
+
+  BOARD_CREATOR_TYPE,
+  BOARD_CREATOR_PARAM_1,
+  BOARD_CREATOR_PARAM_2,
+  BOARD_CREATOR_PARAM_3,
+
+  /**
+   * The value of the variable that will be set in the updateObjectProperties api call
+   */
+  VALUE
 
   //FOR RULES
 
