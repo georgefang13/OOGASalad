@@ -1,56 +1,74 @@
 package oogasalad.frontend.modals.fields;
 
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Control;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
+import java.util.Arrays;
 import java.util.List;
 
-abstract class Field {
-    abstract Control createControl();
+import javafx.scene.layout.HBox;
+// ...
 
-    class TextFieldComponent extends Field {
-        private String text;
-
-        TextFieldComponent(String text) {
-            this.text = text;
-        }
-
-        @Override
-        Control createControl() {
-            TextField textField = new TextField();
-            textField.setText(text);
-            return textField;
-        }
+class Field {
+    HBox createField() {
+        return null;
     }
-
-    class ChoiceBoxComponent extends Field {
+    public class ChoiceBoxComponent extends Field {
         private List<String> options;
+        private String labText;
 
-        ChoiceBoxComponent(List<String> options) {
-            this.options = options;
+        public ChoiceBoxComponent(String labelText, String valueText) {
+            this.options = Arrays.asList(valueText.split(","));
+            this.labText = labelText;
         }
 
         @Override
-        Control createControl() {
+        public HBox createField() {
             ChoiceBox<String> choiceBox = new ChoiceBox<>();
             choiceBox.getItems().addAll(options);
-            return choiceBox;
+//            choiceBox.setValue(propertyValue);
+            return new HBox(new Label(labText), choiceBox);
         }
     }
 
-    class ButtonComponent extends Field {
-        private String text;
+    public class TextFieldComponent extends Field {
 
-        ButtonComponent(String text) {
-            this.text = text;
+        private String labelText;
+        private String propertyValue;
+
+        public TextFieldComponent(String labelText, String propertyValue) {
+            this.labelText = labelText;
+            this.propertyValue = propertyValue;
         }
 
         @Override
-        Control createControl() {
-            return new Button(text);
+        public HBox createField() {
+            TextField textField = new TextField(propertyValue);
+            return new HBox(new Label(labelText), textField);
+        }
+
+        public class ButtonComponent extends Field {
+
+            private String labelText;
+            private String propertyValue;
+
+            public ButtonComponent(String labelText, String propertyValue) {
+                this.labelText = labelText;
+                this.propertyValue = propertyValue;
+            }
+
+            @Override
+            public HBox createField() {
+                Button button = new Button(labelText);
+                return new HBox(button);
+            }
         }
     }
 
+
+
+
+
+
 }
+
+
