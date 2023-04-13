@@ -6,11 +6,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import oogasalad.frontend.objects.Board;
-import oogasalad.frontend.windows.AbstractWindow;
-import oogasalad.gamerunner.backend.fsm.FSMExample;
 import oogasalad.gamerunner.backend.fsm.GameRunnerController;
+import javafx.scene.input.MouseEvent;
 
 /**
  * @author Connor Wells
@@ -18,9 +18,6 @@ import oogasalad.gamerunner.backend.fsm.GameRunnerController;
  */
 
 public class GamePlayerMainScene extends AbstractScene {
-
-  private Button playGameButton;
-  private Label gamePlayerLabel;
   private Board board;
   private Label textInstructions;
   private BorderPane root;
@@ -35,10 +32,6 @@ public class GamePlayerMainScene extends AbstractScene {
   @Override
   public Scene makeScene() {
     root = new BorderPane();
-    playGameButton = new Button();
-    gamePlayerLabel = new Label();
-    root.setTop(gamePlayerLabel);
-    root.setLeft(new VBox(playGameButton));
 
     gameRunnerController = new GameRunnerController();
 
@@ -47,7 +40,7 @@ public class GamePlayerMainScene extends AbstractScene {
     int width = 3;
 
     board = new Board(height,width);
-    refreshBoard();
+    initializeBoard();
 
     textInstructions = new Label();
 
@@ -59,8 +52,14 @@ public class GamePlayerMainScene extends AbstractScene {
     setTheme();
     return getScene();
   }
-  private void refreshBoard(){
-    VBox boardVBOX = new VBox(board.getBoardVisual());
+  private void initializeBoard(){
+    GridPane boardPane = board.getBoardVisual();
+    boardPane.setOnMouseClicked((MouseEvent event) -> {
+      double x = event.getX();
+      double y = event.getY();
+      runOnClick(x,y);
+    });
+    VBox boardVBOX = new VBox(boardPane);
     boardVBOX.setAlignment(Pos.CENTER);
     root.setCenter(boardVBOX);
   }
@@ -73,19 +72,34 @@ public class GamePlayerMainScene extends AbstractScene {
   }
   private void initializeText(){
     textVBOX = new VBox(10);
-    TextField textField = new TextField();
-    Button submitButton = new Button("Submit");
-    textField.setPromptText("Enter text:"); // Set prompt text
-    submitButton.setOnAction(event -> runEnteredText(textField));
+    //TextField textField = new TextField();
+    //Button submitButton = new Button("Submit");
+    //textField.setPromptText("Enter text:"); // Set prompt text
+    //submitButton.setOnAction(event -> runEnteredText(textField));
     parseResponse(gameRunnerController.initialInstruction());
-    textVBOX.getChildren().addAll(textInstructions,textField, submitButton);
+    //textVBOX.getChildren().addAll(textInstructions,textField, submitButton);
+    textVBOX.getChildren().addAll(textInstructions);
   }
   private void runEnteredText(TextField textField){
     String inputText = textField.getText(); // Get the text from the TextField
-    System.out.println("Input text: " + inputText); // Print the input text
     parseResponse(gameRunnerController.userResponds(inputText));
     refreshInstructions();
     textField.clear();
+  }
+  private void runOnClick(double x, double y){
+    System.out.println("X Y:");
+    System.out.println(x);
+    System.out.println(y);
+    Board.BoardXY boardXY = board.boardXYofClick(x,y);
+    int boardX = boardXY.x();
+    int boardY = boardXY.y();
+    System.out.println("board:");
+    System.out.println(boardX);
+    System.out.println(boardY);
+    String inputText = boardY + "," + boardX;
+    parseResponse(gameRunnerController.userResponds(inputText));
+    refreshInstructions();
+    //textField.clear();
   }
   private void parseResponse(String response){
     String[] splitResponse = response.split("Turn:");
@@ -94,12 +108,9 @@ public class GamePlayerMainScene extends AbstractScene {
     parseGrid(gridString);
   }
   private void parseGrid(String gridString){
-    System.out.print("inside parseGrid");
     String[] rows = gridString.split("\n");
     for (int i = 0; i < rows.length; i++) {
       String row = rows[i];
-      System.out.print(row);
-      System.out.print("\n");
       for (int j = 0; j < row.length(); j++) {
         String pieceName = row.substring(j,j+1);
         if (pieceName.equals("-")){
@@ -113,7 +124,5 @@ public class GamePlayerMainScene extends AbstractScene {
 
   @Override
   public void setText() {
-    playGameButton.setText(getPropertyManager().getText("GamePlayerMainScene.PlayGameButton"));
-    gamePlayerLabel.setText(getPropertyManager().getText("GamePlayerMainScene.GamePlayerLabel"));
   }
 }

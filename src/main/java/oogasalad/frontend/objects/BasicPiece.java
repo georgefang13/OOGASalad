@@ -16,6 +16,8 @@ public class BasicPiece implements Piece{
     private PieceImage createPieceImage(String pieceName){
         PieceShapes pieceShape = readPieceShapeFromFile(pieceName);
         switch (pieceShape){
+            case IMAGE:
+                return new ImagePiece();
             case RECTANGLE:
                 return new DiskImage();
             case DISK:
@@ -25,15 +27,16 @@ public class BasicPiece implements Piece{
         }
     }
     enum PieceShapes {
+        IMAGE,
         DISK,
         RECTANGLE
     }
     private PieceShapes readPieceShapeFromFile(String pieceName){
         switch (pieceName){
             case "X":
-                return PieceShapes.RECTANGLE;
+                return PieceShapes.IMAGE;
             case "O":
-                return PieceShapes.DISK;
+                return PieceShapes.IMAGE;
             default:
                 return PieceShapes.RECTANGLE;
         }

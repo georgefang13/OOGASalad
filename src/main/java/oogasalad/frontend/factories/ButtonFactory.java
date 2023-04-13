@@ -21,6 +21,7 @@ public class ButtonFactory {
   private Map<String, String> myTooltipPropertiesMap;
   private static final String BUTTON_PREFIX = "Button";
   private static final String TOOLTIP_PREFIX = "Tooltip";
+  private static final Integer ROTATE_CCW_90 = -90;
 
   public ButtonFactory() {
     this.textBundle = ResourceBundle.getBundle(ENGLISH_PROPERTIES);
@@ -51,6 +52,19 @@ public class ButtonFactory {
     Button componentButton = new Button();
     componentButton.setText(myButtonPropertiesMap.get(property));
     return componentButton;
+  }
+  /**
+   * Creates a button with the given text, font size, and text color
+   *
+   * @param property the key value in the label bundle representing the text of
+   *                 the button
+   * @return the Button
+   */
+  public Button createVeritcalButton(String property) {
+    Button verticalButton = new Button();
+    verticalButton.setText(myButtonPropertiesMap.get(property));
+    verticalButton.setRotate(ROTATE_CCW_90);
+    return verticalButton;
   }
 
   /**
