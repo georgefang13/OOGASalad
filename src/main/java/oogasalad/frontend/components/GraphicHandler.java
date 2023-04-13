@@ -35,7 +35,6 @@ public class GraphicHandler {
   public Point absoluteCoordinatesToEditor(Point absoluteCoord){
     return absoluteCoord.scale(scalingFactor);
   }
-
   /**
    * Converts the size of the Component from Window size to Editor Size
    * @param size the size of the Component as inputted from the user

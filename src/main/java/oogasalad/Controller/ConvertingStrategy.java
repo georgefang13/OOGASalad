@@ -27,6 +27,12 @@ public class ConvertingStrategy {
     }
     return sb.toString();
   }
+
+  /**
+   * Returns the parameters of a Component to a Map of params.
+   * @param component the input component
+   * @return The Map of parameters
+   */
   public Map<String, String> paramsToMap(Component component){
     Map<String, String> map = new HashMap<>();
     Field[] fields = component.getClass().getDeclaredFields();
