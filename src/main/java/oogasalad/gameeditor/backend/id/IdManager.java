@@ -58,7 +58,7 @@ public class  IdManager<T extends IdManageable> implements Iterable<Map.Entry<St
   /**
    * Returns the T with the given id.
    * Accepts simple ids (ex. "Player1") and full ids (ex. "Player1.Variable1").
-   * @param id the id of the ownable to return
+   * @param id the non-null id of the ownable to return
    * @return the T with the given id
    * @throws IllegalArgumentException if the id is not in the set of ids
    */
@@ -137,6 +137,9 @@ public class  IdManager<T extends IdManageable> implements Iterable<Map.Entry<St
    * @throws IllegalArgumentException if the id or object is already in use
    */
   public void addObject(T obj, String id, T parent) throws IllegalArgumentException{
+    if (id == null) {
+      id = obj.getDefaultId();
+    }
     logIdName(obj, parent, id);
   }
 
@@ -144,7 +147,7 @@ public class  IdManager<T extends IdManageable> implements Iterable<Map.Entry<St
    * Helper method for addObject.
    * @param obj the T to add
    * @param parent the parent of the T to be logged in the ownership map
-   * @param defaultId the default id to add the T to
+   * @param defaultId the default id to add the T to. Non-null.
    */
   private void logIdName(T obj, T parent, String defaultId) {
     if (obj == null) {
