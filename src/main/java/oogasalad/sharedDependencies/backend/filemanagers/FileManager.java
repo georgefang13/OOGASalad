@@ -1,8 +1,7 @@
-package oogasalad.gameeditor.backend.filemanagers;
+package oogasalad.sharedDependencies.backend.filemanagers;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.google.gson.JsonElement;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -16,7 +15,7 @@ import java.util.ResourceBundle;
 /**
  * @author Rodrigo Bassi Guerreiro
  *
- * Abstract implementation for class used to save JSON files as user is creating games
+ * Class used to programatically store information in JSON files
  **/
 public class FileManager {
   protected static String SEPARATOR = ",";
@@ -92,6 +91,28 @@ public class FileManager {
     ResourceBundle resources = ResourceBundle.getBundle(RESOURCES_PATH);
     String[] validTags = resources.getString(key).split(SEPARATOR);
     this.setValidTags(new HashSet<>(List.of(validTags)));
+  }
+
+  /**
+   * Finds element in a Json object based on given key, checks whether it exists and is a String,
+   * and returns its content
+   * @param object Json object to be searched into
+   * @param key identifier inside Json object
+   * @return value associated with given key
+   */
+  public static String getStringByKey(JsonObject object, String key) {
+    if (! object.get(key).isJsonPrimitive() || ! object.get(key).getAsJsonPrimitive().isString()) {
+      // TODO: throw custom exception
+    }
+    return object.get(key).getAsJsonPrimitive().toString();
+  }
+
+  /**
+   * Directly access stored information in Json format
+   * @return JsonObject containing saved information
+   */
+  public JsonObject getJson() {
+    return myFileInfo;
   }
 
   /**
