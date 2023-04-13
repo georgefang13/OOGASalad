@@ -6,9 +6,9 @@ import oogasalad.gamerunner.backend.interpreter.tokens.Token;
 import oogasalad.gamerunner.backend.interpreter.tokens.ValueToken;
 import oogasalad.gamerunner.backend.interpreter.tokens.VariableToken;
 
-public class GetGameVariable extends OperatorToken {
+public class FromGame extends OperatorToken {
 
-    public GetGameVariable(){
+    public FromGame(){
         super(1, "FromGame");
     }
 

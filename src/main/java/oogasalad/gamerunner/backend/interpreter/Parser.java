@@ -1,5 +1,6 @@
 package oogasalad.gamerunner.backend.interpreter;
 
+import oogasalad.gamerunner.backend.interpreter.commands.control.FVar;
 import oogasalad.gamerunner.backend.interpreter.commands.control.MakeUserInstruction;
 import oogasalad.gamerunner.backend.interpreter.commands.control.UserInstruction;
 import oogasalad.gamerunner.backend.interpreter.exceptions.InvalidSyntaxException;
@@ -46,6 +47,12 @@ public class Parser {
     private Token parseExpression(Environment env) {
         Token t = next();
         if (t instanceof OperatorToken op) {
+
+            if (lastToken instanceof FVar) {
+                lastToken = op;
+                return op;
+            }
+
             lastToken = t;
             Token tok = parseOperator(env, op);
             if (tok instanceof MakeUserInstruction m){
@@ -67,6 +74,10 @@ public class Parser {
 
     private Token parseCommandToken(CommandToken c, Environment env){
         if (lastToken instanceof MakeUserInstruction){
+            lastToken = c;
+            return c;
+        }
+        else if (lastToken instanceof FVar) {
             lastToken = c;
             return c;
         }

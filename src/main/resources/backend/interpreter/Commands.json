@@ -201,7 +201,7 @@
     "description": "Retrieves an attribute from a GameObject",
     "example": "attr :game_x \"position # attr <gameobject> <attribute>"
   },
-  "GetGameVariable": {
+  "FromGame": {
     "name": "Get Game Object",
     "folder": "operators",
     "str": "fromgame",
@@ -228,6 +228,27 @@
     "str": "putdzitem",
     "description": "Puts an item with a specific name within in a drop zone",
     "example": "putdzitem \"x 1 :game_y # putdzitem <name> <value> <dropzone>"
+  },
+  "DropZonePaths": {
+    "name": "Get All Drop Zone Paths",
+    "folder": "operators",
+    "str": "dzpaths",
+    "description": "Gets a list of all paths a dropzone can take",
+    "example": "dzpaths :game_zone # dzpaths <dropzone>"
+  },
+  "FollowDropZonePath": {
+    "name": "Follow a Path Through Dropzones",
+    "folder": "operators",
+    "str": "dzfollow",
+    "description": "Gets the next dropzone in a path",
+    "example": "dzfollow :game_zone [ Up Up Right ] # dzpaths <dropzone> <list of edges>"
+  },
+  "DropZoneFollowUntilBlocked": {
+    "name": "Follow a Path Through Dropzones Until That Path is Blocked",
+    "folder": "operators",
+    "str": "dzfollowtoblock",
+    "description": "Gets all dropzones among a repeated path until the path is blocked or no longer exists",
+    "example": "dzfollowtoblock :game_zone [ Up Up Right ] fvar blocked_func # dzpaths <dropzone> <list of edges> <blocked function>"
   },
   "Length": {
     "name": "Length",
@@ -271,6 +292,13 @@
     "description": "Repeats a set of instructions for each element in a list",
     "example": "for [ :i 0 5 1 ] [ ... ] # for [ <var_name> <min> <max> <optional increment (default 1)> ] [ <instructions> ]"
   },
+  "Foreach": {
+    "name": "For Each",
+    "folder": "control",
+    "str": "foreach",
+    "description": "Loop over each element in a list",
+    "example": "foreach [ :x [ 1 2 3 ] ] [ ... ] # for [ <var_name> <list> > ] [ <instructions> ]"
+  },
   "If": {
     "name": "If",
     "folder": "control",
@@ -298,5 +326,19 @@
     "str": "to",
     "description": "Defines a new user-defined command",
     "example": "to mycommand [ :x :y ] [ ... ] # to <command_name> [ <arg1> <arg2> ... ] [ <instructions> ]"
+  },
+  "FVar": {
+    "name": "Function Variable",
+    "folder": "control",
+    "str": "fvar",
+    "description": "Puts a command / function inside a variable",
+    "example": "fvar command # fvar <command_name>"
+  },
+  "Call": {
+    "name": "Call Function Variable",
+    "folder": "control",
+    "str": "call",
+    "description": "Calls a command that's contained inside a variable",
+    "example": "call :func_var # call <var_name>"
   }
 }

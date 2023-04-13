@@ -27,6 +27,10 @@ abstract public class OperatorToken extends Token {
    * @param args array of arguments
    */
   public void passArguments(Token[] args) {
+    // TODO: put this in properties file
+    if (args.length != numArgs) {
+      throw new IllegalArgumentException("Incorrect number of arguments passed to operator " + SUBTYPE + ". Expected " + numArgs + " but got " + args.length + ".");
+    }
     this.args = new Token[args.length];
     System.arraycopy(args, 0, this.args, 0, args.length);
   }
@@ -138,7 +142,7 @@ abstract public class OperatorToken extends Token {
     boolean hasType = false;
     for (Class<?> c : type) {
       if (t == null) break;
-      if (t.getClass().equals(c)) {
+      if (c.isInstance(t)){
         hasType = true;
         break;
       }
@@ -165,6 +169,12 @@ abstract public class OperatorToken extends Token {
    */
   protected Token getArg(int index) {
     return args[index];
+  }
+
+  @Override
+  public boolean equals(Token t, Environment env) {
+    Token myt = evaluate(env);
+    return myt.equals(t, env);
   }
 
   @Override

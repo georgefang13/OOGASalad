@@ -165,6 +165,7 @@ public class Environment {
     }
 
     public Variable<?> convertTokenToVariable(Token t){
+        if (t == null) return new Variable<>(null);
         Variable<?> v = new Variable<>(t.export(this));
         t.linkVariable(v);
         return v;

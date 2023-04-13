@@ -1,5 +1,7 @@
 package oogasalad.gamerunner.backend.interpreter;
 import oogasalad.gameeditor.backend.id.IdManager;
+import oogasalad.gameeditor.backend.ownables.gameobjects.BoardCreator;
+import oogasalad.gamerunner.backend.interpreter.commands.control.UserInstruction;
 import oogasalad.gamerunner.backend.interpreter.commands.operators.Sum;
 import oogasalad.gamerunner.backend.interpreter.tokens.*;
 import oogasalad.sharedDependencies.backend.ownables.Ownable;
@@ -9,10 +11,7 @@ import oogasalad.sharedDependencies.backend.ownables.variables.Variable;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -154,6 +153,39 @@ public class CommandsTest {
     }
 
     @Test
+    public void testCall(){
+        String input = "make :x fvar + make :y call :x [ 1 2 ]";
+        interpreter.interpret(input);
+        Variable<Double> y = getVar("interpreter-:y");
+        assertEquals(3., y.get());
+
+        input = "to pythag [ :a :b ] [ make :c sqrt ( + ( * :a :a ) ( * :b :b ) ) :c ] make :x fvar pythag make :y call :x [ 3 4 ]";
+        interpreter.interpret(input);
+        y = getVar("interpreter-:y");
+        assertEquals(5., y.get());
+
+        // call with wrong number of arguments
+        input = "make :x fvar + make :y call :x [ 1 2 3 ]";
+        try{
+            interpreter.interpret(input);
+            fail();
+        } catch (Exception e){
+            Token t = new ValueToken<>(1.);
+            assertEquals("Incorrect number of arguments passed to operator Sum. Expected 2 but got 3.", e.getMessage());
+        }
+
+        // call with non-function
+        input = "make :x 1 make :y call :x [ 1 2 ]";
+        try{
+            interpreter.interpret(input);
+            fail();
+        } catch (Exception e){
+            Token t = new ValueToken<>(1.);
+            assertEquals(checkSubtypeErrorMsg(t, "Call", ValueToken.class, OperatorToken.class), e.getMessage());
+        }
+    }
+
+    @Test
     public void testCosine(){
         // cosine
         String input = "make :x 38 make :z cos :x";
@@ -225,6 +257,40 @@ public class CommandsTest {
         } catch (Exception e){
             ValueToken<?> t = new ValueToken<>(false);
             assertEquals(checkSubtypeErrorMsg(t, "Difference", ValueToken.class, Double.class), e.getMessage());
+        }
+    }
+
+    @Test
+    public void testDropZonePaths(){
+        List<DropZone> grid = BoardCreator.createGrid(5, 5);
+        for (DropZone d : grid){
+            idManager.addObject(d, d.getId());
+        }
+
+        String input = "make :x fromgame \"3,3 make :y dzpaths :x";
+        interpreter.interpret(input);
+        Variable<List<String>> y = getVar("interpreter-:y");
+        List<String> expected = new ArrayList<>(List.of("Up", "Down", "Left", "Right", "UpLeft", "UpRight", "DownLeft", "DownRight"));
+
+        assertEquals(new HashSet<>(expected), new HashSet<>(y.get()));
+
+        // dzpaths with non-dropzones
+        input = "make :x 1 make :y dzpaths :x";
+        try{
+            interpreter.interpret(input);
+            fail();
+        } catch (Exception e){
+            ValueToken<?> t = new ValueToken<>(1.);
+            assertEquals(checkSubtypeErrorMsg(t, "DropZonePaths", ValueToken.class, DropZone.class), e.getMessage());
+        }
+
+        // dzpaths with non-existing dropzone
+        input = "make :x fromgame \"8,8 make :y dzpaths :x";
+        try{
+            interpreter.interpret(input);
+            fail();
+        } catch (Exception e){
+            assertEquals(checkTypeErrorMsg(null, "DropZonePaths", ValueToken.class) , e.getMessage());
         }
     }
 
@@ -323,6 +389,97 @@ public class CommandsTest {
     }
 
     @Test
+    public void testFollowDropZonePath(){
+        List<DropZone> grid = BoardCreator.createGrid(8, 8);
+        for (DropZone d : grid){
+            idManager.addObject(d, d.getId());
+        }
+
+        // follow the path of a knight, starting in the top left corner
+        String input = "make :x fromgame \"0,0 make :y dzfollow :x [ \"Down \"DownRight ]";
+        interpreter.interpret(input);
+        Variable<DropZone> y = getVar("interpreter-:y");
+        assertEquals("2,1", y.get().getId());
+
+    }
+
+    @Test
+    public void testDropZoneFollowUntilBlocked(){
+        List<DropZone> grid = BoardCreator.createGrid(8, 8);
+        for (DropZone d : grid){
+            idManager.addObject(d, d.getId());
+        }
+        /*
+        | 0,0 | 0,1 | 0,2 | XXX | 0,4 | 0,5 | 0,6 | 0,7 |
+        | 1,0 | 1,1 | 1,2 | 1,3 | 1,4 | 1,5 | OOO | 1,7 |
+        | 2,0 | 2,1 | 2,2 | 2,3 | 2,4 | XXX | 2,6 | 2,7 |
+        | 3,0 | 3,1 | 3,2 | 3,3 | 3,4 | 3,5 | 3,6 | 3,7 |
+        | 4,0 | 4,1 | 4,2 | OOO | 4,4 | 4,5 | 4,6 | 4,7 |
+        | 5,0 | 5,1 | 5,2 | 5,3 | 5,4 | 5,5 | 5,6 | 5,7 |
+        | 6,0 | 6,1 | 6,2 | 6,3 | 6,4 | 6,5 | 6,6 | 6,7 |
+        | 7,0 | 7,1 | 7,2 | 7,3 | 7,4 | 7,5 | 7,6 | 7,7 |
+         */
+        ((DropZone) idManager.getObject("0,3")).putObject("obj", "X");
+        ((DropZone) idManager.getObject("2,5")).putObject("obj", "X");
+        ((DropZone) idManager.getObject("1,6")).putObject("obj", "O");
+
+        String input = "to isBlocked [ :x ] [ == \"X dzitem \"obj :x ] make :x fromgame \"4,3 make :y dzfollowtoblock :x [ \"Up ] fvar isBlocked";
+        interpreter.interpret(input);
+        Variable<List<DropZone>> y = getVar("interpreter-:y");
+        List<DropZone> expected = new ArrayList<>(List.of(
+                (DropZone) idManager.getObject("3,3"),
+                (DropZone) idManager.getObject("2,3"),
+                (DropZone) idManager.getObject("1,3")
+        ));
+
+        assertEquals(expected, y.get());
+
+        input = "make :y dzfollowtoblock :x [ \"Up \"Up ] fvar isBlocked";
+        interpreter.interpret(input);
+        y = getVar("interpreter-:y");
+        expected = new ArrayList<>(List.of( (DropZone) idManager.getObject("2,3") ));
+        assertEquals(expected, y.get());
+
+        input = "make :y dzfollowtoblock :x [ \"Up \"Right ] fvar isBlocked";
+        interpreter.interpret(input);
+        y = getVar("interpreter-:y");
+        expected = new ArrayList<>(List.of( (DropZone) idManager.getObject("3,4") ));
+        assertEquals(expected, y.get());
+
+        input = "to isBlocked [ :x ] [ == \"O dzitem \"obj :x ] make :y dzfollowtoblock :x [ \"UpRight ] fvar isBlocked";
+        interpreter.interpret(input);
+        y = getVar("interpreter-:y");
+        expected = new ArrayList<>(List.of( (DropZone) idManager.getObject("3,4"), (DropZone) idManager.getObject("2,5") ));
+        assertEquals(expected, y.get());
+
+        input = "make :y dzfollowtoblock :x [ \"Right \"DownRight ] fvar isBlocked";
+        interpreter.interpret(input);
+        y = getVar("interpreter-:y");
+        expected = new ArrayList<>(List.of( (DropZone) idManager.getObject("5,5"), (DropZone) idManager.getObject("6,7") ));
+        assertEquals(expected, y.get());
+
+        // test with no path
+        input = "make :y dzfollowtoblock :x \"Up fvar isBlocked";
+        try {
+            interpreter.interpret(input);
+            fail();
+        } catch (Exception e){
+            ValueToken<?> t = new ValueToken<>("Up");
+            assertEquals(checkTypeErrorMsg(t, "DropZoneFollowUntilBlocked", ExpressionToken.class), e.getMessage());
+        }
+
+        // test with function that takes no inputs
+        input = "to isBlocked2 [ ] [ == \"X dzitem \"obj :x ] make :y dzfollowtoblock :x [ \"UpRight ] fvar isBlocked2";
+        try {
+            interpreter.interpret(input);
+            fail();
+        } catch (Exception e){
+            assertEquals("Incorrect number of arguments passed to operator isBlocked2. Expected 0 but got 1.", e.getMessage());
+        }
+
+    }
+
+    @Test
     public void testFor(){
         // for
         String input = "make :x [ 0 0 0 0 0 ] for [ :i 0 5 1 ] [ global :x setitem :i :x :i ]";
@@ -406,6 +563,104 @@ public class CommandsTest {
             assertEquals("Cannot repeat from 0.0 to 5.0 by -1.0", e.getMessage());
         }
 
+    }
+
+    @Test
+    public void testForeach(){
+        String input = "make :x [ 0 1 2 3 4 ] make :game_log [ ] foreach [ :i :x ] [ additem :i :game_log ]";
+        interpreter.interpret(input);
+        Variable<List<Object>> game_log = getVar("log");
+        Variable<List<Object>> x = getVar("interpreter-:x");
+        assertEquals(x.get(), game_log.get());
+
+        // foreach with non-list
+        input = "foreach [ :i 5 ] [ :i ]";
+        try{
+            interpreter.interpret(input);
+            fail();
+        } catch (Exception e){
+            ValueToken<?> t = new ValueToken<>(5.);
+            assertEquals(checkTypeErrorMsg(t, "Foreach", ExpressionToken.class), e.getMessage());
+        }
+
+        // foreach with non-variable
+        input = "foreach [ 5 [ 1 2 3 ] ] [ 5 ]";
+        try{
+            interpreter.interpret(input);
+            fail();
+        } catch (Exception e){
+            ValueToken<?> t = new ValueToken<>(5.);
+            assertEquals(checkTypeErrorMsg(t, "Foreach", VariableToken.class), e.getMessage());
+        }
+
+        // foreach with incorrect type for variable name
+        input = "foreach [ 5 [ 1 2 3 ] ] [ 5 ]";
+        try{
+            interpreter.interpret(input);
+            fail();
+        } catch (Exception e){
+            ValueToken<?> t = new ValueToken<>(5.);
+            assertEquals(checkTypeErrorMsg(t, "Foreach", VariableToken.class), e.getMessage());
+        }
+
+        // foreach with incorrect number of header arguments
+        input = "foreach [ 5 ] [ 5 ]";
+        try{
+            interpreter.interpret(input);
+            fail();
+        } catch (Exception e){
+            assertEquals("Foreach header must have 2 arguments", e.getMessage());
+        }
+
+        // foreach with incorrect number of header arguments
+        input = "foreach [ :i :x 5 ] [ :i ]";
+        try{
+            interpreter.interpret(input);
+            fail();
+        } catch (Exception e){
+            assertEquals("Foreach header must have 2 arguments", e.getMessage());
+        }
+
+        // foreach with incorrect number of arguments
+        input = "foreach [ :i :x ]";
+        try{
+            interpreter.interpret(input);
+            fail();
+        } catch (Exception e){
+            assertEquals("Invalid syntax: Not enough arguments for operator Foreach", e.getMessage());
+        }
+    }
+
+    @Test
+    public void testFVar(){
+        String input = "to add2 [ :x ] [ make :y :x + 2 :y ] make :z fvar add2";
+        interpreter.interpret(input);
+        Variable<OperatorToken> z = getVar("interpreter-:z");
+        assertEquals("add2", z.get().SUBTYPE);
+
+        input = "make :z fvar +";
+        interpreter.interpret(input);
+        z = getVar("interpreter-:z");
+        assertEquals("Sum", z.get().SUBTYPE);
+
+        // fvar with a non-function
+        input = "make :z fvar 5";
+        try{
+            interpreter.interpret(input);
+            fail();
+        } catch (Exception e){
+            ValueToken<?> t = new ValueToken<>(5.);
+            assertEquals(checkTypeErrorMsg(t, "FVar", OperatorToken.class), e.getMessage());
+        }
+
+        // fvar with no arguments
+        input = "make :z fvar";
+        try{
+            interpreter.interpret(input);
+            fail();
+        } catch (Exception e){
+            assertEquals("Invalid syntax: Not enough arguments for operator FVar", e.getMessage());
+        }
     }
 
     @Test
