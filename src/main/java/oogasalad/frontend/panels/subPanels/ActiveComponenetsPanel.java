@@ -1,17 +1,20 @@
 package oogasalad.frontend.panels.subPanels;
 
+import javafx.scene.Node;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.TitledPane;
+import javafx.scene.layout.Pane;
 import oogasalad.frontend.components.gameObjectComponent.GameObject;
 import oogasalad.frontend.factories.ButtonFactory;
 import oogasalad.frontend.modals.InputModal;
+import oogasalad.frontend.modals.ModalController;
 import oogasalad.frontend.panels.AccordionPanel;
 import oogasalad.frontend.panels.Panel;
 
 public class ActiveComponenetsPanel extends AccordionPanel {
-  ButtonFactory buttonFactory = new ButtonFactory();
-
+  private ButtonFactory buttonFactory = new ButtonFactory();
+  private Pane root;
   /**
    * Constructor for HeaderMenu
    */
@@ -35,7 +38,11 @@ public class ActiveComponenetsPanel extends AccordionPanel {
   }
 
   private void promptModal() {
-    InputModal modal = new InputModal();
+    InputModal modal = new InputModal("createComponent");
+    ModalController mController = new ModalController();
+    mController.setRoot(root);
+    modal.attach(mController);
+    modal.showAndWait();
     System.out.println("Test");
   }
 
@@ -57,5 +64,8 @@ public class ActiveComponenetsPanel extends AccordionPanel {
   @Override
   public void save() {
 
+  }
+  public void setReferenceRoot(Pane rt){
+    root = rt;
   }
 }

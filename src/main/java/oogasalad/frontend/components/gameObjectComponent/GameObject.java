@@ -1,6 +1,8 @@
 package oogasalad.frontend.components.gameObjectComponent;
 
+import java.lang.reflect.Field;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
@@ -32,7 +34,23 @@ public class GameObject extends DraggableObject implements GameObjectComponent{
   public GameObject(int ID, Node container){
     super(ID, container);
   }
-
+  //TODO fix default values for map constructor
+  public GameObject(Map<String, String> map){
+    super(2);
+    children = null;
+    Image newImage = new Image(DEFAULT_BUNDLE.getString("DEFAULT_IMAGE"));
+    setImage(DEFAULT_BUNDLE.getString("DEFAULT_IMAGE"));
+    followMouse();
+    for(String param: map.keySet()){
+      try{
+        Field field = getClass().getDeclaredField(param);
+        field.setAccessible(true);
+        field.set(this, map.get(param));
+      } catch (Exception e){
+        System.out.println("Test");
+      }
+    }
+  }
   @Override
   public void setName(String newName) {
     name = newName;

@@ -20,7 +20,7 @@ public class ComponentsFactoryTest extends DukeApplicationTest {
   Pane root;
   @Override
   public void start(Stage stage){
-    factory = new ComponentsFactory(stage);
+    factory = new ComponentsFactory();
     root = new Pane();
     Scene scene = new Scene(root);
     stage.setScene(scene);

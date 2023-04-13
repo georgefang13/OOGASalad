@@ -11,7 +11,7 @@ public class ComponentExample extends Application {
 
   @Override
   public void start(Stage primaryStage) throws Exception {
-    ComponentsFactory factory = new ComponentsFactory(primaryStage);
+    ComponentsFactory factory = new ComponentsFactory();
     Pane root = new Pane();
     Scene scene = new Scene(root);
     primaryStage.setScene(scene);

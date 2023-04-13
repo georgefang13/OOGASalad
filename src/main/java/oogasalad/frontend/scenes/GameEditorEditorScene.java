@@ -49,6 +49,7 @@ public class GameEditorEditorScene extends AbstractScene {
         headerMenu = new HeaderMenuPanel(panelController, VISUAL_EDITOR_SCENE);
         componentLibraryPanel = new ComponentLibraryPanel();
         activeComponenetsPanel = new ActiveComponenetsPanel();
+        activeComponenetsPanel.setReferenceRoot(root);
         leftTab = new VBox();
         leftTab.getChildren().addAll(componentLibraryPanel.createAccordion(), activeComponenetsPanel.createAccordion());
         environmentPanel = new EnvironmentPanel();
