@@ -27,7 +27,6 @@ public class GamePlayerMainScene extends AbstractScene {
   private VBox textVBOX;
   private String instruction;
   private GameRunnerController gameRunnerController;
-  private String[][] stringGrid;
 
   public GamePlayerMainScene(SceneController sceneController) {
     super(sceneController);
@@ -48,7 +47,6 @@ public class GamePlayerMainScene extends AbstractScene {
     int width = 3;
 
     board = new Board(height,width);
-    stringGrid = new String[height][width];
     refreshBoard();
 
     textInstructions = new Label();

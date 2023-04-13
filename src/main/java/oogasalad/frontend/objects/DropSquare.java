@@ -25,7 +25,7 @@ public class DropSquare implements DropZone{
         if (dropVisual.getChildren().size() > 1) {
             dropVisual.getChildren().remove(1);
         }
-        dropVisual.getChildren().add(newPiece.getPieceImage());
+        dropVisual.getChildren().add(newPiece.getPieceImage().getPieceNode());
     }
 
     @Override

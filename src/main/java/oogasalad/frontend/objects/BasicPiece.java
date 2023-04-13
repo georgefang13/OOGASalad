@@ -1,35 +1,43 @@
 package oogasalad.frontend.objects;
 
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-
 public class BasicPiece implements Piece{
-    private Circle circleImage; //for now
+    private PieceImage pieceImage;
+
 
     public BasicPiece(String pieceName) {
-        circleImage = new Circle();
-        setProperties(pieceName);
-    }
-
-    @Override
-    public void setProperties(String pieceName) {
-        circleImage.setRadius(25);
-        circleImage.setFill(readColorFromFile(pieceName));
+        pieceImage = createPieceImage(pieceName);
+        pieceImage.setProperties(pieceName);
     }
     @Override
-    public Circle getPieceImage() {
-        return circleImage;
+    public PieceImage getPieceImage() {
+        return pieceImage;
     }
 
-    //for now
-    private Color readColorFromFile(String pieceName){
-        switch (pieceName){
-            case "X":
-                return Color.BLACK;
-            case "O":
-                return Color.RED;
+    private PieceImage createPieceImage(String pieceName){
+        PieceShapes pieceShape = readPieceShapeFromFile(pieceName);
+        switch (pieceShape){
+            case RECTANGLE:
+                return new DiskImage();
+            case DISK:
+                return new DiskImage();
             default:
-                return Color.GREEN;
+                return new DiskImage();
         }
     }
+    enum PieceShapes {
+        DISK,
+        RECTANGLE
+    }
+    private PieceShapes readPieceShapeFromFile(String pieceName){
+        switch (pieceName){
+            case "X":
+                return PieceShapes.RECTANGLE;
+            case "O":
+                return PieceShapes.DISK;
+            default:
+                return PieceShapes.RECTANGLE;
+        }
+    }
+
+
 }
