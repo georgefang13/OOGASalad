@@ -18,9 +18,6 @@ import javafx.scene.input.MouseEvent;
  */
 
 public class GamePlayerMainScene extends AbstractScene {
-
-  private Button playGameButton;
-  private Label gamePlayerLabel;
   private Board board;
   private Label textInstructions;
   private BorderPane root;
@@ -35,10 +32,6 @@ public class GamePlayerMainScene extends AbstractScene {
   @Override
   public Scene makeScene() {
     root = new BorderPane();
-    playGameButton = new Button();
-    gamePlayerLabel = new Label();
-    root.setTop(gamePlayerLabel);
-    root.setLeft(new VBox(playGameButton));
 
     gameRunnerController = new GameRunnerController();
 
@@ -131,7 +124,5 @@ public class GamePlayerMainScene extends AbstractScene {
 
   @Override
   public void setText() {
-    playGameButton.setText(getPropertyManager().getText("GamePlayerMainScene.PlayGameButton"));
-    gamePlayerLabel.setText(getPropertyManager().getText("GamePlayerMainScene.GamePlayerLabel"));
   }
 }
