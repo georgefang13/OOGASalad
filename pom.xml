@@ -58,11 +58,6 @@
         </dependency>
         <dependency>
             <groupId>io.github.eckig.grapheditor</groupId>
-            <artifactId>grapheditor-model</artifactId>
-            <version>18.0.1</version>
-        </dependency>
-        <dependency>
-            <groupId>io.github.eckig.grapheditor</groupId>
             <artifactId>grapheditor-api</artifactId>
             <version>18.0.1</version>
         </dependency>
@@ -80,6 +75,11 @@
             <groupId>org.kordamp.ikonli</groupId>
             <artifactId>ikonli-materialdesign2-pack</artifactId>
             <version>12.3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <version>3.5.0</version>
         </dependency>
     </dependencies>
 
@@ -205,21 +205,21 @@
                 <version>3.0.0-M9</version>
             </plugin>
             <!-- generates javadoc as a report -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.4.1</version>
-                <configuration>
-                    <sourcepath>src</sourcepath>
-                </configuration>
-                <reportSets>
-                    <reportSet>
-                        <reports>
-                            <report>javadoc</report>
-                        </reports>
-                    </reportSet>
-                </reportSets>
-            </plugin>
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-javadoc-plugin</artifactId>-->
+<!--                <version>3.4.1</version>-->
+<!--                <configuration>-->
+<!--                    <sourcepath>src</sourcepath>-->
+<!--                </configuration>-->
+<!--                <reportSets>-->
+<!--                    <reportSet>-->
+<!--                        <reports>-->
+<!--                            <report>javadoc</report>-->
+<!--                        </reports>-->
+<!--                    </reportSet>-->
+<!--                </reportSets>-->
+<!--            </plugin>-->
         </plugins>
     </reporting>
 </project>
