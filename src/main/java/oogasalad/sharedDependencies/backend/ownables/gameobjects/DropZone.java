@@ -155,6 +155,12 @@ public class DropZone extends GameObject {
             JsonObject edge = edgeEntry.getAsJsonObject();
 //            edges.put(FileManager.getStringByKey(edge, "edgeId"));
         }
+
+        for (JsonElement objectEntry : object.get("starterObjects").getAsJsonArray()) {
+            // TODO: get gameObject by Id and add it to holding
+        }
+
+
     }
 
     @Override
