@@ -41,7 +41,7 @@ public class BoardCreator {
      * @param cols the number of columns
      * @return a grid graph with the given number of rows and columns
      */
-    public static List<DropZone> createGrid(IdManager manager, int rows, int cols) {
+    public static List<DropZone> createGrid(int rows, int cols) {
         DropZone[][] nodes = new DropZone[rows][cols];
 
         for (int i = 0; i < rows; i++) {

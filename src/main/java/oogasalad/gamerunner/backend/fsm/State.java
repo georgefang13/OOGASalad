@@ -1,6 +1,6 @@
 package oogasalad.gamerunner.backend.fsm;
 
-abstract class State {
+public abstract class State {
 
     private FSM.NextStateChooser<Object> defaultTransition = null;
 

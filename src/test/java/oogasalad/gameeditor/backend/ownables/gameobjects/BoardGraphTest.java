@@ -146,7 +146,7 @@ public class BoardGraphTest {
   void testCreateGrid(){
     int numRows = 3;
     int numCols = 7;
-    g = BoardCreator.createGrid(idManager, numRows, numCols);
+    g = BoardCreator.createGrid(numRows, numCols);
     assertEquals(numRows * numCols, g.size());
     for (int i = 0; i < numRows; i++){
       for (int j = 0; j < numCols; j++){
@@ -261,7 +261,7 @@ public class BoardGraphTest {
 
   @Test
   void testFindAllSpotsUntilBlocked(){
-    g = BoardCreator.createGrid(idManager, 8, 8);
+    g = BoardCreator.createGrid(8, 8);
 
         /*
         X is a bishop
@@ -308,7 +308,7 @@ public class BoardGraphTest {
 
   @Test
   void testNodePutAndRemoveObject(){
-    g = BoardCreator.createGrid(idManager, 4, 4);
+    g = BoardCreator.createGrid(4, 4);
     Objects.requireNonNull(getNodeWithId("0,0")).putObject("Obj", 1);
     assertTrue(Objects.requireNonNull(getNodeWithId("0,0")).hasObject("Obj"));
     assertEquals(1, Objects.requireNonNull(getNodeWithId("0,0")).getObject("Obj"));
