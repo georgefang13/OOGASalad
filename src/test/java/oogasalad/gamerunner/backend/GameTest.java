@@ -2,7 +2,10 @@ package oogasalad.gamerunner.backend;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Map;
 import oogasalad.gameeditor.backend.GameEditor;
+import oogasalad.gameeditor.backend.ObjectParameter;
+import oogasalad.gameeditor.backend.ObjectType;
 import oogasalad.gameeditor.backend.goals.EmptyGoal;
 import oogasalad.gameeditor.backend.goals.Goal;
 import oogasalad.gameeditor.backend.id.IdManager;
@@ -133,20 +136,21 @@ class GameTest {
     assertInstanceOf(GameWorld.class, game.getGameWorld());
   }
 
-//  @Test
-//  public void changeOwner() {
-//    assertNull(game.getOwnable("EmptyGameObject"));
-//    Player player1 = new Player();
-//    Player player2 = new Player();
-//    game.addPlayer(player1);
-//    game.addPlayer(player2);
-//    game.sendObject("GameObject", "owner=Player;parentOwnable=NULL");
-//    assertEquals(player1, game.getOwnable("EmptyGameObject").getOwner());
-//    assertNotEquals(player2, game.getOwnable("EmptyGameObject").getOwner());
-//    game.changeOwner(player2, game.getOwnable("EmptyGameObject"));
-//    assertEquals(player2, game.getOwnable("EmptyGameObject").getOwner());
-//    assertNotEquals(player1, game.getOwnable("EmptyGameObject").getOwner());
-//  }
+  @Test
+  public void changeOwner() {
+    assertNull(game.getOwnable("test"));
+    Player player1 = new Player();
+    Player player2 = new Player();
+    game.addPlayer(player1);
+    game.addPlayer(player2);
+    Map<ObjectParameter, String> params = Map.of(ObjectParameter.OWNABLE_TYPE, "GameObject", ObjectParameter.ID, "test", ObjectParameter.OWNER, "Player1");
+    game.sendObject(ObjectType.OWNABLE, params);
+    assertEquals(player1, game.getOwnable("test").getOwner());
+    assertNotEquals(player2, game.getOwnable("test").getOwner());
+    game.changeOwner(player2, game.getOwnable("test"));
+    assertEquals(player2, game.getOwnable("test").getOwner());
+    assertNotEquals(player1, game.getOwnable("test").getOwner());
+  }
 //
 //  @Test
 //  public void createOwnable() {
