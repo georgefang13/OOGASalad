@@ -917,7 +917,7 @@ public class CommandsTest {
         input = "make :x 3 make :y ln :x";
         interpreter.interpret(input);
         y = getVar("interpreter-:y");
-        assertEquals(1.0986122886681096, y.get());
+        assertEquals(1.0986122886681096, y.get(), 0.000000000000001);
 
         // natural log with non-numbers
         input = "make :x < 2 1 make :y ln :x";
