@@ -22,8 +22,6 @@ public class And extends OperatorToken {
         ValueToken<Boolean> x1 = checkArgumentWithSubtype(env, t1, ValueToken.class, Boolean.class.getName());
         ValueToken<Boolean> x2 = checkArgumentWithSubtype(env, t2, ValueToken.class, Boolean.class.getName());
 
-        System.out.println("And " + x1.VALUE + " " + x2.VALUE + " = " + (x1.VALUE && x2.VALUE));
-
         return new ValueToken<>(x1.VALUE && x2.VALUE);
     }
 }

@@ -131,6 +131,8 @@ public class FSMExample {
             }
             interpreter.interpret(goal);
 
+            System.out.println( ((Variable) idManager.getObject("log")).get());
+
             if (idManager.isIdInUse("state_output")){
                 Variable<String> output = (Variable<String>) idManager.getObject("state_output");
                 System.out.println(output.get() + " won!");
