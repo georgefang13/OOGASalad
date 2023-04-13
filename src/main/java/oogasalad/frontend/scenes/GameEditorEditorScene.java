@@ -18,6 +18,9 @@ import oogasalad.frontend.panels.subPanels.PropertiesPanel;
  * @author Owen MacKenzie
  */
 public class GameEditorEditorScene extends AbstractScene {
+
+    private static final String VISUAL_EDITOR_SCENE = "visual";
+
     private BorderPane root;
     private VBox rightTab; //REPLACE WITH A PANEL
     private VBox leftTab;
@@ -75,6 +78,7 @@ public class GameEditorEditorScene extends AbstractScene {
     }
     private void createLeftPanel(){
         componentsPanel = new ComponentPanel();
+        componentsPanel.setReferenceRoot(root);
     }
     private void createRightPanel(){
         rightTab = new VBox();
