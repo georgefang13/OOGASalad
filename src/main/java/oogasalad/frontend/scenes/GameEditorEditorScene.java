@@ -20,7 +20,6 @@ import oogasalad.frontend.panels.subPanels.PropertiesPanel;
 public class GameEditorEditorScene extends AbstractScene {
 
     private static final String VISUAL_EDITOR_SCENE = "visual";
-
     private BorderPane root;
     private VBox rightTab; //REPLACE WITH A PANEL
     private VBox leftTab;
