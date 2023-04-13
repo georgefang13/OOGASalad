@@ -104,6 +104,22 @@ public class ExpressionToken extends Token implements Iterable<Token> {
   }
 
   @Override
+  public boolean equals(Token t, Environment env){
+    if (t instanceof ExpressionToken){
+      ExpressionToken e = (ExpressionToken) t;
+      if (e.length() == length()){
+        for (int i = 0; i < length(); i++){
+          if (!get(i).equals(e.get(i), env)){
+            return false;
+          }
+        }
+        return true;
+      }
+    }
+    return false;
+  }
+
+  @Override
   public String toString() {
     StringBuilder s = new StringBuilder("<" + TYPE + " ");
     for (Token t : tokens) {

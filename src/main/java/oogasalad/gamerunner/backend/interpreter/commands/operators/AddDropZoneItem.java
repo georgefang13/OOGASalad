@@ -8,7 +8,7 @@ import oogasalad.sharedDependencies.backend.ownables.gameobjects.DropZone;
 
 public class AddDropZoneItem extends OperatorToken {
     public AddDropZoneItem() {
-        super(3, "AddDropZoneItem");
+        super(3, "PutDropZoneItem");
     }
     @Override
     public Token evaluate(Environment env) throws IllegalArgumentException {
@@ -21,9 +21,6 @@ public class AddDropZoneItem extends OperatorToken {
         ValueToken<DropZone> dz = checkArgumentWithSubtype(env, t3, ValueToken.class, DropZone.class.getName());
 
         dz.VALUE.putObject(name.VALUE, value.VALUE);
-
-        System.out.println("Added " + name.VALUE + " to " + dz.VALUE);
-
         return null;
     }
 }

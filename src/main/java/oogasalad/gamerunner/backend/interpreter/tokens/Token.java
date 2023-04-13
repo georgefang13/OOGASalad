@@ -46,6 +46,10 @@ public class Token {
         return link;
     }
 
+    public boolean equals(Token t, Environment env){
+        return TYPE.equals(t.TYPE) && SUBTYPE.equals(t.SUBTYPE);
+    }
+
     @Override
     public String toString(){
         return "<" + TYPE + ">";

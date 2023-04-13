@@ -7,6 +7,6 @@ import oogasalad.sharedDependencies.backend.ownables.Ownable;
  */
 public interface GameToInterpreterAPI {
 
-    public Ownable getOwnable(String id);
+    void removePlayer(String playerId);
 
 }
