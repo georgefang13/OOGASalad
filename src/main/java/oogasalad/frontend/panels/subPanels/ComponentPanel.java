@@ -5,7 +5,10 @@ import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TitledPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import oogasalad.frontend.modals.InputModal;
+import oogasalad.frontend.modals.ModalController;
 import oogasalad.frontend.panels.VBoxPanel;
 import oogasalad.frontend.panels.Panel;
 
@@ -16,6 +19,7 @@ public class ComponentPanel extends VBoxPanel {
   private static final ResourceBundle ID_BUNDLE = ResourceBundle.getBundle(
       "frontend/properties/StylingIDs/CSS_ID");
   private static final String ACCORDION_LABEL_ID = "AccordionLabelID";
+  private Pane root;
   /**
    * Constructor for HeaderMenu
    */
@@ -55,10 +59,25 @@ public class ComponentPanel extends VBoxPanel {
     return accordion;
   }
   private Accordion createActiveComponentsAccordion() {
-    TitledPane t1 = new TitledPane("Game Objects", new Button("B1")); // TODO: make this dynamic so when you press ok on the modal after adding a compoennet it shows up in this panel
+    TitledPane t1 = new TitledPane("Game Objects", createAccordionButton()); // TODO: make this dynamic so when you press ok on the modal after adding a compoennet it shows up in this panel
     Accordion accordion = new Accordion();
     accordion.getPanes().addAll(t1);
     return accordion;
+  }
+
+  private Button createAccordionButton(){
+    Button b = new Button("Make a new Game Object");
+    b.setOnAction(e -> promptModal());
+    return b;
+  }
+
+  private void promptModal() {
+    InputModal modal = new InputModal("createComponent");
+    ModalController mController = new ModalController();
+    mController.setRoot(root);
+    modal.attach(mController);
+    modal.showAndWait();
+    System.out.println("Test");
   }
 
   @Override
@@ -79,5 +98,8 @@ public class ComponentPanel extends VBoxPanel {
   @Override
   public void save() {
 
+  }
+  public void setReferenceRoot(Pane rt){
+    root = rt;
   }
 }

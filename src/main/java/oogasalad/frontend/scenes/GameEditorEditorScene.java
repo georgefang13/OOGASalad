@@ -77,6 +77,7 @@ public class GameEditorEditorScene extends AbstractScene {
     }
     private void createLeftPanel(){
         componentsPanel = new ComponentPanel();
+        componentsPanel.setReferenceRoot(root);
     }
     private void createRightPanel(){
         rightTab = new VBox();
