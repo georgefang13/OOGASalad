@@ -149,7 +149,7 @@ public class Environment {
 
     public void removeVariable(VariableToken var){
         String name = var.NAME;
-        if (name.startsWith(":game_")) {
+        if (name.startsWith(":game_") && game.isIdInUse(name.substring(6))) {
             game.removeObject(name.substring(6));
             return;
         }
@@ -161,7 +161,7 @@ public class Environment {
                 break;
             }
         }
-        if (getLocalVariable(name) == null) game.removeObject(name);
+        if (getLocalVariable(name) == null && game.isIdInUse(name)) game.removeObject(name);
     }
 
     public Variable<?> convertTokenToVariable(Token t){

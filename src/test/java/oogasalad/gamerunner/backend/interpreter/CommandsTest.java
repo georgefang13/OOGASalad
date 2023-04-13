@@ -193,6 +193,20 @@ public class CommandsTest {
             Token t = new ValueToken<>(1.);
             assertEquals(checkTypeErrorMsg(t, "Del", VariableToken.class), e.getMessage());
         }
+
+        // del with non-existing variable
+        input = "del :yegor";
+        interpreter.interpret(input);
+
+        // del with not enough parameters
+        input = "del";
+        try{
+            interpreter.interpret(input);
+            fail();
+        } catch (Exception e){
+            assertEquals("Invalid syntax: Not enough arguments for operator Del", e.getMessage());
+        }
+
     }
 
     @Test

@@ -2,7 +2,7 @@ package oogasalad.gamerunner.backend;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import oogasalad.gameeditor.backend.GameEditor;
+import oogasalad.gameeditor.backend.GameInator;
 import oogasalad.gameeditor.backend.goals.EmptyGoal;
 import oogasalad.gameeditor.backend.goals.Goal;
 import oogasalad.gameeditor.backend.id.IdManager;
@@ -15,7 +15,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class GameTest {
-  public GameEditor gameEditor;
+  public GameInator gameEditor;
   public IdManager<Ownable> ownableIdManager;
   public IdManager<Rule> ruleIdManager;
   public IdManager<Goal> goalIdManager;
@@ -24,7 +24,7 @@ class GameTest {
 
   @BeforeEach
   public void setUp() {
-    gameEditor = new GameEditor();
+    gameEditor = new GameInator();
     ownableIdManager = new IdManager<>();
     ruleIdManager = new IdManager<>();
     goalIdManager = new IdManager<>();

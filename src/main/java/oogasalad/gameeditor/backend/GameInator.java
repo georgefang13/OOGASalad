@@ -21,7 +21,7 @@ import oogasalad.sharedDependencies.backend.ownables.Ownable;
  * @author Michael Bryant
  * @author Max Meister
  */
-public class GameEditor {
+public class GameInator {
 
   /**
    * The Rules of the game.
@@ -37,17 +37,12 @@ public class GameEditor {
    * The Players of the game.
    * Players own Ownables.
    */
-  private final IdManager<Player> playerIdManager = new IdManager();
+  private final IdManager<Player> playerIdManager = new IdManager<>();
 
   /**
    * The IdManager of the game for Ownables.
    */
-  private final IdManager<Ownable> ownableIdManager = new IdManager();
-
-  /**
-   * The OwnableFactory of the game.
-   */
-  OwnableFactory ownableFactory = new OwnableFactory();
+  private final IdManager<Ownable> ownableIdManager = new IdManager<>();
 
   /**
    * The GameWorld of the game.
@@ -56,66 +51,8 @@ public class GameEditor {
   private final GameWorld gameWorld = new GameWorld();
 
   /**
-   * Adds a Player to the game.
-   * @param player
-   */
-  public void addPlayer(Player player) {
-    playerIdManager.addObject(player);
-  }
-
-  /**
-   * Adds n Players to the game.
-   * @param n the number of Players to add`
-   */
-  public void addNPlayers(int n) {
-    for (int i = 0; i < n; i++) {
-      addPlayer(new Player());
-    }
-  }
-
-  /**
-   * Removes a Player from the game, if it exists there.
-   * Destroys all Ownables owned by the Player. //TODO throw warning about this
-   * @param player
-   */
-  public void removePlayer(Player player) {
-    if(!playerIdManager.isIdInUse(playerIdManager.getId(player))) {
-      return;
-    }
-    //remove all ownables owned by player
-    for(Map.Entry<String, Ownable> entry : ownableIdManager) {
-      if (entry.getValue().getOwner() == player) {
-        ownableIdManager.removeObject(entry.getValue());
-      }
-    }
-    playerIdManager.removeObject(player);
-  }
-
-  /**
-   * Removes all Players from the game and their Ownables.
-   */
-  public void removeAllPlayers() {
-    playerIdManager.clear();
-    ownableIdManager.clear();
-    // TODO reconsider
-  }
-
-  /**
-   * Gets the Players of the game.
-   * @return unmodifiable List of Players
-   */
-  public List<Player> getPlayers() {
-    ArrayList<Player> listPlayers= new ArrayList<>();
-    for(Map.Entry<String, Player> entry : playerIdManager) {
-      listPlayers.add(entry.getValue());
-    }
-    return Collections.unmodifiableList(listPlayers);
-  }
-
-
-  /**
    * Adds a Rule to the game.
-   * @param rule
+   * @param rule the Rule to add
    */
   public void addRule(Rule rule) {
     rules.addObject(rule);
@@ -123,7 +60,7 @@ public class GameEditor {
 
   /**
    * Removes a Rule from the game, if it exists there.
-   * @param rule
+   * @param rule the Rule to remove
    */
   public void removeRule(Rule rule) {
     if(!rules.isIdInUse(rules.getId(rule))) {
@@ -205,7 +142,7 @@ public class GameEditor {
     if (owner == null){
       destinationOwner = gameWorld;
     }
-    Ownable newOwnable = ownableFactory.createOwnable(type, destinationOwner);
+    Ownable newOwnable = OwnableFactory.createOwnable(type, destinationOwner);
     ownableIdManager.addObject(newOwnable, parentOwnable);
   }
 
@@ -213,8 +150,8 @@ public class GameEditor {
    Method is called in order to send information about a newly constructed   object that was made in the front end sent to the backend. The
    controller sends to the backend for the backend to input these into a
    file
-   @Type The class the object belongs to
-   @Params The params of the object
+   @param type The class the object belongs to
+   @param params The params of the object
    **/
   public void sendObject(String type, String params) {
     //TODO this sucks and is sorta hardcoded
@@ -259,7 +196,6 @@ public class GameEditor {
     getOwnable(id).setOwner(owner);
   }
 
-
   /**
    * Gets an Ownable from the IdManager for a given id.
    * @param id the id of the Ownable
@@ -272,6 +208,4 @@ public class GameEditor {
     }
     return ownableIdManager.getObject(id);
   }
-
-  //TODO TURN
 }
