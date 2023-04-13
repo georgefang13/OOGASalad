@@ -54,6 +54,20 @@ public class DisplayableObject extends AbstractComponent implements DisplayableC
     }
 
     @Override
+    public void followMouse() {
+        image.setOnMousePressed(e -> {
+            double xOffset = e.getSceneX() - (getImage().getTranslateX() - getImage().getBoundsInLocal().getWidth()/2);
+            double yOffset = e.getSceneY() - (getImage().getTranslateY() - getImage().getBoundsInLocal().getHeight()/2);
+            setxOffset(xOffset);
+            setyOffset(yOffset);
+        });
+        getImage().setOnMouseDragged(e -> {
+            getImage().setTranslateX(e.getSceneX() - getxOffset());
+            getImage().setTranslateY(e.getSceneY() - getyOffset());
+        });
+    }
+
+    @Override
     public void setVisible(boolean visible) {
         this.visible = visible;
     }

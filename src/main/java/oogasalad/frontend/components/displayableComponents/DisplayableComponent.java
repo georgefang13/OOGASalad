@@ -40,5 +40,7 @@ public interface DisplayableComponent extends Component {
    * @param size the size of the ImageView that represents the Component
    */
   void setSize(int size);
+  void followMouse();
+  void setDefault();
 
 }

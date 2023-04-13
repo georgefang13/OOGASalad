@@ -8,8 +8,11 @@ import java.util.ResourceBundle;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import oogasalad.frontend.components.AbstractComponent;
+import oogasalad.frontend.components.Component;
 import oogasalad.frontend.components.Point;
-import oogasalad.frontend.components.draggableComponent.DraggableObject;
+import oogasalad.frontend.components.displayableComponents.DisplayableComponent;
+import oogasalad.frontend.components.displayableComponents.DisplayableObject;
 
 
 /**
@@ -17,7 +20,7 @@ import oogasalad.frontend.components.draggableComponent.DraggableObject;
  * Concrete Class for GameObject, a reflection of what is going to be a "GameObject" on the backend
  */
 
-public class GameObject extends DraggableObject implements GameObjectComponent{
+public class GameObject extends DisplayableObject implements GameObjectComponent, DisplayableComponent, Component {
   private String name;
   private List<Node> children;
   private boolean playable;
@@ -27,6 +30,7 @@ public class GameObject extends DraggableObject implements GameObjectComponent{
     children = null;
     followMouse();
   }
+
   @Override
   public void setDefault() {
     Properties properties = new Properties();
