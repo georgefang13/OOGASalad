@@ -29,6 +29,12 @@ public class ModalScene extends AbstractScene {
       CreateNewModal modal = new CreateNewModal("Create_Game_Modal");
       modal.showAndWait();
     });
+    Button playerButton = new Button("Create New Player");
+    playerButton.setOnAction(e -> {
+      CreateNewModal modal = new CreateNewModal("Create_Player_Modal");
+      modal.showAndWait();
+    });
+    root.getChildren().add(playerButton);
     errorButton = new Button();
     errorButton.setOnAction(e -> {
       AlertModal modal = new AlertModal();
