@@ -6,7 +6,7 @@ import com.google.gson.JsonParser;
 import java.io.File;
 import java.io.FileWriter;
 import java.util.ResourceBundle;
-import oogasalad.gameeditor.backend.filemanagers.FileManager;
+import oogasalad.sharedDependencies.backend.filemanagers.FileManager;
 
 /**
  * @author Han
