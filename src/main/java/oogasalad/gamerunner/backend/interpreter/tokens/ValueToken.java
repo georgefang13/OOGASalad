@@ -21,6 +21,9 @@ public class ValueToken<T> extends Token {
 
     @Override
     public boolean equals(Token t, Environment env){
+        if (t instanceof OperatorToken o) {
+            t = t.evaluate(env);
+        }
         if(t instanceof ValueToken other){
             return VALUE.equals(other.VALUE);
         }
