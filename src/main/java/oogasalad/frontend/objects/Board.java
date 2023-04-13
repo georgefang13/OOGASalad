@@ -7,6 +7,7 @@ public class Board {
     private int width;
     private DropZone[][] boardDrops;
     private GridPane boardPane;
+    private int blockSize;
 
     public Board(int height, int width) {
         this.height = height;
@@ -17,13 +18,18 @@ public class Board {
     private void initializeBoard() {
         boardPane = new GridPane();
         boardDrops = new DropSquare[height][width];
+        blockSize = readBlockSize();
         for (int row = 0; row < height; row++) {
             for (int col = 0; col < width; col++) {
-                DropZone gridSquare = new DropSquare(80);
+                DropZone gridSquare = new DropSquare(blockSize);
                 boardDrops[row][col] = gridSquare;
                 boardPane.add(gridSquare.getDropZoneVisual(), col, row);
             }
         }
+    }
+
+    private int readBlockSize() {
+        return 80;
     }
 
     public GridPane getBoardVisual() {
@@ -34,7 +40,12 @@ public class Board {
         DropZone pieceSquare = boardDrops[x][y];
         pieceSquare.addPiece(pieceName);
     }
+    public record BoardXY(int x, int y) {
+    }
 
-    record dropXY(double x, double y) {
+    public BoardXY boardXYofClick(double mouseX, double mouseY){
+        int x = (int) (mouseX / blockSize);
+        int y = (int) (mouseY / blockSize);
+        return new BoardXY(x,y);
     }
 }

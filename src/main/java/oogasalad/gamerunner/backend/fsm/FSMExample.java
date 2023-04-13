@@ -64,8 +64,6 @@ class InitState extends State {
 
         List<GameObject> available = new ArrayList<>();
 
-        System.out.println("running onInit");
-
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 DropZone dropZone = (DropZone) idManager.getObject(i + "," + j);
