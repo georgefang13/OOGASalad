@@ -5,8 +5,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import oogasalad.gameeditor.backend.goals.Goal;
 import oogasalad.gameeditor.backend.id.IdManager;
+import oogasalad.gamerunner.backend.interpretables.Goal;
 import oogasalad.sharedDependencies.backend.ownables.OwnableFactory;
 import oogasalad.sharedDependencies.backend.owners.GameWorld;
 import oogasalad.sharedDependencies.backend.owners.Owner;
@@ -37,12 +37,17 @@ public class GameInator {
    * The Players of the game.
    * Players own Ownables.
    */
-  private final IdManager<Player> playerIdManager = new IdManager<>();
+  private final IdManager<Player> playerIdManager = new IdManager();
 
   /**
    * The IdManager of the game for Ownables.
    */
-  private final IdManager<Ownable> ownableIdManager = new IdManager<>();
+  private final IdManager<Ownable> ownableIdManager = new IdManager();
+
+  /**
+   * The OwnableFactory of the game.
+   */
+  OwnableFactory ownableFactory = new OwnableFactory();
 
   /**
    * The GameWorld of the game.
@@ -51,8 +56,66 @@ public class GameInator {
   private final GameWorld gameWorld = new GameWorld();
 
   /**
+   * Adds a Player to the game.
+   * @param player
+   */
+  public void addPlayer(Player player) {
+    playerIdManager.addObject(player);
+  }
+
+  /**
+   * Adds n Players to the game.
+   * @param n the number of Players to add`
+   */
+  public void addNPlayers(int n) {
+    for (int i = 0; i < n; i++) {
+      addPlayer(new Player());
+    }
+  }
+
+  /**
+   * Removes a Player from the game, if it exists there.
+   * Destroys all Ownables owned by the Player. //TODO throw warning about this
+   * @param player
+   */
+  public void removePlayer(Player player) {
+    if(!playerIdManager.isIdInUse(playerIdManager.getId(player))) {
+      return;
+    }
+    //remove all ownables owned by player
+    for(Map.Entry<String, Ownable> entry : ownableIdManager) {
+      if (entry.getValue().getOwner() == player) {
+        ownableIdManager.removeObject(entry.getValue());
+      }
+    }
+    playerIdManager.removeObject(player);
+  }
+
+  /**
+   * Removes all Players from the game and their Ownables.
+   */
+  public void removeAllPlayers() {
+    playerIdManager.clear();
+    ownableIdManager.clear();
+    // TODO reconsider
+  }
+
+  /**
+   * Gets the Players of the game.
+   * @return unmodifiable List of Players
+   */
+  public List<Player> getPlayers() {
+    ArrayList<Player> listPlayers= new ArrayList<>();
+    for(Map.Entry<String, Player> entry : playerIdManager) {
+      listPlayers.add(entry.getValue());
+    }
+    return Collections.unmodifiableList(listPlayers);
+  }
+
+
+  /**
    * Adds a Rule to the game.
-   * @param rule the Rule to add
+   * @param rule
    */
   public void addRule(Rule rule) {
     rules.addObject(rule);
@@ -60,7 +123,7 @@ public class GameInator {
 
   /**
    * Removes a Rule from the game, if it exists there.
-   * @param rule the Rule to remove
+   * @param rule
    */
   public void removeRule(Rule rule) {
     if(!rules.isIdInUse(rules.getId(rule))) {
@@ -142,7 +205,7 @@ public class GameInator {
     if (owner == null){
       destinationOwner = gameWorld;
     }
-    Ownable newOwnable = OwnableFactory.createOwnable(type, destinationOwner);
+    Ownable newOwnable = ownableFactory.createOwnable(type, destinationOwner);
     ownableIdManager.addObject(newOwnable, parentOwnable);
   }
 
@@ -150,8 +213,8 @@ public class GameInator {
    Method is called in order to send information about a newly constructed   object that was made in the front end sent to the backend. The
    controller sends to the backend for the backend to input these into a
    file
-   @param type The class the object belongs to
-   @param params The params of the object
+   @Type The class the object belongs to
+   @Params The params of the object
    **/
   public void sendObject(String type, String params) {
     //TODO this sucks and is sorta hardcoded
@@ -195,6 +258,7 @@ public class GameInator {
   public void setOwner(String id, Owner owner) throws IllegalArgumentException{
     getOwnable(id).setOwner(owner);
   }
+
 
   /**
    * Gets an Ownable from the IdManager for a given id.

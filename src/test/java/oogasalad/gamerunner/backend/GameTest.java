@@ -3,11 +3,10 @@ package oogasalad.gamerunner.backend;
 import static org.junit.jupiter.api.Assertions.*;
 
 import oogasalad.gameeditor.backend.GameInator;
-import oogasalad.gameeditor.backend.goals.EmptyGoal;
-import oogasalad.gameeditor.backend.goals.Goal;
 import oogasalad.gameeditor.backend.id.IdManager;
 import oogasalad.gameeditor.backend.rules.EmptyRule;
 import oogasalad.gameeditor.backend.rules.Rule;
+import oogasalad.gamerunner.backend.interpretables.Goal;
 import oogasalad.sharedDependencies.backend.ownables.Ownable;
 import oogasalad.sharedDependencies.backend.owners.GameWorld;
 import oogasalad.sharedDependencies.backend.owners.Player;
@@ -105,16 +104,16 @@ class GameTest {
   @Test
   public void addGoal() {
     assertTrue(gameEditor.getGoals().isEmpty());
-    gameEditor.addGoal(new EmptyGoal());
+    gameEditor.addGoal(new Goal());
     assertEquals(1, gameEditor.getGoals().size());
-    gameEditor.addGoal(new EmptyGoal());
+    gameEditor.addGoal(new Goal());
     assertEquals(2, gameEditor.getGoals().size());
   }
 
   @Test
   public void removeGoal() {
     assertTrue(gameEditor.getGoals().isEmpty());
-    gameEditor.addGoal(new EmptyGoal());
+    gameEditor.addGoal(new Goal());
     assertEquals(1, gameEditor.getGoals().size());
     gameEditor.removeGoal(gameEditor.getGoals().get(0));
     assertTrue(gameEditor.getGoals().isEmpty());
@@ -123,7 +122,7 @@ class GameTest {
   @Test
   public void getGoals() {
     assertTrue(gameEditor.getGoals().isEmpty());
-    EmptyGoal goal = new EmptyGoal();
+    Goal goal = new Goal();
     gameEditor.addGoal(goal);
     assertEquals(goal, gameEditor.getGoals().get(0));
   }

@@ -1,10 +1,12 @@
 package oogasalad.gamerunner.backend;
 
 import com.google.gson.JsonObject;
-import oogasalad.gameeditor.backend.goals.Goal;
 import oogasalad.gameeditor.backend.id.IdManager;
 import oogasalad.gameeditor.backend.rules.Rule;
 import oogasalad.gamerunner.backend.fsm.FSM;
+import oogasalad.gamerunner.backend.interpretables.Goal;
+import oogasalad.gamerunner.backend.interpretables.Interpretable;
+import oogasalad.gamerunner.backend.interpreter.Interpreter;
 import oogasalad.sharedDependencies.backend.ownables.Ownable;
 import oogasalad.sharedDependencies.backend.ownables.OwnableFactory;
 import oogasalad.sharedDependencies.backend.ownables.gameobjects.GameObject;
@@ -53,12 +55,16 @@ public class Game {
 
   private final FSM<String> fsm = new FSM<>(ownableIdManager);
 
+  private final Interpreter interpreter = new Interpreter();
+
   private int numPlayers = 1;
 
 
   /////////////////// PLAY THE GAME ///////////////////
 
   public void initGame() {
+    interpreter.link(ownableIdManager);
+
     Variable<Double> turn = new Variable<>(0.);
     turn.setOwner(gameWorld);
     ownableIdManager.addObject(turn, "turn");
@@ -90,10 +96,18 @@ public class Game {
     }
   }
 
+  public void keyDown(String key) {
+
+  }
+
+  public void keyUp(String key) {
+
+  }
+
   private int checkGoals() {
     for (Map.Entry<String, Goal> goal : goals){
       Goal g = goal.getValue();
-      int player = g.evaluate(ownableIdManager, playerIdManager);
+      int player = g.test(interpreter, ownableIdManager);
       if (player != -1){
         return player;
       }

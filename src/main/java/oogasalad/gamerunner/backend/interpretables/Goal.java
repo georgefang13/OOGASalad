@@ -1,5 +1,6 @@
 package oogasalad.gamerunner.backend.interpretables;
 
+import oogasalad.gameeditor.backend.id.IdManageable;
 import oogasalad.gameeditor.backend.id.IdManager;
 import oogasalad.gamerunner.backend.interpreter.Interpreter;
 import oogasalad.sharedDependencies.backend.ownables.variables.Variable;
@@ -12,7 +13,7 @@ import oogasalad.sharedDependencies.backend.ownables.variables.Variable;
  * @author Rodrigo Bassi Guerreiro
  */
 public class Goal extends Interpretable {
-  public boolean test(Interpreter interpreter, IdManager idmanager){
+  public int test(Interpreter interpreter, IdManager idmanager){
     interpreter.interpret("del :game_output_state");
 
     for (String instruction : getInstructions()) {
@@ -20,10 +21,10 @@ public class Goal extends Interpretable {
     }
 
     if (!idmanager.isIdInUse("output_state")){
-      return false;
+      return -1;
     }
-    Variable v = (Variable) idmanager.getObject("output_state");
-    return v.get().equals(true);
+    Variable<Double> v = (Variable<Double>) idmanager.getObject("output_state");
+    return v.get().intValue();
   }
 
 }
