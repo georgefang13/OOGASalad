@@ -151,6 +151,10 @@ public class Modal<T> extends Dialog<T> {
         return new TreeMap<>(myPropertiesMap);
     }
 
+    protected String getMyTitle() {
+        return myTitle;
+    }
+
     /**
      * Converts the button type to the result
      * 

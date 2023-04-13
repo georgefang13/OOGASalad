@@ -4,6 +4,7 @@ package oogasalad.sharedDependencies.backend.ownables;
 import java.util.HashSet;
 import oogasalad.gameeditor.backend.id.IdManageable;
 import oogasalad.gameeditor.backend.id.IdManager;
+import oogasalad.sharedDependencies.backend.filemanagers.JsonSaveable;
 import oogasalad.sharedDependencies.backend.owners.GameWorld;
 import oogasalad.sharedDependencies.backend.owners.Owner;
 import oogasalad.sharedDependencies.backend.owners.Player;
@@ -23,7 +24,7 @@ import oogasalad.sharedDependencies.backend.owners.Player;
  * @author Michael Bryant
  * @author Max Meister
  */
-public abstract class Ownable extends IdManageable {
+public abstract class Ownable extends IdManageable implements JsonSaveable {
 
   private Owner owner;
 

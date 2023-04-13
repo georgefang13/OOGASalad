@@ -1,0 +1,25 @@
+{
+  "states": {
+    "INIT": {
+      "init": "to getAvailable [ ] [ make :game_available [ ] for [ :i 0 3 ] [ for [ :j 0 3 ] [ make :x fromgame + + :i \", :j if [ == 0 len dzitems :x ] [ additem :x :game_available ] ] ] ] getAvailable",
+      "leave": "",
+      "setValue": "",
+      "to": "make :game_state_output \"MOVE"
+    },
+    "MOVE": {
+      "init": "",
+      "leave": "getAvailable",
+      "setValue": "ifelse [ == :game_turn 0 ] [ putdzitem \"obj \"X fromgame :game_state_input  ] [ putdzitem \"obj \"O fromgame :game_state_input ] getAvailable",
+      "to": "make :game_state_output \"DONE"
+    },
+    "DONE": {
+      "init": "make :game_turn % + :game_turn 1 :game_numPlayers",
+      "leave": "",
+      "setValue": "",
+      "to": ""
+    }
+  },
+  "goals": [
+  "to check [ :name0 :name1 :name2 ] [    make :z1 dzitem \"obj fromgame :name0    make :z2 dzitem \"obj fromgame :name1    make :z3 dzitem \"obj fromgame :name2        if [ and or == \"X :z1 == \"O :z1 and == :z1 :z2 == :z2 :z3 ] [             make :game_state_output :z1       ] ]    for [ :i 0 3 ] [     make :name0 + + :i \", 0    make :name1 + + :i \", 1    make :name2 + + :i \", 2        check :name0 :name1 :name2             make :name0 + + 0 \", :i     make :name1 + + 1 \", :i    make :name2 + + 2 \", :i        check :name0 :name1 :name2 ] make :name0 + + 0 \", 0 make :name1 + + 1 \", 1 make :name2 + + 2 \", 2 check :name0 :name1 :name2 make :name0 + + 0 \", 2 make :name1 + + 1 \", 1 make :name2 + + 2 \", 0 check :name0 :name1 :name2"
+  ]
+}

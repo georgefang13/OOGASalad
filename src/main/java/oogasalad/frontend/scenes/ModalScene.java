@@ -4,7 +4,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import oogasalad.frontend.modals.subDisplayModals.AlertModal;
-import oogasalad.frontend.modals.subInputModals.CreateGameModal;
+import oogasalad.frontend.modals.subInputModals.CreateNewModal;
 
 /**
  * @author George Fang
@@ -26,9 +26,15 @@ public class ModalScene extends AbstractScene {
     VBox root = new VBox();
     createGameButton = new Button();
     createGameButton.setOnAction(e -> {
-      CreateGameModal modal = new CreateGameModal();
+      CreateNewModal modal = new CreateNewModal("Create_Game_Modal");
       modal.showAndWait();
     });
+    Button playerButton = new Button("Create New Player");
+    playerButton.setOnAction(e -> {
+      CreateNewModal modal = new CreateNewModal("Create_Player_Modal");
+      modal.showAndWait();
+    });
+    root.getChildren().add(playerButton);
     errorButton = new Button();
     errorButton.setOnAction(e -> {
       AlertModal modal = new AlertModal();

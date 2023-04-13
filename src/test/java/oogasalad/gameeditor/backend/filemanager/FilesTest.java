@@ -10,9 +10,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import oogasalad.gameeditor.backend.filemanagers.FileManager;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
+import oogasalad.sharedDependencies.backend.filemanagers.FileManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
