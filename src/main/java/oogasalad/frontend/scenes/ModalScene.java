@@ -24,7 +24,7 @@ public class ModalScene extends AbstractScene {
   @Override
   public Scene makeScene() {
     VBox root = new VBox();
-    createGameButton = new Button();
+    createGameButton = new Button("Create New Game");
     createGameButton.setOnAction(e -> {
       CreateNewModal modal = new CreateNewModal("Create_Game_Modal");
       modal.showAndWait();
@@ -35,7 +35,7 @@ public class ModalScene extends AbstractScene {
       modal.showAndWait();
     });
     root.getChildren().add(playerButton);
-    errorButton = new Button();
+    errorButton = new Button("Alert Modal");
     errorButton.setOnAction(e -> {
       AlertModal modal = new AlertModal();
       modal.showAndWait();
@@ -49,8 +49,8 @@ public class ModalScene extends AbstractScene {
 
   @Override
   public void setText() {
-    createGameButton.setText(getPropertyManager().getText("ModalScene.CreateGameButton"));
-    errorButton.setText(getPropertyManager().getText("ModalScene.ErrorButton"));
+//    createGameButton.setText(getPropertyManager().getText("ModalScene.CreateGameButton"));
+//    errorButton.setText(getPropertyManager().getText("ModalScene.ErrorButton"));
   }
 }
 
