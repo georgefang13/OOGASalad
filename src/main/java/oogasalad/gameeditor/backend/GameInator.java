@@ -161,16 +161,6 @@ public class GameInator {
     players.add(player);
   }
 
-  /**
-   * Removes a Player from the game, if there is one.
-   * Destroys all Ownables owned by the Player.
-   */
-  public void removePlayer() {
-    if (players.size() > 0) {
-      //remove the last player
-      players.remove(players.size() - 1);
-    }
-  }
 
   /**
    * Removes all Players from the game and their Ownables.
@@ -198,16 +188,6 @@ public class GameInator {
     rules.addObject(rule);
   }
 
-  /**
-   * Removes a Rule from the game, if it exists there.
-   * @param rule the Rule to remove
-   */
-  public void removeRule(Rule rule) {
-    if(!rules.isIdInUse(rules.getId(rule))) {
-      return;
-    }
-    rules.removeObject(rule);
-  }
 
   /**
    * Gets the Rules of the game.
@@ -227,17 +207,6 @@ public class GameInator {
    */
   public void addGoal(Goal goal) {
     goals.addObject(goal);
-  }
-
-  /**
-   * Removes a Goal from the game, if it exists there.
-   * @param goal the Goal to remove
-   */
-  public void removeGoal(Goal goal) {
-    if(!goals.isIdInUse(goals.getId(goal))) {
-      return;
-    }
-    goals.removeObject(goal);
   }
 
   /**
@@ -342,33 +311,143 @@ public class GameInator {
       case GOAL -> createGoal(params);
       default -> throw new IllegalArgumentException("Invalid type"); //TODO add to properties
     }
-
-
-
-
-
-
-//    //TODO this sucks and is sorta hardcoded
-//    List<String> parameters = Arrays.asList(params.split(";"));
-//    //{"owner=id1", "parentOwnable=id2"}
-//    String ownerID = parameters.get(0).substring(parameters.get(0).indexOf("=") + 1);
-//    String parentOwnableID = parameters.get(1).substring(parameters.get(1).indexOf("=") + 1);
-//    if (ownerID.equals("NULL")){
-//      if (parentOwnableID.equals("NULL")){
-//        createOwnable(type, null, null);
-//      }
-//      createOwnable(type, null, getOwnable(parentOwnableID));
-//    }
-//    else if (parentOwnableID.equals("NULL")) {
-//      createOwnable(type, playerIdManager.getObject(ownerID), null);
-//    }
-//    else {
-//      createOwnable(type, playerIdManager.getObject(ownerID), getOwnable(parentOwnableID));
-//    }
   }
 
   //endregion sendObject API
 
+  //region deleteObject API
+
+  /**
+   * Removes an Ownable from the game, if it exists there.
+   * @param params the parameters of the ownable
+   */
+  public void removeOwnable(Map<ObjectParameter, String> params) {
+    String id = params.get(ObjectParameter.ID);
+    if(!ownableIdManager.isIdInUse(id)) {
+      return;
+    }
+    ownableIdManager.removeObject(id);
+  }
+
+  /**
+   * Removes a Player from the game, if there is one.
+   * params the parameters of the player
+   */
+  public void removePlayer() {
+    if (players.size() > 0) {
+      //remove the last player
+      players.remove(players.size() - 1);
+    }
+  }
+
+  /**
+   * Removes a Goal from the game, if it exists there.
+   * @param params the parameters of the goal
+   */
+  public void removeGoal(Map<ObjectParameter, String> params) {
+    String id = params.get(ObjectParameter.ID);
+    if(!goals.isIdInUse(id)) {
+      return;
+    }
+    goals.removeObject(id);
+  }
+
+  /**
+   * Removes a Rule from the game, if it exists there.
+   * @param params the parameters of the rule
+   */
+  public void removeRule(Map<ObjectParameter, String> params) {
+    String id = params.get(ObjectParameter.ID);
+    if(!rules.isIdInUse(id)) {
+      return;
+    }
+    rules.removeObject(id);
+  }
+
+  /**
+   Method is called in order to send a request to the backend to delete an object.
+   @Type The class the object belongs to
+   @Params The params of the object
+   **/
+  public void deleteObject(ObjectType type, Map<ObjectParameter, String> params) throws IllegalArgumentException{
+    switch (type) {
+      case PLAYER -> removePlayer();
+      case OWNABLE -> removeOwnable(params);
+      case RULE -> removeRule(params);
+      case GOAL -> removeGoal(params);
+      default -> throw new IllegalArgumentException("Invalid type"); //TODO add to properties
+    }
+  }
+
+  //endregion deleteObject API
+
+  //region updateObjectProperties API
+
+  /**
+   * Update an Ownable in the game.
+   * @param params the parameters of the ownable
+   */
+  public void updateOwnable(Map<ObjectParameter, String> params) {
+    String ownableType = params.get(ObjectParameter.OWNABLE_TYPE);
+    String parentOwnerName = params.get(ObjectParameter.OWNER);
+    String id = params.get(ObjectParameter.ID);
+    String parentOwnableName = params.get(ObjectParameter.PARENT_OWNABLE);
+    String val = params.get(ObjectParameter.VALUE);
+    double value = 0;
+    if (ownableType == "Variable") {
+      try {
+        value = Double.parseDouble(val);
+      } catch (NumberFormatException e) {
+        ((Variable) (ownableIdManager.getObject(id))).set(val);
+      }
+      ((Variable) (ownableIdManager.getObject(id))).set(value);
+    }
+    //ownableIdManager.getObject(id).setOwner(getOwner(parentOwnerName));
+    //TODO make this updateable for all things
+  }
+
+  /**
+   * Update a goal in the game.
+   * @param params the parameters of the goal
+   */
+  public void updateGoal(Map<ObjectParameter, String> params) {
+    String ownableType = params.get(ObjectParameter.OWNABLE_TYPE);
+    String parentOwnerName = params.get(ObjectParameter.OWNER);
+    String id = params.get(ObjectParameter.ID);
+    String parentOwnableName = params.get(ObjectParameter.PARENT_OWNABLE);
+    String val = params.get(ObjectParameter.VALUE);
+    //TODO make this updateable for all things
+  }
+
+  /**
+   * Update a rule in the game.
+   * @param params the parameters of the rule
+   */
+  public void updateRule(Map<ObjectParameter, String> params) {
+    String ownableType = params.get(ObjectParameter.OWNABLE_TYPE);
+    String parentOwnerName = params.get(ObjectParameter.OWNER);
+    String id = params.get(ObjectParameter.ID);
+    String parentOwnableName = params.get(ObjectParameter.PARENT_OWNABLE);
+    String val = params.get(ObjectParameter.VALUE);
+    //TODO make this updateable for all things
+  }
+
+  /**
+   Method is called to update information about a modified object in teh front end. The controller sends updates to the Backend by giving the type and params for identification
+   @type The class the object belongs to
+   @Params The updated params of the object
+   **/
+  public void updateObjectProperties(ObjectType type, Map<ObjectParameter, String> params) throws IllegalArgumentException{
+    switch (type) {
+      case PLAYER -> {}
+      case OWNABLE -> updateOwnable(params);
+      case RULE -> updateRule(params);
+      case GOAL -> updateGoal(params);
+      default -> throw new IllegalArgumentException("Invalid type"); //TODO add to properties
+    }
+  }
+
+  //endregion updateObjectProperties API
 
   /**
    * Gets the Owner of an Ownable with id.

@@ -82,4 +82,19 @@ public class ObjectFactoryTest {
     assertEquals("parent.Variable", idManager.getId(ownable));
   }
 
+  @Test
+  public void testBoardCreator() {
+    Map<ObjectParameter, String> params = Map.of(ObjectParameter.OWNABLE_TYPE, "BoardCreator", ObjectParameter.BOARD_CREATOR_TYPE, "createGrid", ObjectParameter.BOARD_CREATOR_PARAM_1, "5", ObjectParameter.BOARD_CREATOR_PARAM_2, "5");
+    factory.createOwnable(params);
+    assertEquals(25, idManager.getSimpleIds().size());
+    params = Map.of(ObjectParameter.OWNABLE_TYPE, "BoardCreator", ObjectParameter.BOARD_CREATOR_TYPE, "createSquareLoop", ObjectParameter.BOARD_CREATOR_PARAM_1, "5", ObjectParameter.BOARD_CREATOR_PARAM_2, "2");
+    factory.createOwnable(params);
+    assertEquals(25+10, idManager.getSimpleIds().size());
+    System.out.println(idManager.getSimpleIds());
+//    params = Map.of(ObjectParameter.OWNABLE_TYPE, "BoardCreator", ObjectParameter.BOARD_CREATOR_TYPE, "create1DLoop", ObjectParameter.BOARD_CREATOR_PARAM_1, "5");
+//    factory.createOwnable(params);
+//    assertEquals(25+10+5, idManager.getSimpleIds().size());
+
+  }
+
 }
