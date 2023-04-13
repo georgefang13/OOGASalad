@@ -73,7 +73,6 @@ public class CreateNewModal extends InputModal {
 
             String labelName = entry.getKey().toString().substring(start);
             labelName = labelName.split("\\.")[0];
-//            Class<?> topClass = Class.forName("oogasalad.frontend.modals.fields.Field");
 
             // Get the field class corresponding to the property name using reflection
             Class<?> fieldClass = Class.forName("oogasalad.frontend.modals.fields." + fieldType + "Component");
@@ -94,23 +93,6 @@ public class CreateNewModal extends InputModal {
             rowIndex++;
         }
 
-
-
-
-//
-//        grid.add(new Label(myPropertiesMap.get("Name")), 0, 0);
-//        grid.add(makeTextField(myPropertiesMap.get("Name")),1, 0);
-//        grid.add(new Label(myPropertiesMap.get("Description")), 0, 1);
-//        grid.add(makeTextField(myPropertiesMap.get("Description")), 1, 1);
-//        grid.add(new Label(myPropertiesMap.get("Tags")), 0, 2);
-//        grid.add(makeRadioButtons(myPropertiesMap.get("Tags")), 1, 2);
-//        grid.add(new Label(myPropertiesMap.get("Template")), 0, 3);
-//        grid.add(makeDropdown(myPropertiesMap.get("Template")), 1, 3);
-//        grid.add(new Label(myPropertiesMap.get("SetImage")), 0, 4);
-////        grid.add(makeImagePicker(myPropertiesMap.get("SetImage")), 1, 4);
-//        Button imagePicker = makeImagePicker(myPropertiesMap.get("SetImage"));
-////        imagePicker.setId(MODAL_ID_BUNDLE.getString(IMAGE_PICKER_ID));
-//        grid.add(imagePicker, 1, 4);
 
 
         this.getDialogPane().setContent(grid);

@@ -20,7 +20,6 @@ public class ChoiceBoxComponent extends Field {
     public HBox createField() {
         ChoiceBox<String> choiceBox = new ChoiceBox<>();
         choiceBox.getItems().addAll(options);
-//            choiceBox.setValue(propertyValue);
         return new HBox(new Label(labText+": "), choiceBox);
     }
 }
