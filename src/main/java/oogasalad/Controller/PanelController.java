@@ -14,7 +14,7 @@ public class PanelController {
 
   /**
    * Initialize with the new Panel so the panel can communicate with windowController
-   * @param windowController the windowCOntroller that changes the scene for the Window
+   * @param windowController the windowController that changes the scene for the Window
    */
   public PanelController(WindowController windowController){
     controller = windowController;
