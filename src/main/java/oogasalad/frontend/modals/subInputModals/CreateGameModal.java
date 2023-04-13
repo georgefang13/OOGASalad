@@ -12,15 +12,19 @@ import javafx.scene.layout.GridPane;
 import oogasalad.frontend.modals.InputModal;
 
 public class CreateGameModal extends InputModal {
-    private static final ResourceBundle MODAL_ID_BUNDLE = ResourceBundle.getBundle("frontend/modals/ModalStylingID");
+//    private static final ResourceBundle MODAL_ID_BUNDLE = ResourceBundle.getBundle("frontend/modals/ModalStylingID");
     private static final String IMAGE_PICKER_ID = "ImagePickerID";
     private Map<String, String> myPropertiesMap;
+
+    private String myTitle;
 
     /**
      * Constructor for the CreateGameModal dialog
      */
     public CreateGameModal() {
-        super("createGame");
+        super("Create_Game_Modal");
+        myTitle = "Create_Game_Modal";
+//        myPropertiesMap = super.setPropertiesMap(myTitle
     }
 
     /**
@@ -32,8 +36,16 @@ public class CreateGameModal extends InputModal {
     protected DialogPane createDialogPane() {
         myPropertiesMap = super.getPropertiesMap();
 
-        this.getDialogPane().setHeaderText(myPropertiesMap.get("title"));
-        myPropertiesMap.remove("title");
+        for (Map.Entry entry: myPropertiesMap.entrySet()) {
+
+            int start = entry.getKey().toString().indexOf("*") + 1;
+
+//            System.out.println(entry.getKey().toString().substring(start) + " " + entry.getValue());
+
+        }
+
+        this.getDialogPane().setHeaderText(myTitle);
+        System.out.println(this.getDialogPane().getHeaderText());
 
         ArrayList<String> stringFields = new ArrayList<>(myPropertiesMap.values());
 
@@ -43,6 +55,7 @@ public class CreateGameModal extends InputModal {
 
         return this.getDialogPane();
     }
+
 
 
     /**
@@ -65,7 +78,7 @@ public class CreateGameModal extends InputModal {
         grid.add(new Label(myPropertiesMap.get("SetImage")), 0, 4);
 //        grid.add(makeImagePicker(myPropertiesMap.get("SetImage")), 1, 4);
         Button imagePicker = makeImagePicker(myPropertiesMap.get("SetImage"));
-        imagePicker.setId(MODAL_ID_BUNDLE.getString(IMAGE_PICKER_ID));
+//        imagePicker.setId(MODAL_ID_BUNDLE.getString(IMAGE_PICKER_ID));
         grid.add(imagePicker, 1, 4);
 
 
