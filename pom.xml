@@ -47,10 +47,39 @@
             <version>2.10.1</version>
         </dependency>
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.13.1</version>
-            <scope>test</scope>
+            <groupId>io.github.eckig.grapheditor</groupId>
+            <artifactId>grapheditor-core</artifactId>
+            <version>19.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.eckig</groupId>
+            <artifactId>grapheditor</artifactId>
+            <version>18.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.eckig.grapheditor</groupId>
+            <artifactId>grapheditor-api</artifactId>
+            <version>18.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>2.0.5</version>
+        </dependency>
+        <dependency>
+            <groupId>org.kordamp.ikonli</groupId>
+            <artifactId>ikonli-javafx</artifactId>
+            <version>12.3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.kordamp.ikonli</groupId>
+            <artifactId>ikonli-materialdesign2-pack</artifactId>
+            <version>12.3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <version>3.5.0</version>
         </dependency>
     </dependencies>
 
@@ -176,21 +205,21 @@
                 <version>3.0.0-M9</version>
             </plugin>
             <!-- generates javadoc as a report -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.4.1</version>
-                <configuration>
-                    <sourcepath>src</sourcepath>
-                </configuration>
-                <reportSets>
-                    <reportSet>
-                        <reports>
-                            <report>javadoc</report>
-                        </reports>
-                    </reportSet>
-                </reportSets>
-            </plugin>
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-javadoc-plugin</artifactId>-->
+<!--                <version>3.4.1</version>-->
+<!--                <configuration>-->
+<!--                    <sourcepath>src</sourcepath>-->
+<!--                </configuration>-->
+<!--                <reportSets>-->
+<!--                    <reportSet>-->
+<!--                        <reports>-->
+<!--                            <report>javadoc</report>-->
+<!--                        </reports>-->
+<!--                    </reportSet>-->
+<!--                </reportSets>-->
+<!--            </plugin>-->
         </plugins>
     </reporting>
 </project>

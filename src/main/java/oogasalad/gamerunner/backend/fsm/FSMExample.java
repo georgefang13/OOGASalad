@@ -86,6 +86,68 @@ class InitState extends State {
 }
 
 public class FSMExample {
+    private IdManager<Ownable> idManager;
+    private FSM<States> fsm;
+    Variable<List<GameObject>> availableVar;
+
+    public FSMExample() {
+        idManager = new IdManager<>();
+        fsm = new FSM<>(idManager);
+        Variable<Integer> turn = new Variable<>(0);
+        turn.addListener((value) -> fsm.setState(States.INIT));
+        Variable<Integer> numPlayers = new Variable<>(2);
+        availableVar = new Variable(new ArrayList<>());
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                addDropZone(i, j, idManager);
+            }
+        }
+        idManager.addObject(turn, "turn");
+        idManager.addObject(numPlayers, "numPlayers");
+        idManager.addObject(availableVar, "available");
+        fsm.putState(States.INIT, new InitState(), States.MOVE1);
+        fsm.putState(States.MOVE1, new TurnState(), States.DONE);
+        fsm.putState(States.DONE, new DoneState(), States.DONE);
+        fsm.setState(States.INIT);
+    }
+
+    public String run(String fromFront) {
+        sendUserInput(fromFront);
+        String response = getInstruction();
+        return response;
+    }
+    public String getInstruction(){
+        String response = "";
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                DropZone dropZone = (DropZone) idManager.getObject(i + "," + j);
+                if (dropZone.getAllObjects().size() == 0) {
+                    response += "-";
+                } else {
+                    response += dropZone.getAllObjects().get(0);
+                }
+            }
+            response += "\n";
+        }
+        response = response + "Turn: " + ((Variable<Integer>) idManager.getObject("turn")).get();
+        fsm.transition();
+
+        List<GameObject> available = availableVar.get();
+        if (available.size() == 0){
+            response += "DONE";
+        }
+
+        response += "Available spots: ";
+        for (GameObject obj : available) {
+            response = response + idManager.getId(obj) + " ";
+        }
+        response += "\nSelect a spot: ";
+        return response;
+    }
+    private void sendUserInput(String fromFront){
+        fsm.setStateInnerValue(idManager.getObject(fromFront));
+        fsm.transition();
+    }
     public static void main(String[] args) {
         IdManager<Ownable> idManager = new IdManager<>();
 
