@@ -2,9 +2,9 @@ package oogasalad.frontend.scenes;
 
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
+import oogasalad.frontend.panels.subPanels.ComponentPanel;
 import oogasalad.frontend.panels.subPanels.EnvironmentPanel;
 import oogasalad.frontend.panels.subPanels.HeaderMenuPanel;
-import oogasalad.frontend.panels.subPanels.ComponentLibraryPanel;
 
 /**
  * @author George Fang
@@ -15,7 +15,7 @@ import oogasalad.frontend.panels.subPanels.ComponentLibraryPanel;
 public class GameEditorLogicScene extends AbstractScene {
     private BorderPane root;
     private HeaderMenuPanel headerMenu;
-    private ComponentLibraryPanel componentLibraryPanel;
+    private ComponentPanel componentPanel;
     private EnvironmentPanel environmentPanel;
     private static final String LOGIC_EDITOR_SCENE = "logic";
 
@@ -35,7 +35,7 @@ public class GameEditorLogicScene extends AbstractScene {
     private void refreshScene(){
         root.setCenter(environmentPanel);
         root.setTop(headerMenu.createMenu());
-        root.setLeft(componentLibraryPanel.createAccordion());
+        root.setLeft(componentPanel.createSingleAccordionVBox());
         root.setCenter(environmentPanel.createEnvironment());
         setScene(new Scene(root));
         setTheme();
@@ -47,7 +47,7 @@ public class GameEditorLogicScene extends AbstractScene {
         headerMenu = new HeaderMenuPanel(panelController, LOGIC_EDITOR_SCENE);
     }
     private void createLeftPanel(){
-        componentLibraryPanel = new ComponentLibraryPanel();
+        componentPanel = new ComponentPanel();
     }
     @Override
     public void setText() {

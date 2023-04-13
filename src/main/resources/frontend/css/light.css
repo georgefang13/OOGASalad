@@ -23,7 +23,7 @@
   -fx-text-fill: white;
 }
 
-/* ObjectLibraryPanel */
+/* ComponentPanel */
 .titled-pane > .content { /* this will affect all titled panes */
   -fx-padding: 10px;
   -fx-background-color: #312424;
@@ -35,13 +35,20 @@
   -fx-pref-width: 250;
   -fx-text-fill: white;
 }
-.accordion {
+.accordion { /* this will affect all accordions */
   -fx-background-color: #201616;
-  -fx-pref-height: 334; /* calculated from 700 (screen height) minus 32 (menu hbox height) divided by 2 for each accordion*/
+  -fx-pref-height: 700;
+}
+.accordion-label {
+  -fx-background-color: #201616;
+  -fx-text-fill: white;
+  -fx-font-size: 16px;
+  -fx-font-weight: bold;
+  -fx-pref-width: 250;
+  -fx-padding: 5, 0, 0, 0;
+}
+.accordion-label:hover {
+  -fx-translate-x: 100;
 }
 
-/* GameEditorEditorScene */
-.accordion-vbox {
-  -fx-pref-height: 100%;
-}
 

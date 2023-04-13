@@ -1,9 +1,9 @@
 package oogasalad.frontend.panels.subPanels;
 
 import oogasalad.frontend.panels.Panel;
-import oogasalad.frontend.panels.AccordionPanel;
+import oogasalad.frontend.panels.VBoxPanel;
 
-public class SceneEditorPanel extends AccordionPanel {
+public class SceneEditorPanel extends VBoxPanel {
 
   @Override
   public Panel makePanel() {
