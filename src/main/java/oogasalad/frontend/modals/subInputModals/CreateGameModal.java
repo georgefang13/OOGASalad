@@ -48,6 +48,7 @@ public class CreateGameModal extends InputModal {
         System.out.println(this.getDialogPane().getHeaderText());
 
         ArrayList<String> stringFields = new ArrayList<>(myPropertiesMap.values());
+        System.out.println("stringFields: " + stringFields);
 
         this.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
 
@@ -66,6 +67,10 @@ public class CreateGameModal extends InputModal {
      */
     protected void makeFields(ArrayList<String> stringFields) {
         GridPane grid = createGrid();
+
+
+
+
 
         grid.add(new Label(myPropertiesMap.get("Name")), 0, 0);
         grid.add(makeTextField(myPropertiesMap.get("Name")),1, 0);
