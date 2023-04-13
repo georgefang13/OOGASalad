@@ -123,32 +123,36 @@ class GameTest {
     assertEquals(player2, game.getOwnable("test").getOwner());
     assertNotEquals(player1, game.getOwnable("test").getOwner());
   }
-//
-//  @Test
-//  public void createOwnable() {
-//    Player player = new Player();
-//    game.addPlayer(player);
-//
-//    assertNull(game.getOwnable("EmptyGameObject"));
-//    game.sendObject("GameObject", "owner=Player;parentOwnable=NULL"); //TODO CHANGE ; OR MAKE MAP
-//    assertNotNull(game.getOwnable("EmptyGameObject"));
-//    assertEquals(player, game.getOwnable("EmptyGameObject").getOwner());
-//
-//    assertNull(game.getOwnable("EmptyGameObject2"));
-//    game.sendObject("GameObject", "owner=NULL;parentOwnable=NULL");
-//    assertNotNull(game.getOwnable("EmptyGameObject2"));
-//    assertEquals(game.getGameWorld(), game.getOwnable("EmptyGameObject2").getOwner());
-//
-//    assertNull(game.getOwnable("PlayerPiece"));
-//    game.sendObject("PlayerPiece", "owner=Player;parentOwnable=NULL");
-//    assertNotNull(game.getOwnable("PlayerPiece"));
-//    assertEquals(player, game.getOwnable("PlayerPiece").getOwner());
-//
-//    assertNull(game.getOwnable("PlayerPiece2"));
-//    game.sendObject("PlayerPiece", "owner=NULL;parentOwnable=NULL");
-//    assertNotNull(game.getOwnable("PlayerPiece2"));
-//    assertEquals(game.getGameWorld(), game.getOwnable("PlayerPiece2").getOwner());
-//  }
+
+  @Test
+  public void createOwnable() {
+    Player player = new Player();
+    game.addPlayer(player);
+
+    assertNull(game.getOwnable("test"));
+    Map<ObjectParameter, String> params = Map.of(ObjectParameter.OWNABLE_TYPE, "GameObject", ObjectParameter.ID, "test", ObjectParameter.OWNER, "Player1");
+    game.sendObject(ObjectType.OWNABLE, params);
+    assertNotNull(game.getOwnable("test"));
+    assertEquals(player, game.getOwnable("test").getOwner());
+
+    assertNull(game.getOwnable("test2"));
+    Map<ObjectParameter, String> params2 = Map.of(ObjectParameter.OWNABLE_TYPE, "GameObject", ObjectParameter.ID, "test2", ObjectParameter.OWNER, "null");
+    game.sendObject(ObjectType.OWNABLE, params2);
+    assertNotNull(game.getOwnable("test2"));
+    assertEquals(game.getGameWorld(), game.getOwnable("test2").getOwner());
+
+    assertNull(game.getOwnable("test3"));
+    Map<ObjectParameter, String> params3 = Map.of(ObjectParameter.OWNABLE_TYPE, "GameObject", ObjectParameter.ID, "test3", ObjectParameter.OWNER, "Player1");
+    game.sendObject(ObjectType.OWNABLE, params3);
+    assertNotNull(game.getOwnable("test3"));
+    assertEquals(player, game.getOwnable("test3").getOwner());
+
+    assertNull(game.getOwnable("test4"));
+    Map<ObjectParameter, String> params4 = Map.of(ObjectParameter.OWNABLE_TYPE, "GameObject", ObjectParameter.ID, "test4", ObjectParameter.OWNER, "null");
+    game.sendObject(ObjectType.OWNABLE, params4);
+    assertNotNull(game.getOwnable("test4"));
+    assertEquals(game.getGameWorld(), game.getOwnable("test4").getOwner());
+  }
 //
 //  @Test
 //  public void getOwner() {
