@@ -6,7 +6,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.VBox;
-import oogasalad.frontend.factories.ButtonFactory;
 import oogasalad.frontend.panels.VBoxPanel;
 import oogasalad.frontend.panels.Panel;
 
@@ -17,9 +16,6 @@ public class ComponentPanel extends VBoxPanel {
   private static final ResourceBundle ID_BUNDLE = ResourceBundle.getBundle(
       "frontend/properties/StylingIDs/CSS_ID");
   private static final String ACCORDION_LABEL_ID = "AccordionLabelID";
-
-  ButtonFactory buttonFactory = new ButtonFactory();
-
   /**
    * Constructor for HeaderMenu
    */

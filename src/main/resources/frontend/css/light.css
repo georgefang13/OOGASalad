@@ -47,8 +47,26 @@
   -fx-pref-width: 250;
   -fx-padding: 5, 0, 0, 0;
 }
-.accordion-label:hover {
-  -fx-translate-x: 100;
-}
 
+/* PropertiesPanel */
+.properties-button {
+  -fx-background-color: #585A68;
+  -fx-text-fill: white;
+  -fx-font-size: 16px;
+  -fx-font-weight: bold;
+  -fx-padding: 5, 5, 0, 0;
+}
+.properties-button:pressed {
+  -fx-translate-x: 100
+}
+.popout-button-box {
+  -fx-alignment: center;
+  -fx-pref-height: 650;
+  -fx-padding: 0;
+  -fx-spacing: 0;
+}
+.properties-box {
+  -fx-padding: 0;
+  -fx-spacing: 0;
+}
 

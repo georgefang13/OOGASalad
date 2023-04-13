@@ -11,6 +11,7 @@ import oogasalad.frontend.panels.subPanels.HeaderMenuPanel;
 
 import java.util.HashMap;
 import java.util.Map;
+import oogasalad.frontend.panels.subPanels.PropertiesPanel;
 
 /**
  * @author George Fang
@@ -24,6 +25,7 @@ public class GameEditorEditorScene extends AbstractScene {
     private HeaderMenuPanel headerMenu;
     private ComponentPanel componentsPanel;
     private EnvironmentPanel environmentPanel;
+    private PropertiesPanel propertiesPanel;
 
     /**
      * Constructor for the visual editor scene
@@ -75,16 +77,18 @@ public class GameEditorEditorScene extends AbstractScene {
     }
     private void createRightPanel(){
         rightTab = new VBox();
-        buttonVBoxMap = new HashMap<>(); //TODO: what does this do?
-        Button boardButton = new Button("Board");
-        setButtonVisualPanel(boardButton, "Board");
-        Button variableButton = new Button("Variable");
-        setButtonVisualPanel(variableButton, "Variable");
-        Button playerButton = new Button("Player");
-        setButtonVisualPanel(playerButton, "Player");
-        Button backButton = new Button("Back");
-        backButton.setOnAction(e -> panelController.switchSceneFromPanel("main"));
-        rightTab.getChildren().addAll(boardButton,variableButton,playerButton,backButton);
+//        buttonVBoxMap = new HashMap<>(); //TODO: what does this do?
+//        Button boardButton = new Button("Board");
+//        setButtonVisualPanel(boardButton, "Board");
+//        Button variableButton = new Button("Variable");
+//        setButtonVisualPanel(variableButton, "Variable");
+//        Button playerButton = new Button("Player");
+//        setButtonVisualPanel(playerButton, "Player");
+//        Button backButton = new Button("Back");
+//        backButton.setOnAction(e -> panelController.switchSceneFromPanel("main"));
+//        rightTab.getChildren().addAll(boardButton,variableButton,playerButton,backButton);
+        propertiesPanel = new PropertiesPanel();
+        rightTab.getChildren().addAll(propertiesPanel.createPanel());
     }
     private void createCenterPanel(){
         environmentPanel = new EnvironmentPanel();
