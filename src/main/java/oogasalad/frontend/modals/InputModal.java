@@ -198,5 +198,6 @@ public class InputModal extends Modal {
             map.put(param, value);
         }
         controller.createAGameObjectComponent(map);
+        this.getDialogPane().getScene().getWindow().hide();
     }
 }
