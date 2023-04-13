@@ -5,6 +5,8 @@ import java.util.ResourceBundle;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import oogasalad.frontend.components.AbstractComponent;
+import oogasalad.frontend.components.Component;
 import oogasalad.frontend.components.Point;
 import oogasalad.frontend.components.draggableComponent.DraggableObject;
 

@@ -10,6 +10,9 @@ public class AbstractComponent implements Component {
 
   protected int ID;
   protected Node node;
+  private boolean draggable;
+  private boolean active;
+
   public AbstractComponent(int id) {
     ID = id;
   }
@@ -32,4 +35,16 @@ public class AbstractComponent implements Component {
   public void setID(int id) {
     ID = id;
   }
+
+  @Override
+  public void setDraggable(boolean draggable) {
+    this.draggable = draggable;
+  }
+
+  @Override
+  public void setActiveSelected(boolean active) {
+    this.active = active;
+  }
+
+
 }
