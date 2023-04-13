@@ -16,16 +16,25 @@ public class ModalRunner extends Application{
         VBox root = new VBox();
         Button button = new Button("Create Game Modal");
         button.setOnAction(e -> {
-            CreateGameModal modal = new CreateGameModal();
+            CreateGameModal modal = new CreateGameModal("Create_Game_Modal");
             modal.showAndWait();
         });
         root.getChildren().add(button);
+        Button playerButton = new Button("Create New Player");
+        playerButton.setOnAction(e -> {
+            CreateGameModal modal = new CreateGameModal("Create_Player_Modal");
+            modal.showAndWait();
+        });
+        root.getChildren().add(playerButton);
         Button errorButton = new Button("Create Error Modal");
         errorButton.setOnAction(e -> {
             AlertModal modal = new AlertModal();
             modal.showAndWait();
         });
         root.getChildren().add(errorButton);
+
+
+
         Scene scene = new Scene(root, 1000, 700);
 
         stage.setScene(scene);

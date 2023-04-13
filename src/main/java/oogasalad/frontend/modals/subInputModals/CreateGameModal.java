@@ -26,9 +26,9 @@ public class CreateGameModal extends InputModal {
     /**
      * Constructor for the CreateGameModal dialog
      */
-    public CreateGameModal() {
-        super("Create_Game_Modal");
-        myTitle = "Create_Game_Modal";
+    public CreateGameModal(String title) {
+        super(title);
+        myTitle = title;
 //        myPropertiesMap = super.setPropertiesMap(myTitle
     }
 

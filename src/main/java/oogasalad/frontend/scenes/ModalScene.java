@@ -26,7 +26,7 @@ public class ModalScene extends AbstractScene {
     VBox root = new VBox();
     createGameButton = new Button();
     createGameButton.setOnAction(e -> {
-      CreateGameModal modal = new CreateGameModal();
+      CreateGameModal modal = new CreateGameModal("Create_Game_Modal");
       modal.showAndWait();
     });
     errorButton = new Button();
