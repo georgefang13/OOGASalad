@@ -6,8 +6,7 @@ import oogasalad.frontend.managers.StandardPropertyManager;
 import oogasalad.frontend.scenes.AbstractScene;
 import oogasalad.frontend.scenes.SceneController;
 import oogasalad.frontend.scenes.SceneTypes;
-import oogasalad.frontend.managers.PropertiesManager;
-import oogasalad.frontend.scenes.AbstractScene;
+import oogasalad.frontend.managers.PropertyManager;
 
 /**
  * @author Connor Wells
@@ -22,8 +21,8 @@ public abstract class AbstractWindow extends Stage {
   public AbstractWindow(String windowID, WindowMediator windowController) {
     this.windowID = windowID;
     sceneController = new SceneController(windowID,windowController); //maybe add just window controller and then the window id to get window from the window controller
-    setWidth(PropertiesManager.getNumeric("WindowWidth"));
-    setHeight(PropertiesManager.getNumeric("WindowHeight"));
+    setWidth(propertyManager.getNumeric("WindowWidth"));
+    setHeight(propertyManager.getNumeric("WindowHeight"));
   }
 
   public abstract SceneTypes getDefaultSceneType();
