@@ -18,6 +18,10 @@ public class GetDropZoneItem extends OperatorToken {
         ValueToken<String> x1 = checkArgumentWithSubtype(env, t1, ValueToken.class, String.class.getName());
         ValueToken<DropZone> x2 = checkArgumentWithSubtype(env, t2, ValueToken.class, DropZone.class.getName());
 
+        if (!x2.VALUE.hasObject(x1.VALUE)) {
+            return new ValueToken<>("");
+        }
+
         return new ValueToken<>(x2.VALUE.getObject(x1.VALUE));
     }
 }

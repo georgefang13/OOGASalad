@@ -9,7 +9,7 @@ import oogasalad.gamerunner.backend.interpreter.tokens.VariableToken;
 public class GetGameVariable extends OperatorToken {
 
     public GetGameVariable(){
-        super(1, "GetGameVariable");
+        super(1, "FromGame");
     }
 
     @Override
@@ -19,6 +19,7 @@ public class GetGameVariable extends OperatorToken {
             t1 = t1.evaluate(env);
         }
         ValueToken<String> varName = checkArgumentWithSubtype(env, t1, ValueToken.class, String.class.getName());
+
         return env.getLocalVariable(":game_" + varName.VALUE);
     }
 }

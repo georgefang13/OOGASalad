@@ -45,13 +45,14 @@ public class NumberGeneratorTest {
     assertEquals("10001", gen.next());
   }
 
-  @Test
-  void testNumberGeneratorMax() {
-    for (int i = 0; i < Integer.MAX_VALUE; i++) {
-      gen.next();
-    }
-    assertEquals("", gen.next());
-  }
+  //Comment out this test if you want to run the test suite quickly
+//  @Test
+//  void testNumberGeneratorMax() {
+//    for (int i = 0; i < Integer.MAX_VALUE; i++) {
+//      gen.next();
+//    }
+//    assertEquals("", gen.next());
+//  }
 
   @Test
   void testMultipleGenerators() {

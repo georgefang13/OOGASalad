@@ -1,5 +1,6 @@
 package oogasalad.sharedDependencies.backend.ownables.gameobjects.piece;
 
+import com.google.gson.JsonObject;
 import oogasalad.sharedDependencies.backend.owners.Owner;
 
 /**

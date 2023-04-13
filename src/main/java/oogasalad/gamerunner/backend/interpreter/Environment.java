@@ -4,6 +4,7 @@ import oogasalad.gameeditor.backend.id.IdManager;
 import oogasalad.gamerunner.backend.interpreter.tokens.ExpressionToken;
 import oogasalad.gamerunner.backend.interpreter.tokens.Token;
 import oogasalad.gamerunner.backend.interpreter.tokens.ValueToken;
+import oogasalad.gamerunner.backend.interpreter.tokens.VariableToken;
 import oogasalad.sharedDependencies.backend.ownables.Ownable;
 import oogasalad.sharedDependencies.backend.ownables.variables.Variable;
 
@@ -144,6 +145,23 @@ public class Environment {
             return list;
         }
         else return new ValueToken<>(obj);
+    }
+
+    public void removeVariable(VariableToken var){
+        String name = var.NAME;
+        if (name.startsWith(":game_") && game.isIdInUse(name.substring(6))) {
+            game.removeObject(name.substring(6));
+            return;
+        }
+        name = "interpreter-" + name;
+
+        for (int i = scope.size() - 1; i >= 0; i--){
+            if (scope.get(i).containsKey(name)){
+                scope.get(i).remove(name);
+                break;
+            }
+        }
+        if (getLocalVariable(name) == null && game.isIdInUse(name)) game.removeObject(name);
     }
 
     public Variable<?> convertTokenToVariable(Token t){

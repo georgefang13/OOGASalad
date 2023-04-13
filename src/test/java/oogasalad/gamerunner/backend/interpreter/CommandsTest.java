@@ -44,7 +44,7 @@ public class CommandsTest {
         String s = resources.getString("argumentSubtypeError");
         String[] simplenames = new String[subtype.length];
         for (int i = 0; i < subtype.length; i++){
-            simplenames[i] = subtype[i].getName();
+            simplenames[i] = subtype[i].getSimpleName();
         }
         s = String.format(s, t, NAME, type.getSimpleName(), String.join(" or ", simplenames), t.getClass().getSimpleName(), t.SUBTYPE);
         return s;
@@ -58,6 +58,28 @@ public class CommandsTest {
         }
         s = String.format(s, t, NAME, String.join(" or ", simplenames), t == null ? "null" : t.getClass().getSimpleName());
         return s;
+    }
+
+    @Test
+    public void testAddDropZoneItem(){
+        DropZone dz = new DropZone("dz");
+        idManager.addObject(dz, "dz");
+
+        // add item to dropzone
+        String input = "putdzitem \"obj 1 :game_dz";
+        interpreter.interpret(input);
+        List<Double> expected = new ArrayList<>(List.of(1.));
+        assertEquals(expected, dz.getAllObjects());
+
+        // add item to dropzone with non-string
+        input = "putdzitem 1 1 :game_dz";
+        try{
+            interpreter.interpret(input);
+            fail();
+        } catch (Exception e){
+            Token t = new ValueToken<>(1.);
+            assertEquals(checkSubtypeErrorMsg(t, "PutDropZoneItem", ValueToken.class, String.class), e.getMessage());
+        }
     }
 
     @Test
@@ -148,6 +170,43 @@ public class CommandsTest {
             ValueToken<?> t = new ValueToken<>(false);
             assertEquals(checkSubtypeErrorMsg(t, "Cosine", ValueToken.class, Double.class), e.getMessage());
         }
+    }
+
+    @Test
+    public void testDel(){
+        // del
+        String input = "make :x 1 del :x";
+        interpreter.interpret(input);
+        try {
+            getVar("interpreter-:x");
+            fail();
+        } catch (Exception e){
+            assertEquals("Id \"interpreter-:x\" not found.", e.getMessage());
+        }
+
+        // del with non-variables
+        input = "make :x 1 del 1";
+        try{
+            interpreter.interpret(input);
+            fail();
+        } catch (Exception e){
+            Token t = new ValueToken<>(1.);
+            assertEquals(checkTypeErrorMsg(t, "Del", VariableToken.class), e.getMessage());
+        }
+
+        // del with non-existing variable
+        input = "del :yegor";
+        interpreter.interpret(input);
+
+        // del with not enough parameters
+        input = "del";
+        try{
+            interpreter.interpret(input);
+            fail();
+        } catch (Exception e){
+            assertEquals("Invalid syntax: Not enough arguments for operator Del", e.getMessage());
+        }
+
     }
 
     @Test
@@ -243,16 +302,18 @@ public class CommandsTest {
 
         // equal with non-numbers
         input = "make :x < 2 1 make :y 2 make :z == :x :y";
-        try{
-            interpreter.interpret(input);
-            fail();
-        } catch (Exception e){
-            ValueToken<?> t = new ValueToken<>(false);
-            assertEquals(checkSubtypeErrorMsg(t, "Equal", ValueToken.class, Double.class), e.getMessage());
-        }
+        interpreter.interpret(input);
+        z = getVar("interpreter-:z");
+        assertFalse(z.get());
+
+        // equal with non-numbers
+        input = "make :x < 2 1 make :y < 3 2 make :z == :x :y";
+        interpreter.interpret(input);
+        z = getVar("interpreter-:z");
+        assertTrue(z.get());
 
         // equal with incorrect number of parameters
-        input = "make :x 1 make :y 2 make :z == :x";
+        input = "make :x > 1 2 make :y > 3 4 make :z == :x";
         try{
             interpreter.interpret(input);
             fail();
@@ -371,6 +432,55 @@ public class CommandsTest {
     }
 
     @Test
+    public void getDropZoneItem(){
+        DropZone dropZone = new DropZone("A");
+        idManager.addObject(dropZone, "dz");
+        String input = "putdzitem \"obj 1 :game_dz make :x dzitem \"obj :game_dz";
+        interpreter.interpret(input);
+        Variable<Double> x = getVar("interpreter-:x");
+        assertEquals(1., x.get());
+
+        input = "putdzitem \"obj 2 :game_dz make :x dzitem \"obj :game_dz";
+        interpreter.interpret(input);
+        x = getVar("interpreter-:x");
+        assertEquals(2., x.get());
+
+        // try with a non-dropzone
+        input = "make :x dzitem \"obj 2";
+        try{
+            interpreter.interpret(input);
+            fail();
+        } catch (Exception e){
+            ValueToken<?> t = new ValueToken<>(2.);
+            assertEquals(checkSubtypeErrorMsg(t, "GetDropZoneItem", ValueToken.class, DropZone.class), e.getMessage());
+        }
+
+    }
+
+    @Test
+    public void getDropZoneItems(){
+        DropZone dropZone = new DropZone("A");
+        idManager.addObject(dropZone, "dz");
+        String input = "putdzitem \"obj1 1 :game_dz putdzitem \"obj2 2 :game_dz make :x dzitems :game_dz";
+        interpreter.interpret(input);
+        Variable<List<Object>> x = getVar("interpreter-:x");
+        assertEquals(2, x.get().size());
+        assertTrue(x.get().contains(1.));
+        assertTrue(x.get().contains(2.));
+
+        // try with a non-dropzone
+        input = "make :x dzitems \"obj";
+        try{
+            interpreter.interpret(input);
+            fail();
+        } catch (Exception e){
+            ValueToken<?> t = new ValueToken<>("obj");
+            assertEquals(checkSubtypeErrorMsg(t, "GetDropZoneItems", ValueToken.class, DropZone.class), e.getMessage());
+        }
+
+    }
+
+    @Test
     public void testGetFromGameVariable(){
         Variable<?> xvar = new Variable<>("test");
         idManager.addObject(xvar, "0,1");
@@ -379,6 +489,25 @@ public class CommandsTest {
         interpreter.interpret(input);
         Variable<String> x = getVar("interpreter-:x");
         assertEquals("test", x.get());
+
+        // test fromgame from string variable
+        Variable<?> yvar = new Variable<>("test2");
+        idManager.addObject(yvar, "0,2");
+        input = "make :y \"0,2 make :x fromgame :y";
+        interpreter.interpret(input);
+        x = getVar("interpreter-:x");
+        assertEquals("test2", x.get());
+
+        // test without enough arguments
+        input = "make :x fromgame";
+        try{
+            interpreter.interpret(input);
+            fail();
+        } catch (Exception e){
+            assertEquals("Invalid syntax: Not enough arguments for operator FromGame", e.getMessage());
+        }
+
+
     }
 
     @Test
@@ -568,6 +697,25 @@ public class CommandsTest {
             fail();
         } catch (Exception e){
             assertEquals("Cannot get index 4 from list of size 3", e.getMessage());
+        }
+    }
+
+    @Test
+    public void testLength(){
+        // length
+        String input = "make :x [ 1 2 3 ] make :y len :x";
+        interpreter.interpret(input);
+        Variable<Double> y = getVar("interpreter-:y");
+        assertEquals(3.0, y.get(), 0.0001);
+
+        // length with non-list
+        input = "make :x 1 make :y len :x";
+        try{
+            interpreter.interpret(input);
+            fail();
+        } catch (Exception e){
+            ValueToken<?> t = new ValueToken<>(1.0);
+            assertEquals(checkTypeErrorMsg(t, "Length", ExpressionToken.class), e.getMessage());
         }
     }
 
@@ -769,7 +917,7 @@ public class CommandsTest {
         input = "make :x 3 make :y ln :x";
         interpreter.interpret(input);
         y = getVar("interpreter-:y");
-        assertEquals(1.0986122886681096, y.get());
+        assertEquals(1.0986122886681096, y.get(), 0.000000000000001);
 
         // natural log with non-numbers
         input = "make :x < 2 1 make :y ln :x";
@@ -829,13 +977,9 @@ public class CommandsTest {
 
         // not equal with non-numbers
         input = "make :x < 2 1 make :y 2 make :z != :x :y";
-        try{
-            interpreter.interpret(input);
-            fail();
-        } catch (Exception e){
-            ValueToken<?> t = new ValueToken<>(false);
-            assertEquals(checkSubtypeErrorMsg(t, "NotEqual", ValueToken.class, Double.class), e.getMessage());
-        }
+        interpreter.interpret(input);
+        z = getVar("interpreter-:z");
+        assertEquals(true, z.get());
 
         // not equal with incorrect number of parameters
         input = "make :x 1 make :y != :x";
@@ -1356,7 +1500,7 @@ public class CommandsTest {
     }
 
     @Test
-    public void testGetGameVariable(){
+    public void testGame_(){
         Variable<Double> x = new Variable<>(5.0);
         idManager.addObject(x);
         String name = idManager.getId(x);
