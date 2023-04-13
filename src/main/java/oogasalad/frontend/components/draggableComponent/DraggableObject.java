@@ -13,12 +13,11 @@ public class DraggableObject extends DisplayableObject implements DraggableCompo
     public DraggableObject(int ID) {
         super(ID);
     }
-
     @Override
     public void followMouse() {
         getImage().setOnMousePressed(e -> {
-            double xOffset = e.getSceneX() - (getImage().getTranslateX() - getImage().getBoundsInLocal().getWidth()/2);
-            double yOffset = e.getSceneY() - (getImage().getTranslateY() - getImage().getBoundsInLocal().getHeight()/2);
+            double xOffset = e.getSceneX() - (getImage().getTranslateX());
+            double yOffset = e.getSceneY() - (getImage().getTranslateY());
             setxOffset(xOffset);
             setyOffset(yOffset);
         });
@@ -26,7 +25,6 @@ public class DraggableObject extends DisplayableObject implements DraggableCompo
             getImage().setTranslateX(e.getSceneX() - getxOffset());
             getImage().setTranslateY(e.getSceneY() - getyOffset());
         });
-
     }
 
     @Override

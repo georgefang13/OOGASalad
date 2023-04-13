@@ -7,7 +7,6 @@ public class PanelFactory {
     private enum PanelType {
         HEADER_MENU,
         PROPERTIES
-
     }
 
     public static Panel createPanel(PanelType panelType, String panelID, PanelController panelController) {

@@ -17,7 +17,7 @@ public class DisplayableObject extends AbstractComponent implements DisplayableC
     private Point editor;
     private double xOffset;
     private double yOffset;
-    private final String DEFAULT_FILE_PATH = "frontend/properties/Defaults/GameObject.properties";
+    private final String DEFAULT_FILE_PATH = "frontend/properties/Defaults/GameObject";
     private ResourceBundle DEFAULT_BUNDLE = ResourceBundle.getBundle(DEFAULT_FILE_PATH);
 
     public DisplayableObject(int num, Node container) {
@@ -45,7 +45,7 @@ public class DisplayableObject extends AbstractComponent implements DisplayableC
     @Override
     public void setImage(String imagePath) {
         Image newImage = new Image(imagePath);
-        image.setImage(newImage);
+        image = new ImageView(newImage);
     }
 
     @Override
