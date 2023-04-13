@@ -1,7 +1,9 @@
 package oogasalad.frontend.nodeEditor.myNodeEditor;
 
 import javafx.collections.ObservableList;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 public class DraggableItem extends VBox {
@@ -30,6 +32,7 @@ public class DraggableItem extends VBox {
         setPrefSize(width, height);
         setColor(color);
         setContent();
+
     }
 
     public DraggableItem(DraggableItem copy){

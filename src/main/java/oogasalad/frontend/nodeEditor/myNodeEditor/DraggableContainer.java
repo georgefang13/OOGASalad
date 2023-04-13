@@ -12,6 +12,7 @@ public class DraggableContainer implements Serializable {
     private double height;
     private String color;
     private SerializableNodeList children;
+//    private DraggableItem ogItem;
 
     private double dragX;
     private double dragY;
@@ -25,31 +26,11 @@ public class DraggableContainer implements Serializable {
         this.dragX = 0;
         this.dragY = 0;
         this.children = new SerializableNodeList(item.getChildren());
+//        this.ogItem = item;
+//        item.setVisible(false);
         System.out.println(children);
     }
-
-    // private void readObject(ObjectInputStream in) throws IOException,
-    // ClassNotFoundException {
-    // in.defaultReadObject(); // read non-transient fields
-    // children = ; // initialize the transient field
-    // }
-//    private void writeObject(ObjectOutputStream out) throws IOException {
-//        out.defaultWriteObject();
-//        out.writeObject(children);
-//    }
-//
-//    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
-//        in.defaultReadObject();
-//        children = (SerializableNodeList) in.readObject();
-//    }
-
-    public DraggableItem getItem() {
-//        DraggableItem item = new DraggableItem(x, y, width, height, color, children.getNodes());
-//        item.getChildren().clear();
-//        item.getChildren().addAll();
-        return new DraggableItem(x, y, width, height, color, children.getNodes());
-    }
-
+    
     public void setDragX(double x) {
         dragX = x;
     }
