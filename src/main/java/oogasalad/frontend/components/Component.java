@@ -26,4 +26,16 @@ public interface Component {
    * @param id the Int to represent the ID
    */
   void setID(int id);
+
+  /**
+   * This is the method that allows us to lock and unlock if the component can be dragged.
+   */
+  void setDraggable(boolean draggable);
+
+  /**
+   * This is the method that allows for the DraggableComponent to be set as the ActiveComponent.
+   * @param active is if the component is active
+   */
+  void setActiveSelected(boolean active);
+
 }

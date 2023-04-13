@@ -1,9 +1,11 @@
 package oogasalad.Controller;
 
 import java.lang.reflect.Field;
+import java.util.HashMap;
+import java.util.Map;
 import oogasalad.frontend.components.Component;
 
-public class StringConvertingStrategy {
+public class ConvertingStrategy {
 
   /**
    * Returns the parameters of the Component to be converted into a String of params. Used reflection
@@ -18,11 +20,31 @@ public class StringConvertingStrategy {
     for(Field field:fields){
       field.setAccessible(true);
       try {
-        sb.append(field.getName()).append(": ").append(field.get(this).toString());
+        sb.append(field.getName()).append(": ").append(field.get(component).toString());
       } catch (IllegalAccessException e) {
         sb.append(field.getName()).append("=").append("null");
       }
     }
     return sb.toString();
   }
+
+  /**
+   * Returns the parameters of a Component to a Map of params.
+   * @param component the input component
+   * @return The Map of parameters
+   */
+  public Map<String, String> paramsToMap(Component component){
+    Map<String, String> map = new HashMap<>();
+    Field[] fields = component.getClass().getDeclaredFields();
+    for(Field field:fields){
+      field.setAccessible(true);
+      try {
+        map.put(field.getName(), field.get(component).toString());
+      } catch (IllegalAccessException e) {
+        map.put(field.getName(), null);
+      }
+    }
+    return map;
+  }
+
 }

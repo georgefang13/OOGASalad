@@ -1,17 +1,17 @@
 package oogasalad.frontend.components.logicComponent;
 
 
+import java.util.AbstractCollection;
 import java.util.List;
 import javafx.scene.Node;
 import oogasalad.frontend.components.displayableComponents.DisplayableComponent;
-import oogasalad.frontend.components.draggableComponent.DraggableComponent;
 
 /**
  *
  * @author Han, Aryan
  * These are the components of the View that represent Rule and Goal creation
  */
-public interface LogicComponent extends DisplayableComponent, DraggableComponent {
+public interface LogicComponent extends DisplayableComponent {
 
  /**
   * This is the method to get the LogicComponents contained within this LogicComponent. For example,

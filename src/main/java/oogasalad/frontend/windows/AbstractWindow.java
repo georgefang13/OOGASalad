@@ -1,6 +1,9 @@
 package oogasalad.frontend.windows;
 
 import javafx.stage.Stage;
+import oogasalad.frontend.managers.PropertyManager;
+import oogasalad.frontend.managers.StandardPropertyManager;
+import oogasalad.frontend.scenes.AbstractScene;
 import oogasalad.frontend.scenes.SceneController;
 import oogasalad.frontend.scenes.SceneTypes;
 import oogasalad.frontend.managers.PropertiesManager;
@@ -14,6 +17,7 @@ import oogasalad.frontend.scenes.AbstractScene;
 public abstract class AbstractWindow extends Stage {
   protected SceneController sceneController;
   protected String windowID;
+  protected PropertyManager propertyManager = StandardPropertyManager.getInstance();
 
   public AbstractWindow(String windowID, WindowMediator windowController) {
     this.windowID = windowID;
@@ -25,7 +29,7 @@ public abstract class AbstractWindow extends Stage {
   public abstract SceneTypes getDefaultSceneType();
   public abstract AbstractScene addNewScene(SceneTypes sceneType);
 
-  public void showScene(AbstractScene scene){
+  public void showScene(AbstractScene scene) {
     setScene(scene.makeScene());
   }
 }
