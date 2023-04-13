@@ -3,17 +3,16 @@ package oogasalad.frontend.panels.subPanels;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.TitledPane;
-import javafx.scene.layout.HBox;
+
 import javafx.scene.layout.VBox;
 import oogasalad.frontend.factories.ButtonFactory;
+import oogasalad.frontend.panels.AccordionPanel;
 import oogasalad.frontend.panels.Panel;
-import oogasalad.frontend.panels.HBoxPanel;
 import oogasalad.frontend.panels.PanelController;
-
 import java.util.HashMap;
 import java.util.Map;
 
-public class PropertiesPanel extends HBoxPanel {
+public class ComponentLibraryPanel extends AccordionPanel {
   ButtonFactory buttonFactory = new ButtonFactory();
   PanelController panelController;
 
@@ -22,7 +21,7 @@ public class PropertiesPanel extends HBoxPanel {
   /**
    * Constructor for HeaderMenu
    */
-  public PropertiesPanel(PanelController panelController) {
+  public ComponentLibraryPanel() {
     super();
     this.panelController = panelController;
     paneMap = new HashMap<>();
@@ -32,6 +31,9 @@ public class PropertiesPanel extends HBoxPanel {
    * @return
    */
   public Accordion createAccordion() {
+    TitledPane t1 = new TitledPane("Game Objects", new Button("B1"));
+    TitledPane t2 = new TitledPane("Players", new Button("B2"));
+    TitledPane t3 = new TitledPane("Memes", new Button("B3"));
     Button addPlayer = new Button("add player");
     addPlayer.setOnAction(e -> addInstanceToAccordion("player","player1"));
     VBox playerVBOX = new VBox(addPlayer);
@@ -54,6 +56,7 @@ public class PropertiesPanel extends HBoxPanel {
     accordion.getPanes().addAll(player, piece, variable);
     return accordion;
   }
+
   private void addInstanceToAccordion(String paneName, String instanceName){
     TitledPane pane = paneMap.get(paneName);
     Button instanceButton = new Button(instanceName);
