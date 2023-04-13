@@ -977,13 +977,9 @@ public class CommandsTest {
 
         // not equal with non-numbers
         input = "make :x < 2 1 make :y 2 make :z != :x :y";
-        try{
-            interpreter.interpret(input);
-            fail();
-        } catch (Exception e){
-            ValueToken<?> t = new ValueToken<>(false);
-            assertEquals(checkSubtypeErrorMsg(t, "NotEqual", ValueToken.class, Double.class), e.getMessage());
-        }
+        interpreter.interpret(input);
+        z = getVar("interpreter-:z");
+        assertEquals(true, z.get());
 
         // not equal with incorrect number of parameters
         input = "make :x 1 make :y != :x";
