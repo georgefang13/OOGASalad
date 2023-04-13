@@ -1,6 +1,6 @@
 package oogasalad.frontend.modals;
 
-import java.util.ResourceBundle;
+import java.util.HashMap;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
@@ -12,14 +12,16 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.geometry.Insets;
 
 import java.util.Map;
 import java.util.ArrayList;
 
+
 public class InputModal extends Modal {
-    private static final ResourceBundle MODAL_ID_BUNDLE = ResourceBundle.getBundle("frontend/modals/ModalStylingID");
+//    private static final ResourceBundle MODAL_ID_BUNDLE = ResourceBundle.getBundle("frontend/modals/ModalStylingID");
     private static final String IMAGE_PICKER_ID = "ImagePickerID";
     final public static int GAP = 10;
     final public static int INSET_TOP = 20;
@@ -30,6 +32,9 @@ public class InputModal extends Modal {
     protected Map<String, String> myPropertiesMap;
     private String myTitle;
 
+    private ModalController controller;
+
+    private Map<String, TextField> textFields;
     /**
      * Constructor for InputModal
      * 
@@ -61,9 +66,9 @@ public class InputModal extends Modal {
 
         ArrayList<String> stringFields = new ArrayList<>(myPropertiesMap.values());
 
-        this.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
-
+        this.getDialogPane().getButtonTypes().addAll(ButtonType.CANCEL);
         setContentAsTextField(stringFields);
+        this.getDialogPane().getChildren().add(createOKButton());
 
         return this.getDialogPane();
     }
@@ -77,13 +82,14 @@ public class InputModal extends Modal {
     protected void setContentAsTextField(ArrayList<String> fields) {
         GridPane grid = createGrid();
 
-        ArrayList<TextField> textFields = new ArrayList<>();
+        textFields = new HashMap<>();
         for (int i = 0; i < fields.size(); i++) {
             System.out.println(fields.get(i));
             grid.add(new Label(fields.get(i)), 0, i);
             grid.add(makeTextField(fields.get(i)), 1, i);
-            textFields.add(makeTextField(fields.get(i)));
+            textFields.put(fields.get(i), makeTextField(fields.get(i)));
         }
+        grid.add(createOKButton(), 0, 3);
 
         this.getDialogPane().setContent(grid);
     }
@@ -157,7 +163,7 @@ public class InputModal extends Modal {
             fileChooser.getExtensionFilters().addAll(
                     new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif"));
         });
-        ImageButton.setId(MODAL_ID_BUNDLE.getString(IMAGE_PICKER_ID));
+//        ImageButton.setId(MODAL_ID_BUNDLE.getString(IMAGE_PICKER_ID));
         return ImageButton;
     }
 
@@ -170,4 +176,28 @@ public class InputModal extends Modal {
         }
     }
 
+    /**
+     * Allows for Modals to attach their controller to them, which in turn allows them to
+     * send info back to the Modal.
+     * @param mController the controller that is attached to this input Modal
+     */
+    public void attach(ModalController mController) {
+        controller = mController;
+    }
+    private Button createOKButton(){
+        Button ok = new Button("Ok");
+        ok.setOnAction(e -> sendtoController());
+        return ok;
+    }
+
+    private void sendtoController() {
+        Map<String, String> map = new HashMap<>();
+        for(String field: textFields.keySet()){
+            String param = field.toString();
+            String value = textFields.get(field).getText();
+            map.put(param, value);
+        }
+        controller.createAGameObjectComponent(map);
+        this.getDialogPane().getScene().getWindow().hide();
+    }
 }

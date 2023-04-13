@@ -39,9 +39,9 @@ public class PointTest {
   }
   @Test
   public void scale(){
-    point.scale(2);
-    assertEquals(point.getX(), dummyX*2);
-    assertEquals(point.getY(), dummyY*2);
-    assertEquals(point.getZ(), 0);
+    Point p = point.scale(2);
+    assertEquals(p.getX(), dummyX*2);
+    assertEquals(p.getY(), dummyY*2);
+    assertEquals(p.getZ(), 0);
   }
 }

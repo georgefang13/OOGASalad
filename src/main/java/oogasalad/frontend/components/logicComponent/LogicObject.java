@@ -12,23 +12,26 @@ import oogasalad.frontend.components.displayableComponents.DisplayableObject;
 
 public class LogicObject extends DisplayableObject implements LogicComponent {
 
+  private List<LogicComponent> children;
+  private LogicComponent before;
+  private LogicComponent after;
   public LogicObject(int num, Node container) {
     super(num, container);
   }
 
   @Override
   public List<LogicComponent> getChildren() {
-    return null;
+    return children;
   }
 
   @Override
   public LogicComponent getBefore() {
-    return null;
+    return before;
   }
 
   @Override
   public LogicComponent getAfter() {
-    return null;
+    return after;
   }
 
   @Override

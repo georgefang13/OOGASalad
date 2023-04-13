@@ -16,13 +16,7 @@ public class Equal extends OperatorToken {
 
     @Override
     public Token evaluate(Environment env) throws IllegalArgumentException{
-
-        Token t1 = getArg(0).evaluate(env);
-        Token t2 = getArg(1).evaluate(env);
-
-        ValueToken<Double> x1 = checkArgumentWithSubtype(env, t1, ValueToken.class, Double.class.getName());
-        ValueToken<Double> x2 = checkArgumentWithSubtype(env, t2, ValueToken.class, Double.class.getName());
-
-        return new ValueToken<>((double)x1.VALUE == x2.VALUE);
+        boolean b = getArg(0).equals(getArg(1), env);
+        return new ValueToken<>(b);
     }
 }

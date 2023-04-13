@@ -1,13 +1,11 @@
 package oogasalad.frontend.modals;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Properties;
+import java.util.*;
 
-import java.util.ResourceBundle;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogPane;
@@ -18,12 +16,17 @@ import javafx.stage.Modality;
 import javafx.stage.StageStyle;
 
 public class Modal<T> extends Dialog<T> {
+
+    public static final String MODAL_PROPERTIES_FILE_PATH = "frontend/properties/text/Modals.properties";
+    public static final String MODAL_STYlE_FILE_PATH = "frontend/css/modalStyles.css";
+
+
     private final String MODAL_STYLE_SHEET = Objects
-        .requireNonNull(getClass().getClassLoader().getResource("stylesheets/modalStyles.css")).toExternalForm();
+        .requireNonNull(getClass().getClassLoader().getResource(MODAL_STYlE_FILE_PATH)).toExternalForm();
     private Map<String, String> myPropertiesMap;
     private String myTitle;
-    private static String MODAL_FILE_PATH = "frontend/modals/Modals.properties";
-    private static final ResourceBundle MODAL_BUNDLE = ResourceBundle.getBundle("frontend/modals/Modals");
+    private static String MODAL_FILE_PATH = MODAL_PROPERTIES_FILE_PATH;
+//    private static final ResourceBundle MODAL_BUNDLE = ResourceBundle.getBundle("frontend/properties/text/");
     private static final String CANT_LOAD_FILE_ID = "unableToLoadPropertiesFile";
     private static final String ERROR_LOADING_FILE_ID = "Error loading properties file";
 
@@ -79,7 +82,7 @@ public class Modal<T> extends Dialog<T> {
      * 
      * @return
      */
-    protected HashMap<String, String> setPropertiesMap(String title) {
+    protected Map<String, String> setPropertiesMap(String title) {
         Properties properties = new Properties();
         try {
             InputStream inputStream = getClass().getClassLoader()
@@ -87,30 +90,22 @@ public class Modal<T> extends Dialog<T> {
             if (inputStream != null) {
                 properties.load(inputStream);
             } else {
-                System.err.println(MODAL_BUNDLE.getString(CANT_LOAD_FILE_ID));
+//                System.err.println(MODAL_BUNDLE.getString(CANT_LOAD_FILE_ID));
             }
         } catch (Exception e) {
-            System.out.println(MODAL_BUNDLE.getString(ERROR_LOADING_FILE_ID));
+//            System.out.println(MODAL_BUNDLE.getString(ERROR_LOADING_FILE_ID));
         }
-
-        HashMap<String, String> myPropertiesMap = new HashMap<>();
-
+        Map<String, String> myPropertiesMap = new TreeMap<>();
         for (String key : properties.stringPropertyNames()) {
             if (key.startsWith(title)) {
-                String newKey = key.substring(title.length() + 1);
-                myPropertiesMap.put(newKey, properties.getProperty(key));
+                    myPropertiesMap.put(key, properties.getProperty(key));
             }
         }
-        return myPropertiesMap;
 
+
+        return myPropertiesMap;
     }
 
-    /**
-     * Uses the array list of strings to create labels and add them to the dialog
-     * pane
-     * 
-     * @return
-     */
     protected void setContentAsLabels(ArrayList<String> content) {
 
         VBox vBox = new VBox();
@@ -153,7 +148,11 @@ public class Modal<T> extends Dialog<T> {
      * @return
      */
     protected Map<String, String> getPropertiesMap() {
-        return new HashMap<>(myPropertiesMap);
+        return new TreeMap<>(myPropertiesMap);
+    }
+
+    protected String getMyTitle() {
+        return myTitle;
     }
 
     /**

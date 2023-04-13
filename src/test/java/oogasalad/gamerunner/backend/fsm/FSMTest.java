@@ -30,7 +30,7 @@ class BasicState extends State {
 
 class InitState extends State {
     @Override
-    public void onInit(FSM.StateData data) {
+    public void onEnter(FSM.StateData data) {
         IdManager idManager = (IdManager) data.get("idManager");
         Variable<String> var = new Variable<>("hello");
         idManager.addObject(var, "testvar");
@@ -58,7 +58,7 @@ class LeaveState extends State {
 
 class InitLeaveState extends State {
     @Override
-    public void onInit(FSM.StateData data) {
+    public void onEnter(FSM.StateData data) {
         IdManager idManager = (IdManager) data.get("idManager");
         Variable<String> var = new Variable<>("hello");
         idManager.addObject(var, "testvarinit");
@@ -74,72 +74,6 @@ class InitLeaveState extends State {
         IdManager idManager = (IdManager) data.get("idManager");
         Variable<String> var = new Variable<>("hello");
         idManager.addObject(var, "testvarleave");
-    }
-}
-
-class ProgrammableState extends State {
-    Object value;
-
-    Interpreter interpreter;
-
-    String initCode;
-    String leaveCode;
-    String setValueCode;
-
-    public ProgrammableState(Interpreter interpreter, String initCode, String leaveCode, String setValueCode){
-        this.interpreter = interpreter;
-        this.initCode = initCode;
-        this.leaveCode = leaveCode;
-        this.setValueCode = setValueCode;
-    }
-
-    @Override
-    public void onInit(FSM.StateData data) {
-        Variable<Object> output = setStateOutput(data, null);
-        interpreter.interpret(initCode);
-        if (output.get() != null){
-            this.value = output.get();
-        }
-    }
-
-    @Override
-    public void onLeave(FSM.StateData data) {
-        interpreter.interpret(leaveCode);
-    }
-
-    @Override
-    public Object getValue() {
-        return value;
-    }
-
-    @Override
-    public void setInnerValue(FSM.StateData data, Object value) {
-        IdManager idManager = (IdManager) data.get("idManager");
-        if (!idManager.isIdInUse("state_input")){
-            Variable<Object> input = new Variable<>(value);
-            idManager.addObject(input, "state_input");
-        }
-        else {
-            Variable<Object> input = (Variable<Object>) idManager.getObject("state_input");
-            input.set(value);
-        }
-        Variable<Object> output = setStateOutput(data, value);
-        interpreter.interpret(setValueCode);
-        this.value = output.get();
-    }
-
-    private Variable<Object> setStateOutput(FSM.StateData data, Object value){
-        IdManager idManager = (IdManager) data.get("idManager");
-        Variable<Object> output;
-        if (idManager.isIdInUse("state_output")){
-            output = (Variable<Object>) idManager.getObject("state_output");
-        }
-        else {
-            output = new Variable<>(value);
-            idManager.addObject(output, "state_output");
-        }
-        output.set(value);
-        return output;
     }
 }
 
@@ -172,9 +106,9 @@ public class FSMTest {
 
     @Test
     void testDefaultTransitions(){
-        fsm.putState("INIT", new BasicState(), "MOVE1");
-        fsm.putState("MOVE1", new BasicState(), "DONE");
-        fsm.putState("DONE", new BasicState(), "INIT");
+        fsm.putState("INIT", new BasicState(), (state, data) -> "MOVE1");
+        fsm.putState("MOVE1", new BasicState(), (state, data) -> "DONE");
+        fsm.putState("DONE", new BasicState(), (state, data) -> "INIT");
 
         fsm.setState("INIT");
         assertEquals("INIT", fsm.getCurrentState());
@@ -216,7 +150,7 @@ public class FSMTest {
 
     @Test
     void testOnLeave(){
-        fsm.putState("INIT", new LeaveState(), "OTHER");
+        fsm.putState("INIT", new LeaveState(), (state, data) -> "OTHER");
         fsm.putState("OTHER", new BasicState());
         fsm.setState("INIT");
         fsm.transition();
@@ -225,7 +159,7 @@ public class FSMTest {
 
     @Test
     void onInitAndLeave(){
-        fsm.putState("INIT", new InitLeaveState(), "OTHER");
+        fsm.putState("INIT", new InitLeaveState(), (state, data) -> "OTHER");
         fsm.putState("OTHER", new BasicState());
         fsm.setState("INIT");
         assertTrue(idManager.isIdInUse("testvarinit"));
@@ -246,7 +180,7 @@ public class FSMTest {
 
     @Test
     void setInternalValueWithTransition(){
-        fsm.putState("INIT", new BasicState(), "OTHER");
+        fsm.putState("INIT", new BasicState(), (state, data) -> "OTHER");
         fsm.putState("OTHER", new BasicState());
         fsm.setState("INIT");
         fsm.setStateInnerValue("test");

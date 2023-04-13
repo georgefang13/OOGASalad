@@ -80,7 +80,14 @@ abstract public class OperatorToken extends Token {
 
     if (!works) {
       String s = env.getLanguageResource("argumentSubtypeError");
-      s = String.format(s, t, NAME, type.getSimpleName(), String.join(" or ", subtype), t.getClass().getSimpleName(), t.SUBTYPE);
+
+      String[] simpleSubtypes = new String[subtype.length];
+
+      for (int i = 0; i < subtype.length; i++) {
+        simpleSubtypes[i] = subtype[i].substring(subtype[i].lastIndexOf('.') + 1);
+      }
+
+      s = String.format(s, t, NAME, type.getSimpleName(), String.join(" or ", simpleSubtypes), t.getClass().getSimpleName(), t.SUBTYPE);
       throwError(new IllegalArgumentException(s));
     }
 
@@ -106,7 +113,9 @@ abstract public class OperatorToken extends Token {
 
     if (!containsSubtype){
       String s = env.getLanguageResource("argumentSubtypeError");
-      s = String.format(s, t, NAME, type.getSimpleName(), String.join(" or ", subtype), t.getClass().getSimpleName(), t.SUBTYPE);
+
+      String simpleSubtype = subtype.substring(subtype.lastIndexOf('.') + 1);
+      s = String.format(s, t, NAME, type.getSimpleName(), String.join(" or ", simpleSubtype), t.getClass().getSimpleName(), t.SUBTYPE);
       throwError(new IllegalArgumentException(s));
     }
 

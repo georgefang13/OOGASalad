@@ -1,6 +1,7 @@
 package oogasalad.sharedDependencies.backend.ownables.gameobjects;
 
-import oogasalad.gameeditor.backend.id.IdManager;
+import com.google.gson.JsonObject;
+import oogasalad.sharedDependencies.backend.filemanagers.JsonSaveable;
 import oogasalad.sharedDependencies.backend.ownables.Ownable;
 import oogasalad.sharedDependencies.backend.owners.Owner;
 
@@ -9,7 +10,7 @@ import oogasalad.sharedDependencies.backend.owners.Owner;
  * Represents an object such as a game piece
  * @author Michael Bryant
  */
-public class GameObject extends Ownable {
+public class GameObject extends Ownable implements JsonSaveable {
 
   /**
    * Creates a new GameObject.
@@ -18,5 +19,14 @@ public class GameObject extends Ownable {
     super(owner);
   }
 
+  @Override
+  public void buildFromJson(JsonObject element) {
+    // Does nothing
+  }
+
+  @Override
+  public JsonObject getAsJson() {
+    return null;
+  }
 }
 

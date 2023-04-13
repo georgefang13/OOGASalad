@@ -11,19 +11,22 @@ import java.util.ResourceBundle;
 public class GraphicHandler {
 
   //TODO add the SIZE_FILE and set the file names based on convention
-  final static public String FILE_LOCATION = "frontend/properties/numeric";
-  final static public String SIZE_FILE = FILE_LOCATION + "numeric.properties";
-  private int scalingFactor;
+  final static public String FILE_LOCATION = "frontend/properties/numeric/";
+  final static public String SIZE_FILE = FILE_LOCATION + "numeric";
+  private int scalingFactorX, scalingFactorY;
   private int LeftBound;
   private int RightBound;
   private int TopBound;
   private int BottomBound;
   public GraphicHandler(){
     ResourceBundle sizeBundle = ResourceBundle.getBundle(SIZE_FILE);
-    int windowSize = Integer.parseInt(sizeBundle.getString("WindowSize"));
+    int windowSizeX = Integer.parseInt(sizeBundle.getString("WindowWidth"));
+    int windowSizeY = Integer.parseInt(sizeBundle.getString("WindowHeight"));
     //TODO rename this AreaSize based on what the Panel will be called
-    int editingAreaSize = Integer.parseInt(sizeBundle.getString("editingAreaSize"));
-    scalingFactor = editingAreaSize / windowSize;
+    int editingWidth = Integer.parseInt(sizeBundle.getString("EditingWidth"));
+    int editingHeight = Integer.parseInt(sizeBundle.getString("EditingHeight"));
+    scalingFactorX = editingWidth/ windowSizeX;
+    scalingFactorY = editingHeight/ windowSizeY;
   }
 
   /**
@@ -33,16 +36,15 @@ public class GraphicHandler {
    * @return the Point that is displayed in the Editor
    */
   public Point absoluteCoordinatesToEditor(Point absoluteCoord){
-    return absoluteCoord.scale(scalingFactor);
+    return absoluteCoord.scale(scalingFactorX);
   }
-
   /**
    * Converts the size of the Component from Window size to Editor Size
    * @param size the size of the Component as inputted from the user
    * @return the size of the Component it should be in the Editor
    */
   public double absoluteSizeToEditor(double size){
-    return size*scalingFactor;
+    return size*scalingFactorX;
   }
 
   /**
@@ -60,5 +62,10 @@ public class GraphicHandler {
       return false;
     }
     return true;
+  }
+
+  public void moveToCenter(Component c) {
+    c.getNode().setTranslateX(500);
+    c.getNode().setTranslateY(250);
   }
 }

@@ -1,0 +1,9 @@
+{
+  "name": "Tic-Tac-Toe",
+  "author": "DuVALLEY Boiz",
+  "description": "A nice, usual game of tic-tac-toe. Your goal is to get 3 in a row!",
+  "players": {
+    "min": 2,
+    "max": 2
+  }
+}
