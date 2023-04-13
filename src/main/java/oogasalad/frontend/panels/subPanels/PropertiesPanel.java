@@ -1,65 +1,80 @@
 package oogasalad.frontend.panels.subPanels;
 
+import java.util.ResourceBundle;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import oogasalad.frontend.factories.ButtonFactory;
-import oogasalad.frontend.panels.Panel;
 import oogasalad.frontend.panels.HBoxPanel;
-import oogasalad.frontend.panels.PanelController;
-
-import java.util.HashMap;
-import java.util.Map;
+import oogasalad.frontend.panels.Panel;
 
 public class PropertiesPanel extends HBoxPanel {
+  private static final ResourceBundle ELEMENT_LABELS = ResourceBundle.getBundle("frontend/properties/text/english");
+  private static final ResourceBundle ID_BUNDLE = ResourceBundle.getBundle(
+      "frontend/properties/StylingIDs/CSS_ID");
+  private static final String PROPERTIES_BUTTON_TEXT_ID = "Properties";
+  private static final String PROPERTIES_BUTTON_CSS_ID = "PropertiesButtonID";
+  private static final String POPOUT_BUTTON_BOX_ID = "PopoutButtonBoxID";
+  private static final String PROPERTIES_BOX_CLOSED_ID = "PropertiesBoxClosedID";
+  private static final String PROPERTIES_BOX_OPEN_ID = "PropertiesBoxOpenID";
+  private static final String PROPERTIES_TAB_PANE_ID = "PropertiesTabPaneID";
+
   ButtonFactory buttonFactory = new ButtonFactory();
-  PanelController panelController;
-
-  Map<String, TitledPane> paneMap;
+  HBox propertiesPanel;
 
   /**
-   * Constructor for HeaderMenu
+   * Constructor for PropertiesPanel
    */
-  public PropertiesPanel(PanelController panelController) {
+  public PropertiesPanel() {
     super();
-    this.panelController = panelController;
-    paneMap = new HashMap<>();
   }
+
   /**
-   * Creates the menu for the header
+   * Creates the Hbox that holds the pop out button and the tab pane
    * @return
    */
-  public Accordion createAccordion() {
-    Button addPlayer = new Button("add player");
-    addPlayer.setOnAction(e -> addInstanceToAccordion("player","player1"));
-    VBox playerVBOX = new VBox(addPlayer);
-    TitledPane player = new TitledPane("Player", playerVBOX);
-    paneMap.put("player",player);
-
-    Button addPiece = new Button("add piece");
-    addPiece.setOnAction(e -> addInstanceToAccordion("piece","piece1"));
-    VBox pieceVBOX = new VBox(addPiece);
-    TitledPane piece = new TitledPane("Piece", pieceVBOX);
-    paneMap.put("piece",piece);
-
-    Button addVariable = new Button("add variable");
-    addPiece.setOnAction(e -> addInstanceToAccordion("variable","variable1"));
-    VBox variableVBOX = new VBox(addVariable);
-    TitledPane variable = new TitledPane("Variable", variableVBOX);
-    paneMap.put("variable",variable);
-
-    Accordion accordion = new Accordion();
-    accordion.getPanes().addAll(player, piece, variable);
-    return accordion;
+  public HBox createPanel() {
+    propertiesPanel = new HBox();
+    propertiesPanel.getStyleClass().add(ID_BUNDLE.getString(PROPERTIES_BOX_OPEN_ID));
+    propertiesPanel.getChildren().addAll(createPopOutButtonBox(), createPropertiesTabPane());
+    return propertiesPanel;
   }
-  private void addInstanceToAccordion(String paneName, String instanceName){
-    TitledPane pane = paneMap.get(paneName);
-    Button instanceButton = new Button(instanceName);
-    VBox content = (VBox) pane.getContent();
-    content.getChildren().add(instanceButton);
-    System.out.print(instanceName);
+  private VBox createPopOutButtonBox() {
+    VBox popOutButtonBox = new VBox();
+    popOutButtonBox.getStyleClass().add(ID_BUNDLE.getString(POPOUT_BUTTON_BOX_ID));
+    Button popOutButton = new Button("P"+"\n"+"R"+"\n"+"O"+"\n"+"P"+"\n"+"E"+"\n"+"R"+"\n"+"T"+"\n"+"I"+"\n"+"E"+"\n"+"S"); //TODO: put in properties file so you can make it a button factory again
+    popOutButton.getStyleClass().add(ID_BUNDLE.getString(PROPERTIES_BUTTON_CSS_ID));
+    popOutButton.setOnAction(e -> toggleStyleSheets());
+    popOutButtonBox.getChildren().add(popOutButton);
+    return popOutButtonBox;
+  }
+  private TabPane createPropertiesTabPane() {
+    TabPane propertiesTabPane = new TabPane();
+    propertiesTabPane.getStyleClass().add(ID_BUNDLE.getString(PROPERTIES_TAB_PANE_ID));
+    Tab tab1 = new Tab("Tab 1"); // TODO: export these texts, and also make the creating of tabs come from properties files
+    Tab tab2 = new Tab("Tab 2");
+    Tab tab3 = new Tab("Tab 3");
+    tab1.setClosable(false);
+    tab2.setClosable(false);
+    tab3.setClosable(false); // TODO: this will be part of the
+    propertiesTabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
+    propertiesTabPane.getTabs().addAll(tab1, tab2, tab3);
+    return propertiesTabPane;
+  }
+  private void toggleStyleSheets() {
+    if (propertiesPanel.getStyleClass().contains(ID_BUNDLE.getString(PROPERTIES_BOX_CLOSED_ID))) {
+      propertiesPanel.getStyleClass().remove(ID_BUNDLE.getString(PROPERTIES_BOX_CLOSED_ID));
+      propertiesPanel.getStyleClass().add(ID_BUNDLE.getString(PROPERTIES_BOX_OPEN_ID));
+    }
+    else {
+      propertiesPanel.getStyleClass().remove(ID_BUNDLE.getString(PROPERTIES_BOX_OPEN_ID));
+      propertiesPanel.getStyleClass().add(ID_BUNDLE.getString(PROPERTIES_BOX_CLOSED_ID));
+    }
   }
 
   @Override
