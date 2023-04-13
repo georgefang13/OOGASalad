@@ -32,6 +32,17 @@ public class DraggableItem extends VBox {
         setContent();
     }
 
+    public DraggableItem(DraggableItem copy){
+        this.x = copy.getX();
+        this.y = copy.getY();
+        this.color = copy.getColor();
+        setLayoutX(x);
+        setLayoutY(y);
+        setPrefSize(copy.getMyWidth(),copy.getMyHeight());
+        setColor(color);
+        setChildren(copy.getChildren());
+    }
+
     private void setChildren(ObservableList<Node> children) {
         this.getChildren().addAll(children);
     }
@@ -61,6 +72,14 @@ public class DraggableItem extends VBox {
 
     public double getY() {
         return this.y;
+    }
+
+    public double getMyWidth() {
+        return this.getPrefWidth();
+    }
+
+    public double getMyHeight() {
+        return this.getPrefHeight();
     }
 
     public String getColor() {

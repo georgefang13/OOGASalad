@@ -44,10 +44,10 @@ public class DraggableContainer implements Serializable {
 //    }
 
     public DraggableItem getItem() {
-        DraggableItem item = new DraggableItem(x, y, width, height, color, children.getNodes());
+//        DraggableItem item = new DraggableItem(x, y, width, height, color, children.getNodes());
 //        item.getChildren().clear();
 //        item.getChildren().addAll();
-        return item;
+        return new DraggableItem(x, y, width, height, color, children.getNodes());
     }
 
     public void setDragX(double x) {
