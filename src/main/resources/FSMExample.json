@@ -9,7 +9,7 @@
     "MOVE": {
       "init": "",
       "leave": "getAvailable",
-      "setValue": "ifelse [ == :game_turn 0 ] [ putdzitem \"obj \"X fromgame :game_state_input  ] [ putdzitem \"obj \"O fromgame :game_state_input ] getAvailable",
+      "setValue": "ifelse [ == :game_turn 0 ] [ putdzitem \"obj \"X fromgame :game_state_input  ] [ putdzitem \"obj \"O fromgame :game_state_input ]",
       "to": "make :game_state_output \"DONE"
     },
     "DONE": {

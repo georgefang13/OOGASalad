@@ -4,7 +4,21 @@
     "folder": "operators",
     "str": "+",
     "description": "Adds two numbers together",
-    "example": "+ 1 2 # + <number> <number>"
+    "example": "+ 1 2 # + <number> <number>",
+    "specs": {
+      "inner": true,
+      "inputs": [
+          {
+          "name": "a",
+          "type": "number"
+          },
+          {
+          "name": "b",
+          "type": "number"
+          }
+      ],
+      "outputs":  "number"
+    }
   },
   "Difference": {
     "name": "Difference",
@@ -241,14 +255,14 @@
     "folder": "operators",
     "str": "dzfollow",
     "description": "Gets the next dropzone in a path",
-    "example": "dzfollow :game_zone [ Up Up Right ] # dzpaths <dropzone> <list of edges>"
+    "example": "dzfollow :game_zone [ \"Up \"Up \"Right ] # dzpaths <dropzone> <list of edges>"
   },
   "DropZoneFollowUntilBlocked": {
     "name": "Follow a Path Through Dropzones Until That Path is Blocked",
     "folder": "operators",
     "str": "dzfollowtoblock",
     "description": "Gets all dropzones among a repeated path until the path is blocked or no longer exists",
-    "example": "dzfollowtoblock :game_zone [ Up Up Right ] fvar blocked_func # dzpaths <dropzone> <list of edges> <blocked function>"
+    "example": "dzfollowtoblock :game_zone [ \"Up \"UpRight ] fvar blocked_func # dzpaths <dropzone> <list of edges> <blocked function>"
   },
   "Length": {
     "name": "Length",

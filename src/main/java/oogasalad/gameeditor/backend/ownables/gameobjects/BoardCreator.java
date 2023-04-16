@@ -1,7 +1,5 @@
 package oogasalad.gameeditor.backend.ownables.gameobjects;
 
-
-import oogasalad.gameeditor.backend.id.IdManager;
 import oogasalad.sharedDependencies.backend.ownables.gameobjects.DropZone;
 
 import java.util.ArrayList;

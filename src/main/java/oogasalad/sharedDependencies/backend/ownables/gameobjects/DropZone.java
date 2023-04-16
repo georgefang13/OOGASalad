@@ -6,14 +6,11 @@ import com.google.gson.JsonPrimitive;
 import oogasalad.sharedDependencies.backend.filemanagers.FileManager;
 import oogasalad.sharedDependencies.backend.owners.Owner;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Predicate;
 
 public class DropZone extends GameObject {
-    private final String id;
+    private String id;
     private final HashMap<String, DropZone> edges;
     private final HashMap<String, Object> holding;
 
@@ -33,6 +30,10 @@ public class DropZone extends GameObject {
      */
     public String getId() {
         return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     /**
@@ -137,10 +138,12 @@ public class DropZone extends GameObject {
     public List<String> findSpotsUntilBlocked(List<String> path, Predicate<DropZone> isBlocked) {
         DropZone currentNode = this;
         List<String> spots = new ArrayList<>();
+        HashSet<DropZone> visited = new HashSet<>();
         while (true){
             currentNode = currentNode.followPath(path);
-            if (currentNode == null || spots.contains(currentNode.getId()) || isBlocked.test(currentNode)) break;
+            if (currentNode == null || visited.contains(currentNode) || isBlocked.test(currentNode)) break;
             spots.add(currentNode.getId());
+            visited.add(currentNode);
         }
         return spots;
     }
