@@ -302,6 +302,21 @@ public class GameInator {
     goals.addObject(newGoal);
   }
 
+
+  //NOTE: here is an example params map for creating a new Variable with Owner Player 1,
+  // default id "test", and default value 5784
+
+  //Map<ObjectParameter, Object> params = new HashMap<>();
+  //params.put(ObjectParameter.OWNABLE_TYPE, "Variable");
+  //Map<ObjectParameter, Object> constructor_params = new HashMap<>();
+  //constructorParams.put(ObjectParameter.ID, "test"); -> used in IDManager
+  //constructorParams.put(ObjectParameter.VALUE, 5784); -> used in constructor
+  //constructorParams.put(ObjectParameter.OWNER, "1"); -> used in constructor
+  //params.put(ObjectParameter.CONSTRUCTOR_PARAMS, constructorParams);
+
+
+//  sendObject(OWNABLE, params)
+
   /**
    * Method is called in order to send information about a newly constructed   object that was made
    * in the front end sent to the backend. The controller sends to the backend for the backend to
