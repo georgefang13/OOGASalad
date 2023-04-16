@@ -1,8 +1,8 @@
 package oogasalad.frontend.windows;
 
 import oogasalad.frontend.scenes.AbstractScene;
-import oogasalad.frontend.scenes.SplashMainScene;
 import oogasalad.frontend.scenes.SceneTypes;
+import oogasalad.frontend.scenes.SplashMainScene;
 
 /**
  * @author Connor Wells
@@ -16,7 +16,7 @@ public class SplashWindow extends AbstractWindow {
   }
 
   public SplashWindow(String windowID, WindowMediator windowController) {
-    super(windowID,windowController);
+    super(windowID, windowController);
   }
 
   @Override

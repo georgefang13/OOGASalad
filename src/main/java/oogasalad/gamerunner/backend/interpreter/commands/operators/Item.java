@@ -1,36 +1,42 @@
 package oogasalad.gamerunner.backend.interpreter.commands.operators;
 
 import oogasalad.gamerunner.backend.interpreter.Environment;
-import oogasalad.gamerunner.backend.interpreter.tokens.*;
+import oogasalad.gamerunner.backend.interpreter.tokens.ExpressionToken;
+import oogasalad.gamerunner.backend.interpreter.tokens.OperatorToken;
+import oogasalad.gamerunner.backend.interpreter.tokens.Token;
+import oogasalad.gamerunner.backend.interpreter.tokens.ValueToken;
+import oogasalad.gamerunner.backend.interpreter.tokens.VariableToken;
 
 /**
  * Computes if x && y
  */
 public class Item extends OperatorToken {
 
-    public Item(){
-        super(2, "Item");
+  public Item() {
+    super(2, "Item");
+  }
+
+  @Override
+  public Token evaluate(Environment env) throws IllegalArgumentException {
+    Token t1 = getArg(0).evaluate(env);
+
+    Token t2 = getArg(1);
+    if (t2 instanceof VariableToken) {
+      t2 = t2.evaluate(env);
     }
 
-    @Override
-    public Token evaluate(Environment env) throws IllegalArgumentException{
-        Token t1 = getArg(0).evaluate(env);
+    ExpressionToken x2 = checkArgument(env, t2, ExpressionToken.class);
 
-        Token t2 = getArg(1);
-        if (t2 instanceof VariableToken) {
-            t2 = t2.evaluate(env);
-        }
+    ValueToken<Double> d = checkArgumentWithSubtype(env, t1, ValueToken.class,
+        Double.class.getName());
 
-        ExpressionToken x2 = checkArgument(env, t2, ExpressionToken.class);
+    int index = d.VALUE.intValue();
 
-        ValueToken<Double> d = checkArgumentWithSubtype(env, t1, ValueToken.class, Double.class.getName());
-
-        int index = d.VALUE.intValue();
-
-        if (x2.size() <= index){
-            throw new IllegalArgumentException("Cannot get index " + index + " from list of size " + x2.size());
-        }
-
-        return x2.get(index).evaluate(env);
+    if (x2.size() <= index) {
+      throw new IllegalArgumentException(
+          "Cannot get index " + index + " from list of size " + x2.size());
     }
+
+    return x2.get(index).evaluate(env);
+  }
 }

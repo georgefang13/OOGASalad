@@ -4,13 +4,15 @@ import java.util.ResourceBundle;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import oogasalad.frontend.factories.ButtonFactory;
-import oogasalad.frontend.panels.Panel;
 import oogasalad.frontend.panels.HBoxPanel;
+import oogasalad.frontend.panels.Panel;
 import oogasalad.frontend.panels.PanelController;
 import oogasalad.frontend.windows.GameEditorWindow.WindowScenes;
 
 public class HeaderMenuPanel extends HBoxPanel {
-  private static final ResourceBundle ELEMENT_LABELS = ResourceBundle.getBundle("frontend/properties/text/english");
+
+  private static final ResourceBundle ELEMENT_LABELS = ResourceBundle.getBundle(
+      "frontend/properties/text/english");
   private static final String LOGIC_EDITOR = "LogicEditor";
   private static final String VISUAL_EDITOR = "VisualEditor";
   private static final ResourceBundle ID_BUNDLE = ResourceBundle.getBundle(
@@ -32,8 +34,10 @@ public class HeaderMenuPanel extends HBoxPanel {
     this.panelController = panelController;
     this.sceneID = sceneID;
   }
+
   /**
    * Creates the menu for the header
+   *
    * @return
    */
   public HBox createMenu() {

@@ -6,6 +6,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.DialogPane;
 
 public class DisplayModal extends Modal {
+
   private Map<String, String> myPropertiesMap;
 
   public DisplayModal(String title) {

@@ -11,18 +11,18 @@ import oogasalad.gamerunner.backend.interpreter.tokens.VariableToken;
  */
 public class Global extends OperatorToken {
 
-    public Global(){
-        super(1, "Global");
-    }
+  public Global() {
+    super(1, "Global");
+  }
 
-    @Override
-    public Token evaluate(Environment env) {
+  @Override
+  public Token evaluate(Environment env) {
 
-        Token t = getArg(0);
+    Token t = getArg(0);
 
-        VariableToken x = checkArgument(env, t, VariableToken.class);
+    VariableToken x = checkArgument(env, t, VariableToken.class);
 
-        env.addVariable(x.NAME + "-global", t);
-        return null;
-    }
+    env.addVariable(x.NAME + "-global", t);
+    return null;
+  }
 }

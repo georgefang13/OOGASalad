@@ -12,6 +12,7 @@ import javafx.scene.control.Tooltip;
  * This class represents a factory for creating buttons
  */
 public class ButtonFactory {
+
   private final ResourceBundle textBundle;
   private static final String ENGLISH_PROPERTIES = "frontend/properties/text/english";
   private static final String ENGLISH_FILE_PATH = "frontend/properties/text/english.properties";
@@ -32,8 +33,7 @@ public class ButtonFactory {
   /**
    * Creates a button with the given text, font size, and text color
    *
-   * @param property the key value in the label bundle representing the text of
-   *                 the button
+   * @param property the key value in the label bundle representing the text of the button
    * @return the Button
    */
   public Button createDefaultButton(String property) {
@@ -41,11 +41,11 @@ public class ButtonFactory {
     defaultButton.setText(myButtonPropertiesMap.get(property));
     return defaultButton;
   }
+
   /**
    * Creates a button with the given text, font size, and text color
    *
-   * @param property the key value in the label bundle representing the text of
-   *                 the button
+   * @param property the key value in the label bundle representing the text of the button
    * @return the Button
    */
   public Button createComponentButton(String property) {
@@ -53,11 +53,11 @@ public class ButtonFactory {
     componentButton.setText(myButtonPropertiesMap.get(property));
     return componentButton;
   }
+
   /**
    * Creates a button with the given text, font size, and text color
    *
-   * @param property the key value in the label bundle representing the text of
-   *                 the button
+   * @param property the key value in the label bundle representing the text of the button
    * @return the Button
    */
   public Button createVeritcalButton(String property) {
@@ -69,6 +69,7 @@ public class ButtonFactory {
 
   /**
    * Creates a tooltop with the given text
+   *
    * @param text
    * @return
    */
@@ -78,7 +79,8 @@ public class ButtonFactory {
     return tooltip;
   }
 
-  private HashMap<String, String> setPropertiesMap(String prefix) { //TODO: this is reused from MODAL.java...fix that so its not repeated code
+  private HashMap<String, String> setPropertiesMap(
+      String prefix) { //TODO: this is reused from MODAL.java...fix that so its not repeated code
     Properties properties = new Properties();
     try {
       InputStream inputStream = getClass().getClassLoader()

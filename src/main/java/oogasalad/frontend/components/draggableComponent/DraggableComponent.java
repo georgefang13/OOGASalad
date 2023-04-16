@@ -4,8 +4,7 @@ package oogasalad.frontend.components.draggableComponent;
 import oogasalad.frontend.components.Component;
 
 /**
- * @author Han, Aryan
- * This is the component for all View Elements that can be dragged with a mouse
+ * @author Han, Aryan This is the component for all View Elements that can be dragged with a mouse
  */
 public interface DraggableComponent extends Component {
 
@@ -19,8 +18,10 @@ public interface DraggableComponent extends Component {
    * This is the method that allows us to lock and unlock if the component can be dragged.
    */
   void setDraggable(boolean draggable);
+
   /**
    * This is the method that allows for the DraggableComponent to be set as the ActiveComponent.
+   *
    * @param active is if the component is active
    */
   void setActiveSelected(boolean active);

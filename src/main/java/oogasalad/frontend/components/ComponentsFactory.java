@@ -9,9 +9,8 @@ import javafx.stage.Stage;
 import oogasalad.frontend.components.gameObjectComponent.GameObject;
 
 /**
- * @author hanzh
- * This ComponentFactory is meant to provide a Factory to easily instantiate different types of Components
- * given any input parameters
+ * @author hanzh This ComponentFactory is meant to provide a Factory to easily instantiate different
+ * types of Components given any input parameters
  */
 public class ComponentsFactory {
 
@@ -19,58 +18,63 @@ public class ComponentsFactory {
   private ResourceBundle bundle;
   private int ID;
   private Stage stage;
-  public ComponentsFactory(){
+
+  public ComponentsFactory() {
     ID = 0;
     bundle = ResourceBundle.getBundle(FACTOR_PROPERTIES);
   }
+
   /**
-   * Use Reflection to determine the Component type and construct the proper type of Component
-   * This is for the default Component
+   * Use Reflection to determine the Component type and construct the proper type of Component This
+   * is for the default Component
+   *
    * @param type type of component being created. If it's an invalid Component, an error is thrown.
    * @return the Component the client wanted
    */
-  public Component create(String type){
+  public Component create(String type) {
     Component component = null;
     String lowercase = type.substring(0, 1).toLowerCase() + type.substring(1);
     System.out.println(GameObject.class.getName());
-    try{
-      Class<?> c = Class.forName(bundle.getString("package")+lowercase + "Component." + type);
+    try {
+      Class<?> c = Class.forName(bundle.getString("package") + lowercase + "Component." + type);
       Constructor<?> constructor = c.getConstructor(int.class);
       component = (Component) constructor.newInstance(ID);
       ID++;
-    } catch (Exception e){
+    } catch (Exception e) {
       System.out.println(e.toString());
     }
     return component;
   }
+
   /**
    * Takes in Inputs of parameters to create a Component type. This can either establish the default
    * Component or create the input
    */
-  public Component create(String type, ArrayList<String> params){
+  public Component create(String type, ArrayList<String> params) {
     Component component = null;
     Map<String, String> map = new HashMap<>();
 
-    for(String s: params){
+    for (String s : params) {
       String[] parts = s.split(bundle.getString("SplitCharacter"));
       map.put(parts[0], parts[1]);
     }
-    try{
+    try {
       Class<?> c = Class.forName(type);
       Constructor<?> constructor = c.getConstructor(map.getClass());
       component = (Component) constructor.newInstance(map);
-    } catch (Exception e){
+    } catch (Exception e) {
       System.out.println("Failed");
     }
     return component;
   }
-  public Component create(String type, Map<String, String> map){
+
+  public Component create(String type, Map<String, String> map) {
     Component component = null;
-    try{
+    try {
       Class<?> c = Class.forName(type);
       Constructor<?> constructor = c.getConstructor(map.getClass());
       component = (Component) constructor.newInstance(map);
-    } catch (Exception e){
+    } catch (Exception e) {
       e.printStackTrace();
     }
     return component;

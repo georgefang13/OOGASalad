@@ -1,7 +1,9 @@
 package oogasalad.gamerunner.backend.interpreter.commands.operators;
 
 import oogasalad.gamerunner.backend.interpreter.Environment;
-import oogasalad.gamerunner.backend.interpreter.tokens.*;
+import oogasalad.gamerunner.backend.interpreter.tokens.OperatorToken;
+import oogasalad.gamerunner.backend.interpreter.tokens.Token;
+import oogasalad.gamerunner.backend.interpreter.tokens.ValueToken;
 
 /**
  * Computes the sum of two numbers
@@ -27,13 +29,16 @@ public class Sum extends OperatorToken {
     Token t1 = getArg(0).evaluate(env);
     Token t2 = getArg(1).evaluate(env);
 
-    ValueToken<?> x1 = checkArgumentWithSubtype(env, t1, ValueToken.class, Double.class.getName(), String.class.getName());
-    ValueToken<?> x2 = checkArgumentWithSubtype(env, t2, ValueToken.class, Double.class.getName(), String.class.getName());
+    ValueToken<?> x1 = checkArgumentWithSubtype(env, t1, ValueToken.class, Double.class.getName(),
+        String.class.getName());
+    ValueToken<?> x2 = checkArgumentWithSubtype(env, t2, ValueToken.class, Double.class.getName(),
+        String.class.getName());
 
     if (x1.VALUE instanceof String || x2.VALUE instanceof String) {
-      return new ValueToken<>(removeDecimals(x1.VALUE).toString() + removeDecimals(x2.VALUE).toString());
+      return new ValueToken<>(
+          removeDecimals(x1.VALUE).toString() + removeDecimals(x2.VALUE).toString());
     }
 
-    return new ValueToken<>((double)x1.VALUE + (double)x2.VALUE);
+    return new ValueToken<>((double) x1.VALUE + (double) x2.VALUE);
   }
 }

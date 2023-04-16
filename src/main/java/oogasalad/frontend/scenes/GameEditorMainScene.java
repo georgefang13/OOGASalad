@@ -5,7 +5,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import oogasalad.frontend.windows.AbstractWindow;
 import oogasalad.frontend.windows.GameEditorWindow;
 
 /**
@@ -28,7 +27,8 @@ public class GameEditorMainScene extends AbstractScene {
     BorderPane root = new BorderPane();
 
     editGridButton = new Button();
-    editGridButton.setOnAction(e -> panelController.newSceneFromPanel("test", GameEditorWindow.WindowScenes.EDITOR_SCENE));
+    editGridButton.setOnAction(
+        e -> panelController.newSceneFromPanel("test", GameEditorWindow.WindowScenes.EDITOR_SCENE));
 
     gameEditorLabel = new Label();
     root.setTop(gameEditorLabel);

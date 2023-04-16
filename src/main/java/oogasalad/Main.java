@@ -7,6 +7,8 @@ import oogasalad.frontend.windows.WindowMediator;
 
 
 /**
+ * Main.
+ *
  * @author Connor Wells
  * @author Owen MacKenzie
  */
