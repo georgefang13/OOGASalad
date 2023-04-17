@@ -6,7 +6,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 
 
-public class SumNode extends OogaNode {
+public class SumNode extends AbstractDraggable {
 
   private TextField operand1, operand2;
   private Label outputLabel;
