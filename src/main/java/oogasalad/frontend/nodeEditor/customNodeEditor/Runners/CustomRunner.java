@@ -1,4 +1,4 @@
-package oogasalad.frontend.nodeEditor.customNodeEditor;
+package oogasalad.frontend.nodeEditor.customNodeEditor.Runners;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -7,6 +7,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.DifferenceNode;
+import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.SumNode;
 
 public class CustomRunner extends Application {
 
