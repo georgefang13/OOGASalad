@@ -1,9 +1,9 @@
 package oogasalad.frontend.panels.subPanels;
 
 import javafx.scene.layout.Pane;
+import oogasalad.frontend.nodeEditor.GraphEditorTutorial;
 import oogasalad.frontend.panels.Panel;
 import oogasalad.frontend.panels.VisualPanel;
-import oogasalad.frontend.nodeEditor.GraphEditorTutorial;
 
 public class EnvironmentPanel extends VisualPanel {
 
@@ -13,9 +13,11 @@ public class EnvironmentPanel extends VisualPanel {
   public EnvironmentPanel() {
     super();
   }
+
   public Pane createEnvironment() {
     Pane environment = new Pane();
-    environment.setStyle("-fx-background-color: #24252e;"); //TODO: delete, here just so we can see the pane
+    environment.setStyle(
+        "-fx-background-color: #24252e;"); //TODO: delete, here just so we can see the pane
     GraphEditorTutorial graphEditorTutorial = new GraphEditorTutorial();
     //GraphEditorContainer container = graphEditorTutorial.getContainer();
     //container.prefHeightProperty().bind(environment.heightProperty());

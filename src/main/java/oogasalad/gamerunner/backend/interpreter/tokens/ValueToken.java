@@ -3,21 +3,23 @@ package oogasalad.gamerunner.backend.interpreter.tokens;
 import oogasalad.gamerunner.backend.interpreter.Environment;
 
 public class ValueToken<T> extends Token {
-    public final T VALUE;
-    public ValueToken(T value){
-        super("Value", value.getClass().getName());
-        VALUE = value;
-    }
 
-    @Override
-    public Token evaluate(Environment env){
-        return this;
-    }
+  public final T VALUE;
 
-    @Override
-    public Object export(Environment env){
-        return VALUE;
-    }
+  public ValueToken(T value) {
+    super("Value", value.getClass().getName());
+    VALUE = value;
+  }
+
+  @Override
+  public Token evaluate(Environment env) {
+    return this;
+  }
+
+  @Override
+  public Object export(Environment env) {
+    return VALUE;
+  }
 
     @Override
     public boolean equals(Token t, Environment env){
@@ -35,8 +37,8 @@ public class ValueToken<T> extends Token {
         return false;
     }
 
-    @Override
-    public String toString(){
-        return "<" + TYPE + " " + VALUE + ">";
-    }
+  @Override
+  public String toString() {
+    return "<" + TYPE + " " + VALUE + ">";
+  }
 }

@@ -1,13 +1,11 @@
 package oogasalad.gameeditor.frontend;
 
 import javafx.application.Platform;
-import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import oogasalad.frontend.components.Component;
 import oogasalad.frontend.components.ComponentsFactory;
@@ -18,24 +16,26 @@ public class ComponentsFactoryTest extends DukeApplicationTest {
 
   ComponentsFactory factory;
   Pane root;
+
   @Override
-  public void start(Stage stage){
+  public void start(Stage stage) {
     factory = new ComponentsFactory();
     root = new Pane();
     Scene scene = new Scene(root);
     stage.setScene(scene);
     stage.show();
   }
+
   @Test
-  public void createDefault(){
+  public void createDefault() {
     Component c = factory.create("GameObject");
-    Platform.runLater(()-> {
+    Platform.runLater(() -> {
       root.getChildren().add(c.getNode());
     });
     System.out.println(c.getNode().getBoundsInLocal().getMinX());
     simulateMousePress(c.getNode(), MouseButton.PRIMARY, 0, 0);
-    simulateMouseDrag(c.getNode(), MouseButton.PRIMARY, 500,500);
-    simulateMouseRelease(c.getNode(), MouseButton.PRIMARY, 500,500);
+    simulateMouseDrag(c.getNode(), MouseButton.PRIMARY, 500, 500);
+    simulateMouseRelease(c.getNode(), MouseButton.PRIMARY, 500, 500);
     System.out.println(c.getNode().getBoundsInLocal().getMinX());
   }
 

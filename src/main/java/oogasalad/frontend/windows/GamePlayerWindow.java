@@ -1,6 +1,9 @@
 package oogasalad.frontend.windows;
 
-import oogasalad.frontend.scenes.*;
+import oogasalad.frontend.scenes.AbstractScene;
+import oogasalad.frontend.scenes.GameEditorEditorScene;
+import oogasalad.frontend.scenes.GamePlayerMainScene;
+import oogasalad.frontend.scenes.SceneTypes;
 
 /**
  * @author Connor Wells
@@ -15,7 +18,7 @@ public class GamePlayerWindow extends AbstractWindow {
   }
 
   public GamePlayerWindow(String windowID, WindowMediator windowController) {
-    super(windowID,windowController);
+    super(windowID, windowController);
   }
 
   @Override

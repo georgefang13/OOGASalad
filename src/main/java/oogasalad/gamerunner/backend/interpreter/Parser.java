@@ -1,13 +1,19 @@
 package oogasalad.gamerunner.backend.interpreter;
 
-import oogasalad.gamerunner.backend.interpreter.commands.control.FVar;
+import java.util.ArrayList;
+import java.util.List;
 import oogasalad.gamerunner.backend.interpreter.commands.control.MakeUserInstruction;
 import oogasalad.gamerunner.backend.interpreter.commands.control.UserInstruction;
 import oogasalad.gamerunner.backend.interpreter.exceptions.InvalidSyntaxException;
-import oogasalad.gamerunner.backend.interpreter.tokens.*;
-
-import java.util.ArrayList;
-import java.util.List;
+import oogasalad.gamerunner.backend.interpreter.tokens.BracketToken;
+import oogasalad.gamerunner.backend.interpreter.tokens.CommandToken;
+import oogasalad.gamerunner.backend.interpreter.tokens.ExpressionToken;
+import oogasalad.gamerunner.backend.interpreter.tokens.OpenCloseToken;
+import oogasalad.gamerunner.backend.interpreter.tokens.OperatorToken;
+import oogasalad.gamerunner.backend.interpreter.tokens.ParenthesisToken;
+import oogasalad.gamerunner.backend.interpreter.tokens.SetToken;
+import oogasalad.gamerunner.backend.interpreter.tokens.TempFunctionToken;
+import oogasalad.gamerunner.backend.interpreter.tokens.Token;
 
 public class Parser {
     private final List<Token> tokens;
@@ -74,10 +80,6 @@ public class Parser {
 
     private Token parseCommandToken(CommandToken c, Environment env){
         if (lastToken instanceof MakeUserInstruction){
-            lastToken = c;
-            return c;
-        }
-        else if (lastToken instanceof FVar) {
             lastToken = c;
             return c;
         }

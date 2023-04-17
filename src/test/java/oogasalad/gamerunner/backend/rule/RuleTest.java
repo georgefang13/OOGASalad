@@ -11,9 +11,11 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Test for Rule class and subclasses
+ *
  * @author Rodrigo Bassi Guerreiro
  */
 public class RuleTest {
+
   Rule rule;
 
   @BeforeEach

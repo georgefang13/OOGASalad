@@ -6,6 +6,7 @@ package oogasalad.frontend.managers;
  */
 
 public interface PropertiesObserver {
+
   void setText();
 
 }

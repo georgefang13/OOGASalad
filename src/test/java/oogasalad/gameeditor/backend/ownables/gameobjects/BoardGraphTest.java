@@ -1,22 +1,30 @@
 package oogasalad.gameeditor.backend.ownables.gameobjects;
 
 
-import oogasalad.gameeditor.backend.id.IdManager;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import oogasalad.sharedDependencies.backend.ownables.gameobjects.DropZone;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.*;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 public class BoardGraphTest {
 
   private List<DropZone> g;
 
-  private DropZone getNodeWithId(String id){
-    for (DropZone node : g){
-      if (node.getId().equals(id)){
+  private DropZone getNodeWithId(String id) {
+    for (DropZone node : g) {
+      if (node.getId().equals(id)) {
         return node;
       }
     }
@@ -26,17 +34,19 @@ public class BoardGraphTest {
 
   // create new instance of test object before each test is run
   @BeforeEach
-  void setup () {
+  void setup() {
     g = new ArrayList<>();
   }
-  ArrayList<Map.Entry<String, DropZone>> getSortedEdges(DropZone node){
-    ArrayList<Map.Entry<String, DropZone>> sortedEdges = new ArrayList<>(node.getEdges().entrySet());
+
+  ArrayList<Map.Entry<String, DropZone>> getSortedEdges(DropZone node) {
+    ArrayList<Map.Entry<String, DropZone>> sortedEdges = new ArrayList<>(
+        node.getEdges().entrySet());
     sortedEdges.sort(Comparator.comparing(e -> e.getValue().getId()));
     return sortedEdges;
   }
 
   @Test
-  void addConnections(){
+  void addConnections() {
     DropZone a = new DropZone("A");
     DropZone b = new DropZone("B");
     DropZone c = new DropZone("C");
@@ -55,22 +65,24 @@ public class BoardGraphTest {
   }
 
   @Test
-  void addNullAndRedundantConnections(){
+  void addNullAndRedundantConnections() {
     DropZone a = new DropZone("A");
     DropZone b = new DropZone("B");
     DropZone c = new DropZone("C");
 
-    try { a.addOutgoingConnection(null, "AB"); }
-    catch (IllegalArgumentException e) {
+    try {
+      a.addOutgoingConnection(null, "AB");
+    } catch (IllegalArgumentException e) {
       assertEquals("Cannot add null node to graph.", e.getMessage());
     }
-    try { a.addOutgoingConnection(b,  null); }
-    catch (IllegalArgumentException e){
+    try {
+      a.addOutgoingConnection(b, null);
+    } catch (IllegalArgumentException e) {
       assertEquals("Edge name cannot be empty.", e.getMessage());
     }
-    try { a.addOutgoingConnection(b, "");
-    }
-    catch (IllegalArgumentException e){
+    try {
+      a.addOutgoingConnection(b, "");
+    } catch (IllegalArgumentException e) {
       assertEquals("Edge name cannot be empty.", e.getMessage());
     }
 
@@ -86,7 +98,7 @@ public class BoardGraphTest {
   }
 
   @Test
-  void testEquals(){
+  void testEquals() {
     DropZone a = new DropZone("A");
     assertFalse(a.equals(true));
     assertEquals(a, a);
@@ -99,7 +111,7 @@ public class BoardGraphTest {
   }
 
   @Test
-  void testNodeToString(){
+  void testNodeToString() {
     DropZone a = new DropZone("A");
     DropZone b = new DropZone("B");
     DropZone c = new DropZone("Blobfish Tails");
@@ -110,7 +122,7 @@ public class BoardGraphTest {
   }
 
   @Test
-  void testNodeHashcode(){
+  void testNodeHashcode() {
     DropZone a = new DropZone("A");
     DropZone b = new DropZone("B");
 
@@ -118,7 +130,7 @@ public class BoardGraphTest {
     assertEquals("B".hashCode(), b.hashCode());
   }
 
-  void makeConnectedSquare(){
+  void makeConnectedSquare() {
     DropZone a = new DropZone("A");
     DropZone b = new DropZone("B");
     DropZone c = new DropZone("C");
@@ -141,46 +153,45 @@ public class BoardGraphTest {
   }
 
   @Test
-  void testCreateGrid(){
+  void testCreateGrid() {
     int numRows = 3;
     int numCols = 7;
     g = BoardCreator.createGrid(numRows, numCols);
     assertEquals(numRows * numCols, g.size());
-    for (int i = 0; i < numRows; i++){
-      for (int j = 0; j < numCols; j++){
+    for (int i = 0; i < numRows; i++) {
+      for (int j = 0; j < numCols; j++) {
         String id = String.format("%d,%d", i, j);
         assertNotNull(getNodeWithId(id));
         // test edges
-        if (i > 0){
+        if (i > 0) {
           assertTrue(Objects.requireNonNull(getNodeWithId(id)).getEdges().containsKey("Up"));
         }
-        if (i < numRows-1){
-          try{
+        if (i < numRows - 1) {
+          try {
             assertTrue(Objects.requireNonNull(getNodeWithId(id)).getEdges().containsKey("Down"));
-          }
-          catch (AssertionError e){
+          } catch (AssertionError e) {
             System.out.println(id);
             System.out.println(Objects.requireNonNull(getNodeWithId(id)).getEdges());
             throw e;
           }
 
         }
-        if (j > 0){
+        if (j > 0) {
           assertTrue(Objects.requireNonNull(getNodeWithId(id)).getEdges().containsKey("Left"));
         }
-        if (j < numCols-1){
+        if (j < numCols - 1) {
           assertTrue(Objects.requireNonNull(getNodeWithId(id)).getEdges().containsKey("Right"));
         }
-        if (i > 0 && j > 0){
+        if (i > 0 && j > 0) {
           assertTrue(Objects.requireNonNull(getNodeWithId(id)).getEdges().containsKey("UpLeft"));
         }
-        if (i > 0 && j < numCols-1){
+        if (i > 0 && j < numCols - 1) {
           assertTrue(Objects.requireNonNull(getNodeWithId(id)).getEdges().containsKey("UpRight"));
         }
-        if (i < numRows-1 && j > 0){
+        if (i < numRows - 1 && j > 0) {
           assertTrue(Objects.requireNonNull(getNodeWithId(id)).getEdges().containsKey("DownLeft"));
         }
-        if (i < numRows-1 && j < numCols-1){
+        if (i < numRows - 1 && j < numCols - 1) {
           assertTrue(Objects.requireNonNull(getNodeWithId(id)).getEdges().containsKey("DownRight"));
         }
       }
@@ -188,7 +199,7 @@ public class BoardGraphTest {
   }
 
   @Test
-  void followPath(){
+  void followPath() {
     makeConnectedSquare();
 
         /*
@@ -222,7 +233,7 @@ public class BoardGraphTest {
   }
 
   @Test
-  void isPathBlocked(){
+  void isPathBlocked() {
     makeConnectedSquare();
 
         /*
@@ -235,30 +246,37 @@ public class BoardGraphTest {
     Objects.requireNonNull(getNodeWithId("C")).putObject("Obj", 1);
 
     List<String> path1 = new ArrayList<>(List.of("F"));
-    assertFalse(Objects.requireNonNull(getNodeWithId("A")).isPathBlocked(path1, node -> node.hasObject("Obj")));
+    assertFalse(Objects.requireNonNull(getNodeWithId("A"))
+        .isPathBlocked(path1, node -> node.hasObject("Obj")));
 
     List<String> path2 = new ArrayList<>(Arrays.asList("F", "F"));
-    assertTrue(Objects.requireNonNull(getNodeWithId("A")).isPathBlocked(path2, node -> node.hasObject("Obj")));
+    assertTrue(Objects.requireNonNull(getNodeWithId("A"))
+        .isPathBlocked(path2, node -> node.hasObject("Obj")));
 
     List<String> path3 = new ArrayList<>(Arrays.asList("F", "F", "F"));
-    assertTrue(Objects.requireNonNull(getNodeWithId("A")).isPathBlocked(path3 , node -> node.hasObject("Obj")));
-    assertTrue(Objects.requireNonNull(getNodeWithId("B")).isPathBlocked(path3 , node -> node.hasObject("Obj")));
-    assertFalse(Objects.requireNonNull(getNodeWithId("C")).isPathBlocked(path3 , node -> node.hasObject("Obj")));
+    assertTrue(Objects.requireNonNull(getNodeWithId("A"))
+        .isPathBlocked(path3, node -> node.hasObject("Obj")));
+    assertTrue(Objects.requireNonNull(getNodeWithId("B"))
+        .isPathBlocked(path3, node -> node.hasObject("Obj")));
+    assertFalse(Objects.requireNonNull(getNodeWithId("C"))
+        .isPathBlocked(path3, node -> node.hasObject("Obj")));
 
     List<String> path4 = new ArrayList<>(Arrays.asList("F", "F", "F", "F"));
-    assertTrue(Objects.requireNonNull(getNodeWithId("C")).isPathBlocked(path4 , node -> node.hasObject("Obj")));
-
+    assertTrue(Objects.requireNonNull(getNodeWithId("C"))
+        .isPathBlocked(path4, node -> node.hasObject("Obj")));
 
     List<String> path6 = new ArrayList<>(Arrays.asList("F", "DIAG", "F"));
-    assertFalse(Objects.requireNonNull(getNodeWithId("A")).isPathBlocked(path6, node -> node.hasObject("Obj")));
+    assertFalse(Objects.requireNonNull(getNodeWithId("A"))
+        .isPathBlocked(path6, node -> node.hasObject("Obj")));
 
     // go along a nonexistent edge
     List<String> path7 = new ArrayList<>(Arrays.asList("F", "D"));
-    assertTrue(Objects.requireNonNull(getNodeWithId("A")).isPathBlocked(path7, node -> node.hasObject("Obj")));
+    assertTrue(Objects.requireNonNull(getNodeWithId("A"))
+        .isPathBlocked(path7, node -> node.hasObject("Obj")));
   }
 
   @Test
-  void testFindAllSpotsUntilBlocked(){
+  void testFindAllSpotsUntilBlocked() {
     g = BoardCreator.createGrid(8, 8);
 
         /*
@@ -290,7 +308,7 @@ public class BoardGraphTest {
     List<String> available = new ArrayList<>();
     List<String> expected = new ArrayList<>(List.of("3,4", "2,5", "3,2", "5,2", "6,1", "7,0"));
 
-    for (List<String> path : paths){
+    for (List<String> path : paths) {
       assert start != null;
       available.addAll(start.findSpotsUntilBlocked(path, node -> node.hasObject("Obj")));
     }
@@ -305,7 +323,7 @@ public class BoardGraphTest {
 
 
   @Test
-  void testNodePutAndRemoveObject(){
+  void testNodePutAndRemoveObject() {
     g = BoardCreator.createGrid(4, 4);
     Objects.requireNonNull(getNodeWithId("0,0")).putObject("Obj", 1);
     assertTrue(Objects.requireNonNull(getNodeWithId("0,0")).hasObject("Obj"));
@@ -316,12 +334,13 @@ public class BoardGraphTest {
   }
 
   @Test
-  void testSquareLoop(){
+  void testSquareLoop() {
     g = BoardCreator.createSquareLoop(4, 4);
     assertEquals(12, g.size());
 
     List<String> path = new ArrayList<>(List.of("Counterclockwise"));
-    List<String> expected = new ArrayList<>(List.of("9", "10", "11", "0", "1", "2", "3", "4", "5", "6", "7", "8"));
+    List<String> expected = new ArrayList<>(
+        List.of("9", "10", "11", "0", "1", "2", "3", "4", "5", "6", "7", "8"));
     List<String> available = g.get(8).findSpotsUntilBlocked(path, node -> node.hasObject("Obj"));
     assertEquals(expected, available);
 
@@ -333,7 +352,8 @@ public class BoardGraphTest {
     g.get(8).removeObject("Obj");
 
     path = new ArrayList<>(List.of("Clockwise"));
-    List<String> expected3 = new ArrayList<>(List.of("3", "2", "1", "0", "11", "10", "9", "8", "7", "6", "5", "4"));
+    List<String> expected3 = new ArrayList<>(
+        List.of("3", "2", "1", "0", "11", "10", "9", "8", "7", "6", "5", "4"));
     List<String> available3 = g.get(4).findSpotsUntilBlocked(path, node -> node.hasObject("Obj"));
     assertEquals(expected3, available3);
 
@@ -345,7 +365,7 @@ public class BoardGraphTest {
   }
 
   @Test
-  void testCreate1DLoop(){
+  void testCreate1DLoop() {
     g = BoardCreator.create1DLoop(4);
     assertEquals(4, g.size());
 

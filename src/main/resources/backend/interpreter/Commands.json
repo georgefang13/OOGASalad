@@ -216,7 +216,8 @@
   },
   "GreaterThan": {
     "name": "GreaterThan",
-    "folder": "operators","str": ">",
+    "folder": "operators",
+    "str": ">",
     "description": "Tests whether one number is greater than another",
     "example": "> 1 2 # > <number> <number>"
   },

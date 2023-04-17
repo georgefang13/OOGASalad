@@ -5,16 +5,16 @@ public enum ObjectParameter {
   //FOR OWNABLES
   /**
    * Any concrete subclass of Ownable, accessible through reflection. Ex: Variable, DropZone, etc.
-   * If contained in {"", "null", "NULL", "Null", "none", "NONE", "None"} or not present in the map, a default GameObject will be created
+   * If contained in {"", "null", "NULL", "Null", "none", "NONE", "None"} or not present in the map,
+   * a default GameObject will be created
    */
   OWNABLE_TYPE,
 
   /**
-   * The owner of the Ownable. Ex: Player1, Player2, GameWorld, etc.
-   * This is of type Owner
-   * Note: Players cannot be named to anything other than "Player1", "Player2", etc.
-   * This is independent of the language configuration
-   * Any other name will result in the owner being set to the GameWorld
+   * The owner of the Ownable. Ex: Player1, Player2, GameWorld, etc. This is of type Owner Note:
+   * Players cannot be named to anything other than "Player1", "Player2", etc. This is independent
+   * of the language configuration Any other name will result in the owner being set to the
+   * GameWorld
    */
   OWNER,
 

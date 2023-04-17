@@ -9,25 +9,26 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 /**
- * Manages the ids of all Objects of type T (such as an Ownable).
- * For example, an IdManager<Ownable> would manage the ids of all Ownables
- * and an IdManager<Rule> would manage the ids of all Rules.
- * Supports adding SubIds to ids (such as a Player owning a Variable. In this case, the id would be OwnableId.VariableId).
+ * Manages the ids of all Objects of type T (such as an Ownable). For example, an IdManager<Ownable>
+ * would manage the ids of all Ownables and an IdManager<Rule> would manage the ids of all Rules.
+ * Supports adding SubIds to ids (such as a Player owning a Variable. In this case, the id would be
+ * OwnableId.VariableId).
+ *
  * @author Michael Bryant
  */
-public class  IdManager<T extends IdManageable> implements Iterable<Map.Entry<String, T>> {
+public class IdManager<T extends IdManageable> implements Iterable<Map.Entry<String, T>> {
 
   /**
-   * Map of ids to Objects. Includes subIds, but not with the full id.
-   * Ex. If the id is "Player1.Variable1", then the key is the object and the value is the Variable1.
-   * Since the key is a SubObject, it is included in the subIds map.
+   * Map of ids to Objects. Includes subIds, but not with the full id. Ex. If the id is
+   * "Player1.Variable1", then the key is the object and the value is the Variable1. Since the key
+   * is a SubObject, it is included in the subIds map.
    */
   private final Map<String, T> simpleIds = new HashMap<>();
 
   /**
-   * Map of SubObjects to Objects (owners). Example, the key is the Variable1 and the value is the Player1 if the id is "Player1.Variable1".
-   * Enables tree traversal (up the tree) to find the owner of a SubObject.
-   * If the key points to null, then the key is the root of the tree.
+   * Map of SubObjects to Objects (owners). Example, the key is the Variable1 and the value is the
+   * Player1 if the id is "Player1.Variable1". Enables tree traversal (up the tree) to find the
+   * owner of a SubObject. If the key points to null, then the key is the root of the tree.
    * Dependency loops are not allowed per the below methods.
    */
   private final Map<T, T> ownershipMap = new HashMap<>();
@@ -48,6 +49,7 @@ public class  IdManager<T extends IdManageable> implements Iterable<Map.Entry<St
 
   /**
    * Tests if a given obejct is already stored in the id manager.
+   *
    * @param obj the object to test
    * @return true if the object is already stored in the id manager, false otherwise
    */
@@ -56,8 +58,9 @@ public class  IdManager<T extends IdManageable> implements Iterable<Map.Entry<St
   }
 
   /**
-   * Returns the T with the given id.
-   * Accepts simple ids (ex. "Player1") and full ids (ex. "Player1.Variable1").
+   * Returns the T with the given id. Accepts simple ids (ex. "Player1") and full ids (ex.
+   * "Player1.Variable1").
+   *
    * @param id the non-null id of the ownable to return
    * @return the T with the given id
    * @throws IllegalArgumentException if the id is not in the set of ids
@@ -65,21 +68,21 @@ public class  IdManager<T extends IdManageable> implements Iterable<Map.Entry<St
   public T getObject(String id) throws IllegalArgumentException {
     //searchId is everything after the last "." in the id, to handle full ids
     String searchId = id.substring(id.lastIndexOf(".") + 1);
-    if(!simpleIds.containsKey(searchId)) {
+    if (!simpleIds.containsKey(searchId)) {
       throw new IllegalArgumentException("Id \"" + id + "\" not found."); //TODO resource bundle
     }
     return simpleIds.get(searchId);
   }
 
   /**
-   * Finds the simple id of the given T.
-   * Ex. If the T is a Variable, then the returned id could be "Variable1".
-   * Throws exception if the T is not in the set of ids.
+   * Finds the simple id of the given T. Ex. If the T is a Variable, then the returned id could be
+   * "Variable1". Throws exception if the T is not in the set of ids.
+   *
    * @param obj the T to get the id of
    * @return the id of the given T
    * @throws IllegalArgumentException if the T is not in the set of ids
    */
-  private String getSimpleId(T obj) throws IllegalArgumentException{
+  private String getSimpleId(T obj) throws IllegalArgumentException {
     for (Map.Entry<String, T> entry : simpleIds.entrySet()) {
       if (entry.getValue().equals(obj)) {
         return entry.getKey();
@@ -89,9 +92,9 @@ public class  IdManager<T extends IdManageable> implements Iterable<Map.Entry<St
   }
 
   /**
-   * Returns the (full) id of the given T.
-   * Ex. If the T is a Variable, then the returned id could be "Player1.Variable1".
-   * Throws exception if the T is not in the set of ids.
+   * Returns the (full) id of the given T. Ex. If the T is a Variable, then the returned id could be
+   * "Player1.Variable1". Throws exception if the T is not in the set of ids.
+   *
    * @param obj the T to get the id of
    * @return the id of the given T
    * @throws IllegalArgumentException if the T is not in the set of ids
@@ -114,29 +117,32 @@ public class  IdManager<T extends IdManageable> implements Iterable<Map.Entry<St
     }
     // If the root object was not found, the object is not in the IdManager
     if (fullId == null) {
-      throw new IllegalArgumentException("Object \"" + obj + "\" not found in IdManager"); //TODO resource bundle
+      throw new IllegalArgumentException(
+          "Object \"" + obj + "\" not found in IdManager"); //TODO resource bundle
     }
     return fullId;
   }
 
   /**
    * Generates a default simple id for an Object of type T and adds it to the set of ids.
-   * @param obj the T to generate an id for
+   *
+   * @param obj    the T to generate an id for
    * @param parent the parent of the T to be logged in the ownership map
    * @throws IllegalArgumentException if the id is already in use
    */
-  public void addObject(T obj, T parent) throws IllegalArgumentException{
+  public void addObject(T obj, T parent) throws IllegalArgumentException {
     addObject(obj, obj.getDefaultId(), parent);
   }
 
   /**
    * Adds an object with a given id to the set of ids.
-   * @param obj the T to add
+   *
+   * @param obj    the T to add
    * @param parent the parent of the T to be logged in the ownership map
-   * @param id the id to add the T to
+   * @param id     the id to add the T to
    * @throws IllegalArgumentException if the id or object is already in use
    */
-  public void addObject(T obj, String id, T parent) throws IllegalArgumentException{
+  public void addObject(T obj, String id, T parent) throws IllegalArgumentException {
     if (id == null) {
       id = obj.getDefaultId();
     }
@@ -145,8 +151,9 @@ public class  IdManager<T extends IdManageable> implements Iterable<Map.Entry<St
 
   /**
    * Helper method for addObject.
-   * @param obj the T to add
-   * @param parent the parent of the T to be logged in the ownership map
+   *
+   * @param obj       the T to add
+   * @param parent    the parent of the T to be logged in the ownership map
    * @param defaultId the default id to add the T to. Non-null.
    */
   private void logIdName(T obj, T parent, String defaultId) {
@@ -155,11 +162,13 @@ public class  IdManager<T extends IdManageable> implements Iterable<Map.Entry<St
     }
     //if defaultId contains a ".", then it is not allowed
     if (defaultId.contains(".")) {
-      throw new IllegalArgumentException("Id \"" + defaultId + "\" cannot contain a '.'"); //TODO resource bundle
+      throw new IllegalArgumentException(
+          "Id \"" + defaultId + "\" cannot contain a '.'"); //TODO resource bundle
     }
     //check if obj is already in the id manager
     if (simpleIds.containsValue(obj)) {
-      throw new IllegalArgumentException("Object \"" + obj +  "\" already in IdManager"); //TODO resource bundle
+      throw new IllegalArgumentException(
+          "Object \"" + obj + "\" already in IdManager"); //TODO resource bundle
     }
     if (!idGenerators.containsKey(defaultId)) {
       idGenerators.put(defaultId, new NumberGenerator());
@@ -179,35 +188,38 @@ public class  IdManager<T extends IdManageable> implements Iterable<Map.Entry<St
   }
 
   /**
-   * Generates a default simple id for an Object of type T and adds it to the set of ids.
-   * Adds as a root object.
+   * Generates a default simple id for an Object of type T and adds it to the set of ids. Adds as a
+   * root object.
+   *
    * @param obj the T to generate an id for
    * @throws IllegalArgumentException if the id is already in use
    */
-  public void addObject(T obj) throws IllegalArgumentException{
+  public void addObject(T obj) throws IllegalArgumentException {
     logIdName(obj, null, obj.getDefaultId());
   }
 
   /**
    * Adds an id to the set of ids along with the given T.
+   *
    * @param obj the T to add
-   * @param id the id to add
+   * @param id  the id to add
    * @throws IllegalArgumentException if the id is already in use
    */
-  public void addObject(T obj, String id) throws IllegalArgumentException{
+  public void addObject(T obj, String id) throws IllegalArgumentException {
     throwExceptionIfAlreadyInUse(id);
     logIdName(obj, null, id);
   }
 
   /**
    * Adds an id to the set of ids along with the given T and parent.
-   * @param id the id to add
-   * @param obj the T to add
+   *
+   * @param id     the id to add
+   * @param obj    the T to add
    * @param parent the parent of the T to be logged in the ownership map
    * @throws IllegalArgumentException if the id is already in use
    */
-  private void addId(String id, T obj, T parent) throws IllegalArgumentException{
-    if(simpleIds.containsKey(id)) {
+  private void addId(String id, T obj, T parent) throws IllegalArgumentException {
+    if (simpleIds.containsKey(id)) {
       throw new IllegalArgumentException("Id \"" + id + "\" already in use"); //TODO resource bundle
     }
     simpleIds.put(id, obj);
@@ -216,12 +228,13 @@ public class  IdManager<T extends IdManageable> implements Iterable<Map.Entry<St
 
   /**
    * Adds an Object to the set of ids along with the given T and parent id.
-   * @param obj the T to add
-   * @param id the id to add
+   *
+   * @param obj      the T to add
+   * @param id       the id to add
    * @param parentId the id of the parent of the T to be logged in the ownership map
    * @throws IllegalArgumentException if the id is already in use
    */
-  public void addObject(T obj, String id, String parentId) throws IllegalArgumentException{
+  public void addObject(T obj, String id, String parentId) throws IllegalArgumentException {
     throwExceptionIfAlreadyInUse(id);
     T parent = null;
     if (parentId != null) {
@@ -232,18 +245,21 @@ public class  IdManager<T extends IdManageable> implements Iterable<Map.Entry<St
 
   /**
    * Changes an id to a new id.
+   *
    * @param oldId the old id
    * @param newId the new id
    * @throws IllegalArgumentException if the new id is already in use or the old id is not in use
    */
-  public void changeId(String oldId, String newId) throws IllegalArgumentException{
+  public void changeId(String oldId, String newId) throws IllegalArgumentException {
     //if new id is in use throw exception
     if (isIdInUse(newId)) {
-      throw new IllegalArgumentException("Id \"" + newId + "\" already in use"); //TODO resource bundle
+      throw new IllegalArgumentException(
+          "Id \"" + newId + "\" already in use"); //TODO resource bundle
     }
     //if old id is not in use throw exception
     if (!isIdInUse(oldId)) {
-      throw new IllegalArgumentException("Given id \"" + oldId + "\" not found."); //TODO put in resource bundle
+      throw new IllegalArgumentException(
+          "Given id \"" + oldId + "\" not found."); //TODO put in resource bundle
     }
     T obj = simpleIds.get(oldId);
     simpleIds.remove(oldId);
@@ -252,8 +268,9 @@ public class  IdManager<T extends IdManageable> implements Iterable<Map.Entry<St
 
 
   /**
-   * Recursively removes the given T and all of its sub-objects from the IdManager //TODO include frontend warning about this behavior
-   * (including Ids but not NumberGenerators).
+   * Recursively removes the given T and all of its sub-objects from the IdManager //TODO include
+   * frontend warning about this behavior (including Ids but not NumberGenerators).
+   *
    * @param obj the T to remove
    * @throws IllegalArgumentException if the T is not in the set of ids
    */
@@ -280,22 +297,26 @@ public class  IdManager<T extends IdManageable> implements Iterable<Map.Entry<St
   }
 
   /**
-   * Helper method to check if an id is already in use.
-   * Checks iff the callee came from inside the class, if so, throws an exception as this means we don't care if we add a number to the end of the id.
+   * Helper method to check if an id is already in use. Checks iff the callee came from inside the
+   * class, if so, throws an exception as this means we don't care if we add a number to the end of
+   * the id.
+   *
    * @param id the id to check
    * @throws IllegalArgumentException if the id is already in use
    */
   private void throwExceptionIfAlreadyInUse(String id) throws IllegalArgumentException {
     StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace(); //TODO refactor
     if (stackTraceElements[3].getClassName().equals(this.getClass().getName())) {
-      if(isIdInUse(id)) {
-        throw new IllegalArgumentException("Id \"" + id + "\" already in use"); //TODO resource bundle
+      if (isIdInUse(id)) {
+        throw new IllegalArgumentException(
+            "Id \"" + id + "\" already in use"); //TODO resource bundle
       }
     }
   }
 
   /**
    * Recursively removes the T with the given id and all of its sub-objects from the IdManager
+   *
    * @param id the id of the T to remove
    * @throws IllegalArgumentException if the T is not in the set of ids
    */
@@ -325,8 +346,7 @@ public class  IdManager<T extends IdManageable> implements Iterable<Map.Entry<St
   }
 
   /**
-   * Returns an unmodifiable set of all ids.
-   * Useful for displaying all ids in a list.
+   * Returns an unmodifiable set of all ids. Useful for displaying all ids in a list.
    */
   public Map getSimpleIds() {
     return Collections.unmodifiableMap(simpleIds);
@@ -345,6 +365,7 @@ public class  IdManager<T extends IdManageable> implements Iterable<Map.Entry<St
 
   /**
    * Returns the iterator for the simpleIds map.
+   *
    * @return an iterator of type Entry<String, T>
    */
   @Override
@@ -354,8 +375,8 @@ public class  IdManager<T extends IdManageable> implements Iterable<Map.Entry<St
 
   /**
    * Returns a List of all ids of objects of the given class in the IdManager.
-   * @param c the class to check for
-   * You're welcome Ethan
+   *
+   * @param c the class to check for You're welcome Ethan
    * @return a List of all ids of objects of the given class in the IdManager
    */
   public List getIdsOfObjectsOfClass(String c) {

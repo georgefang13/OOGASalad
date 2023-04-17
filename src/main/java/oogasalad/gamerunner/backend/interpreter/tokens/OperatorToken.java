@@ -5,6 +5,7 @@ import oogasalad.gamerunner.backend.interpreter.Environment;
 import oogasalad.gamerunner.backend.interpreter.exceptions.IllegalTokenTypeException;
 
 abstract public class OperatorToken extends Token {
+
   private Token[] args;
   private final int numArgs;
 
@@ -21,23 +22,18 @@ abstract public class OperatorToken extends Token {
   }
 
   /**
-   * Passes arguments to the operator. Throws an exception if the number of
-   * arguments is incorrect
-   * 
+   * Passes arguments to the operator. Throws an exception if the number of arguments is incorrect
+   *
    * @param args array of arguments
    */
   public void passArguments(Token[] args) {
-    // TODO: put this in properties file
-    if (args.length != numArgs) {
-      throw new IllegalArgumentException("Incorrect number of arguments passed to operator " + SUBTYPE + ". Expected " + numArgs + " but got " + args.length + ".");
-    }
     this.args = new Token[args.length];
     System.arraycopy(args, 0, this.args, 0, args.length);
   }
 
   /**
    * returns the number of arguments the operator takes
-   * 
+   *
    * @return number of arguments the operator takes
    */
   public int getNumArgs() {
@@ -58,17 +54,16 @@ abstract public class OperatorToken extends Token {
   }
 
   /**
-   * Checks if the given token is of the given type and subtype. Throws an
-   * exception if it is not.
+   * Checks if the given token is of the given type and subtype. Throws an exception if it is not.
    *
    * @param env
    * @param t       token to check
    * @param type    type to check
    * @param subtype subtype to check - Class.getName()
-   * @throws IllegalArgumentException if the token is not of the given type and
-   *                                  subtype
+   * @throws IllegalArgumentException if the token is not of the given type and subtype
    */
-  protected <T> T checkArgumentWithSubtype(Environment env, Token t, Class<?> type, String... subtype) throws IllegalArgumentException {
+  protected <T> T checkArgumentWithSubtype(Environment env, Token t, Class<?> type,
+      String... subtype) throws IllegalArgumentException {
 
     checkArgument(env, t, type);
 
@@ -79,7 +74,8 @@ abstract public class OperatorToken extends Token {
         checkArgumentWithSubtype(env, t, type, s);
         works = true;
         break;
-      } catch (IllegalArgumentException ignored) {}
+      } catch (IllegalArgumentException ignored) {
+      }
     }
 
     if (!works) {
@@ -91,15 +87,16 @@ abstract public class OperatorToken extends Token {
         simpleSubtypes[i] = subtype[i].substring(subtype[i].lastIndexOf('.') + 1);
       }
 
-      s = String.format(s, t, NAME, type.getSimpleName(), String.join(" or ", simpleSubtypes), t.getClass().getSimpleName(), t.SUBTYPE);
+      s = String.format(s, t, NAME, type.getSimpleName(), String.join(" or ", simpleSubtypes),
+          t.getClass().getSimpleName(), t.SUBTYPE);
       throwError(new IllegalArgumentException(s));
     }
-
 
     return (T) t;
   }
 
-  protected <T> T checkArgumentWithSubtype(Environment env, Token t, Class<?> type, String subtype) throws IllegalArgumentException {
+  protected <T> T checkArgumentWithSubtype(Environment env, Token t, Class<?> type, String subtype)
+      throws IllegalArgumentException {
 
     checkArgument(env, t, type);
 
@@ -108,18 +105,24 @@ abstract public class OperatorToken extends Token {
     Class<?> c = null;
     try {
       c = Class.forName(subtype);
-    } catch (ClassNotFoundException ignored) {}
+    } catch (ClassNotFoundException ignored) {
+    }
 
     if (t instanceof ValueToken v && c != null) {
-        if (c.isInstance(v.VALUE)) containsSubtype = true;
+      if (c.isInstance(v.VALUE)) {
+        containsSubtype = true;
+      }
+    } else if (t.SUBTYPE.equals(subtype)) {
+      containsSubtype = true;
     }
     else if (t.SUBTYPE.equals(subtype)) containsSubtype = true;
 
-    if (!containsSubtype){
+    if (!containsSubtype) {
       String s = env.getLanguageResource("argumentSubtypeError");
 
       String simpleSubtype = subtype.substring(subtype.lastIndexOf('.') + 1);
-      s = String.format(s, t, NAME, type.getSimpleName(), String.join(" or ", simpleSubtype), t.getClass().getSimpleName(), t.SUBTYPE);
+      s = String.format(s, t, NAME, type.getSimpleName(), String.join(" or ", simpleSubtype),
+          t.getClass().getSimpleName(), t.SUBTYPE);
       throwError(new IllegalArgumentException(s));
     }
 
@@ -130,18 +133,20 @@ abstract public class OperatorToken extends Token {
 
 
   /**
-   * Checks if the given token is of the given type. Throws an exception if it is
-   * not.
+   * Checks if the given token is of the given type. Throws an exception if it is not.
    *
    * @param env
    * @param t    token to check
    * @param type type to check
    * @throws IllegalArgumentException if the token is not of the given type
    */
-  protected <T> T checkArgument(Environment env, Token t, Class<?>... type) throws IllegalArgumentException {
+  protected <T> T checkArgument(Environment env, Token t, Class<?>... type)
+      throws IllegalArgumentException {
     boolean hasType = false;
     for (Class<?> c : type) {
-      if (t == null) break;
+      if (t == null) {
+        break;
+      }
       if (c.isInstance(t)){
         hasType = true;
         break;
@@ -155,7 +160,8 @@ abstract public class OperatorToken extends Token {
 
     if (!hasType) {
       String s = env.getLanguageResource("argumentTypeError");
-      s = String.format(s, t, NAME, String.join(" or ", simpleNames), t == null ? "null" : t.getClass().getSimpleName());
+      s = String.format(s, t, NAME, String.join(" or ", simpleNames),
+          t == null ? "null" : t.getClass().getSimpleName());
       throw new IllegalTokenTypeException(s);
     }
     return (T) t;

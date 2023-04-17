@@ -4,6 +4,7 @@ import oogasalad.gamerunner.backend.interpreter.Environment;
 import oogasalad.gamerunner.backend.interpreter.commands.control.UserInstruction;
 
 public class TempFunctionToken extends OperatorToken {
+
   public final String NAME;
 
   public TempFunctionToken(int numArgs, String name) {
