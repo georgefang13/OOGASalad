@@ -6,18 +6,19 @@
     "description": "Adds two numbers together",
     "example": "+ 1 2 # + <number> <number>",
     "specs": {
-      "inner": true,
+      "inner": false,
       "inputs": [
           {
           "name": "a",
-          "type": "number"
+          "type": ["number", "string"]
           },
           {
           "name": "b",
-          "type": "number"
+          "type": ["number", "string"]
           }
       ],
-      "outputs":  "number"
+      "outputs": ["number", "string", "string", "string"],
+      "parse": "+ %s %s"
     }
   },
   "Difference": {
@@ -25,42 +26,123 @@
     "folder": "operators",
     "str": "-",
     "description": "Subtracts one number from another",
-    "example": "- 1 2 # - <number> <number>"
+    "example": "- 1 2 # - <number> <number>",
+    "specs": {
+      "inner": false,
+      "inputs": [
+        {
+          "name": "a",
+          "type": ["number"]
+        },
+        {
+          "name": "b",
+          "type": ["number"]
+        }
+      ],
+      "outputs": ["number"],
+      "parse": "- %s %s"
+    }
   },
   "Product": {
     "name": "Product",
     "folder": "operators",
     "str": "*",
     "description": "Multiplies two numbers together",
-    "example": "* 1 2 # * <number or boolean> <number or boolean>"
+    "example": "* 1 2 # * <number or boolean> <number or boolean>",
+    "specs": {
+      "inner": false,
+      "inputs": [
+        {
+          "name": "a",
+          "type": ["number", "boolean"]
+        },
+        {
+          "name": "b",
+          "type": ["number", "boolean"]
+        }
+      ],
+      "outputs":  "number",
+      "parse": "* %s %s"
+    }
   },
   "Quotient": {
     "name": "Quotient",
     "folder": "operators",
     "str": "/",
     "description": "Divides one number by another",
-    "example": "/ 1 2 # / <number> <number>"
+    "example": "/ 1 2 # / <number> <number>",
+    "specs": {
+      "inner": false,
+      "inputs": [
+        {
+          "name": "a",
+          "type": ["number"]
+        },
+        {
+          "name": "b",
+          "type": ["number"]
+        }
+      ],
+      "outputs":  "number",
+      "parse": "/ %s %s"
+    }
   },
   "Remainder": {
     "name": "Remainder",
     "folder": "operators",
     "str": "%",
     "description": "Finds the remainder after division",
-    "example": "% 1 2 # % <number> <number>"
+    "example": "% 1 2 # % <number> <number>",
+    "specs": {
+      "inner": false,
+      "inputs": [
+        {
+          "name": "a",
+          "type": ["number"]
+        },
+        {
+          "name": "b",
+          "type": ["number"]
+        }
+      ],
+      "outputs": "number",
+      "parse": "% %s %s"
+    }
   },
   "Minus": {
     "name": "Minus",
     "folder": "operators",
     "str": "~",
     "description": "Negates a number",
-    "example": "~ 1 # ~ <number>"
+    "example": "~ 1 # ~ <number>",
+    "specs": {
+      "inner": false,
+      "inputs": [
+        {
+          "name": "a",
+          "type": ["number"]
+        },
+        {
+          "name": "b",
+          "type": ["number"]
+        }
+      ],
+      "outputs":  "number",
+      "parse": "~ %s %s"
+    }
   },
   "Random": {
     "name": "Random",
     "folder": "operators",
     "str": "rand",
     "description": "Generates a random number between 0 and 1",
-    "example": "rand"
+    "example": "rand",
+    "specs": {
+      "inner": false,
+      "inputs": [],
+      "outputs": "number",
+      "parse": "~ %s %s"
+    }
   },
   "RandomRange": {
     "name": "Random Range",
