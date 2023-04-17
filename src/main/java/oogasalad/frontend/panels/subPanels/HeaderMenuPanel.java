@@ -91,6 +91,5 @@ public class HeaderMenuPanel extends HBoxPanel {
   @Override
   public void save() {
   }
-
 }
 
