@@ -2,6 +2,7 @@ package oogasalad.frontend.nodeEditor.customNodeEditor.Nodes;
 
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.control.Tooltip;
 //import oogasalad.frontend.nodeEditor.customNodeEditor.Utils.Ports.Port;
 
 import java.util.List;
@@ -29,6 +30,7 @@ public abstract class OogaNode extends VBox{
         setPrefSize(width, height);
         setColor(color);
         setContent();
+        setToolTips();
 //    this.setStyle("-fx-border-color: black");
 
         this.setOnMousePressed(event -> {
@@ -84,5 +86,9 @@ public abstract class OogaNode extends VBox{
         return this.color;
     }
 
+    protected void setToolTips(){
+        Tooltip t = new Tooltip("Delete: Shift + Click");
+        Tooltip.install(this, t);
+    }
 
 }
