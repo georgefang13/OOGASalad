@@ -38,4 +38,9 @@ public class DifferenceNode extends AbstractDraggable {
       outputLabel.setText("NaN");
     }
   }
+
+  @Override
+  public String sendContent() {
+    return outputLabel.getText();
+  }
 }

@@ -40,4 +40,10 @@ public class SumNode extends AbstractDraggable {
       outputLabel.setText("NaN");
     }
   }
+
+  @Override
+  public String sendContent() {
+    return outputLabel.getText();
+  }
+
 }
