@@ -54,4 +54,10 @@ public class BoardPiece extends DraggableObject implements GameObjectComponent {
     public void setPlayable(boolean playable) {
         this.playable = playable;
     }
+
+    public String getName(){
+        return name;
+    }
+
+
 }

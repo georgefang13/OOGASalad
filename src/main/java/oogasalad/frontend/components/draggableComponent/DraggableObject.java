@@ -23,10 +23,14 @@ public class DraggableObject extends DisplayableObject implements DraggableCompo
       double yOffset = e.getSceneY() - (getImage().getTranslateY());
       setxOffset(xOffset);
       setyOffset(yOffset);
+      setActiveSelected(true);
     });
     getImage().setOnMouseDragged(e -> {
       getImage().setTranslateX(e.getSceneX() - getxOffset());
       getImage().setTranslateY(e.getSceneY() - getyOffset());
+    });
+    getImage().setOnDragDropped(e -> {
+      setActiveSelected(false);
     });
   }
 
@@ -38,6 +42,8 @@ public class DraggableObject extends DisplayableObject implements DraggableCompo
   @Override
   public void setActiveSelected(boolean active) {
     this.active = active;
-
+  }
+  public boolean getActive(){
+    return active;
   }
 }

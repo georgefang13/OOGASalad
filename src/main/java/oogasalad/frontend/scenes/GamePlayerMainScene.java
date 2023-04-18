@@ -12,6 +12,9 @@ import oogasalad.frontend.objects.Board;
 import oogasalad.frontend.objects.BoardPiece;
 import oogasalad.gamerunner.backend.fsm.GameRunnerController;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Connor Wells
  * @author Owen MacKenzie
@@ -20,6 +23,8 @@ import oogasalad.gamerunner.backend.fsm.GameRunnerController;
 public class GamePlayerMainScene extends AbstractScene {
 
   private Board board;
+  private List<BoardPiece> pieces;
+  private String playerTurn;
   private Label textInstructions;
   private BorderPane root;
   private VBox textVBOX;
@@ -33,6 +38,7 @@ public class GamePlayerMainScene extends AbstractScene {
   @Override
   public Scene makeScene() {
     root = new BorderPane();
+    root.setOnMouseClicked(event -> pieceBeingMoved());
 
     gameRunnerController = new GameRunnerController();
 
@@ -43,7 +49,7 @@ public class GamePlayerMainScene extends AbstractScene {
     board = new Board(height, width);
     initializeBoard();
 
-    initializePieces();
+    pieces = initializePieces();
 
     textInstructions = new Label();
 
@@ -54,6 +60,28 @@ public class GamePlayerMainScene extends AbstractScene {
     setText();
     setTheme();
     return getScene();
+  }
+
+  private void pieceBeingMoved() {
+    BoardPiece activepiece = null;
+    for (int i = 0; i < pieces.size(); i++) {
+      BoardPiece piece = pieces.get(i);
+      if (piece.getActive()) {
+        activepiece = piece;
+      }
+    }
+    if (!activepiece.equals(null)){
+      BoardPiece finalActivepiece = activepiece;
+      root.setOnMouseReleased(event -> {
+        placePieceOnGrid(finalActivepiece);
+      });
+    }
+  }
+
+  private void placePieceOnGrid(BoardPiece activePiece){
+    if (activePiece.getName().equals(playerTurn)){
+      activePiece.
+    }
   }
 
   private void initializeBoard() {
@@ -67,12 +95,16 @@ public class GamePlayerMainScene extends AbstractScene {
     boardVBOX.setAlignment(Pos.CENTER);
     root.setCenter(boardVBOX);
   }
-  private void initializePieces() {
+  private ArrayList<BoardPiece> initializePieces() {
+    ArrayList<BoardPiece> newPieces = new ArrayList<>();
     BoardPiece x1 = new BoardPiece("X",1);
     x1.setSize(30);
+    newPieces.add(x1);
     BoardPiece O1 = new BoardPiece("O",1);
     O1.setSize(30);
+    newPieces.add(O1);
     root.getChildren().addAll(x1.getNode(),O1.getNode());
+    return newPieces;
   }
 
   private void refreshInstructions() {
@@ -114,10 +146,13 @@ public class GamePlayerMainScene extends AbstractScene {
   }
 
   private void parseResponse(String response) {
-    String[] splitResponse = response.split("Turn:");
-    instruction = "Turn:" + splitResponse[1];
+    String[] splitResponse = response.split("Turn: ");
+    playerTurn = splitResponse[1].split("\n")[0];
+    System.out.print("player turn: ");
+    System.out.println("playerTurn");
+    instruction = "Turn: " + splitResponse[1];
     String gridString = splitResponse[0];
-    parseGrid(gridString);
+    //parseGrid(gridString);
   }
 
   private void parseGrid(String gridString) {
