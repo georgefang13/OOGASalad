@@ -23,4 +23,9 @@ public class TextFieldNode extends OogaNode {
 
         this.getChildren().addAll(title, field);
     }
+
+    @Override
+    public String sendContent() {
+        return field.getText();
+    }
 }

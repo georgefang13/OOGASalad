@@ -45,4 +45,9 @@ public class AbstractDraggable extends OogaNode implements Draggable {
     protected void setContent() {
 
     }
+
+    @Override
+    public String sendContent() {
+        return null;
+    }
 }

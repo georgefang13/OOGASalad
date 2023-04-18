@@ -32,9 +32,7 @@ public abstract class OogaNode extends VBox{
 //    this.setStyle("-fx-border-color: black");
 
         this.setOnMousePressed(event -> {
-            System.out.println("pressed");
             if (event.isShiftDown()) {
-                System.out.println("pressed + down");
                 this.delete();
             }
 
@@ -43,6 +41,8 @@ public abstract class OogaNode extends VBox{
     }
 
     protected abstract void setContent();
+
+    public abstract String sendContent();
 
     protected void delete() {
         Pane obj = (Pane) this.getParent();
@@ -83,4 +83,6 @@ public abstract class OogaNode extends VBox{
     protected String getColor() {
         return this.color;
     }
+
+
 }
