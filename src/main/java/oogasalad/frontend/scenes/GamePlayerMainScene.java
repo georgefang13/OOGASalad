@@ -9,6 +9,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import oogasalad.frontend.objects.Board;
+import oogasalad.frontend.objects.BoardPiece;
 import oogasalad.gamerunner.backend.fsm.GameRunnerController;
 
 /**
@@ -42,6 +43,8 @@ public class GamePlayerMainScene extends AbstractScene {
     board = new Board(height, width);
     initializeBoard();
 
+    initializePieces();
+
     textInstructions = new Label();
 
     initializeText();
@@ -64,6 +67,13 @@ public class GamePlayerMainScene extends AbstractScene {
     boardVBOX.setAlignment(Pos.CENTER);
     root.setCenter(boardVBOX);
   }
+  private void initializePieces() {
+    BoardPiece x1 = new BoardPiece("X",1);
+    x1.setSize(30);
+    BoardPiece O1 = new BoardPiece("O",1);
+    O1.setSize(30);
+    root.getChildren().addAll(x1.getNode(),O1.getNode());
+  }
 
   private void refreshInstructions() {
     textInstructions.setText(instruction);
@@ -76,12 +86,7 @@ public class GamePlayerMainScene extends AbstractScene {
 
   private void initializeText() {
     textVBOX = new VBox(10);
-    //TextField textField = new TextField();
-    //Button submitButton = new Button("Submit");
-    //textField.setPromptText("Enter text:"); // Set prompt text
-    //submitButton.setOnAction(event -> runEnteredText(textField));
     parseResponse(gameRunnerController.initialInstruction());
-    //textVBOX.getChildren().addAll(textInstructions,textField, submitButton);
     textVBOX.getChildren().addAll(textInstructions);
   }
 

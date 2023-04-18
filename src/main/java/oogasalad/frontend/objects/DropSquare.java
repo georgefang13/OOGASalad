@@ -25,11 +25,14 @@ public class DropSquare implements DropZone {
 
   @Override
   public void addPiece(String pieceName) {
-    Piece newPiece = new BasicPiece(pieceName);
+    //Piece newPiece = new BasicPiece(pieceName);
+    BoardPiece newPiece = new BoardPiece(pieceName,1);
+    newPiece.setSize(30);
     if (dropVisual.getChildren().size() > 1) {
       dropVisual.getChildren().remove(1);
     }
-    dropVisual.getChildren().add(newPiece.getPieceImage().getPieceNode());
+    dropVisual.getChildren().add(newPiece.getNode());
+    newPiece.setDraggable(false); //changed it so can no longer move
   }
 
   @Override

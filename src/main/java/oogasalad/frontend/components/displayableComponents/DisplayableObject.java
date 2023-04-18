@@ -96,8 +96,8 @@ public class DisplayableObject extends AbstractComponent implements DisplayableC
   @Override
   public void setSize(int size) {
     this.size = size;
-    image.setScaleX(size);
-    image.setScaleY(size);
+    image.setFitHeight(size);
+    image.setFitWidth(size);
   }
 
   @Override
