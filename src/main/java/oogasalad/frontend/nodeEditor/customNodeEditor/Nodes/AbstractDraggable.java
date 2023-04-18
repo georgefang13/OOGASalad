@@ -9,6 +9,7 @@ public class AbstractDraggable extends OogaNode implements Draggable {
         onDragDetected();
         onMousePressed();
         onMouseDragged();
+
     }
 
     @Override
@@ -24,7 +25,11 @@ public class AbstractDraggable extends OogaNode implements Draggable {
         this.setOnMousePressed(e -> {
             xOffset = e.getSceneX() - (getTranslateX());
             yOffset = e.getSceneY() - (getTranslateY());
+            if (e.isShiftDown()) {
+                this.delete();
+            }
         });
+
     }
 
     @Override

@@ -8,6 +8,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.CustomNodes.TextFieldNode;
 import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.DifferenceNode;
 import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.SumNode;
 
@@ -33,7 +34,12 @@ public class FsmRunnerTest extends Application {
     differenceButton.setStyle("-fx-min-width: 100");
     differenceButton.setOnAction(event -> pane2.getChildren()
         .add(new DifferenceNode(50, 50, DEFAULT_WIDTH, DEFAULT_HEIGHT, "blue")));
-    pane1.getChildren().addAll(new VBox(sumButton, differenceButton));
+    Button textButton = new Button("Text");
+    textButton.setStyle("-fx-min-width: 100");
+    textButton.setOnAction(event -> pane2.getChildren()
+            .add(new TextFieldNode(50, 50, DEFAULT_WIDTH, DEFAULT_HEIGHT, "white")));
+    pane1.getChildren().addAll(new VBox(sumButton, differenceButton, textButton));
+
 
     HBox allColumns = new HBox();
     ScrollPane setupColumn = new ScrollPane();

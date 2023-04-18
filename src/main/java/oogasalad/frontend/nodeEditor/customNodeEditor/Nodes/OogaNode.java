@@ -1,5 +1,6 @@
 package oogasalad.frontend.nodeEditor.customNodeEditor.Nodes;
 
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 //import oogasalad.frontend.nodeEditor.customNodeEditor.Utils.Ports.Port;
 
@@ -30,21 +31,34 @@ public abstract class OogaNode extends VBox{
         setContent();
 //    this.setStyle("-fx-border-color: black");
 
+        this.setOnMousePressed(event -> {
+            System.out.println("pressed");
+            if (event.isShiftDown()) {
+                System.out.println("pressed + down");
+                this.delete();
+            }
+
+        });
+
     }
 
     protected abstract void setContent();
 
     protected void delete() {
-        this.setVisible(false);
+        Pane obj = (Pane) this.getParent();
+        System.out.println(obj.getChildren());
+        obj.getChildren().remove(this);
     }
 
-//    public List<Port> getPorts() {
-//        return this.ports;
-//    }
-
-//  public void addConnection(Connection connection) {
-//    this.ports.add(port);
-//  }
+    protected void onMousePressed(){
+        this.setOnMousePressed(event -> {
+            System.out.println("pressed");
+            if (event.isShiftDown()) {
+                System.out.println("pressed + down");
+                this.delete();
+            }
+        });
+    }
 
     protected void setColor(String color) {
         setStyle("-fx-background-color: " + color);
