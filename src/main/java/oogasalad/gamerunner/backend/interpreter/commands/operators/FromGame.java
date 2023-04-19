@@ -4,24 +4,22 @@ import oogasalad.gamerunner.backend.interpreter.Environment;
 import oogasalad.gamerunner.backend.interpreter.tokens.OperatorToken;
 import oogasalad.gamerunner.backend.interpreter.tokens.Token;
 import oogasalad.gamerunner.backend.interpreter.tokens.ValueToken;
+import oogasalad.gamerunner.backend.interpreter.tokens.VariableToken;
 
-/**
- * Computes if x && y
- */
-public class And extends OperatorToken {
+public class FromGame extends OperatorToken {
 
-    public And(){
-        super(2, "And");
+    public FromGame(){
+        super(1, "FromGame");
     }
 
     @Override
     public Token evaluate(Environment env) throws IllegalArgumentException{
         Token t1 = getArg(0).evaluate(env);
-        Token t2 = getArg(1).evaluate(env);
+        if (t1 instanceof VariableToken) {
+            t1 = t1.evaluate(env);
+        }
+        ValueToken<String> varName = checkArgumentWithSubtype(env, t1, ValueToken.class, String.class.getName());
 
-        ValueToken<Boolean> x1 = checkArgumentWithSubtype(env, t1, ValueToken.class, Boolean.class.getName());
-        ValueToken<Boolean> x2 = checkArgumentWithSubtype(env, t2, ValueToken.class, Boolean.class.getName());
-
-        return new ValueToken<>(x1.VALUE && x2.VALUE);
+        return env.getLocalVariable(":game_" + varName.VALUE);
     }
 }

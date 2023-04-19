@@ -4,300 +4,778 @@
     "folder": "operators",
     "str": "+",
     "description": "Adds two numbers together",
-    "example": "+ 1 2 # + <number> <number>"
+    "example": "+ 1 2 # + <number> <number>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+          {
+          "name": "a",
+          "type": ["number", "string"]
+          },
+          {
+          "name": "b",
+          "type": ["number", "string"]
+          }
+      ],
+      "outputs": ["number", "string"],
+      "parse": "+ %s %s"
+    }
   },
   "Difference": {
     "name": "Difference",
     "folder": "operators",
     "str": "-",
     "description": "Subtracts one number from another",
-    "example": "- 1 2 # - <number> <number>"
+    "example": "- 1 2 # - <number> <number>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        {
+          "name": "a",
+          "type": ["number"]
+        },
+        {
+          "name": "b",
+          "type": ["number"]
+        }
+      ],
+      "outputs": ["number"],
+      "parse": "- %s %s"
+    }
   },
   "Product": {
     "name": "Product",
     "folder": "operators",
     "str": "*",
     "description": "Multiplies two numbers together",
-    "example": "* 1 2 # * <number or boolean> <number or boolean>"
+    "example": "* 1 2 # * <number or boolean> <number or boolean>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        {
+          "name": "a",
+          "type": ["number"]
+        },
+        {
+          "name": "b",
+          "type": ["number"]
+        }
+      ],
+      "outputs": ["number"],
+      "parse": "* %s %s"
+    }
   },
   "Quotient": {
     "name": "Quotient",
     "folder": "operators",
     "str": "/",
     "description": "Divides one number by another",
-    "example": "/ 1 2 # / <number> <number>"
+    "example": "/ 1 2 # / <number> <number>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        {
+          "name": "a",
+          "type": ["number"]
+        },
+        {
+          "name": "b",
+          "type": ["number"]
+        }
+      ],
+      "outputs": ["number"],
+      "parse": "/ %s %s"
+    }
   },
   "Remainder": {
     "name": "Remainder",
     "folder": "operators",
     "str": "%",
     "description": "Finds the remainder after division",
-    "example": "% 1 2 # % <number> <number>"
+    "example": "% 1 2 # % <number> <number>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        {
+          "name": "a",
+          "type": ["number"]
+        },
+        {
+          "name": "b",
+          "type": ["number"]
+        }
+      ],
+      "outputs": ["number"],
+      "parse": "\\% %s %s"
+    }
   },
   "Minus": {
     "name": "Minus",
     "folder": "operators",
     "str": "~",
     "description": "Negates a number",
-    "example": "~ 1 # ~ <number>"
+    "example": "~ 1 # ~ <number>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        {
+          "name": "a",
+          "type": ["number"]
+        },
+        {
+          "name": "b",
+          "type": ["number"]
+        }
+      ],
+      "outputs": ["number"],
+      "parse": "- %s %s"
+    }
   },
   "Random": {
     "name": "Random",
     "folder": "operators",
     "str": "rand",
     "description": "Generates a random number between 0 and 1",
-    "example": "rand"
+    "example": "rand",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [],
+      "outputs": ["number"],
+      "parse": "rand"
+    }
   },
   "RandomRange": {
     "name": "Random Range",
     "folder": "operators",
     "str": "randr",
     "description": "Generates a random number within a specified range",
-    "example": "randr 1 10 # randr <min> <max>"
+    "example": "randr 1 10 # randr <min> <max>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        { "name": "a", "type": ["number"] },
+        { "name": "b", "type": ["number"] }
+      ],
+      "outputs": ["number"],
+      "parse": "randr %s %s"
+    }
   },
   "Sine": {
     "name": "Sine",
     "folder": "operators",
     "str": "sin",
     "description": "Finds the sine of an angle",
-    "example": "sin 1 # sin <number>"
+    "example": "sin 1 # sin <number>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        { "name": "x", "type": ["number"] }
+      ],
+      "outputs": ["number"],
+      "parse": "sin %s"
+    }
   },
   "Cosine": {
     "name": "Cosine",
     "folder": "operators",
     "str": "cos",
     "description": "Finds the cosine of an angle",
-    "example": "cos 1 # cos <number>"
+    "example": "cos 1 # cos <number>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        { "name": "x", "type": ["number"] }
+      ],
+      "outputs": ["number"],
+      "parse": "cos %s"
+    }
   },
   "Tangent": {
     "name": "Tangent",
     "folder": "operators",
     "str": "tan",
     "description": "Finds the tangent of an angle",
-    "example": "tan 1 # tan <number>"
+    "example": "tan 1 # tan <number>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        { "name": "x", "type": ["number"] }
+      ],
+      "outputs": ["number"],
+      "parse": "tan %s"
+    }
   },
   "ArcTangent": {
     "name": "ArcTangent",
     "folder": "operators",
     "str": "atan",
     "description": "Finds the arctangent of a number",
-    "example": "atan 1 # atan <number>"
+    "example": "atan 1 # atan <number>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        { "name": "x", "type": ["number"] }
+      ],
+      "outputs": ["number"],
+      "parse": "atan %s"
+    }
   },
   "SquareRoot": {
     "name": "SquareRoot",
     "folder": "operators",
     "str": "sqrt",
     "description": "Finds the square root of a number",
-    "example": "sqrt 81 # sqrt <number>"
+    "example": "sqrt 81 # sqrt <number>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        { "name": "a", "type": ["number"] }
+      ],
+      "outputs": ["number"],
+      "parse": "sqrt %s"
+    }
   },
   "NaturalLog": {
     "name": "NaturalLog",
     "folder": "operators",
     "str": "ln",
     "description": "Finds the natural logarithm of a number",
-    "example": "ln :e # ln <number>"
+    "example": "ln :e # ln <number>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        { "name": "a", "type": ["number"] }
+      ],
+      "outputs": ["number"],
+      "parse": "ln %s"
+    }
   },
   "Power": {
     "name": "Power",
     "folder": "operators",
     "str": "pow",
     "description": "Raises a number to a power",
-    "example": "pow 2 3 # pow <number> <number>"
+    "example": "pow 2 3 # pow <number> <number>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        { "name": "a", "type": ["number"] },
+        { "name": "b", "type": ["number"] }
+      ],
+      "outputs": ["number"],
+      "parse": "pow %s %s"
+    }
   },
   "LessThan": {
     "name": "LessThan",
     "folder": "operators",
     "str": "<",
     "description": "Tests whether one number is less than another",
-    "example": "< 1 2 # < <number> <number>"
+    "example": "< 1 2 # < <number> <number>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        { "name": "a", "type": ["number"] },
+        { "name": "b", "type": ["number"] }
+      ],
+      "outputs": ["number"],
+      "parse": "< %s %s"
+    }
   },
   "LessEqual": {
     "name": "LessEqual",
     "folder": "operators",
     "str": "<=",
     "description": "Tests whether one number is less than or equal to another",
-    "example": "<= 1 2 # <= <number> <number>"
+    "example": "<= 1 2 # <= <number> <number>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        { "name": "a", "type": ["number"] },
+        { "name": "b", "type": ["number"] }
+      ],
+      "outputs": ["number"],
+      "parse": "<= %s %s"
+    }
   },
   "GreaterThan": {
     "name": "GreaterThan",
     "folder": "operators",
     "str": ">",
     "description": "Tests whether one number is greater than another",
-    "example": "> 1 2 # > <number> <number>"
+    "example": "> 1 2 # > <number> <number>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        { "name": "a", "type": ["number"] },
+        { "name": "b", "type": ["number"] }
+      ],
+      "outputs": ["number"],
+      "parse": "> %s %s"
+    }
   },
   "GreaterEqual": {
     "name": "GreaterEqual",
     "folder": "operators",
     "str": ">=",
     "description": "Tests whether one number is greater than or equal to another",
-    "example": ">= 1 2 # >= <number> <number>"
+    "example": ">= 1 2 # >= <number> <number>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        { "name": "a", "type": ["number"] },
+        { "name": "b", "type": ["number"] }
+      ],
+      "outputs": ["number"],
+      "parse": ">= %s %s"
+    }
   },
   "Equal": {
     "name": "Equal",
     "folder": "operators",
     "str": "==",
     "description": "Tests whether two values are equal",
-    "example": "== 1 2 # == <value> <value>"
+    "example": "== 1 2 # == <value> <value>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        { "name": "a", "type": ["any"] },
+        { "name": "b", "type": ["any"] }
+      ],
+      "outputs": ["boolean"],
+      "parse": "== %s %s"
+    }
   },
   "NotEqual": {
     "name": "NotEqual",
     "folder": "operators",
     "str": "!=",
     "description": "Tests whether two values are not equal",
-    "example": "!= 1 2 # != <value> <value>"
+    "example": "!= 1 2 # != <value> <value>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        { "name": "a", "type": ["any"] },
+        { "name": "b", "type": ["any"] }
+      ],
+      "outputs": ["boolean"],
+      "parse": "!= %s %s"
+    }
   },
   "And": {
     "name": "And",
     "folder": "operators",
     "str": "and",
     "description": "Tests whether two conditions are both true",
-    "example": "and true false # and <condition> <condition>"
+    "example": "and true false # and <condition> <condition>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        { "name": "a", "type": ["boolean"] },
+        { "name": "b", "type": ["boolean"] }
+      ],
+      "outputs": ["boolean"],
+      "parse": "and %s %s"
+    }
   },
   "Or": {
     "name": "Or",
     "folder": "operators",
     "str": "or",
     "description": "Tests whether at least one of two conditions is true",
-    "example": "or true false"
+    "example": "or true false",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        { "name": "a", "type": ["boolean"] },
+        { "name": "b", "type": ["boolean"] }
+      ],
+      "outputs": ["boolean"],
+      "parse": "or %s %s"
+    }
   },
   "Not": {
     "name": "Not",
     "folder": "operators",
     "str": "not",
     "description": "Inverts the truth value of a condition",
-    "example": "not :x < :y"
+    "example": "not < :x :y",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [{ "name": "a", "type": ["boolean"] }],
+      "outputs": ["boolean"],
+      "parse": "not %s"
+    }
   },
   "Item": {
     "name": "Get List Item",
     "folder": "operators",
     "str": "item",
     "description": "Retrieves an element from a list",
-    "example": "item 1 [1 2 3] # item <index> <list>"
+    "example": "item 1 [1 2 3] # item <index> <list>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        { "name": "index", "type": ["number"] },
+        { "name": "list", "type": ["list"] }
+      ],
+      "outputs": ["any"],
+      "parse": "item %s %s"
+    }
   },
   "SetItem": {
     "name": "Set List Item",
     "folder": "operators",
     "str": "setitem",
     "description": "Sets the value of an element in a list",
-    "example": "setitem 1 [1 2 3] 4 # -> [1 4 3] -- setitem <index> <list> <value>"
+    "example": "setitem 1 [1 2 3] 4 # -> [1 4 3] -- setitem <index> <list> <value>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        { "name": "index", "type": ["number"] },
+        { "name": "list", "type": ["list"] },
+        { "name": "value", "type": ["any"] }
+      ],
+      "outputs": ["list"],
+      "parse": "setitem %s %s %s"
+    }
   },
   "RemoveItem": {
     "name": "Remove List Item",
     "folder": "operators",
     "str": "delitem",
     "description": "Removes the value of at index i in a list",
-    "example": "delitem 1 [1 2 3] # -> [1 3] -- delitem <index> <list>"
+    "example": "delitem 1 [1 2 3] # -> [1 3] -- delitem <index> <list>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        { "name": "index", "type": ["number"] },
+        { "name": "list", "type": ["list"] }
+      ],
+      "outputs": ["list"],
+      "parse": "delitem %s %s"
+    }
   },
   "AddItem": {
     "name": "Add List Item",
     "folder": "operators",
     "str": "additem",
     "description": "Adds the value of an element in a list",
-    "example": "additem 1 [1 2 3] # -> [1 2 3 1] -- additem <value> <list>"
+    "example": "additem 1 [1 2 3] # -> [1 2 3 1] -- additem <value> <list>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        { "name": "value", "type": ["any"] },
+        { "name": "list", "type": ["list"] }
+      ],
+      "outputs": ["list"],
+      "parse": "additem %s %s"
+    }
   },
   "GetAttribute": {
     "name": "Get Attribute",
     "folder": "operators",
     "str": "attr",
     "description": "Retrieves an attribute from a GameObject",
-    "example": "attr :game_x \"position # attr <gameobject> <attribute>"
+    "example": "attr :game_x \"position # attr <gameobject> <attribute>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        { "name": "gameobject", "type": ["any"] },
+        { "name": "attribute", "type": ["string"] }
+      ],
+      "outputs": ["any"],
+      "parse": "attr %s %s"
+    }
   },
-  "GetGameVariable": {
+  "FromGame": {
     "name": "Get Game Object",
     "folder": "operators",
     "str": "fromgame",
     "description": "Retrieves an item from the id manager",
-    "example": "fromgame \"x :game_y # fromgame <var_name>"
+    "example": "fromgame \"x :game_y # fromgame <var_name>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [{ "name": "var_name", "type": ["string"] }],
+      "outputs": ["any"],
+      "parse": "fromgame %s"
+    }
   },
   "GetDropZoneItems": {
     "name": "Get Drop Zone Items",
     "folder": "operators",
     "str": "dzitems",
     "description": "Retrieves all the items in a drop zone",
-    "example": "dzitems :game_y # dzitems <dropzone>"
+    "example": "dzitems :game_y # dzitems <dropzone>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [{ "name": "dropzone", "type": ["dropzone"] }],
+      "outputs": ["list"],
+      "parse": "dzitems %s"
+    }
   },
   "GetDropZoneItem": {
     "name": "Get Drop Zone Item",
     "folder": "operators",
     "str": "dzitem",
     "description": "Retrieves the item with a specific name within in a drop zone",
-    "example": "dzitem \"x :game_y # dzitem <name> <dropzone>"
+    "example": "dzitem \"x :game_y # dzitem <name> <dropzone>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        { "name": "name", "type": ["string"] },
+        { "name": "dropzone", "type": ["dropzone"] }
+      ],
+      "outputs": ["any"],
+      "parse": "dzitem %s %s"
+    }
   },
   "AddDropZoneItem": {
     "name": "Add Drop Zone Item",
     "folder": "operators",
     "str": "putdzitem",
     "description": "Puts an item with a specific name within in a drop zone",
-    "example": "putdzitem \"x 1 :game_y # putdzitem <name> <value> <dropzone>"
+    "example": "putdzitem \"x 1 :game_y # putdzitem <name> <value> <dropzone>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        { "name": "name", "type": ["string"] },
+        { "name": "value", "type": ["any"] },
+        { "name": "dropzone", "type": ["dropzone"] }
+      ],
+      "outputs": ["dropzone"],
+      "parse": "putdzitem %s %s %s"
+    }
+  },
+  "DropZonePaths": {
+    "name": "Get All Drop Zone Paths",
+    "folder": "operators",
+    "str": "dzpaths",
+    "description": "Gets a list of all paths a dropzone can take",
+    "example": "dzpaths :game_zone # dzpaths <dropzone>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [{ "name": "dropzone", "type": ["dropzone"] }],
+      "outputs": ["list"],
+      "parse": "dzpaths %s"
+    }
+  },
+  "FollowDropZonePath": {
+    "name": "Follow a Path Through Dropzones",
+    "folder": "operators",
+    "str": "dzfollow",
+    "description": "Gets the next dropzone in a path",
+    "example": "dzfollow :game_zone [ \"Up \"Up \"Right ] # dzpaths <dropzone> <list of edges>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        { "name": "dropzone", "type": ["dropzone"] },
+        { "name": "path", "type": ["list"] }
+      ],
+      "outputs": ["dropzone"],
+      "parse": "dzfollow %s %s"
+    }
+  },
+  "DropZoneFollowUntilBlocked": {
+    "name": "Follow a Path Through Dropzones Until That Path is Blocked",
+    "folder": "operators",
+    "str": "dzfollowtoblock",
+    "description": "Gets all dropzones among a repeated path until the path is blocked or no longer exists",
+    "example": "dzfollowtoblock :game_zone [ \"Up \"UpRight ] fvar blocked_func # dzpaths <dropzone> <list of edges> <blocked function>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        { "name": "dropzone", "type": ["dropzone"] },
+        { "name": "path", "type": ["list"] },
+        { "name": "blocked_func", "type": ["function"] }
+      ],
+      "outputs": ["list"],
+      "parse": "dzfollowtoblock %s %s %s"
+    }
   },
   "Length": {
     "name": "Length",
     "folder": "operators",
     "str": "len",
     "description": "Gets the length of a list",
-    "example": "len [1 2 3] # -> 3 -- len <list>"
+    "example": "len [1 2 3] # -> 3 -- len <list>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [{ "name": "list", "type": ["list"] }],
+      "outputs": ["number"],
+      "parse": "len %s"
+    }
   },
   "MakeVariable": {
     "name": "Make Variable",
     "folder": "",
     "str": "make",
     "description": "Creates a new variable and sets its value",
-    "example": "make :x 1 # make <var_name> <value>"
+    "example": "make :x 1 # make <var_name> <value>",
+    "specs": {
+      "innerBlocks": ["value"],
+      "inputs": [{"name": "var_name", "type": ["string"] }],
+      "outputs": [],
+      "parse": "make :%s %s"
+    }
   },
   "Global": {
     "name": "Global",
     "folder": "control",
     "str": "global",
     "description": "Declares a variable to be global",
-    "example": "global :x # global <var_name>"
+    "example": "global :x # global <var_name>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [{ "name": "var_name", "type": ["string"] }],
+      "outputs": [],
+      "parse": "global :%s"
+    }
   },
   "Repeat": {
     "name": "Repeat",
     "folder": "control",
     "str": "repeat",
     "description": "Repeats a set of instructions a specified number of times",
-    "example": "repeat 10 [print \"hello] # repeat <number> <instructions>"
+    "example": "repeat 10 [ print \"hello ] # repeat <number> <instructions>",
+    "specs": {
+      "innerBlocks": ["instructions"],
+      "inputs": [{ "name": "number", "type": ["number"] }],
+      "outputs": [],
+      "parse": "repeat %s %s"
+    }
   },
   "DoTimes": {
     "name": "DoTimes",
     "folder": "control",
     "str": "dotimes",
     "description": "Repeats a set of instructions a specified number of times, with a counter variable",
-    "example": "dotimes [ :i 10 ] [ ... ] # dotimes [ <var_name> <number>  ] [ <instructions> ]"
+    "example": "dotimes [ :i 10 ] [ ... ] # dotimes [ <var_name> <number>  ] [ <instructions> ]",
+    "specs": {
+      "innerBlocks": ["instructions"],
+      "inputs": [
+        { "name": "var_name", "type": ["string"] },
+        { "name": "repeats", "type": ["number"] }
+      ],
+      "outputs": [],
+      "parse": "dotimes [ :%s %s ] %s"
+    }
   },
   "For": {
     "name": "For",
     "folder": "control",
     "str": "for",
     "description": "Repeats a set of instructions for each element in a list",
-    "example": "for [ :i 0 5 1 ] [ ... ] # for [ <var_name> <min> <max> <optional increment (default 1)> ] [ <instructions> ]"
+    "example": "for [ :i 0 5 1 ] [ ... ] # for [ <var_name> <min> <max> <optional increment (default 1)> ] [ <instructions> ]",
+    "specs": {
+      "innerBlocks": ["instructions"],
+      "inputs": [
+        { "name": "var_name", "type": ["string"] },
+        { "name": "min", "type": ["number"] },
+        { "name": "max", "type": ["number"] },
+        { "name": "increment", "type": ["number"] }
+      ],
+      "outputs": [],
+      "parse": "for [ :%s %s %s %s ] %s"
+    }
+  },
+  "Foreach": {
+    "name": "For Each",
+    "folder": "control",
+    "str": "foreach",
+    "description": "Loop over each element in a list",
+    "example": "foreach [ :x [ 1 2 3 ] ] [ ... ] # for [ <var_name> <list> > ] [ <instructions> ]",
+    "specs": {
+      "innerBlocks": ["instructions"],
+      "inputs": [
+        { "name": "var_name", "type": ["string"] },
+        { "name": "list", "type": ["list"] }
+      ],
+      "outputs": [],
+      "parse": "foreach [ :%s %s ] %s"
+    }
   },
   "If": {
     "name": "If",
     "folder": "control",
     "str": "if",
     "description": "Executes a set of instructions if a condition is true",
-    "example": "if [ < :x :y ] [ ... ] # if [ <condition> ] [ <instructions> ]"
+    "example": "if [ < :x :y ] [ ... ] # if [ <condition> ] [ <instructions> ]",
+    "specs": {
+      "innerBlocks": ["instructions"],
+      "inputs": [{ "name": "condition", "type": ["condition"] }],
+      "outputs": [],
+      "parse": "if [ %s ] %s"
+    }
   },
   "IfElse": {
     "name": "IfElse",
     "folder": "control",
     "str": "ifelse",
     "description": "Executes one set of instructions if a condition is true, and another set if it is false",
-    "example": "ifelse [ >= :x  :y ] [ ... ] [ ... ] # ifelse [ <condition> ] [ <instructions if true> ] [ <instructions if false> ]"
+    "example": "ifelse [ >= :x  :y ] [ ... ] [ ... ] # ifelse [ <condition> ] [ <instructions if true> ] [ <instructions if false> ]",
+    "specs": {
+      "innerBlocks": ["if block", "else block"],
+      "inputs": [
+        { "name": "condition", "type": ["boolean"] }
+      ],
+      "outputs": [],
+      "parse": "ifelse [ %s ] %s %s"
+    }
   },
   "Del": {
     "name": "Del",
     "folder": "control",
     "str": "del",
     "description": "Removes a variable form scope",
-    "example": "del :x # del <var_name>"
+    "example": "del :x # del <var_name>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [{ "name": "var_name", "type": ["string"] }],
+      "outputs": [],
+      "parse": "del :%s"
+    }
   },
   "MakeUserInstruction": {
     "name": "Make Function",
     "folder": "control",
     "str": "to",
     "description": "Defines a new user-defined command",
-    "example": "to mycommand [ :x :y ] [ ... ] # to <command_name> [ <arg1> <arg2> ... ] [ <instructions> ]"
+    "example": "to mycommand [ :x :y ] [ ... ] # to <command_name> [ <arg1> <arg2> ... ] [ <instructions> ]",
+    "specs": {
+      "innerBlocks": ["instructions"],
+      "inputs": [
+        { "name": "command_name", "type": ["string"] },
+        { "name": "args ...0", "type": ["string"] }
+      ],
+      "outputs": [],
+      "parse": "to %s [ %s ] %s"
+    }
+  },
+  "FVar": {
+    "name": "Function Variable",
+    "folder": "control",
+    "str": "fvar",
+    "description": "Puts a command / function inside a variable",
+    "example": "fvar command # fvar <command_name>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [{ "name": "command_name", "type": ["string"] }],
+      "outputs": [{ "name": "command", "type": ["command"] }],
+      "parse": "fvar %s"
+    }
+  },
+  "Call": {
+    "name": "Call Function Variable",
+    "folder": "control",
+    "str": "call",
+    "description": "Calls a command that's contained inside a variable",
+    "example": "call :func_var # call <var_name>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [{ "name": "var_name", "type": ["string"] }],
+      "outputs": [],
+      "parse": "call :%s"
+    }
   }
 }
