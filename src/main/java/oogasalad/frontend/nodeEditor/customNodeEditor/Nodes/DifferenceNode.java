@@ -5,13 +5,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 
-public class DifferenceNode extends AbstractDraggable {
+public class DifferenceNode extends DraggableAbstractNode {
 
   private TextField operand1, operand2;
   private Label outputLabel;
 
-  public DifferenceNode(double x, double y, double width, double height, String color) {
-    super(x, y, width, height, color);
+  public DifferenceNode() {
+    super(0, 0, 100, 100, "blue");
   }
 
   @Override
