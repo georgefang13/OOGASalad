@@ -41,19 +41,19 @@ public class NodeExperiment extends Application {
     primaryStage.setResizable(false);
     primaryStage.setWidth(1200);
     primaryStage.setHeight(700);
+    primaryStage.setTitle("Node Editor");
 
     nodeSelectionPane = new GridPane();
     nodeSelectionPane.setStyle("-fx-background-color: gray");
-    nodeSelectionPane.setPrefWidth(primaryStage.getWidth() / 2);
-    nodeSelectionPane.setPrefHeight(primaryStage.getHeight() / 2);
+    nodeSelectionPane.setMinSize(primaryStage.getWidth() / 4, primaryStage.getHeight() / 4);
 
     workspace = new ImageView(
         new Image(getClass().getResourceAsStream("/frontend/images/GameEditor/grid.png")));
     workspace.setFitWidth(5 * primaryStage.getWidth());
     workspace.setFitHeight(5 * primaryStage.getHeight());
     group = new Group(workspace);
-    double defaultXScale = 1.0;
-    double defaultYScale = 1.0;
+    double defaultXScale = 0.15;
+    double defaultYScale = 0.15;
     group.setScaleX(defaultXScale);
     group.setScaleY(defaultYScale);
     StackPane content = new StackPane(new Group(group));
@@ -63,7 +63,7 @@ public class NodeExperiment extends Application {
         if (e.getDeltaY() < 0) {
           group.setScaleX(Math.max(group.getScaleX() - 0.1, 0.15));
         } else {
-          group.setScaleX(Math.min(group.getScaleX() + 0.1, 5.0));
+          group.setScaleX(Math.min(group.getScaleX() + 0.1, 3.0));
         }
         group.setScaleY(group.getScaleX());
         e.consume();
