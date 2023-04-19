@@ -10,14 +10,13 @@ import javafx.scene.image.ImageView;
 import oogasalad.frontend.components.AbstractComponent;
 import oogasalad.frontend.components.Component;
 import oogasalad.frontend.components.Point;
-import oogasalad.frontend.components.draggableComponent.DraggableObject;
 
 
 /**
  * @author Han, Aryan
  * Concrete Class for GameObject, a reflection of what is going to be a "GameObject" on the backend
  */
-public class GameObject extends DraggableObject implements GameObjectComponent{
+public class GameObject extends AbstractComponent implements GameObjectComponent{
   private String name;
   private List<Node> children;
   private boolean playable;
@@ -34,6 +33,7 @@ public class GameObject extends DraggableObject implements GameObjectComponent{
   public GameObject(int ID, Node container){
     super(ID, container);
   }
+
   //TODO fix default values for map constructor
   public GameObject(Map<String, String> map){
     super(2);
@@ -65,6 +65,7 @@ public class GameObject extends DraggableObject implements GameObjectComponent{
   public void setPlayable(boolean play) {
     playable = play;
   }
+
   @Override
   public Node getNode(){
     return getImage();

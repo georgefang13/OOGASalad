@@ -23,6 +23,7 @@ public class ComponentsFactory {
     ID = 0;
     bundle = ResourceBundle.getBundle(FACTOR_PROPERTIES);
   }
+
   /**
    * Use Reflection to determine the Component type and construct the proper type of Component
    * This is for the default Component
@@ -43,6 +44,7 @@ public class ComponentsFactory {
     }
     return component;
   }
+
   /**
    * Takes in Inputs of parameters to create a Component type. This can either establish the default
    * Component or create the input
