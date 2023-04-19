@@ -47,54 +47,46 @@ public abstract class DraggableAbstractNode extends AbstractNode implements Drag
           if (this.getParent() == null) {
             return;
           }
+          double x = e.getSceneX();
+          double y = e.getSceneY();
           double scaleFactor = this.getParent().getScaleX();
-          double newX = e.getSceneX() / scaleFactor - xOffset;
-          double newY = e.getSceneY() / scaleFactor - yOffset;
-          if (boundingBox.contains(newX, newY, getWidth(), getHeight())) {
-            setTranslateX(newX);
-            setTranslateY(newY);
-          } else {
-            double clampedX = Math.min(Math.max(newX, boundingBox.getMinX()),
-                boundingBox.getMaxX() - getWidth());
-            double clampedY = Math.min(Math.max(newY, boundingBox.getMinY()),
-                boundingBox.getMaxY() - getHeight());
-            setTranslateX(clampedX);
-            setTranslateY(clampedY);
-          }
+          double newX = x / scaleFactor - xOffset;
+          double newY = y / scaleFactor - yOffset;
+          move(newX, newY);
 
           e.consume();
 
         });
   }
 
-  public void onMouseReleased(){
+  public void onMouseReleased() {
     this.setOnMouseReleased(e -> {
       e.setDragDetect(false);
-        /*check if it is on top of another node
-         * if so, snap to it
-         * if not, do nothing
-         */
-        for (Node node: this.getParent().getChildrenUnmodifiable()) {
-            if (node instanceof AbstractNode && node != this) {
-                if (this.getBoundsInParent().intersects(node.getBoundsInParent())) {
-                    snapTo((AbstractNode) node);
-                }
-            }
+      /*
+       * check if it is on top of another node
+       * if so, snap to it
+       * if not, do nothing
+       */
+      for (Node node : this.getParent().getChildrenUnmodifiable()) {
+        if (node instanceof AbstractNode && node != this) {
+          if (this.getBoundsInParent().intersects(node.getBoundsInParent())) {
+            snapTo((AbstractNode) node);
+          }
         }
+      }
       e.consume();
     });
   }
 
-
   protected void snapTo(AbstractNode node) {
-      System.out.println("node is " + node);
-        while (node.getChildNode() != null){
-            node = node.getChildNode();
-            System.out.println("node is " + node);
-        }
-      this.setTranslateX(node.getTranslateX());
-      this.setTranslateY(node.getTranslateY()+node.getHeight());
-        node.setChildNode(this);
+    // System.out.println("node is " + node);
+    while (node.getChildNode() != null && node.getChildNode() != this) {
+      node = node.getChildNode();
+      // System.out.println("node is " + node);
+    }
+    this.setTranslateX(node.getTranslateX());
+    this.setTranslateY(node.getTranslateY() + node.getHeight());
+    node.setChildNode(this);
   }
 
   public void setBoundingBox(Bounds bounds) {
@@ -110,12 +102,31 @@ public abstract class DraggableAbstractNode extends AbstractNode implements Drag
     return null;
   }
 
-  public String sendChildContent(){
-      System.out.println("this is " + this);
-      System.out.println("child node is " + this.getChildNode());
-      if (this.getChildNode() == null) {
+  public String sendChildContent() {
+    System.out.println("this is " + this);
+    System.out.println("child node is " + this.getChildNode());
+    if (this.getChildNode() == null) {
       return "";
     }
     return "\n" + this.getChildNode().sendContent();
+  }
+
+  @Override
+  public void move(double newX, double newY) {
+
+    if (boundingBox.contains(newX, newY, getWidth(), getHeight())) {
+      setTranslateX(newX);
+      setTranslateY(newY);
+      if (this.getChildNode() != null) {
+        this.getChildNode().move(newX, newY + this.getHeight());
+      }
+    } else {
+      double clampedX = Math.min(Math.max(newX, boundingBox.getMinX()),
+          boundingBox.getMaxX() - getWidth());
+      double clampedY = Math.min(Math.max(newY, boundingBox.getMinY()),
+          boundingBox.getMaxY() - getHeight());
+      setTranslateX(clampedX);
+      setTranslateY(clampedY);
+    }
   }
 }

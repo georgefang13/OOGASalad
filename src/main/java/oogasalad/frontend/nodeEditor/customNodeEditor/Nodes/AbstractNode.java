@@ -90,4 +90,5 @@ public abstract class AbstractNode extends VBox {
     Tooltip.install(this, t);
   }
 
+  protected abstract void move(double x, double v);
 }
