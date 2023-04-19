@@ -1,5 +1,6 @@
 package oogasalad.frontend.nodeEditor.customNodeEditor.Nodes;
 
+import javafx.scene.Node;
 import oogasalad.frontend.nodeEditor.customNodeEditor.Draggable;
 
 public class AbstractDraggable extends OogaNode implements Draggable {
@@ -37,8 +38,31 @@ public class AbstractDraggable extends OogaNode implements Draggable {
         this.setOnMouseDragged(e -> {
             setTranslateX(e.getSceneX() - xOffset);
             setTranslateY(e.getSceneY() - yOffset);
+
+             /*check if it is on top of another node
+              * if so, snap to it
+              * if not, do nothing
+             */
+            for (Node node: this.getParent().getChildrenUnmodifiable()) {
+                if (node instanceof OogaNode) {
+                    if (this.getBoundsInParent().intersects(node.getBoundsInParent())) {
+                        snapTo((OogaNode) node);
+                    }
+                }
+
+            }
+
+
+
+
+
         });
 
+    }
+
+    protected void snapTo(OogaNode node) {
+        this.setTranslateX(node.getTranslateX());
+        this.setTranslateY(node.getTranslateY());
     }
 
     @Override

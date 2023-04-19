@@ -54,9 +54,7 @@ public abstract class OogaNode extends VBox{
 
     protected void onMousePressed(){
         this.setOnMousePressed(event -> {
-            System.out.println("pressed");
             if (event.isShiftDown()) {
-                System.out.println("pressed + down");
                 this.delete();
             }
         });
