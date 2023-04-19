@@ -4,14 +4,13 @@ import java.util.List;
 import javafx.scene.Node;
 import oogasalad.frontend.components.AbstractComponent;
 import oogasalad.frontend.components.Component;
-import oogasalad.frontend.components.displayableComponents.DisplayableComponent;
 
 /**
  *
  * @author Han, Aryan
  * These are the components of the View that are playable objects in Gameplay
  */
-public interface GameObjectComponent extends Component, DisplayableComponent {
+public interface GameObjectComponent extends Component {
 
 
   /**
