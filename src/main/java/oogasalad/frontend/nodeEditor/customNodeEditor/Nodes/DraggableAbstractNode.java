@@ -64,9 +64,8 @@ public abstract class DraggableAbstractNode extends AbstractNode implements Drag
              * if so, snap to it
              * if not, do nothing
              */
-            for (
-                    Node node: this.getParent().getChildrenUnmodifiable()) {
-                if (node instanceof AbstractNode) {
+            for (Node node: this.getParent().getChildrenUnmodifiable()) {
+                if (node instanceof AbstractNode && node != this) {
                     if (this.getBoundsInParent().intersects(node.getBoundsInParent())) {
                         snapTo((AbstractNode) node);
                     }
@@ -78,7 +77,7 @@ public abstract class DraggableAbstractNode extends AbstractNode implements Drag
 
 protected void snapTo(AbstractNode node) {
         this.setTranslateX(node.getTranslateX());
-        this.setTranslateY(node.getTranslateY()+node.getHeight()/2);
+        this.setTranslateY(node.getTranslateY()+node.getHeight());
         }
 
   public void setBoundingBox(Bounds bounds) {

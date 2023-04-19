@@ -73,7 +73,7 @@ public class NodeExperiment extends Application {
 
     Button sendButton = new Button("Submit");
     sendButton.setOnAction(event -> {
-      sendAllNodeContent();
+      System.out.println(sendAllNodeContent());
     });
 
     nodeSelectionPane.add(sendButton, 0, buttonRow);
