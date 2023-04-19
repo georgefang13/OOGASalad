@@ -1,7 +1,6 @@
 package oogasalad.frontend.nodeEditor.customNodeEditor.Runners;
 
 import javafx.application.Application;
-import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -11,10 +10,8 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.CustomNodes.TextFieldNode;
 import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.DifferenceNode;
-import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.OogaNode;
+import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.AbstractNode;
 import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.SumNode;
-
-import java.util.List;
 
 public class FsmRunnerTest extends Application {
 
@@ -77,12 +74,12 @@ public class FsmRunnerTest extends Application {
 
     Button sumButton = new Button("sum");
     sumButton.setStyle("-fx-min-width: 100");
-    sumButton.setOnAction(event -> box.getChildren()
-        .add(new SumNode(50, 50, DEFAULT_WIDTH, DEFAULT_HEIGHT, "white")));
+    //sumButton.setOnAction(event -> box.getChildren()
+    //    .add(new SumNode(50, 50, DEFAULT_WIDTH, DEFAULT_HEIGHT, "white")));
     Button differenceButton = new Button("difference");
     differenceButton.setStyle("-fx-min-width: 100");
-    differenceButton.setOnAction(event -> box1.getChildren()
-        .add(new DifferenceNode(50, 50, DEFAULT_WIDTH, DEFAULT_HEIGHT, "blue")));
+    //differenceButton.setOnAction(event -> box1.getChildren()
+    //    .add(new DifferenceNode(50, 50, DEFAULT_WIDTH, DEFAULT_HEIGHT, "blue")));
     Button textButton = new Button("Text");
     textButton.setStyle("-fx-min-width: 100");
     textButton.setOnAction(event -> box2.getChildren().add(new TextFieldNode(50, 50, DEFAULT_WIDTH, DEFAULT_HEIGHT, "white")));
@@ -108,8 +105,8 @@ public class FsmRunnerTest extends Application {
       VBox column = (VBox) columnTop.getContent();
 
       for (Node node1: column.getChildren()) {
-        if (node1 instanceof OogaNode) {
-          returnable += ((OogaNode) node1).sendContent();
+        if (node1 instanceof AbstractNode) {
+          returnable += ((AbstractNode) node1).sendContent();
           returnable += "\n";
         }
       }
