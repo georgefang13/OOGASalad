@@ -30,14 +30,21 @@ public class NodeExperiment extends Application {
     primaryStage.setHeight(700);
     ImageView imageView = new ImageView(
         new Image(getClass().getResourceAsStream("/frontend/images/GameEditor/grid.png")));
-    DraggableAbstractNode sum = new SumNode(0, 0, 50, 25, "red");
+    imageView.setFitWidth(3 * primaryStage.getWidth());
+    imageView.setFitHeight(3 * primaryStage.getHeight());
+    DraggableAbstractNode sum = new SumNode(0, 0, 75, 25, "red");
+    sum.setBoundingBox(imageView.getBoundsInParent());
     Group group = new Group(imageView, sum);
+    double defaultXScale = 0.5;
+    double defaultYScale = 0.5;
+    group.setScaleX(defaultXScale);
+    group.setScaleY(defaultYScale);
     StackPane content = new StackPane(new Group(group));
     content.setMinSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
     content.setOnScroll(e -> {
       if (e.isShortcutDown() && e.getDeltaY() != 0) {
         if (e.getDeltaY() < 0) {
-          group.setScaleX(Math.max(group.getScaleX() - 0.1, 0.5));
+          group.setScaleX(Math.max(group.getScaleX() - 0.1, 0.25));
         } else {
           group.setScaleX(Math.min(group.getScaleX() + 0.1, 5.0));
         }
@@ -53,6 +60,6 @@ public class NodeExperiment extends Application {
     scrollPane.setFitToHeight(true);
     primaryStage.setScene(new Scene(scrollPane));
     primaryStage.show();
-    sum.setBoundingBox(imageView.getBoundsInParent());
+
   }
 }
