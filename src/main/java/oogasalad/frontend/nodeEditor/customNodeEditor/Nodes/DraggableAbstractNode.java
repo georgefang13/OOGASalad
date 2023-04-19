@@ -7,6 +7,7 @@ import oogasalad.frontend.nodeEditor.customNodeEditor.Draggable;
 public abstract class DraggableAbstractNode extends AbstractNode implements Draggable {
 
   private Bounds boundingBox;
+  private AbstractNode childNode;
 
   public DraggableAbstractNode(double x, double y, double width, double height, String color) {
     super(x, y, width, height, color);
@@ -75,10 +76,16 @@ public abstract class DraggableAbstractNode extends AbstractNode implements Drag
         });
   }
 
-protected void snapTo(AbstractNode node) {
+  protected void snapTo(AbstractNode node) {
         this.setTranslateX(node.getTranslateX());
         this.setTranslateY(node.getTranslateY()+node.getHeight());
-        }
+        node.setChildNode(this);
+  }
+
+  public void setChildNode(AbstractNode node) {
+    childNode = node;
+  }
+
 
   public void setBoundingBox(Bounds bounds) {
     boundingBox = bounds;
@@ -91,5 +98,14 @@ protected void snapTo(AbstractNode node) {
   @Override
   public String sendContent() {
     return null;
+  }
+
+  public String sendChildContent(){
+      System.out.println("this is " + this);
+      System.out.println("child node is " + childNode);
+      if (childNode == null) {
+      return "";
+    }
+    return childNode.sendContent();
   }
 }

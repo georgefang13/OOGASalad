@@ -42,7 +42,7 @@ public class SumNode extends DraggableAbstractNode {
 
   @Override
   public String sendContent() {
-    return outputLabel.getText();
+    return outputLabel.getText() + sendChildContent();
   }
 
 }

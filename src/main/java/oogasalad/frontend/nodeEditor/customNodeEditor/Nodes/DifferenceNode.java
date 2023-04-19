@@ -41,6 +41,6 @@ public class DifferenceNode extends DraggableAbstractNode {
 
   @Override
   public String sendContent() {
-    return outputLabel.getText();
+    return outputLabel.getText() + sendChildContent();
   }
 }

@@ -114,13 +114,15 @@ public class NodeExperiment extends Application {
 
   public String sendAllNodeContent() {
     String returnable = "";
-    for (Node node: group.getChildren()) {
+//    for (Node node: group.getChildren()) {
 //    for (Node node: gameColumn.getChildren()) {
+    Node node = group.getChildren().get(1);
+    System.out.println(node);
         if (node instanceof AbstractNode) {
           returnable += ((AbstractNode) node).sendContent();
           returnable += "\n";
         }
-      }
+//      }
     return returnable;
   }
 
