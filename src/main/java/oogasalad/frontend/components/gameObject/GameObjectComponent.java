@@ -1,8 +1,7 @@
-package oogasalad.frontend.components.gameObjectComponent;
+package oogasalad.frontend.components.gameObject;
 
 import java.util.List;
 import javafx.scene.Node;
-import oogasalad.frontend.components.AbstractComponent;
 import oogasalad.frontend.components.Component;
 
 /**

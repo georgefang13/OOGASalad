@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.stage.Stage;
-import oogasalad.frontend.components.gameObjectComponent.GameObject;
+import oogasalad.frontend.components.gameObject.GameObject;
 
 /**
  * @author hanzh
