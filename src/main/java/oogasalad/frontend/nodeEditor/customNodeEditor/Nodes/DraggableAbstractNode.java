@@ -69,7 +69,8 @@ public abstract class DraggableAbstractNode extends AbstractNode implements Drag
        */
       for (Node node : this.getParent().getChildrenUnmodifiable()) {
         if (node instanceof AbstractNode && node != this) {
-          if (this.getBoundsInParent().intersects(node.getBoundsInParent())) {
+          if (this.getBoundsInParent().intersects(node.getBoundsInParent()) && this.getChildNode() != node) {
+            System.out.println("snapping " + this + " to " + node + "!");
             snapTo((AbstractNode) node);
           }
         }
@@ -86,6 +87,13 @@ public abstract class DraggableAbstractNode extends AbstractNode implements Drag
     }
     this.setTranslateX(node.getTranslateX());
     this.setTranslateY(node.getTranslateY() + node.getHeight());
+    AbstractNode temp = this;
+    while (temp.getChildNode() != null) {
+      temp = temp.getChildNode();
+      temp.setTranslateX(this.getTranslateX());
+      temp.setTranslateY(this.getTranslateY() + this.getHeight());
+    }
+
     node.setChildNode(this);
   }
 
