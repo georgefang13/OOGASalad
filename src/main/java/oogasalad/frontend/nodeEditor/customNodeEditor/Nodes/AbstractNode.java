@@ -10,6 +10,8 @@ public abstract class AbstractNode extends VBox {
   protected double xOffset, yOffset;
 
   protected String color;
+  private AbstractNode childNode;
+
 
 //    protected List<Port> ports;
 
@@ -30,7 +32,12 @@ public abstract class AbstractNode extends VBox {
 
 
   public abstract String sendContent();
-  public abstract void setChildNode(AbstractNode node);
+  public void setChildNode(AbstractNode node){
+    this.childNode = node;
+  }
+  public AbstractNode getChildNode() {
+    return childNode;
+  }
 
 
   protected void delete() {

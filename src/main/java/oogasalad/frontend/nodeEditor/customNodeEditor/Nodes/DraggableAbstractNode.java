@@ -7,13 +7,13 @@ import oogasalad.frontend.nodeEditor.customNodeEditor.Draggable;
 public abstract class DraggableAbstractNode extends AbstractNode implements Draggable {
 
   private Bounds boundingBox;
-  private AbstractNode childNode;
 
   public DraggableAbstractNode(double x, double y, double width, double height, String color) {
     super(x, y, width, height, color);
     onDragDetected();
     onMousePressed();
     onMouseDragged();
+    onMouseReleased();
   }
 
   @Override
@@ -61,31 +61,41 @@ public abstract class DraggableAbstractNode extends AbstractNode implements Drag
             setTranslateX(clampedX);
             setTranslateY(clampedY);
           }
-            /*check if it is on top of another node
-             * if so, snap to it
-             * if not, do nothing
-             */
-            for (Node node: this.getParent().getChildrenUnmodifiable()) {
-                if (node instanceof AbstractNode && node != this) {
-                    if (this.getBoundsInParent().intersects(node.getBoundsInParent())) {
-                        snapTo((AbstractNode) node);
-                    }
-                }
-            }
+
           e.consume();
+
         });
   }
 
+  public void onMouseReleased(){
+    this.setOnMouseReleased(e -> {
+      e.setDragDetect(false);
+        /*check if it is on top of another node
+         * if so, snap to it
+         * if not, do nothing
+         */
+        for (Node node: this.getParent().getChildrenUnmodifiable()) {
+            if (node instanceof AbstractNode && node != this) {
+                if (this.getBoundsInParent().intersects(node.getBoundsInParent())) {
+                    snapTo((AbstractNode) node);
+                }
+            }
+        }
+      e.consume();
+    });
+  }
+
+
   protected void snapTo(AbstractNode node) {
-        this.setTranslateX(node.getTranslateX());
-        this.setTranslateY(node.getTranslateY()+node.getHeight());
+      System.out.println("node is " + node);
+        while (node.getChildNode() != null){
+            node = node.getChildNode();
+            System.out.println("node is " + node);
+        }
+      this.setTranslateX(node.getTranslateX());
+      this.setTranslateY(node.getTranslateY()+node.getHeight());
         node.setChildNode(this);
   }
-
-  public void setChildNode(AbstractNode node) {
-    childNode = node;
-  }
-
 
   public void setBoundingBox(Bounds bounds) {
     boundingBox = bounds;
@@ -102,10 +112,10 @@ public abstract class DraggableAbstractNode extends AbstractNode implements Drag
 
   public String sendChildContent(){
       System.out.println("this is " + this);
-      System.out.println("child node is " + childNode);
-      if (childNode == null) {
+      System.out.println("child node is " + this.getChildNode());
+      if (this.getChildNode() == null) {
       return "";
     }
-    return childNode.sendContent();
+    return "\n" + this.getChildNode().sendContent();
   }
 }
