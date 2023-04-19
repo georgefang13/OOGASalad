@@ -29,6 +29,7 @@ public abstract class AbstractNode extends VBox {
 
   public abstract String sendContent();
 
+
   protected void delete() {
     Group parentGroup = (Group) getParent();
     parentGroup.getChildren().remove(this);

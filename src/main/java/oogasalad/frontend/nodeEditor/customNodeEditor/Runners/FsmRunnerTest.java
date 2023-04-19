@@ -8,10 +8,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.CustomNodes.TextFieldNode;
-import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.DifferenceNode;
+import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.DraggableNodes.TextFieldNode;
 import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.AbstractNode;
-import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.SumNode;
 
 public class FsmRunnerTest extends Application {
 
@@ -105,7 +103,7 @@ public class FsmRunnerTest extends Application {
 
       for (Node node1: column.getChildren()) {
         if (node1 instanceof AbstractNode) {
-          returnable += ((AbstractNode) node1).sendContent();
+          //returnable += ((AbstractNode) node1).sendContent();
           returnable += "\n";
         }
       }

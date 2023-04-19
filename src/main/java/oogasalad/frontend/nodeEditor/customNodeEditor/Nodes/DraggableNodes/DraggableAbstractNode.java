@@ -1,8 +1,9 @@
-package oogasalad.frontend.nodeEditor.customNodeEditor.Nodes;
+package oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.DraggableNodes;
 
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import oogasalad.frontend.nodeEditor.customNodeEditor.Draggable;
+import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.AbstractNode;
 
 public abstract class DraggableAbstractNode extends AbstractNode implements Draggable {
 
@@ -13,6 +14,10 @@ public abstract class DraggableAbstractNode extends AbstractNode implements Drag
     onDragDetected();
     onMousePressed();
     onMouseDragged();
+  }
+
+  @Override
+  protected void setContent() {
   }
 
   @Override
@@ -60,36 +65,30 @@ public abstract class DraggableAbstractNode extends AbstractNode implements Drag
             setTranslateX(clampedX);
             setTranslateY(clampedY);
           }
-            /*check if it is on top of another node
-             * if so, snap to it
-             * if not, do nothing
-             */
-            for (Node node: this.getParent().getChildrenUnmodifiable()) {
-                if (node instanceof AbstractNode && node != this) {
-                    if (this.getBoundsInParent().intersects(node.getBoundsInParent())) {
-                        snapTo((AbstractNode) node);
-                    }
-                }
+          /*check if it is on top of another node
+           * if so, snap to it
+           * if not, do nothing
+           */
+          for (Node node : this.getParent().getChildrenUnmodifiable()) {
+            if (node instanceof AbstractNode && node != this) {
+              if (this.getBoundsInParent().intersects(node.getBoundsInParent())) {
+                snapTo((AbstractNode) node);
+              }
             }
+          }
           e.consume();
         });
   }
 
-protected void snapTo(AbstractNode node) {
-        this.setTranslateX(node.getTranslateX());
-        this.setTranslateY(node.getTranslateY()+node.getHeight());
-        }
+  protected void snapTo(AbstractNode node) {
+    this.setTranslateX(node.getTranslateX());
+    this.setTranslateY(node.getTranslateY() + node.getHeight());
+  }
 
   public void setBoundingBox(Bounds bounds) {
     boundingBox = bounds;
   }
 
-  @Override
-  protected void setContent() {
-  }
 
-  @Override
-  public String sendContent() {
-    return null;
-  }
+
 }

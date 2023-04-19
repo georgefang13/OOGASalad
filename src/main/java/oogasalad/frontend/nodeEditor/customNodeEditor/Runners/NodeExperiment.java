@@ -11,12 +11,14 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.AbstractNode;
-import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.DifferenceNode;
-import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.DraggableAbstractNode;
-import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.SumNode;
+import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.DraggableNodes.DraggableAbstractNode;
 
 /**
  * Scrolling/panning based on
@@ -67,9 +69,10 @@ public class NodeExperiment extends Application {
       }
     });
 
-    createNode("Sum", NODES_FOLDER + "SumNode");
-    createNode("Difference", NODES_FOLDER + "DifferenceNode");
-    createNode("TextField", NODES_FOLDER + "CustomNodes.TextFieldNode");
+    createNode("State", NODES_FOLDER + "DraggableNodes.StateNode");
+    createNode("Sum", NODES_FOLDER + "DraggableNodes.SumNode");
+    createNode("Difference", NODES_FOLDER + "DraggableNodes.DifferenceNode");
+    createNode("TextField", NODES_FOLDER + "DraggableNodes.TextFieldNode");
 
     Button sendButton = new Button("Submit");
     sendButton.setOnAction(event -> {
@@ -115,7 +118,6 @@ public class NodeExperiment extends Application {
   public String sendAllNodeContent() {
     String returnable = "";
     for (Node node: group.getChildren()) {
-//    for (Node node: gameColumn.getChildren()) {
         if (node instanceof AbstractNode) {
           returnable += ((AbstractNode) node).sendContent();
           returnable += "\n";

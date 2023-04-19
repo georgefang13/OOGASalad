@@ -1,4 +1,4 @@
-package oogasalad.frontend.nodeEditor.customNodeEditor.Nodes;
+package oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.DraggableNodes;
 
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -13,6 +13,10 @@ public class SumNode extends DraggableAbstractNode {
 
   public SumNode() {
     super(0, 0, 100, 100, "red");
+  }
+
+  public SumNode(double x, double y, double width, double height, String color) {
+    super(x, y, width, height, color);
   }
 
   @Override
@@ -30,6 +34,11 @@ public class SumNode extends DraggableAbstractNode {
     updateSum();
   }
 
+  @Override
+  public String sendContent() {
+    return outputLabel.getText();
+  }
+
   private void updateSum() {
     try {
       double op1 = Double.parseDouble(operand1.getText());
@@ -38,11 +47,6 @@ public class SumNode extends DraggableAbstractNode {
     } catch (NumberFormatException e) {
       outputLabel.setText("NaN");
     }
-  }
-
-  @Override
-  public String sendContent() {
-    return outputLabel.getText();
   }
 
 }

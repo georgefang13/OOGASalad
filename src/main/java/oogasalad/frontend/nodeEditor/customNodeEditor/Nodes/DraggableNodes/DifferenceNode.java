@@ -1,4 +1,4 @@
-package oogasalad.frontend.nodeEditor.customNodeEditor.Nodes;
+package oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.DraggableNodes;
 
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -12,6 +12,10 @@ public class DifferenceNode extends DraggableAbstractNode {
 
   public DifferenceNode() {
     super(0, 0, 100, 100, "blue");
+  }
+
+  public DifferenceNode(double x, double y, double width, double height, String color) {
+    super(x, y, width, height, color);
   }
 
   @Override
@@ -29,6 +33,11 @@ public class DifferenceNode extends DraggableAbstractNode {
     updateSum();
   }
 
+  @Override
+  public String sendContent() {
+    return outputLabel.getText();
+  }
+
   private void updateSum() {
     try {
       double op1 = Double.parseDouble(operand1.getText());
@@ -39,8 +48,4 @@ public class DifferenceNode extends DraggableAbstractNode {
     }
   }
 
-  @Override
-  public String sendContent() {
-    return outputLabel.getText();
-  }
 }
