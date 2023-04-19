@@ -12,6 +12,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -69,10 +70,8 @@ public class NodeExperiment extends Application {
       }
     });
 
-    Button sumButton = new Button("sum");
-    createNode(sumButton, NODES_FOLDER + "SumNode");
-    Button differenceButton = new Button("difference");
-    createNode(differenceButton, NODES_FOLDER + "DifferenceNode");
+    createNode("Sum", NODES_FOLDER + "SumNode");
+    createNode("Difference", NODES_FOLDER + "DifferenceNode");
 
     ScrollPane scrollPane = new ScrollPane(content);
     scrollPane.setVbarPolicy(ScrollBarPolicy.NEVER);
@@ -85,13 +84,16 @@ public class NodeExperiment extends Application {
 
   }
 
-  private void createNode(Button button, String className) {
+  private void createNode(String buttonName, String className) {
     try {
       Class<?> clazz = Class.forName(className);
-      Constructor<?> constructor = clazz.getConstructor(double.class, double.class, double.class, double.class, String.class);
+      Constructor<?> constructor = clazz.getConstructor();
+      Button button = new Button(buttonName);
+      button.setMaxWidth(Double.MAX_VALUE);
+      GridPane.setHgrow(button, Priority.ALWAYS);
       button.setOnAction(event -> {
         try {
-          DraggableAbstractNode node = (DraggableAbstractNode) constructor.newInstance(0, 0, 100, 100, "white");
+          DraggableAbstractNode node = (DraggableAbstractNode) constructor.newInstance();
           group.getChildren().add(node);
           node.setBoundingBox(workspace.getBoundsInParent());
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {

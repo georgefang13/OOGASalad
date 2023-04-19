@@ -11,9 +11,8 @@ public class SumNode extends DraggableAbstractNode {
   private TextField operand1, operand2;
   private Label outputLabel;
 
-  public SumNode(double x, double y, double width, double height, String color) {
-    super(x, y, width, height, color);
-
+  public SumNode() {
+    super(0, 0, 100, 100, "red");
   }
 
   @Override
