@@ -4,17 +4,14 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import javafx.application.Application;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.AbstractNode;
 import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.DifferenceNode;
@@ -72,6 +69,14 @@ public class NodeExperiment extends Application {
 
     createNode("Sum", NODES_FOLDER + "SumNode");
     createNode("Difference", NODES_FOLDER + "DifferenceNode");
+    createNode("TextField", NODES_FOLDER + "CustomNodes.TextFieldNode");
+
+    Button sendButton = new Button("Submit");
+    sendButton.setOnAction(event -> {
+      System.out.println(sendAllNodeContent());
+    });
+
+    nodeSelectionPane.add(sendButton, 0, buttonRow);
 
     ScrollPane scrollPane = new ScrollPane(content);
     scrollPane.setVbarPolicy(ScrollBarPolicy.NEVER);
@@ -105,6 +110,18 @@ public class NodeExperiment extends Application {
     } catch (ClassNotFoundException | NoSuchMethodException e) {
       e.printStackTrace();
     }
+  }
+
+  public String sendAllNodeContent() {
+    String returnable = "";
+    for (Node node: group.getChildren()) {
+//    for (Node node: gameColumn.getChildren()) {
+        if (node instanceof AbstractNode) {
+          returnable += ((AbstractNode) node).sendContent();
+          returnable += "\n";
+        }
+      }
+    return returnable;
   }
 
 

@@ -29,7 +29,6 @@ public class FsmRunnerTest extends Application {
     pane2 = new Pane();
     pane2.setMinSize(500, primaryStage.getHeight());
     pane2.setPrefWidth(500);
-    System.out.println(pane2.getWidth());
     pane2.setStyle("-fx-border-color: maroon");
 
 
