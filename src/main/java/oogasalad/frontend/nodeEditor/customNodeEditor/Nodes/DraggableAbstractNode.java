@@ -4,9 +4,6 @@ import oogasalad.frontend.nodeEditor.customNodeEditor.Draggable;
 
 public class DraggableAbstractNode extends AbstractNode implements Draggable {
 
-  private double xOffset;
-  private double yOffset;
-
   public DraggableAbstractNode(double x, double y, double width, double height, String color) {
     super(x, y, width, height, color);
     onDragDetected();

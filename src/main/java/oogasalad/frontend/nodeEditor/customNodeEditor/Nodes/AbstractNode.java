@@ -23,15 +23,6 @@ public abstract class AbstractNode extends VBox {
     setColor(color);
     setContent();
     setToolTips();
-//    this.setStyle("-fx-border-color: black");
-
-    this.setOnMousePressed(event -> {
-      if (event.isShiftDown()) {
-        this.delete();
-      }
-
-    });
-
   }
 
   protected abstract void setContent();
@@ -41,16 +32,6 @@ public abstract class AbstractNode extends VBox {
   protected void delete() {
     Group parentGroup = (Group) getParent();
     parentGroup.getChildren().remove(this);
-  }
-
-  protected void onMousePressed() {
-    this.setOnMousePressed(event -> {
-      System.out.println("pressed");
-      if (event.isShiftDown()) {
-        System.out.println("pressed + down");
-        this.delete();
-      }
-    });
   }
 
   protected void setColor(String color) {
@@ -75,6 +56,22 @@ public abstract class AbstractNode extends VBox {
 
   protected String getColor() {
     return this.color;
+  }
+
+  protected double getXOffset() {
+    return xOffset;
+  }
+
+  protected double getYOffset() {
+    return yOffset;
+  }
+
+  protected void setXOffset(Double offset) {
+    this.xOffset = offset;
+  }
+
+  protected void setYOffset(Double offset) {
+    this.yOffset = offset;
   }
 
   protected void setToolTips() {
