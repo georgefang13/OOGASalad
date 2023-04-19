@@ -1,8 +1,11 @@
 package oogasalad.frontend.nodeEditor.customNodeEditor.Nodes;
 
+import javafx.geometry.Bounds;
 import oogasalad.frontend.nodeEditor.customNodeEditor.Draggable;
 
-public class DraggableAbstractNode extends AbstractNode implements Draggable {
+public abstract class DraggableAbstractNode extends AbstractNode implements Draggable {
+
+  private Bounds boundingBox;
 
   public DraggableAbstractNode(double x, double y, double width, double height, String color) {
     super(x, y, width, height, color);
@@ -40,10 +43,25 @@ public class DraggableAbstractNode extends AbstractNode implements Draggable {
         e -> {
           e.setDragDetect(false);
           double scaleFactor = this.getParent().getScaleX();
-          setTranslateX(e.getSceneX() / scaleFactor - xOffset);
-          setTranslateY(e.getSceneY() / scaleFactor - yOffset);
+          double newX = e.getSceneX() / scaleFactor - xOffset;
+          double newY = e.getSceneY() / scaleFactor - yOffset;
+          if (boundingBox.contains(newX, newY, getWidth(), getHeight())) {
+            setTranslateX(newX);
+            setTranslateY(newY);
+          } else {
+            double clampedX = Math.min(Math.max(newX, boundingBox.getMinX()),
+                boundingBox.getMaxX() - getWidth());
+            double clampedY = Math.min(Math.max(newY, boundingBox.getMinY()),
+                boundingBox.getMaxY() - getHeight());
+            setTranslateX(clampedX);
+            setTranslateY(clampedY);
+          }
           e.consume();
         });
+  }
+
+  public void setBoundingBox(Bounds bounds) {
+    boundingBox = bounds;
   }
 
   @Override

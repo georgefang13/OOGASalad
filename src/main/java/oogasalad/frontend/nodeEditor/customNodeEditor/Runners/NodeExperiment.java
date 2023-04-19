@@ -1,15 +1,20 @@
 package oogasalad.frontend.nodeEditor.customNodeEditor.Runners;
 
 import javafx.application.Application;
+import javafx.beans.binding.Bindings;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.DraggableAbstractNode;
 import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.SumNode;
+import oogasalad.frontend.scenes.AbstractScene;
+import oogasalad.frontend.scenes.SceneTypes;
+import oogasalad.frontend.windows.AbstractWindow;
 
 /**
  * Scrolling/panning based on
@@ -20,9 +25,12 @@ public class NodeExperiment extends Application {
 
   @Override
   public void start(Stage primaryStage) {
+    primaryStage.setResizable(false);
+    primaryStage.setWidth(1200);
+    primaryStage.setHeight(700);
     ImageView imageView = new ImageView(
-        "https://static.vecteezy.com/system/resources/previews/005/424/896/original/blueprint-background-in-blue-planning-architecture-sheet-with-grid-free-vector.jpg");
-    DraggableAbstractNode sum = new SumNode(100, 100, 50, 25, "red");
+        new Image(getClass().getResourceAsStream("/frontend/images/GameEditor/grid.png")));
+    DraggableAbstractNode sum = new SumNode(0, 0, 50, 25, "red");
     Group group = new Group(imageView, sum);
     StackPane content = new StackPane(new Group(group));
     content.setMinSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
@@ -43,8 +51,8 @@ public class NodeExperiment extends Application {
     scrollPane.setPannable(true);
     scrollPane.setFitToWidth(true);
     scrollPane.setFitToHeight(true);
-    primaryStage.setScene(new Scene(scrollPane, 800, 600));
+    primaryStage.setScene(new Scene(scrollPane));
     primaryStage.show();
+    sum.setBoundingBox(imageView.getBoundsInParent());
   }
 }
-
