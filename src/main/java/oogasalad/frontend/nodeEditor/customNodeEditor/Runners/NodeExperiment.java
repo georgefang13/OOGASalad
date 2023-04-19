@@ -1,5 +1,8 @@
 package oogasalad.frontend.nodeEditor.customNodeEditor.Runners;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import javafx.application.Application;
@@ -17,8 +20,8 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.AbstractNode;
 import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.DraggableNodes.DraggableAbstractNode;
+import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.DraggableNodes.StateNode;
 
 /**
  * Scrolling/panning based on
@@ -116,15 +119,18 @@ public class NodeExperiment extends Application {
   }
 
   public String sendAllNodeContent() {
-    String returnable = "";
-    for (Node node: group.getChildren()) {
-        if (node instanceof AbstractNode) {
-          returnable += ((AbstractNode) node).sendContent();
-          returnable += "\n";
-        }
+    Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    JsonObject statesObject = new JsonObject();
+    for (Node node : group.getChildren()) {
+      if (node instanceof StateNode) {
+        StateNode stateNode = (StateNode) node;
+        JsonObject stateObject = gson.fromJson(stateNode.sendJSONContent(), JsonObject.class);
+        String stateName = stateObject.keySet().iterator().next();
+        statesObject.add(stateName, stateObject.get(stateName));
       }
-    return returnable;
+    }
+    JsonObject contentObject = new JsonObject();
+    contentObject.add("states", statesObject);
+    return gson.toJson(contentObject);
   }
-
-
 }

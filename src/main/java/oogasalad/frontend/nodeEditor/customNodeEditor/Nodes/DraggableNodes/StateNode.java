@@ -36,6 +36,10 @@ public class StateNode extends DraggableAbstractNode {
 
   @Override
   public String sendContent() {
+    return "";
+  }
+
+  public JsonObject sendJSONContent() {
     Gson gson = new GsonBuilder().setPrettyPrinting().create();
     JsonObject moveObject = new JsonObject();
     moveObject.addProperty("init", init.getText());
@@ -43,7 +47,7 @@ public class StateNode extends DraggableAbstractNode {
     moveObject.addProperty("setValue", setValue.getText());
     moveObject.addProperty("to", to.getText());
     JsonObject contentObject = new JsonObject();
-    contentObject.add("MOVE", moveObject);
-    return gson.toJson(contentObject);
+    contentObject.add(stateName.getText(), moveObject);
+    return contentObject;
   }
 }
