@@ -6,7 +6,6 @@ import oogasalad.gameeditor.backend.rules.Rule;
 import oogasalad.gamerunner.backend.fsm.FSM;
 import oogasalad.gamerunner.backend.interpretables.Goal;
 import oogasalad.gamerunner.backend.interpreter.Interpreter;
-import oogasalad.sharedDependencies.backend.ObjectFactory;
 import oogasalad.sharedDependencies.backend.ownables.Ownable;
 import oogasalad.sharedDependencies.backend.ownables.gameobjects.GameObject;
 import oogasalad.sharedDependencies.backend.ownables.variables.Variable;
@@ -23,7 +22,7 @@ import java.util.*;
  * @author Michael Bryant
  * @author Max Meister
  */
-public class Game {
+public class Game implements GameToInterpreterAPI {
 
     /**
      * The Rules of the game.
@@ -58,15 +57,19 @@ public class Game {
 
     private int numPlayers = 1;
 
+    private final Variable<Double> turn = new Variable<>(0.);
+
 
     /////////////////// PLAY THE GAME ///////////////////
 
     public void initGame() {
-        interpreter.link(ownableIdManager);
+        interpreter.linkIdManager(ownableIdManager);
+        interpreter.linkGame(this);
 
-        Variable<Double> turn = new Variable<>(0.);
         turn.setOwner(gameWorld);
-        ownableIdManager.addObject(turn, "turn");
+        if (!ownableIdManager.isIdInUse("turn")) {
+            ownableIdManager.addObject(turn, "turn");
+        }
 
         Variable<Double> numPlayersVar = new Variable<>((double) numPlayers);
         numPlayersVar.setOwner(gameWorld);
@@ -189,6 +192,10 @@ public class Game {
             listPlayers.add(entry.getValue());
         }
         return Collections.unmodifiableList(listPlayers);
+    }
+
+    public Player getCurPlayer() {
+        return playerIdManager.getObject("player" + turn.get().intValue());
     }
 
     //endregion

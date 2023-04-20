@@ -1,4 +1,4 @@
-package oogasalad.gamerunner.backend.interpreter.commands.operators;
+package oogasalad.gamerunner.backend.interpreter.commands.game;
 
 import java.lang.reflect.Field;
 import oogasalad.gamerunner.backend.interpreter.Environment;

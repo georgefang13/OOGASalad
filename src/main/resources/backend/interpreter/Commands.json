@@ -474,7 +474,7 @@
   },
   "GetAttribute": {
     "name": "Get Attribute",
-    "folder": "operators",
+    "folder": "game",
     "str": "attr",
     "description": "Retrieves an attribute from a GameObject",
     "example": "attr :game_x \"position # attr <gameobject> <attribute>",
@@ -490,7 +490,7 @@
   },
   "FromGame": {
     "name": "Get Game Object",
-    "folder": "operators",
+    "folder": "game",
     "str": "fromgame",
     "description": "Retrieves an item from the id manager",
     "example": "fromgame \"x :game_y # fromgame <var_name>",
@@ -503,7 +503,7 @@
   },
   "GetDropZoneItems": {
     "name": "Get Drop Zone Items",
-    "folder": "operators",
+    "folder": "game",
     "str": "dzitems",
     "description": "Retrieves all the items in a drop zone",
     "example": "dzitems :game_y # dzitems <dropzone>",
@@ -516,7 +516,7 @@
   },
   "GetDropZoneItem": {
     "name": "Get Drop Zone Item",
-    "folder": "operators",
+    "folder": "game",
     "str": "dzitem",
     "description": "Retrieves the item with a specific name within in a drop zone",
     "example": "dzitem \"x :game_y # dzitem <name> <dropzone>",
@@ -532,7 +532,7 @@
   },
   "AddDropZoneItem": {
     "name": "Add Drop Zone Item",
-    "folder": "operators",
+    "folder": "game",
     "str": "putdzitem",
     "description": "Puts an item with a specific name within in a drop zone",
     "example": "putdzitem \"x 1 :game_y # putdzitem <name> <value> <dropzone>",
@@ -549,7 +549,7 @@
   },
   "DropZonePaths": {
     "name": "Get All Drop Zone Paths",
-    "folder": "operators",
+    "folder": "game",
     "str": "dzpaths",
     "description": "Gets a list of all paths a dropzone can take",
     "example": "dzpaths :game_zone # dzpaths <dropzone>",
@@ -562,7 +562,7 @@
   },
   "FollowDropZonePath": {
     "name": "Follow a Path Through Dropzones",
-    "folder": "operators",
+    "folder": "game",
     "str": "dzfollow",
     "description": "Gets the next dropzone in a path",
     "example": "dzfollow :game_zone [ \"Up \"Up \"Right ] # dzpaths <dropzone> <list of edges>",
@@ -578,7 +578,7 @@
   },
   "DropZoneFollowUntilBlocked": {
     "name": "Follow a Path Through Dropzones Until That Path is Blocked",
-    "folder": "operators",
+    "folder": "game",
     "str": "dzfollowtoblock",
     "description": "Gets all dropzones among a repeated path until the path is blocked or no longer exists",
     "example": "dzfollowtoblock :game_zone [ \"Up \"UpRight ] fvar blocked_func # dzpaths <dropzone> <list of edges> <blocked function>",
@@ -591,6 +591,21 @@
       ],
       "outputs": ["list"],
       "parse": "dzfollowtoblock %s %s %s"
+    }
+  },
+  "GetObjsByClass": {
+    "name": "Get Objects In The Game By Class",
+    "folder": "game",
+    "str": "fromgameclass",
+    "description": "Gets objects in the id manager that contain one or more classes",
+    "example": "fromgameclass \"class1.class2.class3...  # fromgameclass <.-delimited strings>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        { "name": "classes", "type": ["string"] }
+      ],
+      "outputs": ["list"],
+      "parse": "fromgameclass %s"
     }
   },
   "Length": {
@@ -776,6 +791,45 @@
       "inputs": [{ "name": "var_name", "type": ["string"] }],
       "outputs": [],
       "parse": "call :%s"
+    }
+  },
+  "Return": {
+    "name": "Return from function with value",
+    "folder": "control",
+    "str": "return",
+    "description": "returns from a function with a value",
+    "example": "return 5 # return <value or variable>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [{ "name": "value", "type": ["any"] }],
+      "outputs": ["any"],
+      "parse": "return :%s"
+    }
+  },
+  "ReturnNull": {
+    "name": "Return from function",
+    "folder": "control",
+    "str": "return;",
+    "description": "returns from a function",
+    "example": "return; # return;",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [],
+      "outputs": [],
+      "parse": "return"
+    }
+  },
+  "Break": {
+    "name": "Break from loop",
+    "folder": "control",
+    "str": "break",
+    "description": "breaks from the innermost loop",
+    "example": "break # break",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [],
+      "outputs": [],
+      "parse": "break"
     }
   }
 }

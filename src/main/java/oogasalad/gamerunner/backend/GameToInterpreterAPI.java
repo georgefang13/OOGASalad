@@ -5,6 +5,5 @@ package oogasalad.gamerunner.backend;
  */
 public interface GameToInterpreterAPI {
 
-  void removePlayer(String playerId);
 
 }

@@ -1,7 +1,7 @@
 {
   "states": {
     "INIT": {
-      "init": "to getAvailable [ ] [ make :game_available [ ] for [ :i 0 3 ] [ for [ :j 0 3 ] [ make :x fromgame + + :i \", :j if [ == 0 len dzitems :x ] [ additem :x :game_available ] ] ] ] getAvailable",
+      "init": "make :game_log [ ] to getAvailable [ ] [ make :game_available [ ] foreach [ :x fromgameclass \"board ] [ additem :x :game_log if [ == 0 len dzitems :x ] [ additem :x :game_available ] ] ] getAvailable",
       "leave": "",
       "setValue": "",
       "to": "make :game_state_output \"MOVE"
