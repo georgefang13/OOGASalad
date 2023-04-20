@@ -30,5 +30,11 @@ public interface GameObjectComponent extends Component {
    */
   void setPlayable(boolean playable);
 
+  /**
+   * This is the method that allows for visual for DisplayableComponent to be changed
+   * @param imagePath the path where the image is contained to represent the Component
+   */
+  void setImage(String imagePath);
+  ImageView getImage();
 
 }

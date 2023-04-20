@@ -21,6 +21,8 @@ public class GameObject extends AbstractComponent implements GameObjectComponent
   private String name;
   private List<Node> children;
   private boolean playable;
+  private ImageView image;
+
   private final String DEFAULT_FILE_PATH = "frontend.properties.Defaults.GameObject";
   private ResourceBundle DEFAULT_BUNDLE = ResourceBundle.getBundle(DEFAULT_FILE_PATH);
 
@@ -54,6 +56,18 @@ public class GameObject extends AbstractComponent implements GameObjectComponent
       }
     }
   }
+
+  @Override
+  public void setImage(String imagePath) {
+    Image newImage = new Image(imagePath);
+    image = new ImageView(newImage);
+  }
+
+  @Override
+  public ImageView getImage() {
+    return image;
+  }
+
   @Override
   public void setName(String newName) {
     name = newName;

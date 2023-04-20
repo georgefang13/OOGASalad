@@ -17,6 +17,7 @@ public class LineObject extends AbstractComponent implements LineObjectComponent
     public LineObject(int ID){
         super(ID);
         this.setDefault();
+        this.followMouse();
         this.getNode();
     }
 

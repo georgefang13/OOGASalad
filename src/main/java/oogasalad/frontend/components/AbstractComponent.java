@@ -24,7 +24,6 @@ public class AbstractComponent implements Component {
   private int size;
   private double XOffset;
   private double YOffset;
-  private ImageView image;
   private Point absolute;
   private Point editor;
   private final String DEFAULT_FILE_PATH = "frontend/properties/Defaults/GameObject";
@@ -69,29 +68,18 @@ public class AbstractComponent implements Component {
   }
 
   @Override
-  public void setDefault() {
-    Properties properties = new Properties();
-    try (InputStream inputStream = getClass().getResourceAsStream(DEFAULT_FILE_PATH)) {
-      properties.load(inputStream);
-      visible = Boolean.valueOf(properties.getProperty("VISIBLE"));
-      zIndex = Integer.parseInt(properties.getProperty("Z_INDEX"));
-      size = Integer.parseInt(properties.getProperty("SIZE"));
-      image.setImage(new Image(properties.getProperty("DEFAULT_IMAGE")));
-    } catch (IOException e) {
-      System.out.println("Failed");
-    }
-  }
+  public void setDefault() {}
 
   @Override
   public void followMouse() {
-    image.setOnMousePressed(e -> {
-      XOffset = e.getSceneX() - (getImage().getTranslateX());
-      YOffset = e.getSceneY() - (getImage().getTranslateY());
+    getNode().setOnMousePressed(e -> {
+      XOffset = e.getSceneX() - (getNode().getTranslateX());
+      YOffset = e.getSceneY() - (getNode().getTranslateY());
 
     });
-    getImage().setOnMouseDragged(e -> {
-      getImage().setTranslateX(e.getSceneX() - XOffset);
-      getImage().setTranslateY(e.getSceneY() - YOffset);
+    getNode().setOnMouseDragged(e -> {
+      getNode().setTranslateX(e.getSceneX() - XOffset);
+      getNode().setTranslateY(e.getSceneY() - YOffset);
     });
   }
 
@@ -102,27 +90,16 @@ public class AbstractComponent implements Component {
 
   @Override
   public void setZIndex(int zIndex) {
-    image.setTranslateZ(zIndex);
+    getNode().setTranslateZ(zIndex);
     absolute.setZ(zIndex);
     editor.setZ(zIndex);
   }
 
   @Override
-  public void setImage(String imagePath) {
-    Image newImage = new Image(imagePath);
-    image = new ImageView(newImage);
-  }
-
-  @Override
-  public ImageView getImage() {
-    return image;
-  }
-
-  @Override
   public void setSize(int size) {
     this.size = size;
-    image.setScaleX(size);
-    image.setScaleY(size);
+    getNode().setScaleX(size);
+    getNode().setScaleY(size);
   }
 
   protected void setVisibleBool(boolean vis){
