@@ -3,15 +3,25 @@ package oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.DraggableNodes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
+import oogasalad.frontend.nodeEditor.customNodeEditor.NodeController;
 
 public class StateNode extends DraggableAbstractNode {
 
-  private TextField stateName, init, leave, setValue, to;
+  private TextField stateName;
+  private GridPane buttonGrid;
+  private int buttonRow;
+  private NodeController nodeController;
 
-  public StateNode() {
+  public StateNode(NodeController nodeController) {
     super(0, 0, 300, 100, "orange");
+    this.nodeController = nodeController;
   }
 
   public StateNode(double x, double y, double width, double height, String color) {
@@ -20,19 +30,44 @@ public class StateNode extends DraggableAbstractNode {
 
   @Override
   protected void setContent() {
+    buttonGrid = new GridPane();
+    buttonGrid.setHgap(10);
+    buttonGrid.setPadding(new Insets(30));
+    this.getChildren().add(buttonGrid);
+
     stateName = new TextField();
     stateName.setPromptText("Name");
-    init = new TextField();
-    init.setPromptText("Initialize");
-    leave = new TextField();
-    leave.setPromptText("Leave");
-    setValue = new TextField();
-    setValue.setPromptText("Set value");
-    to = new TextField();
-    to.setPromptText("Next");
-    setPadding(new Insets(30));
-    this.getChildren().addAll(stateName, init, leave, setValue, to);
+    buttonGrid.add(stateName, 0, 0);
+    buttonGrid.add(createButton("Initialize", this::onInitialize), 0, 1);
+    buttonGrid.add(createButton("Leave", this::onLeave), 0, 2);
+    buttonGrid.add(createButton("Set value", this::onSetValue), 0, 3);
+    buttonGrid.add(createButton("Next", this::onNext), 0, 4);
   }
+
+  private Button createButton(String label, EventHandler<ActionEvent> handler) {
+    Button button = new Button(label);
+    button.setOnAction(handler);
+    button.setMaxWidth(Double.MAX_VALUE);
+    GridPane.setHgrow(button, Priority.ALWAYS);
+    return button;
+  }
+
+  private void onInitialize(ActionEvent event) {
+    nodeController.openAndSwitchToTab(stateName.getText() + ": Initialize");
+  }
+
+  private void onLeave(ActionEvent event) {
+    nodeController.openAndSwitchToTab(stateName.getText() + ": Leave");
+  }
+
+  private void onSetValue(ActionEvent event) {
+    nodeController.openAndSwitchToTab(stateName.getText() + ": Set value");
+  }
+
+  private void onNext(ActionEvent event) {
+    nodeController.openAndSwitchToTab(stateName.getText() + ": Next");
+  }
+
 
   @Override
   public String sendContent() {
@@ -42,10 +77,10 @@ public class StateNode extends DraggableAbstractNode {
   public JsonObject sendJSONContent() {
     Gson gson = new GsonBuilder().setPrettyPrinting().create();
     JsonObject moveObject = new JsonObject();
-    moveObject.addProperty("init", init.getText());
-    moveObject.addProperty("leave", leave.getText());
-    moveObject.addProperty("setValue", setValue.getText());
-    moveObject.addProperty("to", to.getText());
+    //moveObject.addProperty("init", init.getText());
+    //moveObject.addProperty("leave", leave.getText());
+    //moveObject.addProperty("setValue", setValue.getText());
+    //moveObject.addProperty("to", to.getText());
     JsonObject contentObject = new JsonObject();
     contentObject.add(stateName.getText(), moveObject);
     return contentObject;

@@ -12,6 +12,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -20,6 +22,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import oogasalad.frontend.nodeEditor.customNodeEditor.NodeController;
 import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.DraggableNodes.DraggableAbstractNode;
 import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.DraggableNodes.StateNode;
 
@@ -36,6 +39,10 @@ public class NodeExperiment extends Application {
   private ImageView workspace;
   private int buttonRow;
   private GridPane nodeSelectionPane;
+
+  private TabPane tabs;
+
+  private NodeController nodeController;
 
 
   @Override
@@ -73,9 +80,9 @@ public class NodeExperiment extends Application {
     });
 
     createNode("State", NODES_FOLDER + "DraggableNodes.StateNode");
-    createNode("Sum", NODES_FOLDER + "DraggableNodes.SumNode");
-    createNode("Difference", NODES_FOLDER + "DraggableNodes.DifferenceNode");
-    createNode("TextField", NODES_FOLDER + "DraggableNodes.TextFieldNode");
+    //createNode("Sum", NODES_FOLDER + "DraggableNodes.SumNode");
+    //createNode("Difference", NODES_FOLDER + "DraggableNodes.DifferenceNode");
+    //createNode("TextField", NODES_FOLDER + "DraggableNodes.TextFieldNode");
 
     Button sendButton = new Button("Submit");
     sendButton.setOnAction(event -> {
@@ -83,28 +90,32 @@ public class NodeExperiment extends Application {
     });
 
     nodeSelectionPane.add(sendButton, 0, buttonRow);
-
     ScrollPane scrollPane = new ScrollPane(content);
     scrollPane.setVbarPolicy(ScrollBarPolicy.NEVER);
     scrollPane.setHbarPolicy(ScrollBarPolicy.NEVER);
     scrollPane.setPannable(true);
     scrollPane.setFitToWidth(true);
     scrollPane.setFitToHeight(true);
-    primaryStage.setScene(new Scene(new HBox(nodeSelectionPane, scrollPane)));
+    tabs = new TabPane();
+    Tab mainTab = new Tab("Main Tab", new HBox(nodeSelectionPane, scrollPane));
+    mainTab.setClosable(false);
+    tabs.getTabs().add(mainTab);
+    nodeController = new NodeController(tabs);
+    primaryStage.setScene(new Scene(tabs));
     primaryStage.show();
-
   }
 
   private void createNode(String buttonName, String className) {
     try {
       Class<?> clazz = Class.forName(className);
-      Constructor<?> constructor = clazz.getConstructor();
+      Constructor<?> constructor = clazz.getConstructor(NodeController.class);
       Button button = new Button(buttonName);
       button.setMaxWidth(Double.MAX_VALUE);
       GridPane.setHgrow(button, Priority.ALWAYS);
       button.setOnAction(event -> {
         try {
-          DraggableAbstractNode node = (DraggableAbstractNode) constructor.newInstance();
+          DraggableAbstractNode node = (DraggableAbstractNode) constructor.newInstance(
+              nodeController);
           group.getChildren().add(node);
           node.setBoundingBox(workspace.getBoundsInParent());
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
