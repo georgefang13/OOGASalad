@@ -16,7 +16,7 @@ public class ComponentExample extends Application {
     Scene scene = new Scene(root);
     primaryStage.setScene(scene);
     primaryStage.show();
-    Component c = factory.create("GameObject");
+    Component c = factory.create("TextObject");
     root.getChildren().add(c.getNode());
   }
 }
