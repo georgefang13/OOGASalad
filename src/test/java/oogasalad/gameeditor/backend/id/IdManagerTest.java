@@ -10,6 +10,7 @@ import oogasalad.gameeditor.backend.ownables.gameobjects.EmptyGameObject;
 import oogasalad.sharedDependencies.backend.ownables.Ownable;
 import oogasalad.sharedDependencies.backend.ownables.gameobjects.GameObject;
 import oogasalad.sharedDependencies.backend.ownables.variables.Variable;
+import oogasalad.sharedDependencies.backend.owners.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -523,6 +524,157 @@ public class IdManagerTest {
     assertTrue(manager.getIdsOfObjectsOfClass("test").contains("Variable.Variable2"));
     assertFalse(manager.getIdsOfObjectsOfClass("invalid").contains("Variable"));
 
+  }
+
+  @Test
+  public void testCheckMultipleClasses() {
+    variable1.addClass("test");
+    variable1.addClass("test2");
+    variable1.addClass("test3");
+    variable2.addClass("test");
+    variable2.addClass("test4");
+    manager.addObject(variable1);
+    manager.addObject(variable2, variable1);
+    assertTrue(manager.getIdsOfObjectsOfClass("test", "test2").size() == 1);
+    assertTrue(manager.getIdsOfObjectsOfClass("test", "test4").size() == 1);
+    assertTrue(manager.getIdsOfObjectsOfClass("test", "test3").size() == 1);
+    assertTrue(manager.getIdsOfObjectsOfClass("test", "test4").size() == 1);
+    assertTrue(manager.getIdsOfObjectsOfClass("test", "test2", "test3").size() == 1);
+    assertTrue(manager.getIdsOfObjectsOfClass("test", "test2", "test3", "test4").size() == 0);
+
+
+  }
+
+  @Test
+  public void testGetDirectObjectsOfOwner() {
+    Player player = new Player();
+    Player player2 = new Player();
+    Player player3 = new Player();
+
+    variable1.setOwner(player);
+    variable2.setOwner(player);
+    variable3.setOwner(player2);
+    object1.setOwner(player);
+    object2.setOwner(player2);
+    object3.setOwner(player3);
+
+    manager.addObject(variable1);
+    manager.addObject(variable2);
+    manager.addObject(variable3, variable1);
+    manager.addObject(object1, "x", variable3);
+    manager.addObject(object2);
+    manager.addObject(object3, object1);
+
+    assertTrue(manager.getDirectObjectsOfOwner(player).size() == 3);
+    assertTrue(manager.getDirectObjectsOfOwner(player).contains(variable1));
+    assertTrue(manager.getDirectObjectsOfOwner(player).contains(variable2));
+    assertTrue(manager.getDirectObjectsOfOwner(player).contains(object1));
+    assertTrue(manager.getDirectObjectsOfOwner(player2).size() == 2);
+    assertTrue(manager.getDirectObjectsOfOwner(player2).contains(variable3));
+    assertTrue(manager.getDirectObjectsOfOwner(player2).contains(object2));
+    assertTrue(manager.getDirectObjectsOfOwner(player3).size() == 1);
+    assertTrue(manager.getDirectObjectsOfOwner(player3).contains(object3));
+
+  }
+
+  @Test
+  public void testGetDirectIdsOfOwner() {
+    Player player = new Player();
+    Player player2 = new Player();
+    Player player3 = new Player();
+
+    variable1.setOwner(player);
+    variable2.setOwner(player);
+    variable3.setOwner(player2);
+    object1.setOwner(player);
+    object2.setOwner(player2);
+    object3.setOwner(player3);
+
+    manager.addObject(variable1, "var1");
+    manager.addObject(variable2, "var2");
+    manager.addObject(variable3, variable1);
+    manager.addObject(object1, "obj1", variable3);
+    manager.addObject(object2, "obj2");
+    manager.addObject(object3, object1);
+
+    assertTrue(manager.getDirectIdsOfOwner(player).size() == 3);
+    assertTrue(manager.getDirectIdsOfOwner(player).contains("var1"));
+    assertTrue(manager.getDirectIdsOfOwner(player).contains("var2"));
+    assertTrue(manager.getDirectIdsOfOwner(player).contains("var1.Variable.obj1"));
+    assertTrue(manager.getDirectIdsOfOwner(player2).size() == 2);
+    assertTrue(manager.getDirectIdsOfOwner(player2).contains("var1.Variable"));
+    assertTrue(manager.getDirectIdsOfOwner(player2).contains("obj2"));
+    assertTrue(manager.getDirectIdsOfOwner(player3).size() == 1);
+    assertTrue(manager.getDirectIdsOfOwner(player3).contains("var1.Variable.obj1.EmptyGameObject"));
+  }
+
+  @Test
+  public void testGetObjectsOfOwner() {
+    Player player = new Player();
+    Player player2 = new Player();
+    Player player3 = new Player();
+
+    variable1.setOwner(player);
+    variable2.setOwner(player);
+    variable3.setOwner(player2);
+    object1.setOwner(player);
+    object2.setOwner(player2);
+    object3.setOwner(player3);
+
+    manager.addObject(variable1, "var1");
+    manager.addObject(variable2, "var2");
+    manager.addObject(variable3, variable1);
+    manager.addObject(object1, "obj1", variable3);
+    manager.addObject(object2, "obj2");
+    manager.addObject(object3, object1);
+
+
+    assertTrue(manager.getObjectsOfOwner(player).size() == 5);
+    assertTrue(manager.getObjectsOfOwner(player).contains(variable1));
+    assertTrue(manager.getObjectsOfOwner(player).contains(variable2));
+    assertTrue(manager.getObjectsOfOwner(player).contains(object1));
+    assertTrue(manager.getObjectsOfOwner(player).contains(object3));
+    assertTrue(manager.getObjectsOfOwner(player2).size() == 4);
+    assertTrue(manager.getObjectsOfOwner(player2).contains(variable3));
+    assertTrue(manager.getObjectsOfOwner(player2).contains(object2));
+    assertTrue(manager.getObjectsOfOwner(player2).contains(object3));
+    assertTrue(manager.getObjectsOfOwner(player3).size() == 1);
+    assertTrue(manager.getObjectsOfOwner(player3).contains(object3));
+  }
+
+  @Test
+  public void testGetIdsOfOwner() {
+    Player player = new Player();
+    Player player2 = new Player();
+    Player player3 = new Player();
+
+    variable1.setOwner(player);
+    variable2.setOwner(player);
+    variable3.setOwner(player2);
+    object1.setOwner(player);
+    object2.setOwner(player2);
+    object3.setOwner(player3);
+
+    manager.addObject(variable1, "var1");
+    manager.addObject(variable2, "var2");
+    manager.addObject(variable3, variable1);
+    manager.addObject(object1, "obj1", variable3);
+    manager.addObject(object2, "obj2");
+    manager.addObject(object3, object1);
+
+    assertTrue(manager.getIdsOfOwner(player).size() == 5);
+    assertTrue(manager.getIdsOfOwner(player).contains("var1"));
+    assertTrue(manager.getIdsOfOwner(player).contains("var2"));
+    assertTrue(manager.getIdsOfOwner(player).contains("var1.Variable"));
+    assertTrue(manager.getIdsOfOwner(player).contains("var1.Variable.obj1"));
+    assertTrue(manager.getIdsOfOwner(player).contains("var1.Variable.obj1.EmptyGameObject"));
+    assertTrue(manager.getIdsOfOwner(player2).size() == 4);
+    assertTrue(manager.getIdsOfOwner(player2).contains("var1.Variable"));
+    assertTrue(manager.getIdsOfOwner(player2).contains("obj2"));
+    assertTrue(manager.getIdsOfOwner(player2).contains("var1.Variable.obj1.EmptyGameObject"));
+    assertTrue(manager.getIdsOfOwner(player2).contains("obj2"));
+    assertTrue(manager.getIdsOfOwner(player3).size() == 1);
+    assertTrue(manager.getIdsOfOwner(player3).contains("var1.Variable.obj1.EmptyGameObject"));
   }
 
 }

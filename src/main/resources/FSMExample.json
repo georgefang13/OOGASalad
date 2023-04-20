@@ -9,7 +9,7 @@
     "MOVE": {
       "init": "",
       "leave": "getAvailable",
-      "setValue": "ifelse [ == :game_turn 0 ] [ putdzitem \"obj \"X fromgame :game_state_input  ] [ putdzitem \"obj \"O fromgame :game_state_input ] getAvailable",
+      "setValue": "ifelse [ == :game_turn 0 ] [ putdzitem \"obj \"X fromgame :game_state_input  ] [ putdzitem \"obj \"O fromgame :game_state_input ]",
       "to": "make :game_state_output \"DONE"
     },
     "DONE": {
@@ -20,6 +20,6 @@
     }
   },
   "goals": [
-    "make :game_log [ ] to check [ :name0 :name1 :name2 ] [        make :z1 dzitem \"obj fromgame :name0    make :z2 dzitem \"obj fromgame :name1    make :z3 dzitem \"obj fromgame :name2        make :total ( + :z1 :z2 :z3 )        additem :total :game_log         if [ or == :total \"XXX == :total \"OOO ] [          make :game_state_output :z1       ] ]    for [ :i 0 3 ] [     make :name0 + + :i \", 0    make :name1 + + :i \", 1    make :name2 + + :i \", 2        check :name0 :name1 :name2             make :name0 + + 0 \", :i     make :name1 + + 1 \", :i    make :name2 + + 2 \", :i        check :name0 :name1 :name2 ] check \"0,0 \"1,1 \"2,2 check \"0,2 \"1,1 \"2,0"
+  "make :game_log [ ] make :piece \"X if [ == 0 :game_turn ] [ make :piece \"O ] to blocked [ :x ] [ != dzitem \"obj :x :piece ] for [ :i 0 3 ] [ for [ :j 0 3 ] [ make :dz fromgame ( + :i \", :j ) foreach [ :edge dzpaths :dz ] [ make :dzs dzfollowtoblock :dz [ :edge ] fvar blocked make :curspot dzitem \"obj :dz if [ and == :piece :curspot == 2 len :dzs ] [ make :game_state_output :piece ] ] ] ]"
   ]
 }

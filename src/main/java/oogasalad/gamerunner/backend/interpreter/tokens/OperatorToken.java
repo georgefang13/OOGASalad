@@ -1,5 +1,6 @@
 package oogasalad.gamerunner.backend.interpreter.tokens;
 
+import com.sun.jdi.Value;
 import oogasalad.gamerunner.backend.interpreter.Environment;
 import oogasalad.gamerunner.backend.interpreter.exceptions.IllegalTokenTypeException;
 
@@ -114,6 +115,7 @@ abstract public class OperatorToken extends Token {
     } else if (t.SUBTYPE.equals(subtype)) {
       containsSubtype = true;
     }
+    else if (t.SUBTYPE.equals(subtype)) containsSubtype = true;
 
     if (!containsSubtype) {
       String s = env.getLanguageResource("argumentSubtypeError");
@@ -124,8 +126,10 @@ abstract public class OperatorToken extends Token {
       throwError(new IllegalArgumentException(s));
     }
 
+
     return (T) t;
   }
+
 
 
   /**
@@ -143,7 +147,7 @@ abstract public class OperatorToken extends Token {
       if (t == null) {
         break;
       }
-      if (t.getClass().equals(c)) {
+      if (c.isInstance(t)){
         hasType = true;
         break;
       }
@@ -171,6 +175,12 @@ abstract public class OperatorToken extends Token {
    */
   protected Token getArg(int index) {
     return args[index];
+  }
+
+  @Override
+  public boolean equals(Token t, Environment env) {
+    Token myt = evaluate(env);
+    return myt.equals(t, env);
   }
 
   @Override
