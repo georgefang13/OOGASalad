@@ -1,8 +1,7 @@
-package oogasalad.frontend.panels.subPanels;
+package oogasalad.frontend.panels.editorPanels;
 
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import oogasalad.frontend.nodeEditor.customNodeEditor.DifferenceNode;

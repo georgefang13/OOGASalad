@@ -1,4 +1,4 @@
-package oogasalad.frontend.panels.subPanels;
+package oogasalad.frontend.panels.editorPanels;
 
 import java.util.ResourceBundle;
 import javafx.scene.Node;

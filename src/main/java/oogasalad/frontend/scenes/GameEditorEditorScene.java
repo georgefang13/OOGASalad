@@ -6,10 +6,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import oogasalad.frontend.panels.subPanels.ComponentPanel;
-import oogasalad.frontend.panels.subPanels.EnvironmentPanel;
-import oogasalad.frontend.panels.subPanels.HeaderMenuPanel;
-import oogasalad.frontend.panels.subPanels.PropertiesPanel;
+import oogasalad.frontend.panels.editorPanels.ComponentPanel;
+import oogasalad.frontend.panels.editorPanels.EnvironmentPanel;
+import oogasalad.frontend.panels.editorPanels.HeaderMenuPanel;
+import oogasalad.frontend.panels.editorPanels.PropertiesPanel;
 
 /**
  * @author George Fang

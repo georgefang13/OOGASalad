@@ -2,9 +2,9 @@ package oogasalad.frontend.scenes;
 
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
-import oogasalad.frontend.panels.subPanels.ComponentPanel;
-import oogasalad.frontend.panels.subPanels.HeaderMenuPanel;
-import oogasalad.frontend.panels.subPanels.NodeLogicPanel;
+import oogasalad.frontend.panels.editorPanels.ComponentPanel;
+import oogasalad.frontend.panels.editorPanels.HeaderMenuPanel;
+import oogasalad.frontend.panels.editorPanels.NodeLogicPanel;
 
 /**
  * @author George Fang
