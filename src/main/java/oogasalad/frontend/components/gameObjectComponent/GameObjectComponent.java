@@ -2,6 +2,7 @@ package oogasalad.frontend.components.gameObjectComponent;
 
 import java.util.List;
 import javafx.scene.Node;
+import javafx.scene.image.ImageView;
 import oogasalad.frontend.components.AbstractComponent;
 import oogasalad.frontend.components.Component;
 
@@ -28,5 +29,6 @@ public interface GameObjectComponent extends Component {
    * Toggle the gameObject on or off depending on whether the user wants the GameObject to display in game
    */
   void setPlayable(boolean playable);
+
 
 }

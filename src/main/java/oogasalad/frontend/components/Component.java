@@ -15,7 +15,6 @@ public interface Component {
    * @return the Node to add and drop the Component
    */
   Node getNode();
-
   void setNode(Node node);
 
   /**
