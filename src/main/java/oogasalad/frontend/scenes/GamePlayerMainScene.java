@@ -2,6 +2,7 @@ package oogasalad.frontend.scenes;
 
 import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -44,19 +45,15 @@ public class GamePlayerMainScene extends AbstractScene {
 
     gameRunnerController = new GameRunnerController();
 
-    //Will load these from backend file somehow or when created via modal
-    int height = 3;
-    int width = 3;
+    VBox boardDisplay = gameRunnerController.initializeBoard();
+    root.setCenter(boardDisplay);
 
-    board = new Board(height, width);
-    initializeBoard();
+    ArrayList<Node> pieces = gameRunnerController.initializePieces();
+    root.getChildren().addAll(pieces);
 
-    pieces = initializePieces();
-
-    textInstructions = new Label();
-
-    initializeText();
-    refreshText();
+    //textInstructions = new Label();
+    //initializeText();
+    //refreshText();
 
     setScene(new Scene(root));
     setText();
@@ -91,47 +88,6 @@ public class GamePlayerMainScene extends AbstractScene {
     }
   }
 
-  private void initializeBoard() {
-    boardPane = board.getBoardVisual();
-    boardPane.setOnMouseClicked((MouseEvent event) -> {
-      double x = event.getX();
-      double y = event.getY();
-      Board.BoardXY boardXY = board.boardXYofClick(x, y);
-      int boardX = boardXY.x();
-      int boardY = boardXY.y();
-      String inputText = boardY + "," + boardX;
-      parseResponse(gameRunnerController.userResponds(inputText));
-      refreshInstructions();
-      //runOnClick(x, y);
-    });
-    VBox boardVBOX = new VBox(boardPane);
-    boardVBOX.setAlignment(Pos.CENTER);
-    root.setCenter(boardVBOX);
-  }
-  private ArrayList<BoardPiece> initializePieces() {
-    ArrayList<BoardPiece> newPieces = new ArrayList<>();
-    BoardPiece x1 = new BoardPiece("X",1);
-    x1.setSize(30);
-    newPieces.add(x1);
-    BoardPiece O1 = new BoardPiece("O",1);
-    O1.setSize(30);
-    newPieces.add(O1);
-    BoardPiece x2 = new BoardPiece("X",2);
-    x2.setSize(30);
-    newPieces.add(x1);
-    BoardPiece O2 = new BoardPiece("O",2);
-    O2.setSize(30);
-    newPieces.add(O1);
-    BoardPiece x3 = new BoardPiece("X",3);
-    x3.setSize(30);
-    newPieces.add(x1);
-    BoardPiece O3 = new BoardPiece("O",3);
-    O3.setSize(30);
-    newPieces.add(O1);
-    root.getChildren().addAll(x1.getNode(),O1.getNode(),x2.getNode(),O2.getNode(),x3.getNode(),O3.getNode());
-    return newPieces;
-  }
-
   private void refreshInstructions() {
     textInstructions.setText(instruction);
   }
@@ -143,13 +99,13 @@ public class GamePlayerMainScene extends AbstractScene {
 
   private void initializeText() {
     textVBOX = new VBox(10);
-    parseResponse(gameRunnerController.initialInstruction());
+    //parseResponse(gameRunnerController.initialInstruction());
     textVBOX.getChildren().addAll(textInstructions);
   }
 
   private void runEnteredText(TextField textField) {
     String inputText = textField.getText(); // Get the text from the TextField
-    parseResponse(gameRunnerController.userResponds(inputText));
+    //parseResponse(gameRunnerController.userResponds(inputText));
     refreshInstructions();
     textField.clear();
   }
@@ -165,26 +121,9 @@ public class GamePlayerMainScene extends AbstractScene {
     System.out.println(boardX);
     System.out.println(boardY);
     String inputText = boardY + "," + boardX;
-    parseResponse(gameRunnerController.userResponds(inputText));
-    refreshInstructions();
+    //parseResponse(gameRunnerController.userResponds(inputText));
+    //refreshInstructions();
     //textField.clear();
-  }
-
-  private String playerDoubleStringtoName(String doubleString){
-    double dub = Double.parseDouble(doubleString);
-    int playeridx = Integer.valueOf((int) dub);
-    String[] players = {"X","O"};
-    return players[playeridx];
-  }
-
-  private void parseResponse(String response) {
-    String[] splitResponse = response.split("Turn: ");
-    playerTurn = playerDoubleStringtoName(splitResponse[1].split("\n")[0]);
-    System.out.print("player turn: ");
-    System.out.println(playerTurn);
-    instruction = "Turn: " + splitResponse[1];
-    //String gridString = splitResponse[0];
-    //parseGrid(gridString);
   }
 
   private void parseGrid(String gridString) {
@@ -196,7 +135,7 @@ public class GamePlayerMainScene extends AbstractScene {
         if (pieceName.equals("-")) {
           continue;
         }
-        board.addPiece(i, j, pieceName);
+        //board.addPiece(i, j, pieceName);
       }
     }
 

@@ -6,5 +6,5 @@ public interface DropZone {
 
   public StackPane getDropZoneVisual();
 
-  public void addPiece(String pieceName);
+  public void addPiece(BoardPiece boardPiece);
 }

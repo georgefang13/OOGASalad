@@ -37,9 +37,9 @@ public class Board {
     return boardPane;
   }
 
-  public void addPiece(int x, int y, String pieceName) {
+  public void addPiece(int x, int y, BoardPiece boardPiece) {
     DropZone pieceSquare = boardDrops[x][y];
-    pieceSquare.addPiece(pieceName);
+    pieceSquare.addPiece(boardPiece);
   }
 
   public record BoardXY(int x, int y) {

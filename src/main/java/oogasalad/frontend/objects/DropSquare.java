@@ -24,9 +24,8 @@ public class DropSquare implements DropZone {
   }
 
   @Override
-  public void addPiece(String pieceName) {
+  public void addPiece(BoardPiece newPiece) {
     //Piece newPiece = new BasicPiece(pieceName);
-    BoardPiece newPiece = new BoardPiece(pieceName,1);
     newPiece.setSize(30);
     if (dropVisual.getChildren().size() > 1) {
       dropVisual.getChildren().remove(1);

@@ -3,6 +3,7 @@ package oogasalad.frontend.objects;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import oogasalad.Controller.GameRunnerController;
 import oogasalad.frontend.components.draggableComponent.DraggableObject;
 import oogasalad.frontend.components.gameObjectComponent.GameObject;
 import oogasalad.frontend.components.gameObjectComponent.GameObjectComponent;
@@ -17,8 +18,10 @@ public class BoardPiece extends DraggableObject implements GameObjectComponent {
     private boolean playable;
     private final String DEFAULT_FILE_PATH = "frontend.properties.Defaults.GameObject";
     private ResourceBundle DEFAULT_BUNDLE = ResourceBundle.getBundle(DEFAULT_FILE_PATH);
+    private GameRunnerController gameRunnerController;
+    private
 
-    public BoardPiece(String pieceName, int ID) {
+    public BoardPiece(String pieceName, int ID, GameRunnerController gameRunnerController) {
         super(ID);
         children = null;
         setName(pieceName);
