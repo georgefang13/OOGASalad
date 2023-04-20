@@ -41,6 +41,10 @@ public class FileManager {
     setValidTagsFromResources(validTagsKey);
   }
 
+  public void addContent(String content, String... tags) {
+    updateHierarchy(myFileInfo, content, tags);
+  }
+
   /**
    * Adds content to currently stored file structure in the specified hierarchical order
    *
@@ -56,12 +60,15 @@ public class FileManager {
       // TODO: throw custom exception
     }
 
-    if (object.has(tags[0])) {
+    if (tags.length == 1) {
+      addLowestContent(object, tags[0], new JsonPrimitive(content));
+    }
+    else if (object.has(tags[0])) {
       updateHierarchy(object.getAsJsonObject(tags[0]),
           content, Arrays.copyOfRange(tags, 1, tags.length));
     }
     else {
-      object.add(tags[0], makeHierarchy(content, tags));
+      object.add(tags[0], makeHierarchy(content, Arrays.copyOfRange(tags, 1, tags.length)));
     }
   }
 
@@ -88,24 +95,24 @@ public class FileManager {
    * @param tag     key name in JSON file where data should go
    * @param content information to be stored in file
    */
-  protected void addContent(String tag, JsonElement content) {
-    if (!myValidTags.isEmpty() && !isValid(tag)) {
+  protected void addLowestContent(JsonObject object, String tag, JsonElement content) {
+    if (!object.isEmpty() && !isValid(tag)) {
       // TODO: maybe make this into a custom exception
       throw new RuntimeException("Invalid tag!");
     }
-    if (myFileInfo.has(tag)) {
+    if (object.has(tag)) {
       JsonArray array;
-      if (myFileInfo.get(tag).isJsonArray()) {
-        array = myFileInfo.getAsJsonArray(tag);
+      if (object.get(tag).isJsonArray()) {
+        array = object.getAsJsonArray(tag);
         array.add(content);
       } else {
         array = new JsonArray();
-        array.add(myFileInfo.get(tag));
+        array.add(object.get(tag));
         array.add(content);
-        myFileInfo.add(tag, array);
+        object.add(tag, array);
       }
     } else {
-      myFileInfo.add(tag, content);
+      object.add(tag, content);
     }
   }
 

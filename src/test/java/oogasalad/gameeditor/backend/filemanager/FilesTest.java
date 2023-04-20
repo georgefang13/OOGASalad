@@ -26,6 +26,8 @@ public class FilesTest {
   private static final String SINGLE_TAG_FILE_NAME = "single.json";
   private static final String DIFFERENT_TAG_FILE_NAME = "difftags.json";
   private static final String SAME_TAG_FILE_NAME = "sametag.json";
+  private static final String SINGLE_HIERARCHY_FILE_NAME = "singlehierarchy.json";
+  private static final String DOUBLE_HIERARCHY_FILE_NAME = "doublehierarchy.json";
   FileManager fileManager;
   Gson gson;
 
@@ -46,33 +48,44 @@ public class FilesTest {
 
   @Test
   void singleTagTest() {
-    fileManager.addContent("name", new JsonPrimitive("Rodrigo"));
+    fileManager.addContent("Rodrigo", "name");
     saveAndCompare(SINGLE_TAG_FILE_NAME);
   }
 
   @Test
   void differentTagTest() {
-    fileManager.addContent("name", new JsonPrimitive("Rodrigo"));
-    fileManager.addContent("nickname", new JsonPrimitive("Hot Rod"));
+    fileManager.addContent("Rodrigo", "name");
+    fileManager.addContent("Hot Rod", "nickname");
     saveAndCompare(DIFFERENT_TAG_FILE_NAME);
   }
 
   @Test
   void sameTagTest() {
-    fileManager.addContent("name", new JsonPrimitive("Rodrigo"));
-    fileManager.addContent("name", new JsonPrimitive("Hot Rod"));
+    fileManager.addContent("Rodrigo", "name");
+    fileManager.addContent("Hot Rod", "name");
     saveAndCompare(SAME_TAG_FILE_NAME);
   }
 
   @Test
   void validTagTest() {
     fileManager.setValidTagsFromResources("General");
-    fileManager.addContent("name", new JsonPrimitive("Rodrigo"));
+    fileManager.addContent("Rodrigo", "name");
     assertThrows(RuntimeException.class, () -> {
-      fileManager.addContent("invalid tag", new JsonPrimitive("oops"));
+      fileManager.addContent( "oops", "invalid tag");
     });
-    fileManager.addContent("name", new JsonPrimitive("Hot Rod"));
+    fileManager.addContent( "Hot Rod", "name");
     saveAndCompare(SAME_TAG_FILE_NAME);
+  }
+
+  @Test
+  void hierarchyTest() {
+    fileManager.addContent("Rodrigo", "person1", "name");
+    fileManager.addContent("Hot Rod", "person1", "nickname");
+    saveAndCompare(SINGLE_HIERARCHY_FILE_NAME);
+
+    fileManager.addContent("Ethan", "person2", "name");
+    fileManager.addContent("EeEEe", "person2", "nickname");
+    saveAndCompare(DOUBLE_HIERARCHY_FILE_NAME);
   }
 
   private void saveAndCompare(String sameTagFileName) {

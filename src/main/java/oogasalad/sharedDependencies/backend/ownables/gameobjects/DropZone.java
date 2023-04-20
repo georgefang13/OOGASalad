@@ -178,14 +178,14 @@ public class DropZone extends GameObject {
     // TODO: pass ID into IdManager (maybe change constructor?)
     // this.id = FileManager.getStringByKey(object, "id");
 
-    for (JsonElement edgeEntry : object.get("connections").getAsJsonArray()) {
-      JsonObject edge = edgeEntry.getAsJsonObject();
-//            edges.put(FileManager.getStringByKey(edge, "edgeId"));
-    }
-
-    for (JsonElement objectEntry : object.get("starterObjects").getAsJsonArray()) {
-      // TODO: get gameObject by Id and add it to holding
-    }
+//    for (JsonElement edgeEntry : object.get("connections").getAsJsonArray()) {
+//      JsonObject edge = edgeEntry.getAsJsonObject();
+////            edges.put(FileManager.getStringByKey(edge, "edgeId"));
+//    }
+//
+//    for (JsonElement objectEntry : object.get("starterObjects").getAsJsonArray()) {
+//      // TODO: get gameObject by Id and add it to holding
+//    }
 
 
   }
@@ -193,14 +193,15 @@ public class DropZone extends GameObject {
   @Override
   public String getAsJson() {
     FileManager fileManager = new FileManager();
-    fileManager.addContent("id", new JsonPrimitive(id));
+//    fileManager.addContent("id", new JsonPrimitive(id));
     for (String edgeId : edges.keySet()) {
       JsonObject edge = new JsonObject();
       edge.add("edgeId", new JsonPrimitive(edgeId));
       edge.add("nodeId", new JsonPrimitive(edges.get(edgeId).getId()));
-      fileManager.addContent("connections", edge);
+//      fileManager.addContent("connections", edge);
     }
-    return fileManager.getJson();
+//    return fileManager.getJson();
+    return "";
   }
 
 
