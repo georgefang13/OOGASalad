@@ -48,7 +48,7 @@ public class GameObject extends AbstractComponent implements GameObjectComponent
         Field field = this.getClass().getDeclaredField(param);
         field.setAccessible(true);
         Class<?> fieldType = field.getType();
-
+        fieldType.getName();
         Object value = fieldType.cast(map.get(param));
         field.set(this, value);
       } catch (Exception e){
@@ -71,6 +71,9 @@ public class GameObject extends AbstractComponent implements GameObjectComponent
   @Override
   public void setName(String newName) {
     name = newName;
+  }
+  public String getName(){
+    return name;
   }
 
   @Override

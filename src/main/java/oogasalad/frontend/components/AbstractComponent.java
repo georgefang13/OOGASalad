@@ -24,6 +24,7 @@ public class AbstractComponent implements Component {
   private int size;
   private double XOffset;
   private double YOffset;
+  private ImageView image;
   private Point absolute;
   private Point editor;
   private final String DEFAULT_FILE_PATH = "frontend/properties/Defaults/GameObject";
@@ -72,14 +73,14 @@ public class AbstractComponent implements Component {
 
   @Override
   public void followMouse() {
-    getNode().setOnMousePressed(e -> {
-      XOffset = e.getSceneX() - (getNode().getTranslateX());
-      YOffset = e.getSceneY() - (getNode().getTranslateY());
+    image.setOnMousePressed(e -> {
+      XOffset = e.getSceneX() - (getImage().getTranslateX());
+      YOffset = e.getSceneY() - (getImage().getTranslateY());
 
     });
-    getNode().setOnMouseDragged(e -> {
-      getNode().setTranslateX(e.getSceneX() - XOffset);
-      getNode().setTranslateY(e.getSceneY() - YOffset);
+    getImage().setOnMouseDragged(e -> {
+      getImage().setTranslateX(e.getSceneX() - XOffset);
+      getImage().setTranslateY(e.getSceneY() - YOffset);
     });
   }
 
