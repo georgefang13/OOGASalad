@@ -5,38 +5,32 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonPrimitive;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.util.ResourceBundle;
 import oogasalad.sharedDependencies.backend.filemanagers.FileManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
- * Class for testing FileManager and other JSON data file-related actions
+ * Class for testing FileManager functionalities of adding information to configuration files
  *
  * @author Rodrigo Bassi Guerreiro
  */
-public class FilesTest {
+public class FileAddTest {
 
-  private static final String FILE_FOLDER = System.getProperty("user.dir") + "/data/testfiles";
-  private static final String TEST_FILE_NAME = "test.json";
-  private static final String EMPTY_FILE_NAME = "empty.json";
-  private static final String SINGLE_TAG_FILE_NAME = "single.json";
-  private static final String DIFFERENT_TAG_FILE_NAME = "difftags.json";
-  private static final String SAME_TAG_FILE_NAME = "sametag.json";
-  private static final String SINGLE_HIERARCHY_FILE_NAME = "singlehierarchy.json";
-  private static final String DOUBLE_HIERARCHY_FILE_NAME = "doublehierarchy.json";
-  private static final String HIERARCHY_LIST_FILE_NAME = "hierarchylist.json";
+  public static final String FILE_FOLDER = System.getProperty("user.dir") + "/data/testfiles";
+  private static final String RESOURCES_PATH = "TestConfigFiles";
   FileManager fileManager;
   Gson gson;
+  ResourceBundle resources = ResourceBundle.getBundle(RESOURCES_PATH);
 
   @BeforeEach
   void initialize() {
     fileManager = new FileManager();
     gson = new Gson();
-    File file = new File(FILE_FOLDER + "/" + TEST_FILE_NAME);
+    File file = new File(FILE_FOLDER + "/" + resources.getString("TEST"));
     if (file.exists()) {
       file.delete();
     }
@@ -44,27 +38,27 @@ public class FilesTest {
 
   @Test
   void emptyFileTest() throws FileNotFoundException {
-    saveAndCompare(EMPTY_FILE_NAME);
+    saveAndCompare("EMPTY");
   }
 
   @Test
   void singleTagTest() {
     fileManager.addContent("Rodrigo", "name");
-    saveAndCompare(SINGLE_TAG_FILE_NAME);
+    saveAndCompare("SINGLE_TAG");
   }
 
   @Test
   void differentTagTest() {
     fileManager.addContent("Rodrigo", "name");
     fileManager.addContent("Hot Rod", "nickname");
-    saveAndCompare(DIFFERENT_TAG_FILE_NAME);
+    saveAndCompare("DIFFERENT_TAG");
   }
 
   @Test
   void sameTagTest() {
     fileManager.addContent("Rodrigo", "name");
     fileManager.addContent("Hot Rod", "name");
-    saveAndCompare(SAME_TAG_FILE_NAME);
+    saveAndCompare("SAME_TAG");
   }
 
   @Test
@@ -75,31 +69,31 @@ public class FilesTest {
       fileManager.addContent( "oops", "invalid tag");
     });
     fileManager.addContent( "Hot Rod", "name");
-    saveAndCompare(SAME_TAG_FILE_NAME);
+    saveAndCompare("SAME_TAG");
   }
 
   @Test
   void hierarchyTest() {
     fileManager.addContent("Rodrigo", "person1", "name");
     fileManager.addContent("Hot Rod", "person1", "nickname");
-    saveAndCompare(SINGLE_HIERARCHY_FILE_NAME);
+    saveAndCompare("SINGLE_HIERARCHY");
 
     fileManager.addContent("Ethan", "person2", "name");
     fileManager.addContent("EeEEe", "person2", "nickname");
-    saveAndCompare(DOUBLE_HIERARCHY_FILE_NAME);
+    saveAndCompare("DOUBLE_HIERARCHY");
   }
 
   @Test
   void hierarchyListTest() {
     fileManager.addContent("Rodrigo", "person1", "name");
     fileManager.addContent("Hot Rod", "person1", "name");
-    saveAndCompare(HIERARCHY_LIST_FILE_NAME);
+    saveAndCompare("HIERARCHY_LIST");
   }
 
-  private void saveAndCompare(String sameTagFileName) {
-    fileManager.saveToFile(FILE_FOLDER + "/" + TEST_FILE_NAME);
-    JsonElement singleTag = getJsonFromFile(FILE_FOLDER + "/" + sameTagFileName);
-    JsonElement test = getJsonFromFile(FILE_FOLDER + "/" + TEST_FILE_NAME);
+  private void saveAndCompare(String key) {
+    fileManager.saveToFile(FILE_FOLDER + "/" + resources.getString("TEST"));
+    JsonElement singleTag = getJsonFromFile(FILE_FOLDER + "/" + resources.getString(key));
+    JsonElement test = getJsonFromFile(FILE_FOLDER + "/" + resources.getString("TEST"));
     assertEquals(singleTag, test);
   }
 
