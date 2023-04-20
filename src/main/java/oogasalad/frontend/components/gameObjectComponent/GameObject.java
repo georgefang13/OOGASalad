@@ -14,10 +14,11 @@ import oogasalad.frontend.components.Point;
 
 
 /**
- * @author Han, Aryan
- * Concrete Class for GameObject, a reflection of what is going to be a "GameObject" on the backend
+ * @author Han, Aryan Concrete Class for GameObject, a reflection of what is going to be a
+ * "GameObject" on the backend
  */
 public class GameObject extends AbstractComponent implements GameObjectComponent{
+
   private String name;
   private List<Node> children;
   private boolean playable;
@@ -26,14 +27,15 @@ public class GameObject extends AbstractComponent implements GameObjectComponent
   private final String DEFAULT_FILE_PATH = "frontend.properties.Defaults.GameObject";
   private ResourceBundle DEFAULT_BUNDLE = ResourceBundle.getBundle(DEFAULT_FILE_PATH);
 
-  public GameObject(int ID){
+  public GameObject(int ID) {
     super(ID);
     children = null;
     Image newImage = new Image(DEFAULT_BUNDLE.getString("DEFAULT_IMAGE"));
     setImage(DEFAULT_BUNDLE.getString("DEFAULT_IMAGE"));
     followMouse();
   }
-  public GameObject(int ID, Node container){
+
+  public GameObject(int ID, Node container) {
     super(ID, container);
   }
 
@@ -87,7 +89,7 @@ public class GameObject extends AbstractComponent implements GameObjectComponent
   }
 
   @Override
-  public Node getNode(){
+  public Node getNode() {
     return getImage();
   }
 }

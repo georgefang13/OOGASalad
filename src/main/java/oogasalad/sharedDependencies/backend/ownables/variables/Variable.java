@@ -10,19 +10,21 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import oogasalad.gameeditor.backend.id.IdManager;
 import oogasalad.sharedDependencies.backend.filemanagers.FileManager;
 import oogasalad.sharedDependencies.backend.ownables.Ownable;
 import oogasalad.sharedDependencies.backend.owners.Owner;
 
 /**
  * An Ownable variable that can be changed and listened to.
+ *
  * @param <T> the type of the variable
  * @author Michael Bryant
  */
 public class Variable<T> extends Ownable {
+
   // TODO: separate valid classes into properties file
-  private final Set<Class<?>> validClasses = new HashSet<>(Arrays.asList(String.class, Integer.class));
+  private final Set<Class<?>> validClasses = new HashSet<>(
+      Arrays.asList(String.class, Integer.class));
 
   private T value;
   private final List<VariableListener<T>> listeners;
@@ -36,6 +38,7 @@ public class Variable<T> extends Ownable {
 
   /**
    * Creates a new variable with the given value.
+   *
    * @param value the initial value of the variable
    * @param owner the owner of the ownable
    */
@@ -47,14 +50,16 @@ public class Variable<T> extends Ownable {
 
   /**
    * Creates a new variable with the given value and no (null) owner.
+   *
    * @param value the initial value of the variable
    */
-  public Variable(T value){
+  public Variable(T value) {
     this(value, null);
   }
 
   /**
    * Gets the current value of the variable.
+   *
    * @return the current value of the variable
    */
   public T get() {
@@ -63,6 +68,7 @@ public class Variable<T> extends Ownable {
 
   /**
    * Sets the value of the variable and notifies all listeners.
+   *
    * @param value the new value of the variable
    */
   public void set(T value) {
@@ -72,6 +78,7 @@ public class Variable<T> extends Ownable {
 
   /**
    * Adds a listener to the variable.
+   *
    * @param listener the listener to add
    */
   public void addListener(VariableListener<T> listener) {
@@ -80,10 +87,11 @@ public class Variable<T> extends Ownable {
 
   /**
    * Removes a listener from the variable, if it is there.
+   *
    * @param listener the listener to remove
    */
   public void removeListener(VariableListener<T> listener) {
-    if(listeners.contains(listener)) {
+    if (listeners.contains(listener)) {
       listeners.remove(listener);
     }
   }
@@ -97,6 +105,7 @@ public class Variable<T> extends Ownable {
 
   /**
    * Gets an uneditable list of all listeners.
+   *
    * @return an uneditable list of all listeners
    */
   public List getListeners() {
@@ -119,14 +128,14 @@ public class Variable<T> extends Ownable {
     try {
       Class<?> variableType = Class.forName(className);
       Class<?> instantiatedType = Class.forName(this.getClass().getTypeName());
-      if (variableType != instantiatedType || ! validClasses.contains(variableType)) {
+      if (variableType != instantiatedType || !validClasses.contains(variableType)) {
         throw new ClassNotFoundException();
       }
       Constructor<?> constructor = instantiatedType.getConstructor(String.class);
       // NOTE: condition above checks that casting is valid
       value = (T) constructor.newInstance(FileManager.getStringByKey(object, "value"));
     } catch (ClassNotFoundException | NoSuchMethodException
-        | InvocationTargetException | InstantiationException | IllegalAccessException e) {
+             | InvocationTargetException | InstantiationException | IllegalAccessException e) {
       // TODO: add custom exception
       throw new RuntimeException(e);
     }

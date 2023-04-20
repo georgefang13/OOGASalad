@@ -7,15 +7,14 @@ import oogasalad.frontend.components.AbstractComponent;
 import oogasalad.frontend.components.Component;
 
 /**
- *
- * @author Han, Aryan
- * These are the components of the View that are playable objects in Gameplay
+ * @author Han, Aryan These are the components of the View that are playable objects in Gameplay
  */
 public interface GameObjectComponent extends Component {
 
 
   /**
    * Change the name of the GameObject being edited
+   *
    * @param name
    */
   void setName(String name);
@@ -26,7 +25,8 @@ public interface GameObjectComponent extends Component {
   List<Node> getChildren();
 
   /**
-   * Toggle the gameObject on or off depending on whether the user wants the GameObject to display in game
+   * Toggle the gameObject on or off depending on whether the user wants the GameObject to display
+   * in game
    */
   void setPlayable(boolean playable);
 

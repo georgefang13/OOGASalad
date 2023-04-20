@@ -5,9 +5,9 @@ import java.util.HashSet;
 public abstract class IdManageable {
 
   /**
-   * The classes that this Ownable can be.
-   * Note: these are not Java classes, but rather the names of the classes in the game.
-   * For example, if the game has a class called "Rook", then this set would contain "Rook".
+   * The classes that this Ownable can be. Note: these are not Java classes, but rather the names of
+   * the classes in the game. For example, if the game has a class called "Rook", then this set
+   * would contain "Rook".
    */
   private HashSet<String> classes = new HashSet<>();
 
@@ -20,6 +20,7 @@ public abstract class IdManageable {
 
   /**
    * Adds the given class to this Ownable.
+   *
    * @param className the name of the class to add
    */
   public void addClass(String className) {
@@ -28,10 +29,11 @@ public abstract class IdManageable {
 
   /**
    * Removes the given class from this Ownable, if it exists.
+   *
    * @param className the name of the class to remove
    */
   public void removeClass(String className) {
-    if(classes.contains(className)) {
+    if (classes.contains(className)) {
       classes.remove(className);
     }
   }
@@ -46,6 +48,7 @@ public abstract class IdManageable {
 
   /**
    * Checks if this Ownable is of the given class.
+   *
    * @param className the name of the class to check
    * @return true if this Ownable is of the given class, false otherwise
    */

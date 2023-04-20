@@ -6,13 +6,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
-import oogasalad.gameeditor.backend.id.IdManager;
-import oogasalad.sharedDependencies.backend.ownables.variables.Variable;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
  * Tests the Variable class.
+ *
  * @author Michael Bryant
  */
 public class VariableTest {
@@ -69,7 +68,7 @@ public class VariableTest {
 
   @Test
   void testVariableArray() {
-    v.set(new int[] {1, 2, 3});
+    v.set(new int[]{1, 2, 3});
     assertTrue(v.get() instanceof int[]);
     int[] array = (int[]) v.get();
     assertEquals(1, array[0]);
@@ -100,7 +99,7 @@ public class VariableTest {
   @Test
   void testVariableListener() {
     AtomicInteger testVar = new AtomicInteger(0);
-    v.addListener(value -> testVar.set((int) value) );
+    v.addListener(value -> testVar.set((int) value));
     v.set(5);
     assertEquals(5, testVar.get());
   }
@@ -108,7 +107,7 @@ public class VariableTest {
   @Test
   void testClearListener() {
     AtomicInteger testVar = new AtomicInteger(0);
-    v.addListener(value -> testVar.set((int) value) );
+    v.addListener(value -> testVar.set((int) value));
     v.clearListeners();
     v.set(5);
     assertEquals(0, testVar.get());
@@ -116,7 +115,8 @@ public class VariableTest {
 
   @Test
   void getListeners() {
-    v.addListener(value -> {});
+    v.addListener(value -> {
+    });
     assertEquals(1, v.getListeners().size());
   }
 

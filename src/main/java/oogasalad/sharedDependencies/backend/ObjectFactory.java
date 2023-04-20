@@ -18,8 +18,9 @@ import oogasalad.sharedDependencies.backend.owners.Owner;
 import oogasalad.sharedDependencies.backend.owners.Player;
 
 /**
- * A factory class for ownables.
- * This is used to choose which type of ownable to instantiate in createOwnable method.
+ * A factory class for ownables. This is used to choose which type of ownable to instantiate in
+ * createOwnable method.
+ *
  * @author Max Meister
  */
 public class ObjectFactory {
@@ -31,11 +32,13 @@ public class ObjectFactory {
 
   /**
    * The constructor for the ObjectFactory.
-   * @param gameWorld the GameWorld of the game
+   *
+   * @param gameWorld        the GameWorld of the game
    * @param ownableIdManager the IdManager for the Ownables
-   * @param players the Players of the game
+   * @param players          the Players of the game
    */
-  public ObjectFactory(GameWorld gameWorld, IdManager<Ownable> ownableIdManager, ArrayList<Player> players) {
+  public ObjectFactory(GameWorld gameWorld, IdManager<Ownable> ownableIdManager,
+      ArrayList<Player> players) {
     this.gameWorld = gameWorld;
     this.ownableIdManager = ownableIdManager;
     this.players = players;
@@ -50,6 +53,7 @@ public class ObjectFactory {
 
   /**
    * Checks if the given type is a null type.
+   *
    * @param type the type to check
    * @return true if the type is a null type, false otherwise
    */
@@ -63,9 +67,11 @@ public class ObjectFactory {
   }
 
   /**
-   * Access a parameter from the map, returning null if the parameter is not present or is a null type.
+   * Access a parameter from the map, returning null if the parameter is not present or is a null
+   * type.
+   *
    * @param params the map of parameters
-   * @param param the parameter to get
+   * @param param  the parameter to get
    * @return
    */
   private String getWithNull(Map<ObjectParameter, String> params, ObjectParameter param) {
@@ -102,13 +108,13 @@ public class ObjectFactory {
         boardCreatorMethod = BoardCreator.class.getMethod(type, int.class, int.class);
         dropZones = (List<DropZone>) boardCreatorMethod.invoke(null, param1Int, param2Int);
       } else if (type.equals("create1DLoop")) {
-        if(param3 == null) {
+        if (param3 == null) {
           boardCreatorMethod = BoardCreator.class.getMethod(type, int.class);
           int param1Int = Integer.parseInt(param1);
           dropZones = (List<DropZone>) boardCreatorMethod.invoke(null, param1Int);
-        }
-        else {
-          boardCreatorMethod = BoardCreator.class.getMethod(type, int.class, String.class, String.class);
+        } else {
+          boardCreatorMethod = BoardCreator.class.getMethod(type, int.class, String.class,
+              String.class);
           int param1Int = Integer.parseInt(param1);
           dropZones = (List<DropZone>) boardCreatorMethod.invoke(null, param1Int, param2, param3);
         }
@@ -149,13 +155,16 @@ public class ObjectFactory {
             "Class " + ownableType + " is not a subclass of Ownable"); //TODO add to properties file
       }
     } catch (Exception e) {
-      throw new RuntimeException("Error instantiating " + ownableType, e); //TODO add to properties file
+      throw new RuntimeException("Error instantiating " + ownableType,
+          e); //TODO add to properties file
     }
   } //TODO
 
 
   /**
-   * Creates an ownable from the given parameters and adds it to the IdManager. If OWNABLE_TYPE is not specified, adds a GameObject.
+   * Creates an ownable from the given parameters and adds it to the IdManager. If OWNABLE_TYPE is
+   * not specified, adds a GameObject.
+   *
    * @param params
    * @return
    */
@@ -165,10 +174,9 @@ public class ObjectFactory {
     String id = getWithNull(params, ObjectParameter.ID);
     String parentOwnableName = getWithNull(params, ObjectParameter.PARENT_OWNABLE);
     Ownable parentOwnable;
-    try{
+    try {
       parentOwnable = ownableIdManager.getObject(parentOwnableName);
-    }
-    catch (Exception e){
+    } catch (Exception e) {
       parentOwnable = null;
     }
     //if null or does not contain playerIdentifier, then it is the gameWorld
@@ -178,16 +186,16 @@ public class ObjectFactory {
     } else {
       //get player from player list
       try {
-        Owner = players.get(Integer.parseInt(parentOwnerName.substring(playerIdentifier.length())) - 1); //Because player numbers start at 1
+        Owner = players.get(Integer.parseInt(parentOwnerName.substring(playerIdentifier.length()))
+            - 1); //Because player numbers start at 1
       } catch (NumberFormatException e) {
         Owner = gameWorld;
       }
     }
     //if ownableType is BoardCreator
-    if(ownableType.equals("BoardCreator")) {
+    if (ownableType.equals("BoardCreator")) {
       handleBoardCreator(params);
-    }
-    else {
+    } else {
       Ownable newOwnable = createOwnable(ownableType, Owner);
       ownableIdManager.addObject(newOwnable, id, parentOwnable);
     }

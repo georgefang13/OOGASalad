@@ -10,20 +10,22 @@ import oogasalad.gamerunner.backend.interpreter.tokens.ValueToken;
  */
 public class And extends OperatorToken {
 
-    public And(){
-        super(2, "And");
-    }
+  public And() {
+    super(2, "And");
+  }
 
-    @Override
-    public Token evaluate(Environment env) throws IllegalArgumentException{
-        Token t1 = getArg(0).evaluate(env);
-        Token t2 = getArg(1).evaluate(env);
+  @Override
+  public Token evaluate(Environment env) throws IllegalArgumentException {
+    Token t1 = getArg(0).evaluate(env);
+    Token t2 = getArg(1).evaluate(env);
 
-        ValueToken<Boolean> x1 = checkArgumentWithSubtype(env, t1, ValueToken.class, Boolean.class.getName());
-        ValueToken<Boolean> x2 = checkArgumentWithSubtype(env, t2, ValueToken.class, Boolean.class.getName());
+    ValueToken<Boolean> x1 = checkArgumentWithSubtype(env, t1, ValueToken.class,
+        Boolean.class.getName());
+    ValueToken<Boolean> x2 = checkArgumentWithSubtype(env, t2, ValueToken.class,
+        Boolean.class.getName());
 
-        System.out.println("And " + x1.VALUE + " " + x2.VALUE + " = " + (x1.VALUE && x2.VALUE));
+    System.out.println("And " + x1.VALUE + " " + x2.VALUE + " = " + (x1.VALUE && x2.VALUE));
 
-        return new ValueToken<>(x1.VALUE && x2.VALUE);
-    }
+    return new ValueToken<>(x1.VALUE && x2.VALUE);
+  }
 }

@@ -1,8 +1,8 @@
 package oogasalad.frontend.objects;
 
-import javafx.scene.image.ImageView;
-import javafx.scene.shape.Circle;
+import oogasalad.frontend.components.gameObjectComponent.GameObjectComponent;
 
 public interface Piece {
-    public PieceImage getPieceImage();
+
+  public PieceImage getPieceImage();
 }

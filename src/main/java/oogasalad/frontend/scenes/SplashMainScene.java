@@ -6,7 +6,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import oogasalad.frontend.scenes.modals.ExampleModal;
 import oogasalad.frontend.windows.WindowTypes;
 
 /**

@@ -9,6 +9,7 @@ import oogasalad.gamerunner.backend.interpreter.Interpreter;
  * @author Rodrigo
  */
 public class Rule {
+
   List<String> myInstructions;
 
   public Rule() {

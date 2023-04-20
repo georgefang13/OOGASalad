@@ -2,11 +2,12 @@ package oogasalad.frontend.nodeEditor.customNodeEditor;
 
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
-import javafx.scene.layout.*;
 
 
 public class SumNode extends DraggableItem {
+
   private TextField operand1, operand2;
   private Label outputLabel;
 
@@ -26,7 +27,7 @@ public class SumNode extends DraggableItem {
     outputLabel = new Label();
     operand1.textProperty().addListener((observable, oldValue, newValue) -> updateSum());
     operand2.textProperty().addListener((observable, oldValue, newValue) -> updateSum());
-    this.getChildren().addAll(operand1,filler,title,operand2,filler2, outputLabel);
+    this.getChildren().addAll(operand1, filler, title, operand2, filler2, outputLabel);
     updateSum();
   }
 

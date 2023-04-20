@@ -1,4 +1,5 @@
 package oogasalad.frontend.nodeEditor.skins;
+
 import javafx.geometry.Side;
 
 /**
@@ -6,38 +7,38 @@ import javafx.geometry.Side;
  */
 public interface SkinController {
 
-    /**
-     * Adds a node to the graph.
-     *
-     * @param currentZoomFactor the current zoom factor (1 for 100%)
-     */
-    void addNode(final double currentZoomFactor);
+  /**
+   * Adds a node to the graph.
+   *
+   * @param currentZoomFactor the current zoom factor (1 for 100%)
+   */
+  void addNode(final double currentZoomFactor);
 
-    /**
-     * activates this skin
-     */
-    void activate();
+  /**
+   * activates this skin
+   */
+  void activate();
 
-    /**
-     * Adds a connector of the given type to all selected nodes.
-     *
-     * @param position the currently selected connector position
-     * @param input {@code true} for input, {@code false} for output
-     */
-    void addConnector(Side position, boolean input);
+  /**
+   * Adds a connector of the given type to all selected nodes.
+   *
+   * @param position the currently selected connector position
+   * @param input    {@code true} for input, {@code false} for output
+   */
+  void addConnector(Side position, boolean input);
 
-    /**
-     * Clears all connectors from all selected nodes.
-     */
-    void clearConnectors();
+  /**
+   * Clears all connectors from all selected nodes.
+   */
+  void clearConnectors();
 
-    /**
-     * Handles the paste operation.
-     * @param selectionCopier {@link SelectionCopier}
-     */
+  /**
+   * Handles the paste operation.
+   * @param selectionCopier {@link SelectionCopier}
+   */
 
-    /**
-     * Handles the select-all operation.
-     */
-    void handleSelectAll();
+  /**
+   * Handles the select-all operation.
+   */
+  void handleSelectAll();
 }

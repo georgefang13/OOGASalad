@@ -1,8 +1,5 @@
 package oogasalad.gamerunner.backend.interpretables;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import oogasalad.gamerunner.backend.interpreter.Interpreter;
 
 /**
@@ -11,12 +8,15 @@ import oogasalad.gamerunner.backend.interpreter.Interpreter;
  * @author Rodrigo Bassi Guerreiro
  */
 public class Rule extends Interpretable {
+
   public Rule() {
     super();
   }
 
   /**
-   * Iterates over current instructions, interpreting them and ensuring that they are upheld by the game
+   * Iterates over current instructions, interpreting them and ensuring that they are upheld by the
+   * game
+   *
    * @param interpreter Interpreter instance used to process the instruction Strings
    */
   public void enforce(Interpreter interpreter) {

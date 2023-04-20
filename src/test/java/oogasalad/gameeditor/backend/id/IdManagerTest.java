@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests the IdManager class.
+ *
  * @author Michael Bryant
  */
 public class IdManagerTest {
@@ -381,7 +382,8 @@ public class IdManagerTest {
     manager.changeId("EmptyGameObject2", "EmptyGameObject2Renamed");
     assertEquals(manager.getId(object1), "EmptyGameObject");
     assertEquals(manager.getId(object2), "EmptyGameObject.EmptyGameObject2Renamed");
-    assertEquals(manager.getId(object3), "EmptyGameObject.EmptyGameObject2Renamed.EmptyGameObject3");
+    assertEquals(manager.getId(object3),
+        "EmptyGameObject.EmptyGameObject2Renamed.EmptyGameObject3");
   }
 
   @Test
@@ -421,10 +423,13 @@ public class IdManagerTest {
     manager.addObject(variable2, object2);
     manager.addObject(variable3, object3);
     int num = 0;
-    for(Map.Entry<String, Ownable> entry : manager) {
+    for (Map.Entry<String, Ownable> entry : manager) {
       num++;
       //check that it is one of the objects
-      assertTrue(entry.getValue() == object1 || entry.getValue() == object2 || entry.getValue() == object3 || entry.getValue() == variable1 || entry.getValue() == variable2 || entry.getValue() == variable3);
+      assertTrue(
+          entry.getValue() == object1 || entry.getValue() == object2 || entry.getValue() == object3
+              || entry.getValue() == variable1 || entry.getValue() == variable2
+              || entry.getValue() == variable3);
     }
     assertTrue(num == 6);
   }
@@ -465,11 +470,14 @@ public class IdManagerTest {
   @Test
   public void testCannotContainDot() {
     assertFalse(manager.isIdInUse("this.is.a.test"));
-    assertThrows(IllegalArgumentException.class, () -> manager.addObject(variable1, "this.is.a.test"));
+    assertThrows(IllegalArgumentException.class,
+        () -> manager.addObject(variable1, "this.is.a.test"));
     assertFalse(manager.isIdInUse("this.is.a.test"));
-    assertThrows(IllegalArgumentException.class, () -> manager.addObject(variable1, "this.is.a.test", "this.is.a.test"));
+    assertThrows(IllegalArgumentException.class,
+        () -> manager.addObject(variable1, "this.is.a.test", "this.is.a.test"));
     assertFalse(manager.isIdInUse("this.is.a.test"));
-    assertThrows(IllegalArgumentException.class, () -> manager.addObject(variable1, "this.is.a.test", variable1));
+    assertThrows(IllegalArgumentException.class,
+        () -> manager.addObject(variable1, "this.is.a.test", variable1));
     assertFalse(manager.isIdInUse("this.is.a.test"));
     manager.addObject(variable1);
     assertTrue(manager.isIdInUse("Variable"));
