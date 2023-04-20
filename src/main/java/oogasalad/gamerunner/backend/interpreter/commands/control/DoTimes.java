@@ -1,11 +1,7 @@
 package oogasalad.gamerunner.backend.interpreter.commands.control;
 
 import oogasalad.gamerunner.backend.interpreter.Environment;
-import oogasalad.gamerunner.backend.interpreter.tokens.ExpressionToken;
-import oogasalad.gamerunner.backend.interpreter.tokens.OperatorToken;
-import oogasalad.gamerunner.backend.interpreter.tokens.Token;
-import oogasalad.gamerunner.backend.interpreter.tokens.ValueToken;
-import oogasalad.gamerunner.backend.interpreter.tokens.VariableToken;
+import oogasalad.gamerunner.backend.interpreter.tokens.*;
 
 /**
  * Repeats the given expressions the given number of times
@@ -36,12 +32,19 @@ public class DoTimes extends OperatorToken {
 
     int reps = (int) Math.floor(times.VALUE);
 
+    Token result = null;
+
     env.createLocalScope();
     for (int i = 0; i < reps; i++) {
       env.addVariable(var.NAME, new ValueToken<>((double) i));
-      exprs.evaluate(env);
+      result = exprs.evaluate(env);
+      if (result instanceof ReturnToken || result instanceof BreakToken){
+        break;
+      }
     }
     env.endLocalScope();
-    return null;
+
+    if (result instanceof BreakToken) result = null;
+    return result;
   }
 }
