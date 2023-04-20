@@ -314,7 +314,6 @@ public class GameInator {
   //constructorParams.put(ObjectParameter.OWNER, "1"); -> used in constructor
   //params.put(ObjectParameter.CONSTRUCTOR_PARAMS, constructorParams);
 
-
 //  sendObject(OWNABLE, params)
 
   /**
