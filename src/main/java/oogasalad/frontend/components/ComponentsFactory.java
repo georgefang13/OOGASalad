@@ -61,6 +61,7 @@ public class ComponentsFactory {
       Class<?> c = Class.forName(type);
       Constructor<?> constructor = c.getConstructor(map.getClass());
       component = (Component) constructor.newInstance(map);
+      ID++;
     } catch (Exception e){
       System.out.println("Failed");
     }
@@ -70,8 +71,9 @@ public class ComponentsFactory {
     Component component = null;
     try{
       Class<?> c = Class.forName(type);
-      Constructor<?> constructor = c.getConstructor(map.getClass());
-      component = (Component) constructor.newInstance(map);
+      Constructor<?> constructor = c.getConstructor(int.class, map.getClass());
+      component = (Component) constructor.newInstance(ID, map);
+      ID++;
     } catch (Exception e){
       e.printStackTrace();
     }

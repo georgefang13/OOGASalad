@@ -35,10 +35,9 @@ public class GameObject extends AbstractComponent implements GameObjectComponent
   }
 
   //TODO fix default values for map constructor
-  public GameObject(Map<String, String> map){
-    super(2);
+  public GameObject(int ID, Map<String, String> map){
+    super(ID);
     children = null;
-    Image newImage = new Image(DEFAULT_BUNDLE.getString("DEFAULT_IMAGE"));
     setImage(DEFAULT_BUNDLE.getString("DEFAULT_IMAGE"));
     followMouse();
     for(String param: map.keySet()){
