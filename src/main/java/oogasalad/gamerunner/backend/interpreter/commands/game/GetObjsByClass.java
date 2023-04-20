@@ -1,4 +1,4 @@
-package oogasalad.gamerunner.backend.interpreter.commands.operators;
+package oogasalad.gamerunner.backend.interpreter.commands.game;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +9,6 @@ import oogasalad.gamerunner.backend.interpreter.tokens.OperatorToken;
 import oogasalad.gamerunner.backend.interpreter.tokens.Token;
 import oogasalad.gamerunner.backend.interpreter.tokens.ValueToken;
 import oogasalad.sharedDependencies.backend.ownables.Ownable;
-import oogasalad.sharedDependencies.backend.ownables.gameobjects.GameObject;
 import oogasalad.sharedDependencies.backend.ownables.variables.Variable;
 
 public class GetObjsByClass extends OperatorToken {
@@ -27,7 +26,7 @@ public class GetObjsByClass extends OperatorToken {
 
         String[] classes = x.VALUE.split("\\.");
 
-        IdManager<Ownable> game = env.getGame();
+        IdManager<Ownable> game = env.getIdManager();
 
         List<String> objIds = game.getIdsOfObjectsOfClass(classes);
         List<Ownable> objs = new ArrayList<>();

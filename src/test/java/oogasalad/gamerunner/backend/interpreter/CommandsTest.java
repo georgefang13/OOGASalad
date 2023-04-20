@@ -34,7 +34,7 @@ public class CommandsTest {
   public void setUp() {
     interpreter = new Interpreter();
     idManager = new IdManager<>();
-    interpreter.link(idManager);
+    interpreter.linkIdManager(idManager);
     language = "English";
     resources = ResourceBundle.getBundle(LANGUAGE_RESOURCE_PATH + "." + language);
   }
@@ -182,12 +182,12 @@ public class CommandsTest {
                 "make :y :repcount " +
               "] " +
             "]";
+
     interpreter.interpret(input);
     x = getVar("interpreter-:x");
     Variable<Double> y = getVar("interpreter-:y");
     assertEquals(5.0, x.get());
     assertEquals(5.0, y.get());
-
 
   }
 
