@@ -11,7 +11,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import oogasalad.frontend.objects.Board;
 import oogasalad.frontend.objects.BoardPiece;
-import oogasalad.gamerunner.backend.fsm.GameRunnerController;
+import oogasalad.Controller.GameRunnerController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,6 +65,7 @@ public class GamePlayerMainScene extends AbstractScene {
   }
 
   private void pieceBeingMoved() {
+    System.out.println("piece being moved");
     BoardPiece activepiece = null;
     for (int i = 0; i < pieces.size(); i++) {
       BoardPiece piece = pieces.get(i);
@@ -72,9 +73,11 @@ public class GamePlayerMainScene extends AbstractScene {
         activepiece = piece;
       }
     }
-    if (!activepiece.equals(null)){
+    if (activepiece != null){
+      System.out.println("there is an active piece");
       BoardPiece finalActivepiece = activepiece;
       root.setOnMouseReleased(event -> {
+        System.out.println(finalActivepiece.getName());
         placePieceOnGrid(finalActivepiece);
       });
     }
@@ -167,13 +170,20 @@ public class GamePlayerMainScene extends AbstractScene {
     //textField.clear();
   }
 
+  private String playerDoubleStringtoName(String doubleString){
+    double dub = Double.parseDouble(doubleString);
+    int playeridx = Integer.valueOf((int) dub);
+    String[] players = {"X","O"};
+    return players[playeridx];
+  }
+
   private void parseResponse(String response) {
     String[] splitResponse = response.split("Turn: ");
-    playerTurn = splitResponse[1].split("\n")[0];
+    playerTurn = playerDoubleStringtoName(splitResponse[1].split("\n")[0]);
     System.out.print("player turn: ");
-    System.out.println("playerTurn");
+    System.out.println(playerTurn);
     instruction = "Turn: " + splitResponse[1];
-    String gridString = splitResponse[0];
+    //String gridString = splitResponse[0];
     //parseGrid(gridString);
   }
 
