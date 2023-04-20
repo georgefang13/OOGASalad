@@ -38,7 +38,7 @@ public class Game implements GameToInterpreterAPI {
      * The Players of the game.
      * Players own Ownables.
      */
-    private final IdManager<Player> playerIdManager = new IdManager<>();
+    private final ArrayList<Player> players = new ArrayList<>();
 
     /**
      * The IdManager of the game for Ownables.
@@ -55,33 +55,41 @@ public class Game implements GameToInterpreterAPI {
 
     private final Interpreter interpreter = new Interpreter();
 
-    private int numPlayers = 1;
-
     private final Variable<Double> turn = new Variable<>(0.);
 
 
     /////////////////// PLAY THE GAME ///////////////////
 
-    public void initGame() {
+    public void initGame(int numPlayers) {
+        
+        for (int i = 0; i < numPlayers; i++){
+            players.add(new Player());
+        }
+        
         interpreter.linkIdManager(ownableIdManager);
         interpreter.linkGame(this);
 
+        initVariables();
+
+        fsm.setState("INIT");
+        fsm.transition();
+    }
+    
+    private void initVariables(){
         turn.setOwner(gameWorld);
         if (!ownableIdManager.isIdInUse("turn")) {
             ownableIdManager.addObject(turn, "turn");
         }
 
-        Variable<Double> numPlayersVar = new Variable<>((double) numPlayers);
+        Variable<Double> numPlayersVar = new Variable<>((double) players.size());
         numPlayersVar.setOwner(gameWorld);
         ownableIdManager.addObject(numPlayersVar, "playerCount");
 
         Variable<List<GameObject>> available = new Variable<>(new ArrayList<>());
         available.setOwner(gameWorld);
         ownableIdManager.addObject(available, "available");
-
-        fsm.setState("INIT");
-        fsm.transition();
     }
+    
     /**
      * reacts to clicking a piece
      */
@@ -136,7 +144,7 @@ public class Game implements GameToInterpreterAPI {
     }
 
     private void initPlayers(JsonObject json) {
-        numPlayers = 1;
+//        numPlayers = 1;
     }
 
     private void initOwnables(JsonObject json) {}
@@ -152,7 +160,7 @@ public class Game implements GameToInterpreterAPI {
      * @param player the Player to add
      */
     public void addPlayer(Player player) {
-        playerIdManager.addObject(player);
+        players.add(player);
     }
 
     /**
@@ -161,23 +169,16 @@ public class Game implements GameToInterpreterAPI {
      * @param player the Player to remove
      */
     public void removePlayer(Player player) {
-        if(!playerIdManager.isIdInUse(playerIdManager.getId(player))) {
-            return;
+        if (players.contains(player)){
+            players.remove(player);
         }
-        //remove all ownables owned by player
-        for(Map.Entry<String, Ownable> entry : ownableIdManager) {
-            if (entry.getValue().getOwner() == player) {
-                ownableIdManager.removeObject(entry.getValue());
-            }
-        }
-        playerIdManager.removeObject(player);
     }
 
     /**
      * Removes all Players from the game and their Ownables.
      */
     public void removeAllPlayers() {
-        playerIdManager.clear();
+        players.clear();
         ownableIdManager.clear();
         // TODO reconsider
     }
@@ -187,15 +188,12 @@ public class Game implements GameToInterpreterAPI {
      * @return unmodifiable List of Players
      */
     public List<Player> getPlayers() {
-        ArrayList<Player> listPlayers= new ArrayList<>();
-        for(Map.Entry<String, Player> entry : playerIdManager) {
-            listPlayers.add(entry.getValue());
-        }
-        return Collections.unmodifiableList(listPlayers);
+        return Collections.unmodifiableList(players);
     }
 
-    public Player getCurPlayer() {
-        return playerIdManager.getObject("player" + turn.get().intValue());
+    @Override
+    public Player getPlayer(int playerNum) {
+        return players.get(playerNum);
     }
 
     //endregion
@@ -309,6 +307,9 @@ public class Game implements GameToInterpreterAPI {
      */
     public void setOwner(String id, Owner owner) throws IllegalArgumentException{
         ownableIdManager.getObject(id).setOwner(owner);
+    }
+
+    public void init(int i) {
     }
 
     // endregion

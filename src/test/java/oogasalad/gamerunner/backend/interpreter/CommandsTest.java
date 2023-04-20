@@ -9,6 +9,7 @@ import java.util.*;
 
 import oogasalad.gameeditor.backend.id.IdManager;
 import oogasalad.gameeditor.backend.ownables.gameobjects.BoardCreator;
+import oogasalad.gamerunner.backend.Game;
 import oogasalad.gamerunner.backend.interpreter.commands.operators.Sum;
 import oogasalad.gamerunner.backend.interpreter.tokens.ExpressionToken;
 import oogasalad.gamerunner.backend.interpreter.tokens.OperatorToken;
@@ -26,6 +27,7 @@ public class CommandsTest {
 
   private Interpreter interpreter;
   private IdManager<Ownable> idManager;
+  private Game game;
   private static final String LANGUAGE_RESOURCE_PATH = "backend.interpreter.languages";
   ResourceBundle resources;
   private String language = "English";
@@ -34,7 +36,9 @@ public class CommandsTest {
   public void setUp() {
     interpreter = new Interpreter();
     idManager = new IdManager<>();
+    game = new Game();
     interpreter.linkIdManager(idManager);
+    interpreter.linkGame(game);
     language = "English";
     resources = ResourceBundle.getBundle(LANGUAGE_RESOURCE_PATH + "." + language);
   }
@@ -209,6 +213,17 @@ public class CommandsTest {
       assertEquals(checkSubtypeErrorMsg(t, "Cosine", ValueToken.class, Double.class),
           e.getMessage());
     }
+  }
+
+  @Test
+  public void testCurPlayer(){
+    game.init(2);
+
+  }
+
+  @Test
+  public void testCurrentPlayer(){
+    game.init(2);
   }
 
   @Test

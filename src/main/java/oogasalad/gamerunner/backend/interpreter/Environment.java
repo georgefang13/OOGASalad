@@ -41,6 +41,9 @@ public class Environment {
   public IdManager<Ownable> getIdManager() {
     return idManager;
   }
+  public GameToInterpreterAPI getGame(){
+    return game;
+  }
 
   public void linkIdManager(IdManager<Ownable> manager) {
     this.idManager = manager;
