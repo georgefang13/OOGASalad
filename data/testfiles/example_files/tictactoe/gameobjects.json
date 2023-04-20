@@ -3,8 +3,13 @@
   "ownedByPlayer": [
     {
       "id": "x",
-      "image": null,
+      "image": "x.png",
       "initialDropbox": "p1"
+    },
+    {
+      "id": "o",
+      "image": "o.png",
+      "initialDropbox": "p2"
     }
   ]
 }

@@ -173,7 +173,7 @@ public class DropZone extends GameObject {
   }
 
   @Override
-  public void buildFromJson(JsonObject object) {
+  public void fromConfigFile(String object) {
     // TODO: make validation check, likely as static method of FileManager
     // TODO: pass ID into IdManager (maybe change constructor?)
     // this.id = FileManager.getStringByKey(object, "id");
@@ -191,7 +191,7 @@ public class DropZone extends GameObject {
   }
 
   @Override
-  public JsonObject getAsJson() {
+  public String getAsJson() {
     FileManager fileManager = new FileManager();
     fileManager.addContent("id", new JsonPrimitive(id));
     for (String edgeId : edges.keySet()) {

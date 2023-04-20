@@ -14,8 +14,9 @@ import java.util.ResourceBundle;
 
 /**
  * @author Rodrigo Bassi Guerreiro
- * <p>
- * Class used to programatically store information in JSON files
+ *
+ * Class used to programatically store information in configuration files
+ * Currently implemented to store information as JSON files (using the Gson library)
  **/
 public class FileManager {
 
