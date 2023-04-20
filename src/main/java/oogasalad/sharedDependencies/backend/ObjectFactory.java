@@ -4,6 +4,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import oogasalad.gameeditor.backend.ObjectParameter;
@@ -51,39 +52,39 @@ public class ObjectFactory {
 
   private final String playerIdentifier = "Player"; //Independent of language, should not be changed
 
-  /**
-   * Checks if the given type is a null type.
-   *
-   * @param type the type to check
-   * @return true if the type is a null type, false otherwise
-   */
-  private boolean isNullType(String type) {
-    for (String nullType : nullTypes) {
-      if (type.equals(nullType)) {
-        return true;
-      }
-    }
-    return false;
-  }
+//  /**
+//   * Checks if the given type is a null type.
+//   *
+//   * @param type the type to check
+//   * @return true if the type is a null type, false otherwise
+//   */
+//  private boolean isNullType(String type) {
+//    for (String nullType : nullTypes) {
+//      if (type.equals(nullType)) {
+//        return true;
+//      }
+//    }
+//    return false;
+//  }
+//
+//  /**
+//   * Access a parameter from the map, returning null if the parameter is not present or is a null
+//   * type.
+//   *
+//   * @param params the map of parameters
+//   * @param param  the parameter to get
+//   * @return
+//   */
+//  private String getWithNull(Map<ObjectParameter, String> params, ObjectParameter param) {
+//    String result = params.get(param);
+//    if (result == null || isNullType(result)) {
+//      return null;
+//    } else {
+//      return result;
+//    }
+//  }
 
-  /**
-   * Access a parameter from the map, returning null if the parameter is not present or is a null
-   * type.
-   *
-   * @param params the map of parameters
-   * @param param  the parameter to get
-   * @return
-   */
-  private String getWithNull(Map<ObjectParameter, String> params, ObjectParameter param) {
-    String result = params.get(param);
-    if (result == null || isNullType(result)) {
-      return null;
-    } else {
-      return result;
-    }
-  }
-
-  private void handleBoardCreator(Map<ObjectParameter, String> params) {
+  private void handleBoardCreator(Map<ObjectParameter, Object> params) {
     Owner owner = gameWorld;
 
     String type = getWithNull(params, ObjectParameter.BOARD_CREATOR_TYPE);
@@ -160,6 +161,21 @@ public class ObjectFactory {
     }
   } //TODO
 
+  /**
+   * check if owner id is numeric value
+   * @param str
+   * @return
+   */
+  public Integer isNumeric(String str) {
+    if (str == null) {
+      return null;
+    }
+    try {
+      return  Integer.parseInt(str);
+    } catch (NumberFormatException e) {
+      return null;
+    }
+  }
 
   /**
    * Creates an ownable from the given parameters and adds it to the IdManager. If OWNABLE_TYPE is
@@ -168,46 +184,43 @@ public class ObjectFactory {
    * @param params
    * @return
    */
-  public void createOwnable(Map<ObjectParameter, String> params) {
-    String ownableType = getWithNull(params, ObjectParameter.OWNABLE_TYPE);
-    String parentOwnerName = getWithNull(params, ObjectParameter.OWNER);
-    String id = getWithNull(params, ObjectParameter.ID);
-    String parentOwnableName = getWithNull(params, ObjectParameter.PARENT_OWNABLE);
+  public void createOwnable(Map<ObjectParameter, Object> params) {
+    String ownableType = params.get(ObjectParameter.OWNABLE_TYPE).toString();
+    Map<ObjectParameter, Object> constructor_params = (Map<ObjectParameter, Object>) params.get(ObjectParameter.CONSTRUCTOR_ARGS);
+    String ownerNum = constructor_params.get(ObjectParameter.OWNER).toString();
+    Integer ownerInt = isNumeric(ownerNum);
+    String parentOwnableId = constructor_params.get(ObjectParameter.PARENT_OWNABLE_ID).toString();
+    String id = constructor_params.get(ObjectParameter.ID).toString();
+    Owner owner;
     Ownable parentOwnable;
-    try {
-      parentOwnable = ownableIdManager.getObject(parentOwnableName);
-    } catch (Exception e) {
-      parentOwnable = null;
-    }
-    //if null or does not contain playerIdentifier, then it is the gameWorld
-    Owner Owner;
-    if (parentOwnerName == null || !parentOwnerName.contains(playerIdentifier)) {
-      Owner = gameWorld;
+    //owner from constructor params
+    if (ownerInt != null && players.size() >= ownerInt){
+      owner = players.get(ownerInt - 1);
     } else {
-      //get player from player list
-      try {
-        Owner = players.get(Integer.parseInt(parentOwnerName.substring(playerIdentifier.length()))
-            - 1); //Because player numbers start at 1
-      } catch (NumberFormatException e) {
-        Owner = gameWorld;
-      }
+      owner = gameWorld;
+    }
+    //parent ownable from constructor params
+    if (parentOwnableId != null){
+      parentOwnable = ownableIdManager.getObject(parentOwnableId);
+    } else {
+      parentOwnable = null;
     }
     //if ownableType is BoardCreator
     if (ownableType.equals("BoardCreator")) {
-      handleBoardCreator(params);
+      handleBoardCreator(constructor_params);
     } else {
-      Ownable newOwnable = createOwnable(ownableType, Owner);
+      Ownable newOwnable = createOwnable(ownableType, owner);
       ownableIdManager.addObject(newOwnable, id, parentOwnable);
     }
 
 
   }
 
-  public static Rule createRule(Map<ObjectParameter, String> params) {
+  public static Rule createRule(Map<ObjectParameter, Object> params) {
     return null; //TODO move to shared dependencies
   }
 
-  public static Goal createGoal(Map<ObjectParameter, String> params) {
+  public static Goal createGoal(Map<ObjectParameter, Object> params) {
     return null; //TODO move to shared dependencies
   }
 

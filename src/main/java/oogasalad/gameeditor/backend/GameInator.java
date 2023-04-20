@@ -272,7 +272,7 @@ public class GameInator {
    *
    * @param params the parameters of the ownable
    */
-  private void createOwnable(Map<ObjectParameter, String> params) {
+  private void createOwnable(Map<ObjectParameter, Object> params) {
     objectFactory.createOwnable(params);
   }
 
@@ -289,7 +289,7 @@ public class GameInator {
    *
    * @param params the parameters of the ownable
    */
-  private void createRule(Map<ObjectParameter, String> params) {
+  private void createRule(Map<ObjectParameter, Object> params) {
     Rule newRule = ObjectFactory.createRule(params);
     rules.addObject(newRule);
   }
@@ -297,7 +297,7 @@ public class GameInator {
   /**
    * Creates a new goal and adds it to the game
    */
-  private void createGoal(Map<ObjectParameter, String> params) {
+  private void createGoal(Map<ObjectParameter, Object> params) {
     Goal newGoal = ObjectFactory.createGoal(params);
     goals.addObject(newGoal);
   }
@@ -326,7 +326,7 @@ public class GameInator {
    * @Type The class the object belongs to
    * @Params The params of the object
    **/
-  public void sendObject(ObjectType type, Map<ObjectParameter, String> params)
+  public void sendObject(ObjectType type, Map<ObjectParameter, Object> params)
       throws IllegalArgumentException {
     switch (type) {
       case PLAYER -> createPlayer();
