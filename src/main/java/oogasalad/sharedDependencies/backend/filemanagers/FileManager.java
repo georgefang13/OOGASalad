@@ -1,9 +1,12 @@
 package oogasalad.sharedDependencies.backend.filemanagers;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
@@ -12,6 +15,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -36,17 +40,30 @@ public class FileManager {
     myValidTags = new HashSet<>();
   }
 
-  public FileManager(String validTagsKey) {
-    this();
-    setValidTagsFromResources(validTagsKey);
+  public FileManager(String filePath) {
+    Gson gson = new Gson();
+    try {
+      myFileInfo = gson
+          .fromJson(new FileReader(filePath), JsonElement.class)
+          .getAsJsonObject();
+    } catch (FileNotFoundException e) {
+      throw new RuntimeException(e);
+    }
+    myValidTags = new HashSet<>();
   }
 
+  /**
+   * Adds content to currently stored file structure in the specified hierarchical order
+   *
+   * @param content String containing content to be added to file
+   * @param tags arbitrary number of String specifying hierarchical sequence (from highest to lowest)
+   */
   public void addContent(String content, String... tags) {
     updateHierarchy(myFileInfo, content, tags);
   }
 
   /**
-   * Adds content to currently stored file structure in the specified hierarchical order
+   * Modifies the internally stored JsonObject with the specified information
    *
    * @param object JsonObject to be modified
    * @param content String containing content to be added to file
@@ -116,8 +133,6 @@ public class FileManager {
     }
   }
 
-  ;
-
   /**
    * Saves currently stored JSON content into a file in the system
    *
@@ -148,30 +163,6 @@ public class FileManager {
   }
 
   /**
-   * Finds element in a Json object based on given key, checks whether it exists and is a String,
-   * and returns its content
-   *
-   * @param object Json object to be searched into
-   * @param key    identifier inside Json object
-   * @return value associated with given key
-   */
-  public static String getStringByKey(JsonObject object, String key) {
-    if (!object.get(key).isJsonPrimitive() || !object.get(key).getAsJsonPrimitive().isString()) {
-      // TODO: throw custom exception
-    }
-    return object.get(key).getAsJsonPrimitive().toString();
-  }
-
-  /**
-   * Directly access stored information in Json format
-   *
-   * @return JsonObject containing saved information
-   */
-  public JsonObject getJson() {
-    return myFileInfo;
-  }
-
-  /**
    * Check whether tag is valid
    *
    * @param tag String containing tag to be checked
@@ -182,5 +173,54 @@ public class FileManager {
       return true;
     }
     return myValidTags.contains(tag);
+  }
+
+  /**
+   * Gets information in the form of a String from configuration file
+   * by following the specified hierarchy
+   *
+   * @param tags variable number of String parameters in order of hierarchy (from high to low)
+   * @return String found by following specified hierarchy
+   */
+  public String getString(String... tags) {
+    if (tags.length == 0) {
+      throw new IllegalArgumentException();
+    }
+    JsonObject object = myFileInfo;
+    for (String tag : tags) {
+      if (! object.has(tag)) {
+        throw new IllegalArgumentException();
+      }
+      if (object.get(tag).isJsonPrimitive()) {
+        return object.get(tag).getAsString();
+      }
+      object = object.getAsJsonObject(tag);
+    }
+    throw new IllegalArgumentException();
+  }
+
+  public Iterable<String> getArray(String... tags) {
+    if (tags.length == 0) {
+      throw new IllegalArgumentException();
+    }
+    JsonObject object = myFileInfo;
+    for (String tag : tags) {
+      if (! object.has(tag)) {
+        throw new IllegalArgumentException();
+      }
+      if (object.get(tag).isJsonArray()) {
+        return JsonArrayToIterable(object.get(tag).getAsJsonArray());
+      }
+      object = object.getAsJsonObject(tag);
+    }
+    throw new IllegalArgumentException();
+  }
+
+  private Iterable<String> JsonArrayToIterable(JsonArray array) {
+    List<String> list = new LinkedList<>();
+    for (JsonElement element : array) {
+      list.add(element.getAsString());
+    }
+    return list;
   }
 }
