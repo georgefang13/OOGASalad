@@ -3,6 +3,8 @@ package oogasalad.frontend.nodeEditor.customNodeEditor.Runners;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import javafx.application.Application;
@@ -79,7 +81,7 @@ public class NodeExperiment extends Application {
 
     Button sendButton = new Button("Submit");
     sendButton.setOnAction(event -> {
-      System.out.println(sendAllNodeContent());
+      sendAllNodeContent("src/main/resources/export.json");
     });
     sendButton.setMaxWidth(Double.MAX_VALUE);
     GridPane.setHgrow(sendButton, Priority.ALWAYS);
@@ -119,7 +121,7 @@ public class NodeExperiment extends Application {
     }
   }
 
-  public String sendAllNodeContent() {
+  public void sendAllNodeContent(String filePath) {
     Gson gson = new GsonBuilder().setPrettyPrinting().create();
     JsonObject statesObject = new JsonObject();
     for (Node node : group.getChildren()) {
@@ -132,6 +134,11 @@ public class NodeExperiment extends Application {
     }
     JsonObject contentObject = new JsonObject();
     contentObject.add("states", statesObject);
-    return gson.toJson(contentObject);
+
+    try (FileWriter fileWriter = new FileWriter(filePath)) {
+      gson.toJson(contentObject, fileWriter);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 }
