@@ -28,6 +28,7 @@ public class FilesTest {
   private static final String SAME_TAG_FILE_NAME = "sametag.json";
   private static final String SINGLE_HIERARCHY_FILE_NAME = "singlehierarchy.json";
   private static final String DOUBLE_HIERARCHY_FILE_NAME = "doublehierarchy.json";
+  private static final String HIERARCHY_LIST_FILE_NAME = "hierarchylist.json";
   FileManager fileManager;
   Gson gson;
 
@@ -86,6 +87,13 @@ public class FilesTest {
     fileManager.addContent("Ethan", "person2", "name");
     fileManager.addContent("EeEEe", "person2", "nickname");
     saveAndCompare(DOUBLE_HIERARCHY_FILE_NAME);
+  }
+
+  @Test
+  void hierarchyListTest() {
+    fileManager.addContent("Rodrigo", "person1", "name");
+    fileManager.addContent("Hot Rod", "person1", "name");
+    saveAndCompare(HIERARCHY_LIST_FILE_NAME);
   }
 
   private void saveAndCompare(String sameTagFileName) {
