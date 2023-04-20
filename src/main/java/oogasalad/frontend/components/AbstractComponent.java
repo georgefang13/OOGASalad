@@ -73,14 +73,14 @@ public class AbstractComponent implements Component {
 
   @Override
   public void followMouse() {
-    image.setOnMousePressed(e -> {
-      XOffset = e.getSceneX() - (getImage().getTranslateX());
-      YOffset = e.getSceneY() - (getImage().getTranslateY());
+    getNode().setOnMousePressed(e -> {
+      XOffset = e.getSceneX() - (getNode().getTranslateX());
+      YOffset = e.getSceneY() - (getNode().getTranslateY());
 
     });
-    getImage().setOnMouseDragged(e -> {
-      getImage().setTranslateX(e.getSceneX() - XOffset);
-      getImage().setTranslateY(e.getSceneY() - YOffset);
+    getNode().setOnMouseDragged(e -> {
+      getNode().setTranslateX(e.getSceneX() - XOffset);
+      getNode().setTranslateY(e.getSceneY() - YOffset);
     });
   }
 
