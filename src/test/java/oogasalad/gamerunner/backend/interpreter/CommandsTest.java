@@ -5,11 +5,10 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
+
 import oogasalad.gameeditor.backend.id.IdManager;
+import oogasalad.gameeditor.backend.ownables.gameobjects.BoardCreator;
 import oogasalad.gamerunner.backend.interpreter.commands.operators.Sum;
 import oogasalad.gamerunner.backend.interpreter.tokens.ExpressionToken;
 import oogasalad.gamerunner.backend.interpreter.tokens.OperatorToken;
@@ -164,6 +163,32 @@ public class CommandsTest {
       assertEquals(checkSubtypeErrorMsg(t, "ArcTangent", ValueToken.class, Double.class),
           e.getMessage());
     }
+  }
+
+  @Test
+  public void testBreak(){
+    // break
+    String input = "make :x 0 for [ :i 1 10 1 ] [ global :x if <= :i 5 [ make :x :i ] if > :i 5 [ break ] ]";
+    interpreter.interpret(input);
+    Variable<Double> x = getVar("interpreter-:x");
+    assertEquals(5.0, x.get());
+
+    // break in nested loop
+    input = "make :x 0 make :y 0 " +
+            "repeat 5 [ " +
+              "make :x + :x 1 " +
+              "repeat 10 [ " +
+                "if > :repcount 5 [ break ] " +
+                "make :y :repcount " +
+              "] " +
+            "]";
+    interpreter.interpret(input);
+    x = getVar("interpreter-:x");
+    Variable<Double> y = getVar("interpreter-:y");
+    assertEquals(5.0, x.get());
+    assertEquals(5.0, y.get());
+
+
   }
 
   @Test
@@ -494,6 +519,70 @@ public class CommandsTest {
       ValueToken<?> t = new ValueToken<>("obj");
       assertEquals(checkSubtypeErrorMsg(t, "GetDropZoneItems", ValueToken.class, DropZone.class),
           e.getMessage());
+    }
+
+  }
+
+  @Test
+  public void testGetObjsByClass(){
+    // three objects with class "obj"
+    GameObject obj1 = new GameObject(null);
+    obj1.addClass("obj");
+    GameObject obj2 = new GameObject(null);
+    obj2.addClass("obj");
+    GameObject obj3 = new GameObject(null);
+    obj3.addClass("obj");
+    idManager.addObject(obj1, "obj1");
+    idManager.addObject(obj2, "obj2");
+    idManager.addObject(obj3, "obj3");
+    String input = "make :x fromgameclass \"obj";
+    interpreter.interpret(input);
+    Variable<List<Object>> x = getVar("interpreter-:x");
+    assertEquals(3, x.get().size());
+    assertTrue(x.get().contains(obj1));
+    assertTrue(x.get().contains(obj2));
+    assertTrue(x.get().contains(obj3));
+
+    // board, some are selected, some are not, one other object is selected
+    List<DropZone> tiles = BoardCreator.createGrid(3, 3);
+    for (DropZone tile : tiles){
+      tile.addClass("board");
+      idManager.addObject(tile);
+    }
+    tiles.get(0).addClass("selected");
+    obj1.addClass("selected");
+    input = "make :x fromgameclass \"board make :y fromgameclass \"board.selected make :z fromgameclass \"selected";
+    interpreter.interpret(input);
+    x = getVar("interpreter-:x");
+    assertEquals(new HashSet(tiles), new HashSet(x.get()));
+
+    Variable<List<Object>> y = getVar("interpreter-:y");
+    assertEquals(1, y.get().size());
+    assertTrue(y.get().contains(tiles.get(0)));
+
+    Variable<List<Object>> z = getVar("interpreter-:z");
+    assertEquals(2, z.get().size());
+    assertTrue(z.get().contains(tiles.get(0)));
+    assertTrue(z.get().contains(obj1));
+
+    // fromgameclass with a non-string
+    input = "make :x fromgameclass 1";
+    try {
+      interpreter.interpret(input);
+      fail();
+    } catch (Exception e) {
+      ValueToken<?> t = new ValueToken<>(1.);
+      assertEquals(checkSubtypeErrorMsg(t, "GetFromGameClass", ValueToken.class, String.class),
+          e.getMessage());
+    }
+
+    // fromgameclass with wrong number of arguments
+    input = "make :x fromgameclass";
+    try {
+      interpreter.interpret(input);
+      fail();
+    } catch (Exception e) {
+      assertEquals("Invalid syntax: Not enough arguments for operator GetFromGameClass", e.getMessage());
     }
 
   }
@@ -838,13 +927,13 @@ public class CommandsTest {
     assertEquals(7.0, x.get());
 
     // make user instruction that returns a value
-    input = "to test [ ] [ 1 ] make :x test";
+    input = "to test [ ] [ return 1 ] make :x test";
     interpreter.interpret(input);
     x = getVar("interpreter-:x");
     assertEquals(1.0, x.get());
 
     // make user instruction that returns pythagorean distance
-    input = "to pythag [ :a :b ] [ sqrt + * :a :a * :b :b ] make :a pythag 3 4";
+    input = "to pythag [ :a :b ] [ return sqrt + * :a :a * :b :b ] make :a pythag 3 4";
     interpreter.interpret(input);
     x = getVar("interpreter-:a");
     assertEquals(5.0, x.get());
@@ -1296,6 +1385,43 @@ public class CommandsTest {
     } catch (Exception e) {
       assertEquals("Invalid syntax: Not enough arguments for operator RemoveItem", e.getMessage());
     }
+  }
+
+  @Test
+  public void testReturn(){
+    // return null
+    String input = "to f [ ] [ make :game_log [ ] return; additem 1 :game_log ] f";
+    interpreter.interpret(input);
+    Variable<List<Double>> log = getVar("log");
+    assertEquals(0, log.get().size());
+
+    // return with number
+    input = "to f [ ] [ return 1 ] make :x f";
+    interpreter.interpret(input);
+    Variable<Double> x = getVar("interpreter-:x");
+    assertEquals(1.0, x.get());
+
+    // return from inside if statement
+    input = "to f [ :x ] [ if > :x 0 [ return 1 ] return 2 ] make :x f 5";
+    interpreter.interpret(input);
+    x = getVar("interpreter-:x");
+    assertEquals(1.0, x.get());
+
+    // return from inside a loop
+    input = "to f [ :x ] [ repeat :x [ return 1 ] return 2 ] make :x f 5";
+    interpreter.interpret(input);
+    x = getVar("interpreter-:x");
+    assertEquals(1.0, x.get());
+
+    // return with too few parameters
+    input = "to f [ ] [ return ] make :x f";
+    try {
+      interpreter.interpret(input);
+      fail();
+    } catch (Exception e) {
+      assertEquals("Invalid syntax: Not enough arguments for operator Return", e.getMessage());
+    }
+
   }
 
   @Test

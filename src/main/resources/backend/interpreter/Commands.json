@@ -593,6 +593,21 @@
       "parse": "dzfollowtoblock %s %s %s"
     }
   },
+  "GetObjsByClass": {
+    "name": "Get Objects In The Game By Class",
+    "folder": "operators",
+    "str": "fromgameclass",
+    "description": "Gets objects in the id manager that contain one or more classes",
+    "example": "fromgameclass \"class1.class2.class3...  # fromgameclass <.-delimited strings>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        { "name": "classes", "type": ["string"] }
+      ],
+      "outputs": ["list"],
+      "parse": "fromgameclass %s"
+    }
+  },
   "Length": {
     "name": "Length",
     "folder": "operators",
@@ -776,6 +791,46 @@
       "inputs": [{ "name": "var_name", "type": ["string"] }],
       "outputs": [],
       "parse": "call :%s"
+    }
+  },
+  "Return": {
+    "name": "Return from function with value",
+    "folder": "control",
+    "str": "return",
+    "description": "returns from a function with a value",
+    "example": "return 5 # return <value or variable>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [{ "name": "value", "type": ["any"] }],
+      "outputs": ["any"],
+      "parse": "return :%s"
+    }
+  },
+  "ReturnNull": {
+    "name": "Return from function",
+    "folder": "control",
+    "str": "return;",
+    "description": "returns from a function",
+    "example": "return; # return;",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [],
+      "outputs": [],
+      "parse": "return"
+    }
+  },
+
+  "Break": {
+    "name": "Break from loop",
+    "folder": "control",
+    "str": "break",
+    "description": "breaks from the innermost loop",
+    "example": "break # break",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [],
+      "outputs": [],
+      "parse": "break"
     }
   }
 }

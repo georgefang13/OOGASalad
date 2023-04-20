@@ -133,6 +133,7 @@ public class Environment {
       Variable v = (Variable) game.getObject(name);
       v.set(setter.get());
       val.linkVariable(v);
+
     } else {
       Variable<?> var = convertTokenToVariable(val);
       game.addObject(var, name);
@@ -181,6 +182,9 @@ public class Environment {
   }
 
   public Variable<?> convertTokenToVariable(Token t) {
+    if (t == null) {
+      return new Variable<>(null, null);
+    }
     Variable<?> v = new Variable<>(t.export(this));
     t.linkVariable(v);
     return v;

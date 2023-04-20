@@ -81,6 +81,7 @@ public class FSMExample {
 
     List<DropZone> zones = BoardCreator.createGrid(3, 3);
     for (DropZone zone : zones) {
+      zone.addClass("board");
       idManager.addObject(zone, zone.getId());
     }
 
