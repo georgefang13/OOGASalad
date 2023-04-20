@@ -1,6 +1,7 @@
 package oogasalad.frontend.components.gameObject;
 
 import java.lang.reflect.Field;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -32,19 +33,21 @@ public class GameObject extends AbstractComponent implements GameObjectComponent
   }
 
   //TODO fix default values for map constructor
-  public GameObject(Map<String, String> map){
-    super(2);
+  public GameObject(int ID, Map<String, String> map){
+    super(ID);
     children = null;
-    Image newImage = new Image(DEFAULT_BUNDLE.getString("DEFAULT_IMAGE"));
     setImage(DEFAULT_BUNDLE.getString("DEFAULT_IMAGE"));
     followMouse();
     for(String param: map.keySet()){
       try{
-        Field field = getClass().getDeclaredField(param);
+        Field field = this.getClass().getDeclaredField(param);
         field.setAccessible(true);
-        field.set(this, map.get(param));
+        Class<?> fieldType = field.getType();
+
+        Object value = fieldType.cast(map.get(param));
+        field.set(this, value);
       } catch (Exception e){
-        System.out.println("Test");
+        e.printStackTrace();
       }
     }
   }

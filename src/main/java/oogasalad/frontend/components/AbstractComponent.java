@@ -22,6 +22,8 @@ public class AbstractComponent implements Component {
   private boolean visible;
   private int zIndex;
   private int size;
+  private double XOffset;
+  private double YOffset;
   private ImageView image;
   private Point absolute;
   private Point editor;
@@ -83,12 +85,13 @@ public class AbstractComponent implements Component {
   @Override
   public void followMouse() {
     image.setOnMousePressed(e -> {
-      double xOffset = e.getSceneX() - (getImage().getTranslateX() - getImage().getBoundsInLocal().getWidth()/2);
-      double yOffset = e.getSceneY() - (getImage().getTranslateY() - getImage().getBoundsInLocal().getHeight()/2);
+      XOffset = e.getSceneX() - (getImage().getTranslateX());
+      YOffset = e.getSceneY() - (getImage().getTranslateY());
+
     });
     getImage().setOnMouseDragged(e -> {
-      getImage().setTranslateX(e.getSceneX());
-      getImage().setTranslateY(e.getSceneY());
+      getImage().setTranslateX(e.getSceneX() - XOffset);
+      getImage().setTranslateY(e.getSceneY() - YOffset);
     });
   }
 
