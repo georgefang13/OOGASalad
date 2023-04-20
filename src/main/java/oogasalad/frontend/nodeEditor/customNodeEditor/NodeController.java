@@ -2,6 +2,7 @@ package oogasalad.frontend.nodeEditor.customNodeEditor;
 
 import java.util.HashMap;
 import java.util.Map;
+import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 
@@ -21,7 +22,7 @@ public class NodeController {
   public void openAndSwitchToTab(String name) {
     Tab existingTab = tabsByName.get(name);
     if (existingTab == null) {
-      Tab newTab = new Tab(name);
+      Tab newTab = new Tab(name, new Label("Write code with blocks"));
       tabs.getTabs().add(newTab);
       tabsByName.put(name, newTab);
     } else {
