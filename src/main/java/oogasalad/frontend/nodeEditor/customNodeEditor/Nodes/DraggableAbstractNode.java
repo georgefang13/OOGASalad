@@ -62,6 +62,9 @@ public abstract class DraggableAbstractNode extends AbstractNode implements Drag
   public void onMouseReleased() {
     this.setOnMouseReleased(e -> {
       e.setDragDetect(false);
+      if (this.getParent() == null) {
+        return;
+      }
       /*
        * check if it is on top of another node
        * if so, snap to it
