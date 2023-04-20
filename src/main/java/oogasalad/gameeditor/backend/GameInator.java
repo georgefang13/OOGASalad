@@ -420,17 +420,17 @@ public class GameInator {
     String ownableType = params.get(ObjectParameter.OWNABLE_TYPE);
     String parentOwnerName = params.get(ObjectParameter.OWNER);
     String id = params.get(ObjectParameter.ID);
-    String parentOwnableName = params.get(ObjectParameter.PARENT_OWNABLE);
-    String val = params.get(ObjectParameter.VALUE);
-    double value = 0;
-    if (ownableType == "Variable") {
-      try {
-        value = Double.parseDouble(val);
-      } catch (NumberFormatException e) {
-        ((Variable) (ownableIdManager.getObject(id))).set(val);
-      }
-      ((Variable) (ownableIdManager.getObject(id))).set(value);
-    }
+//    String parentOwnableName = params.get(ObjectParameter.PARENT_OWNABLE);
+//    String val = params.get(ObjectParameter.VALUE);
+//    double value = 0;
+//    if (ownableType == "Variable") {
+//      try {
+//        value = Double.parseDouble(val);
+//      } catch (NumberFormatException e) {
+//        ((Variable) (ownableIdManager.getObject(id))).set(val);
+//      }
+//      ((Variable) (ownableIdManager.getObject(id))).set(value);
+//    }
     //ownableIdManager.getObject(id).setOwner(getOwner(parentOwnerName));
     //TODO make this updateable for all things
   }
@@ -441,11 +441,11 @@ public class GameInator {
    * @param params the parameters of the goal
    */
   public void updateGoal(Map<ObjectParameter, String> params) {
-    String ownableType = params.get(ObjectParameter.OWNABLE_TYPE);
-    String parentOwnerName = params.get(ObjectParameter.OWNER);
-    String id = params.get(ObjectParameter.ID);
-    String parentOwnableName = params.get(ObjectParameter.PARENT_OWNABLE);
-    String val = params.get(ObjectParameter.VALUE);
+//    String ownableType = params.get(ObjectParameter.OWNABLE_TYPE);
+//    String parentOwnerName = params.get(ObjectParameter.OWNER);
+//    String id = params.get(ObjectParameter.ID);
+//    String parentOwnableName = params.get(ObjectParameter.PARENT_OWNABLE);
+//    String val = params.get(ObjectParameter.VALUE);
     //TODO make this updateable for all things
   }
 
@@ -455,11 +455,11 @@ public class GameInator {
    * @param params the parameters of the rule
    */
   public void updateRule(Map<ObjectParameter, String> params) {
-    String ownableType = params.get(ObjectParameter.OWNABLE_TYPE);
-    String parentOwnerName = params.get(ObjectParameter.OWNER);
-    String id = params.get(ObjectParameter.ID);
-    String parentOwnableName = params.get(ObjectParameter.PARENT_OWNABLE);
-    String val = params.get(ObjectParameter.VALUE);
+//    String ownableType = params.get(ObjectParameter.OWNABLE_TYPE);
+//    String parentOwnerName = params.get(ObjectParameter.OWNER);
+//    String id = params.get(ObjectParameter.ID);
+//    String parentOwnableName = params.get(ObjectParameter.PARENT_OWNABLE);
+//    String val = params.get(ObjectParameter.VALUE);
     //TODO make this updateable for all things
   }
 

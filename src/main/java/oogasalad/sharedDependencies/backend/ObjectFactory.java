@@ -87,10 +87,15 @@ public class ObjectFactory {
   private void handleBoardCreator(Map<ObjectParameter, Object> params) {
     Owner owner = gameWorld;
 
-    String type = getWithNull(params, ObjectParameter.BOARD_CREATOR_TYPE);
-    String param1 = getWithNull(params, ObjectParameter.BOARD_CREATOR_PARAM_1);
-    String param2 = getWithNull(params, ObjectParameter.BOARD_CREATOR_PARAM_2);
-    String param3 = getWithNull(params, ObjectParameter.BOARD_CREATOR_PARAM_3);
+//    String type = getWithNull(params, ObjectParameter.BOARD_CREATOR_TYPE);
+//    String param1 = getWithNull(params, ObjectParameter.BOARD_CREATOR_PARAM_1);
+//    String param2 = getWithNull(params, ObjectParameter.BOARD_CREATOR_PARAM_2);
+//    String param3 = getWithNull(params, ObjectParameter.BOARD_CREATOR_PARAM_3);
+
+    String type = null;
+    String param1 = null;
+    String param2 = null;
+    String param3 = null;
 
     List<DropZone> dropZones = new ArrayList<>();
 
