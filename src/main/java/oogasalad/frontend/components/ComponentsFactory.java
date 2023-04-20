@@ -19,6 +19,7 @@ public class ComponentsFactory {
   private ResourceBundle bundle;
   private int ID;
   private Stage stage;
+  Component component;
   public ComponentsFactory(){
     ID = 0;
     bundle = ResourceBundle.getBundle(FACTOR_PROPERTIES);
@@ -31,7 +32,6 @@ public class ComponentsFactory {
    * @return the Component the client wanted
    */
   public Component create(String type){
-    Component component = null;
     String lowercase = type.substring(0, 1).toLowerCase() + type.substring(1);
     System.out.println(GameObject.class.getName());
     try{
@@ -50,7 +50,6 @@ public class ComponentsFactory {
    * Component or create the input
    */
   public Component create(String type, ArrayList<String> params){
-    Component component = null;
     Map<String, String> map = new HashMap<>();
 
     for(String s: params){
@@ -67,7 +66,6 @@ public class ComponentsFactory {
     return component;
   }
   public Component create(String type, Map<String, String> map){
-    Component component = null;
     try{
       Class<?> c = Class.forName(type);
       Constructor<?> constructor = c.getConstructor(map.getClass());

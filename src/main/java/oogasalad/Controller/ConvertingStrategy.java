@@ -7,6 +7,9 @@ import oogasalad.frontend.components.Component;
 
 public class ConvertingStrategy {
 
+  public ConvertingStrategy(){
+
+  }
   /**
    * Returns the parameters of the Component to be converted into a String of params. Used reflection
    * to catch all the parameters. Note that if the params don't have a String value, then they must be deleted
