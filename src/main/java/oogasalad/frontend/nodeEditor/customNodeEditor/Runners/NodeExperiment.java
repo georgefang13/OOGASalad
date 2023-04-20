@@ -3,8 +3,11 @@ package oogasalad.frontend.nodeEditor.customNodeEditor.Runners;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Map;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -42,6 +45,7 @@ public class NodeExperiment extends Application {
 
   private TabPane tabs;
 
+  Map<String, Tab> tabsByName;
   private NodeController nodeController;
 
 
@@ -86,7 +90,7 @@ public class NodeExperiment extends Application {
 
     Button sendButton = new Button("Submit");
     sendButton.setOnAction(event -> {
-      System.out.println(sendAllNodeContent());
+      saveAllNodeContent("/src/main/resource/export.json");
     });
     sendButton.setMaxWidth(Double.MAX_VALUE);
     GridPane.setHgrow(sendButton, Priority.ALWAYS);
@@ -101,7 +105,7 @@ public class NodeExperiment extends Application {
     Tab mainTab = new Tab("Main Tab", new HBox(nodeSelectionPane, scrollPane));
     mainTab.setClosable(false);
     tabs.getTabs().add(mainTab);
-    nodeController = new NodeController(tabs);
+    //nodeController = new NodeController(tabs);
     primaryStage.setScene(new Scene(tabs));
     primaryStage.show();
   }
@@ -130,7 +134,7 @@ public class NodeExperiment extends Application {
     }
   }
 
-  public String sendAllNodeContent() {
+  public void saveAllNodeContent(String filePath) {
     Gson gson = new GsonBuilder().setPrettyPrinting().create();
     JsonObject statesObject = new JsonObject();
     for (Node node : group.getChildren()) {
@@ -143,6 +147,22 @@ public class NodeExperiment extends Application {
     }
     JsonObject contentObject = new JsonObject();
     contentObject.add("states", statesObject);
-    return gson.toJson(contentObject);
+
+    try (FileWriter fileWriter = new FileWriter(filePath)) {
+      gson.toJson(contentObject, fileWriter);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
+
+//  public void openAndSwitchToTab() {
+//    Tab existingTab = tabsByName.get(name);
+//    if (existingTab == null) {
+//      Tab newTab = new Tab(name, new Label("Write code with blocks"));
+//      tabs.getTabs().add(newTab);
+//      tabsByName.put(name, newTab);
+//    } else {
+//      tabs.getSelectionModel().select(existingTab);
+//    }
+//  }
 }

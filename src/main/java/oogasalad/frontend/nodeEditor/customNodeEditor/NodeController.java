@@ -1,25 +1,18 @@
 package oogasalad.frontend.nodeEditor.customNodeEditor;
 
 import java.util.HashMap;
-import java.util.Map;
-import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import oogasalad.frontend.scenes.AbstractScene;
 
 public class NodeController {
 
-  Map<String, Tab> tabsByName;
-  private TabPane tabs;
+  private AbstractScene scene;
 
-  public NodeController(TabPane tabs) {
-    this.tabs = tabs;
-    this.tabsByName = new HashMap<>();
-    for (Tab tab : tabs.getTabs()) {
-      tabsByName.put(tab.getText(), tab);
-    }
+  public NodeController(AbstractScene scene) {
   }
 
   public void openAndSwitchToTab(String name) {
-
+    //scene.openAndSwitchToTab(name);
   }
 }
