@@ -34,7 +34,6 @@ public class GameEditorEditorScene extends AbstractScene {
    */
   public GameEditorEditorScene(SceneController sceneController) {
     super(sceneController);
-    headerMenu = new HeaderMenuPanel(panelController, VISUAL_EDITOR_SCENE);
 
   }
 
@@ -71,9 +70,9 @@ public class GameEditorEditorScene extends AbstractScene {
   private void refreshScene() {
     root.setRight(rightTab);
     root.setCenter(environmentPanel);
-    root.setTop(headerMenu.makePanel().asNode());
-    root.setLeft(componentsPanel.createDualAccordionVBox());
-    root.setCenter(environmentPanel.createEnvironment());
+    root.setTop(headerMenu);
+    root.setLeft(componentsPanel);
+    root.setCenter(environmentPanel);
     setScene(new Scene(root));
     setText();
     setTheme();
@@ -97,7 +96,7 @@ public class GameEditorEditorScene extends AbstractScene {
 //        backButton.setOnAction(e -> panelController.switchSceneFromPanel("main"));
 //        rightTab.getChildren().addAll(boardButton,variableButton,playerButton,backButton);
     propertiesPanel = new PropertiesPanel();
-    rightTab.getChildren().addAll(propertiesPanel.createPanel());
+    rightTab.getChildren().addAll(propertiesPanel);
   }
 
   private void createCenterPanel() {
@@ -105,6 +104,7 @@ public class GameEditorEditorScene extends AbstractScene {
   }
 
   private void createTopPanel() {
+    headerMenu = new HeaderMenuPanel(panelController, VISUAL_EDITOR_SCENE);
   }
 
   @Override

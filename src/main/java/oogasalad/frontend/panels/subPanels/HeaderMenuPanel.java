@@ -33,6 +33,7 @@ public class HeaderMenuPanel extends HBox implements Panel {
     super();
     this.panelController = panelController;
     this.sceneID = sceneID;
+    this.makePanel();
   }
 
   /**

@@ -1,6 +1,7 @@
 package oogasalad.frontend.panels.subPanels;
 
 import java.util.ResourceBundle;
+import javafx.scene.Node;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -27,6 +28,7 @@ public class ComponentPanel extends VBox implements Panel {
    */
   public ComponentPanel() {
     super();
+    this.makePanel();
   }
 
   /**
@@ -34,12 +36,11 @@ public class ComponentPanel extends VBox implements Panel {
    *
    * @return
    */
-  public VBox createDualAccordionVBox() {
-    VBox componentPanel = new VBox();
-    componentPanel.getChildren()
+  public Panel makePanel() {
+    this.getChildren()
         .addAll(createComponentLibraryLabel(), createComponenetLibraryAccordion(),
             createActiveComponentsLabel(), createActiveComponentsAccordion());
-    return componentPanel;
+    return this;
   }
 
   public VBox createSingleAccordionVBox() {
@@ -92,10 +93,8 @@ public class ComponentPanel extends VBox implements Panel {
     modal.showAndWait();
     System.out.println("Test");
   }
-
-  @Override
-  public Panel makePanel() {
-    return null;
+  public Node asNode() {
+    return this;
   }
 
   @Override

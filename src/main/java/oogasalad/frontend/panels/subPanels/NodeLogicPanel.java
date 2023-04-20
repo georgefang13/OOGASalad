@@ -1,5 +1,6 @@
 package oogasalad.frontend.panels.subPanels;
 
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -20,8 +21,7 @@ public class NodeLogicPanel extends Pane implements Panel {
     super();
   }
 
-  public HBox createNodeLogicEnvironment() {
-    Pane root = new Pane();
+  public Panel makePanel() {
     Pane pane1 = new Pane();
     pane1.setStyle("-fx-background-color: gray");
     pane1.setPrefSize(100, 200);
@@ -38,14 +38,14 @@ public class NodeLogicPanel extends Pane implements Panel {
         .add(new DifferenceNode(50, 50, DEFAULT_WIDTH, DEFAULT_HEIGHT, "lightpink")));
     pane1.getChildren().addAll(new VBox(sumButton, differenceButton));
 
-    root.getChildren().addAll(pane1, pane2);
+    this.getChildren().addAll(pane1, pane2);
 
-    return new HBox(pane1, pane2);
+    return this;
   }
 
   @Override
-  public Panel makePanel() {
-    return null;
+  public Node asNode() {
+    return this;
   }
 
   @Override

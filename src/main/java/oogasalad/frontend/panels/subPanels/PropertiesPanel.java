@@ -1,6 +1,7 @@
 package oogasalad.frontend.panels.subPanels;
 
 import java.util.ResourceBundle;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -23,13 +24,13 @@ public class PropertiesPanel extends HBox implements Panel {
   private static final String PROPERTIES_TAB_PANE_ID = "PropertiesTabPaneID";
 
   ButtonFactory buttonFactory = new ButtonFactory();
-  HBox propertiesPanel;
 
   /**
    * Constructor for PropertiesPanel
    */
   public PropertiesPanel() {
     super();
+    this.makePanel();
   }
 
   /**
@@ -37,11 +38,11 @@ public class PropertiesPanel extends HBox implements Panel {
    *
    * @return
    */
-  public HBox createPanel() {
-    propertiesPanel = new HBox();
-    propertiesPanel.getStyleClass().add(ID_BUNDLE.getString(PROPERTIES_BOX_OPEN_ID));
-    propertiesPanel.getChildren().addAll(createPopOutButtonBox(), createPropertiesTabPane());
-    return propertiesPanel;
+  @Override
+  public Panel makePanel() {
+    this.getStyleClass().add(ID_BUNDLE.getString(PROPERTIES_BOX_OPEN_ID));
+    this.getChildren().addAll(createPopOutButtonBox(), createPropertiesTabPane());
+    return this;
   }
 
   private VBox createPopOutButtonBox() {
@@ -73,20 +74,17 @@ public class PropertiesPanel extends HBox implements Panel {
   }
 
   private void toggleStyleSheets() {
-    if (propertiesPanel.getStyleClass().contains(ID_BUNDLE.getString(PROPERTIES_BOX_CLOSED_ID))) {
-      propertiesPanel.getStyleClass().remove(ID_BUNDLE.getString(PROPERTIES_BOX_CLOSED_ID));
-      propertiesPanel.getStyleClass().add(ID_BUNDLE.getString(PROPERTIES_BOX_OPEN_ID));
+    if (this.getStyleClass().contains(ID_BUNDLE.getString(PROPERTIES_BOX_CLOSED_ID))) {
+      this.getStyleClass().remove(ID_BUNDLE.getString(PROPERTIES_BOX_CLOSED_ID));
+      this.getStyleClass().add(ID_BUNDLE.getString(PROPERTIES_BOX_OPEN_ID));
     } else {
-      propertiesPanel.getStyleClass().remove(ID_BUNDLE.getString(PROPERTIES_BOX_OPEN_ID));
-      propertiesPanel.getStyleClass().add(ID_BUNDLE.getString(PROPERTIES_BOX_CLOSED_ID));
+      this.getStyleClass().remove(ID_BUNDLE.getString(PROPERTIES_BOX_OPEN_ID));
+      this.getStyleClass().add(ID_BUNDLE.getString(PROPERTIES_BOX_CLOSED_ID));
     }
   }
-
-  @Override
-  public Panel makePanel() {
-    return null;
+  public Node asNode() {
+    return this;
   }
-
   @Override
   public Panel refreshPanel() {
     return null;
