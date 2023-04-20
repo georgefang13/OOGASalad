@@ -1,5 +1,7 @@
 package oogasalad.gameeditor.frontend;
 
+import java.util.HashMap;
+import java.util.Map;
 import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -39,6 +41,16 @@ public class ComponentsFactoryTest extends DukeApplicationTest {
     System.out.println(c.getNode().getBoundsInLocal().getMinX());
   }
 
+  @Test
+  public void createFromMap(){
+    Map<String, String> map = new HashMap<>();
+    map.put("playable", "true");
+    Component c = factory.create("GameObject", map);
+    System.out.println(c.getNode().getBoundsInLocal().getMinX());
+    simulateMousePress(c.getNode(), MouseButton.PRIMARY, 0, 0);
+    simulateMouseDrag(c.getNode(), MouseButton.PRIMARY, 500,500);
+    simulateMouseRelease(c.getNode(), MouseButton.PRIMARY, 500,500);
+  }
   private void simulateMousePress(Node node, MouseButton button, double x, double y) {
     MouseEvent event = new MouseEvent(
         MouseEvent.MOUSE_PRESSED,
