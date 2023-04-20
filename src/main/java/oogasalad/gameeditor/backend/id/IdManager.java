@@ -3,10 +3,13 @@ package oogasalad.gameeditor.backend.id;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import oogasalad.sharedDependencies.backend.ownables.Ownable;
+import oogasalad.sharedDependencies.backend.owners.Owner;
 
 /**
  * Manages the ids of all Objects of type T (such as an Ownable). For example, an IdManager<Ownable>
@@ -374,20 +377,142 @@ public class IdManager<T extends IdManageable> implements Iterable<Map.Entry<Str
   }
 
   /**
-   * Returns a List of all ids of objects of the given class in the IdManager.
+   * Returns a List of all ids of objects of the given classes in the IdManager.
+   * Returns only classes that use all of the given classes.
    *
-   * @param c the class to check for You're welcome Ethan
+   * @param classNames the classes to check for You're welcome Ethan
    * @return a List of all ids of objects of the given class in the IdManager
    */
-  public List getIdsOfObjectsOfClass(String c) {
-//    loop through all ids and check if they are of the given class using usesClass
-    List ids = new ArrayList();
+  public List<String> getIdsOfObjectsOfClass(String... classNames) {
+    List<String> ids = new ArrayList<>();
     for (Map.Entry<String, T> entry : simpleIds.entrySet()) {
-      if (entry.getValue().usesClass(c)) {
+      boolean allClassesMatch = true;
+      for (String className : classNames) {
+        if (!entry.getValue().usesClass(className)) {
+          allClassesMatch = false;
+          break;
+        }
+      }
+      if (allClassesMatch) {
         ids.add(getId(getObject(entry.getKey())));
       }
     }
     return ids;
+  }
+
+  /**
+   * Returns a List of all Ownables with a certain Owner if T is Ownable.
+   * Only checks direct ownership and does not check ownership of sub-objects.
+   * @param owner the owner to check for
+   * @return a List of all Ownables with a certain Owner if T is Ownable or null if T is not Ownable
+   */
+  public List getDirectObjectsOfOwner(Owner owner) {
+    try {
+      List objects = new ArrayList();
+      //use Ownable.getOwner() to get the owner of the object. Loop over simpleIds
+      for (Map.Entry<String, T> entry : simpleIds.entrySet()) {
+        if (((Ownable) entry.getValue()).getOwner().equals(owner)) {
+          objects.add(entry.getValue());
+        }
+      }
+      return objects;
+    }
+    catch (ClassCastException e) {
+      return null;
+    }
+  }
+
+  /**
+   * Returns a List of all Ownables with a certain Owner if T is Ownable.
+   * Recursive helper method to check ownership of sub-objects.
+   * @param objects the list of objects to add to
+   * @param obj the object to check
+   */
+  private void addAllChildren(List objects, T obj) {
+    for (Map.Entry<T, T> entry : ownershipMap.entrySet()) {
+      if (entry.getValue() == obj) {
+        objects.add(entry.getKey());
+        addAllChildren(objects, entry.getKey());
+      }
+    }
+  }
+
+  /**
+   * Returns a List of all Ownables with a certain Owner if T is Ownable.
+   * Traverse the ownershipMap to check ownership of sub-objects.
+   * @param owner the owner to check for
+   * @return a List of all Ownables with a certain Owner if T is Ownable or null if T is not Ownable
+   */
+  public List getObjectsOfOwner(Owner owner) {
+    try {
+      List objects = new ArrayList();
+      //use Ownable.getOwner() to get the owner of the object. Loop over simpleIds
+      for (Map.Entry<String, T> entry : simpleIds.entrySet()) {
+        if (((Ownable) entry.getValue()).getOwner().equals(owner)) {
+          objects.add(entry.getValue());
+          addAllChildren(objects, entry.getValue());
+        }
+      }
+      return new ArrayList(new HashSet(objects));
+    }
+    catch (ClassCastException e) {
+      return null;
+    }
+  }
+
+  /**
+   * Returns a List of all ids of Ownables with a certain Owner if T is Ownable.
+   * Only checks direct ownership and does not check ownership of sub-objects.
+   * @param owner the owner to check for
+   * @return a List of all ids of Ownables with a certain Owner if T is Ownable or null if T is not Ownable
+   */
+  public List getDirectIdsOfOwner(Owner owner) {
+    try {
+      ArrayList<Ownable> ownables = (ArrayList<Ownable>) getDirectObjectsOfOwner(owner);
+      ArrayList<String> ids = new ArrayList<>();
+      for (Ownable o : ownables) {
+        ids.add(getId((T) o));
+      }
+      return ids;
+    }
+    catch (ClassCastException e) {
+      return null;
+    }
+  }
+
+  /**
+   * Returns a List of all ids of Ownables with a certain Owner if T is Ownable.
+   * Traverse the ownershipMap to check ownership of sub-objects.
+   * @param ids the list of ids to add to
+   * @param obj the object to check
+   */
+  private void addAllChildrenIds(List ids, T obj) {
+    for (Map.Entry<T, T> entry : ownershipMap.entrySet()) {
+      if (entry.getValue() == obj) {
+        ids.add(getId(entry.getKey()));
+        addAllChildrenIds(ids, entry.getKey());
+      }
+    }
+  }
+
+  /**
+   * Returns a List of all ids of Ownables with a certain Owner if T is Ownable.
+   * @param owner the owner to check for
+   * @return a List of all ids of Ownables with a certain Owner if T is Ownable or null if T is not Ownable
+   */
+  public List getIdsOfOwner(Owner owner) {
+    try {
+      ArrayList<Ownable> ownables = (ArrayList<Ownable>) getObjectsOfOwner(owner);
+      ArrayList<String> ids = new ArrayList<>();
+      for (Ownable o : ownables) {
+        ids.add(getId((T) o));
+        addAllChildrenIds(ids, (T) o);
+      }
+      return new ArrayList(new HashSet(ids));
+    }
+    catch (ClassCastException e) {
+      return null;
+    }
   }
 
   //TODO return multiple maps based on ownership (recursive)
