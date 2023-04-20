@@ -34,11 +34,6 @@ public class SumNode extends DraggableAbstractNode {
     updateSum();
   }
 
-  @Override
-  public String sendContent() {
-    return outputLabel.getText();
-  }
-
   private void updateSum() {
     try {
       double op1 = Double.parseDouble(operand1.getText());
@@ -49,4 +44,8 @@ public class SumNode extends DraggableAbstractNode {
     }
   }
 
+  @Override
+  public String sendContent() {
+    return outputLabel.getText() + sendChildContent();
+  }
 }

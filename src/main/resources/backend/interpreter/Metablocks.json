@@ -1,0 +1,10 @@
+{
+  "List": {
+    "specs": {
+      "innerBlocks": ["contents"],
+      "inputs": [],
+      "outputs": [],
+      "parse": "[ %s ]"
+    }
+  }
+}

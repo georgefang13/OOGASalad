@@ -22,10 +22,11 @@ public class If extends OperatorToken {
         Boolean.class.getName());
     ExpressionToken exprs = checkArgument(env, getArg(1), ExpressionToken.class);
 
+    Token result = null;
     if (b.VALUE) {
-      exprs.evaluate(env);
+      result = exprs.evaluate(env);
     }
 
-    return null;
+    return result;
   }
 }

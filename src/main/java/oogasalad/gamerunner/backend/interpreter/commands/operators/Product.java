@@ -34,8 +34,6 @@ public class Product extends OperatorToken {
         Boolean.class.getName());
     ValueToken<?> x2 = checkArgumentWithSubtype(env, t2, ValueToken.class, Double.class.getName(),
         Boolean.class.getName());
-//        ValueToken<?> x1 = checkArgument(env, t1, ValueToken.class);
-//        ValueToken<?> x2 = checkArgument(env, t2, ValueToken.class);
 
     double x = getNumber(x1);
     double y = getNumber(x2);
