@@ -1,6 +1,7 @@
 package oogasalad.frontend.panels.subPanels;
 
 import java.util.ResourceBundle;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import oogasalad.frontend.factories.ButtonFactory;
@@ -39,9 +40,8 @@ public class HeaderMenuPanel extends HBox implements Panel {
    *
    * @return
    */
-  public HBox createMenu() {
-    HBox menu = new HBox();
-    menu.getStyleClass().add(ID_BUNDLE.getString(MENU_HBOX_ID));
+  public Panel makePanel() {
+    this.getStyleClass().add(ID_BUNDLE.getString(MENU_HBOX_ID));
     Button logicButton = buttonFactory.createDefaultButton(LOGIC_EDITOR);
     Button visualButton = buttonFactory.createDefaultButton(VISUAL_EDITOR);
     selectSceneButtonSettings(logicButton, visualButton);
@@ -52,8 +52,8 @@ public class HeaderMenuPanel extends HBox implements Panel {
     visualButton.setOnAction(e -> {
       panelController.newSceneFromPanel(editor, WindowScenes.EDITOR_SCENE);
     });
-    menu.getChildren().addAll(visualButton, logicButton);
-    return menu;
+    this.getChildren().addAll(visualButton, logicButton);
+    return this;
   }
 
   private static void selectSceneButtonSettings(Button logicButton, Button visualButton) {
@@ -72,9 +72,8 @@ public class HeaderMenuPanel extends HBox implements Panel {
 
   }
 
-  @Override
-  public Panel makePanel() {
-    return null;
+  public Node asNode() {
+    return this;
   }
 
   @Override

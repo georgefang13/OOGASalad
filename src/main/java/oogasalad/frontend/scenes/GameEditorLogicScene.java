@@ -36,7 +36,7 @@ public class GameEditorLogicScene extends AbstractScene {
 
   private void refreshScene() {
     root.setCenter(nodeLogicPanel);
-    root.setTop(headerMenu.createMenu());
+    root.setTop(headerMenu.makePanel().asNode());
     root.setLeft(componentPanel.createSingleAccordionVBox());
     root.setCenter(nodeLogicPanel.createNodeLogicEnvironment());
     setScene(new Scene(root));
