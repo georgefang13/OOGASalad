@@ -10,9 +10,8 @@ import javafx.scene.layout.VBox;
 import oogasalad.frontend.modals.InputModal;
 import oogasalad.frontend.modals.ModalController;
 import oogasalad.frontend.panels.Panel;
-import oogasalad.frontend.panels.VBoxPanel;
 
-public class ComponentPanel extends VBoxPanel {
+public class ComponentPanel extends VBox implements Panel {
 
   private static final ResourceBundle ELEMENT_LABELS = ResourceBundle.getBundle(
       "frontend/properties/text/english");

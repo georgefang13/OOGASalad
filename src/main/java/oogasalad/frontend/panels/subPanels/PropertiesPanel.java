@@ -7,10 +7,9 @@ import javafx.scene.control.TabPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import oogasalad.frontend.factories.ButtonFactory;
-import oogasalad.frontend.panels.HBoxPanel;
 import oogasalad.frontend.panels.Panel;
 
-public class PropertiesPanel extends HBoxPanel {
+public class PropertiesPanel extends HBox implements Panel {
 
   private static final ResourceBundle ELEMENT_LABELS = ResourceBundle.getBundle(
       "frontend/properties/text/english");

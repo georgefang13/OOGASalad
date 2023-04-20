@@ -3,9 +3,8 @@ package oogasalad.frontend.panels.subPanels;
 import javafx.scene.layout.Pane;
 import oogasalad.frontend.nodeEditor.GraphEditorTutorial;
 import oogasalad.frontend.panels.Panel;
-import oogasalad.frontend.panels.VisualPanel;
 
-public class EnvironmentPanel extends VisualPanel {
+public class EnvironmentPanel extends Pane implements Panel {
 
   /**
    * Constructor for the environment panel

@@ -4,12 +4,11 @@ import java.util.ResourceBundle;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import oogasalad.frontend.factories.ButtonFactory;
-import oogasalad.frontend.panels.HBoxPanel;
 import oogasalad.frontend.panels.Panel;
 import oogasalad.frontend.panels.PanelController;
 import oogasalad.frontend.windows.GameEditorWindow.WindowScenes;
 
-public class HeaderMenuPanel extends HBoxPanel {
+public class HeaderMenuPanel extends HBox implements Panel {
 
   private static final ResourceBundle ELEMENT_LABELS = ResourceBundle.getBundle(
       "frontend/properties/text/english");

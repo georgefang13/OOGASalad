@@ -7,9 +7,8 @@ import javafx.scene.layout.VBox;
 import oogasalad.frontend.nodeEditor.customNodeEditor.DifferenceNode;
 import oogasalad.frontend.nodeEditor.customNodeEditor.SumNode;
 import oogasalad.frontend.panels.Panel;
-import oogasalad.frontend.panels.VisualPanel;
 
-public class NodeLogicPanel extends VisualPanel {
+public class NodeLogicPanel extends Pane implements Panel {
 
   private final int DEFAULT_WIDTH = 100;
   private final int DEFAULT_HEIGHT = 100;

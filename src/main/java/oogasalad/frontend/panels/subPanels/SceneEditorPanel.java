@@ -1,9 +1,9 @@
 package oogasalad.frontend.panels.subPanels;
 
+import javafx.scene.layout.VBox;
 import oogasalad.frontend.panels.Panel;
-import oogasalad.frontend.panels.VBoxPanel;
 
-public class SceneEditorPanel extends VBoxPanel {
+public class SceneEditorPanel extends VBox implements Panel {
 
   @Override
   public Panel makePanel() {
