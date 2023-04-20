@@ -8,14 +8,14 @@ import oogasalad.gamerunner.backend.interpreter.tokens.ValueToken;
 /**
  * Creates a new variable with the given name and value
  */
-public class False extends OperatorToken {
+public class Null extends OperatorToken {
 
-    public False() {
-        super(0, "False");
+    public Null() {
+        super(0, "Null");
     }
 
     @Override
     public ValueToken<?> evaluate(Environment env) {
-        return new ValueToken<>(false);
+        return null;
     }
 }

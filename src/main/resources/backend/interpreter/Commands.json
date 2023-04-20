@@ -38,6 +38,19 @@
       "parse": "false"
     }
   },
+  "Null": {
+    "name": "Null",
+    "folder": "",
+    "str": "null",
+    "description": "null",
+    "example": "null # null",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [],
+      "outputs": [],
+      "parse": "null"
+    }
+  },
 
 
   "Break": {
@@ -287,6 +300,22 @@
       "parse": "dzfollowtoblock %s %s %s"
     }
   },
+  "DropZoneHasId": {
+    "name": "DropZone Has Object Id",
+    "folder": "game",
+    "str": "dzhasid",
+    "description": "Returns if the dropzone has an object with a specific id",
+    "example": "dzhasid \"obj :game_zone # dzhasid <string id> <dropzone>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        { "name": "id", "type": ["string"] },
+        { "name": "dropzone", "type": ["dropzone"] }
+      ],
+      "outputs": ["boolean"],
+      "parse": "dzhasid %s %s"
+    }
+  },
   "DropZonePaths": {
     "name": "Get All Drop Zone Paths",
     "folder": "game",
@@ -389,8 +418,36 @@
       "parse": "fromgameclass %s"
     }
   },
+  "IsDropZoneEmpty": {
+    "name": "Is Drop Zone Empty",
+    "folder": "game",
+    "str": "dzempty",
+    "description": "Tests if a dropzone is empty",
+    "example": "dzempty :dz # dzempty <dropzone>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [{ "name": "dropzone", "type": ["dropzone"] }],
+      "outputs": ["boolean"],
+      "parse": "dzempty %s"
+    }
+  },
 
-
+  "AddAllItems": {
+    "name": "Add All List Items",
+    "folder": "operators",
+    "str": "addallitems",
+    "description": "Adds all the values from one list into the other",
+    "example": "addallitems [ 4 5 6 ] [ 1 2 3 ] # -> [1 2 3 4 5 6 ] -- addallitems <from> <to>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        { "name": "from", "type": ["list"] },
+        { "name": "to", "type": ["list"] }
+      ],
+      "outputs": [],
+      "parse": "addallitems %s %s"
+    }
+  },
   "AddItem": {
     "name": "Add List Item",
     "folder": "operators",
@@ -403,7 +460,7 @@
         { "name": "value", "type": ["any"] },
         { "name": "list", "type": ["list"] }
       ],
-      "outputs": ["list"],
+      "outputs": [],
       "parse": "additem %s %s"
     }
   },

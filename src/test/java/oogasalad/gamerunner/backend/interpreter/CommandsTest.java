@@ -75,6 +75,15 @@ public class CommandsTest {
   }
 
   @Test
+  public void testAddAllItems(){
+    String input = "make :x [ 1 2 3 ] make :y [ 4 5 6 ] addallitems :x :y";
+    interpreter.interpret(input);
+    List<Double> expected = new ArrayList<>(List.of(4., 5., 6., 1., 2., 3.));
+    Variable<List<Double>> t = getVar("interpreter-:y");
+    assertEquals(expected, t.get());
+  }
+
+  @Test
   public void testAddDropZoneItem() {
     DropZone dz = new DropZone("dz");
     idManager.addObject(dz, "dz");
@@ -335,6 +344,26 @@ public class CommandsTest {
     } catch (Exception e) {
       assertEquals("Invalid syntax: Not enough arguments for operator DoTimes", e.getMessage());
     }
+  }
+
+  @Test
+  public void testDropZoneHasId(){
+    DropZone d1 = new DropZone("A");
+    DropZone d2 = new DropZone("B");
+    idManager.addObject(d1, "A");
+    idManager.addObject(d2, "B");
+
+    d1.putObject("obj", 1);
+
+    String input = "make :x dzhasid \"obj :game_A";
+    interpreter.interpret(input);
+    Variable<Boolean> x = getVar("interpreter-:x");
+    assertTrue(x.get());
+
+    input = "make :x dzhasid \"obj2 :game_A";
+    interpreter.interpret(input);
+    x = getVar("interpreter-:x");
+    assertFalse(x.get());
   }
 
   @Test
@@ -745,6 +774,24 @@ public class CommandsTest {
   }
 
   @Test
+  public void testIfDropZoneEmpty(){
+    DropZone d1 = new DropZone("A");
+    idManager.addObject(d1, "A");
+
+    String input = "make :x dzempty :game_A";
+    interpreter.interpret(input);
+    Variable<Boolean> x = getVar("interpreter-:x");
+    assertTrue(x.get());
+
+    d1.putObject("obj", 1);
+
+    input = "make :x dzempty :game_A";
+    interpreter.interpret(input);
+    x = getVar("interpreter-:x");
+    assertFalse(x.get());
+  }
+
+  @Test
   public void testIfElse() {
     // if true
     String input = "make :x 1 make :y true ifelse :y [ global :x make :x 3 ] [ global :x make :x 4 ]";
@@ -1116,6 +1163,15 @@ public class CommandsTest {
     } catch (Exception e) {
       assertEquals("Invalid syntax: Not enough arguments for operator NotEqual", e.getMessage());
     }
+  }
+
+  @Test
+  public void testNull(){
+    // null
+    String input = "make :x null make :y == :x null";
+    interpreter.interpret(input);
+    Variable<Boolean> y = getVar("interpreter-:y");
+    assertTrue(y.get());
   }
 
   @Test
