@@ -33,7 +33,6 @@ public class ComponentsFactory {
   public Component create(String type){
     Component component = null;
     String lowercase = type.substring(0, 1).toLowerCase() + type.substring(1);
-    System.out.println(GameObject.class.getName());
     try{
       Class<?> c = Class.forName(bundle.getString("package")+lowercase + "Component." + type);
       Constructor<?> constructor = c.getConstructor(int.class);
@@ -61,6 +60,7 @@ public class ComponentsFactory {
       Class<?> c = Class.forName(type);
       Constructor<?> constructor = c.getConstructor(map.getClass());
       component = (Component) constructor.newInstance(map);
+      ID++;
     } catch (Exception e){
       System.out.println("Failed");
     }
@@ -68,10 +68,12 @@ public class ComponentsFactory {
   }
   public Component create(String type, Map<String, String> map){
     Component component = null;
+    String lowercase = type.substring(0, 1).toLowerCase() + type.substring(1);
     try{
-      Class<?> c = Class.forName(type);
-      Constructor<?> constructor = c.getConstructor(map.getClass());
-      component = (Component) constructor.newInstance(map);
+      Class<?> c = Class.forName(bundle.getString("package")+lowercase + "Component." + type);
+      Constructor<?> constructor = c.getConstructor(int.class, Map.class);
+      component = (Component) constructor.newInstance(ID, map);
+      ID++;
     } catch (Exception e){
       e.printStackTrace();
     }
