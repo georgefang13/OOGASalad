@@ -7,14 +7,13 @@ public class TextFieldNode extends DraggableAbstractNode {
 
   private TextField field;
 
-  public TextFieldNode() {
-    super(0, 0, 100, 100, "White");
-  }
-
   public TextFieldNode(double x, double y, double width, double height, String color) {
     super(x, y, width, height, color);
   }
 
+  public TextFieldNode() {
+    super(0, 0, 100, 100, "White");
+  }
 
   @Override
   protected void setContent() {
@@ -25,6 +24,7 @@ public class TextFieldNode extends DraggableAbstractNode {
 
   @Override
   public String sendContent() {
-    return field.getText();
+    return field.getText() + sendChildContent();
   }
+
 }

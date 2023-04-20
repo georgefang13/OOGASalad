@@ -88,7 +88,8 @@ public class NodeExperiment extends Application {
     sendButton.setOnAction(event -> {
       System.out.println(sendAllNodeContent());
     });
-
+    sendButton.setMaxWidth(Double.MAX_VALUE);
+    GridPane.setHgrow(sendButton, Priority.ALWAYS);
     nodeSelectionPane.add(sendButton, 0, buttonRow);
     ScrollPane scrollPane = new ScrollPane(content);
     scrollPane.setVbarPolicy(ScrollBarPolicy.NEVER);

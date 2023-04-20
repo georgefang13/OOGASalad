@@ -33,11 +33,6 @@ public class DifferenceNode extends DraggableAbstractNode {
     updateSum();
   }
 
-  @Override
-  public String sendContent() {
-    return outputLabel.getText();
-  }
-
   private void updateSum() {
     try {
       double op1 = Double.parseDouble(operand1.getText());
@@ -48,4 +43,8 @@ public class DifferenceNode extends DraggableAbstractNode {
     }
   }
 
+  @Override
+  public String sendContent() {
+    return outputLabel.getText() + sendChildContent();
+  }
 }
