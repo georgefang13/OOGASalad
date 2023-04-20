@@ -12,6 +12,32 @@
       "parse": "make :%s %s"
     }
   },
+  "True": {
+    "name": "True",
+    "folder": "",
+    "str": "true",
+    "description": "true",
+    "example": "true # true",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [],
+      "outputs": [],
+      "parse": "true"
+    }
+  },
+  "False": {
+    "name": "False",
+    "folder": "",
+    "str": "false",
+    "description": "false",
+    "example": "false # false",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [],
+      "outputs": [],
+      "parse": "false"
+    }
+  },
 
 
   "Break": {

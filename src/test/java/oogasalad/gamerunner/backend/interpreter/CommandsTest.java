@@ -127,13 +127,13 @@ public class CommandsTest {
   @Test
   public void testAnd() {
     // true and
-    String input = "make :a < 1 2 make :b < 2 3 make :x and :a :b";
+    String input = "make :a true make :b < 2 3 make :x and :a :b";
     interpreter.interpret(input);
     Variable<Boolean> x = getVar("interpreter-:x");
     assertTrue(x.get());
 
     // false and
-    input = "make :a < 1 2 make :b < 3 2 make :x and :a :b";
+    input = "make :a true make :b < 3 2 make :x and :a :b";
     interpreter.interpret(input);
     x = getVar("interpreter-:x");
     assertFalse(x.get());
@@ -219,11 +219,6 @@ public class CommandsTest {
   public void testCurPlayer(){
     game.init(2);
 
-  }
-
-  @Test
-  public void testCurrentPlayer(){
-    game.init(2);
   }
 
   @Test
@@ -369,7 +364,7 @@ public class CommandsTest {
     assertTrue(z.get());
 
     // equal with incorrect number of parameters
-    input = "make :x > 1 2 make :y > 3 4 make :z == :x";
+    input = "make :x false make :y false make :z == :x";
     try {
       interpreter.interpret(input);
       fail();
@@ -718,7 +713,7 @@ public class CommandsTest {
   @Test
   public void testIf() {
     // if true
-    String input = "make :x 1 make :y < 1 2 if :y [ make :x 3 ]";
+    String input = "make :x 1 make :y true if :y [ make :x 3 ]";
     interpreter.interpret(input);
     Variable<Double> x = getVar("interpreter-:x");
     assertEquals(3.0, x.get());
@@ -740,7 +735,7 @@ public class CommandsTest {
     }
 
     // if with incorrect number of parameters
-    input = "make :x 1 make :y < 1 2 if :y";
+    input = "make :x 1 make :y true if :y";
     try {
       interpreter.interpret(input);
       fail();
@@ -752,7 +747,7 @@ public class CommandsTest {
   @Test
   public void testIfElse() {
     // if true
-    String input = "make :x 1 make :y < 1 2 ifelse :y [ global :x make :x 3 ] [ global :x make :x 4 ]";
+    String input = "make :x 1 make :y true ifelse :y [ global :x make :x 3 ] [ global :x make :x 4 ]";
     interpreter.interpret(input);
     Variable<Double> x = getVar("interpreter-:x");
     assertEquals(3.0, x.get(), 0.0001);
@@ -774,7 +769,7 @@ public class CommandsTest {
     }
 
     // if with incorrect number of parameters
-    input = "make :x 1 make :y < 1 2 ifelse :y";
+    input = "make :x 1 make :y true ifelse :y";
     try {
       interpreter.interpret(input);
       fail();
@@ -1074,7 +1069,7 @@ public class CommandsTest {
   @Test
   public void testNot() {
     // not
-    String input = "make :x < 1 2 make :y not :x";
+    String input = "make :x true make :y not :x";
     interpreter.interpret(input);
     Variable<Boolean> y = getVar("interpreter-:y");
     assertEquals(false, y.get());
@@ -1126,13 +1121,13 @@ public class CommandsTest {
   @Test
   public void testOr() {
     // true or
-    String input = "make :a < 1 2 make :b < 2 3 make :x or :a :b";
+    String input = "make :a true make :b < 2 3 make :x or :a :b";
     interpreter.interpret(input);
     Variable<Boolean> x = getVar("interpreter-:x");
     assertEquals(true, x.get());
 
     // true or
-    input = "make :a < 1 2 make :b < 3 2 make :x or :a :b";
+    input = "make :a true make :b < 3 2 make :x or :a :b";
     interpreter.interpret(input);
     x = getVar("interpreter-:x");
     assertEquals(true, x.get());
@@ -1278,7 +1273,7 @@ public class CommandsTest {
     assertTrue(x.get() > 100);
 
     // random with non-numbers
-    input = "make :x rand < 1 2";
+    input = "make :x rand true";
     try {
       interpreter.interpret(input);
       fail();
@@ -1320,7 +1315,7 @@ public class CommandsTest {
     assertTrue(x.get() < 10000001);
 
     // random range with non-numbers
-    input = "make :x randr < 1 2 3";
+    input = "make :x randr true 3";
     try {
       interpreter.interpret(input);
       fail();
@@ -1454,7 +1449,7 @@ public class CommandsTest {
     assertEquals(112.0, x.get());
 
     // repeat with non-numbers
-    input = "make :x 0 repeat < 1 2 [ global :x make :x + :x 1 ]";
+    input = "make :x 0 repeat true [ global :x make :x + :x 1 ]";
     try {
       interpreter.interpret(input);
       fail();
@@ -1494,7 +1489,7 @@ public class CommandsTest {
     assertEquals(expected, x.get());
 
     // setitem with non-numbers
-    input = "make :x [ 1 2 3 ] make :y < 1 2 setitem :x 1 :y";
+    input = "make :x [ 1 2 3 ] make :y true setitem :x 1 :y";
     try {
       interpreter.interpret(input);
       fail();
@@ -1528,7 +1523,7 @@ public class CommandsTest {
     assertEquals(0.8910065241883679, y.get());
 
     // sine with non-numbers
-    input = "make :x < 1 2 make :y sin :x";
+    input = "make :x true make :y sin :x";
     try {
       interpreter.interpret(input);
       fail();
@@ -1579,7 +1574,7 @@ public class CommandsTest {
     }
 
     // square root with non-numbers
-    input = "make :x < 1 2 make :y sqrt :x";
+    input = "make :x true make :y sqrt :x";
     try {
       interpreter.interpret(input);
       fail();
@@ -1627,7 +1622,7 @@ public class CommandsTest {
     assertEquals(15.0, i.get());
 
     // sum with non-numbers
-    input = "make :x < 1 2 make :y 3 make :z + :x :y";
+    input = "make :x true make :y 3 make :z + :x :y";
     try {
       interpreter.interpret(input);
       fail();
@@ -1662,7 +1657,7 @@ public class CommandsTest {
     assertEquals(0.3443276132896654, i.get());
 
     // tangent with non-numbers
-    input = "make :x < 1 2 make :y tan :x";
+    input = "make :x true make :y tan :x";
     try {
       interpreter.interpret(input);
       fail();
@@ -1721,7 +1716,7 @@ public class CommandsTest {
       interpreter.setLanguage(language);
       setLanguage(language);
 
-      String input = "make :x < 1 2 make :y 3 make :z + :x :y";
+      String input = "make :x true make :y 3 make :z + :x :y";
       try {
         interpreter.interpret(input);
         fail();
