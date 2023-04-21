@@ -1,18 +1,17 @@
 package oogasalad.frontend.nodeEditor.customNodeEditor;
 
-import java.util.HashMap;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
-import oogasalad.frontend.scenes.AbstractScene;
+import oogasalad.frontend.windows.NodeWindow;
 
 public class NodeController {
 
-  private AbstractScene scene;
+  private NodeScene scene;
 
-  public NodeController(AbstractScene scene) {
+  public NodeController(NodeWindow nodeWindow) {
+    scene = new NodeScene(this);
+    nodeWindow.showScene(scene);
   }
 
   public void openAndSwitchToTab(String name) {
-    //scene.openAndSwitchToTab(name);
+    scene.openAndSwitchToTab(name);
   }
 }

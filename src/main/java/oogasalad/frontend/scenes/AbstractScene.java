@@ -24,6 +24,12 @@ public abstract class AbstractScene implements PropertiesObserver, ThemeObserver
   protected PropertyManager propertyManager = StandardPropertyManager.getInstance();
   protected ThemeManager themeManager = StandardThemeManager.getInstance();
 
+  public AbstractScene() {
+    this.scene = makeScene();
+    propertyManager.addObserver(this);
+    themeManager.addObserver(this);
+  }
+
   public AbstractScene(SceneController sceneController) {
     this.panelController = new PanelController(sceneController);
     this.scene = makeScene();
