@@ -5,10 +5,15 @@ import javafx.scene.control.Button;
 
 public class CodeEditorPanel extends AbstractNodePanel {
 
+  protected String state, action;
 
-  public CodeEditorPanel(NodeController nodeController) {
+
+  public CodeEditorPanel(NodeController nodeController, String state, String action) {
     super(nodeController);
+    this.state = state;
+    this.action = action;
   }
+
   @Override
   protected List<Button> getNodeSelectionButtons() {
     return List.of(
@@ -21,5 +26,17 @@ public class CodeEditorPanel extends AbstractNodePanel {
         makeButton("Save",
             event -> saveAllNodeContent("src/main/resources/export.json"))
     );
+  }
+
+  public String getAction() {
+    return action;
+  }
+
+  public String getState() {
+    return state;
+  }
+
+  public boolean equals(CodeEditorPanel panel) {
+    return panel.getAction().equals(this.action) && panel.getState().equals(this.state);
   }
 }

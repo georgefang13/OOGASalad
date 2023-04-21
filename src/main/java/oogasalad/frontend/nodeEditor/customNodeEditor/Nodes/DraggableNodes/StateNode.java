@@ -13,6 +13,7 @@ import javafx.scene.layout.Priority;
 import oogasalad.frontend.nodeEditor.customNodeEditor.NodeController;
 
 public class StateNode extends DraggableAbstractNode {
+
   private TextField stateName;
   private GridPane buttonGrid;
 
@@ -35,10 +36,10 @@ public class StateNode extends DraggableAbstractNode {
     stateName = new TextField();
     stateName.setPromptText("Name");
     buttonGrid.add(stateName, 0, 0);
-    buttonGrid.add(makeButton("Initialize", this::onInitialize), 0, 1);
-    buttonGrid.add(makeButton("Leave", this::onLeave), 0, 2);
-    buttonGrid.add(makeButton("Set value", this::onSetValue), 0, 3);
-    buttonGrid.add(makeButton("Next", this::onNext), 0, 4);
+    buttonGrid.add(makeButton("on enter", this::onInitialize), 0, 1);
+    buttonGrid.add(makeButton("on leave", this::onLeave), 0, 2);
+    buttonGrid.add(makeButton("select", this::onSetValue), 0, 3);
+    buttonGrid.add(makeButton("next", this::onNext), 0, 4);
   }
 
   private Button makeButton(String label, EventHandler<ActionEvent> handler) {
@@ -50,19 +51,19 @@ public class StateNode extends DraggableAbstractNode {
   }
 
   private void onInitialize(ActionEvent event) {
-    nodeController.openAndSwitchToTab(stateName.getText() + ": Initialize");
+    nodeController.openAndSwitchToTab(stateName.getText(), "on enter");
   }
 
   private void onLeave(ActionEvent event) {
-    nodeController.openAndSwitchToTab(stateName.getText() + ": Leave");
+    nodeController.openAndSwitchToTab(stateName.getText(), "on leave");
   }
 
   private void onSetValue(ActionEvent event) {
-    nodeController.openAndSwitchToTab(stateName.getText() + ": Set value");
+    nodeController.openAndSwitchToTab(stateName.getText(), "select");
   }
 
   private void onNext(ActionEvent event) {
-    nodeController.openAndSwitchToTab(stateName.getText() + ": Next");
+    nodeController.openAndSwitchToTab(stateName.getText(), "next");
   }
 
 
@@ -71,15 +72,5 @@ public class StateNode extends DraggableAbstractNode {
     return "";
   }
 
-  public JsonObject sendJSONContent() {
-    Gson gson = new GsonBuilder().setPrettyPrinting().create();
-    JsonObject moveObject = new JsonObject();
-    //moveObject.addProperty("init", init.getText());
-    //moveObject.addProperty("leave", leave.getText());
-    //moveObject.addProperty("setValue", setValue.getText());
-    //moveObject.addProperty("to", to.getText());
-    JsonObject contentObject = new JsonObject();
-    contentObject.add(stateName.getText(), moveObject);
-    return contentObject;
-  }
+
 }

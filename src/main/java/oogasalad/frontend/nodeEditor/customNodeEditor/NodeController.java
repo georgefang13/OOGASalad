@@ -11,7 +11,7 @@ public class NodeController {
     nodeWindow.showScene(scene);
   }
 
-  public void openAndSwitchToTab(String name) {
-    scene.openAndSwitchToTab(name);
+  public void openAndSwitchToTab(String state, String action) {
+    scene.openAndSwitchToTab(state, action);
   }
 }

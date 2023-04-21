@@ -15,6 +15,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
+import javafx.scene.control.Tab;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -23,12 +24,14 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import oogasalad.frontend.managers.PropertyManager;
 import oogasalad.frontend.managers.StandardPropertyManager;
+import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.AbstractNode;
 import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.DraggableNodes.DraggableAbstractNode;
 import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.DraggableNodes.StateNode;
 
-public abstract class AbstractNodePanel {
+public abstract class AbstractNodePanel extends Tab {
 
   public static final String NODES_FOLDER = "oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.";
+  public static final String NODES_JSON_FOLDER = "/src/resources/nodeCode/";
   protected Group group;
   protected ImageView workspace;
   protected double windowWidth, windowHeight;
@@ -45,24 +48,20 @@ public abstract class AbstractNodePanel {
   protected abstract List<Button> getNodeSelectionButtons();
 
   public void saveAllNodeContent(String filePath) {
-    Gson gson = new GsonBuilder().setPrettyPrinting().create();
-    JsonObject statesObject = new JsonObject();
-    for (Node node : group.getChildren()) {
-      if (node instanceof StateNode) {
-        StateNode stateNode = (StateNode) node;
-        JsonObject stateObject = gson.fromJson(stateNode.sendJSONContent(), JsonObject.class);
-        String stateName = stateObject.keySet().iterator().next();
-        statesObject.add(stateName, stateObject.get(stateName));
-      }
-    }
-    JsonObject contentObject = new JsonObject();
-    contentObject.add("states", statesObject);
-    try (FileWriter fileWriter = new FileWriter(filePath)) {
-      gson.toJson(contentObject, fileWriter);
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+
   }
+
+//  public JsonObject sendJSONContent() {
+//    Gson gson = new GsonBuilder().setPrettyPrinting().create();
+//    JsonObject moveObject = new JsonObject();
+//    //moveObject.addProperty("init", init.getText());
+//    //moveObject.addProperty("leave", leave.getText());
+//    //moveObject.addProperty("setValue", setValue.getText());
+//    //moveObject.addProperty("to", to.getText());
+//    JsonObject contentObject = new JsonObject();
+//    contentObject.add(stateName.getText(), moveObject);
+//    return contentObject;
+//  }
 
 
   protected Button makeButton(String buttonName, EventHandler<ActionEvent> handler) {
