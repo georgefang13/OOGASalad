@@ -60,7 +60,7 @@ public interface Component {
    * This is the method that allows Component in the game-editor to be resized
    * @param size the size of the ImageView that represents the Component
    */
-  void setSize(int size);
+  void setSize(double size);
 
   void followMouse();
 

@@ -31,10 +31,12 @@ public abstract class GameRunnerObject extends GameObject implements GameRunnerC
 
         });
         getNode().setOnMouseDragged(e -> {
+            System.out.println("Being dragged");
             getNode().setTranslateX(e.getSceneX() - XOffset);
             getNode().setTranslateY(e.getSceneY() - YOffset);
         });
-        getNode().setOnDragOver(e -> {
+        getNode().setOnMouseReleased(e -> {
+            System.out.println("mouse releaawd");
             onDragDropped();
         });
     }

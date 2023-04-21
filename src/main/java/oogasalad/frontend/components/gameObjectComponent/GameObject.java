@@ -30,7 +30,7 @@ public class GameObject extends AbstractComponent implements GameObjectComponent
   public GameObject(int ID) {
     super(ID);
     children = null;
-    Image newImage = new Image(DEFAULT_BUNDLE.getString("DEFAULT_IMAGE"));
+    //Image newImage = new Image(DEFAULT_BUNDLE.getString("DEFAULT_IMAGE"));
     setImage(DEFAULT_BUNDLE.getString("DEFAULT_IMAGE"));
     followMouse();
   }

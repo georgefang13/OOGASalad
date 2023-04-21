@@ -67,16 +67,19 @@ public class GameRunnerController {
         for (int i = 1; i <= 10; i++) {
             int pieceID = i;
             BoardPiece piece = new BoardPiece(pieceID,this);
-            piece.setSize(30);
+            piece.setSize(0.2);
             pieceMap.put(pieceID,piece);
             pieceNodes.add(piece.getNode());
         }
         return pieceNodes;
     }
     public void updatePieceMove(int id) {
+        System.out.println("updating piece move:");
+        System.out.println(id);
         BoardPiece piece = pieceMap.get(id);
         Board.BoardXY boardXY = getPieceBoardLocation(piece.getNode());
         String userInput = boardXY.y() + "," + boardXY.x();
+        System.out.println(userInput);
         userResponds(userInput);
     }
     private Board.BoardXY getPieceBoardLocation(Node node) {
