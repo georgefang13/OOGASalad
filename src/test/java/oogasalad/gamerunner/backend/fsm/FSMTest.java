@@ -232,7 +232,7 @@ public class FSMTest {
                     "for [ :i 0 3 ] [ " +
                     "for [ :j 0 3 ] [ " +
                     "make :x fromgame + + :i \", :j " +
-                    "if [ == 0 len dzitems :x ] [ " +
+                    "if == 0 len dzitems :x [ " +
                     "additem :x :game_available " +
                     "] " +
                     "] " +
@@ -244,7 +244,7 @@ public class FSMTest {
             {"MOVE", Stream.of(new String[][]{
                 {"init", ""},
                 {"leave", "getAvailable"},
-                {"setValue", "ifelse [ == :game_turn 0 ] [ " +
+                {"setValue", "ifelse == :game_turn 0 [ " +
                     "putdzitem \"obj \"X fromgame :game_state_input " +
                     " ] [ " +
                     "putdzitem \"obj \"O fromgame :game_state_input " +
