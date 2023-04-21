@@ -53,42 +53,6 @@ public abstract class AbstractNode extends VBox {
     setStyle("-fx-background-color: " + color);
   }
 
-  protected void setX(double x) {
-    this.x = x;
-  }
-
-  protected void setY(double y) {
-    this.y = y;
-  }
-
-  protected double getX() {
-    return this.x;
-  }
-
-  protected double getY() {
-    return this.y;
-  }
-
-  protected String getColor() {
-    return this.color;
-  }
-
-  protected double getXOffset() {
-    return xOffset;
-  }
-
-  protected double getYOffset() {
-    return yOffset;
-  }
-
-  protected void setXOffset(Double offset) {
-    this.xOffset = offset;
-  }
-
-  protected void setYOffset(Double offset) {
-    this.yOffset = offset;
-  }
-
   protected void setToolTips() {
     Tooltip t = new Tooltip("Delete: Shift + Click");
     Tooltip.install(this, t);

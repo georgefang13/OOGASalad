@@ -74,7 +74,7 @@ public abstract class DraggableAbstractNode extends AbstractNode implements Drag
         if (node instanceof AbstractNode && node != this) {
           if (this.getBoundsInParent().intersects(node.getBoundsInParent())
               && this.getChildNode() != node) {
-            System.out.println("snapping " + this + " to " + node + "!");
+            //System.out.println("snapping " + this + " to " + node + "!");
             snapTo((AbstractNode) node);
           }
         }
@@ -104,13 +104,11 @@ public abstract class DraggableAbstractNode extends AbstractNode implements Drag
     boundingBox = bounds;
   }
 
-  public String sendContent() {
-    return null;
-  }
+  public abstract String sendContent();
 
   public String sendChildContent() {
-    System.out.println("this is " + this);
-    System.out.println("child node is " + this.getChildNode());
+    //System.out.println("this is " + this);
+    //System.out.println("child node is " + this.getChildNode());
     if (this.getChildNode() == null) {
       return "";
     }

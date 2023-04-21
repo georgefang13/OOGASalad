@@ -99,11 +99,11 @@ public abstract class AbstractNodePanel {
 
 
   public ScrollPane makeWorkspacePane() {
+    double defaultXScale = 0.15;
+    double defaultYScale = 0.15;
     workspace = new ImageView(
         new Image(getClass().getResourceAsStream("/frontend/images/GameEditor/grid.png")));
     group = new Group(workspace);
-    double defaultXScale = 0.15;
-    double defaultYScale = 0.15;
     group.setScaleX(defaultXScale);
     group.setScaleY(defaultYScale);
     StackPane content = new StackPane(new Group(group));

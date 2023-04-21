@@ -35,13 +35,13 @@ public class StateNode extends DraggableAbstractNode {
     stateName = new TextField();
     stateName.setPromptText("Name");
     buttonGrid.add(stateName, 0, 0);
-    buttonGrid.add(createButton("Initialize", this::onInitialize), 0, 1);
-    buttonGrid.add(createButton("Leave", this::onLeave), 0, 2);
-    buttonGrid.add(createButton("Set value", this::onSetValue), 0, 3);
-    buttonGrid.add(createButton("Next", this::onNext), 0, 4);
+    buttonGrid.add(makeButton("Initialize", this::onInitialize), 0, 1);
+    buttonGrid.add(makeButton("Leave", this::onLeave), 0, 2);
+    buttonGrid.add(makeButton("Set value", this::onSetValue), 0, 3);
+    buttonGrid.add(makeButton("Next", this::onNext), 0, 4);
   }
 
-  private Button createButton(String label, EventHandler<ActionEvent> handler) {
+  private Button makeButton(String label, EventHandler<ActionEvent> handler) {
     Button button = new Button(label);
     button.setOnAction(handler);
     button.setMaxWidth(Double.MAX_VALUE);
