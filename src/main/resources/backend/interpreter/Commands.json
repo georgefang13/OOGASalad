@@ -74,10 +74,26 @@
     "example": "call :func_var # call <var_name>",
     "specs": {
       "innerBlocks": [],
-      "inputs": [{ "name": "var_name", "type": ["string"] }],
+      "inputs": [
+        { "name": "var_name", "type": ["string"] },
+        { "name": "args", "type": ["list"] }
+      ],
       "outputs": [],
-      "parse": "call :%s"
+      "parse": "call :%s [ %s ]"
     }
+  },
+  "Continue": {
+      "name": "Continue",
+      "folder": "control",
+      "str": "continue",
+      "description": "Continues to the next iteration of the innermost loop",
+      "example": "continue # continue",
+      "specs": {
+      "innerBlocks": [],
+      "inputs": [],
+      "outputs": [],
+      "parse": "continue"
+      }
   },
   "Del": {
     "name": "Del",
@@ -403,6 +419,37 @@
       "parse": "dzitems %s"
     }
   },
+  "GetObjectsFromPlayer": {
+    "name": "Get Objects From Player",
+    "folder": "game",
+    "str": "fromplayer",
+    "description": "Gets all objects owned by a player with a specific class",
+    "example": "fromplayer :curplayer \"class1.class2.class3...  # fromplayer <player> <.-delimited strings>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        { "name": "player", "type": ["player"] },
+        { "name": "classes", "type": ["string"] }
+      ],
+      "outputs": ["list"],
+      "parse": "fromplayer :%s %s"
+    }
+  },
+  "GetPlayer": {
+    "name": "Get Objects From Player",
+    "folder": "game",
+    "str": "getplayer",
+    "description": "Gets the nth player in the game",
+    "example": "getplayer 1  # getplayer <player_number>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        { "name": "player_number", "type": ["number"] },
+      ],
+      "outputs": ["player"],
+      "parse": "getplayer %s"
+    }
+  },
   "GetObjsByClass": {
     "name": "Get Objects In The Game By Class",
     "folder": "game",
@@ -418,6 +465,19 @@
       "parse": "fromgameclass %s"
     }
   },
+  "GetOwner": {
+    "name": "Get Game Object Owner",
+    "folder": "game",
+    "str": "owner",
+    "description": "Retrieves the owner of a GameObject",
+    "example": "owner :game_var # owner <var_name>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [{ "name": "var_name", "type": ["string"] }],
+      "outputs": ["player"],
+      "parse": "owner :%s"
+    }
+  },
   "IsDropZoneEmpty": {
     "name": "Is Drop Zone Empty",
     "folder": "game",
@@ -431,6 +491,7 @@
       "parse": "dzempty %s"
     }
   },
+
 
   "AddAllItems": {
     "name": "Add All List Items",

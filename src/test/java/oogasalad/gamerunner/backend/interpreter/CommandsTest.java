@@ -6,10 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.*;
-
 import oogasalad.gameeditor.backend.id.IdManager;
 import oogasalad.gameeditor.backend.ownables.gameobjects.BoardCreator;
-import oogasalad.gamerunner.backend.Game;
 import oogasalad.gamerunner.backend.interpreter.commands.operators.Sum;
 import oogasalad.gamerunner.backend.interpreter.tokens.ExpressionToken;
 import oogasalad.gamerunner.backend.interpreter.tokens.OperatorToken;
@@ -20,6 +18,7 @@ import oogasalad.sharedDependencies.backend.ownables.Ownable;
 import oogasalad.sharedDependencies.backend.ownables.gameobjects.DropZone;
 import oogasalad.sharedDependencies.backend.ownables.gameobjects.GameObject;
 import oogasalad.sharedDependencies.backend.ownables.variables.Variable;
+import oogasalad.sharedDependencies.backend.owners.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -27,7 +26,7 @@ public class CommandsTest {
 
   private Interpreter interpreter;
   private IdManager<Ownable> idManager;
-  private Game game;
+  private TestGame game;
   private static final String LANGUAGE_RESOURCE_PATH = "backend.interpreter.languages";
   ResourceBundle resources;
   private String language = "English";
@@ -36,7 +35,7 @@ public class CommandsTest {
   public void setUp() {
     interpreter = new Interpreter();
     idManager = new IdManager<>();
-    game = new Game();
+    game = new TestGame();
     interpreter.linkIdManager(idManager);
     interpreter.linkGame(game);
     language = "English";
@@ -72,6 +71,11 @@ public class CommandsTest {
     s = String.format(s, t, NAME, String.join(" or ", simplenames),
         t == null ? "null" : t.getClass().getSimpleName());
     return s;
+  }
+
+  private void useGameVars(){
+    interpreter = game.getInterpreter();
+    idManager = game.getOwnableIdManager();
   }
 
   @Test
@@ -131,6 +135,12 @@ public class CommandsTest {
     List<String> expected2 = new ArrayList<>(List.of("1", "hello"));
     a = getVar("interpreter-:x");
     assertEquals(expected2, a.get());
+
+    // add variable to list
+    input = "make :x [ ] make :y 1 additem :y :x";
+    interpreter.interpret(input);
+    a = getVar("interpreter-:x");
+    assertEquals(expected, a.get());
   }
 
   @Test
@@ -205,6 +215,61 @@ public class CommandsTest {
   }
 
   @Test
+  public void testCallAndFVar(){
+    String input = "make :y 0 to test [ :x ] [ global :y make :game_y :x ] make :func fvar test call :func [ 1 ]";
+    interpreter.interpret(input);
+    Variable y = getVar("y");
+    assertEquals(1.0, y.get());
+
+    // test with function that takes no parameters
+    input = "make :y 0 to test [ ] [ global :y make :game_y 6 ] make :func fvar test call :func [ ]";
+    interpreter.interpret(input);
+    y = getVar("y");
+    assertEquals(6.0, y.get());
+
+    // test with function that takes multiple parameters
+    input = "make :y 0 to test [ :x :z ] [ global :y make :game_y + :x :z ] make :func fvar test call :func [ 1 2 ]";
+    interpreter.interpret(input);
+    y = getVar("y");
+    assertEquals(3.0, y.get());
+  }
+
+  @Test
+  public void testContinue(){
+    // continue
+    String input = "make :game_log [ ] " +
+            "make :x 0 " +
+            "for [ :i 1 10 1 ] [ " +
+            "global :x " +
+            "additem :i :game_log " +
+            "if > :i 5 [ continue ] " +
+            " make :x :i " +
+            "]";
+    interpreter.interpret(input);
+    Variable<Double> x = getVar("interpreter-:x");
+    Variable<List<Double>> log = getVar("log");
+    assertEquals(5., x.get());
+    List<Double> expected = new ArrayList<>(List.of(1., 2., 3., 4., 5., 6., 7., 8., 9.));
+    assertEquals(expected, log.get());
+
+    // continue in nested loop
+    input = "make :x 0 make :y 0 " +
+            "repeat 5 [ " +
+              "make :x + :x 1 " +
+              "repeat 10 [ " +
+                "if > :repcount 5 [ continue ] " +
+                "make :y :repcount " +
+              "] " +
+            "]";
+
+    interpreter.interpret(input);
+    x = getVar("interpreter-:x");
+    Variable<Double> y = getVar("interpreter-:y");
+    assertEquals(5.0, x.get());
+    assertEquals(5.0, y.get());
+  }
+
+  @Test
   public void testCosine() {
     // cosine
     String input = "make :x 38 make :z cos :x";
@@ -226,8 +291,18 @@ public class CommandsTest {
 
   @Test
   public void testCurPlayer(){
-    game.init(2);
+    game.noFSMInit(2);
+    useGameVars();
+    String input = "make :x curplayer";
+    interpreter.interpret(input);
+    Variable<Player> x = getVar("interpreter-:x");
+    assertEquals(game.getPlayer(0), x.get());
 
+    game.setTurn(1);
+    input = "make :x curplayer";
+    interpreter.interpret(input);
+    x = getVar("interpreter-:x");
+    assertEquals(game.getPlayer(1), x.get());
   }
 
   @Test
@@ -489,6 +564,14 @@ public class CommandsTest {
   }
 
   @Test
+  public void testForEach(){
+    String input = "make :x [ 1 2 3 4 5 ] make :y 0 foreach [ :i :x ] [ global :y make :y + :y :i ]";
+    interpreter.interpret(input);
+    Variable<Double> y = getVar("interpreter-:y");
+    assertEquals(15, y.get());
+  }
+
+  @Test
   public void testGetAttribute() {
     GameObject dropZone = new DropZone("A");
     Class<?> c = GameObject.class;
@@ -560,6 +643,37 @@ public class CommandsTest {
           e.getMessage());
     }
 
+  }
+
+  @Test
+  public void testDropZonePaths(){
+    List<DropZone> board = BoardCreator.createGrid(8, 8);
+    for (DropZone dz : board) {
+      idManager.addObject(dz, dz.getId());
+    }
+    String id1 = board.get(0).getId();
+    String id2 = board.get(18).getId();
+    String input = "make :p1 dzpaths fromgame \"" + id1 + " make :p2 dzpaths fromgame \"" + id2;
+    interpreter.interpret(input);
+    Variable<List<String>> p1 = getVar("interpreter-:p1");
+    Variable<List<String>> p2 = getVar("interpreter-:p2");
+    HashSet<String> expected1 = new HashSet<>(Arrays.asList("Down", "DownRight", "Right"));
+    HashSet<String> expected2 = new HashSet<>(Arrays.asList("Up", "UpLeft", "Left", "DownLeft", "Down", "DownRight", "Right", "UpRight"));
+    assertEquals(expected1, new HashSet<>(p1.get()));
+    assertEquals(expected2, new HashSet<>(p2.get()));
+  }
+
+  @Test
+  public void testFollowDropZonePath(){
+    List<DropZone> board = BoardCreator.createGrid(8, 8);
+    for (DropZone dz : board) {
+      idManager.addObject(dz, dz.getId());
+    }
+    String id1 = board.get(0).getId();
+    String input = "make :dz fromgame \"" + id1 + " make :path [ \"Down \"DownRight ] make :p dzfollow :dz :path";
+    interpreter.interpret(input);
+    Variable<DropZone> p = getVar("interpreter-:p");
+    assertEquals(board.get(17), p.get());
   }
 
   @Test
@@ -653,6 +767,76 @@ public class CommandsTest {
       assertEquals("Invalid syntax: Not enough arguments for operator FromGame", e.getMessage());
     }
 
+
+  }
+
+  @Test
+  public void testGetObjectsFromPlayer(){
+    game.noFSMInit(2);
+    useGameVars();
+    // two players, one object each
+    Player p1 = game.getPlayer(0);
+    Player p2 = game.getPlayer(1);
+    GameObject obj1 = new GameObject(p1);
+    GameObject obj2 = new GameObject(p2);
+    GameObject obj3 = new GameObject(p1);
+    GameObject obj4 = new GameObject(p2);
+    obj1.addClass("obj");
+    obj2.addClass("obj");
+    obj3.addClass("obj");
+    obj4.addClass("obj");
+    obj3.addClass("thing");
+    obj4.addClass("thing");
+
+    Variable<?> xvar = new Variable<>("test", p1);
+    xvar.addClass("pvar");
+    Variable<?> yvar = new Variable<>("test", p2);
+    yvar.addClass("pvar");
+
+    idManager.addObject(xvar, "0,1");
+    idManager.addObject(yvar, "0,2");
+
+    idManager.addObject(obj1, "obj1");
+    idManager.addObject(obj2, "obj2");
+    idManager.addObject(obj3, "obj3");
+    idManager.addObject(obj4, "obj4");
+
+    // single class
+    String input = "make :x fromplayer curplayer \"obj make :y fromplayer getplayer 1 \"obj";
+    interpreter.interpret(input);
+    Variable<List<Object>> x = getVar("interpreter-:x");
+    Variable<List<Object>> y = getVar("interpreter-:y");
+    assertEquals(2, x.get().size());
+    assertEquals(2, y.get().size());
+    assertTrue(x.get().contains(obj1));
+    assertTrue(y.get().contains(obj2));
+
+    // multiple classes
+    input = "make :x fromplayer curplayer \"obj.thing";
+    interpreter.interpret(input);
+    x = getVar("interpreter-:x");
+    assertEquals(1, x.get().size());
+    assertTrue(x.get().contains(obj3));
+
+    // fromplayer with a non-number
+    input = "make :x fromplayer \"1 \"4";
+    try {
+      interpreter.interpret(input);
+      fail();
+    } catch (Exception e) {
+      ValueToken<?> t = new ValueToken<>("1");
+      assertEquals(checkSubtypeErrorMsg(t, "GetObjectsFromPlayer", ValueToken.class, Player.class),
+          e.getMessage());
+    }
+
+    // fromplayer with wrong number of arguments
+    input = "make :x fromplayer";
+    try {
+      interpreter.interpret(input);
+      fail();
+    } catch (Exception e) {
+      assertEquals("Invalid syntax: Not enough arguments for operator GetObjectsFromPlayer", e.getMessage());
+    }
 
   }
 
@@ -1202,6 +1386,36 @@ public class CommandsTest {
       ValueToken<?> t = new ValueToken<>(1.0);
       assertEquals(checkSubtypeErrorMsg(t, "Or", ValueToken.class, Boolean.class), e.getMessage());
     }
+  }
+
+  @Test
+  public void testPlayerOwner(){
+    game.noFSMInit(4);
+    useGameVars();
+    Variable<Double> v1 = new Variable<>(1.0, game.getPlayer(0));
+    Variable<Double> v2 = new Variable<>(2.0, game.getPlayer(1));
+    Variable<Double> v3 = new Variable<>(3.0, game.getPlayer(2));
+    Variable<Double> v4 = new Variable<>(4.0, game.getPlayer(3));
+    idManager.addObject(v1, "v1");
+    idManager.addObject(v2, "v2");
+    idManager.addObject(v3, "v3");
+    idManager.addObject(v4, "v4");
+    String input = "make :x owner :game_v1";
+    interpreter.interpret(input);
+    Variable<Player> x = getVar("interpreter-:x");
+    assertEquals(game.getPlayer(0), x.get());
+
+    input = "make :x owner :game_v2";
+    interpreter.interpret(input);
+    x = getVar("interpreter-:x");
+    assertEquals(game.getPlayer(1), x.get());
+
+    GameObject o = new GameObject(null);
+    idManager.addObject(o, "o", v3);
+    input = "make :x owner :game_o";
+    interpreter.interpret(input);
+    x = getVar("interpreter-:x");
+    assertEquals(game.getPlayer(2), x.get());
   }
 
   @Test

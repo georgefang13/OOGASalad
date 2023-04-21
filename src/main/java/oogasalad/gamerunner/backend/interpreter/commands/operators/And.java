@@ -17,11 +17,13 @@ public class And extends OperatorToken {
     @Override
     public Token evaluate(Environment env) throws IllegalArgumentException{
         Token t1 = getArg(0).evaluate(env);
-        Token t2 = getArg(1).evaluate(env);
-
         ValueToken<Boolean> x1 = checkArgumentWithSubtype(env, t1, ValueToken.class, Boolean.class.getName());
+
+        if (!x1.VALUE) return new ValueToken<>(false);
+
+        Token t2 = getArg(1).evaluate(env);
         ValueToken<Boolean> x2 = checkArgumentWithSubtype(env, t2, ValueToken.class, Boolean.class.getName());
 
-        return new ValueToken<>(x1.VALUE && x2.VALUE);
+        return new ValueToken<>(x2.VALUE);
     }
 }

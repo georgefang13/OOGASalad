@@ -38,13 +38,13 @@ public class DoTimes extends OperatorToken {
     for (int i = 0; i < reps; i++) {
       env.addVariable(var.NAME, new ValueToken<>((double) i));
       result = exprs.evaluate(env);
-      if (result instanceof ReturnToken || result instanceof BreakToken){
+      if (result instanceof ReturnToken || result instanceof Break){
         break;
       }
     }
     env.endLocalScope();
 
-    if (result instanceof BreakToken) result = null;
+    if (result instanceof Break) result = null;
     return result;
   }
 }

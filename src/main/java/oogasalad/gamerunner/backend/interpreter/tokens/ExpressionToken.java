@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import oogasalad.gamerunner.backend.interpreter.Environment;
+import oogasalad.gamerunner.backend.interpreter.commands.control.Break;
+import oogasalad.gamerunner.backend.interpreter.commands.control.Continue;
 import oogasalad.gamerunner.backend.interpreter.commands.control.Return;
 import oogasalad.gamerunner.backend.interpreter.commands.control.ReturnNull;
 
@@ -86,7 +88,7 @@ public class ExpressionToken extends Token implements Iterable<Token> {
   public Token evaluate(Environment env) {
     for (Token expr : tokens) {
       Token t = expr.evaluate(env);
-      if (t instanceof ReturnToken || t instanceof BreakToken) {
+      if (t instanceof ReturnToken || t instanceof Break || t instanceof Continue) {
         return t;
       }
     }

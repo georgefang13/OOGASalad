@@ -158,16 +158,15 @@ public class DropZone extends GameObject {
    * @param isBlocked a function that takes a node and returns true if it is blocked
    * @return a list of all the open nodes that can be reached with that path
    */
-  public List<String> findSpotsUntilBlocked(List<String> path, Predicate<DropZone> isBlocked) {
+  public List<DropZone> findSpotsUntilBlocked(List<String> path, Predicate<DropZone> isBlocked) {
     DropZone currentNode = this;
-    List<String> spots = new ArrayList<>();
+    List<DropZone> spots = new ArrayList<>();
     while (true) {
       currentNode = currentNode.followPath(path);
-      if (currentNode == null || spots.contains(currentNode.getId()) || isBlocked.test(
-          currentNode)) {
+      if (currentNode == null || spots.contains(currentNode) || isBlocked.test(currentNode)) {
         break;
       }
-      spots.add(currentNode.getId());
+      spots.add(currentNode);
     }
     return spots;
   }
