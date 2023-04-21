@@ -30,8 +30,9 @@ public class GameObject extends AbstractComponent implements GameObjectComponent
   public GameObject(int ID) {
     super(ID);
     children = null;
-    //Image newImage = new Image(DEFAULT_BUNDLE.getString("DEFAULT_IMAGE"));
-    setImage(DEFAULT_BUNDLE.getString("DEFAULT_IMAGE"));
+    setImage(DEFAULT_BUNDLE.getString(replaceWithFileLoadingByID()));
+    image.setFitHeight(200);
+    image.setFitWidth(200);
     followMouse();
   }
 
@@ -43,7 +44,7 @@ public class GameObject extends AbstractComponent implements GameObjectComponent
   public GameObject(int ID, Map<String, String> map){
     super(ID);
     children = null;
-    setImage(DEFAULT_BUNDLE.getString("DEFAULT_IMAGE"));
+    setImage(DEFAULT_BUNDLE.getString(replaceWithFileLoadingByID()));
     followMouse();
     for(String param: map.keySet()){
       try{
@@ -56,6 +57,14 @@ public class GameObject extends AbstractComponent implements GameObjectComponent
       } catch (Exception e){
         e.printStackTrace();
       }
+    }
+  }
+  private String replaceWithFileLoadingByID(){
+    if (ID < 6){
+      return "DEFAULT_IMAGE";
+    }
+    else {
+      return "X_IMAGE";
     }
   }
 

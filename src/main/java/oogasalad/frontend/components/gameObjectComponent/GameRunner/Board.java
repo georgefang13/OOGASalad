@@ -49,6 +49,14 @@ public class Board {
   public BoardXY boardXYofNode(Point2D nodeXY) {
     int x = (int) (nodeXY.getX() / blockSize);
     int y = (int) (nodeXY.getY() / blockSize);
+    if (!checkValid(x,width) || !checkValid(y,height)){
+      x = -1;
+      y = -1;
+    }
     return new BoardXY(x, y);
+  }
+
+  private boolean checkValid(int xy, int max){
+    return ((0 <= xy) && (xy <= max));
   }
 }

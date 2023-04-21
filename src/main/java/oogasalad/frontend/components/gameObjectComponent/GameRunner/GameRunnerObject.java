@@ -25,18 +25,8 @@ public abstract class GameRunnerObject extends GameObject implements GameRunnerC
 
     @Override
     public void followMouse() {
-        getNode().setOnMousePressed(e -> {
-            XOffset = e.getSceneX() - (getNode().getTranslateX());
-            YOffset = e.getSceneY() - (getNode().getTranslateY());
-
-        });
-        getNode().setOnMouseDragged(e -> {
-            System.out.println("Being dragged");
-            getNode().setTranslateX(e.getSceneX() - XOffset);
-            getNode().setTranslateY(e.getSceneY() - YOffset);
-        });
+        super.followMouse();
         getNode().setOnMouseReleased(e -> {
-            System.out.println("mouse releaawd");
             onDragDropped();
         });
     }

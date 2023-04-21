@@ -35,7 +35,8 @@ public class GameRunnerController {
     }
 
     public String initialInstruction() {
-        return fsmExample.getInstruction();
+        String response = fsmExample.getInstruction();
+        return parseResponse(response);
     }
 
     public GridPane initializeBoard() {
@@ -45,17 +46,16 @@ public class GameRunnerController {
         board = new Board(height, width);
         return board.getBoardVisual();
     }
-    private void parseResponse(String response) {
+    private String parseResponse(String response) {
         String[] splitResponse = response.split("Turn: ");
-        playerTurn = playerDoubleStringtoName(splitResponse[1].split("\n")[0]);
+        String[] secondSplit = splitResponse[1].split("\n");
+        playerTurn = playerDoubleStringtoName(secondSplit[0]);
         System.out.print("player turn: ");
         System.out.println(playerTurn);
-        //instruction = "Turn: " + splitResponse[1];
-        //String gridString = splitResponse[0];
-        //parseGrid(gridString);
+        return "Turn: " + playerTurn + secondSplit[1];
     }
 
-    private String playerDoubleStringtoName(String doubleString){
+    private String playerDoubleStringtoName(String doubleString){ //FILE
         double dub = Double.parseDouble(doubleString);
         int playeridx = Integer.valueOf((int) dub);
         String[] players = {"X","O"};
@@ -74,13 +74,31 @@ public class GameRunnerController {
         return pieceNodes;
     }
     public void updatePieceMove(int id) {
-        System.out.println("updating piece move:");
-        System.out.println(id);
         BoardPiece piece = pieceMap.get(id);
         Board.BoardXY boardXY = getPieceBoardLocation(piece.getNode());
-        String userInput = boardXY.y() + "," + boardXY.x();
-        System.out.println(userInput);
-        userResponds(userInput);
+        int boardX = boardXY.x();
+        int boardY = boardXY.y();
+        if ((boardX != -1) && (boardY != -1)){
+            if (playerTurn == replaceWithFileLoaderThatAssignIDtoPiece(id)) {
+                String userInput = boardY + "," + boardX;
+                System.out.println(userInput);
+                String fsmReturn = userResponds(userInput);
+                String newInstruction = parseResponse(fsmReturn);
+                gamePlayerMainScene.refreshInstructions(newInstruction);
+            }
+            else {
+                String newInstruction = "ITS NOT YOUR MOVE!!!";
+                gamePlayerMainScene.refreshInstructions(newInstruction);
+            }
+        }
+    }
+    private String replaceWithFileLoaderThatAssignIDtoPiece(int id){
+        if (id < 6){
+            return "O";
+        }
+        else {
+            return "X";
+        }
     }
     private Board.BoardXY getPieceBoardLocation(Node node) {
         Point2D gridPaneXY = gamePlayerMainScene.getNodeXYOnGrid(node);
