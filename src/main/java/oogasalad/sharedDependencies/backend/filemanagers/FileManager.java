@@ -29,7 +29,7 @@ public class FileManager {
   protected static String SEPARATOR = ",";
   protected static String RESOURCES_PATH = "backend.filemanager.ValidTags";
 
-  private JsonObject myFileInfo;
+  private final JsonObject myFileInfo;
   private Collection<String> myValidTags;
 
   /**
@@ -40,15 +40,11 @@ public class FileManager {
     myValidTags = new HashSet<>();
   }
 
-  public FileManager(String filePath) {
+  public FileManager(String filePath) throws FileNotFoundException {
     Gson gson = new Gson();
-    try {
-      myFileInfo = gson
-          .fromJson(new FileReader(filePath), JsonElement.class)
-          .getAsJsonObject();
-    } catch (FileNotFoundException e) {
-      throw new RuntimeException(e);
-    }
+    myFileInfo = gson
+        .fromJson(new FileReader(filePath), JsonElement.class)
+        .getAsJsonObject();
     myValidTags = new HashSet<>();
   }
 
@@ -194,7 +190,9 @@ public class FileManager {
       if (object.get(tag).isJsonPrimitive()) {
         return object.get(tag).getAsString();
       }
-      object = object.getAsJsonObject(tag);
+      else if (object.get(tag).isJsonObject()) {
+        object = object.getAsJsonObject(tag);
+      }
     }
     throw new IllegalArgumentException();
   }
@@ -210,6 +208,9 @@ public class FileManager {
       }
       if (object.get(tag).isJsonArray()) {
         return JsonArrayToIterable(object.get(tag).getAsJsonArray());
+      }
+      else if (object.get(tag).isJsonPrimitive()) {
+        return new ArrayList<>(Collections.singletonList(object.get(tag).getAsString()));
       }
       object = object.getAsJsonObject(tag);
     }

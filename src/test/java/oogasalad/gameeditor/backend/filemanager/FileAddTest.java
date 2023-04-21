@@ -20,7 +20,7 @@ import org.junit.jupiter.api.Test;
  */
 public class FileAddTest {
 
-  public static final String FILE_FOLDER = System.getProperty("user.dir") + "/data/testfiles";
+  private static final String FILE_FOLDER = System.getProperty("user.dir") + "/data/testfiles";
   private static final String RESOURCES_PATH = "TestConfigFiles";
   FileManager fileManager;
   Gson gson;
