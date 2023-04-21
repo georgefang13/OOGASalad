@@ -4,18 +4,20 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
+import oogasalad.frontend.nodeEditor.customNodeEditor.NodeController;
 
 public class DifferenceNode extends DraggableAbstractNode {
 
   private TextField operand1, operand2;
   private Label outputLabel;
 
-  public DifferenceNode() {
-    super(0, 0, 100, 100, "blue");
+  public DifferenceNode(NodeController nodeController) {
+    super(nodeController, 0, 0, 100, 100, "blue");
   }
 
-  public DifferenceNode(double x, double y, double width, double height, String color) {
-    super(x, y, width, height, color);
+  public DifferenceNode(NodeController nodeController, double x, double y, double width,
+      double height, String color) {
+    super(nodeController, x, y, width, height, color);
   }
 
   @Override

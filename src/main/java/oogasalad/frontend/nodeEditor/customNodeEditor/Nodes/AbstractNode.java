@@ -3,6 +3,7 @@ package oogasalad.frontend.nodeEditor.customNodeEditor.Nodes;
 import javafx.scene.Group;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.VBox;
+import oogasalad.frontend.nodeEditor.customNodeEditor.NodeController;
 
 public abstract class AbstractNode extends VBox {
 
@@ -10,15 +11,18 @@ public abstract class AbstractNode extends VBox {
   protected double xOffset, yOffset;
 
   protected String color;
-  private AbstractNode childNode;
 
+  protected NodeController nodeController;
+  private AbstractNode childNode;
 
 //    protected List<Port> ports;
 
-  public AbstractNode(double x, double y, double width, double height, String color) {
+  public AbstractNode(NodeController nodeController, double x, double y, double width,
+      double height, String color) {
     this.x = x;
     this.y = y;
     this.color = color;
+    this.nodeController = nodeController;
     setLayoutX(x);
     setLayoutY(y);
     setPrefSize(width, height);
@@ -31,9 +35,11 @@ public abstract class AbstractNode extends VBox {
 
 
   public abstract String sendContent();
-  public void setChildNode(AbstractNode node){
+
+  public void setChildNode(AbstractNode node) {
     this.childNode = node;
   }
+
   public AbstractNode getChildNode() {
     return childNode;
   }

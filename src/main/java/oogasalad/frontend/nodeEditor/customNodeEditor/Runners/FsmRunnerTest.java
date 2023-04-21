@@ -79,7 +79,7 @@ public class FsmRunnerTest extends Application {
     //    .add(new DifferenceNode(50, 50, DEFAULT_WIDTH, DEFAULT_HEIGHT, "blue")));
     Button textButton = new Button("Text");
     textButton.setStyle("-fx-min-width: 100");
-    textButton.setOnAction(event -> box2.getChildren().add(new TextFieldNode(50, 50, DEFAULT_WIDTH, DEFAULT_HEIGHT, "white")));
+    //textButton.setOnAction(event -> box2.getChildren().add(new TextFieldNode(50, 50, DEFAULT_WIDTH, DEFAULT_HEIGHT, "white")));
     Button submitButton = new Button("Submit");
     submitButton.setStyle("-fx-min-width: 100");
     submitButton.setOnAction(event -> System.out.println(sendAllNodeContent()));

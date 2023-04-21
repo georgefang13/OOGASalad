@@ -4,6 +4,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
+import oogasalad.frontend.nodeEditor.customNodeEditor.NodeController;
 
 
 public class SumNode extends DraggableAbstractNode {
@@ -11,12 +12,13 @@ public class SumNode extends DraggableAbstractNode {
   private TextField operand1, operand2;
   private Label outputLabel;
 
-  public SumNode() {
-    super(0, 0, 100, 100, "red");
+  public SumNode(NodeController nodeController) {
+    super(nodeController, 0, 0, 100, 100, "red");
   }
 
-  public SumNode(double x, double y, double width, double height, String color) {
-    super(x, y, width, height, color);
+  public SumNode(NodeController nodeController, double x, double y, double width, double height,
+      String color) {
+    super(nodeController, x, y, width, height, color);
   }
 
   @Override

@@ -3,14 +3,16 @@ package oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.DraggableNodes;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import oogasalad.frontend.nodeEditor.customNodeEditor.Draggable;
+import oogasalad.frontend.nodeEditor.customNodeEditor.NodeController;
 import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.AbstractNode;
 
 public abstract class DraggableAbstractNode extends AbstractNode implements Draggable {
 
   private Bounds boundingBox;
 
-  public DraggableAbstractNode(double x, double y, double width, double height, String color) {
-    super(x, y, width, height, color);
+  public DraggableAbstractNode(NodeController nodeController, double x, double y, double width,
+      double height, String color) {
+    super(nodeController, x, y, width, height, color);
     onDragDetected();
     onMousePressed();
     onMouseDragged();
@@ -70,7 +72,8 @@ public abstract class DraggableAbstractNode extends AbstractNode implements Drag
       }
       for (Node node : this.getParent().getChildrenUnmodifiable()) {
         if (node instanceof AbstractNode && node != this) {
-          if (this.getBoundsInParent().intersects(node.getBoundsInParent()) && this.getChildNode() != node) {
+          if (this.getBoundsInParent().intersects(node.getBoundsInParent())
+              && this.getChildNode() != node) {
             System.out.println("snapping " + this + " to " + node + "!");
             snapTo((AbstractNode) node);
           }

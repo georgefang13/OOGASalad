@@ -13,19 +13,16 @@ import javafx.scene.layout.Priority;
 import oogasalad.frontend.nodeEditor.customNodeEditor.NodeController;
 
 public class StateNode extends DraggableAbstractNode {
-
   private TextField stateName;
   private GridPane buttonGrid;
-  private int buttonRow;
-  private NodeController nodeController;
 
   public StateNode(NodeController nodeController) {
-    super(0, 0, 300, 100, "orange");
-    this.nodeController = nodeController;
+    super(nodeController, 0, 0, 300, 100, "orange");
   }
 
-  public StateNode(double x, double y, double width, double height, String color) {
-    super(x, y, width, height, color);
+  public StateNode(NodeController nodeController, double x, double y, double width, double height,
+      String color) {
+    super(nodeController, x, y, width, height, color);
   }
 
   @Override
