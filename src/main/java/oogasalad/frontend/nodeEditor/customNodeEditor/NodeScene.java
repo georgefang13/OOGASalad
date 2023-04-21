@@ -7,12 +7,15 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.control.Tab;
@@ -33,12 +36,9 @@ public class NodeScene extends AbstractScene {
   public static final String NODES_FOLDER = "oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.";
   private Group group;
   private ImageView workspace;
-  private int buttonRow;
-  private GridPane nodeSelectionPane;
-
   private TabPane tabs;
-
-  Map<String, Tab> tabsByName;
+  Map<String, Tab> tabMap;
+  private double windowWidth, windowHeight;
   private NodeController nodeController;
 
   public NodeScene(NodeController nodeController) {
@@ -48,11 +48,67 @@ public class NodeScene extends AbstractScene {
 
   @Override
   public Scene makeScene() {
-    nodeSelectionPane = new GridPane();
-    nodeSelectionPane.setStyle("-fx-background-color: gray");
-    workspace = new ImageView(
+    tabs = new TabPane();
+    tabs.getTabs().add(makeStateEditorTab());
+    tabMap = new HashMap<>();
+    windowWidth = propertyManager.getNumeric("WindowWidth");
+    windowHeight = propertyManager.getNumeric("WindowHeight");
+    return new Scene(tabs);
+  }
+
+  private Tab makeStateEditorTab() {
+    GridPane nodeSelectionPane = makeNodeSelectionPane(makeStateEditorNodeButtons());
+    ScrollPane workspacePane = makeWorkspacePane();
+    Tab tab = new Tab("State Editor", new HBox(nodeSelectionPane, workspacePane));
+    tab.setClosable(false);
+    tabMap.put(tab.getText(), tab);
+    return tab;
+  }
+
+  private Tab makeCodeEditorTab() {
+    GridPane nodeSelectionPane = makeNodeSelectionPane(makeCodeEditorNodeButtons());
+    ScrollPane workspacePane = makeWorkspacePane();
+    Tab tab = new Tab("Code Editor", new HBox(nodeSelectionPane, workspacePane));
+    tabMap.put(tab.getText(), tab);
+    return tab;
+  }
+
+  private GridPane makeNodeSelectionPane(List<Button> buttons) {
+    GridPane pane = new GridPane();
+    pane.setStyle("-fx-background-color: gray");
+    for (Button button : buttons) {
+      pane.add(button, 0, buttons.indexOf(button));
+    }
+    pane.setMinSize(windowWidth / 4, windowHeight / 4);
+    return pane;
+  }
+
+  private List<Button> makeStateEditorNodeButtons() {
+    return List.of(
+        makeButton("State",
+            event -> makeNode(NODES_FOLDER + "DraggableNodes.StateNode")),
+        makeButton("Save",
+            event -> saveAllNodeContent("src/main/resources/export.json"))
+    );
+  }
+
+  private List<Button> makeCodeEditorNodeButtons() {
+    return List.of(
+        makeButton("Sum",
+            event -> makeNode(NODES_FOLDER + "DraggableNodes.SumNode")),
+        makeButton("Difference",
+            event -> makeNode(NODES_FOLDER + "DraggableNodes.DifferenceNode")),
+        makeButton("TextField",
+            event -> makeNode(NODES_FOLDER + "DraggableNodes.TextFieldNode")),
+        makeButton("Save",
+            event -> saveAllNodeContent("src/main/resources/export.json"))
+    );
+  }
+
+  private ScrollPane makeWorkspacePane() {
+    ImageView workspace = new ImageView(
         new Image(getClass().getResourceAsStream("/frontend/images/GameEditor/grid.png")));
-    group = new Group(workspace);
+    Group group = new Group(workspace);
     double defaultXScale = 0.15;
     double defaultYScale = 0.15;
     group.setScaleX(defaultXScale);
@@ -70,59 +126,17 @@ public class NodeScene extends AbstractScene {
         e.consume();
       }
     });
-    createNode("State", NODES_FOLDER + "DraggableNodes.StateNode");
-    //createNode("Sum", NODES_FOLDER + "DraggableNodes.SumNode");
-    //createNode("Difference", NODES_FOLDER + "DraggableNodes.DifferenceNode");
-    //createNode("TextField", NODES_FOLDER + "DraggableNodes.TextFieldNode");
-
-    Button sendButton = new Button("Submit");
-    sendButton.setOnAction(event -> {
-      saveAllNodeContent("src/main/resources/export.json");
-    });
-    sendButton.setMaxWidth(Double.MAX_VALUE);
-    GridPane.setHgrow(sendButton, Priority.ALWAYS);
-    nodeSelectionPane.add(sendButton, 0, buttonRow);
     ScrollPane scrollPane = new ScrollPane(content);
     scrollPane.setVbarPolicy(ScrollBarPolicy.NEVER);
     scrollPane.setHbarPolicy(ScrollBarPolicy.NEVER);
     scrollPane.setPannable(true);
     scrollPane.setFitToWidth(true);
     scrollPane.setFitToHeight(true);
-    tabs = new TabPane();
-    Tab mainTab = new Tab("Main Tab", new HBox(nodeSelectionPane, scrollPane));
-    mainTab.setClosable(false);
-    tabs.getTabs().add(mainTab);
-    Double windowWidth = propertyManager.getNumeric("WindowWidth");
-    Double windowHeight = propertyManager.getNumeric("WindowHeight");
-    nodeSelectionPane.setMinSize(windowWidth / 4, windowHeight / 4);
     workspace.setFitWidth(5 * windowWidth);
     workspace.setFitHeight(5 * windowHeight);
-    return new Scene(tabs);
+    return scrollPane;
   }
 
-  private void createNode(String buttonName, String className) {
-    try {
-      Class<?> clazz = Class.forName(className);
-      Constructor<?> constructor = clazz.getConstructor(NodeController.class);
-      Button button = new Button(buttonName);
-      button.setMaxWidth(Double.MAX_VALUE);
-      GridPane.setHgrow(button, Priority.ALWAYS);
-      button.setOnAction(event -> {
-        try {
-          DraggableAbstractNode node = (DraggableAbstractNode) constructor.newInstance(
-              nodeController);
-          group.getChildren().add(node);
-          node.setBoundingBox(workspace.getBoundsInParent());
-        } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
-          e.printStackTrace();
-        }
-      });
-      nodeSelectionPane.add(button, 0, buttonRow);
-      buttonRow += 1;
-    } catch (ClassNotFoundException | NoSuchMethodException e) {
-      e.printStackTrace();
-    }
-  }
 
   public void saveAllNodeContent(String filePath) {
     Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -145,13 +159,33 @@ public class NodeScene extends AbstractScene {
   }
 
   public void openAndSwitchToTab(String name) {
-    Tab existingTab = tabsByName.get(name);
+    Tab existingTab = tabMap.get(name);
     if (existingTab == null) {
-      Tab newTab = new Tab(name, new Label("Write code with blocks"));
-      tabs.getTabs().add(newTab);
-      tabsByName.put(name, newTab);
+      Tab newTab = new Tab(name, ); tabs.getTabs().add(newTab);
+      tabMap.put(name, newTab);
     } else {
       tabs.getSelectionModel().select(existingTab);
+    }
+  }
+
+  private Button makeButton(String buttonName, EventHandler<ActionEvent> handler) {
+    Button button = new Button(buttonName);
+    button.setOnAction(handler);
+    button.setMaxWidth(Double.MAX_VALUE);
+    GridPane.setHgrow(button, Priority.ALWAYS);
+    return button;
+  }
+
+  private void makeNode(String className) {
+    try {
+      Class<?> clazz = Class.forName(className);
+      Constructor<?> constructor = clazz.getConstructor(NodeController.class);
+      DraggableAbstractNode node = (DraggableAbstractNode) constructor.newInstance(nodeController);
+      group.getChildren().add(node);
+      node.setBoundingBox(workspace.getBoundsInParent());
+    } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException |
+             IllegalAccessException | InvocationTargetException e) {
+      e.printStackTrace();
     }
   }
 
