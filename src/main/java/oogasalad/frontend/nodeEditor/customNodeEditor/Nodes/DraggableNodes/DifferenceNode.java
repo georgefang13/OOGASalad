@@ -37,7 +37,7 @@ public class DifferenceNode extends DraggableAbstractNode {
 
   @Override
   public String getJSONString() {
-    return String.format("%d - %d = %d", operand1.getText(), operand2.getText(),
+    return String.format("%s - %s = %s", operand1.getText(), operand2.getText(),
         outputLabel.getText());
   }
 
