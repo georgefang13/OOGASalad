@@ -70,7 +70,7 @@ public class NodeScene extends AbstractScene {
         stateJson.addProperty(action, content);
       }
     }
-    try (FileWriter fileWriter = new FileWriter(NODES_JSON_PATH + filePath)) {
+    try (FileWriter fileWriter = new FileWriter(NODES_JSON_PATH)) {
       gson.toJson(stateObject, fileWriter);
     } catch (IOException e) {
       e.printStackTrace();

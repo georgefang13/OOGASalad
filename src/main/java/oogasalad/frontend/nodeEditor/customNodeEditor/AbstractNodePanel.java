@@ -26,7 +26,7 @@ import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.DraggableNodes.Dragg
 public abstract class AbstractNodePanel extends Tab {
 
   public static final String NODES_FOLDER = "oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.";
-  public static final String NODES_JSON_PATH = "src/resources/nodeCode/savedContent.json";
+  public static final String NODES_JSON_PATH = "src/main/resources/nodeCode/save.json";
   protected Group group;
   protected ImageView workspace;
   protected double windowWidth, windowHeight;
