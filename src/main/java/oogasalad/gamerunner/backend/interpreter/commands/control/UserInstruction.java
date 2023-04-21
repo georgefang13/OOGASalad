@@ -4,8 +4,9 @@ import oogasalad.gamerunner.backend.interpreter.Environment;
 import oogasalad.gamerunner.backend.interpreter.tokens.ExpressionToken;
 import oogasalad.gamerunner.backend.interpreter.tokens.OperatorToken;
 import oogasalad.gamerunner.backend.interpreter.tokens.Token;
-import oogasalad.gamerunner.backend.interpreter.tokens.ValueToken;
 import oogasalad.gamerunner.backend.interpreter.tokens.VariableToken;
+import oogasalad.gamerunner.backend.interpreter.tokens.ValueToken;
+import oogasalad.gamerunner.backend.interpreter.tokens.ReturnToken;
 
 /**
  * User defined instruction
@@ -31,6 +32,10 @@ public class UserInstruction extends OperatorToken {
     }
     Token t = exprs.evaluate(env);
     env.endLocalScope();
+
+    if (t instanceof ReturnToken r){
+      return r.VALUE;
+    }
     return t;
   }
 }

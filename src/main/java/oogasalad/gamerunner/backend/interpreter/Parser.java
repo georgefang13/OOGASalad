@@ -5,6 +5,7 @@ import java.util.List;
 
 import oogasalad.gamerunner.backend.interpreter.commands.control.FVar;
 import oogasalad.gamerunner.backend.interpreter.commands.control.MakeUserInstruction;
+import oogasalad.gamerunner.backend.interpreter.commands.control.Return;
 import oogasalad.gamerunner.backend.interpreter.commands.control.UserInstruction;
 import oogasalad.gamerunner.backend.interpreter.exceptions.InvalidSyntaxException;
 import oogasalad.gamerunner.backend.interpreter.tokens.BracketToken;
@@ -160,7 +161,5 @@ public class Parser {
         }
         if(openBrackets > 0) throw new InvalidSyntaxException("Bracket not closed: " + openBrackets);
     }
-
-
 
 }

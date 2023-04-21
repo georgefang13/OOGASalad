@@ -7,12 +7,9 @@ import java.util.List;
 import java.util.Map;
 import oogasalad.gameeditor.backend.id.IdManager;
 import oogasalad.gameeditor.backend.rules.Rule;
-import oogasalad.gamerunner.backend.fsm.FSM;
 import oogasalad.gamerunner.backend.interpretables.Goal;
-import oogasalad.gamerunner.backend.interpreter.Interpreter;
 import oogasalad.sharedDependencies.backend.ObjectFactory;
 import oogasalad.sharedDependencies.backend.ownables.Ownable;
-import oogasalad.sharedDependencies.backend.ownables.gameobjects.GameObject;
 import oogasalad.sharedDependencies.backend.ownables.variables.Variable;
 import oogasalad.sharedDependencies.backend.owners.GameWorld;
 import oogasalad.sharedDependencies.backend.owners.Owner;
@@ -53,88 +50,13 @@ public class GameInator {
    */
   private final GameWorld gameWorld = new GameWorld();
 
-  private final FSM<String> fsm = new FSM<>(ownableIdManager);
-
-  private final Interpreter interpreter = new Interpreter();
-
-  private int numPlayers = 1;
 
   /////////////////// PLAY THE GAME ///////////////////
 
-  public void initGame() {
-    interpreter.link(ownableIdManager);
-
-    Variable<Double> turn = new Variable<>(0.);
-    turn.setOwner(gameWorld);
-    ownableIdManager.addObject(turn, "turn");
-
-    Variable<Double> numPlayersVar = new Variable<>((double) numPlayers);
-    numPlayersVar.setOwner(gameWorld);
-    ownableIdManager.addObject(numPlayersVar, "playerCount");
-
-    Variable<List<GameObject>> available = new Variable<>(new ArrayList<>());
-    available.setOwner(gameWorld);
-    ownableIdManager.addObject(available, "available");
-
-    fsm.setState("INIT");
-    fsm.transition();
-  }
-
-  /**
-   * reacts to clicking a piece
-   */
-  public void clickPiece(String selectedObject) {
-    fsm.setStateInnerValue(selectedObject);
-    fsm.transition();
-
-    if (fsm.getCurrentState().equals("DONE")) {
-      fsm.setState("INIT");
-      // check goals
-      if (checkGoals() != -1) {
-        // TODO end game
-      }
-    }
-  }
-
-  public void keyDown(String key) {
-
-  }
-
-  public void keyUp(String key) {
-
-  }
-
-  private int checkGoals() {
-    for (Map.Entry<String, Goal> goal : goals) {
-      Goal g = goal.getValue();
-      int player = g.test(interpreter, ownableIdManager);
-      if (player != -1) {
-        return player;
-      }
-    }
-    return -1;
-  }
-
   // region LOADING
 
-  /**
-   * Loads a Game from a file.
-   *
-   * @param directory the name of the file to load from
-   */
-  public void loadGame(String directory) {
-    // TODO
-    // get num players
-
-    // load in players and player FSM
-
-    // load in ownables
-
-    // load in rules and goals
-  }
-
   private void initPlayers(JsonObject json) {
-    numPlayers = 1;
+
   }
 
   private void initOwnables(JsonObject json) {
@@ -250,7 +172,7 @@ public class GameInator {
   //region sendObject API
 
 //  /**
-//   * Creates an ownable using ownableFactory for player
+//   * Creates an Ownable using OwnableFactory for player
 //   * Pass in null for any unused parameters (cannot pass null for type)
 //   * @param type the string type of ownable
 //   * @param owner the owner of the ownable
@@ -309,8 +231,8 @@ public class GameInator {
    * variable has no initialized value In the future this would be added Currently, this
    * responsibility is handled by the updateObjectProperties API call
    *
-   * @Type The class the object belongs to
-   * @Params The params of the object
+   * @param type The class the object belongs to
+   * @param params The params of the object
    **/
   public void sendObject(ObjectType type, Map<ObjectParameter, String> params)
       throws IllegalArgumentException {

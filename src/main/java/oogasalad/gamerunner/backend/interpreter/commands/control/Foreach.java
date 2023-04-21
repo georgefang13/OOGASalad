@@ -28,11 +28,15 @@ public class Foreach extends OperatorToken {
         }
         ExpressionToken list = checkArgument(env, t, ExpressionToken.class);
 
+        Token result = null;
         for (Token item : list){
             env.addVariable(v.NAME, item);
-            exprs.evaluate(env);
+            result = exprs.evaluate(env);
+            if (result instanceof ReturnToken || result instanceof BreakToken){
+                break;
+            }
         }
-
-        return null;
+        if (result instanceof BreakToken) result = null;
+        return result;
     }
 }

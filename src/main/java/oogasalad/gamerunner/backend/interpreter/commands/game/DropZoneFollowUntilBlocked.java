@@ -1,4 +1,4 @@
-package oogasalad.gamerunner.backend.interpreter.commands.operators;
+package oogasalad.gamerunner.backend.interpreter.commands.game;
 
 import oogasalad.gamerunner.backend.interpreter.Environment;
 import oogasalad.gamerunner.backend.interpreter.tokens.ExpressionToken;
