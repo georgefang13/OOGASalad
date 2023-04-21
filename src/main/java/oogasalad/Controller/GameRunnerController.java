@@ -89,8 +89,10 @@ public class GameRunnerController {
             else {
                 String newInstruction = "ITS NOT YOUR MOVE!!!";
                 gamePlayerMainScene.refreshInstructions(newInstruction);
+                piece.goBack();
             }
         }
+        piece.acceptDrag();
     }
     private String replaceWithFileLoaderThatAssignIDtoPiece(int id){
         if (id < 6){

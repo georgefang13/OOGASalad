@@ -6,6 +6,8 @@ import oogasalad.Controller.GameRunnerController;
 import java.util.Map;
 
 public class BoardPiece extends GameRunnerObject{
+    private double lastTranslateX;
+    private double lastTranslateY;
     public BoardPiece(int ID, GameRunnerController gameRunnerController) {
         super(ID, gameRunnerController);
     }
@@ -21,5 +23,19 @@ public class BoardPiece extends GameRunnerObject{
     @Override
     public void onDragDropped() {
         gameRunnerController.updatePieceMove(ID);
+    }
+
+    @Override
+    public void acceptDrag() {
+        Node node = getNode();
+        lastTranslateX = node.getTranslateX();
+        lastTranslateY = node.getTranslateY();
+    }
+
+    @Override
+    public void goBack() {
+        Node node = getNode();
+        node.setTranslateX(lastTranslateX);
+        node.setTranslateY(lastTranslateY);
     }
 }
