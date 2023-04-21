@@ -35,6 +35,12 @@ public class DifferenceNode extends DraggableAbstractNode {
     updateSum();
   }
 
+  @Override
+  public String getJSONString() {
+    return String.format("%d - %d = %d", operand1.getText(), operand2.getText(),
+        outputLabel.getText());
+  }
+
   private void updateSum() {
     try {
       double op1 = Double.parseDouble(operand1.getText());
@@ -43,10 +49,5 @@ public class DifferenceNode extends DraggableAbstractNode {
     } catch (NumberFormatException e) {
       outputLabel.setText("NaN");
     }
-  }
-
-  @Override
-  public String sendContent() {
-    return outputLabel.getText() + sendChildContent();
   }
 }

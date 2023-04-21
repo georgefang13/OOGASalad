@@ -20,8 +20,7 @@ public abstract class DraggableAbstractNode extends AbstractNode implements Drag
   }
 
   @Override
-  protected void setContent() {
-  }
+  protected abstract void setContent();
 
   @Override
   public void onDragDetected() {
@@ -104,16 +103,14 @@ public abstract class DraggableAbstractNode extends AbstractNode implements Drag
     boundingBox = bounds;
   }
 
-  public abstract String sendContent();
-
-  public String sendChildContent() {
+  //public String sendChildContent() {
     //System.out.println("this is " + this);
     //System.out.println("child node is " + this.getChildNode());
-    if (this.getChildNode() == null) {
-      return "";
-    }
-    return "\n" + this.getChildNode().sendContent();
-  }
+    //if (this.getChildNode() == null) {
+    //  return "";
+    //}
+    //return "\n" + this.getChildNode().sendContent();
+  //}
 
   @Override
   public void move(double newX, double newY) {

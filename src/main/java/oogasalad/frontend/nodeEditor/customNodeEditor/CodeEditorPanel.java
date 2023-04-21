@@ -24,7 +24,7 @@ public class CodeEditorPanel extends AbstractNodePanel {
         makeButton("TextField",
             event -> makeNode(NODES_FOLDER + "DraggableNodes.TextFieldNode")),
         makeButton("Save",
-            event -> saveAllNodeContent("src/main/resources/export.json"))
+            event -> nodeController.saveAllContent(NODES_JSON_PATH))
     );
   }
 

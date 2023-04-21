@@ -25,8 +25,7 @@ public class TextFieldNode extends DraggableAbstractNode {
   }
 
   @Override
-  public String sendContent() {
-    return field.getText() + sendChildContent();
+  public String getJSONString() {
+    return field.getText();
   }
-
 }

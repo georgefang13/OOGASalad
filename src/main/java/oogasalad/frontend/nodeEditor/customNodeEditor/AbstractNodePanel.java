@@ -1,12 +1,8 @@
 package oogasalad.frontend.nodeEditor.customNodeEditor;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.List;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -26,12 +22,11 @@ import oogasalad.frontend.managers.PropertyManager;
 import oogasalad.frontend.managers.StandardPropertyManager;
 import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.AbstractNode;
 import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.DraggableNodes.DraggableAbstractNode;
-import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.DraggableNodes.StateNode;
 
 public abstract class AbstractNodePanel extends Tab {
 
   public static final String NODES_FOLDER = "oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.";
-  public static final String NODES_JSON_FOLDER = "/src/resources/nodeCode/";
+  public static final String NODES_JSON_PATH = "src/resources/nodeCode/savedContent.json";
   protected Group group;
   protected ImageView workspace;
   protected double windowWidth, windowHeight;
@@ -47,8 +42,14 @@ public abstract class AbstractNodePanel extends Tab {
 
   protected abstract List<Button> getNodeSelectionButtons();
 
-  public void saveAllNodeContent(String filePath) {
-
+  public String getAllNodeContent() {
+    List<String> code = new ArrayList<String>();
+    for (Node node : group.getChildren()) {
+      if (node instanceof AbstractNode) {
+        code.add(((AbstractNode) node).getJSONString());
+      }
+    }
+    return String.join(" ", code);
   }
 
 //  public JsonObject sendJSONContent() {

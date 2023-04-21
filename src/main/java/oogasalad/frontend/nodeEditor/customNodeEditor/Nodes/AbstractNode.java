@@ -33,8 +33,9 @@ public abstract class AbstractNode extends VBox {
 
   protected abstract void setContent();
 
+  public abstract void move(double x, double y);
 
-  public abstract String sendContent();
+  public abstract String getJSONString();
 
   public void setChildNode(AbstractNode node) {
     this.childNode = node;
@@ -58,5 +59,4 @@ public abstract class AbstractNode extends VBox {
     Tooltip.install(this, t);
   }
 
-  public abstract void move(double x, double y);
 }

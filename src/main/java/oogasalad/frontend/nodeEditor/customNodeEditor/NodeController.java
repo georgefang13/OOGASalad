@@ -14,4 +14,8 @@ public class NodeController {
   public void openAndSwitchToTab(String state, String action) {
     scene.openAndSwitchToTab(state, action);
   }
+
+  public void saveAllContent(String filePath) {
+    scene.saveAllContent(filePath);
+  }
 }

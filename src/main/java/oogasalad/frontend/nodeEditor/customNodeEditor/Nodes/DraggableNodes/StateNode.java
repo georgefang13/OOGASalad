@@ -1,8 +1,5 @@
 package oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.DraggableNodes;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -42,6 +39,11 @@ public class StateNode extends DraggableAbstractNode {
     buttonGrid.add(makeButton("next", this::onNext), 0, 4);
   }
 
+  @Override
+  public String getJSONString() {
+    return null;
+  }
+
   private Button makeButton(String label, EventHandler<ActionEvent> handler) {
     Button button = new Button(label);
     button.setOnAction(handler);
@@ -65,12 +67,4 @@ public class StateNode extends DraggableAbstractNode {
   private void onNext(ActionEvent event) {
     nodeController.openAndSwitchToTab(stateName.getText(), "next");
   }
-
-
-  @Override
-  public String sendContent() {
-    return "";
-  }
-
-
 }

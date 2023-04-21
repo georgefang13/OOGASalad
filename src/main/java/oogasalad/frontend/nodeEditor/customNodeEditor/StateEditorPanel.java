@@ -15,7 +15,7 @@ public class StateEditorPanel extends AbstractNodePanel {
         makeButton("State",
             event -> makeNode(NODES_FOLDER + "DraggableNodes.StateNode")),
         makeButton("Save",
-            event -> saveAllNodeContent("src/main/resources/export.json"))
+            event -> nodeController.saveAllContent(NODES_JSON_PATH))
     );
   }
 }
