@@ -1,22 +1,32 @@
 package oogasalad.Controller;
 
+import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import oogasalad.frontend.objects.Board;
-import oogasalad.frontend.objects.BoardPiece;
+import oogasalad.frontend.components.gameObjectComponent.GameRunner.Board;
+import oogasalad.frontend.components.gameObjectComponent.GameRunner.BoardPiece;
+import oogasalad.frontend.scenes.GamePlayerMainScene;
 import oogasalad.gamerunner.backend.fsm.FSMExample;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GameRunnerController {
 
     private FSMExample fsmExample;
-    String playerTurn;
+    private GamePlayerMainScene gamePlayerMainScene;
 
-    public GameRunnerController() {
+    private String playerTurn;
+    private Board board;
+    private Map<Integer,BoardPiece> pieceMap;
+
+    public GameRunnerController(GamePlayerMainScene gamePlayerMainScene) {
+        this.gamePlayerMainScene = gamePlayerMainScene;
         fsmExample = new FSMExample();
+        pieceMap = new HashMap<>();
     }
 
     public String userResponds(String enteredText) {
@@ -28,15 +38,12 @@ public class GameRunnerController {
         return fsmExample.getInstruction();
     }
 
-    public VBox initializeBoard() {
+    public GridPane initializeBoard() {
         //Will load these from backend file somehow or when created via modal
         int height = 3;
         int width = 3;
-        Board board = new Board(height, width);
-        GridPane boardPane = board.getBoardVisual();
-        VBox boardVBOX = new VBox(boardPane);
-        boardVBOX.setAlignment(Pos.CENTER);
-        return boardVBOX;
+        board = new Board(height, width);
+        return board.getBoardVisual();
     }
     private void parseResponse(String response) {
         String[] splitResponse = response.split("Turn: ");
@@ -56,29 +63,25 @@ public class GameRunnerController {
     }
 
     public ArrayList<Node> initializePieces() {
-        ArrayList<BoardPiece> newPieces = new ArrayList<>();
         ArrayList<Node> pieceNodes = new ArrayList<>();
-        BoardPiece x1 = new BoardPiece("X",1,this);
-        x1.setSize(30);
-        newPieces.add(x1);
-        BoardPiece O1 = new BoardPiece("O",1,this);
-        O1.setSize(30);
-        newPieces.add(O1);
-        BoardPiece x2 = new BoardPiece("X",2,this);
-        x2.setSize(30);
-        newPieces.add(x1);
-        BoardPiece O2 = new BoardPiece("O",2,this);
-        O2.setSize(30);
-        newPieces.add(O1);
-        BoardPiece x3 = new BoardPiece("X",3,this);
-        x3.setSize(30);
-        newPieces.add(x1);
-        BoardPiece O3 = new BoardPiece("O",3,this);
-        O3.setSize(30);
-        newPieces.add(O1);
-        for (BoardPiece piece:newPieces) {
+        for (int i = 1; i <= 10; i++) {
+            int pieceID = i;
+            BoardPiece piece = new BoardPiece(pieceID,this);
+            piece.setSize(30);
+            pieceMap.put(pieceID,piece);
             pieceNodes.add(piece.getNode());
         }
         return pieceNodes;
+    }
+    public void updatePieceMove(int id) {
+        BoardPiece piece = pieceMap.get(id);
+        Board.BoardXY boardXY = getPieceBoardLocation(piece.getNode());
+        String userInput = boardXY.y() + "," + boardXY.x();
+        userResponds(userInput);
+    }
+    private Board.BoardXY getPieceBoardLocation(Node node) {
+        Point2D gridPaneXY = gamePlayerMainScene.getNodeXYOnGrid(node);
+        Board.BoardXY boardXY = board.boardXYofNode(gridPaneXY);
+        return boardXY;
     }
 }

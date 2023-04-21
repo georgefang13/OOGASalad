@@ -1,4 +1,4 @@
-package oogasalad.frontend.objects;
+package oogasalad.frontend.components.gameObjectComponent.GameRunner;
 
 import javafx.scene.layout.StackPane;
 

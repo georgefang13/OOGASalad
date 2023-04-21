@@ -1,5 +1,6 @@
-package oogasalad.frontend.objects;
+package oogasalad.frontend.components.gameObjectComponent.GameRunner;
 
+import javafx.geometry.Point2D;
 import javafx.scene.layout.GridPane;
 
 public class Board {
@@ -43,12 +44,11 @@ public class Board {
   }
 
   public record BoardXY(int x, int y) {
-
   }
 
-  public BoardXY boardXYofClick(double mouseX, double mouseY) {
-    int x = (int) (mouseX / blockSize);
-    int y = (int) (mouseY / blockSize);
+  public BoardXY boardXYofNode(Point2D nodeXY) {
+    int x = (int) (nodeXY.getX() / blockSize);
+    int y = (int) (nodeXY.getY() / blockSize);
     return new BoardXY(x, y);
   }
 }

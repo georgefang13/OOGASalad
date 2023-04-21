@@ -12,7 +12,7 @@ import java.util.ResourceBundle;
 /**
  * @author Han and Aryan AbstractComponent is the abstraction that all Components are built off of.
  */
-public class AbstractComponent implements Component {
+public abstract class AbstractComponent implements Component {
 
   protected int ID;
   protected Node node;
@@ -21,8 +21,8 @@ public class AbstractComponent implements Component {
   private boolean visible;
   private int zIndex;
   private int size;
-  private double XOffset;
-  private double YOffset;
+  protected double XOffset;
+  protected double YOffset;
   private ImageView image;
   private Point absolute;
   private Point editor;

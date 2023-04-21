@@ -1,8 +1,9 @@
-package oogasalad.frontend.objects;
+package oogasalad.frontend.components.gameObjectComponent.GameRunner;
 
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import oogasalad.frontend.components.gameObjectComponent.GameRunner.DropZone;
 
 public class DropSquare implements DropZone {
 
