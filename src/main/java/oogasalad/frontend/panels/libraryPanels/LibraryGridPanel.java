@@ -7,6 +7,7 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import oogasalad.frontend.nodeEditor.GraphEditorTutorial;
 import oogasalad.frontend.panels.Panel;
 
@@ -73,5 +74,9 @@ public class LibraryGridPanel extends GridPane implements Panel {
   @Override
   public void save() {
 
+  }
+  public VBox createGameBox() {
+    //TODO: Make the box that user can click on to open the game.
+    return null;
   }
 }
