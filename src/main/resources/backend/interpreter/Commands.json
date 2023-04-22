@@ -419,6 +419,34 @@
       "parse": "dzitems %s"
     }
   },
+  "GetDzNeighbors": {
+    "name": "Get All Drop Zone Neighbors",
+    "folder": "game",
+    "str": "dzneighbors",
+    "description": "Gets a list of all of the neighbors of a dropzone",
+    "example": "dzneighbors :game_zone # dzpaths <dropzone>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [{ "name": "dropzone", "type": ["dropzone"] }],
+      "outputs": ["list"],
+      "parse": "dzneighbors %s"
+    }
+  },
+  "GetObjDz": {
+    "name": "Get Dropzone of Objects",
+    "folder": "game",
+    "str": "objdz",
+    "description": "Get the dropzone tht a GameObject is in",
+    "example": "objdz :x  # objdz <obj>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        { "name": "object", "type": ["any"] }
+      ],
+      "outputs": ["dropzone"],
+      "parse": "gameobjdz %s"
+    }
+  },
   "GetObjectsFromPlayer": {
     "name": "Get Objects From Player",
     "folder": "game",
@@ -444,7 +472,7 @@
     "specs": {
       "innerBlocks": [],
       "inputs": [
-        { "name": "player_number", "type": ["number"] },
+        { "name": "player_number", "type": ["number"] }
       ],
       "outputs": ["player"],
       "parse": "getplayer %s"
@@ -478,6 +506,35 @@
       "parse": "owner :%s"
     }
   },
+  "GoToNextPlayer": {
+    "name": "Go To Next Player's turn",
+    "folder": "game",
+    "str": "gotonextplayer",
+    "description": "Sets the turn to go to the next player",
+    "example": "gotonextplayer # gotonextplayer",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [],
+      "outputs": [],
+      "parse": "gotonextplayer"
+    }
+  },
+  "HasClass": {
+    "name": "Get Objects From Player",
+    "folder": "game",
+    "str": "hasclass",
+    "description": "Gets the nth player in the game",
+    "example": "hasclass curplayer \"red  # hasclass <player> <string class>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        { "name": "player", "type": ["player"] },
+        { "name": "class", "type": ["string"] }
+      ],
+      "outputs": ["boolean"],
+      "parse": "hasclass %s %s"
+    }
+  },
   "IsDropZoneEmpty": {
     "name": "Is Drop Zone Empty",
     "folder": "game",
@@ -489,6 +546,328 @@
       "inputs": [{ "name": "dropzone", "type": ["dropzone"] }],
       "outputs": ["boolean"],
       "parse": "dzempty %s"
+    }
+  },
+  "MakeAllAvailable": {
+    "name": "Get Objects From Player",
+    "folder": "game",
+    "str": "makeallavailable",
+    "description": "Gets the nth player in the game",
+    "example": "makeallavailable [ 1 2 3 ]  # makeallavailable <list>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        { "name": "items", "type": ["list"] }
+      ],
+      "outputs": [],
+      "parse": "makeallavailable %s"
+    }
+  },
+  "MakeAvailable": {
+    "name": "Get Objects From Player",
+    "folder": "game",
+    "str": "makeavailable",
+    "description": "Set a value to be an available piece to click on in the game",
+    "example": "makeavailable :x  # makeavailable <anything>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        { "name": "item", "type": ["any"] }
+      ],
+      "outputs": [],
+      "parse": "makeavailable %s"
+    }
+  },
+  "MovePiece": {
+    "name": "Move Piece",
+    "folder": "game",
+    "str": "movepiece",
+    "description": "Moves a piece from one dropzone to another, keeping the same name it had within that dropzone",
+    "example": "movepiece :game_piece1 :game_dz1 # movepiece <GameObject> <dropzone>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        {
+          "name": "piece",
+          "type": [
+            "any"
+          ]
+        },
+        {
+          "name": "dropzone",
+          "type": [
+            "dropzone"
+          ]
+        }
+      ],
+      "outputs": [],
+      "parse": "movepiece %s %s"
+    }
+  },
+  "MovePieceAs": {
+    "name": "Move Piece As",
+    "folder": "game",
+    "str": "movepieceas",
+    "description": "Moves a piece from one dropzone to another, putting in a new name for that piece within the dropzone",
+    "example": "movepieceas :game_piece1 :game_dz1 \"obj# movepiece <GameObject> <dropzone> <string>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        { "name": "piece", "type": ["any"] },
+        { "name": "dropzone", "type": ["dropzone"] },
+        { "name": "name", "type": ["string"] }
+      ],
+      "outputs": [],
+      "parse": "movepieceas %s %s %s"
+    }
+  },
+  "RemovePiece": {
+    "name": "Get Dropzone of Objects",
+    "folder": "game",
+    "str": "removepiece",
+    "description": "Get the dropzone tht a GameObject is in",
+    "example": "removepiece :x  # removepiece <obj>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        { "name": "object", "type": ["any"] }
+      ],
+      "outputs": [],
+      "parse": "removepiece %s"
+    }
+  },
+
+
+  "And": {
+    "name": "And",
+    "folder": "math",
+    "str": "and",
+    "description": "Tests whether two conditions are both true",
+    "example": "and true false # and <condition> <condition>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        { "name": "a", "type": ["boolean"] },
+        { "name": "b", "type": ["boolean"] }
+      ],
+      "outputs": ["boolean"],
+      "parse": "and %s %s"
+    }
+  },
+  "ArcTangent": {
+    "name": "ArcTangent",
+    "folder": "math",
+    "str": "atan",
+    "description": "Finds the arctangent of a number",
+    "example": "atan 1 # atan <number>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        { "name": "x", "type": ["number"] }
+      ],
+      "outputs": ["number"],
+      "parse": "atan %s"
+    }
+  },
+  "Cosine": {
+    "name": "Cosine",
+    "folder": "math",
+    "str": "cos",
+    "description": "Finds the cosine of an angle",
+    "example": "cos 1 # cos <number>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        { "name": "x", "type": ["number"] }
+      ],
+      "outputs": ["number"],
+      "parse": "cos %s"
+    }
+  },
+  "Difference": {
+    "name": "Difference",
+    "folder": "math",
+    "str": "-",
+    "description": "Subtracts one number from another",
+    "example": "- 1 2 # - <number> <number>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        {
+          "name": "a",
+          "type": ["number"]
+        },
+        {
+          "name": "b",
+          "type": ["number"]
+        }
+      ],
+      "outputs": ["number"],
+      "parse": "- %s %s"
+    }
+  },
+  "Minus": {
+    "name": "Minus",
+    "folder": "math",
+    "str": "~",
+    "description": "Negates a number",
+    "example": "~ 1 # ~ <number>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        {
+          "name": "a",
+          "type": ["number"]
+        },
+        {
+          "name": "b",
+          "type": ["number"]
+        }
+      ],
+      "outputs": ["number"],
+      "parse": "- %s %s"
+    }
+  },
+  "NaturalLog": {
+    "name": "NaturalLog",
+    "folder": "math",
+    "str": "ln",
+    "description": "Finds the natural logarithm of a number",
+    "example": "ln :e # ln <number>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        { "name": "a", "type": ["number"] }
+      ],
+      "outputs": ["number"],
+      "parse": "ln %s"
+    }
+  },
+  "Power": {
+    "name": "Power",
+    "folder": "math",
+    "str": "pow",
+    "description": "Raises a number to a power",
+    "example": "pow 2 3 # pow <number> <number>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        { "name": "a", "type": ["number"] },
+        { "name": "b", "type": ["number"] }
+      ],
+      "outputs": ["number"],
+      "parse": "pow %s %s"
+    }
+  },
+  "Product": {
+    "name": "Product",
+    "folder": "math",
+    "str": "*",
+    "description": "Multiplies two numbers together",
+    "example": "* 1 2 # * <number or boolean> <number or boolean>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        {
+          "name": "a",
+          "type": ["number"]
+        },
+        {
+          "name": "b",
+          "type": ["number"]
+        }
+      ],
+      "outputs": ["number"],
+      "parse": "* %s %s"
+    }
+  },
+  "Quotient": {
+    "name": "Quotient",
+    "folder": "math",
+    "str": "/",
+    "description": "Divides one number by another",
+    "example": "/ 1 2 # / <number> <number>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        {
+          "name": "a",
+          "type": ["number"]
+        },
+        {
+          "name": "b",
+          "type": ["number"]
+        }
+      ],
+      "outputs": ["number"],
+      "parse": "/ %s %s"
+    }
+  },
+  "Sine": {
+    "name": "Sine",
+    "folder": "math",
+    "str": "sin",
+    "description": "Finds the sine of an angle",
+    "example": "sin 1 # sin <number>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        { "name": "x", "type": ["number"] }
+      ],
+      "outputs": ["number"],
+      "parse": "sin %s"
+    }
+  },
+  "SquareRoot": {
+    "name": "SquareRoot",
+    "folder": "math",
+    "str": "sqrt",
+    "description": "Finds the square root of a number",
+    "example": "sqrt 81 # sqrt <number>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        { "name": "a", "type": ["number"] }
+      ],
+      "outputs": ["number"],
+      "parse": "sqrt %s"
+    }
+  },
+  "Sum": {
+    "name": "Sum",
+    "folder": "math",
+    "str": "+",
+    "description": "Adds two numbers together",
+    "example": "+ 1 2 # + <number> <number>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        {
+          "name": "a",
+          "type": ["number", "string"]
+        },
+        {
+          "name": "b",
+          "type": ["number", "string"]
+        }
+      ],
+      "outputs": ["number", "string"],
+      "parse": "+ %s %s"
+    }
+  },
+  "Tangent": {
+    "name": "Tangent",
+    "folder": "math",
+    "str": "tan",
+    "description": "Finds the tangent of an angle",
+    "example": "tan 1 # tan <number>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        { "name": "x", "type": ["number"] }
+      ],
+      "outputs": ["number"],
+      "parse": "tan %s"
     }
   },
 
@@ -523,74 +902,6 @@
       ],
       "outputs": [],
       "parse": "additem %s %s"
-    }
-  },
-  "And": {
-    "name": "And",
-    "folder": "operators",
-    "str": "and",
-    "description": "Tests whether two conditions are both true",
-    "example": "and true false # and <condition> <condition>",
-    "specs": {
-      "innerBlocks": [],
-      "inputs": [
-        { "name": "a", "type": ["boolean"] },
-        { "name": "b", "type": ["boolean"] }
-      ],
-      "outputs": ["boolean"],
-      "parse": "and %s %s"
-    }
-  },
-  "ArcTangent": {
-    "name": "ArcTangent",
-    "folder": "operators",
-    "str": "atan",
-    "description": "Finds the arctangent of a number",
-    "example": "atan 1 # atan <number>",
-    "specs": {
-      "innerBlocks": [],
-      "inputs": [
-        { "name": "x", "type": ["number"] }
-      ],
-      "outputs": ["number"],
-      "parse": "atan %s"
-    }
-  },
-  "Cosine": {
-    "name": "Cosine",
-    "folder": "operators",
-    "str": "cos",
-    "description": "Finds the cosine of an angle",
-    "example": "cos 1 # cos <number>",
-    "specs": {
-      "innerBlocks": [],
-      "inputs": [
-        { "name": "x", "type": ["number"] }
-      ],
-      "outputs": ["number"],
-      "parse": "cos %s"
-    }
-  },
-  "Difference": {
-    "name": "Difference",
-    "folder": "operators",
-    "str": "-",
-    "description": "Subtracts one number from another",
-    "example": "- 1 2 # - <number> <number>",
-    "specs": {
-      "innerBlocks": [],
-      "inputs": [
-        {
-          "name": "a",
-          "type": ["number"]
-        },
-        {
-          "name": "b",
-          "type": ["number"]
-        }
-      ],
-      "outputs": ["number"],
-      "parse": "- %s %s"
     }
   },
   "Equal": {
@@ -702,41 +1013,36 @@
       "parse": "< %s %s"
     }
   },
-  "Minus": {
-    "name": "Minus",
+  "ListIndex": {
+    "name": "Index In List",
     "folder": "operators",
-    "str": "~",
-    "description": "Negates a number",
-    "example": "~ 1 # ~ <number>",
+    "str": "index",
+    "description": "Tests if a list contains a value",
+    "example": "index 1 [1 2 3] # -> 0 -- index <value> <list>",
     "specs": {
       "innerBlocks": [],
       "inputs": [
-        {
-          "name": "a",
-          "type": ["number"]
-        },
-        {
-          "name": "b",
-          "type": ["number"]
-        }
+        { "name": "value", "type": ["any"] },
+        { "name": "list", "type": ["list"] }
       ],
       "outputs": ["number"],
-      "parse": "- %s %s"
+      "parse": "index %s %s"
     }
   },
-  "NaturalLog": {
-    "name": "NaturalLog",
+  "ListContains": {
+    "name": "List Contains",
     "folder": "operators",
-    "str": "ln",
-    "description": "Finds the natural logarithm of a number",
-    "example": "ln :e # ln <number>",
+    "str": "listhas",
+    "description": "Tests if a list contains a value",
+    "example": "listhas 1 [1 2 3] # -> true -- listhas <value> <list>",
     "specs": {
       "innerBlocks": [],
       "inputs": [
-        { "name": "a", "type": ["number"] }
+        { "name": "value", "type": ["any"] },
+        { "name": "list", "type": ["list"] }
       ],
-      "outputs": ["number"],
-      "parse": "ln %s"
+      "outputs": ["boolean"],
+      "parse": "listhas %s %s"
     }
   },
   "Not": {
@@ -782,66 +1088,6 @@
       ],
       "outputs": ["boolean"],
       "parse": "or %s %s"
-    }
-  },
-  "Power": {
-    "name": "Power",
-    "folder": "operators",
-    "str": "pow",
-    "description": "Raises a number to a power",
-    "example": "pow 2 3 # pow <number> <number>",
-    "specs": {
-      "innerBlocks": [],
-      "inputs": [
-        { "name": "a", "type": ["number"] },
-        { "name": "b", "type": ["number"] }
-      ],
-      "outputs": ["number"],
-      "parse": "pow %s %s"
-    }
-  },
-  "Product": {
-    "name": "Product",
-    "folder": "operators",
-    "str": "*",
-    "description": "Multiplies two numbers together",
-    "example": "* 1 2 # * <number or boolean> <number or boolean>",
-    "specs": {
-      "innerBlocks": [],
-      "inputs": [
-        {
-          "name": "a",
-          "type": ["number"]
-        },
-        {
-          "name": "b",
-          "type": ["number"]
-        }
-      ],
-      "outputs": ["number"],
-      "parse": "* %s %s"
-    }
-  },
-  "Quotient": {
-    "name": "Quotient",
-    "folder": "operators",
-    "str": "/",
-    "description": "Divides one number by another",
-    "example": "/ 1 2 # / <number> <number>",
-    "specs": {
-      "innerBlocks": [],
-      "inputs": [
-        {
-          "name": "a",
-          "type": ["number"]
-        },
-        {
-          "name": "b",
-          "type": ["number"]
-        }
-      ],
-      "outputs": ["number"],
-      "parse": "/ %s %s"
     }
   },
   "Random": {
@@ -926,73 +1172,6 @@
       ],
       "outputs": ["list"],
       "parse": "setitem %s %s %s"
-    }
-  },
-  "Sine": {
-    "name": "Sine",
-    "folder": "operators",
-    "str": "sin",
-    "description": "Finds the sine of an angle",
-    "example": "sin 1 # sin <number>",
-    "specs": {
-      "innerBlocks": [],
-      "inputs": [
-        { "name": "x", "type": ["number"] }
-      ],
-      "outputs": ["number"],
-      "parse": "sin %s"
-    }
-  },
-  "SquareRoot": {
-    "name": "SquareRoot",
-    "folder": "operators",
-    "str": "sqrt",
-    "description": "Finds the square root of a number",
-    "example": "sqrt 81 # sqrt <number>",
-    "specs": {
-      "innerBlocks": [],
-      "inputs": [
-        { "name": "a", "type": ["number"] }
-      ],
-      "outputs": ["number"],
-      "parse": "sqrt %s"
-    }
-  },
-  "Sum": {
-    "name": "Sum",
-    "folder": "operators",
-    "str": "+",
-    "description": "Adds two numbers together",
-    "example": "+ 1 2 # + <number> <number>",
-    "specs": {
-      "innerBlocks": [],
-      "inputs": [
-          {
-          "name": "a",
-          "type": ["number", "string"]
-          },
-          {
-          "name": "b",
-          "type": ["number", "string"]
-          }
-      ],
-      "outputs": ["number", "string"],
-      "parse": "+ %s %s"
-    }
-  },
-  "Tangent": {
-    "name": "Tangent",
-    "folder": "operators",
-    "str": "tan",
-    "description": "Finds the tangent of an angle",
-    "example": "tan 1 # tan <number>",
-    "specs": {
-      "innerBlocks": [],
-      "inputs": [
-        { "name": "x", "type": ["number"] }
-      ],
-      "outputs": ["number"],
-      "parse": "tan %s"
     }
   }
 }

@@ -74,6 +74,17 @@ public class ExpressionToken extends Token implements Iterable<Token> {
     exportSelf(env);
   }
 
+  public int index(Token t, Environment env) {
+    int index = 0;
+    for (Token tok : this){
+        if (tok.equals(t, env)){
+            return index;
+        }
+        index++;
+    }
+    return -1;
+  }
+
   public int length() {
     return tokens.size();
   }

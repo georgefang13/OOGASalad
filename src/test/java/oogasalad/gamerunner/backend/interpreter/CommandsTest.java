@@ -6,9 +6,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.*;
+
+import oogasalad.gameeditor.backend.id.IdManageable;
 import oogasalad.gameeditor.backend.id.IdManager;
 import oogasalad.gameeditor.backend.ownables.gameobjects.BoardCreator;
-import oogasalad.gamerunner.backend.interpreter.commands.operators.Sum;
+import oogasalad.gamerunner.backend.interpreter.commands.math.Sum;
 import oogasalad.gamerunner.backend.interpreter.tokens.ExpressionToken;
 import oogasalad.gamerunner.backend.interpreter.tokens.OperatorToken;
 import oogasalad.gamerunner.backend.interpreter.tokens.Token;
@@ -91,11 +93,13 @@ public class CommandsTest {
   public void testAddDropZoneItem() {
     DropZone dz = new DropZone("dz");
     idManager.addObject(dz, "dz");
+    GameObject obj = new GameObject(null);
+    idManager.addObject(obj, "obj");
 
     // add item to dropzone
-    String input = "putdzitem \"obj 1 :game_dz";
+    String input = "putdzitem \"obj :game_obj :game_dz";
     interpreter.interpret(input);
-    List<Double> expected = new ArrayList<>(List.of(1.));
+    List<GameObject> expected = List.of(obj);
     assertEquals(expected, dz.getAllObjects());
 
     // add item to dropzone with non-string
@@ -442,6 +446,42 @@ public class CommandsTest {
   }
 
   @Test
+  public void testDropZonePaths(){
+    List<DropZone> board = BoardCreator.createGrid(8, 8);
+    for (DropZone dz : board) {
+      idManager.addObject(dz, dz.getId());
+    }
+    String id1 = board.get(0).getId();
+    String id2 = board.get(18).getId();
+    String input = "make :p1 dzpaths fromgame \"" + id1 + " make :p2 dzpaths fromgame \"" + id2;
+    interpreter.interpret(input);
+    Variable<List<String>> p1 = getVar("interpreter-:p1");
+    Variable<List<String>> p2 = getVar("interpreter-:p2");
+    HashSet<String> expected1 = new HashSet<>(Arrays.asList("Down", "DownRight", "Right"));
+    HashSet<String> expected2 = new HashSet<>(Arrays.asList("Up", "UpLeft", "Left", "DownLeft", "Down", "DownRight", "Right", "UpRight"));
+    assertEquals(expected1, new HashSet<>(p1.get()));
+    assertEquals(expected2, new HashSet<>(p2.get()));
+  }
+
+  @Test
+  public void testDzNeighbors(){
+    List<DropZone> board = BoardCreator.createGrid(8, 8);
+    for (DropZone dz : board) {
+      idManager.addObject(dz, dz.getId());
+    }
+    String id1 = board.get(0).getId();
+    String id2 = board.get(18).getId();
+    String input = "make :p1 dzneighbors fromgame \"" + id1 + " make :p2 dzneighbors fromgame \"" + id2;
+    interpreter.interpret(input);
+    Variable<List<DropZone>> p1 = getVar("interpreter-:p1");
+    Variable<List<DropZone>> p2 = getVar("interpreter-:p2");
+    HashSet<DropZone> expected1 = new HashSet<>(Arrays.asList(board.get(1), board.get(8), board.get(9)));
+    HashSet<DropZone> expected2 = new HashSet<>(Arrays.asList(board.get(17), board.get(19), board.get(10), board.get(9), board.get(11), board.get(26), board.get(25), board.get(27)));
+    assertEquals(expected1, new HashSet<>(p1.get()));
+    assertEquals(expected2, new HashSet<>(p2.get()));
+  }
+
+  @Test
   public void testEqual() {
     // equal
     String input = "make :x 1 make :y 1 make :z == :x :y";
@@ -572,6 +612,19 @@ public class CommandsTest {
   }
 
   @Test
+  public void testFollowDropZonePath(){
+    List<DropZone> board = BoardCreator.createGrid(8, 8);
+    for (DropZone dz : board) {
+      idManager.addObject(dz, dz.getId());
+    }
+    String id1 = board.get(0).getId();
+    String input = "make :dz fromgame \"" + id1 + " make :path [ \"Down \"DownRight ] make :p dzfollow :dz :path";
+    interpreter.interpret(input);
+    Variable<DropZone> p = getVar("interpreter-:p");
+    assertEquals(board.get(17), p.get());
+  }
+
+  @Test
   public void testGetAttribute() {
     GameObject dropZone = new DropZone("A");
     Class<?> c = GameObject.class;
@@ -595,18 +648,23 @@ public class CommandsTest {
   }
 
   @Test
-  public void getDropZoneItem() {
+  public void testGetDropZoneItem() {
     DropZone dropZone = new DropZone("A");
+    GameObject obj = new GameObject(null);
     idManager.addObject(dropZone, "dz");
-    String input = "putdzitem \"obj 1 :game_dz make :x dzitem \"obj :game_dz";
+    idManager.addObject(obj, "obj");
+    String input = "putdzitem \"obj :game_obj :game_dz make :x dzitem \"obj :game_dz";
     interpreter.interpret(input);
-    Variable<Double> x = getVar("interpreter-:x");
-    assertEquals(1., x.get());
+    Variable<Ownable> x = getVar("interpreter-:x");
+    assertEquals(obj, x.get());
 
-    input = "putdzitem \"obj 2 :game_dz make :x dzitem \"obj :game_dz";
+    GameObject obj2 = new GameObject(null);
+    idManager.addObject(obj2, "obj2");
+
+    input = "putdzitem \"obj :game_obj2 :game_dz make :x dzitem \"obj :game_dz";
     interpreter.interpret(input);
     x = getVar("interpreter-:x");
-    assertEquals(2., x.get());
+    assertEquals(obj2, x.get());
 
     // try with a non-dropzone
     input = "make :x dzitem \"obj 2";
@@ -622,15 +680,19 @@ public class CommandsTest {
   }
 
   @Test
-  public void getDropZoneItems() {
+  public void testGetDropZoneItems() {
     DropZone dropZone = new DropZone("A");
     idManager.addObject(dropZone, "dz");
-    String input = "putdzitem \"obj1 1 :game_dz putdzitem \"obj2 2 :game_dz make :x dzitems :game_dz";
+    GameObject obj = new GameObject(null);
+    idManager.addObject(obj, "obj");
+    GameObject obj2 = new GameObject(null);
+    idManager.addObject(obj2, "obj2");
+    String input = "putdzitem \"obj1 :game_obj :game_dz putdzitem \"obj2 :game_obj2 :game_dz make :x dzitems :game_dz";
     interpreter.interpret(input);
     Variable<List<Object>> x = getVar("interpreter-:x");
     assertEquals(2, x.get().size());
-    assertTrue(x.get().contains(1.));
-    assertTrue(x.get().contains(2.));
+    assertTrue(x.get().contains(obj));
+    assertTrue(x.get().contains(obj2));
 
     // try with a non-dropzone
     input = "make :x dzitems \"obj";
@@ -646,34 +708,53 @@ public class CommandsTest {
   }
 
   @Test
-  public void testDropZonePaths(){
-    List<DropZone> board = BoardCreator.createGrid(8, 8);
+  public void testGetObjDz(){
+    game.noFSMInit(2);
+    useGameVars();
+    List<DropZone> board = BoardCreator.createGrid(2, 2);
     for (DropZone dz : board) {
-      idManager.addObject(dz, dz.getId());
+      game.addElement(dz, dz.getId());
     }
-    String id1 = board.get(0).getId();
-    String id2 = board.get(18).getId();
-    String input = "make :p1 dzpaths fromgame \"" + id1 + " make :p2 dzpaths fromgame \"" + id2;
-    interpreter.interpret(input);
-    Variable<List<String>> p1 = getVar("interpreter-:p1");
-    Variable<List<String>> p2 = getVar("interpreter-:p2");
-    HashSet<String> expected1 = new HashSet<>(Arrays.asList("Down", "DownRight", "Right"));
-    HashSet<String> expected2 = new HashSet<>(Arrays.asList("Up", "UpLeft", "Left", "DownLeft", "Down", "DownRight", "Right", "UpRight"));
-    assertEquals(expected1, new HashSet<>(p1.get()));
-    assertEquals(expected2, new HashSet<>(p2.get()));
-  }
+    // add items to dropZones
+    GameObject p1 = new GameObject(game.getPlayer(0));
+    GameObject p2 = new GameObject(game.getPlayer(0));
+    GameObject p3 = new GameObject(game.getPlayer(1));
+    GameObject p4 = new GameObject(game.getPlayer(1));
+    game.addElement(p1, "p1");
+    game.putInDropZone(p1, board.get(0), "piece");
+    game.addElement(p2, "p2");
+    game.putInDropZone(p2, board.get(1), "piece");
+    game.addElement(p3, "p3");
+    game.putInDropZone(p3, board.get(2), "piece");
+    game.addElement(p4, "p4");
+    game.putInDropZone(p4, board.get(3), "piece");
 
-  @Test
-  public void testFollowDropZonePath(){
-    List<DropZone> board = BoardCreator.createGrid(8, 8);
-    for (DropZone dz : board) {
-      idManager.addObject(dz, dz.getId());
-    }
-    String id1 = board.get(0).getId();
-    String input = "make :dz fromgame \"" + id1 + " make :path [ \"Down \"DownRight ] make :p dzfollow :dz :path";
+    String input = "make :x objdz :game_p1";
     interpreter.interpret(input);
-    Variable<DropZone> p = getVar("interpreter-:p");
-    assertEquals(board.get(17), p.get());
+    Variable<DropZone> x = getVar("interpreter-:x");
+    assertEquals(board.get(0), x.get());
+
+    input = "make :x objdz :game_p2 make :y objdz :game_p3 make :z objdz :game_p4";
+    interpreter.interpret(input);
+    x = getVar("interpreter-:x");
+    Variable<DropZone> y = getVar("interpreter-:y");
+    Variable<DropZone> z = getVar("interpreter-:z");
+    assertEquals(board.get(1), x.get());
+    assertEquals(board.get(2), y.get());
+    assertEquals(board.get(3), z.get());
+
+
+    // null case
+    game.addElement(new GameObject(game.getPlayer(0)), "p5");
+    input = "make :x == null objdz :game_p5";
+    interpreter.interpret(input);
+    System.out.println(((Variable)getVar("interpreter-:x")).get());
+    Variable<Boolean> b = getVar("interpreter-:x");
+    assertTrue(b.get());
+
+
+
+
   }
 
   @Test
@@ -841,6 +922,18 @@ public class CommandsTest {
   }
 
   @Test
+  public void testGoToNextPlayer(){
+    game.noFSMInit(2);
+    useGameVars();
+    String input = "gotonextplayer";
+    interpreter.interpret(input);
+    assertEquals(1.0, ((Variable) getVar("turn")).get());
+
+    interpreter.interpret(input);
+    assertEquals(0., ((Variable) getVar("turn")).get());
+  }
+
+  @Test
   public void testGreaterEqual() {
     // greater equal
     String input = "make :x 1 make :y 1 make :z >= :x :y";
@@ -921,6 +1014,65 @@ public class CommandsTest {
     } catch (Exception e) {
       assertEquals("Invalid syntax: Not enough arguments for operator GreaterThan", e.getMessage());
     }
+  }
+
+  @Test
+  public void testHasClass(){
+    game.noFSMInit(4);
+    useGameVars();
+    game.getPlayer(0).addClass("red");
+    game.getPlayer(1).addClass("red");
+    game.getPlayer(2).addClass("blue");
+    game.getPlayer(3).addClass("blue");
+
+    // has class
+    String input = "make :a hasclass curplayer \"red make :b hasclass curplayer \"blue";
+    interpreter.interpret(input);
+    Variable<Boolean> a = getVar("interpreter-:a");
+    Variable<Boolean> b = getVar("interpreter-:b");
+    assertTrue(a.get());
+    assertFalse(b.get());
+
+    // hasclass with an object
+    GameObject obj = new GameObject(null);
+    obj.addClass("red");
+    game.addElement(obj, "obj");
+    input = "make :a hasclass fromgame \"obj \"red";
+    interpreter.interpret(input);
+    a = getVar("interpreter-:a");
+    assertTrue(a.get());
+
+    // has class with incorrect number of parameters
+    input = "make :a hasclass curplayer";
+    try {
+      interpreter.interpret(input);
+      fail();
+    } catch (Exception e) {
+      assertEquals("Invalid syntax: Not enough arguments for operator HasClass", e.getMessage());
+    }
+
+    // has class with non-string
+    input = "make :a hasclass curplayer 1";
+    try {
+      interpreter.interpret(input);
+      fail();
+    } catch (Exception e) {
+      ValueToken<?> t = new ValueToken<>(1.0);
+      assertEquals(checkSubtypeErrorMsg(t, "HasClass", ValueToken.class, String.class),
+          e.getMessage());
+    }
+
+    // has class with non-player
+    input = "make :a hasclass 1 \"red";
+    try {
+      interpreter.interpret(input);
+      fail();
+    } catch (Exception e) {
+      ValueToken<?> t = new ValueToken<>(1.0);
+      assertEquals(checkSubtypeErrorMsg(t, "HasClass", ValueToken.class, IdManageable.class),
+          e.getMessage());
+    }
+
   }
 
   @Test
@@ -1154,6 +1306,79 @@ public class CommandsTest {
   }
 
   @Test
+  public void testListContains(){
+    String input = "make :x [ 1 2 3 ] make :y listhas 1 :x";
+    interpreter.interpret(input);
+    Variable<Boolean> y = getVar("interpreter-:y");
+    assertTrue(y.get());
+
+    input = "make :x [ 1 2 3 ] make :y listhas 4 :x";
+    interpreter.interpret(input);
+    assertFalse(y.get());
+
+    input = "make :x [ 1 2 3 ] make :y listhas 1.0 :x";
+    interpreter.interpret(input);
+    assertTrue(y.get());
+
+    input = "make :x [ 1 2 3 ] make :y listhas 1.1 :x";
+    interpreter.interpret(input);
+    assertFalse(y.get());
+
+    // test with non-list
+    input = "make :x 1 make :y listhas 1 :x";
+    try {
+      interpreter.interpret(input);
+      fail();
+    } catch (Exception e) {
+      ValueToken<?> t = new ValueToken<>(1.0);
+      assertEquals(checkTypeErrorMsg(t, "ListContains", ExpressionToken.class), e.getMessage());
+    }
+
+
+  }
+
+  @Test
+  public void testListIndex(){
+    String input = "make :x [ 1 2 3 ] make :y index 1 :x";
+    interpreter.interpret(input);
+    Variable<Double> y = getVar("interpreter-:y");
+    assertEquals(0., y.get());
+
+    input = "make :y index 2 :x";
+    interpreter.interpret(input);
+    assertEquals(1., y.get());
+
+    input = "make :y index 3 :x";
+    interpreter.interpret(input);
+    assertEquals(2., y.get());
+
+    input = "make :y index 4 :x";
+    interpreter.interpret(input);
+    assertEquals(-1., y.get());
+  }
+
+  @Test
+  public void testMakeAllAvailable(){
+    idManager.addObject(new Variable<>(new ArrayList<>()), "available");
+    String input = "make :x [ 1 2 3 ] makeallavailable :x";
+    interpreter.interpret(input);
+    Variable<List<Double>> available = getVar("available");
+    assertEquals(1.0, available.get().get(0));
+    assertEquals(2.0, available.get().get(1));
+    assertEquals(3.0, available.get().get(2));
+    assertEquals(3, available.get().size());
+  }
+  @Test
+  public void testMakeAvailable(){
+    idManager.addObject(new Variable<>(new ArrayList<>()), "available");
+    String input = "make :x 1 makeavailable :x";
+    interpreter.interpret(input);
+    Variable<List<Double>> available = getVar("available");
+    assertEquals(1.0, available.get().get(0));
+    assertEquals(1, available.get().size());
+  }
+
+  @Test
   public void testMakeUserInstruction() {
     // make user instruction, don't make global variable
     String input = "make :x 5 to test [ ] [ make :x + :x 2 ] test";
@@ -1260,6 +1485,50 @@ public class CommandsTest {
     } catch (Exception e) {
       assertEquals("Invalid syntax: Not enough arguments for operator Minus", e.getMessage());
     }
+  }
+
+  @Test
+  public void testMovePiece(){
+    game.noFSMInit(2);
+    useGameVars();
+    List<DropZone> dropZones = BoardCreator.createGrid(2, 2);
+    for (DropZone dz : dropZones) {
+      game.addElement(dz, dz.getId());
+    }
+    GameObject p1 = new GameObject(game.getPlayer(0));
+    game.addElement(p1, "p1");
+    game.putInDropZone(p1, dropZones.get(0), "piece");
+
+    assertTrue(dropZones.get(0).hasObject("piece"));
+
+    String input = "make :x :game_p1 make :next_dz fromgame \"0,1 movepiece :x :next_dz";
+    interpreter.interpret(input);
+    assertTrue(dropZones.get(1).getAllObjects().contains(p1));
+    assertTrue(dropZones.get(1).hasObject("piece"));
+    assertFalse(dropZones.get(0).getAllObjects().contains(p1));
+    assertFalse(dropZones.get(0).hasObject("piece"));
+  }
+
+  @Test
+  public void testMovePieceAs(){
+    game.noFSMInit(2);
+    useGameVars();
+    List<DropZone> dropZones = BoardCreator.createGrid(2, 2);
+    for (DropZone dz : dropZones) {
+      game.addElement(dz, dz.getId());
+    }
+    GameObject p1 = new GameObject(game.getPlayer(0));
+    game.addElement(p1, "p1");
+    game.putInDropZone(p1, dropZones.get(0), "piece");
+
+    assertTrue(dropZones.get(0).hasObject("piece"));
+
+    String input = "make :x :game_p1 make :next_dz fromgame \"0,1 movepieceas :x :next_dz \"thing";
+    interpreter.interpret(input);
+    assertTrue(dropZones.get(1).hasObject("thing"));
+    assertFalse(dropZones.get(1).hasObject("piece"));
+    assertFalse(dropZones.get(0).hasObject("thing"));
+    assertFalse(dropZones.get(0).hasObject("piece"));
   }
 
   @Test
@@ -1635,7 +1904,7 @@ public class CommandsTest {
   }
 
   @Test
-  public void RemoveItem() {
+  public void testRemoveItem() {
     // remove item
     String input = "make :x [ 1 2 3 ] delitem 1 :x";
     interpreter.interpret(input);
@@ -1665,6 +1934,29 @@ public class CommandsTest {
     } catch (Exception e) {
       assertEquals("Invalid syntax: Not enough arguments for operator RemoveItem", e.getMessage());
     }
+  }
+
+  @Test
+  public void testRemovePiece(){
+    game.noFSMInit(2);
+    useGameVars();
+    GameObject obj1 = new GameObject(game.getPlayer(0));
+    GameObject obj2 = new GameObject(game.getPlayer(1));
+    List<DropZone> board = BoardCreator.createGrid(3, 3);
+    game.addElement(obj1, "obj1");
+    game.addElement(obj2, "obj2");
+    for (DropZone dz : board) {
+      game.addElement(dz, dz.getId());
+    }
+    game.putInDropZone(obj1, board.get(0), "obj");
+
+    // remove piece
+    String input = "removepiece :game_obj1";
+    interpreter.interpret(input);
+    assertEquals(0, board.get(0).getAllObjects().size());
+    assertFalse(idManager.isIdInUse("obj1"));
+
+
   }
 
   @Test

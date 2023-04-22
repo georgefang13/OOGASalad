@@ -4,6 +4,7 @@ import oogasalad.gamerunner.backend.interpreter.Environment;
 import oogasalad.gamerunner.backend.interpreter.tokens.OperatorToken;
 import oogasalad.gamerunner.backend.interpreter.tokens.Token;
 import oogasalad.gamerunner.backend.interpreter.tokens.ValueToken;
+import oogasalad.sharedDependencies.backend.ownables.Ownable;
 import oogasalad.sharedDependencies.backend.ownables.gameobjects.DropZone;
 
 public class AddDropZoneItem extends OperatorToken {
@@ -20,11 +21,11 @@ public class AddDropZoneItem extends OperatorToken {
 
     ValueToken<String> name = checkArgumentWithSubtype(env, t1, ValueToken.class,
         String.class.getName());
-    ValueToken<?> value = checkArgument(env, t2, ValueToken.class);
+    ValueToken<Ownable> value = checkArgument(env, t2, ValueToken.class);
     ValueToken<DropZone> dz = checkArgumentWithSubtype(env, t3, ValueToken.class,
         DropZone.class.getName());
 
-    dz.VALUE.putObject(name.VALUE, value.VALUE);
+    env.getGame().putInDropZone(value.VALUE, dz.VALUE, name.VALUE);
     return null;
   }
 }

@@ -1,4 +1,4 @@
-package oogasalad.gamerunner.backend.interpreter.commands.operators;
+package oogasalad.gamerunner.backend.interpreter.commands.math;
 
 import oogasalad.gamerunner.backend.interpreter.Environment;
 import oogasalad.gamerunner.backend.interpreter.tokens.OperatorToken;
@@ -6,12 +6,12 @@ import oogasalad.gamerunner.backend.interpreter.tokens.Token;
 import oogasalad.gamerunner.backend.interpreter.tokens.ValueToken;
 
 /**
- * Computes the tangent of the given value.
+ * Computes the negation of a number
  */
-public class Tangent extends OperatorToken {
+public class Minus extends OperatorToken {
 
-  public Tangent() {
-    super(1, "Tangent");
+  public Minus() {
+    super(1, "Minus");
   }
 
   @Override
@@ -21,6 +21,6 @@ public class Tangent extends OperatorToken {
     ValueToken<Double> x1 = checkArgumentWithSubtype(env, t, ValueToken.class,
         Double.class.getName());
 
-    return new ValueToken<>(Math.tan(x1.VALUE * Math.PI / 180.));
+    return new ValueToken<>(-x1.VALUE);
   }
 }

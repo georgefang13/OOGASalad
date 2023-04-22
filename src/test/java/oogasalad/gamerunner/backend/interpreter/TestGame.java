@@ -1,18 +1,21 @@
 package oogasalad.gamerunner.backend.interpreter;
 
 import com.google.gson.JsonObject;
+import oogasalad.gameeditor.backend.id.IdManageable;
 import oogasalad.gameeditor.backend.id.IdManager;
 import oogasalad.gameeditor.backend.rules.Rule;
 import oogasalad.gamerunner.backend.GameToInterpreterAPI;
 import oogasalad.gamerunner.backend.fsm.FSM;
 import oogasalad.gamerunner.backend.interpretables.Goal;
 import oogasalad.sharedDependencies.backend.ownables.Ownable;
+import oogasalad.sharedDependencies.backend.ownables.gameobjects.DropZone;
 import oogasalad.sharedDependencies.backend.ownables.gameobjects.GameObject;
 import oogasalad.sharedDependencies.backend.ownables.variables.Variable;
 import oogasalad.sharedDependencies.backend.owners.GameWorld;
 import oogasalad.sharedDependencies.backend.owners.Player;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,6 +34,8 @@ public class TestGame implements GameToInterpreterAPI {
     private final Interpreter interpreter = new Interpreter();
 
     private final Variable<Double> turn = new Variable<>(0.);
+
+    private final Map<Ownable, DropZone> pieceLocations = new HashMap<>();
 
 
     /////////////////// PLAY THE GAME ///////////////////
@@ -115,6 +120,33 @@ public class TestGame implements GameToInterpreterAPI {
         return players.get(playerNum);
     }
 
+    @Override
+    public DropZone getPieceLocation(Ownable piece) {
+        if (pieceLocations.containsKey(piece)){
+            return pieceLocations.get(piece);
+        }
+        return null;
+    }
+
+    @Override
+    public void movePiece(GameObject piece, DropZone dz, String name) {
+        DropZone oldDz = pieceLocations.get(piece);
+        if (oldDz != null){
+            oldDz.removeObject(oldDz.getKey(piece));
+        }
+        dz.putObject(name, piece);
+    }
+
+    @Override
+    public void removePiece(GameObject piece) {
+        if (pieceLocations.containsKey(piece)){
+            DropZone dz = pieceLocations.get(piece);
+            dz.removeObject(dz.getKey(piece));
+            pieceLocations.remove(piece);
+        }
+        ownableIdManager.removeObject(piece);
+    }
+
     public void noFSMInit(int numPlayers){
         for (int i = 0; i < numPlayers; i++){
             players.add(new Player());
@@ -132,6 +164,20 @@ public class TestGame implements GameToInterpreterAPI {
 
     public IdManager<Ownable> getOwnableIdManager(){
         return ownableIdManager;
+    }
+
+    public void addElement(Ownable element, String id){
+        ownableIdManager.addObject(element, id);
+    }
+    @Override
+    public void putInDropZone(Ownable element, DropZone dropZone, String name){
+        pieceLocations.put(element, dropZone);
+        dropZone.putObject(name, element);
+    }
+
+    @Override
+    public void increaseTurn() {
+        turn.set((turn.get() + 1) % players.size());
     }
 
     public void setTurn(int i){

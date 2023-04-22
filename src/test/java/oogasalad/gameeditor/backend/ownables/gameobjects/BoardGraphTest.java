@@ -416,6 +416,13 @@ public class BoardGraphTest {
     assertEquals(dzExpected, available4);
   }
 
+  @Test
+  void testGetObjectKey(){
+    g = BoardCreator.createGrid(4, 4);
+    Objects.requireNonNull(getNodeWithId("0,0")).putObject("Obj", 1);
+    assertEquals("Obj", g.get(0).getKey(1));
+  }
+
 }
 
 

@@ -1,4 +1,4 @@
-package oogasalad.gamerunner.backend.interpreter.commands.operators;
+package oogasalad.gamerunner.backend.interpreter.commands.math;
 
 import oogasalad.gamerunner.backend.interpreter.Environment;
 import oogasalad.gamerunner.backend.interpreter.tokens.OperatorToken;
@@ -6,16 +6,16 @@ import oogasalad.gamerunner.backend.interpreter.tokens.Token;
 import oogasalad.gamerunner.backend.interpreter.tokens.ValueToken;
 
 /**
- * Computes the x^y
+ * Computes the quotient of two numbers
  */
-public class Power extends OperatorToken {
+public class Quotient extends OperatorToken {
 
-  public Power() {
-    super(2, "Power");
+  public Quotient() {
+    super(2, "Quotient");
   }
 
   @Override
-  public Token evaluate(Environment env) {
+  public ValueToken<Double> evaluate(Environment env) {
     Token t1 = getArg(0).evaluate(env);
     Token t2 = getArg(1).evaluate(env);
 
@@ -24,6 +24,6 @@ public class Power extends OperatorToken {
     ValueToken<Double> x2 = checkArgumentWithSubtype(env, t2, ValueToken.class,
         Double.class.getName());
 
-    return new ValueToken<>(Math.pow(x1.VALUE, x2.VALUE));
+    return new ValueToken<>(x1.VALUE / x2.VALUE);
   }
 }

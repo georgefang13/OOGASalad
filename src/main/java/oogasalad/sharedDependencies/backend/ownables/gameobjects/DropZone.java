@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
+
 import oogasalad.sharedDependencies.backend.filemanagers.FileManager;
 import oogasalad.sharedDependencies.backend.owners.Owner;
 
@@ -38,12 +40,16 @@ public class DropZone extends GameObject {
   }
 
   /**
-   * Adds an object to the node.
+   * Adds an object to the node. If the object is already in the dropzone, it updates the key
    *
    * @param key   the key of the object
    * @param value the object to add
    */
   public void putObject(String key, Object value) {
+    if (holding.containsValue(value)){
+      String prevKey = getKey(value);
+      holding.remove(prevKey);
+    }
     holding.put(key, value);
   }
 
@@ -54,7 +60,10 @@ public class DropZone extends GameObject {
    * @return the object that was removed
    */
   public Object removeObject(String key) {
-    return holding.remove(key);
+    if (key != null && holding.containsKey(key)){
+        return holding.remove(key);
+    }
+    return null;
   }
 
   /**
@@ -65,6 +74,17 @@ public class DropZone extends GameObject {
    */
   public Object getObject(String key) {
     return holding.get(key);
+  }
+
+  public String getKey(Object value) {
+    List<Map.Entry<String, Object>> key = holding.entrySet()
+            .stream()
+            .filter(entry -> value.equals(entry.getValue()))
+            .toList();
+    if (key.size() == 1) {
+      return key.get(0).getKey();
+    }
+    return null;
   }
 
   public List<Object> getAllObjects() {

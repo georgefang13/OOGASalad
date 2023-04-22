@@ -1,4 +1,4 @@
-package oogasalad.gamerunner.backend.interpreter.commands.operators;
+package oogasalad.gamerunner.backend.interpreter.commands.math;
 
 import oogasalad.gamerunner.backend.interpreter.Environment;
 import oogasalad.gamerunner.backend.interpreter.tokens.OperatorToken;
@@ -6,12 +6,12 @@ import oogasalad.gamerunner.backend.interpreter.tokens.Token;
 import oogasalad.gamerunner.backend.interpreter.tokens.ValueToken;
 
 /**
- * Computes the natural log (ln) of a number
+ * Computes the sine of the given value.
  */
-public class NaturalLog extends OperatorToken {
+public class Sine extends OperatorToken {
 
-  public NaturalLog() {
-    super(1, "NaturalLog");
+  public Sine() {
+    super(1, "Sine");
   }
 
   @Override
@@ -21,6 +21,6 @@ public class NaturalLog extends OperatorToken {
     ValueToken<Double> x1 = checkArgumentWithSubtype(env, t, ValueToken.class,
         Double.class.getName());
 
-    return new ValueToken<>(Math.log(x1.VALUE));
+    return new ValueToken<>(Math.sin(x1.VALUE * Math.PI / 180.));
   }
 }

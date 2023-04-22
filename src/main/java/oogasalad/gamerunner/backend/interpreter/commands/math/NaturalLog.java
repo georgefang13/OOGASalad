@@ -1,5 +1,4 @@
-package oogasalad.gamerunner.backend.interpreter.commands.operators;
-
+package oogasalad.gamerunner.backend.interpreter.commands.math;
 
 import oogasalad.gamerunner.backend.interpreter.Environment;
 import oogasalad.gamerunner.backend.interpreter.tokens.OperatorToken;
@@ -7,21 +6,21 @@ import oogasalad.gamerunner.backend.interpreter.tokens.Token;
 import oogasalad.gamerunner.backend.interpreter.tokens.ValueToken;
 
 /**
- * Computes the cosine of the given value.
+ * Computes the natural log (ln) of a number
  */
-public class Cosine extends OperatorToken {
+public class NaturalLog extends OperatorToken {
 
-  public Cosine() {
-    super(1, "Cosine");
+  public NaturalLog() {
+    super(1, "NaturalLog");
   }
 
   @Override
-  public Token evaluate(Environment env) throws IllegalArgumentException {
+  public Token evaluate(Environment env) {
     Token t = getArg(0).evaluate(env);
 
     ValueToken<Double> x1 = checkArgumentWithSubtype(env, t, ValueToken.class,
         Double.class.getName());
 
-    return new ValueToken<>(Math.cos(x1.VALUE * Math.PI / 180.));
+    return new ValueToken<>(Math.log(x1.VALUE));
   }
 }

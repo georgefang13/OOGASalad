@@ -7,6 +7,7 @@ import oogasalad.gamerunner.backend.fsm.FSM;
 import oogasalad.gamerunner.backend.interpretables.Goal;
 import oogasalad.gamerunner.backend.interpreter.Interpreter;
 import oogasalad.sharedDependencies.backend.ownables.Ownable;
+import oogasalad.sharedDependencies.backend.ownables.gameobjects.DropZone;
 import oogasalad.sharedDependencies.backend.ownables.gameobjects.GameObject;
 import oogasalad.sharedDependencies.backend.ownables.variables.Variable;
 import oogasalad.sharedDependencies.backend.owners.GameWorld;
@@ -56,6 +57,8 @@ public class Game implements GameToInterpreterAPI {
     private final Interpreter interpreter = new Interpreter();
 
     private final Variable<Double> turn = new Variable<>(0.);
+
+    private final Map<Ownable, DropZone> pieceLocations = new HashMap<>();
 
 
     /////////////////// PLAY THE GAME ///////////////////
@@ -132,6 +135,7 @@ public class Game implements GameToInterpreterAPI {
      * @param directory the name of the file to load from
      */
     public void loadGame(String directory) {
+        pieceLocations.clear();
         // TODO
         // get num players
 
@@ -169,9 +173,7 @@ public class Game implements GameToInterpreterAPI {
      * @param player the Player to remove
      */
     public void removePlayer(Player player) {
-        if (players.contains(player)){
-            players.remove(player);
-        }
+        players.remove(player);
     }
 
     /**
@@ -196,28 +198,47 @@ public class Game implements GameToInterpreterAPI {
         return players.get(playerNum);
     }
 
+    @Override
+    public DropZone getPieceLocation(Ownable piece) {
+        if (pieceLocations.containsKey(piece)){
+            return pieceLocations.get(piece);
+        }
+        return null;
+    }
+
+    @Override
+    public void movePiece(GameObject piece, DropZone dz, String name) {
+        DropZone oldDz = pieceLocations.get(piece);
+        if (oldDz != null){
+            oldDz.removeObject(oldDz.getKey(piece));
+        }
+        dz.putObject(name, piece);
+    }
+
+    @Override
+    public void removePiece(GameObject piece) {
+        if (pieceLocations.containsKey(piece)){
+            DropZone dz = pieceLocations.get(piece);
+            dz.removeObject(dz.getKey(piece));
+            pieceLocations.remove(piece);
+        }
+        ownableIdManager.removeObject(piece);
+    }
+
+    @Override
+    public void putInDropZone(Ownable element, DropZone dropZone, String name){
+        pieceLocations.put(element, dropZone);
+        dropZone.putObject(name, element);
+    }
+
+    @Override
+    public void increaseTurn() {
+        turn.set((turn.get() + 1) % players.size());
+    }
+
     //endregion
 
     // region RULES AND GOALS
-
-    /**
-     * Adds a Rule to the game.
-     * @param rule the Rule to add
-     */
-    public void addRule(Rule rule) {
-        rules.addObject(rule);
-    }
-
-    /**
-     * Removes a Rule from the game, if it exists there.
-     * @param rule the Rule to remove
-     */
-    public void removeRule(Rule rule) {
-        if(!rules.isIdInUse(rules.getId(rule))) {
-            return;
-        }
-        rules.removeObject(rule);
-    }
 
     /**
      * Gets the Rules of the game.
@@ -270,22 +291,6 @@ public class Game implements GameToInterpreterAPI {
     public void changeOwner(Owner owner, Ownable ownable) {
         ownable.setOwner(owner);
     }
-
-//    /**
-//     * Creates an ownable using ownableFactory for player
-//     * Pass in null for any unused parameters (cannot pass null for type)
-//     * @param type the string type of ownable
-//     * @param owner the owner of the ownable
-//     * @param parentOwnable the parent of the ownable
-//     */
-//    private void createOwnable(String type, Owner owner, Ownable parentOwnable) {
-//        Owner destinationOwner = owner;
-//        if (owner == null){
-//            destinationOwner = gameWorld;
-//        }
-////        Ownable newOwnable = ObjectFactory.createOwnable(type, destinationOwner);
-////        ownableIdManager.addObject(newOwnable, parentOwnable);
-//    }
 
     /**
      * Gets the Owner of an Ownable with id.

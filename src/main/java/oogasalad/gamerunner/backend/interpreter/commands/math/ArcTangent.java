@@ -1,4 +1,4 @@
-package oogasalad.gamerunner.backend.interpreter.commands.operators;
+package oogasalad.gamerunner.backend.interpreter.commands.math;
 
 
 import oogasalad.gamerunner.backend.interpreter.Environment;
