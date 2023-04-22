@@ -21,7 +21,7 @@ public class AddDropZoneItem extends OperatorToken {
 
     ValueToken<String> name = checkArgumentWithSubtype(env, t1, ValueToken.class,
         String.class.getName());
-    ValueToken<Ownable> value = checkArgument(env, t2, ValueToken.class);
+    ValueToken<Ownable> value = checkArgumentWithSubtype(env, t2, ValueToken.class, Ownable.class.getName());
     ValueToken<DropZone> dz = checkArgumentWithSubtype(env, t3, ValueToken.class,
         DropZone.class.getName());
 
