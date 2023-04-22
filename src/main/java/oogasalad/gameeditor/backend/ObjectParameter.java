@@ -29,7 +29,14 @@ public enum ObjectParameter {
   /**
    * The ID of the Parent Ownable.
    */
-  PARENT_OWNABLE_ID
+  PARENT_OWNABLE_ID,
+
+  BOARD_TYPE,
+  BOARD_ROWS,
+  BOARD_COLS,
+  BOARD_LENGTH,
+  BOARD_FORWARD,
+  BOARD_BACKWARD
 
   //endregion FOR CONSTRUCTOR_ARGS
 
