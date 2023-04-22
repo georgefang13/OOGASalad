@@ -1,11 +1,16 @@
 package oogasalad.frontend.panels.libraryPanels;
 
+import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
 import oogasalad.frontend.nodeEditor.GraphEditorTutorial;
 import oogasalad.frontend.panels.Panel;
 
-public class LibraryGridPanel extends Pane implements Panel {
+public class LibraryGridPanel extends GridPane implements Panel {
 
   /**
    * Constructor for the environment panel
@@ -13,16 +18,42 @@ public class LibraryGridPanel extends Pane implements Panel {
   public LibraryGridPanel() {
     super();
     this.makePanel();
+    this.setPadding(new Insets(10));
+    this.setHgap(10);
+    this.setVgap(10);
+
+    // set column constraints to evenly distribute the available width
+    ColumnConstraints column1 = new ColumnConstraints();
+    column1.setPercentWidth(25);
+    ColumnConstraints column2 = new ColumnConstraints();
+    column2.setPercentWidth(25);
+    ColumnConstraints column3 = new ColumnConstraints();
+    column3.setPercentWidth(25);
+    ColumnConstraints column4 = new ColumnConstraints();
+    column4.setPercentWidth(25);
+    this.getColumnConstraints().addAll(column1, column2, column3, column4);
+
+    // populate the grid with labels
+    String[] items = {"Item 1", "Item 2", "Item 3", "Item 4", "Item 5"};
+    int numRows = (int) Math.ceil((double) items.length / 4);
+    int rowIndex = 0;
+    int columnIndex = 0;
+    for (String item : items) {
+      Label label = new Label(item);
+      GridPane.setHgrow(label, Priority.ALWAYS);
+      GridPane.setVgrow(label, Priority.ALWAYS);
+      this.add(label, columnIndex, rowIndex);
+      columnIndex++;
+      if (columnIndex > 3) {
+        columnIndex = 0;
+        rowIndex++;
+      }
+    }
+
   }
 
   public Panel makePanel() {
-    this.setStyle(
-        "-fx-background-color: #24252e;"); //TODO: delete, here just so we can see the pane
-    GraphEditorTutorial graphEditorTutorial = new GraphEditorTutorial();
-    //GraphEditorContainer container = graphEditorTutorial.getContainer();
-    //container.prefHeightProperty().bind(environment.heightProperty());
-    //container.prefWidthProperty().bind(environment.widthProperty());
-    //environment.getChildren().add(container);
+    //TODO: make this a grid of buttons
     return this;
   }
 

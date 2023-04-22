@@ -13,7 +13,7 @@ public class GamePlayerLibraryScene extends AbstractScene {
   private Button editGridButton;
   private Label gameEditorLabel;
   private BorderPane root;
-  private SortedGamesPanel sortedGamesPanel;
+  private LibraryGridPanel libraryGridPanel;
 
   public GamePlayerLibraryScene(SceneController sceneController) {
     super(sceneController);
@@ -30,7 +30,7 @@ public class GamePlayerLibraryScene extends AbstractScene {
     gameEditorLabel = new Label("THIS IS WHERE THE HEADERPANEL WILL GO");
     root.setTop(gameEditorLabel);
     root.setLeft(new VBox(editGridButton));
-    root.setCenter(sortedGamesPanel = new SortedGamesPanel());
+    root.setCenter(libraryGridPanel = new LibraryGridPanel());
     setScene(new Scene(root));
     setText();
     setTheme();

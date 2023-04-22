@@ -17,7 +17,7 @@ import oogasalad.frontend.modals.ModalController;
 import oogasalad.frontend.panels.Panel;
 import oogasalad.frontend.panels.PanelController;
 
-public class SortedGamesPanel extends GridPane implements Panel {
+public class SortedGamesPanel extends VBox implements Panel {
 
   private static final ResourceBundle ELEMENT_LABELS = ResourceBundle.getBundle(
       "frontend/properties/text/english");
@@ -33,37 +33,7 @@ public class SortedGamesPanel extends GridPane implements Panel {
   public SortedGamesPanel() {
     super();
     this.makePanel();
-    this.setPadding(new Insets(10));
-    this.setHgap(10);
-    this.setVgap(10);
 
-    // set column constraints to evenly distribute the available width
-    ColumnConstraints column1 = new ColumnConstraints();
-    column1.setPercentWidth(25);
-    ColumnConstraints column2 = new ColumnConstraints();
-    column2.setPercentWidth(25);
-    ColumnConstraints column3 = new ColumnConstraints();
-    column3.setPercentWidth(25);
-    ColumnConstraints column4 = new ColumnConstraints();
-    column4.setPercentWidth(25);
-    this.getColumnConstraints().addAll(column1, column2, column3, column4);
-
-    // populate the grid with labels
-    String[] items = {"Item 1", "Item 2", "Item 3", "Item 4", "Item 5"};
-    int numRows = (int) Math.ceil((double) items.length / 4);
-    int rowIndex = 0;
-    int columnIndex = 0;
-    for (String item : items) {
-      Label label = new Label(item);
-      GridPane.setHgrow(label, Priority.ALWAYS);
-      GridPane.setVgrow(label, Priority.ALWAYS);
-      this.add(label, columnIndex, rowIndex);
-      columnIndex++;
-      if (columnIndex > 3) {
-        columnIndex = 0;
-        rowIndex++;
-      }
-    }
   }
 
   /**
