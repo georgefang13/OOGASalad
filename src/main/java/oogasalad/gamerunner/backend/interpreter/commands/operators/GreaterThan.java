@@ -11,18 +11,20 @@ import oogasalad.gamerunner.backend.interpreter.tokens.ValueToken;
  */
 public class GreaterThan extends OperatorToken {
 
-    public GreaterThan(){
-        super(2, "GreaterThan");
-    }
+  public GreaterThan() {
+    super(2, "GreaterThan");
+  }
 
-    @Override
-    public Token evaluate(Environment env) throws IllegalArgumentException{
-        Token t1 = getArg(0).evaluate(env);
-        Token t2 = getArg(1).evaluate(env);
+  @Override
+  public Token evaluate(Environment env) throws IllegalArgumentException {
+    Token t1 = getArg(0).evaluate(env);
+    Token t2 = getArg(1).evaluate(env);
 
-        ValueToken<Double> x1 = checkArgumentWithSubtype(env, t1, ValueToken.class, Double.class.getName());
-        ValueToken<Double> x2 = checkArgumentWithSubtype(env, t2, ValueToken.class, Double.class.getName());
+    ValueToken<Double> x1 = checkArgumentWithSubtype(env, t1, ValueToken.class,
+        Double.class.getName());
+    ValueToken<Double> x2 = checkArgumentWithSubtype(env, t2, ValueToken.class,
+        Double.class.getName());
 
-        return new ValueToken<>(x1.VALUE > x2.VALUE);
-    }
+    return new ValueToken<>(x1.VALUE > x2.VALUE);
+  }
 }

@@ -2,12 +2,11 @@ package oogasalad.gameeditor.backend.filemanager;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import com.google.gson.JsonPrimitive;
-import java.io.File;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonPrimitive;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import oogasalad.sharedDependencies.backend.filemanagers.FileManager;
@@ -20,6 +19,7 @@ import org.junit.jupiter.api.Test;
  * @author Rodrigo Bassi Guerreiro
  */
 public class FilesTest {
+
   private static final String FILE_FOLDER = System.getProperty("user.dir") + "/data/testfiles";
   private static final String TEST_FILE_NAME = "test.json";
   private static final String EMPTY_FILE_NAME = "empty.json";

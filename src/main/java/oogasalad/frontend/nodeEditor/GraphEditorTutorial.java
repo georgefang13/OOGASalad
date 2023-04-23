@@ -1,7 +1,8 @@
 package oogasalad.frontend.nodeEditor;
 
 import io.github.eckig.grapheditor.Commands;
-import io.github.eckig.grapheditor.GNodeSkin;
+import io.github.eckig.grapheditor.GraphEditor;
+import io.github.eckig.grapheditor.core.DefaultGraphEditor;
 import io.github.eckig.grapheditor.core.view.GraphEditorContainer;
 import io.github.eckig.grapheditor.model.GConnector;
 import io.github.eckig.grapheditor.model.GModel;
@@ -10,115 +11,108 @@ import io.github.eckig.grapheditor.model.GraphFactory;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import io.github.eckig.grapheditor.GraphEditor;
-import io.github.eckig.grapheditor.core.DefaultGraphEditor;
 import oogasalad.frontend.nodeEditor.skins.tree.TreeConnectionSkin;
 import oogasalad.frontend.nodeEditor.skins.tree.TreeConnectorSkin;
 import oogasalad.frontend.nodeEditor.skins.tree.TreeNodeSkin;
-import oogasalad.frontend.nodeEditor.skins.tree.TreeTailSkin;
 import oogasalad.frontend.nodeEditor.skins.tree.TreeSkinConstants;
-public class GraphEditorTutorial extends Application
-{
+import oogasalad.frontend.nodeEditor.skins.tree.TreeTailSkin;
 
-    public static void main(final String[] args)
-    {
-        launch(args);
-    }
+public class GraphEditorTutorial extends Application {
 
-    @Override
-    public void start(final Stage primaryStage) throws Exception
-    {
-        GraphEditor graphEditor = new DefaultGraphEditor();
-        GraphEditorContainer container = new GraphEditorContainer();
-        container.setGraphEditor(graphEditor);
+  public static void main(final String[] args) {
+    launch(args);
+  }
 
-        container.getStyleClass().add("graph-editor-container");
+  @Override
+  public void start(final Stage primaryStage) throws Exception {
+    GraphEditor graphEditor = new DefaultGraphEditor();
+    GraphEditorContainer container = new GraphEditorContainer();
+    container.setGraphEditor(graphEditor);
 
+    container.getStyleClass().add("graph-editor-container");
 
-        graphEditor.setNodeSkinFactory(node -> new TreeNodeSkin(node));
+    graphEditor.setNodeSkinFactory(node -> new TreeNodeSkin(node));
 
-        // Register GConnectorSkin implementation(s)
-        graphEditor.setConnectorSkinFactory(connector -> new TreeConnectorSkin(connector));
+    // Register GConnectorSkin implementation(s)
+    graphEditor.setConnectorSkinFactory(connector -> new TreeConnectorSkin(connector));
 
-        // Register GConnectionSkin implementation(s)
-        graphEditor.setConnectionSkinFactory(connection -> new TreeConnectionSkin(connection));
+    // Register GConnectionSkin implementation(s)
+    graphEditor.setConnectionSkinFactory(connection -> new TreeConnectionSkin(connection));
 
-        // Register GTailSkin implementation(s)
-        graphEditor.setTailSkinFactory(tail -> new TreeTailSkin(tail));
+    // Register GTailSkin implementation(s)
+    graphEditor.setTailSkinFactory(tail -> new TreeTailSkin(tail));
 
-        // Register GNodeSkin implementation(s)
+    // Register GNodeSkin implementation(s)
 
-        Scene scene = new Scene(container, 800, 600);
-        primaryStage.setScene(scene);
-        primaryStage.show();
-        GModel model = GraphFactory.eINSTANCE.createGModel();
-        graphEditor.setModel(model);
-        addNodes(model);
-        scene.getStylesheets().add(getClass().getResource("/frontend/css/tree-node.css").toExternalForm());
-        System.out.println(scene.getStylesheets());
+    Scene scene = new Scene(container, 800, 600);
+    primaryStage.setScene(scene);
+    primaryStage.show();
+    GModel model = GraphFactory.eINSTANCE.createGModel();
+    graphEditor.setModel(model);
+    addNodes(model);
+    scene.getStylesheets()
+        .add(getClass().getResource("/frontend/css/tree-node.css").toExternalForm());
+    System.out.println(scene.getStylesheets());
 
-    }
+  }
 
-    public GraphEditorContainer getContainer() {
-        GraphEditor graphEditor = new DefaultGraphEditor();
-        GraphEditorContainer container = new GraphEditorContainer();
-        container.setGraphEditor(graphEditor);
-        container.getStyleClass().add("graph-editor-container");
+  public GraphEditorContainer getContainer() {
+    GraphEditor graphEditor = new DefaultGraphEditor();
+    GraphEditorContainer container = new GraphEditorContainer();
+    container.setGraphEditor(graphEditor);
+    container.getStyleClass().add("graph-editor-container");
 
+    graphEditor.setNodeSkinFactory(node -> new TreeNodeSkin(node));
 
-        graphEditor.setNodeSkinFactory(node -> new TreeNodeSkin(node));
+    // Register GConnectorSkin implementation(s)
+    graphEditor.setConnectorSkinFactory(connector -> new TreeConnectorSkin(connector));
 
-        // Register GConnectorSkin implementation(s)
-        graphEditor.setConnectorSkinFactory(connector -> new TreeConnectorSkin(connector));
+    // Register GConnectionSkin implementation(s)
+    graphEditor.setConnectionSkinFactory(connection -> new TreeConnectionSkin(connection));
 
-        // Register GConnectionSkin implementation(s)
-        graphEditor.setConnectionSkinFactory(connection -> new TreeConnectionSkin(connection));
+    // Register GTailSkin implementation(s)
+    graphEditor.setTailSkinFactory(tail -> new TreeTailSkin(tail));
 
-        // Register GTailSkin implementation(s)
-        graphEditor.setTailSkinFactory(tail -> new TreeTailSkin(tail));
+    // Register GNodeSkin implementation(s)
 
-        // Register GNodeSkin implementation(s)
+    GModel model = GraphFactory.eINSTANCE.createGModel();
+    graphEditor.setModel(model);
+    addNodes(model);
 
-        GModel model = GraphFactory.eINSTANCE.createGModel();
-        graphEditor.setModel(model);
-        addNodes(model);
+    return container;
+  }
 
-        return container;
-    }
+  private GNode createNode() {
+    GNode node = GraphFactory.eINSTANCE.createGNode();
 
-    private GNode createNode()
-    {
-        GNode node = GraphFactory.eINSTANCE.createGNode();
+    GConnector input = GraphFactory.eINSTANCE.createGConnector();
+    GConnector output = GraphFactory.eINSTANCE.createGConnector();
+    GConnector output2 = GraphFactory.eINSTANCE.createGConnector();
 
-        GConnector input = GraphFactory.eINSTANCE.createGConnector();
-        GConnector output = GraphFactory.eINSTANCE.createGConnector();
-        GConnector output2 = GraphFactory.eINSTANCE.createGConnector();
+    input.setType(TreeSkinConstants.TREE_INPUT_CONNECTOR);
+    output.setType(TreeSkinConstants.TREE_OUTPUT_CONNECTOR);
+    output2.setType(TreeSkinConstants.TREE_OUTPUT_CONNECTOR);
 
-        input.setType(TreeSkinConstants.TREE_INPUT_CONNECTOR);
-        output.setType(TreeSkinConstants.TREE_OUTPUT_CONNECTOR);
-        output2.setType(TreeSkinConstants.TREE_OUTPUT_CONNECTOR);
+    node.getConnectors().add(input);
+    node.getConnectors().add(output);
+    // node.getConnectors().add(output2);
 
-        node.getConnectors().add(input);
-        node.getConnectors().add(output);
-        // node.getConnectors().add(output2);
+    return node;
+  }
 
-        return node;
-    }
+  private void addNodes(GModel model) {
+    GNode firstNode = createNode();
+    GNode secondNode = createNode();
 
-    private void addNodes(GModel model)
-    {
-        GNode firstNode = createNode();
-        GNode secondNode = createNode();
+    firstNode.setX(150);
+    firstNode.setY(150);
 
-        firstNode.setX(150);
-        firstNode.setY(150);
+    secondNode.setX(400);
+    secondNode.setY(200);
+    secondNode.setWidth(200);
+    secondNode.setHeight(150);
 
-        secondNode.setX(400);
-        secondNode.setY(200);
-        secondNode.setWidth(200);
-        secondNode.setHeight(150);
-
-        Commands.addNode(model, firstNode);
-        Commands.addNode(model, secondNode);
-    }
+    Commands.addNode(model, firstNode);
+    Commands.addNode(model, secondNode);
+  }
 }

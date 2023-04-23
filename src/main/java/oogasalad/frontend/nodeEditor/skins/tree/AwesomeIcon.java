@@ -13,45 +13,45 @@ import javafx.scene.text.Text;
  */
 public enum AwesomeIcon {
 
-    /**
-     * A plus icon.
-     */
-    PLUS(0x002B),
+  /**
+   * A plus icon.
+   */
+  PLUS(0x002B),
 
-    /**
-     * A times / cross icon.
-     */
-    TIMES(0x0058),
+  /**
+   * A times / cross icon.
+   */
+  TIMES(0x0058),
 
-    /**
-     * A map icon.
-     */
-    MAP(0xf03e);
+  /**
+   * A map icon.
+   */
+  MAP(0xf03e);
 
-    private static final String STYLE_CLASS = "icon"; //$NON-NLS-1$
-    private static final String FONT_AWESOME = "FontAwesome"; //$NON-NLS-1$
-    private int unicode;
+  private static final String STYLE_CLASS = "icon"; //$NON-NLS-1$
+  private static final String FONT_AWESOME = "FontAwesome"; //$NON-NLS-1$
+  private int unicode;
 
-    /**
-     * Creates a new awesome icon for the given unicode value.
-     *
-     * @param pUnicode the unicode value as an integer
-     */
-    private AwesomeIcon(final int pUnicode) {
-        this.unicode = pUnicode;
-    }
+  /**
+   * Creates a new awesome icon for the given unicode value.
+   *
+   * @param pUnicode the unicode value as an integer
+   */
+  private AwesomeIcon(final int pUnicode) {
+    this.unicode = pUnicode;
+  }
 
-    /**
-     * Returns a new {@link Node} containing the icon.
-     *
-     * @return a new node containing the icon
-     */
-    public Node node() {
+  /**
+   * Returns a new {@link Node} containing the icon.
+   *
+   * @return a new node containing the icon
+   */
+  public Node node() {
 
-        final Text text = new Text(String.valueOf((char) unicode));
-        text.getStyleClass().setAll(STYLE_CLASS);
-        text.setFont(Font.font(FONT_AWESOME));
+    final Text text = new Text(String.valueOf((char) unicode));
+    text.getStyleClass().setAll(STYLE_CLASS);
+    text.setFont(Font.font(FONT_AWESOME));
 
-        return text;
-    }
+    return text;
+  }
 }

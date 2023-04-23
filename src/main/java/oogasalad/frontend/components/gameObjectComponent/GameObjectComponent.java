@@ -2,19 +2,19 @@ package oogasalad.frontend.components.gameObjectComponent;
 
 import java.util.List;
 import javafx.scene.Node;
+import javafx.scene.image.ImageView;
 import oogasalad.frontend.components.AbstractComponent;
 import oogasalad.frontend.components.Component;
 
 /**
- *
- * @author Han, Aryan
- * These are the components of the View that are playable objects in Gameplay
+ * @author Han, Aryan These are the components of the View that are playable objects in Gameplay
  */
 public interface GameObjectComponent extends Component {
 
 
   /**
    * Change the name of the GameObject being edited
+   *
    * @param name
    */
   void setName(String name);
@@ -25,8 +25,16 @@ public interface GameObjectComponent extends Component {
   List<Node> getChildren();
 
   /**
-   * Toggle the gameObject on or off depending on whether the user wants the GameObject to display in game
+   * Toggle the gameObject on or off depending on whether the user wants the GameObject to display
+   * in game
    */
   void setPlayable(boolean playable);
+
+  /**
+   * This is the method that allows for visual for DisplayableComponent to be changed
+   * @param imagePath the path where the image is contained to represent the Component
+   */
+  void setImage(String imagePath);
+  ImageView getImage();
 
 }

@@ -9,12 +9,14 @@
   -fx-border-width: 2;
   -fx-border-color: #4A4F76;
 }
+
 .deselected-header-menu-button { /* Specific */
   -fx-border-radius: 0;
   -fx-border-width: 0;
   -fx-background-color: #4A4F76;
   -fx-text-fill: white;
 }
+
 .selected-header-menu-button { /* Specific */
   -fx-border-radius: 0;
   -fx-border-width: 1;
@@ -28,17 +30,21 @@
   -fx-padding: 10px;
   -fx-background-color: #312424;
 }
+
 .titled-pane > .title { /* this will affect all titled panes */
   -fx-background-color: #201616;
 }
+
 .titled-pane { /* this will affect all titled panes */
   -fx-pref-width: 250;
   -fx-text-fill: white;
 }
+
 .accordion { /* this will affect all accordions */
   -fx-background-color: #201616;
   -fx-pref-height: 700;
 }
+
 .accordion-label {
   -fx-background-color: #201616;
   -fx-text-fill: white;
@@ -58,6 +64,7 @@
   -fx-pref-height: 150;
   -fx-background-radius: 10 0 0 10;
 }
+
 .popout-button-box {
   -fx-alignment: center;
   -fx-pref-height: 650;
@@ -65,34 +72,41 @@
   -fx-spacing: 0;
   -fx-background-color: #24252e;
 }
+
 .properties-box-open {
   -fx-padding: 0;
   -fx-spacing: 0;
   -fx-background-color: #24252e;
 }
+
 .properties-box-closed {
   -fx-padding: 0;
   -fx-spacing: 0;
   -fx-background-color: #24252e;
   -fx-translate-x: 225;
 }
+
 .properties-tab-pane {
   -fx-background-color: #3E404E;
   -fx-pref-width: 225;
 }
+
 .properties-tab-pane .tab {
   -fx-background-color: #333B73;
   -fx-pref-width: 69;
   -fx-background-radius: 10 10 0 0;
 }
+
 .properties-tab-pane .tab:selected {
   -fx-background-color: #6570B0;
 }
+
 .properties-tab-pane .tab-label {
   -fx-text-fill: white;
   -fx-font-size: 14px;
   -fx-font-weight: bold;
 }
+
 .properties-tab-pane .tab-header-background {
   -fx-background-color: #3E404E;
 }

@@ -27,7 +27,7 @@ public class WindowController implements WindowMediator {
   @Override
   public String registerWindow(WindowType windowType) {
     String windowID = windowType + "_" + windowIDCounter;
-    AbstractWindow window = WindowFactory.createWindow(windowType, windowID,this);
+    AbstractWindow window = WindowFactory.createWindow(windowType, windowID, this);
     windowIDCounter++;
     windowMap.put(windowID, window);
     window.sceneController.setDefaultScene(window.getDefaultSceneType()); //messy
@@ -44,6 +44,7 @@ public class WindowController implements WindowMediator {
     getWindow(windowID).close();
     windowMap.remove(windowID);
   }
+
   @Override
   public AbstractWindow getWindow(String windowID) {
     return windowMap.get(windowID);

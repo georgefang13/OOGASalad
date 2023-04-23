@@ -10,19 +10,21 @@ import oogasalad.gamerunner.backend.interpreter.tokens.ValueToken;
  */
 public class Difference extends OperatorToken {
 
-    public Difference(){
-        super(2, "Difference");
-    }
+  public Difference() {
+    super(2, "Difference");
+  }
 
-    @Override
-    public ValueToken<Double> evaluate(Environment env) throws IllegalArgumentException{
+  @Override
+  public ValueToken<Double> evaluate(Environment env) throws IllegalArgumentException {
 
-        Token t1 = getArg(0).evaluate(env);
-        Token t2 = getArg(1).evaluate(env);
+    Token t1 = getArg(0).evaluate(env);
+    Token t2 = getArg(1).evaluate(env);
 
-        ValueToken<Double> x1 = checkArgumentWithSubtype(env, t1, ValueToken.class, Double.class.getName());
-        ValueToken<Double> x2 = checkArgumentWithSubtype(env, t2, ValueToken.class, Double.class.getName());
+    ValueToken<Double> x1 = checkArgumentWithSubtype(env, t1, ValueToken.class,
+        Double.class.getName());
+    ValueToken<Double> x2 = checkArgumentWithSubtype(env, t2, ValueToken.class,
+        Double.class.getName());
 
-        return new ValueToken<>(x1.VALUE - x2.VALUE);
-    }
+    return new ValueToken<>(x1.VALUE - x2.VALUE);
+  }
 }

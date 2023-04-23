@@ -1,77 +1,83 @@
 package oogasalad.gamerunner.backend.interpreter.commands.control;
 
 import oogasalad.gamerunner.backend.interpreter.Environment;
-import oogasalad.gamerunner.backend.interpreter.tokens.*;
+import oogasalad.gamerunner.backend.interpreter.tokens.ExpressionToken;
+import oogasalad.gamerunner.backend.interpreter.tokens.OperatorToken;
+import oogasalad.gamerunner.backend.interpreter.tokens.Token;
+import oogasalad.gamerunner.backend.interpreter.tokens.ValueToken;
+import oogasalad.gamerunner.backend.interpreter.tokens.VariableToken;
 
 /**
  * Repeats the given expressions the given number of times
  */
 public class For extends OperatorToken {
-    public For() {
-        super(2, "For");
+
+  public For() {
+    super(2, "For");
+  }
+
+
+  // returns [var, start, stop, increment]
+  private Token[] repeatArgs(Environment env) throws IllegalArgumentException {
+    checkArgument(env, getArg(0), ExpressionToken.class);
+    ExpressionToken repeats = (ExpressionToken) getArg(0);
+
+    if (repeats.size() < 3 || repeats.size() > 4) {
+      throw new IllegalArgumentException("Cannot repeat with " + repeats.size() + " arguments");
     }
 
+    Token[] ret = new Token[repeats.size()];
 
-    // returns [var, start, stop, increment]
-    private Token[] repeatArgs(Environment env) throws IllegalArgumentException{
-        checkArgument(env, getArg(0), ExpressionToken.class);
-        ExpressionToken repeats = (ExpressionToken) getArg(0);
+    checkArgument(env, repeats.get(0), VariableToken.class);
 
-        if (repeats.size() < 3 || repeats.size() > 4){
-            throw new IllegalArgumentException("Cannot repeat with " + repeats.size() + " arguments");
-        }
+    Token tstart = repeats.get(1).evaluate(env);
+    Token tstop = repeats.get(2).evaluate(env);
 
-        Token[] ret = new Token[repeats.size()];
+    checkArgumentWithSubtype(env, tstart, ValueToken.class, Double.class.getName());
+    checkArgumentWithSubtype(env, tstop, ValueToken.class, Double.class.getName());
 
-        checkArgument(env, repeats.get(0), VariableToken.class);
+    ret[0] = repeats.get(0);
+    ret[1] = tstart;
+    ret[2] = tstop;
 
-        Token tstart = repeats.get(1).evaluate(env);
-        Token tstop = repeats.get(2).evaluate(env);
-
-        checkArgumentWithSubtype(env, tstart, ValueToken.class, Double.class.getName());
-        checkArgumentWithSubtype(env, tstop, ValueToken.class, Double.class.getName());
-
-        ret[0] = repeats.get(0);
-        ret[1] = tstart;
-        ret[2] = tstop;
-
-        if (repeats.size() == 4){
-            Token tinc = repeats.get(3).evaluate(env);
-            checkArgumentWithSubtype(env, tinc, ValueToken.class, Double.class.getName());
-            ret[3] = tinc;
-        }
-
-        return ret;
+    if (repeats.size() == 4) {
+      Token tinc = repeats.get(3).evaluate(env);
+      checkArgumentWithSubtype(env, tinc, ValueToken.class, Double.class.getName());
+      ret[3] = tinc;
     }
 
-    public Token evaluate(Environment env) throws IllegalArgumentException{
-        Token[] repArgs = repeatArgs(env);
+    return ret;
+  }
 
-        VariableToken var = (VariableToken) repArgs[0];
+  public Token evaluate(Environment env) throws IllegalArgumentException {
+    Token[] repArgs = repeatArgs(env);
 
-        double start = ((ValueToken<Double>) repArgs[1]).VALUE;
-        double stop = ((ValueToken<Double>) repArgs[2]).VALUE;
+    VariableToken var = (VariableToken) repArgs[0];
 
-        double increment = 1;
+    double start = ((ValueToken<Double>) repArgs[1]).VALUE;
+    double stop = ((ValueToken<Double>) repArgs[2]).VALUE;
 
-        // repeat can have an optional increment as a 4th argument (default 1)
-        if (repArgs.length == 4){
-            increment = ((ValueToken<Double>) repArgs[3]).VALUE;
-        }
-        ExpressionToken exprs = (ExpressionToken) getArg(1);
+    double increment = 1;
 
-        if (start == stop || start > stop && increment > 0 || start < stop && increment < 0){
-            throwError(new RuntimeException("Cannot repeat from " + start + " to " + stop + " by " + increment));
-        }
-
-        env.createLocalScope();
-
-        for (double i = start; i < stop; i += increment){
-            env.addVariable(var.NAME, new ValueToken<>(i));
-            exprs.evaluate(env);
-        }
-
-        env.endLocalScope();
-        return null;
+    // repeat can have an optional increment as a 4th argument (default 1)
+    if (repArgs.length == 4) {
+      increment = ((ValueToken<Double>) repArgs[3]).VALUE;
     }
+    ExpressionToken exprs = (ExpressionToken) getArg(1);
+
+    if (start == stop || start > stop && increment > 0 || start < stop && increment < 0) {
+      throwError(
+          new RuntimeException("Cannot repeat from " + start + " to " + stop + " by " + increment));
+    }
+
+    env.createLocalScope();
+
+    for (double i = start; i < stop; i += increment) {
+      env.addVariable(var.NAME, new ValueToken<>(i));
+      exprs.evaluate(env);
+    }
+
+    env.endLocalScope();
+    return null;
+  }
 }

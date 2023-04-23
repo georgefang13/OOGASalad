@@ -7,7 +7,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import oogasalad.frontend.scenes.AbstractScene;
 import oogasalad.frontend.scenes.SceneController;
-import oogasalad.frontend.windows.AbstractWindow;
 
 public class ExampleErrorModal extends AbstractScene {
 

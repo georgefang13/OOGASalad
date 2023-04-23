@@ -10,20 +10,22 @@ import oogasalad.gamerunner.backend.interpreter.tokens.ValueToken;
  * Repeats the given expressions the given number of times
  */
 public class If extends OperatorToken {
-    public If() {
-        super(2, "If");
+
+  public If() {
+    super(2, "If");
+  }
+
+  public Token evaluate(Environment env) throws IllegalArgumentException {
+    Token t = getArg(0).evaluate(env);
+
+    ValueToken<Boolean> b = checkArgumentWithSubtype(env, t, ValueToken.class,
+        Boolean.class.getName());
+    ExpressionToken exprs = checkArgument(env, getArg(1), ExpressionToken.class);
+
+    if (b.VALUE) {
+      exprs.evaluate(env);
     }
 
-    public Token evaluate(Environment env) throws IllegalArgumentException{
-        Token t = getArg(0).evaluate(env);
-
-        ValueToken<Boolean> b = checkArgumentWithSubtype(env, t, ValueToken.class, Boolean.class.getName());
-        ExpressionToken exprs =  checkArgument(env, getArg(1), ExpressionToken.class);
-
-        if (b.VALUE) {
-            exprs.evaluate(env);
-        }
-
-        return null;
-    }
+    return null;
+  }
 }

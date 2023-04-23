@@ -20,12 +20,13 @@ public class ObjectFactoryTest {
   private IdManager<Ownable> idManager;
   private ArrayList<Player> players;
   private GameWorld world;
+
   @BeforeEach
   void setup() {
     world = new GameWorld();
     idManager = new IdManager<>();
     players = new ArrayList<>();
-    for(int i = 0; i < 5; i++) {
+    for (int i = 0; i < 5; i++) {
       players.add(new Player());
     }
     factory = new ObjectFactory(world, idManager, players);
@@ -53,7 +54,8 @@ public class ObjectFactoryTest {
 
   @Test
   public void testCreateWithId() {
-    Map<ObjectParameter, String> params = Map.of(ObjectParameter.OWNABLE_TYPE, "Variable", ObjectParameter.ID, "test");
+    Map<ObjectParameter, String> params = Map.of(ObjectParameter.OWNABLE_TYPE, "Variable",
+        ObjectParameter.ID, "test");
     factory.createOwnable(params);
     assertEquals(1, idManager.getSimpleIds().size());
     Ownable ownable = idManager.getObject("test");
@@ -69,10 +71,12 @@ public class ObjectFactoryTest {
 
   @Test
   public void testParentOwnable() {
-    Map<ObjectParameter, String> params = Map.of(ObjectParameter.OWNABLE_TYPE, "GameObject", ObjectParameter.ID, "parent");
+    Map<ObjectParameter, String> params = Map.of(ObjectParameter.OWNABLE_TYPE, "GameObject",
+        ObjectParameter.ID, "parent");
     factory.createOwnable(params);
     assertEquals(1, idManager.getSimpleIds().size());
-    params = Map.of(ObjectParameter.OWNABLE_TYPE, "Variable", ObjectParameter.PARENT_OWNABLE, "parent");
+    params = Map.of(ObjectParameter.OWNABLE_TYPE, "Variable", ObjectParameter.PARENT_OWNABLE,
+        "parent");
     factory.createOwnable(params);
     assertEquals(2, idManager.getSimpleIds().size());
     Ownable ownable = idManager.getObject("Variable");
@@ -84,12 +88,16 @@ public class ObjectFactoryTest {
 
   @Test
   public void testBoardCreator() {
-    Map<ObjectParameter, String> params = Map.of(ObjectParameter.OWNABLE_TYPE, "BoardCreator", ObjectParameter.BOARD_CREATOR_TYPE, "createGrid", ObjectParameter.BOARD_CREATOR_PARAM_1, "5", ObjectParameter.BOARD_CREATOR_PARAM_2, "5");
+    Map<ObjectParameter, String> params = Map.of(ObjectParameter.OWNABLE_TYPE, "BoardCreator",
+        ObjectParameter.BOARD_CREATOR_TYPE, "createGrid", ObjectParameter.BOARD_CREATOR_PARAM_1,
+        "5", ObjectParameter.BOARD_CREATOR_PARAM_2, "5");
     factory.createOwnable(params);
     assertEquals(25, idManager.getSimpleIds().size());
-    params = Map.of(ObjectParameter.OWNABLE_TYPE, "BoardCreator", ObjectParameter.BOARD_CREATOR_TYPE, "createSquareLoop", ObjectParameter.BOARD_CREATOR_PARAM_1, "5", ObjectParameter.BOARD_CREATOR_PARAM_2, "2");
+    params = Map.of(ObjectParameter.OWNABLE_TYPE, "BoardCreator",
+        ObjectParameter.BOARD_CREATOR_TYPE, "createSquareLoop",
+        ObjectParameter.BOARD_CREATOR_PARAM_1, "5", ObjectParameter.BOARD_CREATOR_PARAM_2, "2");
     factory.createOwnable(params);
-    assertEquals(25+10, idManager.getSimpleIds().size());
+    assertEquals(25 + 10, idManager.getSimpleIds().size());
     System.out.println(idManager.getSimpleIds());
 //    params = Map.of(ObjectParameter.OWNABLE_TYPE, "BoardCreator", ObjectParameter.BOARD_CREATOR_TYPE, "create1DLoop", ObjectParameter.BOARD_CREATOR_PARAM_1, "5");
 //    factory.createOwnable(params);

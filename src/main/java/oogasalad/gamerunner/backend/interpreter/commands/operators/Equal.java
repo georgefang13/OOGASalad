@@ -10,13 +10,13 @@ import oogasalad.gamerunner.backend.interpreter.tokens.ValueToken;
  */
 public class Equal extends OperatorToken {
 
-    public Equal(){
-        super(2, "Equal");
-    }
+  public Equal() {
+    super(2, "Equal");
+  }
 
-    @Override
-    public Token evaluate(Environment env) throws IllegalArgumentException{
-        boolean b = getArg(0).equals(getArg(1), env);
-        return new ValueToken<>(b);
-    }
+  @Override
+  public Token evaluate(Environment env) throws IllegalArgumentException {
+    boolean b = getArg(0).equals(getArg(1), env);
+    return new ValueToken<>(b);
+  }
 }
