@@ -61,8 +61,32 @@ public class FileGetTest {
   }
 
   @Test
+  void tagsGetTest() throws FileNotFoundException {
+    fileManager = new FileManager(getPath("MANY_TAGS"));
+    List<String> tags = new ArrayList<>(Arrays.asList(
+       "Rodrigo", "Max", "Ethan", "Owen", "George"
+    ));
+    List<String> values = new ArrayList<>(Arrays.asList(
+        "Hot Rod", "The Meister", "Eh", "O-Show", "Curious"
+    ));
+    Iterator<String> iteratorExpected = tags.iterator();
+    Iterator<String> iteratorFromFile = fileManager.getTagsAtLevel("names").iterator();
+    while (iteratorFromFile.hasNext() && iteratorExpected.hasNext()) {
+      assertEquals(iteratorFromFile.next(), iteratorExpected.next());
+    }
+    Iterator<String> iteratorTags = tags.iterator();
+    Iterator<String> iteratorValues = values.iterator();
+    while (iteratorExpected.hasNext()) {
+      assertEquals(iteratorValues.next(), fileManager.getString("names", iteratorTags.next()));
+    }
+  }
+
+  @Test
   void sadTests() throws FileNotFoundException {
     fileManager = new FileManager(getPath("SAME_TAG"));
+    assertThrows(IllegalArgumentException.class, () -> {
+      fileManager.getString();
+    });
     assertThrows(IllegalArgumentException.class, () -> {
       fileManager.getString("invalid key");
     });
