@@ -24,7 +24,19 @@ public enum ObjectParameter {
   /**
    *  For noting who the Owner of Onwables is. This should be "1", "2", etc. for the Players; anything else assumes GameWorld
    */
-  OWNER
+  OWNER,
+
+  /**
+   * The ID of the Parent Ownable.
+   */
+  PARENT_OWNABLE_ID,
+
+  BOARD_TYPE,
+  BOARD_ROWS,
+  BOARD_COLS,
+  BOARD_LENGTH,
+  BOARD_FORWARD,
+  BOARD_BACKWARD
 
   //endregion FOR CONSTRUCTOR_ARGS
 

@@ -4,6 +4,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import oogasalad.gameeditor.backend.ObjectParameter;
@@ -51,82 +52,82 @@ public class ObjectFactory {
 
   private final String playerIdentifier = "Player"; //Independent of language, should not be changed
 
-  /**
-   * Checks if the given type is a null type.
-   *
-   * @param type the type to check
-   * @return true if the type is a null type, false otherwise
-   */
-  private boolean isNullType(String type) {
-    for (String nullType : nullTypes) {
-      if (type.equals(nullType)) {
-        return true;
-      }
-    }
-    return false;
-  }
+//  /**
+//   * Checks if the given type is a null type.
+//   *
+//   * @param type the type to check
+//   * @return true if the type is a null type, false otherwise
+//   */
+//  private boolean isNullType(String type) {
+//    for (String nullType : nullTypes) {
+//      if (type.equals(nullType)) {
+//        return true;
+//      }
+//    }
+//    return false;
+//  }
+//
+//  /**
+//   * Access a parameter from the map, returning null if the parameter is not present or is a null
+//   * type.
+//   *
+//   * @param params the map of parameters
+//   * @param param  the parameter to get
+//   * @return
+//   */
+//  private String getWithNull(Map<ObjectParameter, String> params, ObjectParameter param) {
+//    String result = params.get(param);
+//    if (result == null || isNullType(result)) {
+//      return null;
+//    } else {
+//      return result;
+//    }
+//  }
 
-  /**
-   * Access a parameter from the map, returning null if the parameter is not present or is a null
-   * type.
-   *
-   * @param params the map of parameters
-   * @param param  the parameter to get
-   * @return
-   */
-  private String getWithNull(Map<ObjectParameter, String> params, ObjectParameter param) {
-    String result = params.get(param);
-    if (result == null || isNullType(result)) {
-      return null;
-    } else {
-      return result;
-    }
-  }
-
-  private void handleBoardCreator(Map<ObjectParameter, String> params) {
+  private void handleBoardCreator(Map<ObjectParameter, Object> params) {
     Owner owner = gameWorld;
-
-    String type = getWithNull(params, ObjectParameter.BOARD_CREATOR_TYPE);
-    String param1 = getWithNull(params, ObjectParameter.BOARD_CREATOR_PARAM_1);
-    String param2 = getWithNull(params, ObjectParameter.BOARD_CREATOR_PARAM_2);
-    String param3 = getWithNull(params, ObjectParameter.BOARD_CREATOR_PARAM_3);
-
+    String type = params.get(ObjectParameter.BOARD_TYPE).toString();
     List<DropZone> dropZones = new ArrayList<>();
-
+    String boardRows = params.get(ObjectParameter.BOARD_ROWS).toString();
+    String boardCols = params.get(ObjectParameter.BOARD_COLS).toString();
+    String boardLength = params.get(ObjectParameter.BOARD_LENGTH).toString();
+    String boardForward = params.get(ObjectParameter.BOARD_FORWARD).toString();
+    String boardBackward = params.get(ObjectParameter.BOARD_BACKWARD).toString();
     try {
       // Get the method from BoardCreator matching type
+      Class<?> boardCreatorClass = Class.forName("oogasalad/gameeditor/backend/ownables/gameobjects/BoardCreator.java");
       Method boardCreatorMethod;
+      Object[] args;
 
-      if (type.equals("createGrid")) {
-        int param1Int = Integer.parseInt(param1);
-        int param2Int = Integer.parseInt(param2);
-        boardCreatorMethod = BoardCreator.class.getMethod(type, int.class, int.class);
-        dropZones = (List<DropZone>) boardCreatorMethod.invoke(null, param1Int, param2Int);
-      } else if (type.equals("createSquareLoop")) {
-        int param1Int = Integer.parseInt(param1);
-        int param2Int = Integer.parseInt(param2);
-        boardCreatorMethod = BoardCreator.class.getMethod(type, int.class, int.class);
-        dropZones = (List<DropZone>) boardCreatorMethod.invoke(null, param1Int, param2Int);
-      } else if (type.equals("create1DLoop")) {
-        if (param3 == null) {
-          boardCreatorMethod = BoardCreator.class.getMethod(type, int.class);
-          int param1Int = Integer.parseInt(param1);
-          dropZones = (List<DropZone>) boardCreatorMethod.invoke(null, param1Int);
-        } else {
-          boardCreatorMethod = BoardCreator.class.getMethod(type, int.class, String.class,
-              String.class);
-          int param1Int = Integer.parseInt(param1);
-          dropZones = (List<DropZone>) boardCreatorMethod.invoke(null, param1Int, param2, param3);
-        }
-
-      } else {
-        throw new RuntimeException("Unsupported BoardCreator type: " + type);
+      switch (type) {
+        case "createGrid":
+          args = new Object[]{Integer.parseInt(boardRows), Integer.parseInt(boardCols)};
+          boardCreatorMethod = BoardCreator.class.getMethod(type, int.class, int.class);
+          break;
+        case "createSquareLoop":
+          args = new Object[]{Integer.parseInt(boardRows), Integer.parseInt(boardCols)};
+          boardCreatorMethod = boardCreatorClass.getMethod(type, int.class, int.class);
+          break;
+        case "create1DLoop":
+          if (boardForward == null || boardBackward == null) {
+            args = new Object[]{Integer.parseInt(boardLength)};
+            boardCreatorMethod = boardCreatorClass.getMethod(type, int.class);
+          } else {
+            args = new Object[]{Integer.parseInt(boardLength), boardForward, boardBackward};
+            boardCreatorMethod = boardCreatorClass.getMethod(type, int.class, String.class, String.class);
+          }
+          break;
+        default:
+          throw new RuntimeException("Unsupported BoardCreator type: " + type);
       }
-    } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+
+      dropZones = (List<DropZone>) boardCreatorMethod.invoke(null, args);
+    } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
       e.printStackTrace();
     } catch (Exception e) {
       throw new RuntimeException("Error creating game board", e);
     }
+
     //we have all the dropzones, now we need to add them to game manager (with owner as game world)
     for (DropZone dropZone : dropZones) {
       dropZone.setOwner(owner);
@@ -160,6 +161,21 @@ public class ObjectFactory {
     }
   } //TODO
 
+  /**
+   * check if owner id is numeric value
+   * @param str
+   * @return
+   */
+  public Integer isNumeric(String str) {
+    if (str == null) {
+      return null;
+    }
+    try {
+      return  Integer.parseInt(str);
+    } catch (NumberFormatException e) {
+      return null;
+    }
+  }
 
   /**
    * Creates an ownable from the given parameters and adds it to the IdManager. If OWNABLE_TYPE is
@@ -168,46 +184,43 @@ public class ObjectFactory {
    * @param params
    * @return
    */
-  public void createOwnable(Map<ObjectParameter, String> params) {
-    String ownableType = getWithNull(params, ObjectParameter.OWNABLE_TYPE);
-    String parentOwnerName = getWithNull(params, ObjectParameter.OWNER);
-    String id = getWithNull(params, ObjectParameter.ID);
-    String parentOwnableName = getWithNull(params, ObjectParameter.PARENT_OWNABLE);
+  public void createOwnable(Map<ObjectParameter, Object> params) {
+    String ownableType = params.get(ObjectParameter.OWNABLE_TYPE).toString();
+    Map<ObjectParameter, Object> constructor_params = (Map<ObjectParameter, Object>) params.get(ObjectParameter.CONSTRUCTOR_ARGS);
+    String ownerNum = constructor_params.get(ObjectParameter.OWNER).toString();
+    Integer ownerInt = isNumeric(ownerNum);
+    String parentOwnableId = constructor_params.get(ObjectParameter.PARENT_OWNABLE_ID).toString();
+    String id = constructor_params.get(ObjectParameter.ID).toString();
+    Owner owner;
     Ownable parentOwnable;
-    try {
-      parentOwnable = ownableIdManager.getObject(parentOwnableName);
-    } catch (Exception e) {
-      parentOwnable = null;
-    }
-    //if null or does not contain playerIdentifier, then it is the gameWorld
-    Owner Owner;
-    if (parentOwnerName == null || !parentOwnerName.contains(playerIdentifier)) {
-      Owner = gameWorld;
+    //owner from constructor params
+    if (ownerInt != null && players.size() >= ownerInt){
+      owner = players.get(ownerInt - 1);
     } else {
-      //get player from player list
-      try {
-        Owner = players.get(Integer.parseInt(parentOwnerName.substring(playerIdentifier.length()))
-            - 1); //Because player numbers start at 1
-      } catch (NumberFormatException e) {
-        Owner = gameWorld;
-      }
+      owner = gameWorld;
+    }
+    //parent ownable from constructor params
+    if (parentOwnableId != null){
+      parentOwnable = ownableIdManager.getObject(parentOwnableId);
+    } else {
+      parentOwnable = null;
     }
     //if ownableType is BoardCreator
     if (ownableType.equals("BoardCreator")) {
-      handleBoardCreator(params);
+      handleBoardCreator(constructor_params);
     } else {
-      Ownable newOwnable = createOwnable(ownableType, Owner);
+      Ownable newOwnable = createOwnable(ownableType, owner);
       ownableIdManager.addObject(newOwnable, id, parentOwnable);
     }
 
 
   }
 
-  public static Rule createRule(Map<ObjectParameter, String> params) {
+  public static Rule createRule(Map<ObjectParameter, Object> params) {
     return null; //TODO move to shared dependencies
   }
 
-  public static Goal createGoal(Map<ObjectParameter, String> params) {
+  public static Goal createGoal(Map<ObjectParameter, Object> params) {
     return null; //TODO move to shared dependencies
   }
 
