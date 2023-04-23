@@ -58,6 +58,9 @@ public class GameRunnerController {
 
         return board.getBoardVisual();
     }
+    public void initializeDropZones(){
+
+    }
 
     public record DropZoneParameters(String id, int x, int y, int height, int width){}
 
