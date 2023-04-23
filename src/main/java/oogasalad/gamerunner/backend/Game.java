@@ -10,6 +10,7 @@ import oogasalad.gamerunner.backend.fsm.GameRunnerController;
 import oogasalad.gamerunner.backend.fsm.ProgrammableState;
 import oogasalad.gamerunner.backend.interpretables.Goal;
 import oogasalad.gamerunner.backend.interpreter.Interpreter;
+import oogasalad.sharedDependencies.backend.filemanagers.FileManager;
 import oogasalad.sharedDependencies.backend.ownables.Ownable;
 import oogasalad.sharedDependencies.backend.ownables.gameobjects.DropZone;
 import oogasalad.sharedDependencies.backend.ownables.gameobjects.GameObject;
@@ -209,11 +210,41 @@ public class Game implements GameToInterpreterAPI{
         }
     }
 
-    private void loadDropZones(String file){
-        JsonObject json = getTopJSON(file);
+    private void loadDropZones(String file) throws FileNotFoundException {
+        FileManager fm = new FileManager(file);
+
+        Map<DropZone, String[]> edgeMap = new HashMap<>();
+
+        for (String id : fm.getTagsAtLevel()){
+            int x = Integer.parseInt(fm.getString(id, "position", "x"));
+            int y = Integer.parseInt(fm.getString(id, "position", "y"));
+            int width = Integer.parseInt(fm.getString(id, "position", "width"));
+            int height = Integer.parseInt(fm.getString(id, "position", "height"));
+
+            DropZone dz = new DropZone(id);
+
+            for (String edgeName : fm.getTagsAtLevel(id, "connections")){
+                String edge = fm.getString(id, "connections", edgeName);
+                edgeMap.put(dz, new String[]{edgeName, edge});
+            }
+
+            ownableIdManager.addObject(dz, id);
+        }
+
+        for (DropZone dz : edgeMap.keySet()){
+            // [ edgeName, edge ]
+            String[] edge = edgeMap.get(dz);
+            DropZone other = (DropZone) ownableIdManager.getObject(edge[1]);
+            dz.addOutgoingConnection(other, edge[0]);
+        }
     }
 
-    private void loadGameObjects(String file){
+    private void loadGameObjects(String file) throws FileNotFoundException {
+
+        FileManager fm = new FileManager(file);
+
+        fm.getTagsAtLevel();
+
         JsonObject json = getTopJSON(file);
 
         Map<String, List<String>> ownMap = new HashMap<>();
