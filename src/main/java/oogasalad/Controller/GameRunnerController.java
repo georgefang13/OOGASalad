@@ -46,8 +46,8 @@ public class GameRunnerController {
     }
 
     public String initialInstruction() {
-        String response = fsmExample.getInstruction();
-        return parseResponse(response);
+        //String response = fsmExample.getInstruction();
+        return "pass"; //parseResponse(response);
     }
 
     public GridPane initializeBoard() {
@@ -58,6 +58,8 @@ public class GameRunnerController {
 
         return board.getBoardVisual();
     }
+
+    public record DropZoneParameters(String id, int x, int y, int height, int width){}
 
     private void parseDropZoneLayout() throws FileNotFoundException {
         FileManager DZparser = new FileManager(directory + "/layout.json");
@@ -99,9 +101,9 @@ public class GameRunnerController {
             if (playerTurn == replaceWithFileLoaderThatAssignIDtoPiece(id)) {
                 String userInput = boardY + "," + boardX;
                 System.out.println(userInput);
-                String fsmReturn = userResponds(userInput);
-                String newInstruction = parseResponse(fsmReturn);
-                gamePlayerMainScene.refreshInstructions(newInstruction);
+                //String fsmReturn = userResponds(userInput);
+                //String newInstruction = parseResponse(fsmReturn);
+                gamePlayerMainScene.refreshInstructions("pass");
             }
             else {
                 String newInstruction = "ITS NOT YOUR MOVE!!!";
