@@ -1,15 +1,12 @@
 package oogasalad.sharedDependencies.backend.ownables.variables;
 
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import oogasalad.sharedDependencies.backend.filemanagers.FileManager;
 import oogasalad.sharedDependencies.backend.ownables.Ownable;
 import oogasalad.sharedDependencies.backend.owners.Owner;
 
@@ -141,8 +138,8 @@ public class Variable<T> extends Ownable {
   }
 
   @Override
-  public String getAsJson() {
-    return null;
+  public void toConfigFile(String path) {
+
   }
 }
 
