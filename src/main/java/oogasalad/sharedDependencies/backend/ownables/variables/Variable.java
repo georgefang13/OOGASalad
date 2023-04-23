@@ -145,5 +145,10 @@ public class Variable<T> extends Ownable {
   public JsonObject getAsJson() {
     return null;
   }
+
+  @Override
+  public String toString(){
+    return "Var<" + value + ">";
+  }
 }
 

@@ -29,11 +29,15 @@ public class ObjectFactoryTest {
     game = new GameInator();
     world = game.getGameWorld();
     players = (ArrayList<Player>) game.getPlayers();
+    game.addPlayer(new Player());
+    game.addPlayer(new Player());
+    game.addPlayer(new Player());
     idManager = game.getOwnableIdManager();
   }
 
   @Test
   public void testCreateOwnables() {
+    // Variable
     ObjectType type = ObjectType.OWNABLE;
     Map<ObjectParameter, Object> params = new HashMap<>();
     params.put(ObjectParameter.OWNABLE_TYPE, "Variable");
@@ -46,6 +50,18 @@ public class ObjectFactoryTest {
     game.sendObject(type, params);
     assertEquals(1, idManager.getSimpleIds().size());
 
+    // GameObject
+    ObjectType type2 = ObjectType.OWNABLE;
+    Map<ObjectParameter, Object> params2 = new HashMap<>();
+    params2.put(ObjectParameter.OWNABLE_TYPE, "GameObject");
+    Map<Object, Object> constructorParams2 = new HashMap<>();
+//    constructorParams2.put("value", 64);
+    params2.put(ObjectParameter.ID, "myId2");
+    params2.put(ObjectParameter.OWNER, "3");
+    params2.put(ObjectParameter.CONSTRUCTOR_ARGS, constructorParams2);
+//    params2.put(ObjectParameter.PARENT_OWNABLE_ID, constructorParams);
+    game.sendObject(type2, params2);
+    assertEquals(2, idManager.getSimpleIds().size());
   }
 
   @Test
