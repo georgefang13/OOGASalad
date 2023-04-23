@@ -26,6 +26,10 @@ public class ButtonFactory {
   private static final String BUTTON_PREFIX = "Button";
   private static final String TOOLTIP_PREFIX = "Tooltip";
   private static final Integer ROTATE_CCW_90 = -90;
+  private static final ResourceBundle ID_BUNDLE = ResourceBundle.getBundle(
+      "frontend/properties/StylingIDs/CSS_ID");
+  private static final String ICON_BUTTON_ID = "IconButtonID";
+
 
   public ButtonFactory() {
     this.textBundle = ResourceBundle.getBundle(ENGLISH_PROPERTIES);
@@ -71,21 +75,21 @@ public class ButtonFactory {
   }
 
   public Button createIconButton(String text, String iconPath) {
-    Button button = new Button(text);
+    Button iconButton = new Button(text);
 
     // Load the icon image from the file path
     Image iconImage = new Image(iconPath);
 
     // Create an ImageView with the icon image and set it as the button's graphic
     ImageView iconView = new ImageView(iconImage);
-    button.setGraphic(iconView);
+    iconButton.setGraphic(iconView);
 
     // Set the button's layout to display the icon on the left and text on the right
-    button.setContentDisplay(ContentDisplay.LEFT); // Set the content display to display the graphic on the left
-    button.setGraphicTextGap(10); // Set the gap between the icon and text
-    button.setPrefWidth(150); // Set the button's preferred width to fit the text and icon
-
-    return button;
+    iconButton.setContentDisplay(ContentDisplay.LEFT); // Set the content display to display the graphic on the left
+    iconButton.setGraphicTextGap(10); // Set the gap between the icon and text
+    iconButton.setPrefWidth(150); // Set the button's preferred width to fit the text and icon
+    iconButton.getStyleClass().add(ID_BUNDLE.getString(ICON_BUTTON_ID));
+    return iconButton;
   }
 
   /**

@@ -139,3 +139,12 @@
 .header-panel {
   -fx-background-color: #3E404E;
 }
+
+/* ButtonFactory */
+.icon-button {
+  -fx-background-color: #3180F5;
+  -fx-border-radius: 10;
+  -fx-background-radius: 10;
+  -fx-text-fill: white;
+  -fx-pref-height: 70;
+}
