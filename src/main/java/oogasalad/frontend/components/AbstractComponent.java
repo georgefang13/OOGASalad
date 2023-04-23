@@ -13,7 +13,7 @@ import java.util.ResourceBundle;
  * @author Han and Aryan
  * AbstractComponent is the abstraction that all Components are built off of.
  */
-public class AbstractComponent implements Component {
+public abstract class AbstractComponent implements Component {
 
   protected int ID;
   protected Node node;
@@ -67,9 +67,6 @@ public class AbstractComponent implements Component {
   public void setActiveSelected(boolean active) {
     this.active = active;
   }
-
-  @Override
-  public void setDefault() {}
 
   @Override
   public void followMouse() {

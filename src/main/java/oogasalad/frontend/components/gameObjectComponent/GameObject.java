@@ -29,8 +29,7 @@ public class GameObject extends AbstractComponent implements GameObjectComponent
   public GameObject(int ID){
     super(ID);
     children = null;
-    Image newImage = new Image(DEFAULT_BUNDLE.getString("DEFAULT_IMAGE"));
-    setImage(DEFAULT_BUNDLE.getString("DEFAULT_IMAGE"));
+    setDefault();
     followMouse();
   }
   public GameObject(int ID, Node container){
@@ -90,4 +89,11 @@ public class GameObject extends AbstractComponent implements GameObjectComponent
   public Node getNode(){
     return getImage();
   }
+
+  @Override
+  public void setDefault() {
+    Image newImage = new Image(DEFAULT_BUNDLE.getString("DEFAULT_IMAGE"));
+    setImage(DEFAULT_BUNDLE.getString("DEFAULT_IMAGE"));
+  }
+
 }
