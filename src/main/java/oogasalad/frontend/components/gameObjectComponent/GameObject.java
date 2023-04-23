@@ -70,4 +70,8 @@ public class GameObject extends AbstractComponent implements GameObjectComponent
   public Node getNode(){
     return getImage();
   }
+
+  public String getName(){
+    return name;
+  }
 }

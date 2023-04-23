@@ -16,8 +16,8 @@ import util.DukeApplicationTest;
 
 public class ComponentsFactoryTest extends DukeApplicationTest {
 
-  ComponentsFactory factory;
-  Pane root;
+  private ComponentsFactory factory;
+  private Pane root;
   @Override
   public void start(Stage stage){
     factory = new ComponentsFactory();
