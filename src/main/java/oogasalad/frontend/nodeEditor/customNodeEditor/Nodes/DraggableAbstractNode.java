@@ -65,11 +65,6 @@ public abstract class DraggableAbstractNode extends AbstractNode implements Drag
       if (this.getParent() == null) {
         return;
       }
-      /*
-       * check if it is on top of another node
-       * if so, snap to it
-       * if not, do nothing
-       */
       for (Node node : this.getParent().getChildrenUnmodifiable()) {
         if (node instanceof AbstractNode && node != this) {
           if (this.getBoundsInParent().intersects(node.getBoundsInParent()) && this.getChildNode() != node) {
