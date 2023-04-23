@@ -111,4 +111,9 @@
   -fx-background-color: #3E404E;
 }
 
-
+/* LibraryGridPanel */
+.game-box {
+  -fx-border-width: 2;
+  -fx-border-color: black;
+  -fx-border-radius: 10;
+}
