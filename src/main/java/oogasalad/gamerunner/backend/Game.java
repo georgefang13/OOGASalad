@@ -1,11 +1,16 @@
 package oogasalad.gamerunner.backend;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import oogasalad.Controller.GameRunnerController;
 import oogasalad.gameeditor.backend.id.IdManager;
 import oogasalad.gameeditor.backend.rules.Rule;
 import oogasalad.gamerunner.backend.fsm.FSM;
+import oogasalad.gamerunner.backend.fsm.ProgrammableState;
 import oogasalad.gamerunner.backend.interpretables.Goal;
 import oogasalad.gamerunner.backend.interpreter.Interpreter;
+import oogasalad.sharedDependencies.backend.filemanagers.FileManager;
 import oogasalad.sharedDependencies.backend.ownables.Ownable;
 import oogasalad.sharedDependencies.backend.ownables.gameobjects.DropZone;
 import oogasalad.sharedDependencies.backend.ownables.gameobjects.GameObject;
@@ -13,9 +18,13 @@ import oogasalad.sharedDependencies.backend.ownables.variables.Variable;
 import oogasalad.sharedDependencies.backend.owners.GameWorld;
 import oogasalad.sharedDependencies.backend.owners.Owner;
 import oogasalad.sharedDependencies.backend.owners.Player;
-import oogasalad.Controller.GameRunnerController;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
+import java.util.function.Function;
 
 /**
  * The Game class represents the game itself.
@@ -24,7 +33,7 @@ import java.util.*;
  * @author Michael Bryant
  * @author Max Meister
  */
-public class Game implements GameToInterpreterAPI {
+public class Game implements GameToInterpreterAPI{
 
     /**
      * The Rules of the game.
@@ -81,7 +90,11 @@ public class Game implements GameToInterpreterAPI {
         interpreter.linkIdManager(ownableIdManager);
         interpreter.linkGame(this);
 
-        loadGame(directory);
+        try {
+            loadGame(directory);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
 
         initVariables();
 
@@ -145,16 +158,127 @@ public class Game implements GameToInterpreterAPI {
      * Loads a Game from a file.
      * @param directory the name of the file to load from
      */
-    public void loadGame(String directory) {
+    public void loadGame(String directory) throws FileNotFoundException {
         pieceLocations.clear();
-        // TODO
 
-        // load in players and player FSM
+
+        // player FSM
+        loadFSM(directory + "/fsm.json");
 
 
         // load in ownables
 
         // load in rules and goals
+    }
+
+    private JsonObject getTopJSON(String file){
+        String fileContent = "";
+        // Read the entire file content
+        try {
+            fileContent = Files.readString(Paths.get(file));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        JsonElement jsonE = JsonParser.parseString(fileContent);
+
+        JsonObject json = jsonE.getAsJsonObject();
+        return json;
+    }
+
+    private void loadFSM(String file){
+
+        JsonObject json = getTopJSON(file);
+
+        JsonObject states = json.get("states").getAsJsonObject();
+
+        for (String key : states.keySet()) {
+            JsonObject state = states.get(key).getAsJsonObject();
+            String onEnter = state.get("init").getAsString();
+            String onLeave = state.get("leave").getAsString();
+            String setValue = state.get("setValue").getAsString();
+            String to = state.get("to").getAsString();
+
+            ProgrammableState ps = new ProgrammableState(interpreter, onEnter, onLeave, setValue);
+
+            fsm.putState(key, ps, (prevstate, data) -> {
+                interpreter.interpret(to);
+                IdManager idManager = (IdManager) data.get("idManager");
+                Variable<String> output = (Variable<String>) idManager.getObject("state_output");
+                return output.get();
+            });
+        }
+    }
+
+    private void loadDropZones(String file) throws FileNotFoundException {
+        FileManager fm = new FileManager(file);
+
+        Map<DropZone, String[]> edgeMap = new HashMap<>();
+
+        for (String id : fm.getTagsAtLevel()){
+            int x = Integer.parseInt(fm.getString(id, "position", "x"));
+            int y = Integer.parseInt(fm.getString(id, "position", "y"));
+            int width = Integer.parseInt(fm.getString(id, "position", "width"));
+            int height = Integer.parseInt(fm.getString(id, "position", "height"));
+
+            DropZone dz = new DropZone(id);
+
+            for (String edgeName : fm.getTagsAtLevel(id, "connections")){
+                String edge = fm.getString(id, "connections", edgeName);
+                edgeMap.put(dz, new String[]{edgeName, edge});
+            }
+
+            ownableIdManager.addObject(dz, id);
+        }
+
+        for (DropZone dz : edgeMap.keySet()){
+            // [ edgeName, edge ]
+            String[] edge = edgeMap.get(dz);
+            DropZone other = (DropZone) ownableIdManager.getObject(edge[1]);
+            dz.addOutgoingConnection(other, edge[0]);
+        }
+    }
+
+    private void loadGameObjects(String file) throws FileNotFoundException {
+
+        FileManager fm = new FileManager(file);
+
+        fm.getTagsAtLevel();
+
+        JsonObject json = getTopJSON(file);
+
+        Map<String, List<String>> ownMap = new HashMap<>();
+
+        for (String key : json.keySet()){
+            JsonObject go = json.get(key).getAsJsonObject();
+            String image = go.get("image").getAsString();
+            List<Integer> size = go.get("size").getAsJsonArray().asList().stream().map(JsonElement::getAsInt).toList();
+            String owner = go.get("owner").getAsString();
+            String location = go.get("location").getAsString();
+            List<String> classes = go.get("classes").getAsJsonArray().asList().stream().map(JsonElement::getAsString).toList();
+            List<String> owns = go.get("owns").getAsJsonArray().asList().stream().map(JsonElement::getAsString).toList();
+
+            Owner own = null;
+            if (!owner.isEmpty()){
+                own = players.get(Integer.parseInt(owner));
+            }
+
+            GameObject obj = new GameObject(own);
+            classes.forEach(obj::addClass);
+
+            ((DropZone) ownableIdManager.getObject(location)).putObject(key, obj);
+
+            ownMap.put(key, owns);
+            // TODO: send image to front end
+        }
+
+        for (String s : ownMap.keySet()){
+            GameObject mainObj = (GameObject) ownableIdManager.getObject(s);
+            for (String o : ownMap.get(s)){
+                GameObject obj = (GameObject) ownableIdManager.getObject(o);
+                ownableIdManager.setOwner(obj, mainObj);
+            }
+        }
     }
 
     private void initPlayers(JsonObject json) {
