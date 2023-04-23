@@ -10,8 +10,7 @@ import java.util.Properties;
 import java.util.ResourceBundle;
 
 /**
- * @author Han and Aryan
- * AbstractComponent is the abstraction that all Components are built off of.
+ * @author Han and Aryan AbstractComponent is the abstraction that all Components are built off of.
  */
 public abstract class AbstractComponent implements Component {
 
@@ -21,10 +20,9 @@ public abstract class AbstractComponent implements Component {
   private boolean active;
   private boolean visible;
   private int zIndex;
-  private int size;
-  private double XOffset;
-  private double YOffset;
-  private ImageView image;
+  private double size;
+  protected double XOffset;
+  protected double YOffset;
   private Point absolute;
   private Point editor;
   private final String DEFAULT_FILE_PATH = "frontend/properties/Defaults/GameObject";
@@ -32,10 +30,6 @@ public abstract class AbstractComponent implements Component {
 
   public AbstractComponent(int id) {
     ID = id;
-  }
-  public AbstractComponent(int num, Node container){
-    ID = num;
-    node = container;
   }
 
   @Override
@@ -94,10 +88,10 @@ public abstract class AbstractComponent implements Component {
   }
 
   @Override
-  public void setSize(int size) {
+  public void setSize(double size) {
     this.size = size;
-    getNode().setScaleX(size);
     getNode().setScaleY(size);
+    getNode().setScaleX(size);
   }
 
   protected void setVisibleBool(boolean vis){

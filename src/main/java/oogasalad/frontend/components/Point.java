@@ -1,20 +1,24 @@
 package oogasalad.frontend.components;
 
 public class Point {
+
   private double x;
   private double y;
   private double z;
-  public Point(double xCoord, double yCoord){
+
+  public Point(double xCoord, double yCoord) {
     x = checkPositive(xCoord);
     y = checkPositive(yCoord);
   }
-  private double checkPositive(double value){
-    if(value < 0){
+
+  private double checkPositive(double value) {
+    if (value < 0) {
       return 0;
     }
     return value;
   }
-  public Point(double xCoord, double yCoord, double zCoord){
+
+  public Point(double xCoord, double yCoord, double zCoord) {
     x = checkPositive(xCoord);
     y = checkPositive(yCoord);
     z = zCoord;
@@ -25,16 +29,19 @@ public class Point {
   }
 
   public Point scale(int scalingFactor) {
-    return new Point(x*scalingFactor, y*scalingFactor, z);
+    return new Point(x * scalingFactor, y * scalingFactor, z);
   }
-  public double getX(){
+
+  public double getX() {
 
     return x;
   }
-  public double getY(){
+
+  public double getY() {
     return y;
   }
-  public double getZ(){
+
+  public double getZ() {
     return z;
   }
 }

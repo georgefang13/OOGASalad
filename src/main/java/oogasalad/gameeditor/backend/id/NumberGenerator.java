@@ -3,12 +3,14 @@ package oogasalad.gameeditor.backend.id;
 import java.util.Iterator;
 
 /**
- * Generates a sequence of String forms of integers. Used for numbering ownables.
- * Starts at 1. Does not display the number if it is 1.
- * For example, the first three generated values would be: "", "2", "3".
+ * Generates a sequence of String forms of integers. Used for numbering ownables. Starts at 1. Does
+ * not display the number if it is 1. For example, the first three generated values would be: "",
+ * "2", "3".
+ *
  * @author Michael Bryant
  */
 public class NumberGenerator implements Iterator<String> {
+
   private int currentNumber = 0;
 
   @Override

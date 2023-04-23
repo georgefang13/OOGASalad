@@ -14,10 +14,11 @@ import oogasalad.frontend.components.Point;
 
 
 /**
- * @author Han, Aryan
- * Concrete Class for GameObject, a reflection of what is going to be a "GameObject" on the backend
+ * @author Han, Aryan Concrete Class for GameObject, a reflection of what is going to be a
+ * "GameObject" on the backend
  */
 public class GameObject extends AbstractComponent implements GameObjectComponent{
+
   private String name;
   private List<Node> children;
   private boolean playable;
@@ -26,21 +27,17 @@ public class GameObject extends AbstractComponent implements GameObjectComponent
   private final String DEFAULT_FILE_PATH = "frontend.properties.Defaults.GameObject";
   private ResourceBundle DEFAULT_BUNDLE = ResourceBundle.getBundle(DEFAULT_FILE_PATH);
 
-  public GameObject(int ID){
+  public GameObject(int ID) {
     super(ID);
     children = null;
     setDefault();
     followMouse();
   }
-  public GameObject(int ID, Node container){
-    super(ID, container);
-  }
-
-  //TODO fix default values for map constructor
+  
   public GameObject(int ID, Map<String, String> map){
     super(ID);
     children = null;
-    setImage(DEFAULT_BUNDLE.getString("DEFAULT_IMAGE"));
+    setImage(DEFAULT_BUNDLE.getString(replaceWithFileLoadingByID()));
     followMouse();
     for(String param: map.keySet()){
       try{
@@ -53,6 +50,14 @@ public class GameObject extends AbstractComponent implements GameObjectComponent
       } catch (Exception e){
         e.printStackTrace();
       }
+    }
+  }
+  private String replaceWithFileLoadingByID(){
+    if (ID < 6){
+      return "DEFAULT_IMAGE";
+    }
+    else {
+      return "X_IMAGE";
     }
   }
 
@@ -86,7 +91,7 @@ public class GameObject extends AbstractComponent implements GameObjectComponent
   }
 
   @Override
-  public Node getNode(){
+  public Node getNode() {
     return getImage();
   }
 

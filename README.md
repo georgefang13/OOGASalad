@@ -1,10 +1,12 @@
 # oogasalad
+
 ## duVALLEY BOYS
+
 ## Names:
 
 - Rodrigo Bassi Guerreiro
-- Michael Bryant 
-- Joao Carvalho 
+- Michael Bryant
+- Joao Carvalho
 - George Fang
 - Ethan Horowitz
 - Aryan Kothari
@@ -20,46 +22,39 @@ This project implements an authoring environment and player for multiple related
 
 ### Timeline
 
- * Start Date: _March 26, 2023_
+* Start Date: _March 26, 2023_
 
- * Finish Date: 
+* Finish Date:
 
- * Hours Spent:
-
-
+* Hours Spent:
 
 ### Attributions
 
- * Resources used for learning (including AI assistance)
- 
- * Resources used directly (including AI assistance)
+* Resources used for learning (including AI assistance)
 
+* Resources used directly (including AI assistance)
 
 ### Running the Program
 
- * Main class:
+* Main class:
 
- * Data files needed: 
+* Data files needed:
 
- * Interesting data files:
+* Interesting data files:
 
- * Key/Mouse inputs:
-
-
+* Key/Mouse inputs:
 
 ### Notes/Assumptions
 
- * Assumptions or Simplifications:
+* Assumptions or Simplifications:
 
- * Known Bugs:
+* Known Bugs:
 
- * Features implemented:
+* Features implemented:
 
- * Features unimplemented:
+* Features unimplemented:
 
- * Noteworthy Features:
-
-
+* Noteworthy Features:
 
 ### Assignment Impressions
 

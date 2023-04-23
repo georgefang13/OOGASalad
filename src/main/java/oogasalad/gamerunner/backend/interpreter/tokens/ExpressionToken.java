@@ -1,13 +1,13 @@
 package oogasalad.gamerunner.backend.interpreter.tokens;
 
 
-import oogasalad.gamerunner.backend.interpreter.Environment;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import oogasalad.gamerunner.backend.interpreter.Environment;
 
 public class ExpressionToken extends Token implements Iterable<Token> {
+
   private List<Token> tokens;
 
   public ExpressionToken() {
@@ -16,9 +16,9 @@ public class ExpressionToken extends Token implements Iterable<Token> {
   }
 
   /**
-   * pass the fill list of tokens to the expression (any previously added tokens
-   * will be overwritten)
-   * 
+   * pass the fill list of tokens to the expression (any previously added tokens will be
+   * overwritten)
+   *
    * @param tokens list of tokens to add to expression
    */
   public void passTokens(List<Token> tokens) {
@@ -27,7 +27,7 @@ public class ExpressionToken extends Token implements Iterable<Token> {
 
   /**
    * add a token to the expression
-   * 
+   *
    * @param t token to add to expression
    */
   public void addToken(Token t, Environment env) {
@@ -37,7 +37,7 @@ public class ExpressionToken extends Token implements Iterable<Token> {
 
   /**
    * get the number of tokens in the expression
-   * 
+   *
    * @return number of tokens in expression
    */
   public int size() {
@@ -46,7 +46,7 @@ public class ExpressionToken extends Token implements Iterable<Token> {
 
   /**
    * get the token at index i
-   * 
+   *
    * @param i index of token to get
    * @return token at index i
    */
@@ -56,7 +56,7 @@ public class ExpressionToken extends Token implements Iterable<Token> {
 
   /**
    * set the token at index i to t
-   * 
+   *
    * @param i index of token to set
    * @param t token to set at index i
    */
@@ -70,12 +70,12 @@ public class ExpressionToken extends Token implements Iterable<Token> {
     exportSelf(env);
   }
 
-  public int length(){
+  public int length() {
     return tokens.size();
   }
 
-  private void exportSelf(Environment env){
-    if (link != null){
+  private void exportSelf(Environment env) {
+    if (link != null) {
       link.set(export(env));
     }
   }
@@ -104,12 +104,12 @@ public class ExpressionToken extends Token implements Iterable<Token> {
   }
 
   @Override
-  public boolean equals(Token t, Environment env){
-    if (t instanceof ExpressionToken){
+  public boolean equals(Token t, Environment env) {
+    if (t instanceof ExpressionToken) {
       ExpressionToken e = (ExpressionToken) t;
-      if (e.length() == length()){
-        for (int i = 0; i < length(); i++){
-          if (!get(i).equals(e.get(i), env)){
+      if (e.length() == length()) {
+        for (int i = 0; i < length(); i++) {
+          if (!get(i).equals(e.get(i), env)) {
             return false;
           }
         }

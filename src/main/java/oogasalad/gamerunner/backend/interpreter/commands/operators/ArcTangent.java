@@ -10,16 +10,18 @@ import oogasalad.gamerunner.backend.interpreter.tokens.ValueToken;
  * Computes the arctan of the given value.
  */
 public class ArcTangent extends OperatorToken {
-    public ArcTangent(){
-        super(1, "ArcTangent");
-    }
 
-    @Override
-    public Token evaluate(Environment env) throws IllegalArgumentException{
-        Token t = getArg(0).evaluate(env);
+  public ArcTangent() {
+    super(1, "ArcTangent");
+  }
 
-        ValueToken<Double> x1 = checkArgumentWithSubtype(env, t, ValueToken.class, Double.class.getName());
+  @Override
+  public Token evaluate(Environment env) throws IllegalArgumentException {
+    Token t = getArg(0).evaluate(env);
 
-        return new ValueToken<>(Math.atan(x1.VALUE)*180/Math.PI);
-    }
+    ValueToken<Double> x1 = checkArgumentWithSubtype(env, t, ValueToken.class,
+        Double.class.getName());
+
+    return new ValueToken<>(Math.atan(x1.VALUE) * 180 / Math.PI);
+  }
 }

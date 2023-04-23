@@ -1,38 +1,47 @@
 package oogasalad.gamerunner.backend.interpreter.commands.control;
 
 import oogasalad.gamerunner.backend.interpreter.Environment;
-import oogasalad.gamerunner.backend.interpreter.tokens.*;
+import oogasalad.gamerunner.backend.interpreter.tokens.ExpressionToken;
+import oogasalad.gamerunner.backend.interpreter.tokens.OperatorToken;
+import oogasalad.gamerunner.backend.interpreter.tokens.Token;
+import oogasalad.gamerunner.backend.interpreter.tokens.ValueToken;
+import oogasalad.gamerunner.backend.interpreter.tokens.VariableToken;
 
 /**
  * Repeats the given expressions the given number of times
  */
 public class DoTimes extends OperatorToken {
-    public DoTimes() {
-        super(2, "DoTimes");
+
+  public DoTimes() {
+    super(2, "DoTimes");
+  }
+
+  public Token evaluate(Environment env) throws IllegalArgumentException {
+
+    ExpressionToken repeats = checkArgument(env, getArg(0), ExpressionToken.class);
+    ExpressionToken exprs = checkArgument(env, getArg(1), ExpressionToken.class);
+
+    if (repeats.size() != 2) {
+      throwError(
+          new IllegalArgumentException("Cannot repeat with " + repeats.size() + " arguments"));
     }
 
-    public Token evaluate(Environment env) throws IllegalArgumentException{
+    checkArgument(env, repeats.get(0), VariableToken.class);
 
-        ExpressionToken repeats = checkArgument(env, getArg(0), ExpressionToken.class);
-        ExpressionToken exprs = checkArgument(env, getArg(1), ExpressionToken.class);
+    VariableToken var = (VariableToken) repeats.get(0);
+    Token t = repeats.get(1).evaluate(env);
 
-        if (repeats.size() != 2) throwError(new IllegalArgumentException("Cannot repeat with " + repeats.size() + " arguments"));
+    ValueToken<Double> times = checkArgumentWithSubtype(env, t, ValueToken.class,
+        Double.class.getName());
 
-        checkArgument(env, repeats.get(0), VariableToken.class);
+    int reps = (int) Math.floor(times.VALUE);
 
-        VariableToken var = (VariableToken) repeats.get(0);
-        Token t = repeats.get(1).evaluate(env);
-
-        ValueToken<Double> times = checkArgumentWithSubtype(env, t, ValueToken.class, Double.class.getName());
-
-        int reps = (int) Math.floor(times.VALUE);
-
-        env.createLocalScope();
-        for (int i = 0; i < reps; i++){
-            env.addVariable(var.NAME, new ValueToken<>((double)i));
-            exprs.evaluate(env);
-        }
-        env.endLocalScope();
-        return null;
+    env.createLocalScope();
+    for (int i = 0; i < reps; i++) {
+      env.addVariable(var.NAME, new ValueToken<>((double) i));
+      exprs.evaluate(env);
     }
+    env.endLocalScope();
+    return null;
+  }
 }

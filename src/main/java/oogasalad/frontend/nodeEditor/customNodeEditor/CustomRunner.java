@@ -23,10 +23,12 @@ public class CustomRunner extends Application {
 
     Button sumButton = new Button("sum");
     sumButton.setStyle("-fx-min-width: 100");
-    sumButton.setOnAction(event -> pane2.getChildren().add(new SumNode(50, 50, DEFAULT_WIDTH, DEFAULT_HEIGHT, "white")));
+    sumButton.setOnAction(event -> pane2.getChildren()
+        .add(new SumNode(50, 50, DEFAULT_WIDTH, DEFAULT_HEIGHT, "white")));
     Button differenceButton = new Button("difference");
     differenceButton.setStyle("-fx-min-width: 100");
-    differenceButton.setOnAction(event -> pane2.getChildren().add(new DifferenceNode(50, 50, DEFAULT_WIDTH, DEFAULT_HEIGHT, "blue")));
+    differenceButton.setOnAction(event -> pane2.getChildren()
+        .add(new DifferenceNode(50, 50, DEFAULT_WIDTH, DEFAULT_HEIGHT, "blue")));
     pane1.getChildren().addAll(new VBox(sumButton, differenceButton));
 
     Scene scene = new Scene(new HBox(pane1, pane2), 600, 400);

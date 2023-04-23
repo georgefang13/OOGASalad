@@ -5,6 +5,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import oogasalad.frontend.components.AbstractComponent;
 
+import java.util.Map;
 import java.util.ResourceBundle;
 
 
@@ -20,13 +21,8 @@ public class TextObject extends AbstractComponent implements TextObjectComponent
         this.getNode();
     }
 
-    public TextObject(int id, Node container, String content, double x, double y, Color color, double fontSize) {
-        super(id, container);
-        text = new Text(content);
-        text.setX(x);
-        text.setY(y);
-        text.setFill(color);
-        text.setFont(Font.font(fontSize));
+    public TextObject(int ID, Map<String, String> map){
+        super(ID);
     }
 
     @Override

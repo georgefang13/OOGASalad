@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests the NumberGenerator class.
+ *
  * @author Michael Bryant
  */
 public class NumberGeneratorTest {

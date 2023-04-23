@@ -9,7 +9,7 @@ stages:
 checkstyle_analysis:
   stage: validate
   script:
-   - mvn validate
+    - mvn validate
   artifacts:
     reports:
       codequality: target/checkstyle-result.xml

@@ -5,6 +5,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 
+import java.util.Map;
 import java.util.ResourceBundle;
 
 
@@ -27,18 +28,8 @@ public class RectangleObject extends AbstractComponent implements RectangleObjec
         this.getNode();
     }
 
-    public RectangleObject(int ID, Node container){
-        super(ID, container);
-        this.setDefault();
-    }
-
-    public RectangleObject(int ID, Node container, double x, double y, double width, double height) {
-        super(ID, container);
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
-        this.rectangle = new Rectangle(x, y, width, height);
+    public RectangleObject(int ID, Map<String, String> map){
+        super(ID);
     }
 
     @Override
