@@ -12,8 +12,10 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import oogasalad.gameeditor.backend.id.IdManager;
 import oogasalad.gamerunner.backend.interpreter.Interpreter;
+import oogasalad.gamerunner.backend.interpreter.TestGame;
 import oogasalad.sharedDependencies.backend.ownables.Ownable;
 import oogasalad.sharedDependencies.backend.ownables.gameobjects.DropZone;
+import oogasalad.sharedDependencies.backend.ownables.gameobjects.GameObject;
 import oogasalad.sharedDependencies.backend.ownables.variables.Variable;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -206,8 +208,13 @@ public class FSMTest {
 
   @Test
   void testProgrammableState() {
-    Interpreter interpreter = new Interpreter();
-    interpreter.link(idManager);
+    TestGame game = new TestGame();
+    idManager = game.getOwnableIdManager();
+    Interpreter interpreter = game.getInterpreter();
+    fsm = new FSM<>(idManager);
+
+    interpreter.linkIdManager(idManager);
+    interpreter.linkGame(game);
 
     ArrayList<DropZone> zones = new ArrayList<>();
 
@@ -226,13 +233,18 @@ public class FSMTest {
       }
     }
 
+    GameObject objX = new GameObject(null);
+    GameObject objO = new GameObject(null);
+    idManager.addObject(objX, "X");
+    idManager.addObject(objO, "O");
+
     Map<String, Map<String, String>> map = Stream.of(new Object[][]{
             {"INIT", Stream.of(new String[][]{
                 {"init", "to getAvailable [ ] [ make :game_available [ ] " +
                     "for [ :i 0 3 ] [ " +
                     "for [ :j 0 3 ] [ " +
                     "make :x fromgame + + :i \", :j " +
-                    "if [ == 0 len dzitems :x ] [ " +
+                    "if == 0 len dzitems :x [ " +
                     "additem :x :game_available " +
                     "] " +
                     "] " +
@@ -244,10 +256,10 @@ public class FSMTest {
             {"MOVE", Stream.of(new String[][]{
                 {"init", ""},
                 {"leave", "getAvailable"},
-                {"setValue", "ifelse [ == :game_turn 0 ] [ " +
-                    "putdzitem \"obj \"X fromgame :game_state_input " +
+                {"setValue", "ifelse == :game_turn 0 [ " +
+                    "putdzitem \"obj :game_X fromgame :game_state_input " +
                     " ] [ " +
-                    "putdzitem \"obj \"O fromgame :game_state_input " +
+                    "putdzitem \"obj :game_O fromgame :game_state_input " +
                     "] getAvailable"},
             }).collect(Collectors.toMap(data -> ((String[]) data)[0], data -> ((String[]) data)[1]))},
 
@@ -270,6 +282,7 @@ public class FSMTest {
     fsm.putState("DONE", new ProgrammableState(interpreter, map.get("DONE").get("init"),
         map.get("DONE").get("leave"),
         map.get("DONE").get("setValue")));
+
     fsm.setState("INIT");
 
     Variable v = (Variable) idManager.getObject("available");
@@ -280,7 +293,7 @@ public class FSMTest {
     fsm.transition((state, data) -> "MOVE");
     fsm.setStateInnerValue("0,0");
 
-    assertEquals("X", zones.get(0).getAllObjects().get(0));
+    assertEquals(objX, zones.get(0).getAllObjects().get(0));
 
     expected = new ArrayList<>(
         Arrays.asList(zones.get(1), zones.get(2), zones.get(3), zones.get(4), zones.get(5),
@@ -296,7 +309,7 @@ public class FSMTest {
     fsm.transition((state, data) -> "MOVE");
 
     fsm.setStateInnerValue("0,1");
-    assertEquals("O", zones.get(1).getAllObjects().get(0));
+    assertEquals(objO, zones.get(1).getAllObjects().get(0));
     expected = new ArrayList<>(
         Arrays.asList(zones.get(2), zones.get(3), zones.get(4), zones.get(5), zones.get(6),
             zones.get(7), zones.get(8)));

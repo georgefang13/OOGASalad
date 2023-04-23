@@ -1,7 +1,6 @@
 package oogasalad.sharedDependencies.backend.ownables.gameobjects;
 
-import com.google.gson.JsonObject;
-import oogasalad.sharedDependencies.backend.filemanagers.JsonSaveable;
+import oogasalad.sharedDependencies.backend.filemanagers.Configurable;
 import oogasalad.sharedDependencies.backend.ownables.Ownable;
 import oogasalad.sharedDependencies.backend.owners.Owner;
 
@@ -11,7 +10,7 @@ import oogasalad.sharedDependencies.backend.owners.Owner;
  *
  * @author Michael Bryant
  */
-public class GameObject extends Ownable implements JsonSaveable {
+public class GameObject extends Ownable implements Configurable {
 
   /**
    * Creates a new GameObject.
@@ -21,12 +20,12 @@ public class GameObject extends Ownable implements JsonSaveable {
   }
 
   @Override
-  public void buildFromJson(JsonObject element) {
+  public void fromConfigFile(String path) {
     // Does nothing
   }
 
   @Override
-  public JsonObject getAsJson() {
+  public String getAsJson() {
     return null;
   }
 }

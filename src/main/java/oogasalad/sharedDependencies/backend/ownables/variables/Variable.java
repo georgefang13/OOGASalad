@@ -1,7 +1,6 @@
 package oogasalad.sharedDependencies.backend.ownables.variables;
 
 
-import com.google.gson.JsonObject;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -122,27 +121,27 @@ public class Variable<T> extends Ownable {
   }
 
   @Override
-  public void buildFromJson(JsonObject object) {
-    // TODO: update ID
-    String className = FileManager.getStringByKey(object, "type");
-    try {
-      Class<?> variableType = Class.forName(className);
-      Class<?> instantiatedType = Class.forName(this.getClass().getTypeName());
-      if (variableType != instantiatedType || !validClasses.contains(variableType)) {
-        throw new ClassNotFoundException();
-      }
-      Constructor<?> constructor = instantiatedType.getConstructor(String.class);
-      // NOTE: condition above checks that casting is valid
-      value = (T) constructor.newInstance(FileManager.getStringByKey(object, "value"));
-    } catch (ClassNotFoundException | NoSuchMethodException
-             | InvocationTargetException | InstantiationException | IllegalAccessException e) {
-      // TODO: add custom exception
-      throw new RuntimeException(e);
-    }
+  public void fromConfigFile(String object) {
+//    // TODO: update ID
+//    String className = FileManager.getStringByKey(object, "type");
+//    try {
+//      Class<?> variableType = Class.forName(className);
+//      Class<?> instantiatedType = Class.forName(this.getClass().getTypeName());
+//      if (variableType != instantiatedType || !validClasses.contains(variableType)) {
+//        throw new ClassNotFoundException();
+//      }
+//      Constructor<?> constructor = instantiatedType.getConstructor(String.class);
+//      // NOTE: condition above checks that casting is valid
+//      value = (T) constructor.newInstance(FileManager.getStringByKey(object, "value"));
+//    } catch (ClassNotFoundException | NoSuchMethodException
+//             | InvocationTargetException | InstantiationException | IllegalAccessException e) {
+//      // TODO: add custom exception
+//      throw new RuntimeException(e);
+//    }
   }
 
   @Override
-  public JsonObject getAsJson() {
+  public String getAsJson() {
     return null;
   }
 }

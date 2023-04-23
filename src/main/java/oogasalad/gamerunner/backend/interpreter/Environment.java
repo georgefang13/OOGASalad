@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import oogasalad.gameeditor.backend.id.IdManager;
+import oogasalad.gamerunner.backend.GameToInterpreterAPI;
 import oogasalad.gamerunner.backend.interpreter.tokens.ExpressionToken;
 import oogasalad.gamerunner.backend.interpreter.tokens.Token;
 import oogasalad.gamerunner.backend.interpreter.tokens.ValueToken;
@@ -16,7 +17,8 @@ import oogasalad.sharedDependencies.backend.ownables.variables.Variable;
 public class Environment {
 
   private final List<Map<String, Token>> scope = new ArrayList<>();
-  private IdManager<Ownable> game;
+  private IdManager<Ownable> idManager;
+  private GameToInterpreterAPI game;
   private static final String LANGUAGE_RESOURCE_PATH = "backend.interpreter.languages";
   private String language = "English";
 
@@ -36,11 +38,17 @@ public class Environment {
     return resources.getString(key);
   }
 
-  public IdManager<Ownable> getGame() {
+  public IdManager<Ownable> getIdManager() {
+    return idManager;
+  }
+  public GameToInterpreterAPI getGame(){
     return game;
   }
 
-  public void linkSimulation(IdManager<Ownable> game) {
+  public void linkIdManager(IdManager<Ownable> manager) {
+    this.idManager = manager;
+  }
+  public void linkGame(GameToInterpreterAPI game){
     this.game = game;
   }
 
@@ -73,8 +81,8 @@ public class Environment {
 
   private Token getGameVariableToken(String name) {
     name = name.substring(6);
-    if (game.isIdInUse(name)) {
-      Ownable v = game.getObject(name);
+    if (idManager.isIdInUse(name)) {
+      Ownable v = idManager.getObject(name);
       if (v instanceof Variable<?> var) {
         Token t = convertVariableToToken(var);
         t.linkVariable(var);
@@ -104,10 +112,10 @@ public class Environment {
     Variable<?> var = convertTokenToVariable(val);
 
     if (var.get() != null) {
-      if (!game.isIdInUse(name) && !game.isObjectInUse(var)) {
-        game.addObject(var, name);
-      } else if (game.isIdInUse(name)) {
-        Variable v = (Variable) game.getObject(name);
+      if (!idManager.isIdInUse(name) && !idManager.isObjectInUse(var)) {
+        idManager.addObject(var, name);
+      } else if (idManager.isIdInUse(name)) {
+        Variable v = (Variable) idManager.getObject(name);
         val.linkVariable(v);
         v.set(var.get());
       }
@@ -128,14 +136,15 @@ public class Environment {
 
   private void addGameVariable(String name, Token val) {
     name = name.substring(6);
-    if (game.isIdInUse(name)) {
+    if (idManager.isIdInUse(name)) {
       Variable setter = convertTokenToVariable(val);
-      Variable v = (Variable) game.getObject(name);
+      Variable v = (Variable) idManager.getObject(name);
       v.set(setter.get());
       val.linkVariable(v);
+
     } else {
       Variable<?> var = convertTokenToVariable(val);
-      game.addObject(var, name);
+      idManager.addObject(var, name);
     }
   }
 
@@ -163,8 +172,8 @@ public class Environment {
 
   public void removeVariable(VariableToken var) {
     String name = var.NAME;
-    if (name.startsWith(":game_") && game.isIdInUse(name.substring(6))) {
-      game.removeObject(name.substring(6));
+    if (name.startsWith(":game_") && idManager.isIdInUse(name.substring(6))) {
+      idManager.removeObject(name.substring(6));
       return;
     }
     name = "interpreter-" + name;
@@ -175,12 +184,15 @@ public class Environment {
         break;
       }
     }
-    if (getLocalVariable(name) == null && game.isIdInUse(name)) {
-      game.removeObject(name);
+    if (getLocalVariable(name) == null && idManager.isIdInUse(name)) {
+      idManager.removeObject(name);
     }
   }
 
   public Variable<?> convertTokenToVariable(Token t) {
+    if (t == null) {
+      return new Variable<>(null, null);
+    }
     Variable<?> v = new Variable<>(t.export(this));
     t.linkVariable(v);
     return v;
@@ -202,8 +214,8 @@ public class Environment {
 
     List<String> removed = new ArrayList<>();
     for (String key : curScope.keySet()) {
-      if (!key.contains("-global") && game.isIdInUse(key)) {
-        game.removeObject(key);
+      if (!key.contains("-global") && idManager.isIdInUse(key)) {
+        idManager.removeObject(key);
         removed.add(key);
       }
     }
@@ -214,7 +226,7 @@ public class Environment {
       Token var = getLocalVariable(key);
       if (var != null) {
         Variable<?> v = convertTokenToVariable(var);
-        game.addObject(v, key);
+        idManager.addObject(v, key);
       }
     }
   }

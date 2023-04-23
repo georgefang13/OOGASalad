@@ -6,10 +6,13 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import oogasalad.gameeditor.backend.ownables.gameobjects.EmptyGameObject;
 import oogasalad.sharedDependencies.backend.ownables.Ownable;
 import oogasalad.sharedDependencies.backend.ownables.gameobjects.GameObject;
 import oogasalad.sharedDependencies.backend.ownables.variables.Variable;
+import oogasalad.sharedDependencies.backend.owners.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -522,6 +525,87 @@ public class IdManagerTest {
     assertTrue(manager.getIdsOfObjectsOfClass("test").contains("Variable"));
     assertTrue(manager.getIdsOfObjectsOfClass("test").contains("Variable.Variable2"));
     assertFalse(manager.getIdsOfObjectsOfClass("invalid").contains("Variable"));
+
+  }
+
+  @Test
+  public void testCheckMultipleClasses() {
+    variable1.addClass("test");
+    variable1.addClass("test2");
+    variable1.addClass("test3");
+    variable2.addClass("test");
+    variable2.addClass("test4");
+    manager.addObject(variable1);
+    manager.addObject(variable2, variable1);
+    assertTrue(manager.getIdsOfObjectsOfClass("test", "test2").size() == 1);
+    assertTrue(manager.getIdsOfObjectsOfClass("test", "test4").size() == 1);
+    assertTrue(manager.getIdsOfObjectsOfClass("test", "test3").size() == 1);
+    assertTrue(manager.getIdsOfObjectsOfClass("test", "test4").size() == 1);
+    assertTrue(manager.getIdsOfObjectsOfClass("test", "test2", "test3").size() == 1);
+    assertTrue(manager.getIdsOfObjectsOfClass("test", "test2", "test3", "test4").size() == 0);
+
+
+  }
+
+  @Test
+  public void testRemapOwner() {
+    Player player = new Player();
+    Player player2 = new Player();
+
+    variable1.setOwner(player);
+    variable2.setOwner(player2);
+
+    manager.addObject(variable1);
+    manager.addObject(variable2, variable1);
+
+    assertTrue(variable2.getOwner() == player);
+  }
+
+  @Test
+  public void testStream() {
+    Player player = new Player();
+    Player player2 = new Player();
+    Player player3 = new Player();
+
+    OwnableSearchStream searchStream = new OwnableSearchStream(manager);
+
+    variable1.setOwner(player);
+    variable2.setOwner(player);
+    variable3.setOwner(player2);
+    object1.setOwner(player);
+    object2.setOwner(player2);
+    object3.setOwner(player3);
+
+    manager.addObject(variable1);
+    manager.addObject(variable2);
+    manager.addObject(variable3);
+    manager.addObject(object1);
+    manager.addObject(object2);
+    manager.addObject(object3, object2);
+
+    variable2.addClass("test");
+
+    Stream<Ownable> ownableStream = manager.objectStream()
+        .filter(searchStream.isOfOwner(player))
+        .filter(searchStream.isOfAnyClass("test"));
+
+    //test that the stream is correct
+    assertTrue(ownableStream.count() == 1);
+
+    ownableStream = manager.objectStream()
+        .filter(searchStream.isOfOwner(player2));
+
+    assertTrue(ownableStream.count() == 3);
+
+    ownableStream = manager.objectStream()
+        .filter(searchStream.isOfOwner(player3));
+
+    assertTrue(ownableStream.count() == 0);
+
+    ownableStream = manager.objectStream()
+        .filter(searchStream.isOfAnyClass("test"));
+
+    assertTrue(ownableStream.count() == 1);
 
   }
 

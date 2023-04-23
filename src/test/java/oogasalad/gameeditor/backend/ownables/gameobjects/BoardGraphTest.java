@@ -305,20 +305,28 @@ public class BoardGraphTest {
     paths.add(new ArrayList<>(List.of("UpLeft")));
     paths.add(new ArrayList<>(List.of("DownRight")));
     paths.add(new ArrayList<>(List.of("DownLeft")));
-    List<String> available = new ArrayList<>();
+    List<DropZone> available = new ArrayList<>();
     List<String> expected = new ArrayList<>(List.of("3,4", "2,5", "3,2", "5,2", "6,1", "7,0"));
 
     for (List<String> path : paths) {
       assert start != null;
       available.addAll(start.findSpotsUntilBlocked(path, node -> node.hasObject("Obj")));
     }
+    List<String> dzids = new ArrayList<>();
+    for (DropZone dz : available) {
+      dzids.add(dz.getId());
+    }
 
-    assertEquals(expected, available);
+    assertEquals(expected, dzids);
 
     List<String> newPath = new ArrayList<>(List.of("Up", "UpRight"));
     List<String> expected2 = new ArrayList<>(List.of("2,4", "0,5"));
-    List<String> available2 = start.findSpotsUntilBlocked(newPath, node -> node.hasObject("Obj"));
-    assertEquals(expected2, available2);
+    List<DropZone> available2 = start.findSpotsUntilBlocked(newPath, node -> node.hasObject("Obj"));
+    dzids = new ArrayList<>();
+    for (DropZone dz : available2) {
+      dzids.add(dz.getId());
+    }
+    assertEquals(expected2, dzids);
   }
 
 
@@ -341,26 +349,34 @@ public class BoardGraphTest {
     List<String> path = new ArrayList<>(List.of("Counterclockwise"));
     List<String> expected = new ArrayList<>(
         List.of("9", "10", "11", "0", "1", "2", "3", "4", "5", "6", "7", "8"));
-    List<String> available = g.get(8).findSpotsUntilBlocked(path, node -> node.hasObject("Obj"));
-    assertEquals(expected, available);
+    List<DropZone> dzExpected = new ArrayList<>();
+    for (String id : expected) { dzExpected.add(Objects.requireNonNull(getNodeWithId(id))); }
+    List<DropZone> available = g.get(8).findSpotsUntilBlocked(path, node -> node.hasObject("Obj"));
+    assertEquals(dzExpected, available);
 
     g.get(8).putObject("Obj", 1);
     List<String> expected2 = new ArrayList<>(List.of("1", "2", "3", "4", "5", "6", "7"));
-    List<String> available2 = g.get(0).findSpotsUntilBlocked(path, node -> node.hasObject("Obj"));
-    assertEquals(expected2, available2);
+    List<DropZone> available2 = g.get(0).findSpotsUntilBlocked(path, node -> node.hasObject("Obj"));
+    dzExpected = new ArrayList<>();
+    for (String id : expected2) { dzExpected.add(Objects.requireNonNull(getNodeWithId(id))); }
+    assertEquals(dzExpected, available2);
 
     g.get(8).removeObject("Obj");
 
     path = new ArrayList<>(List.of("Clockwise"));
     List<String> expected3 = new ArrayList<>(
         List.of("3", "2", "1", "0", "11", "10", "9", "8", "7", "6", "5", "4"));
-    List<String> available3 = g.get(4).findSpotsUntilBlocked(path, node -> node.hasObject("Obj"));
-    assertEquals(expected3, available3);
+    List<DropZone> available3 = g.get(4).findSpotsUntilBlocked(path, node -> node.hasObject("Obj"));
+    dzExpected = new ArrayList<>();
+    for (String id : expected3) { dzExpected.add(Objects.requireNonNull(getNodeWithId(id))); }
+    assertEquals(dzExpected, available3);
 
     g.get(4).putObject("Obj", 1);
     List<String> expected4 = new ArrayList<>(List.of("11", "10", "9", "8", "7", "6", "5"));
-    List<String> available4 = g.get(0).findSpotsUntilBlocked(path, node -> node.hasObject("Obj"));
-    assertEquals(expected4, available4);
+    List<DropZone> available4 = g.get(0).findSpotsUntilBlocked(path, node -> node.hasObject("Obj"));
+    dzExpected = new ArrayList<>();
+    for (String id : expected4) { dzExpected.add(Objects.requireNonNull(getNodeWithId(id))); }
+    assertEquals(dzExpected, available4);
 
   }
 
@@ -371,25 +387,40 @@ public class BoardGraphTest {
 
     List<String> path = new ArrayList<>(List.of("Forward"));
     List<String> expected = new ArrayList<>(List.of("3", "0", "1", "2"));
-    List<String> available = g.get(2).findSpotsUntilBlocked(path, node -> node.hasObject("Obj"));
-    assertEquals(expected, available);
+    List<DropZone> available = g.get(2).findSpotsUntilBlocked(path, node -> node.hasObject("Obj"));
+    ArrayList<DropZone> dzExpected = new ArrayList<>();
+    for (String id : expected) { dzExpected.add(Objects.requireNonNull(getNodeWithId(id))); }
+    assertEquals(dzExpected, available);
 
     g.get(2).putObject("Obj", 1);
     List<String> expected2 = new ArrayList<>(List.of("1"));
-    List<String> available2 = g.get(0).findSpotsUntilBlocked(path, node -> node.hasObject("Obj"));
-    assertEquals(expected2, available2);
+    List<DropZone> available2 = g.get(0).findSpotsUntilBlocked(path, node -> node.hasObject("Obj"));
+    dzExpected = new ArrayList<>();
+    for (String id : expected2) { dzExpected.add(Objects.requireNonNull(getNodeWithId(id))); }
+    assertEquals(dzExpected, available2);
 
     g.get(2).removeObject("Obj");
 
     path = new ArrayList<>(List.of("Backward"));
     List<String> expected3 = new ArrayList<>(List.of("1", "0", "3", "2"));
-    List<String> available3 = g.get(2).findSpotsUntilBlocked(path, node -> node.hasObject("Obj"));
-    assertEquals(expected3, available3);
+    List<DropZone> available3 = g.get(2).findSpotsUntilBlocked(path, node -> node.hasObject("Obj"));
+    dzExpected = new ArrayList<>();
+    for (String id : expected3) { dzExpected.add(Objects.requireNonNull(getNodeWithId(id))); }
+    assertEquals(dzExpected, available3);
 
     g.get(1).putObject("Obj", 1);
     List<String> expected4 = new ArrayList<>(List.of("3", "2"));
-    List<String> available4 = g.get(0).findSpotsUntilBlocked(path, node -> node.hasObject("Obj"));
-    assertEquals(expected4, available4);
+    List<DropZone> available4 = g.get(0).findSpotsUntilBlocked(path, node -> node.hasObject("Obj"));
+    dzExpected = new ArrayList<>();
+    for (String id : expected4) { dzExpected.add(Objects.requireNonNull(getNodeWithId(id))); }
+    assertEquals(dzExpected, available4);
+  }
+
+  @Test
+  void testGetObjectKey(){
+    g = BoardCreator.createGrid(4, 4);
+    Objects.requireNonNull(getNodeWithId("0,0")).putObject("Obj", 1);
+    assertEquals("Obj", g.get(0).getKey(1));
   }
 
 }

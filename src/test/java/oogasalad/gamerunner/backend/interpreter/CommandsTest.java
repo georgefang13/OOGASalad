@@ -5,12 +5,12 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
+
+import oogasalad.gameeditor.backend.id.IdManageable;
 import oogasalad.gameeditor.backend.id.IdManager;
-import oogasalad.gamerunner.backend.interpreter.commands.operators.Sum;
+import oogasalad.gameeditor.backend.ownables.gameobjects.BoardCreator;
+import oogasalad.gamerunner.backend.interpreter.commands.math.Sum;
 import oogasalad.gamerunner.backend.interpreter.tokens.ExpressionToken;
 import oogasalad.gamerunner.backend.interpreter.tokens.OperatorToken;
 import oogasalad.gamerunner.backend.interpreter.tokens.Token;
@@ -20,6 +20,7 @@ import oogasalad.sharedDependencies.backend.ownables.Ownable;
 import oogasalad.sharedDependencies.backend.ownables.gameobjects.DropZone;
 import oogasalad.sharedDependencies.backend.ownables.gameobjects.GameObject;
 import oogasalad.sharedDependencies.backend.ownables.variables.Variable;
+import oogasalad.sharedDependencies.backend.owners.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -27,6 +28,7 @@ public class CommandsTest {
 
   private Interpreter interpreter;
   private IdManager<Ownable> idManager;
+  private TestGame game;
   private static final String LANGUAGE_RESOURCE_PATH = "backend.interpreter.languages";
   ResourceBundle resources;
   private String language = "English";
@@ -35,7 +37,9 @@ public class CommandsTest {
   public void setUp() {
     interpreter = new Interpreter();
     idManager = new IdManager<>();
-    interpreter.link(idManager);
+    game = new TestGame();
+    interpreter.linkIdManager(idManager);
+    interpreter.linkGame(game);
     language = "English";
     resources = ResourceBundle.getBundle(LANGUAGE_RESOURCE_PATH + "." + language);
   }
@@ -71,15 +75,31 @@ public class CommandsTest {
     return s;
   }
 
+  private void useGameVars(){
+    interpreter = game.getInterpreter();
+    idManager = game.getOwnableIdManager();
+  }
+
+  @Test
+  public void testAddAllItems(){
+    String input = "make :x [ 1 2 3 ] make :y [ 4 5 6 ] addallitems :x :y";
+    interpreter.interpret(input);
+    List<Double> expected = new ArrayList<>(List.of(4., 5., 6., 1., 2., 3.));
+    Variable<List<Double>> t = getVar("interpreter-:y");
+    assertEquals(expected, t.get());
+  }
+
   @Test
   public void testAddDropZoneItem() {
     DropZone dz = new DropZone("dz");
     idManager.addObject(dz, "dz");
+    GameObject obj = new GameObject(null);
+    idManager.addObject(obj, "obj");
 
     // add item to dropzone
-    String input = "putdzitem \"obj 1 :game_dz";
+    String input = "putdzitem \"obj :game_obj :game_dz";
     interpreter.interpret(input);
-    List<Double> expected = new ArrayList<>(List.of(1.));
+    List<GameObject> expected = List.of(obj);
     assertEquals(expected, dz.getAllObjects());
 
     // add item to dropzone with non-string
@@ -119,18 +139,24 @@ public class CommandsTest {
     List<String> expected2 = new ArrayList<>(List.of("1", "hello"));
     a = getVar("interpreter-:x");
     assertEquals(expected2, a.get());
+
+    // add variable to list
+    input = "make :x [ ] make :y 1 additem :y :x";
+    interpreter.interpret(input);
+    a = getVar("interpreter-:x");
+    assertEquals(expected, a.get());
   }
 
   @Test
   public void testAnd() {
     // true and
-    String input = "make :a < 1 2 make :b < 2 3 make :x and :a :b";
+    String input = "make :a true make :b < 2 3 make :x and :a :b";
     interpreter.interpret(input);
     Variable<Boolean> x = getVar("interpreter-:x");
     assertTrue(x.get());
 
     // false and
-    input = "make :a < 1 2 make :b < 3 2 make :x and :a :b";
+    input = "make :a true make :b < 3 2 make :x and :a :b";
     interpreter.interpret(input);
     x = getVar("interpreter-:x");
     assertFalse(x.get());
@@ -167,6 +193,87 @@ public class CommandsTest {
   }
 
   @Test
+  public void testBreak(){
+    // break
+    String input = "make :x 0 for [ :i 1 10 1 ] [ global :x if <= :i 5 [ make :x :i ] if > :i 5 [ break ] ]";
+    interpreter.interpret(input);
+    Variable<Double> x = getVar("interpreter-:x");
+    assertEquals(5.0, x.get());
+
+    // break in nested loop
+    input = "make :x 0 make :y 0 " +
+            "repeat 5 [ " +
+              "make :x + :x 1 " +
+              "repeat 10 [ " +
+                "if > :repcount 5 [ break ] " +
+                "make :y :repcount " +
+              "] " +
+            "]";
+
+    interpreter.interpret(input);
+    x = getVar("interpreter-:x");
+    Variable<Double> y = getVar("interpreter-:y");
+    assertEquals(5.0, x.get());
+    assertEquals(5.0, y.get());
+
+  }
+
+  @Test
+  public void testCallAndFVar(){
+    String input = "make :y 0 to test [ :x ] [ global :y make :game_y :x ] make :func fvar test call :func [ 1 ]";
+    interpreter.interpret(input);
+    Variable y = getVar("y");
+    assertEquals(1.0, y.get());
+
+    // test with function that takes no parameters
+    input = "make :y 0 to test [ ] [ global :y make :game_y 6 ] make :func fvar test call :func [ ]";
+    interpreter.interpret(input);
+    y = getVar("y");
+    assertEquals(6.0, y.get());
+
+    // test with function that takes multiple parameters
+    input = "make :y 0 to test [ :x :z ] [ global :y make :game_y + :x :z ] make :func fvar test call :func [ 1 2 ]";
+    interpreter.interpret(input);
+    y = getVar("y");
+    assertEquals(3.0, y.get());
+  }
+
+  @Test
+  public void testContinue(){
+    // continue
+    String input = "make :game_log [ ] " +
+            "make :x 0 " +
+            "for [ :i 1 10 1 ] [ " +
+            "global :x " +
+            "additem :i :game_log " +
+            "if > :i 5 [ continue ] " +
+            " make :x :i " +
+            "]";
+    interpreter.interpret(input);
+    Variable<Double> x = getVar("interpreter-:x");
+    Variable<List<Double>> log = getVar("log");
+    assertEquals(5., x.get());
+    List<Double> expected = new ArrayList<>(List.of(1., 2., 3., 4., 5., 6., 7., 8., 9.));
+    assertEquals(expected, log.get());
+
+    // continue in nested loop
+    input = "make :x 0 make :y 0 " +
+            "repeat 5 [ " +
+              "make :x + :x 1 " +
+              "repeat 10 [ " +
+                "if > :repcount 5 [ continue ] " +
+                "make :y :repcount " +
+              "] " +
+            "]";
+
+    interpreter.interpret(input);
+    x = getVar("interpreter-:x");
+    Variable<Double> y = getVar("interpreter-:y");
+    assertEquals(5.0, x.get());
+    assertEquals(5.0, y.get());
+  }
+
+  @Test
   public void testCosine() {
     // cosine
     String input = "make :x 38 make :z cos :x";
@@ -184,6 +291,22 @@ public class CommandsTest {
       assertEquals(checkSubtypeErrorMsg(t, "Cosine", ValueToken.class, Double.class),
           e.getMessage());
     }
+  }
+
+  @Test
+  public void testCurPlayer(){
+    game.noFSMInit(2);
+    useGameVars();
+    String input = "make :x curplayer";
+    interpreter.interpret(input);
+    Variable<Player> x = getVar("interpreter-:x");
+    assertEquals(game.getPlayer(0), x.get());
+
+    game.setTurn(1);
+    input = "make :x curplayer";
+    interpreter.interpret(input);
+    x = getVar("interpreter-:x");
+    assertEquals(game.getPlayer(1), x.get());
   }
 
   @Test
@@ -303,6 +426,62 @@ public class CommandsTest {
   }
 
   @Test
+  public void testDropZoneHasId(){
+    DropZone d1 = new DropZone("A");
+    DropZone d2 = new DropZone("B");
+    idManager.addObject(d1, "A");
+    idManager.addObject(d2, "B");
+
+    d1.putObject("obj", 1);
+
+    String input = "make :x dzhasid \"obj :game_A";
+    interpreter.interpret(input);
+    Variable<Boolean> x = getVar("interpreter-:x");
+    assertTrue(x.get());
+
+    input = "make :x dzhasid \"obj2 :game_A";
+    interpreter.interpret(input);
+    x = getVar("interpreter-:x");
+    assertFalse(x.get());
+  }
+
+  @Test
+  public void testDropZonePaths(){
+    List<DropZone> board = BoardCreator.createGrid(8, 8);
+    for (DropZone dz : board) {
+      idManager.addObject(dz, dz.getId());
+    }
+    String id1 = board.get(0).getId();
+    String id2 = board.get(18).getId();
+    String input = "make :p1 dzpaths fromgame \"" + id1 + " make :p2 dzpaths fromgame \"" + id2;
+    interpreter.interpret(input);
+    Variable<List<String>> p1 = getVar("interpreter-:p1");
+    Variable<List<String>> p2 = getVar("interpreter-:p2");
+    HashSet<String> expected1 = new HashSet<>(Arrays.asList("Down", "DownRight", "Right"));
+    HashSet<String> expected2 = new HashSet<>(Arrays.asList("Up", "UpLeft", "Left", "DownLeft", "Down", "DownRight", "Right", "UpRight"));
+    assertEquals(expected1, new HashSet<>(p1.get()));
+    assertEquals(expected2, new HashSet<>(p2.get()));
+  }
+
+  @Test
+  public void testDzNeighbors(){
+    List<DropZone> board = BoardCreator.createGrid(8, 8);
+    for (DropZone dz : board) {
+      idManager.addObject(dz, dz.getId());
+    }
+    String id1 = board.get(0).getId();
+    String id2 = board.get(18).getId();
+    String input = "make :p1 dzneighbors fromgame \"" + id1 + " make :p2 dzneighbors fromgame \"" + id2;
+    interpreter.interpret(input);
+    Variable<List<DropZone>> p1 = getVar("interpreter-:p1");
+    Variable<List<DropZone>> p2 = getVar("interpreter-:p2");
+    HashSet<DropZone> expected1 = new HashSet<>(Arrays.asList(board.get(1), board.get(8), board.get(9)));
+    HashSet<DropZone> expected2 = new HashSet<>(Arrays.asList(board.get(17), board.get(19), board.get(10), board.get(9), board.get(11), board.get(26), board.get(25), board.get(27)));
+    assertEquals(expected1, new HashSet<>(p1.get()));
+    assertEquals(expected2, new HashSet<>(p2.get()));
+  }
+
+  @Test
   public void testEqual() {
     // equal
     String input = "make :x 1 make :y 1 make :z == :x :y";
@@ -329,7 +508,7 @@ public class CommandsTest {
     assertTrue(z.get());
 
     // equal with incorrect number of parameters
-    input = "make :x > 1 2 make :y > 3 4 make :z == :x";
+    input = "make :x false make :y false make :z == :x";
     try {
       interpreter.interpret(input);
       fail();
@@ -425,6 +604,27 @@ public class CommandsTest {
   }
 
   @Test
+  public void testForEach(){
+    String input = "make :x [ 1 2 3 4 5 ] make :y 0 foreach [ :i :x ] [ global :y make :y + :y :i ]";
+    interpreter.interpret(input);
+    Variable<Double> y = getVar("interpreter-:y");
+    assertEquals(15, y.get());
+  }
+
+  @Test
+  public void testFollowDropZonePath(){
+    List<DropZone> board = BoardCreator.createGrid(8, 8);
+    for (DropZone dz : board) {
+      idManager.addObject(dz, dz.getId());
+    }
+    String id1 = board.get(0).getId();
+    String input = "make :dz fromgame \"" + id1 + " make :path [ \"Down \"DownRight ] make :p dzfollow :dz :path";
+    interpreter.interpret(input);
+    Variable<DropZone> p = getVar("interpreter-:p");
+    assertEquals(board.get(17), p.get());
+  }
+
+  @Test
   public void testGetAttribute() {
     GameObject dropZone = new DropZone("A");
     Class<?> c = GameObject.class;
@@ -448,18 +648,23 @@ public class CommandsTest {
   }
 
   @Test
-  public void getDropZoneItem() {
+  public void testGetDropZoneItem() {
     DropZone dropZone = new DropZone("A");
+    GameObject obj = new GameObject(null);
     idManager.addObject(dropZone, "dz");
-    String input = "putdzitem \"obj 1 :game_dz make :x dzitem \"obj :game_dz";
+    idManager.addObject(obj, "obj");
+    String input = "putdzitem \"obj :game_obj :game_dz make :x dzitem \"obj :game_dz";
     interpreter.interpret(input);
-    Variable<Double> x = getVar("interpreter-:x");
-    assertEquals(1., x.get());
+    Variable<Ownable> x = getVar("interpreter-:x");
+    assertEquals(obj, x.get());
 
-    input = "putdzitem \"obj 2 :game_dz make :x dzitem \"obj :game_dz";
+    GameObject obj2 = new GameObject(null);
+    idManager.addObject(obj2, "obj2");
+
+    input = "putdzitem \"obj :game_obj2 :game_dz make :x dzitem \"obj :game_dz";
     interpreter.interpret(input);
     x = getVar("interpreter-:x");
-    assertEquals(2., x.get());
+    assertEquals(obj2, x.get());
 
     // try with a non-dropzone
     input = "make :x dzitem \"obj 2";
@@ -475,15 +680,19 @@ public class CommandsTest {
   }
 
   @Test
-  public void getDropZoneItems() {
+  public void testGetDropZoneItems() {
     DropZone dropZone = new DropZone("A");
     idManager.addObject(dropZone, "dz");
-    String input = "putdzitem \"obj1 1 :game_dz putdzitem \"obj2 2 :game_dz make :x dzitems :game_dz";
+    GameObject obj = new GameObject(null);
+    idManager.addObject(obj, "obj");
+    GameObject obj2 = new GameObject(null);
+    idManager.addObject(obj2, "obj2");
+    String input = "putdzitem \"obj1 :game_obj :game_dz putdzitem \"obj2 :game_obj2 :game_dz make :x dzitems :game_dz";
     interpreter.interpret(input);
     Variable<List<Object>> x = getVar("interpreter-:x");
     assertEquals(2, x.get().size());
-    assertTrue(x.get().contains(1.));
-    assertTrue(x.get().contains(2.));
+    assertTrue(x.get().contains(obj));
+    assertTrue(x.get().contains(obj2));
 
     // try with a non-dropzone
     input = "make :x dzitems \"obj";
@@ -494,6 +703,120 @@ public class CommandsTest {
       ValueToken<?> t = new ValueToken<>("obj");
       assertEquals(checkSubtypeErrorMsg(t, "GetDropZoneItems", ValueToken.class, DropZone.class),
           e.getMessage());
+    }
+
+  }
+
+  @Test
+  public void testGetObjDz(){
+    game.noFSMInit(2);
+    useGameVars();
+    List<DropZone> board = BoardCreator.createGrid(2, 2);
+    for (DropZone dz : board) {
+      game.addElement(dz, dz.getId());
+    }
+    // add items to dropZones
+    GameObject p1 = new GameObject(game.getPlayer(0));
+    GameObject p2 = new GameObject(game.getPlayer(0));
+    GameObject p3 = new GameObject(game.getPlayer(1));
+    GameObject p4 = new GameObject(game.getPlayer(1));
+    game.addElement(p1, "p1");
+    game.putInDropZone(p1, board.get(0), "piece");
+    game.addElement(p2, "p2");
+    game.putInDropZone(p2, board.get(1), "piece");
+    game.addElement(p3, "p3");
+    game.putInDropZone(p3, board.get(2), "piece");
+    game.addElement(p4, "p4");
+    game.putInDropZone(p4, board.get(3), "piece");
+
+    String input = "make :x objdz :game_p1";
+    interpreter.interpret(input);
+    Variable<DropZone> x = getVar("interpreter-:x");
+    assertEquals(board.get(0), x.get());
+
+    input = "make :x objdz :game_p2 make :y objdz :game_p3 make :z objdz :game_p4";
+    interpreter.interpret(input);
+    x = getVar("interpreter-:x");
+    Variable<DropZone> y = getVar("interpreter-:y");
+    Variable<DropZone> z = getVar("interpreter-:z");
+    assertEquals(board.get(1), x.get());
+    assertEquals(board.get(2), y.get());
+    assertEquals(board.get(3), z.get());
+
+
+    // null case
+    game.addElement(new GameObject(game.getPlayer(0)), "p5");
+    input = "make :x == null objdz :game_p5";
+    interpreter.interpret(input);
+    System.out.println(((Variable)getVar("interpreter-:x")).get());
+    Variable<Boolean> b = getVar("interpreter-:x");
+    assertTrue(b.get());
+
+
+
+
+  }
+
+  @Test
+  public void testGetObjsByClass(){
+    // three objects with class "obj"
+    GameObject obj1 = new GameObject(null);
+    obj1.addClass("obj");
+    GameObject obj2 = new GameObject(null);
+    obj2.addClass("obj");
+    GameObject obj3 = new GameObject(null);
+    obj3.addClass("obj");
+    idManager.addObject(obj1, "obj1");
+    idManager.addObject(obj2, "obj2");
+    idManager.addObject(obj3, "obj3");
+    String input = "make :x fromgameclass \"obj";
+    interpreter.interpret(input);
+    Variable<List<Object>> x = getVar("interpreter-:x");
+    assertEquals(3, x.get().size());
+    assertTrue(x.get().contains(obj1));
+    assertTrue(x.get().contains(obj2));
+    assertTrue(x.get().contains(obj3));
+
+    // board, some are selected, some are not, one other object is selected
+    List<DropZone> tiles = BoardCreator.createGrid(3, 3);
+    for (DropZone tile : tiles){
+      tile.addClass("board");
+      idManager.addObject(tile);
+    }
+    tiles.get(0).addClass("selected");
+    obj1.addClass("selected");
+    input = "make :x fromgameclass \"board make :y fromgameclass \"board.selected make :z fromgameclass \"selected";
+    interpreter.interpret(input);
+    x = getVar("interpreter-:x");
+    assertEquals(new HashSet(tiles), new HashSet(x.get()));
+
+    Variable<List<Object>> y = getVar("interpreter-:y");
+    assertEquals(1, y.get().size());
+    assertTrue(y.get().contains(tiles.get(0)));
+
+    Variable<List<Object>> z = getVar("interpreter-:z");
+    assertEquals(2, z.get().size());
+    assertTrue(z.get().contains(tiles.get(0)));
+    assertTrue(z.get().contains(obj1));
+
+    // fromgameclass with a non-string
+    input = "make :x fromgameclass 1";
+    try {
+      interpreter.interpret(input);
+      fail();
+    } catch (Exception e) {
+      ValueToken<?> t = new ValueToken<>(1.);
+      assertEquals(checkSubtypeErrorMsg(t, "GetFromGameClass", ValueToken.class, String.class),
+          e.getMessage());
+    }
+
+    // fromgameclass with wrong number of arguments
+    input = "make :x fromgameclass";
+    try {
+      interpreter.interpret(input);
+      fail();
+    } catch (Exception e) {
+      assertEquals("Invalid syntax: Not enough arguments for operator GetFromGameClass", e.getMessage());
     }
 
   }
@@ -526,6 +849,88 @@ public class CommandsTest {
     }
 
 
+  }
+
+  @Test
+  public void testGetObjectsFromPlayer(){
+    game.noFSMInit(2);
+    useGameVars();
+    // two players, one object each
+    Player p1 = game.getPlayer(0);
+    Player p2 = game.getPlayer(1);
+    GameObject obj1 = new GameObject(p1);
+    GameObject obj2 = new GameObject(p2);
+    GameObject obj3 = new GameObject(p1);
+    GameObject obj4 = new GameObject(p2);
+    obj1.addClass("obj");
+    obj2.addClass("obj");
+    obj3.addClass("obj");
+    obj4.addClass("obj");
+    obj3.addClass("thing");
+    obj4.addClass("thing");
+
+    Variable<?> xvar = new Variable<>("test", p1);
+    xvar.addClass("pvar");
+    Variable<?> yvar = new Variable<>("test", p2);
+    yvar.addClass("pvar");
+
+    idManager.addObject(xvar, "0,1");
+    idManager.addObject(yvar, "0,2");
+
+    idManager.addObject(obj1, "obj1");
+    idManager.addObject(obj2, "obj2");
+    idManager.addObject(obj3, "obj3");
+    idManager.addObject(obj4, "obj4");
+
+    // single class
+    String input = "make :x fromplayer curplayer \"obj make :y fromplayer getplayer 1 \"obj";
+    interpreter.interpret(input);
+    Variable<List<Object>> x = getVar("interpreter-:x");
+    Variable<List<Object>> y = getVar("interpreter-:y");
+    assertEquals(2, x.get().size());
+    assertEquals(2, y.get().size());
+    assertTrue(x.get().contains(obj1));
+    assertTrue(y.get().contains(obj2));
+
+    // multiple classes
+    input = "make :x fromplayer curplayer \"obj.thing";
+    interpreter.interpret(input);
+    x = getVar("interpreter-:x");
+    assertEquals(1, x.get().size());
+    assertTrue(x.get().contains(obj3));
+
+    // fromplayer with a non-number
+    input = "make :x fromplayer \"1 \"4";
+    try {
+      interpreter.interpret(input);
+      fail();
+    } catch (Exception e) {
+      ValueToken<?> t = new ValueToken<>("1");
+      assertEquals(checkSubtypeErrorMsg(t, "GetObjectsFromPlayer", ValueToken.class, Player.class),
+          e.getMessage());
+    }
+
+    // fromplayer with wrong number of arguments
+    input = "make :x fromplayer";
+    try {
+      interpreter.interpret(input);
+      fail();
+    } catch (Exception e) {
+      assertEquals("Invalid syntax: Not enough arguments for operator GetObjectsFromPlayer", e.getMessage());
+    }
+
+  }
+
+  @Test
+  public void testGoToNextPlayer(){
+    game.noFSMInit(2);
+    useGameVars();
+    String input = "gotonextplayer";
+    interpreter.interpret(input);
+    assertEquals(1.0, ((Variable) getVar("turn")).get());
+
+    interpreter.interpret(input);
+    assertEquals(0., ((Variable) getVar("turn")).get());
   }
 
   @Test
@@ -612,9 +1017,68 @@ public class CommandsTest {
   }
 
   @Test
+  public void testHasClass(){
+    game.noFSMInit(4);
+    useGameVars();
+    game.getPlayer(0).addClass("red");
+    game.getPlayer(1).addClass("red");
+    game.getPlayer(2).addClass("blue");
+    game.getPlayer(3).addClass("blue");
+
+    // has class
+    String input = "make :a hasclass curplayer \"red make :b hasclass curplayer \"blue";
+    interpreter.interpret(input);
+    Variable<Boolean> a = getVar("interpreter-:a");
+    Variable<Boolean> b = getVar("interpreter-:b");
+    assertTrue(a.get());
+    assertFalse(b.get());
+
+    // hasclass with an object
+    GameObject obj = new GameObject(null);
+    obj.addClass("red");
+    game.addElement(obj, "obj");
+    input = "make :a hasclass fromgame \"obj \"red";
+    interpreter.interpret(input);
+    a = getVar("interpreter-:a");
+    assertTrue(a.get());
+
+    // has class with incorrect number of parameters
+    input = "make :a hasclass curplayer";
+    try {
+      interpreter.interpret(input);
+      fail();
+    } catch (Exception e) {
+      assertEquals("Invalid syntax: Not enough arguments for operator HasClass", e.getMessage());
+    }
+
+    // has class with non-string
+    input = "make :a hasclass curplayer 1";
+    try {
+      interpreter.interpret(input);
+      fail();
+    } catch (Exception e) {
+      ValueToken<?> t = new ValueToken<>(1.0);
+      assertEquals(checkSubtypeErrorMsg(t, "HasClass", ValueToken.class, String.class),
+          e.getMessage());
+    }
+
+    // has class with non-player
+    input = "make :a hasclass 1 \"red";
+    try {
+      interpreter.interpret(input);
+      fail();
+    } catch (Exception e) {
+      ValueToken<?> t = new ValueToken<>(1.0);
+      assertEquals(checkSubtypeErrorMsg(t, "HasClass", ValueToken.class, IdManageable.class),
+          e.getMessage());
+    }
+
+  }
+
+  @Test
   public void testIf() {
     // if true
-    String input = "make :x 1 make :y < 1 2 if :y [ make :x 3 ]";
+    String input = "make :x 1 make :y true if :y [ make :x 3 ]";
     interpreter.interpret(input);
     Variable<Double> x = getVar("interpreter-:x");
     assertEquals(3.0, x.get());
@@ -636,7 +1100,7 @@ public class CommandsTest {
     }
 
     // if with incorrect number of parameters
-    input = "make :x 1 make :y < 1 2 if :y";
+    input = "make :x 1 make :y true if :y";
     try {
       interpreter.interpret(input);
       fail();
@@ -646,9 +1110,27 @@ public class CommandsTest {
   }
 
   @Test
+  public void testIfDropZoneEmpty(){
+    DropZone d1 = new DropZone("A");
+    idManager.addObject(d1, "A");
+
+    String input = "make :x dzempty :game_A";
+    interpreter.interpret(input);
+    Variable<Boolean> x = getVar("interpreter-:x");
+    assertTrue(x.get());
+
+    d1.putObject("obj", 1);
+
+    input = "make :x dzempty :game_A";
+    interpreter.interpret(input);
+    x = getVar("interpreter-:x");
+    assertFalse(x.get());
+  }
+
+  @Test
   public void testIfElse() {
     // if true
-    String input = "make :x 1 make :y < 1 2 ifelse :y [ global :x make :x 3 ] [ global :x make :x 4 ]";
+    String input = "make :x 1 make :y true ifelse :y [ global :x make :x 3 ] [ global :x make :x 4 ]";
     interpreter.interpret(input);
     Variable<Double> x = getVar("interpreter-:x");
     assertEquals(3.0, x.get(), 0.0001);
@@ -670,7 +1152,7 @@ public class CommandsTest {
     }
 
     // if with incorrect number of parameters
-    input = "make :x 1 make :y < 1 2 ifelse :y";
+    input = "make :x 1 make :y true ifelse :y";
     try {
       interpreter.interpret(input);
       fail();
@@ -824,6 +1306,79 @@ public class CommandsTest {
   }
 
   @Test
+  public void testListContains(){
+    String input = "make :x [ 1 2 3 ] make :y listhas 1 :x";
+    interpreter.interpret(input);
+    Variable<Boolean> y = getVar("interpreter-:y");
+    assertTrue(y.get());
+
+    input = "make :x [ 1 2 3 ] make :y listhas 4 :x";
+    interpreter.interpret(input);
+    assertFalse(y.get());
+
+    input = "make :x [ 1 2 3 ] make :y listhas 1.0 :x";
+    interpreter.interpret(input);
+    assertTrue(y.get());
+
+    input = "make :x [ 1 2 3 ] make :y listhas 1.1 :x";
+    interpreter.interpret(input);
+    assertFalse(y.get());
+
+    // test with non-list
+    input = "make :x 1 make :y listhas 1 :x";
+    try {
+      interpreter.interpret(input);
+      fail();
+    } catch (Exception e) {
+      ValueToken<?> t = new ValueToken<>(1.0);
+      assertEquals(checkTypeErrorMsg(t, "ListContains", ExpressionToken.class), e.getMessage());
+    }
+
+
+  }
+
+  @Test
+  public void testListIndex(){
+    String input = "make :x [ 1 2 3 ] make :y index 1 :x";
+    interpreter.interpret(input);
+    Variable<Double> y = getVar("interpreter-:y");
+    assertEquals(0., y.get());
+
+    input = "make :y index 2 :x";
+    interpreter.interpret(input);
+    assertEquals(1., y.get());
+
+    input = "make :y index 3 :x";
+    interpreter.interpret(input);
+    assertEquals(2., y.get());
+
+    input = "make :y index 4 :x";
+    interpreter.interpret(input);
+    assertEquals(-1., y.get());
+  }
+
+  @Test
+  public void testMakeAllAvailable(){
+    idManager.addObject(new Variable<>(new ArrayList<>()), "available");
+    String input = "make :x [ 1 2 3 ] makeallavailable :x";
+    interpreter.interpret(input);
+    Variable<List<Double>> available = getVar("available");
+    assertEquals(1.0, available.get().get(0));
+    assertEquals(2.0, available.get().get(1));
+    assertEquals(3.0, available.get().get(2));
+    assertEquals(3, available.get().size());
+  }
+  @Test
+  public void testMakeAvailable(){
+    idManager.addObject(new Variable<>(new ArrayList<>()), "available");
+    String input = "make :x 1 makeavailable :x";
+    interpreter.interpret(input);
+    Variable<List<Double>> available = getVar("available");
+    assertEquals(1.0, available.get().get(0));
+    assertEquals(1, available.get().size());
+  }
+
+  @Test
   public void testMakeUserInstruction() {
     // make user instruction, don't make global variable
     String input = "make :x 5 to test [ ] [ make :x + :x 2 ] test";
@@ -838,13 +1393,13 @@ public class CommandsTest {
     assertEquals(7.0, x.get());
 
     // make user instruction that returns a value
-    input = "to test [ ] [ 1 ] make :x test";
+    input = "to test [ ] [ return 1 ] make :x test";
     interpreter.interpret(input);
     x = getVar("interpreter-:x");
     assertEquals(1.0, x.get());
 
     // make user instruction that returns pythagorean distance
-    input = "to pythag [ :a :b ] [ sqrt + * :a :a * :b :b ] make :a pythag 3 4";
+    input = "to pythag [ :a :b ] [ return sqrt + * :a :a * :b :b ] make :a pythag 3 4";
     interpreter.interpret(input);
     x = getVar("interpreter-:a");
     assertEquals(5.0, x.get());
@@ -933,6 +1488,50 @@ public class CommandsTest {
   }
 
   @Test
+  public void testMovePiece(){
+    game.noFSMInit(2);
+    useGameVars();
+    List<DropZone> dropZones = BoardCreator.createGrid(2, 2);
+    for (DropZone dz : dropZones) {
+      game.addElement(dz, dz.getId());
+    }
+    GameObject p1 = new GameObject(game.getPlayer(0));
+    game.addElement(p1, "p1");
+    game.putInDropZone(p1, dropZones.get(0), "piece");
+
+    assertTrue(dropZones.get(0).hasObject("piece"));
+
+    String input = "make :x :game_p1 make :next_dz fromgame \"0,1 movepiece :x :next_dz";
+    interpreter.interpret(input);
+    assertTrue(dropZones.get(1).getAllObjects().contains(p1));
+    assertTrue(dropZones.get(1).hasObject("piece"));
+    assertFalse(dropZones.get(0).getAllObjects().contains(p1));
+    assertFalse(dropZones.get(0).hasObject("piece"));
+  }
+
+  @Test
+  public void testMovePieceAs(){
+    game.noFSMInit(2);
+    useGameVars();
+    List<DropZone> dropZones = BoardCreator.createGrid(2, 2);
+    for (DropZone dz : dropZones) {
+      game.addElement(dz, dz.getId());
+    }
+    GameObject p1 = new GameObject(game.getPlayer(0));
+    game.addElement(p1, "p1");
+    game.putInDropZone(p1, dropZones.get(0), "piece");
+
+    assertTrue(dropZones.get(0).hasObject("piece"));
+
+    String input = "make :x :game_p1 make :next_dz fromgame \"0,1 movepieceas :x :next_dz \"thing";
+    interpreter.interpret(input);
+    assertTrue(dropZones.get(1).hasObject("thing"));
+    assertFalse(dropZones.get(1).hasObject("piece"));
+    assertFalse(dropZones.get(0).hasObject("thing"));
+    assertFalse(dropZones.get(0).hasObject("piece"));
+  }
+
+  @Test
   public void testNaturalLog() {
     // natural log
     String input = "make :x 1 make :y ln :x";
@@ -970,7 +1569,7 @@ public class CommandsTest {
   @Test
   public void testNot() {
     // not
-    String input = "make :x < 1 2 make :y not :x";
+    String input = "make :x true make :y not :x";
     interpreter.interpret(input);
     Variable<Boolean> y = getVar("interpreter-:y");
     assertEquals(false, y.get());
@@ -1020,15 +1619,24 @@ public class CommandsTest {
   }
 
   @Test
+  public void testNull(){
+    // null
+    String input = "make :x null make :y == :x null";
+    interpreter.interpret(input);
+    Variable<Boolean> y = getVar("interpreter-:y");
+    assertTrue(y.get());
+  }
+
+  @Test
   public void testOr() {
     // true or
-    String input = "make :a < 1 2 make :b < 2 3 make :x or :a :b";
+    String input = "make :a true make :b < 2 3 make :x or :a :b";
     interpreter.interpret(input);
     Variable<Boolean> x = getVar("interpreter-:x");
     assertEquals(true, x.get());
 
     // true or
-    input = "make :a < 1 2 make :b < 3 2 make :x or :a :b";
+    input = "make :a true make :b < 3 2 make :x or :a :b";
     interpreter.interpret(input);
     x = getVar("interpreter-:x");
     assertEquals(true, x.get());
@@ -1047,6 +1655,36 @@ public class CommandsTest {
       ValueToken<?> t = new ValueToken<>(1.0);
       assertEquals(checkSubtypeErrorMsg(t, "Or", ValueToken.class, Boolean.class), e.getMessage());
     }
+  }
+
+  @Test
+  public void testPlayerOwner(){
+    game.noFSMInit(4);
+    useGameVars();
+    Variable<Double> v1 = new Variable<>(1.0, game.getPlayer(0));
+    Variable<Double> v2 = new Variable<>(2.0, game.getPlayer(1));
+    Variable<Double> v3 = new Variable<>(3.0, game.getPlayer(2));
+    Variable<Double> v4 = new Variable<>(4.0, game.getPlayer(3));
+    idManager.addObject(v1, "v1");
+    idManager.addObject(v2, "v2");
+    idManager.addObject(v3, "v3");
+    idManager.addObject(v4, "v4");
+    String input = "make :x owner :game_v1";
+    interpreter.interpret(input);
+    Variable<Player> x = getVar("interpreter-:x");
+    assertEquals(game.getPlayer(0), x.get());
+
+    input = "make :x owner :game_v2";
+    interpreter.interpret(input);
+    x = getVar("interpreter-:x");
+    assertEquals(game.getPlayer(1), x.get());
+
+    GameObject o = new GameObject(null);
+    idManager.addObject(o, "o", v3);
+    input = "make :x owner :game_o";
+    interpreter.interpret(input);
+    x = getVar("interpreter-:x");
+    assertEquals(game.getPlayer(2), x.get());
   }
 
   @Test
@@ -1174,7 +1812,7 @@ public class CommandsTest {
     assertTrue(x.get() > 100);
 
     // random with non-numbers
-    input = "make :x rand < 1 2";
+    input = "make :x rand true";
     try {
       interpreter.interpret(input);
       fail();
@@ -1216,7 +1854,7 @@ public class CommandsTest {
     assertTrue(x.get() < 10000001);
 
     // random range with non-numbers
-    input = "make :x randr < 1 2 3";
+    input = "make :x randr true 3";
     try {
       interpreter.interpret(input);
       fail();
@@ -1266,7 +1904,7 @@ public class CommandsTest {
   }
 
   @Test
-  public void RemoveItem() {
+  public void testRemoveItem() {
     // remove item
     String input = "make :x [ 1 2 3 ] delitem 1 :x";
     interpreter.interpret(input);
@@ -1299,6 +1937,66 @@ public class CommandsTest {
   }
 
   @Test
+  public void testRemovePiece(){
+    game.noFSMInit(2);
+    useGameVars();
+    GameObject obj1 = new GameObject(game.getPlayer(0));
+    GameObject obj2 = new GameObject(game.getPlayer(1));
+    List<DropZone> board = BoardCreator.createGrid(3, 3);
+    game.addElement(obj1, "obj1");
+    game.addElement(obj2, "obj2");
+    for (DropZone dz : board) {
+      game.addElement(dz, dz.getId());
+    }
+    game.putInDropZone(obj1, board.get(0), "obj");
+
+    // remove piece
+    String input = "removepiece :game_obj1";
+    interpreter.interpret(input);
+    assertEquals(0, board.get(0).getAllObjects().size());
+    assertFalse(idManager.isIdInUse("obj1"));
+
+
+  }
+
+  @Test
+  public void testReturn(){
+    // return null
+    String input = "to f [ ] [ make :game_log [ ] return; additem 1 :game_log ] f";
+    interpreter.interpret(input);
+    Variable<List<Double>> log = getVar("log");
+    assertEquals(0, log.get().size());
+
+    // return with number
+    input = "to f [ ] [ return 1 ] make :x f";
+    interpreter.interpret(input);
+    Variable<Double> x = getVar("interpreter-:x");
+    assertEquals(1.0, x.get());
+
+    // return from inside if statement
+    input = "to f [ :x ] [ if > :x 0 [ return 1 ] return 2 ] make :x f 5";
+    interpreter.interpret(input);
+    x = getVar("interpreter-:x");
+    assertEquals(1.0, x.get());
+
+    // return from inside a loop
+    input = "to f [ :x ] [ repeat :x [ return 1 ] return 2 ] make :x f 5";
+    interpreter.interpret(input);
+    x = getVar("interpreter-:x");
+    assertEquals(1.0, x.get());
+
+    // return with too few parameters
+    input = "to f [ ] [ return ] make :x f";
+    try {
+      interpreter.interpret(input);
+      fail();
+    } catch (Exception e) {
+      assertEquals("Invalid syntax: Not enough arguments for operator Return", e.getMessage());
+    }
+
+  }
+
+  @Test
   public void testRepeat() {
     // repeat
     String input = "make :x 0 repeat 3 [ global :x make :x + :x 1 ]";
@@ -1313,7 +2011,7 @@ public class CommandsTest {
     assertEquals(112.0, x.get());
 
     // repeat with non-numbers
-    input = "make :x 0 repeat < 1 2 [ global :x make :x + :x 1 ]";
+    input = "make :x 0 repeat true [ global :x make :x + :x 1 ]";
     try {
       interpreter.interpret(input);
       fail();
@@ -1353,7 +2051,7 @@ public class CommandsTest {
     assertEquals(expected, x.get());
 
     // setitem with non-numbers
-    input = "make :x [ 1 2 3 ] make :y < 1 2 setitem :x 1 :y";
+    input = "make :x [ 1 2 3 ] make :y true setitem :x 1 :y";
     try {
       interpreter.interpret(input);
       fail();
@@ -1387,7 +2085,7 @@ public class CommandsTest {
     assertEquals(0.8910065241883679, y.get());
 
     // sine with non-numbers
-    input = "make :x < 1 2 make :y sin :x";
+    input = "make :x true make :y sin :x";
     try {
       interpreter.interpret(input);
       fail();
@@ -1438,7 +2136,7 @@ public class CommandsTest {
     }
 
     // square root with non-numbers
-    input = "make :x < 1 2 make :y sqrt :x";
+    input = "make :x true make :y sqrt :x";
     try {
       interpreter.interpret(input);
       fail();
@@ -1486,7 +2184,7 @@ public class CommandsTest {
     assertEquals(15.0, i.get());
 
     // sum with non-numbers
-    input = "make :x < 1 2 make :y 3 make :z + :x :y";
+    input = "make :x true make :y 3 make :z + :x :y";
     try {
       interpreter.interpret(input);
       fail();
@@ -1521,7 +2219,7 @@ public class CommandsTest {
     assertEquals(0.3443276132896654, i.get());
 
     // tangent with non-numbers
-    input = "make :x < 1 2 make :y tan :x";
+    input = "make :x true make :y tan :x";
     try {
       interpreter.interpret(input);
       fail();
@@ -1580,7 +2278,7 @@ public class CommandsTest {
       interpreter.setLanguage(language);
       setLanguage(language);
 
-      String input = "make :x < 1 2 make :y 3 make :z + :x :y";
+      String input = "make :x true make :y 3 make :z + :x :y";
       try {
         interpreter.interpret(input);
         fail();
