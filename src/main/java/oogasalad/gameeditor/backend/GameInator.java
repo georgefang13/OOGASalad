@@ -178,7 +178,7 @@ public class GameInator {
    * @return unmodifiable List of Players
    */
   public List<Player> getPlayers() {
-    return Collections.unmodifiableList(players);
+    return players;
   }
 
 
@@ -523,5 +523,14 @@ public class GameInator {
     return ownableIdManager.getObject(id);
   }
 
-  //TODO TURN
+
+  /**
+   * Gets the IdManager for the Ownables.
+   *
+   * @return the IdManager for the Ownables
+   */
+  public IdManager getOwnableIdManager() {
+    return ownableIdManager;
+  }
+
 }

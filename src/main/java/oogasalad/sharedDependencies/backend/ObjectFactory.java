@@ -14,6 +14,8 @@ import oogasalad.gameeditor.backend.rules.Rule;
 import oogasalad.gamerunner.backend.interpretables.Goal;
 import oogasalad.sharedDependencies.backend.ownables.Ownable;
 import oogasalad.sharedDependencies.backend.ownables.gameobjects.DropZone;
+import oogasalad.sharedDependencies.backend.ownables.gameobjects.GameObject;
+import oogasalad.sharedDependencies.backend.ownables.variables.Variable;
 import oogasalad.sharedDependencies.backend.owners.GameWorld;
 import oogasalad.sharedDependencies.backend.owners.Owner;
 import oogasalad.sharedDependencies.backend.owners.Player;
@@ -84,7 +86,7 @@ public class ObjectFactory {
 //    }
 //  }
 
-  private void handleBoardCreator(Map<ObjectParameter, Object> params) {
+  private void handleBoardCreator(Map<Object, Object> params) {
     Owner owner = gameWorld;
     String type = params.get(ObjectParameter.BOARD_TYPE).toString();
     List<DropZone> dropZones = new ArrayList<>();
@@ -161,6 +163,38 @@ public class ObjectFactory {
     }
   } //TODO
 
+  public Ownable constructOwnable(String ownableType, Owner owner, Map<Object, Object> constructor_params) throws IllegalArgumentException {
+
+    //Assume that only Variables and GameObjects will be created in this way
+    //Could be changed to use reflection to create any type of Ownable, but only Variables and GameObjects are needed
+    if(ownableType.contains("Variable")) {
+      Object value = constructor_params.get("value");
+      //if neither value or owner are null, then we can create the variable
+      if(value != null && owner != null) {
+        Variable variable = new Variable(value, owner);
+        return variable;
+      } else if(value == null && owner != null) {
+        //if value is null, then we need to create a variable with a default value
+        Variable variable = new Variable(owner);
+        return variable;
+      } else if(value != null && owner == null) {
+        //if owner is null, then we need to create a variable with a default owner
+        Variable variable = new Variable(value, gameWorld);
+        return variable;
+      } else if(value == null && owner == null) {
+        //if both value and owner are null, then we need to create a variable with a default value and owner
+        Variable variable = new Variable(gameWorld);
+        return variable;
+      }
+
+    } else if(ownableType.contains("GameObject")){
+      return new GameObject(owner);
+    } else {
+      throw new IllegalArgumentException("Invalid ownableType: " + ownableType);
+    }
+    return null; //should never reach this point
+  }
+
   /**
    * check if owner id is numeric value
    * @param str
@@ -184,13 +218,13 @@ public class ObjectFactory {
    * @param params
    * @return
    */
-  public void createOwnable(Map<ObjectParameter, Object> params) {
-    String ownableType = params.get(ObjectParameter.OWNABLE_TYPE).toString();
-    Map<ObjectParameter, Object> constructor_params = (Map<ObjectParameter, Object>) params.get(ObjectParameter.CONSTRUCTOR_ARGS);
-    String ownerNum = constructor_params.get(ObjectParameter.OWNER).toString();
+  public void createOwnable(Map<ObjectParameter, Object> params) throws IllegalArgumentException {
+    String ownableType = params.get(ObjectParameter.OWNABLE_TYPE) != null ? params.get(ObjectParameter.OWNABLE_TYPE).toString() : null;
+    Map<Object, Object> constructor_params = (Map<Object, Object>) params.get(ObjectParameter.CONSTRUCTOR_ARGS);
+    String ownerNum = constructor_params.get(ObjectParameter.OWNER) != null ? constructor_params.get(ObjectParameter.OWNER).toString() : null;
     Integer ownerInt = isNumeric(ownerNum);
-    String parentOwnableId = constructor_params.get(ObjectParameter.PARENT_OWNABLE_ID).toString();
-    String id = constructor_params.get(ObjectParameter.ID).toString();
+    String parentOwnableId = constructor_params.get(ObjectParameter.PARENT_OWNABLE_ID) != null ? constructor_params.get(ObjectParameter.PARENT_OWNABLE_ID).toString() : null;
+    String id = constructor_params.get(ObjectParameter.ID) != null ? constructor_params.get(ObjectParameter.ID).toString() : null;
     Owner owner;
     Ownable parentOwnable;
     //owner from constructor params
@@ -207,10 +241,15 @@ public class ObjectFactory {
     }
     //if ownableType is BoardCreator
     if (ownableType.equals("BoardCreator")) {
+      //below method also adds dropzones to ownableIdManager
       handleBoardCreator(constructor_params);
     } else {
-      Ownable newOwnable = createOwnable(ownableType, owner);
-      ownableIdManager.addObject(newOwnable, id, parentOwnable);
+      try {
+        Ownable newOwnable = constructOwnable(ownableType, owner, constructor_params);
+        ownableIdManager.addObject(newOwnable, id, parentOwnable);
+      } catch (IllegalArgumentException e) {
+        throw new RuntimeException("Error creating ownable", e);
+      }
     }
 
 
