@@ -1,0 +1,15 @@
+{
+  "ownedByGame": [],
+  "ownedByPlayer": [
+    {
+      "id": "x",
+      "image": "x.png",
+      "initialDropbox": "p1"
+    },
+    {
+      "id": "o",
+      "image": "o.png",
+      "initialDropbox": "p2"
+    }
+  ]
+}

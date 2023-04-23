@@ -1,37 +1,48 @@
 package oogasalad.Controller;
 
 import javafx.geometry.Point2D;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
+//import oogasalad.frontend.components.gameObjectComponent.GameObject;
 import oogasalad.frontend.components.gameObjectComponent.GameRunner.Board;
-import oogasalad.frontend.components.gameObjectComponent.GameRunner.BoardPiece;
+import oogasalad.frontend.components.gameObjectComponent.GameRunner.Piece;
 import oogasalad.frontend.scenes.GamePlayerMainScene;
-import oogasalad.gamerunner.backend.fsm.FSMExample;
+import oogasalad.gamerunner.backend.Game;
+import oogasalad.sharedDependencies.backend.filemanagers.FileManager;
+import oogasalad.sharedDependencies.backend.ownables.gameobjects.DropZone;
+import oogasalad.sharedDependencies.backend.ownables.gameobjects.GameObject;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class GameRunnerController {
-
-    private FSMExample fsmExample;
+    private Game game;
     private GamePlayerMainScene gamePlayerMainScene;
 
     private String playerTurn;
     private Board board;
-    private Map<Integer,BoardPiece> pieceMap;
+    private Map<Integer, Piece> pieceMap;
+    private Map<String, GameObject> backendPieces;
+    private Map<String, DropZone> backendDropZones;
+    String directory;
 
     public GameRunnerController(GamePlayerMainScene gamePlayerMainScene) {
         this.gamePlayerMainScene = gamePlayerMainScene;
-        fsmExample = new FSMExample();
+
+        directory = "data/tictactoe";
+        int numPlayers = 2; //hardcoded read from file
+
+        game = new Game(this,directory,numPlayers);
         pieceMap = new HashMap<>();
     }
 
-    public String userResponds(String enteredText) {
-        String backendResponse = fsmExample.run(enteredText);
-        return backendResponse;
+    public String userResponds(String pieceID, String dropzoneID) {
+        GameObject piece = backendPieces.get(pieceID);
+        DropZone dropZone = backendDropZones.get(dropzoneID);
+        game.movePiece(piece,dropZone,pieceID);
+        return "pass";
     }
 
     public String initialInstruction() {
@@ -44,8 +55,14 @@ public class GameRunnerController {
         int height = 3;
         int width = 3;
         board = new Board(height, width);
+
         return board.getBoardVisual();
     }
+
+    private void parseDropZoneLayout() throws FileNotFoundException {
+        FileManager DZparser = new FileManager(directory + "/layout.json");
+    }
+
     private String parseResponse(String response) {
         String[] splitResponse = response.split("Turn: ");
         String[] secondSplit = splitResponse[1].split("\n");
@@ -66,7 +83,7 @@ public class GameRunnerController {
         ArrayList<Node> pieceNodes = new ArrayList<>();
         for (int i = 1; i <= 10; i++) {
             int pieceID = i;
-            BoardPiece piece = new BoardPiece(pieceID,this);
+            Piece piece = new Piece(pieceID,this);
             piece.setSize(0.2);
             pieceMap.put(pieceID,piece);
             pieceNodes.add(piece.getNode());
@@ -74,7 +91,7 @@ public class GameRunnerController {
         return pieceNodes;
     }
     public void updatePieceMove(int id) {
-        BoardPiece piece = pieceMap.get(id);
+        Piece piece = pieceMap.get(id);
         Board.BoardXY boardXY = getPieceBoardLocation(piece.getNode());
         int boardX = boardXY.x();
         int boardY = boardXY.y();
