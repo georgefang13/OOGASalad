@@ -6,7 +6,10 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.ResourceBundle;
 import javafx.scene.control.Button;
+import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Tooltip;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 /**
  * This class represents a factory for creating buttons
@@ -65,6 +68,24 @@ public class ButtonFactory {
     verticalButton.setText(myButtonPropertiesMap.get(property));
     verticalButton.setRotate(ROTATE_CCW_90);
     return verticalButton;
+  }
+
+  public Button createIconButton(String text, String iconPath) {
+    Button button = new Button(text);
+
+    // Load the icon image from the file path
+    Image iconImage = new Image(iconPath);
+
+    // Create an ImageView with the icon image and set it as the button's graphic
+    ImageView iconView = new ImageView(iconImage);
+    button.setGraphic(iconView);
+
+    // Set the button's layout to display the icon on the left and text on the right
+    button.setContentDisplay(ContentDisplay.LEFT); // Set the content display to display the graphic on the left
+    button.setGraphicTextGap(10); // Set the gap between the icon and text
+    button.setPrefWidth(150); // Set the button's preferred width to fit the text and icon
+
+    return button;
   }
 
   /**

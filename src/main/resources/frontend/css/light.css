@@ -112,12 +112,18 @@
 }
 
 /* LibraryGridPanel */
+.library-grid-pane {
+  -fx-background-color: #24252e;
+  -fx-hgap: 20;
+  -fx-vgap: 20;
+  -fx-padding: 20;
+}
 .game-box {
-  -fx-border-width: 2;
-  -fx-border-color: blue;
-  -fx-border-radius: 10;
-  -fx-pref-width: 290;
-  -fx-pref-height: 264;
+  -fx-background-color: #3E404E;
+  -fx-border-radius: 20;
+  -fx-background-radius: 20;
+  -fx-pref-width: 250;
+  -fx-pref-height: 200;
 }
 .game-name-edit-box {
   -fx-pref-width: 290;
@@ -127,4 +133,9 @@
 }
 .game-name-label {
   -fx-text-fill: white;
+}
+
+/* HeaderPanel */
+.header-panel {
+  -fx-background-color: #3E404E;
 }

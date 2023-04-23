@@ -25,6 +25,7 @@ public class LibraryGridPanel extends GridPane implements Panel {
   private static final String GAME_BOX_IMAGE_ID = "GameBoxImageID";
   private static final String GAME_NAME_EDIT_BOX_ID = "GameNameEditBoxID";
   private static final String GAME_NAME_LABEL_ID = "GameNameLabelID";
+  private static final String LIBRARY_GRID_PANE_ID = "LibraryGridPaneID";
   private final int IMAGE_WIDTH = 290;
   private final int IMAGE_HEIGHT = 196;
   private final List<String> libraryGames = new ArrayList<>(
@@ -36,9 +37,7 @@ public class LibraryGridPanel extends GridPane implements Panel {
   public LibraryGridPanel() {
     super();
     this.makePanel();
-    this.setPadding(new Insets(10));
-    this.setHgap(10);
-    this.setVgap(10);
+    this.getStyleClass().add(ID_BUNDLE.getString(LIBRARY_GRID_PANE_ID));
 
     // set column constraints to evenly distribute the available width
     ColumnConstraints column1 = new ColumnConstraints();
@@ -109,7 +108,7 @@ public class LibraryGridPanel extends GridPane implements Panel {
     gameNameEditBox.getStyleClass().add(ID_BUNDLE.getString(GAME_NAME_EDIT_BOX_ID));
     gameNameEditBox.getChildren().addAll(gameNameLabel, editIcon);
     gameBox.getStyleClass().add(ID_BUNDLE.getString(GAME_BOX_ID));
-    gameBox.getChildren().addAll(gameImage, gameNameEditBox);
+//    gameBox.getChildren().addAll(gameImage, gameNameEditBox);
 
 
     return gameBox;

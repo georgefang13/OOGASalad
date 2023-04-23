@@ -13,15 +13,11 @@ public class HeaderPanel extends HBox implements Panel {
 
   private static final ResourceBundle ELEMENT_LABELS = ResourceBundle.getBundle(
       "frontend/properties/text/english");
-  private static final String LOGIC_EDITOR = "LogicEditor";
-  private static final String VISUAL_EDITOR = "VisualEditor";
   private static final ResourceBundle ID_BUNDLE = ResourceBundle.getBundle(
       "frontend/properties/StylingIDs/CSS_ID");
-  private static final String MENU_HBOX_ID = "MenuHboxID";
-  private static final String DESELECTED_HEADER_MENU_BUTTON_ID = "DeselectedHeaderMenuButtonID";
-  private static final String SELECTED_HEADER_MENU_BUTTON_ID = "SelectedHeaderMenuButtonID";
-  private static final String logic = "logic";
-  private static final String editor = "visual";
+  private static final String HEADER_PANEL_ID = "HeaderPanelID";
+  private Button importGame;
+  private Button newGame;
   ButtonFactory buttonFactory = new ButtonFactory();
   PanelController panelController;
   private static String sceneID;
@@ -42,35 +38,14 @@ public class HeaderPanel extends HBox implements Panel {
    * @return
    */
   public Panel makePanel() {
-    this.getStyleClass().add(ID_BUNDLE.getString(MENU_HBOX_ID));
-    Button logicButton = buttonFactory.createDefaultButton(LOGIC_EDITOR);
-    Button visualButton = buttonFactory.createDefaultButton(VISUAL_EDITOR);
-    selectSceneButtonSettings(logicButton, visualButton);
-    logicButton.setOnAction(e -> {
-      panelController.newSceneFromPanel(logic, WindowScenes.LOGIC_SCENE);
-    });
-
-    visualButton.setOnAction(e -> {
-      panelController.newSceneFromPanel(editor, WindowScenes.EDITOR_SCENE);
-    });
-    this.getChildren().addAll(visualButton, logicButton);
+//    buttonFactory.createIconButton("logic", "logic", e -> {
+//      panelController.newSceneFromPanel("logic", WindowScenes.LOGIC_SCENE);
+//    });
+    newGame = buttonFactory.createIconButton("New Game", "file:src/main/resources/frontend/images/GameLibrary/EditIcon.png");
+    importGame = buttonFactory.createIconButton("Import Game", "file:src/main/resources/frontend/images/GameLibrary/EditIcon.png");
+    this.getChildren().addAll(newGame, importGame);
+    this.getStyleClass().add(ID_BUNDLE.getString(HEADER_PANEL_ID));
     return this;
-  }
-
-  private static void selectSceneButtonSettings(Button logicButton, Button visualButton) {
-    switch (sceneID) {
-      case logic:
-        logicButton.getStyleClass().add(ID_BUNDLE.getString(SELECTED_HEADER_MENU_BUTTON_ID));
-        visualButton.getStyleClass().add(ID_BUNDLE.getString(DESELECTED_HEADER_MENU_BUTTON_ID));
-        break;
-      case editor:
-        logicButton.getStyleClass().add(ID_BUNDLE.getString(DESELECTED_HEADER_MENU_BUTTON_ID));
-        visualButton.getStyleClass().add(ID_BUNDLE.getString(SELECTED_HEADER_MENU_BUTTON_ID));
-        break;
-      default:
-        break;
-    }
-
   }
 
   public Node asNode() {

@@ -5,13 +5,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import oogasalad.frontend.panels.libraryPanels.HeaderPanel;
 import oogasalad.frontend.panels.libraryPanels.LibraryGridPanel;
 import oogasalad.frontend.panels.libraryPanels.SortedGamesPanel;
 import oogasalad.frontend.windows.GamePlayerWindow;
 
 public class GamePlayerLibraryScene extends AbstractScene {
   private Button editGridButton;
-  private Label gameEditorLabel;
+  private HeaderPanel gameLibraryHeader;
   private BorderPane root;
   private LibraryGridPanel libraryGridPanel;
 
@@ -27,8 +28,8 @@ public class GamePlayerLibraryScene extends AbstractScene {
     editGridButton.setOnAction(
         e -> panelController.newSceneFromPanel("test", GamePlayerWindow.WindowScenes.PLAY_SCENE));
 
-    gameEditorLabel = new Label("THIS IS WHERE THE HEADERPANEL WILL GO");
-    root.setTop(gameEditorLabel);
+    gameLibraryHeader = new HeaderPanel(panelController, "library");
+    root.setTop(gameLibraryHeader);
     root.setLeft(new VBox(editGridButton));
     root.setCenter(libraryGridPanel = new LibraryGridPanel());
     setScene(new Scene(root));
