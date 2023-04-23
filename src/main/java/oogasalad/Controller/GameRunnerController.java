@@ -58,7 +58,7 @@ public class GameRunnerController {
 
         return board.getBoardVisual();
     }
-    public void initializeDropZones(){
+    public void initializeDropZone(DropZoneParameters params){
 
     }
 
