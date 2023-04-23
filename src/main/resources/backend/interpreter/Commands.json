@@ -452,7 +452,7 @@
     "folder": "game",
     "str": "fromplayer",
     "description": "Gets all objects owned by a player with a specific class",
-    "example": "fromplayer :curplayer \"class1.class2.class3...  # fromplayer <player> <.-delimited strings>",
+    "example": "fromplayer curplayer \"class1.class2.class3...  # fromplayer <player> <.-delimited strings>",
     "specs": {
       "innerBlocks": [],
       "inputs": [

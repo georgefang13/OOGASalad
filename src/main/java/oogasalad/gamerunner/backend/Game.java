@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import oogasalad.gameeditor.backend.id.IdManager;
 import oogasalad.gameeditor.backend.rules.Rule;
 import oogasalad.gamerunner.backend.fsm.FSM;
+import oogasalad.gamerunner.backend.fsm.GameRunnerController;
 import oogasalad.gamerunner.backend.interpretables.Goal;
 import oogasalad.gamerunner.backend.interpreter.Interpreter;
 import oogasalad.sharedDependencies.backend.ownables.Ownable;
@@ -60,17 +61,27 @@ public class Game implements GameToInterpreterAPI {
 
     private final Map<Ownable, DropZone> pieceLocations = new HashMap<>();
 
+    private GameRunnerController controller;
+
 
     /////////////////// PLAY THE GAME ///////////////////
 
-    public void initGame(int numPlayers) {
-        
+
+    public Game(GameRunnerController controller, String directory, int numPlayers) {
+        this.controller = controller;
+
+        initGame(numPlayers, directory);
+    }
+    private void initGame(int numPlayers, String directory){
+
         for (int i = 0; i < numPlayers; i++){
             players.add(new Player());
         }
         
         interpreter.linkIdManager(ownableIdManager);
         interpreter.linkGame(this);
+
+        loadGame(directory);
 
         initVariables();
 
@@ -137,12 +148,11 @@ public class Game implements GameToInterpreterAPI {
     public void loadGame(String directory) {
         pieceLocations.clear();
         // TODO
-        // get num players
 
         // load in players and player FSM
 
-        // load in ownables
 
+        // load in ownables
 
         // load in rules and goals
     }
