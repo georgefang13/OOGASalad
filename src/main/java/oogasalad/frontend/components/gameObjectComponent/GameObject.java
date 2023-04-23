@@ -102,7 +102,4 @@ public class GameObject extends AbstractComponent implements GameObjectComponent
     return getImage();
   }
 
-  public String getName(){
-    return name;
-  }
 }

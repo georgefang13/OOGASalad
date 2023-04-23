@@ -66,6 +66,7 @@ public class ComponentsFactory {
     return component;
   }
   public Component create(String type, Map<String, String> map){
+    String lowercase = type.substring(0, 1).toLowerCase() + type.substring(1);
     try{
       Class<?> c = Class.forName(bundle.getString("package")+lowercase + "Component." + type);
       Constructor<?> constructor = c.getConstructor(int.class, Map.class);
