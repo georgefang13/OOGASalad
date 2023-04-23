@@ -2,6 +2,7 @@ package oogasalad.sharedDependencies.backend.ownables.gameobjects;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,7 +13,7 @@ import oogasalad.sharedDependencies.backend.owners.Owner;
 
 public class DropZone extends GameObject {
 
-  private final String id;
+  private String id;
   private final HashMap<String, DropZone> edges;
   private final HashMap<String, Object> holding;
 
@@ -172,9 +173,12 @@ public class DropZone extends GameObject {
   }
 
   @Override
-  public void fromConfigFile(String object) {
+  public void fromConfigFile(String path) throws FileNotFoundException {
     // TODO: make validation check, likely as static method of FileManager
     // TODO: pass ID into IdManager (maybe change constructor?)
+    FileManager reader = new FileManager(path);
+    this.id = reader.getString("id");
+
     // this.id = FileManager.getStringByKey(object, "id");
 
 //    for (JsonElement edgeEntry : object.get("connections").getAsJsonArray()) {
@@ -192,14 +196,12 @@ public class DropZone extends GameObject {
   @Override
   public void toConfigFile(String path) {
     FileManager fileManager = new FileManager();
-//    fileManager.addContent("id", new JsonPrimitive(id));
+    fileManager.addContent(id, "id");
     for (String edgeId : edges.keySet()) {
-      JsonObject edge = new JsonObject();
-      edge.add("edgeId", new JsonPrimitive(edgeId));
-      edge.add("nodeId", new JsonPrimitive(edges.get(edgeId).getId()));
-//      fileManager.addContent("connections", edge);
+      fileManager.addContent(edgeId, "connections", "edgeId");
+      fileManager.addContent(edges.get(edgeId).getId(), "connections", "nodeId");
     }
-//    return fileManager.getJson();
+    fileManager.saveToFile(path);
   }
 
 

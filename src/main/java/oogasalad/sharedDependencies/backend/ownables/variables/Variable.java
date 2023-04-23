@@ -139,7 +139,7 @@ public class Variable<T> extends Ownable {
 
   @Override
   public void toConfigFile(String path) {
-    return null;
+
   }
 }
 

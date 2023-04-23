@@ -1,5 +1,6 @@
 package oogasalad.sharedDependencies.backend.ownables.gameobjects;
 
+import java.io.FileNotFoundException;
 import oogasalad.sharedDependencies.backend.filemanagers.Configurable;
 import oogasalad.sharedDependencies.backend.ownables.Ownable;
 import oogasalad.sharedDependencies.backend.owners.Owner;
@@ -20,7 +21,7 @@ public class GameObject extends Ownable implements Configurable {
   }
 
   @Override
-  public void fromConfigFile(String path) {
+  public void fromConfigFile(String path) throws FileNotFoundException {
     // Does nothing
   }
 
