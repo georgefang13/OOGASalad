@@ -114,6 +114,17 @@
 /* LibraryGridPanel */
 .game-box {
   -fx-border-width: 2;
-  -fx-border-color: black;
+  -fx-border-color: blue;
   -fx-border-radius: 10;
+  -fx-pref-width: 290;
+  -fx-pref-height: 264;
+}
+.game-name-edit-box {
+  -fx-pref-width: 290;
+  -fx-pref-height: 68;
+  -fx-border-radius: 0 0 10 10;
+  -fx-background-color: #3E404E;
+}
+.game-name-label {
+  -fx-text-fill: white;
 }

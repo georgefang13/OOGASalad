@@ -11,6 +11,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -21,6 +22,11 @@ public class LibraryGridPanel extends GridPane implements Panel {
   private static final ResourceBundle ID_BUNDLE = ResourceBundle.getBundle(
       "frontend/properties/StylingIDs/CSS_ID");
   private static final String GAME_BOX_ID = "GameBoxID";
+  private static final String GAME_BOX_IMAGE_ID = "GameBoxImageID";
+  private static final String GAME_NAME_EDIT_BOX_ID = "GameNameEditBoxID";
+  private static final String GAME_NAME_LABEL_ID = "GameNameLabelID";
+  private final int IMAGE_WIDTH = 290;
+  private final int IMAGE_HEIGHT = 196;
   private final List<String> libraryGames = new ArrayList<>(
       Arrays.asList("Tic-Tak-Toe", "Fortnite", "Backgammon", "Chess", "Checkers")); //TODO: TEMPORARY
 
@@ -62,7 +68,7 @@ public class LibraryGridPanel extends GridPane implements Panel {
 //      }
 //    }
     this.add(createGameBox("UploadImage"), 0, 0);
-    this.add(createGameBox("UploadImage"), 1, 0);
+    this.add(createGameBox("Chess"), 1, 0);
 
   }
 
@@ -91,8 +97,19 @@ public class LibraryGridPanel extends GridPane implements Panel {
   public VBox createGameBox(String gameName) {
     VBox gameBox = new VBox();
     ImageView gameImage = new ImageView("file:src/main/resources/frontend/images/GameLibrary/" + gameName + ".png"); //make this a vairable and have the game name find the image name from a helper function
-    gameBox.getChildren().add(gameImage);
+//    gameImage.getStyleClass().add(ID_BUNDLE.getString(GAME_BOX_IMAGE_ID));
+    gameImage.setFitWidth(IMAGE_WIDTH);
+    gameImage.setFitHeight(IMAGE_HEIGHT);
+    gameImage.setPreserveRatio(true);
+    HBox gameNameEditBox = new HBox();
+    Label gameNameLabel = new Label(gameName);
+    gameNameLabel.getStyleClass().add(ID_BUNDLE.getString(GAME_NAME_LABEL_ID));
+    Image icon = new Image("file:src/main/resources/frontend/images/GameLibrary/EditIcon.png");
+    ImageView editIcon = new ImageView(icon);
+    gameNameEditBox.getStyleClass().add(ID_BUNDLE.getString(GAME_NAME_EDIT_BOX_ID));
+    gameNameEditBox.getChildren().addAll(gameNameLabel, editIcon);
     gameBox.getStyleClass().add(ID_BUNDLE.getString(GAME_BOX_ID));
+    gameBox.getChildren().addAll(gameImage, gameNameEditBox);
 
 
     return gameBox;
