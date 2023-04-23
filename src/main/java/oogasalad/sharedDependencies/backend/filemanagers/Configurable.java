@@ -17,9 +17,9 @@ public interface Configurable {
   void fromConfigFile(String path);
 
   /**
-   * Saves internal information of instance into JSON object
+   * Saves internal information into configuration file at specified path
    *
-   * @return JsonObject (from Gson package) containing information
+   * @param path String containing path where configuration file should be saved
    */
-  String getAsJson();
+  void toConfigFile(String path);
 }

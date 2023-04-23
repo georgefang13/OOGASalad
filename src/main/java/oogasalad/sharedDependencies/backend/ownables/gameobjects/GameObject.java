@@ -25,8 +25,8 @@ public class GameObject extends Ownable implements Configurable {
   }
 
   @Override
-  public String getAsJson() {
-    return null;
+  public void toConfigFile(String path) {
+    // Does nothing
   }
 }
 

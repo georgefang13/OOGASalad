@@ -20,7 +20,6 @@ public abstract class Piece extends GameObject {
   }
 
   @Override
-  public String getAsJson() {
-    return null;
+  public void toConfigFile(String path) {
   }
 }

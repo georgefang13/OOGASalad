@@ -1,6 +1,5 @@
 package oogasalad.sharedDependencies.backend.ownables.gameobjects;
 
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import java.util.ArrayList;
@@ -191,7 +190,7 @@ public class DropZone extends GameObject {
   }
 
   @Override
-  public String getAsJson() {
+  public void toConfigFile(String path) {
     FileManager fileManager = new FileManager();
 //    fileManager.addContent("id", new JsonPrimitive(id));
     for (String edgeId : edges.keySet()) {
@@ -201,7 +200,6 @@ public class DropZone extends GameObject {
 //      fileManager.addContent("connections", edge);
     }
 //    return fileManager.getJson();
-    return "";
   }
 
 
