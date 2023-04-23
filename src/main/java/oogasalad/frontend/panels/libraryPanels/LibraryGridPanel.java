@@ -68,6 +68,11 @@ public class LibraryGridPanel extends GridPane implements Panel {
 //    }
     this.add(createGameBox("UploadImage"), 0, 0);
     this.add(createGameBox("Chess"), 1, 0);
+    this.add(createGameBox("Checkers"), 2, 0);
+    this.add(createGameBox("Tic-Tak-Toe"), 3, 0);
+    this.add(createGameBox("Fortnite"), 0, 1);
+    this.add(createGameBox("Backgammon"), 1, 1);
+
 
   }
 

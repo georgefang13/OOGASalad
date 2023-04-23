@@ -122,7 +122,6 @@
   -fx-background-color: #3E404E;
   -fx-border-radius: 20;
   -fx-background-radius: 20;
-  -fx-pref-width: 250;
   -fx-pref-height: 200;
 }
 .game-name-edit-box {
@@ -136,8 +135,24 @@
 }
 
 /* HeaderPanel */
-.header-panel {
+.right-header-box {
+  -fx-alignment: center-right;
+  -fx-spacing: 15;
+  -fx-padding: 0 15 0 0;
   -fx-background-color: #3E404E;
+  -fx-pref-height: 80;
+  -fx-pref-width: 950;
+}
+.left-header-box {
+  -fx-alignment: center;
+  -fx-background-color: #54576F;
+  -fx-pref-height: 80;
+  -fx-pref-width: 250;
+}
+.game-library-title {
+  -fx-text-fill: white;
+  -fx-font-size: 30px;
+  -fx-font-weight: bold;
 }
 
 /* ButtonFactory */
@@ -146,5 +161,19 @@
   -fx-border-radius: 10;
   -fx-background-radius: 10;
   -fx-text-fill: white;
-  -fx-pref-height: 70;
+  -fx-padding: 10;
+  -fx-pref-height: 50;
 }
+.icon-button .graphic {
+  -fx-graphic-text-gap: 10px;
+  -fx-alignment: center-left;
+}
+.icon-button .text {
+  -fx-graphic-text-gap: 10px;
+  -fx-font-size: 25;
+}
+.awesome-icon {
+  -fx-fill: white;
+  -fx-font-size: 25;
+}
+

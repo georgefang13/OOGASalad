@@ -10,6 +10,10 @@ import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import org.kordamp.ikonli.javafx.FontIcon;
+import org.kordamp.ikonli.fontawesome5.FontAwesomeBrands;
+import org.kordamp.ikonli.fontawesome5.FontAwesomeSolid;
+
 
 /**
  * This class represents a factory for creating buttons
@@ -29,6 +33,7 @@ public class ButtonFactory {
   private static final ResourceBundle ID_BUNDLE = ResourceBundle.getBundle(
       "frontend/properties/StylingIDs/CSS_ID");
   private static final String ICON_BUTTON_ID = "IconButtonID";
+  private static final String AWESOME_ICON_ID = "AwesomeIconID";
 
 
   public ButtonFactory() {
@@ -74,20 +79,11 @@ public class ButtonFactory {
     return verticalButton;
   }
 
-  public Button createIconButton(String text, String iconPath) {
+  public Button createIconButton(String text, String iconText) {
     Button iconButton = new Button(text);
-
-    // Load the icon image from the file path
-    Image iconImage = new Image(iconPath);
-
-    // Create an ImageView with the icon image and set it as the button's graphic
-    ImageView iconView = new ImageView(iconImage);
-    iconButton.setGraphic(iconView);
-
-    // Set the button's layout to display the icon on the left and text on the right
-    iconButton.setContentDisplay(ContentDisplay.LEFT); // Set the content display to display the graphic on the left
-    iconButton.setGraphicTextGap(10); // Set the gap between the icon and text
-    iconButton.setPrefWidth(150); // Set the button's preferred width to fit the text and icon
+    FontIcon icon = new FontIcon(FontAwesomeSolid.valueOf(iconText.toUpperCase()));
+    icon.getStyleClass().add(ID_BUNDLE.getString(AWESOME_ICON_ID));
+    iconButton.setGraphic(icon);
     iconButton.getStyleClass().add(ID_BUNDLE.getString(ICON_BUTTON_ID));
     return iconButton;
   }
