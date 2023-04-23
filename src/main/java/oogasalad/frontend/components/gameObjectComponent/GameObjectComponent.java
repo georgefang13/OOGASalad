@@ -2,13 +2,14 @@ package oogasalad.frontend.components.gameObjectComponent;
 
 import java.util.List;
 import javafx.scene.Node;
+import javafx.scene.image.ImageView;
+import oogasalad.frontend.components.AbstractComponent;
 import oogasalad.frontend.components.Component;
-import oogasalad.frontend.components.displayableComponents.DisplayableComponent;
 
 /**
  * @author Han, Aryan These are the components of the View that are playable objects in Gameplay
  */
-public interface GameObjectComponent extends Component, DisplayableComponent {
+public interface GameObjectComponent extends Component {
 
 
   /**
@@ -28,5 +29,12 @@ public interface GameObjectComponent extends Component, DisplayableComponent {
    * in game
    */
   void setPlayable(boolean playable);
+
+  /**
+   * This is the method that allows for visual for DisplayableComponent to be changed
+   * @param imagePath the path where the image is contained to represent the Component
+   */
+  void setImage(String imagePath);
+  ImageView getImage();
 
 }
