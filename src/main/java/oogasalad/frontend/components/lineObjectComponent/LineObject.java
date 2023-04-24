@@ -31,6 +31,7 @@ public class LineObject extends AbstractComponent implements LineObjectComponent
         super(ID);
         instantiatePropFile("frontend.properties.Defaults.LineObject");
         setValuesfromMap(map);
+        myLine = new Line(startX,startY,endX, endY);
         followMouse();
     }
 
