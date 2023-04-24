@@ -11,6 +11,8 @@ public abstract class DraggableAbstractNode extends AbstractNode implements Drag
 
   private Bounds boundingBox;
 
+  private AbstractNode parentNode;
+
   public DraggableAbstractNode(NodeController nodeController, double x, double y, double width,
       double height, String color) {
     super(nodeController, x, y, width, height, color);
@@ -60,6 +62,14 @@ public abstract class DraggableAbstractNode extends AbstractNode implements Drag
           double newX = e.getSceneX() / scaleFactor - xOffset;
           double newY = e.getSceneY() / scaleFactor - yOffset;
           move(newX, newY);
+          if (this.getParentNode() != null) {
+              System.out.println("parent node = " + parentNode);
+              System.out.println("parent's child node = " + parentNode.getChildNode());
+              this.parentNode.setChildNode(null);
+              this.setParentNode(null);
+              System.out.println("parent node = " + parentNode);
+
+          }
           e.consume();
         });
   }
@@ -98,6 +108,7 @@ public abstract class DraggableAbstractNode extends AbstractNode implements Drag
       temp.setTranslateY(this.getTranslateY() + this.getHeight());
     }
     node.setChildNode(this);
+    this.parentNode= node;
   }
 
   public void setBoundingBox(Bounds bounds) {
@@ -130,4 +141,12 @@ public abstract class DraggableAbstractNode extends AbstractNode implements Drag
       setTranslateY(clampedY);
     }
   }
+    public void setParentNode(AbstractNode node) {
+        this.parentNode = node;
+    }
+
+    public AbstractNode getParentNode() {
+        return parentNode;
+    }
+
 }

@@ -24,9 +24,11 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import oogasalad.frontend.nodeEditor.customNodeEditor.NodeController;
 import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.*;
 import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.DraggableNodes.DraggableAbstractNode;
 import oogasalad.frontend.panels.subPanels.ComponentPanel;
+import oogasalad.frontend.windows.NodeWindow;
 
 /**
  * Scrolling/panning based on
@@ -47,6 +49,9 @@ public class CustomRunner extends Application {
 
   @Override
   public void start(Stage primaryStage) {
+    NodeWindow nodeWindow = new NodeWindow();
+    NodeController nodeController = new NodeController(nodeWindow);
+    nodeWindow.close();
     primaryStage.setResizable(false);
     primaryStage.setWidth(1200);
     primaryStage.setHeight(700);
@@ -55,6 +60,7 @@ public class CustomRunner extends Application {
     nodeSelectionPane = new GridPane();
     nodeSelectionPane.setStyle("-fx-background-color: gray");
     nodeSelectionPane.setMinSize(primaryStage.getWidth() / 4, primaryStage.getHeight() / 4);
+
 
     workspace = new ImageView(
             new Image(getClass().getResourceAsStream("/frontend/images/GameEditor/grid.png")));
@@ -79,9 +85,9 @@ public class CustomRunner extends Application {
       }
     });
 
-    createNode("Sum", NODES_FOLDER + "SumNode");
-    createNode("Difference", NODES_FOLDER + "DifferenceNode");
-    createNode("TextField", NODES_FOLDER + "TextFieldNode");
+//    createNode("Sum", NODES_FOLDER + "SumNode");
+//    createNode("Difference", NODES_FOLDER + "DifferenceNode");
+//    createNode("TextField", NODES_FOLDER + "TextFieldNode");
 
     Button sendButton = new Button("Submit");
     sendButton.setOnAction(event -> {
@@ -94,14 +100,15 @@ public class CustomRunner extends Application {
     scrollPane.setPannable(true);
     scrollPane.setFitToWidth(true);
     scrollPane.setFitToHeight(true);
+    scrollPane.setMaxWidth(850);
     myScrollBoy.setContent(nodeSelectionPane);
     primaryStage.setScene(new Scene(new HBox(myScrollBoy, scrollPane)));
     primaryStage.show();
-    initFromFile();
+    initFromFile(nodeController);
 
   }
 
-  private void initFromFile(){
+  private void initFromFile(NodeController nodeController){
     String absoluteFilePath = System.getProperty("user.dir") + COMMANDS_RESOURCE_PATH;
 
     String fileContent = "";
@@ -132,7 +139,7 @@ public class CustomRunner extends Application {
       Button button = new Button(name);
       button.setOnAction(event -> {
         try {
-            DraggableAbstractNode node = new FileBasedNode(name, innerBlocks, outputTypes, parseStr, inputs);
+            DraggableAbstractNode node = new FileBasedNode(nodeController,name, innerBlocks, outputTypes, parseStr, inputs);
             group.getChildren().add(node);
             node.setBoundingBox(workspace.getBoundsInParent());
         } catch (Exception e) {
@@ -177,7 +184,7 @@ public class CustomRunner extends Application {
     Node node = group.getChildren().get(1);
     System.out.println(node);
     if (node instanceof AbstractNode) {
-      returnable += ((AbstractNode) node).sendContent();
+//      returnable += ((AbstractNode) node).sendContent();
       returnable += "\n";
     }
 //      }

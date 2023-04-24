@@ -15,6 +15,7 @@ public abstract class AbstractNode extends VBox {
   protected NodeController nodeController;
   private AbstractNode childNode;
 
+
 //    protected List<Port> ports;
 
   public AbstractNode(NodeController nodeController, double x, double y, double width,

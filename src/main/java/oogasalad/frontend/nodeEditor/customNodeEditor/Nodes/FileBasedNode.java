@@ -7,6 +7,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
+import oogasalad.frontend.nodeEditor.customNodeEditor.NodeController;
 import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.DraggableNodes.DraggableAbstractNode;
 
 import java.util.ArrayList;
@@ -30,14 +31,15 @@ public class FileBasedNode extends DraggableAbstractNode {
     private Label outputLabel;
     private ArrayList<String> inputs = new ArrayList<>();
 
-    public FileBasedNode(String name, JsonArray innerBlocks, JsonArray outputTypes, String parseStr, JsonArray inputs) {
-        super(DEFAULT_X, DEFAULT_Y, WIDTH, HEIGHT, "white");
+    public FileBasedNode(NodeController nodeController, String name, JsonArray innerBlocks, JsonArray outputTypes, String parseStr, JsonArray inputs) {
+        super(nodeController,DEFAULT_X, DEFAULT_Y, WIDTH, HEIGHT, "white");
         myName = name;
         myInnerBlocks = innerBlocks;
         myOutputTypes = outputTypes;
         myParseStr = parseStr;
         myInputs = inputs;
         setContent();
+        this.setStyle("-fx-border-color: black; -fx-border-width: 2px; -fx-border-radius: 5px; -fx-background-color: white; -fx-background-radius: 5px; -fx-padding: 5px;");
 
     }
 
@@ -71,6 +73,11 @@ public class FileBasedNode extends DraggableAbstractNode {
 
     }
 
+    @Override
+    public String getJSONString() {
+        return null;
+    }
+
     private void updateSum() {
         try {
             double op1 = Double.parseDouble(operand1.getText());
@@ -86,8 +93,8 @@ public class FileBasedNode extends DraggableAbstractNode {
         outputLabel.setText(output);
     }
 
-    @Override
-    public String sendContent() {
-        return outputLabel.getText() + sendChildContent();
-    }
+//    @Override
+//    public String sendContent() {
+//        return outputLabel.getText() + sendChildContent();
+//    }
 }
