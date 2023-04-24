@@ -201,7 +201,7 @@ public class InputModal extends Modal {
     }
     //TODO remove, just for testing purposes
     System.out.println(map);
-    controller.createGameObjectTemplate(map);
+    controller.createObjectTemplate(map, myTitle);
     this.getDialogPane().getScene().getWindow().hide();
   }
 

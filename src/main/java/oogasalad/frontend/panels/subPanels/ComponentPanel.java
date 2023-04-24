@@ -106,18 +106,18 @@ public class ComponentPanel extends VBoxPanel {
   }
 
 
-  public void addGameComponentTemplate(String name){
+  public void addComponentTemplate(String name, String objectType){
 
     Button b = new Button(name);
-    b.setOnAction(e -> createNewComponentInstance(name));
+    b.setOnAction(e -> createNewComponentInstance(name, objectType));
 //    b.setOnMousePressed(e -> {
 //      xOffset = e.getSceneX();
 //      yOffset = e.getSceneY();
 //    });
     gameComponents.getChildren().add(b);
   }
-  private void createNewComponentInstance(String name) {
-    mController.createGameObjectInstance(name);
+  private void createNewComponentInstance(String name, String objectType) {
+    mController.createObjectInstance(name, objectType);
     Button b = new Button(name);
     gameComponentInstances.getChildren().add(b);
   }

@@ -132,7 +132,7 @@ public class CreateNewModal extends InputModal {
     }
     //TODO remove, just for testing purposes
     System.out.println(map);
-    this.getController().createGameObjectTemplate(map);
+    this.getController().createObjectTemplate(map, myTitle);
     this.getDialogPane().getScene().getWindow().hide();
   }
 }
