@@ -15,6 +15,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Rectangle;
 import oogasalad.frontend.nodeEditor.GraphEditorTutorial;
 import oogasalad.frontend.panels.Panel;
 import oogasalad.frontend.windows.GamePlayerWindow;
@@ -31,8 +32,9 @@ public class LibraryGridPanel extends GridPane implements Panel {
   private static final String GAME_BOX_EDIT_ICON_BOX_ID = "GameBoxEditIconBoxID";
   private static final String GAME_BOX_EDIT_ICON_ID = "GameBoxEditIconID";
   private static final String LIBRARY_GRID_PANE_ID = "LibraryGridPaneID";
-  private final int IMAGE_WIDTH = 290;
-  private final int IMAGE_HEIGHT = 196;
+  private final int IMAGE_WIDTH = 212;
+  private final int IMAGE_HEIGHT = 150;
+  private final int IMAGE_RADIUS = 20;
   private final List<String> libraryGames = new ArrayList<>(
       Arrays.asList("Tic-Tak-Toe", "Fortnite", "Backgammon", "Chess", "Checkers")); //TODO: TEMPORARY
 
@@ -71,29 +73,33 @@ public class LibraryGridPanel extends GridPane implements Panel {
 //        rowIndex++;
 //      }
 //    }
-    this.add(createGameBox("UploadImage"), 0, 0);
+    this.add(createGameBox("Chess"), 0, 0);
     this.add(createGameBox("Chess"), 1, 0);
-    this.add(createGameBox("Checkers"), 2, 0);
-    this.add(createGameBox("Tic-Tak-Toe"), 3, 0);
-    this.add(createGameBox("Fortnite"), 0, 1);
-    this.add(createGameBox("Backgammon"), 1, 1);
+    this.add(createGameBox("Chess"), 2, 0);
+    this.add(createGameBox("Chess"), 3, 0);
+//    this.add(createGameBox("Fortnite"), 0, 1);
+//    this.add(createGameBox("Backgammon"), 1, 1);
 
 
   }
   public VBox createGameBox(String gameName) {
     VBox gameBox = new VBox();
-    //ignore these two lines for now
-    ImageView gameImage = new ImageView("file:src/main/resources/frontend/images/GameLibrary/" + gameName + ".png"); //make this a vairable and have the game name find the image name from a helper function
-//    gameImage.getStyleClass().add(ID_BUNDLE.getString(GAME_BOX_IMAGE_ID));
-
     gameBox.getStyleClass().add(ID_BUNDLE.getString(GAME_BOX_ID));
-    gameBox.getChildren().addAll(createTextIconHBox(gameName));
+    gameBox.getChildren().addAll(createImageView(gameName), createTextIconHBox(gameName));
     return gameBox;
   }
   private ImageView createImageView(String gameName) {
     ImageView gameImage = new ImageView("file:src/main/resources/frontend/images/GameLibrary/" + gameName + ".png"); //make file:src/main/resources/frontend/images/GameLibrary/ a vairable and have the game name find the image name from a helper function
-    gameImage.setFitWidth(IMAGE_WIDTH);
+    gameImage.setPreserveRatio(false);
     gameImage.setFitHeight(IMAGE_HEIGHT);
+    gameImage.setFitWidth(IMAGE_WIDTH);
+    Rectangle clip = new Rectangle();
+    clip.setWidth(gameImage.getFitWidth());
+    clip.setHeight(gameImage.getFitHeight());
+    clip.setArcWidth(IMAGE_RADIUS);
+    clip.setArcHeight(IMAGE_RADIUS);
+    gameImage.setClip(clip);
+    gameImage.getStyleClass().add(ID_BUNDLE.getString(GAME_BOX_IMAGE_ID));
     return gameImage;
   }
   private HBox createTextIconHBox(String gameName) {

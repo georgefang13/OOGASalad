@@ -123,6 +123,12 @@
   -fx-border-radius: 20;
   -fx-background-radius: 20;
   -fx-pref-height: 200;
+  -fx-alignment: center;
+}
+.game-box-image {
+  -fx-border-radius: 20 20 0 0;
+  -fx-background-radius: 20 20 0 0;
+  -fx-alignment: center;
 }
 .game-name-label-box {
   -fx-alignment: center-left;
@@ -130,7 +136,7 @@
   -fx-border-radius: 0 0 0 10;
   -fx-background-color: #3E404E;
   -fx-pref-width: 290;
-  -fx-pref-height: 68;
+  -fx-pref-height: 50;
   -fx-padding: 0 0 0 20;
 }
 .game-name-label {
