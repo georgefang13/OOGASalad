@@ -3,6 +3,8 @@ package oogasalad.frontend.windows;
 import java.util.HashMap;
 import java.util.Map;
 import oogasalad.frontend.windows.WindowTypes.WindowType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Connor Wells
@@ -14,6 +16,8 @@ public class WindowController implements WindowMediator {
   private Map<String, AbstractWindow> windowMap;
   private int windowIDCounter;
 
+  private static final Logger logger = LoggerFactory.getLogger(WindowController.class);
+
   public WindowController() {
     windowMap = new HashMap<>();
     registerAndShow(WindowType.SPLASH_WINDOW);
@@ -22,6 +26,7 @@ public class WindowController implements WindowMediator {
   @Override
   public void registerAndShow(WindowType windowType) {
     showWindow(registerWindow(windowType));
+    logger.debug(String.format("Registered a new window: Type - %s",  windowType));
   }
 
   @Override
@@ -37,12 +42,14 @@ public class WindowController implements WindowMediator {
   @Override
   public void showWindow(String windowID) {
     getWindow(windowID).show();
+    logger.info(String.format("Show a new window: ID - %s",  windowID));
   }
 
   @Override
   public void closeWindow(String windowID) {
     getWindow(windowID).close();
     windowMap.remove(windowID);
+    logger.info(String.format("Close window: ID - %s",  windowID));
   }
 
   @Override
