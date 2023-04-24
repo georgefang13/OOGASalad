@@ -11,6 +11,7 @@ public class Call extends OperatorToken {
         super(2, "Call");
     }
     public Token evaluate(Environment env) throws IllegalArgumentException{
+
         Token t = getArg(0).evaluate(env);
 
         ValueToken<OperatorToken> var = checkArgumentWithSubtype(env, t, ValueToken.class, OperatorToken.class.getName());

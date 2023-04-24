@@ -15,7 +15,6 @@ public interface Component {
    * @return the Node to add and drop the Component
    */
   Node getNode();
-
   void setNode(Node node);
 
   /**
@@ -58,21 +57,13 @@ public interface Component {
   void setZIndex(int zIndex);
 
   /**
-   * This is the method that allows for visual for DisplayableComponent to be changed
-   * @param imagePath the path where the image is contained to represent the Component
-   */
-  void setImage(String imagePath);
-  ImageView getImage();
-
-  /**
    * This is the method that allows Component in the game-editor to be resized
    * @param size the size of the ImageView that represents the Component
    */
-  void setSize(int size);
+  void setSize(double size);
 
   void followMouse();
 
   void setDefault();
-
 
 }

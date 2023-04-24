@@ -35,21 +35,14 @@ public class DropZoneFollowUntilBlocked extends OperatorToken {
 
         List<String> path = (List<String>) expr.export(env);
 
-        List<String> allZones = d.findSpotsUntilBlocked(path, (dz) -> {
+        List<DropZone> allZones = d.findSpotsUntilBlocked(path, (dz) -> {
             op.passArguments(new Token[]{new ValueToken<>(dz)});
             Token result = op.evaluate(env);
             ValueToken<Boolean> b = checkArgumentWithSubtype(env, result, ValueToken.class, Boolean.class.getName());
             return b.VALUE;
         });
 
-        List<DropZone> zones = new ArrayList<>();
-        for (String s : allZones){
-            Token var = env.getLocalVariable(":game_" + s);
-            ValueToken<DropZone> v = checkArgumentWithSubtype(env, var, ValueToken.class, DropZone.class.getName());
-            zones.add(v.VALUE);
-        }
-
-        Variable<List<DropZone>> var = new Variable<>(zones);
+        Variable<List<DropZone>> var = new Variable<>(allZones);
         return env.convertVariableToToken(var);
     }
 }

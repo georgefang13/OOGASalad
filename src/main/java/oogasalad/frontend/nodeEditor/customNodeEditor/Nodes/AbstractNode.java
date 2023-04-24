@@ -4,6 +4,7 @@ import javafx.scene.Group;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.VBox;
 import oogasalad.frontend.nodeEditor.customNodeEditor.NodeController;
+import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.DraggableNodes.DraggableAbstractNode;
 
 public abstract class AbstractNode extends VBox {
 
@@ -13,7 +14,8 @@ public abstract class AbstractNode extends VBox {
   protected String color;
 
   protected NodeController nodeController;
-  private AbstractNode childNode;
+  private DraggableAbstractNode childNode;
+
 
 //    protected List<Port> ports;
 
@@ -27,7 +29,6 @@ public abstract class AbstractNode extends VBox {
     setLayoutY(y);
     setPrefSize(width, height);
     setColor(color);
-    setContent();
     setToolTips();
   }
 
@@ -37,11 +38,11 @@ public abstract class AbstractNode extends VBox {
 
   public abstract String getJSONString();
 
-  public void setChildNode(AbstractNode node) {
+  public void setChildNode(DraggableAbstractNode node) {
     this.childNode = node;
   }
 
-  public AbstractNode getChildNode() {
+  public DraggableAbstractNode getChildNode() {
     return childNode;
   }
 

@@ -8,6 +8,7 @@ public class TextFieldComponent extends Field {
 
   private String labelText;
   private String propertyValue;
+  private TextField textField;
 
   public TextFieldComponent() {
 
@@ -20,7 +21,13 @@ public class TextFieldComponent extends Field {
 
   @Override
   public HBox createField() {
-    TextField textField = new TextField(propertyValue);
+    textField = new TextField(propertyValue);
     return new HBox(new Label(labelText + ": "), textField);
+  }
+  public String getValue(){
+    return textField.getText();
+  }
+  public String getLabelText(){
+    return labelText;
   }
 }

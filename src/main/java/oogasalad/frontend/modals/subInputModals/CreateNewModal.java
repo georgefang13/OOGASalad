@@ -4,19 +4,25 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DialogPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import oogasalad.frontend.modals.InputModal;
+import oogasalad.frontend.modals.fields.ImagePickerComponent;
+import oogasalad.frontend.modals.fields.TextFieldComponent;
 
 public class CreateNewModal extends InputModal {
 
   //    private static final ResourceBundle MODAL_ID_BUNDLE = ResourceBundle.getBundle("frontend/modals/ModalStylingID");
   private static final String IMAGE_PICKER_ID = "ImagePickerID";
   private Map<String, String> myPropertiesMap;
-
+  private List<ImagePickerComponent> ImagePickers;
+  private List<TextFieldComponent> textFields;
   private String myTitle;
 
   /**
@@ -41,8 +47,7 @@ public class CreateNewModal extends InputModal {
 
     ArrayList<String> stringFields = new ArrayList<>(myPropertiesMap.values());
 
-    this.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
-
+    this.getDialogPane().getButtonTypes().addAll(ButtonType.CANCEL);
     try {
       makeFields(myPropertiesMap);
     } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException |
@@ -64,7 +69,7 @@ public class CreateNewModal extends InputModal {
       throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
     GridPane grid = createGrid();
     int rowIndex = 0;
-
+    initializeArrayLists();
     for (Map.Entry<String, String> entry : map.entrySet()) {
       String propertyName = entry.getKey();
       String fieldType = propertyName.split("\\.")[propertyName.split("\\.").length - 1];
@@ -87,15 +92,47 @@ public class CreateNewModal extends InputModal {
       Method createFieldMethod = fieldClass.getDeclaredMethod("createField");
       HBox fieldHBox = (HBox) createFieldMethod.invoke(field);
 
+      //TODO hide in strategy
+      if(field.getClass() == ImagePickerComponent.class){
+        ImagePickers.add((ImagePickerComponent) field);
+      }
+      if(field.getClass() == TextFieldComponent.class){
+        textFields.add((TextFieldComponent) field);
+      }
+
       // Add the field to the grid
       grid.add(fieldHBox, 0, rowIndex);
 
       // Increment the row index
       rowIndex++;
     }
-
+    rowIndex++;
+    grid.add(createOKButton(), 0, rowIndex);
     this.getDialogPane().setContent(grid);
   } // TODO: make classes for each of these elements and use java reflection to create them. for
+
+  private void initializeArrayLists() {
+    ImagePickers = new ArrayList<>();
+    textFields = new ArrayList<>();
+  }
   // TODO: styling use the last .NAME in the properties file to get the styling id
 
+  protected Button createOKButton() {
+    Button ok = new Button("Ok");
+    ok.setOnAction(e -> sendtoController());
+    return ok;
+  }
+  private void sendtoController(){
+    Map<String, String> map = new HashMap<>();
+    for (TextFieldComponent fieldComponent : textFields) {
+      map.put(fieldComponent.getLabelText(), fieldComponent.getValue());
+    }
+    for (ImagePickerComponent imageComponent : ImagePickers){
+      map.put(imageComponent.getLabelText(), imageComponent.getFile().toString());
+    }
+    //TODO remove, just for testing purposes
+    System.out.println(map);
+    this.getController().createGameObjectTemplate(map);
+    this.getDialogPane().getScene().getWindow().hide();
+  }
 }

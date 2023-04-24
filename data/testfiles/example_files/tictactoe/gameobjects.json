@@ -1,10 +1,10 @@
 {
-  "ownedByGame": [],
-  "ownedByPlayer": [
-    {
-      "id": "x",
-      "image": null,
-      "initialDropbox": "p1"
-    }
-  ]
+  "ID": {
+    "image": "path of image",
+    "size": [100, 100],
+    "owner": "",
+    "location": "dropzone id",
+    "classes": ["class1", "class2", "class3"],
+    "owns": ["id1", "id2"]
+  }
 }
