@@ -73,13 +73,13 @@ public class For extends OperatorToken {
     for (double i = start; i < stop; i += increment) {
       env.addVariable(var.NAME, new ValueToken<>(i));
       result = exprs.evaluate(env);
-      if (result instanceof ReturnToken || result instanceof BreakToken) {
+      if (result instanceof ReturnToken || result instanceof Break) {
           break;
       }
     }
     env.endLocalScope();
 
-    if (result instanceof BreakToken) result = null;
+    if (result instanceof Break) result = null;
     return result;
   }
 }

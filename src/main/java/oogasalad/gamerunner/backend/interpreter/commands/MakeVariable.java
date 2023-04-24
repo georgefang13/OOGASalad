@@ -24,7 +24,7 @@ public class MakeVariable extends OperatorToken {
     String name = v.NAME;
 
     Token t = getArg(1);
-    if (!(t instanceof ExpressionToken)) {
+    if (t != null && !(t instanceof ExpressionToken)) {
       t = t.evaluate(env);
     }
 

@@ -55,6 +55,7 @@ public class Parser {
     }
     private Token parseExpression(Environment env) {
         Token t = next();
+
         if (t instanceof OperatorToken op) {
 
             if (lastToken instanceof FVar) {
@@ -88,6 +89,10 @@ public class Parser {
         }
 
         if (env.getLocalVariable(c.NAME) instanceof UserInstruction m){
+            if (lastToken instanceof FVar){
+                lastToken = m;
+                return m;
+            }
             TempFunctionToken func = new TempFunctionToken(m.getNumArgs(), c.NAME);
             lastToken = parseOperator(env, func);
             return lastToken;

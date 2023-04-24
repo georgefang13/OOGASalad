@@ -170,11 +170,7 @@ public class IdManager<T extends IdManageable> implements Iterable<Map.Entry<Str
           "Id \"" + defaultId + "\" cannot contain a '.'"); //TODO resource bundle
     }
     //check if obj is already in the id manager
-    System.out.println("checking if " + obj + " is already in id manager");
-    //print type of obj
-    System.out.println("type of obj is " + obj.getClass().getName());
     if (simpleIds.containsValue(obj)) {
-      System.out.println("already have " + obj);
       throw new IllegalArgumentException(
           "Object \"" + obj + "\" already in IdManager"); //TODO resource bundle
     }
@@ -182,12 +178,10 @@ public class IdManager<T extends IdManageable> implements Iterable<Map.Entry<Str
       idGenerators.put(defaultId, new NumberGenerator());
     }
     String itemNum = simpleIds.containsKey(defaultId) ? idGenerators.get(defaultId).next() : "";
-    System.out.println("deault id is " + defaultId);
     String fullId;
     do {
       try {
         fullId = defaultId + itemNum;
-        System.out.println("full id is " + fullId);
         addId(fullId, obj, parent);
         break;
       } catch (Exception e) {
@@ -370,6 +364,33 @@ public class IdManager<T extends IdManageable> implements Iterable<Map.Entry<Str
     return Collections.unmodifiableMap(simpleIds);
   }
 
+  public List<T> getObjectsOwnedBy(T owner) {
+    List<T> ownedObjects = new ArrayList<>();
+    for (Map.Entry<T, T> entry : ownershipMap.entrySet()) {
+      if (entry.getValue() == owner) {
+        ownedObjects.add(entry.getKey());
+      }
+    }
+    return ownedObjects;
+  }
+
+  public void setOwner(T obj, T owner) {
+    if (ownershipMap.containsKey(obj)) {
+      ownershipMap.put(obj, owner);
+      //If T is Ownable, remap the owner of the Object to the Owner of the parent
+      if (obj instanceof Ownable) {
+        Ownable ownable = (Ownable) obj;
+        if (owner != null) {
+          ownable.setOwner(((Ownable) owner).getOwner());
+        }
+      }
+
+      for (T ownable : getObjectsOwnedBy(obj)) {
+        setOwner(ownable, obj);
+      }
+
+    }
+  }
 
   /**
    * Clears everything in the IdManager.

@@ -26,11 +26,11 @@ public class Repeat extends OperatorToken {
     for (int i = 0; i < reps; i++) {
       env.addVariable(":repcount", new ValueToken<>((double) i));
       ret = exprs.evaluate(env);
-      if (ret instanceof ReturnToken || ret instanceof BreakToken) {
+      if (ret instanceof ReturnToken || ret instanceof Break) {
         break;
       }
     }
-    if (ret instanceof BreakToken) ret = null;
+    if (ret instanceof Break) ret = null;
     return ret;
   }
 }

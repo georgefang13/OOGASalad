@@ -1,5 +1,7 @@
 package oogasalad.sharedDependencies.backend.filemanagers;
 
+import java.io.FileNotFoundException;
+
 /**
  * Interface that should be implemented by all objects in the program that can be loaded to / from
  * a configuration file
@@ -14,12 +16,12 @@ public interface Configurable {
    *
    * @param path String containing path to configuration file
    */
-  void fromConfigFile(String path);
+  void fromConfigFile(String path) throws FileNotFoundException;
 
   /**
-   * Saves internal information of instance into JSON object
+   * Saves internal information into configuration file at specified path
    *
-   * @return JsonObject (from Gson package) containing information
+   * @param path String containing path where configuration file should be saved
    */
-  String getAsJson();
+  void toConfigFile(String path);
 }

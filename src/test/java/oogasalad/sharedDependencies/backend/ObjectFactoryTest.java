@@ -4,9 +4,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 import oogasalad.gameeditor.backend.GameInator;
 import oogasalad.gameeditor.backend.ObjectParameter;
 import oogasalad.gameeditor.backend.ObjectType;
@@ -21,7 +25,7 @@ import org.junit.jupiter.api.Test;
 
 public class ObjectFactoryTest {
 
-  private IdManager<Ownable> idManager;
+  private IdManager idManager;
   private ArrayList<Player> players;
   private GameWorld world;
   private GameInator game;
@@ -158,5 +162,19 @@ public class ObjectFactoryTest {
     //params.put(ObjectParameter.ID, "myIdBoard");
     game.sendObject(type, params);
     game.sendObject(type, params);
+    assertEquals(2*8, idManager.getSimpleIds().size());
+    //print out the id of all the things in id manager
+//    Iterator<Entry<String, Ownable>> it = idManager.iterator();
+//    ArrayList<String> ids = new ArrayList<>();
+//    while (it.hasNext()) {
+//      Entry<String, Ownable> entry = it.next();
+//      ids.add(entry.getKey());
+//    }
+//    //sort the ids
+//    Collections.sort(ids);
+//    //print out the ids
+//    for(String id : ids) {
+//      System.out.println(id);
+//    }
   }
 }

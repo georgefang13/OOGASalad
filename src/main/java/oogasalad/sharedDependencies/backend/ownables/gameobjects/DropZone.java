@@ -3,11 +3,14 @@ package oogasalad.sharedDependencies.backend.ownables.gameobjects;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
+
 import oogasalad.sharedDependencies.backend.filemanagers.FileManager;
 import oogasalad.sharedDependencies.backend.owners.Owner;
 
@@ -160,6 +163,19 @@ public class DropZone extends GameObject {
     }
     return spots;
   }
+
+  public String getKey(Object value) {
+    List<Map.Entry<String, Object>> key = holding.entrySet()
+        .stream()
+        .filter(entry -> value.equals(entry.getValue()))
+        .toList();
+    if (key.size() == 1) {
+      return key.get(0).getKey();
+    }
+    return null;
+  }
+
+
 
 
 }

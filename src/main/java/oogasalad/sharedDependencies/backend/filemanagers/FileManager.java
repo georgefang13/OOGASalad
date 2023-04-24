@@ -15,8 +15,10 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 /**
@@ -197,6 +199,13 @@ public class FileManager {
     throw new IllegalArgumentException();
   }
 
+  /**
+   * Gets information in the form of an Iterable of Strings from configuration file
+   * by following the specified hierarchy
+   *
+   * @param tags variable number of String parameters in order of hierarchy (from high to low)
+   * @return Iterable of Strings found by following specified hierarchy
+   */
   public Iterable<String> getArray(String... tags) {
     if (tags.length == 0) {
       throw new IllegalArgumentException();
@@ -215,6 +224,18 @@ public class FileManager {
       object = object.getAsJsonObject(tag);
     }
     throw new IllegalArgumentException();
+  }
+
+  public Iterable<String> getTagsAtLevel(String... tags) {
+    JsonObject object = myFileInfo;
+    for (String tag : tags) {
+      object = object.getAsJsonObject(tag);
+    }
+    List<String> tagList = new LinkedList<>();
+    for (Map.Entry<String, JsonElement> entry : object.entrySet()) {
+      tagList.add(entry.getKey());
+    }
+    return tagList;
   }
 
   private Iterable<String> JsonArrayToIterable(JsonArray array) {
