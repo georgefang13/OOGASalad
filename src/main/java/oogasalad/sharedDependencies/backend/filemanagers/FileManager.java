@@ -69,13 +69,6 @@ public class FileManager {
    * @param tags arbitrary number of String specifying hierarchical sequence (from highest to lowest)
    */
   private void updateHierarchy(JsonObject object, Object content, String... tags) {
-    if (tags.length == 0) {
-      throw new IllegalArgumentException();
-    }
-    if (! isValid(tags[0])) {
-      // TODO: throw custom exception
-    }
-
     if (tags.length == 1) {
       addLowestContent(object, tags[0], content);
     }
@@ -213,23 +206,32 @@ public class FileManager {
    * @return Iterable of Strings found by following specified hierarchy
    */
   public Iterable<String> getArray(String... tags) {
-    if (tags.length == 0) {
-      throw new IllegalArgumentException();
-    }
+    return getArray(String.class, tags);
+  }
+
+  public <T> Iterable<T> getArray(Class<T> clazz, String... tags) {
     JsonElement element = traverse(tags);
     if (element.isJsonArray()) {
-      return JsonArrayToIterable(element.getAsJsonArray());
+      return JsonArrayToIterable(clazz, element.getAsJsonArray());
     }
     else if (element.isJsonPrimitive()) {
-      return new ArrayList<>(Arrays.asList(element.getAsString()));
+      return new ArrayList<>(Arrays.asList(myGson.fromJson(element, clazz)));
     }
     throw new IllegalArgumentException();
   }
 
+  /**
+   * Adds empty object to hierarchy
+   * @param tags variable number of String parameters in order of hierarchy (from high to low)
+   */
   public void addEmptyObject(String... tags) {
     updateHierarchy(myFileInfo, new JsonObject(), tags);
   }
 
+  /**
+   * Adds empty array to hierarchy
+   * @param tags variable number of String parameters in order of hierarchy (from high to low)
+   */
   public void addEmptyArray(String... tags) {
     updateHierarchy(myFileInfo, new JsonArray(), tags);
   }
@@ -265,10 +267,10 @@ public class FileManager {
     return element;
   }
 
-  private Iterable<String> JsonArrayToIterable(JsonArray array) {
-    List<String> list = new LinkedList<>();
+  private <T> Iterable<T> JsonArrayToIterable(Class<T> clazz, JsonArray array) {
+    List<T> list = new LinkedList<>();
     for (JsonElement element : array) {
-      list.add(element.getAsString());
+      list.add(myGson.fromJson(element, clazz));
     }
     return list;
   }
