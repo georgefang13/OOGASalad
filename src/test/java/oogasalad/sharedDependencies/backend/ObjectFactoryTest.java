@@ -36,8 +36,7 @@ public class ObjectFactoryTest {
   }
 
   @Test
-  public void testCreateOwnables() {
-    // Variable
+  public void testCreateVariables() {
     ObjectType type = ObjectType.OWNABLE;
     Map<ObjectParameter, Object> params = new HashMap<>();
     params.put(ObjectParameter.OWNABLE_TYPE, "Variable");
@@ -59,25 +58,27 @@ public class ObjectFactoryTest {
     params.put(ObjectParameter.PARENT_OWNABLE_ID, "myId");
     game.sendObject(type, params);
     assertEquals(5, idManager.getSimpleIds().size());
-
+  }
+  @Test
+  public void testCreateGameObjects() {
     // GameObject
-    ObjectType type2 = ObjectType.OWNABLE;
-    Map<ObjectParameter, Object> params2 = new HashMap<>();
-    params2.put(ObjectParameter.OWNABLE_TYPE, "GameObject");
-    Map<Object, Object> constructorParams2 = new HashMap<>();
-    params2.put(ObjectParameter.CONSTRUCTOR_ARGS, constructorParams2);
+    ObjectType type = ObjectType.OWNABLE;
+    Map<ObjectParameter, Object> params = new HashMap<>();
+    params.put(ObjectParameter.OWNABLE_TYPE, "GameObject");
+    Map<Object, Object> constructorParams = new HashMap<>();
+    params.put(ObjectParameter.CONSTRUCTOR_ARGS, constructorParams);
     // GameObject with nothing
-    game.sendObject(type2, params2);
+    game.sendObject(type, params);
     // GameObject with ID
-    params2.put(ObjectParameter.ID, "myIdGameObject");
-    game.sendObject(type2, params2);
+    params.put(ObjectParameter.ID, "myIdGameObject");
+    game.sendObject(type, params);
     // GameObject with owner
-    params2.put(ObjectParameter.OWNER, "3");
-    game.sendObject(type2, params2);
+    params.put(ObjectParameter.OWNER, "3");
+    game.sendObject(type, params);
     // GameObject with parent ownable
-    params2.put(ObjectParameter.PARENT_OWNABLE_ID, "myIdGameObject");
-    game.sendObject(type2, params2);
-    assertEquals(9, idManager.getSimpleIds().size());
+    params.put(ObjectParameter.PARENT_OWNABLE_ID, "myIdGameObject");
+    game.sendObject(type, params);
+    assertEquals(4, idManager.getSimpleIds().size());
   }
 
   @Test
