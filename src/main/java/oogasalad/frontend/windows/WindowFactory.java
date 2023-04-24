@@ -16,7 +16,7 @@ public class WindowFactory {
 
   public static AbstractWindow createWindow(WindowType windowType, String windowID,
       WindowMediator mediator) {
-    logger.setLogLevel(Level.DEBUG);
+    logger.setLogLevel(Level.ALL); // uncomment if you want to add lover level logs specific to this class
 
     switch (windowType) {
       case SPLASH_WINDOW:

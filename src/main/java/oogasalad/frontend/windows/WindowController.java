@@ -22,7 +22,7 @@ public class WindowController implements WindowMediator {
   public WindowController() {
     windowMap = new HashMap<>();
     registerAndShow(WindowType.SPLASH_WINDOW);
-    logger.setLogLevel(Level.TRACE);
+    //logger.setLogLevel(Level.ALL); // uncomment if you want to add lover level logs specific to this class
   }
 
   @Override

@@ -4,12 +4,17 @@ import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * @author Yegor Kursakov
+ */
+
 public class MainLogger {
     private static MainLogger instance;
     private Logger logger;
 
     private MainLogger(String className) {
         logger = (Logger) LoggerFactory.getLogger(className);
+        logger.setLevel(Level.INFO); //Level.INFO - to set only progress log
     }
 
     public static MainLogger getInstance(Class<?> className) {
@@ -17,7 +22,7 @@ public class MainLogger {
     }
 
     public void setLogLevel(Level level) {
-        logger.setLevel(level); //Level.INFO - to set only progress log
+        logger.setLevel(level);
     }
 
     public void info(String message) {
