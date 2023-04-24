@@ -8,6 +8,7 @@ import oogasalad.frontend.scenes.AbstractScene;
 import oogasalad.frontend.scenes.SceneController;
 import oogasalad.frontend.scenes.SceneTypes;
 import oogasalad.logging.MainLogger;
+import ch.qos.logback.classic.Level;
 
 /**
  * @author Connor Wells
