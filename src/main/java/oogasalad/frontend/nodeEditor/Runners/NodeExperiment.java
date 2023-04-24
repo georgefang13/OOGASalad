@@ -1,8 +1,8 @@
-package oogasalad.frontend.nodeEditor.customNodeEditor.Runners;
+package oogasalad.frontend.nodeEditor.Runners;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import oogasalad.frontend.nodeEditor.customNodeEditor.NodeController;
+import oogasalad.frontend.nodeEditor.NodeController;
 import oogasalad.frontend.windows.NodeWindow;
 
 /**

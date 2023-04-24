@@ -1,4 +1,4 @@
-package oogasalad.frontend.nodeEditor.customNodeEditor.Runners;
+package oogasalad.frontend.nodeEditor.Runners;
 
 import javafx.application.Application;
 import javafx.scene.Node;
@@ -8,8 +8,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.DraggableNodes.TextFieldNode;
-import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.AbstractNode;
+import oogasalad.frontend.nodeEditor.Nodes.AbstractNode;
+import oogasalad.frontend.nodeEditor.Nodes.DraggableNodes.TextFieldNode;
 
 public class FsmRunnerTest extends Application {
 

@@ -1,6 +1,6 @@
-package oogasalad.frontend.nodeEditor.customNodeEditor;
+package oogasalad.frontend.nodeEditor;
 
-import static oogasalad.frontend.nodeEditor.customNodeEditor.AbstractNodePanel.NODES_JSON_PATH;
+import static oogasalad.frontend.nodeEditor.AbstractNodePanel.NODES_JSON_PATH;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

@@ -1,8 +1,9 @@
-package oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.DraggableNodes;
+package oogasalad.frontend.nodeEditor.Nodes.DraggableNodes;
 
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import oogasalad.frontend.nodeEditor.customNodeEditor.NodeController;
+import oogasalad.frontend.nodeEditor.NodeController;
+import oogasalad.frontend.nodeEditor.Nodes.DraggableNodes.DraggableAbstractNode;
 
 public class TextFieldNode extends DraggableAbstractNode {
 

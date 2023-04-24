@@ -1,10 +1,10 @@
-package oogasalad.frontend.nodeEditor.customNodeEditor.Nodes;
+package oogasalad.frontend.nodeEditor.Nodes;
 
 import javafx.scene.Group;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.VBox;
-import oogasalad.frontend.nodeEditor.customNodeEditor.NodeController;
-import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.DraggableNodes.DraggableAbstractNode;
+import oogasalad.frontend.nodeEditor.NodeController;
+import oogasalad.frontend.nodeEditor.Nodes.DraggableNodes.DraggableAbstractNode;
 
 public abstract class AbstractNode extends VBox {
 

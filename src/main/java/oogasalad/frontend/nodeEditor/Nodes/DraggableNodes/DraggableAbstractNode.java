@@ -1,12 +1,12 @@
-package oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.DraggableNodes;
+package oogasalad.frontend.nodeEditor.Nodes.DraggableNodes;
 
 import com.google.gson.JsonArray;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
-import oogasalad.frontend.nodeEditor.customNodeEditor.Draggable;
-import oogasalad.frontend.nodeEditor.customNodeEditor.NodeController;
-import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.AbstractNode;
-import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.FileBasedNode;
+import oogasalad.frontend.nodeEditor.Draggable;
+import oogasalad.frontend.nodeEditor.NodeController;
+import oogasalad.frontend.nodeEditor.Nodes.AbstractNode;
+import oogasalad.frontend.nodeEditor.Nodes.FileBasedNode;
 
 public abstract class DraggableAbstractNode extends AbstractNode implements Draggable {
 

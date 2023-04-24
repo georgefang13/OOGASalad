@@ -1,4 +1,4 @@
-package oogasalad.frontend.nodeEditor.customNodeEditor;
+package oogasalad.frontend.nodeEditor;
 
 import oogasalad.frontend.windows.NodeWindow;
 

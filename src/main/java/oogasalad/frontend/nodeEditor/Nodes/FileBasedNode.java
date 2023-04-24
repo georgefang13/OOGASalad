@@ -1,4 +1,4 @@
-package oogasalad.frontend.nodeEditor.customNodeEditor.Nodes;
+package oogasalad.frontend.nodeEditor.Nodes;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -7,8 +7,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
-import oogasalad.frontend.nodeEditor.customNodeEditor.NodeController;
-import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.DraggableNodes.DraggableAbstractNode;
+import oogasalad.frontend.nodeEditor.NodeController;
+import oogasalad.frontend.nodeEditor.Nodes.DraggableNodes.DraggableAbstractNode;
 
 import java.util.ArrayList;
 import java.util.Map;

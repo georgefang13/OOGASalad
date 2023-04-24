@@ -1,4 +1,4 @@
-package oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.DraggableNodes;
+package oogasalad.frontend.nodeEditorNodes.DraggableNodes;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -7,7 +7,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
-import oogasalad.frontend.nodeEditor.customNodeEditor.NodeController;
+import oogasalad.frontend.nodeEditor.NodeController;
+import oogasalad.frontend.nodeEditor.Nodes.DraggableNodes.DraggableAbstractNode;
 
 public class StateNode extends DraggableAbstractNode {
 
