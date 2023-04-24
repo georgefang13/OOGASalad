@@ -32,7 +32,7 @@ public class GameRunnerController {
     public GameRunnerController(GamePlayerMainScene gamePlayerMainScene) {
         this.gamePlayerMainScene = gamePlayerMainScene;
 
-        directory = "data/tictactoe";
+        directory = "data/games/tictactoe";
         int numPlayers = 2; //hardcoded read from file
 
         game = new Game(this,directory,numPlayers);

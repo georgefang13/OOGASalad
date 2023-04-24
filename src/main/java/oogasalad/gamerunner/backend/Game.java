@@ -1,8 +1,5 @@
 package oogasalad.gamerunner.backend;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import oogasalad.Controller.GameRunnerController;
 import oogasalad.gameeditor.backend.id.IdManager;
 import oogasalad.gameeditor.backend.rules.Rule;
@@ -20,11 +17,7 @@ import oogasalad.sharedDependencies.backend.owners.Owner;
 import oogasalad.sharedDependencies.backend.owners.Player;
 
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.*;
-import java.util.function.Function;
 import java.util.stream.StreamSupport;
 
 /**
@@ -44,7 +37,7 @@ public class Game implements GameToInterpreterAPI{
     /**
      * The Goals of the game.
      */
-    private final IdManager<Goal> goals = new IdManager<>();
+    private final List<Goal> goals = new ArrayList<>();
 
     /**
      * The Players of the game.
@@ -71,7 +64,7 @@ public class Game implements GameToInterpreterAPI{
 
     private final Map<Ownable, DropZone> pieceLocations = new HashMap<>();
 
-    private GameRunnerController controller;
+    private final GameRunnerController controller;
 
 
     /////////////////// PLAY THE GAME ///////////////////
@@ -143,8 +136,7 @@ public class Game implements GameToInterpreterAPI{
     }
 
     private int checkGoals() {
-        for (Map.Entry<String, Goal> goal : goals){
-            Goal g = goal.getValue();
+        for (Goal g : goals){
             int player = g.test(interpreter, ownableIdManager);
             if (player != -1){
                 return player;
@@ -172,6 +164,7 @@ public class Game implements GameToInterpreterAPI{
 
         FileManager fm = new FileManager(file);
 
+        // states
         for (String stateName : fm.getTagsAtLevel("states")){
             String onEnter = fm.getString("states", stateName, "init");
             String onLeave = fm.getString("states", stateName, "leave");
@@ -187,6 +180,15 @@ public class Game implements GameToInterpreterAPI{
                 return output.get();
             });
         }
+
+        // goals
+        List<String> goals = StreamSupport.stream(fm.getArray("goals").spliterator(), false).toList();
+        for (String g : goals){
+            Goal goal = new Goal();
+            goal.addInstruction(g);
+            this.goals.add(goal);
+        }
+
     }
 
     private void loadDropZones(String file) throws FileNotFoundException {
@@ -232,8 +234,7 @@ public class Game implements GameToInterpreterAPI{
 
         for (String id : fm.getTagsAtLevel()){
             String image = fm.getString(id, "image");
-            List<Integer> size = StreamSupport.stream(fm.getArray(id, "size").spliterator(), false)
-                    .map(Integer::parseInt).toList();
+            double size = Double.parseDouble(fm.getString(id, "size"));
             String owner = fm.getString(id, "owner");
             String location = fm.getString(id, "location");
             List<String> owns = StreamSupport.stream(fm.getArray(id, "owns").spliterator(), false).toList();
@@ -248,6 +249,8 @@ public class Game implements GameToInterpreterAPI{
             for (String cls : fm.getArray(id, "classes")){
                 obj.addClass(cls);
             }
+
+            ownableIdManager.addObject(obj, id);
 
             ((DropZone) ownableIdManager.getObject(location)).putObject(id, obj);
 
@@ -275,7 +278,9 @@ public class Game implements GameToInterpreterAPI{
         }
     }
 
-    private void initRulesAndGoals(JsonObject json) {}
+    private void loadRules(){
+
+    }
 
     //endregion
 
@@ -379,7 +384,7 @@ public class Game implements GameToInterpreterAPI{
      * @param goal the Goal to add
      */
     public void addGoal(Goal goal) {
-        goals.addObject(goal);
+        goals.add(goal);
     }
 
     /**
@@ -387,10 +392,7 @@ public class Game implements GameToInterpreterAPI{
      * @param goal the Goal to remove
      */
     public void removeGoal(Goal goal) {
-        if(!goals.isIdInUse(goals.getId(goal))) {
-            return;
-        }
-        goals.removeObject(goal);
+        goals.remove(goal);
     }
 
     /**
