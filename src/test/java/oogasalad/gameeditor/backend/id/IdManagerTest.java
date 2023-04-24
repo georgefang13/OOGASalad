@@ -677,5 +677,30 @@ public class IdManagerTest {
     assertTrue(manager.getIdsOfOwner(player3).contains("var1.Variable.obj1.EmptyGameObject"));
   }
 
+  @Test
+  public void testChangeParentId() {
+//    Player player = new Player();
+//    Player player2 = new Player();
+//    Player player3 = new Player();
+//
+//    variable1.setOwner(player);
+//    variable2.setOwner(player);
+//    variable3.setOwner(player2);
+//    object1.setOwner(player);
+//    object2.setOwner(player2);
+//    object3.setOwner(player3);
+//
+//    manager.addObject(variable1, "var1");
+//    manager.addObject(variable2, "var2");
+//    manager.addObject(variable3, variable1);
+//    manager.addObject(object1, "obj1", variable3);
+//    manager.addObject(object2, "obj2");
+//    manager.addObject(object3, object1);
+//
+//    manager.changeParentId("var1.Variable.obj1", "var1.Variable.obj1.EmptyGameObject");
+//    assertTrue(manager.getObject("var1.Variable.obj1.EmptyGameObject.var1.Variable.obj1") != null);
+//    assertTrue(manager.getObject("var1.Variable.obj1") == null);
+  }
+
 }
 

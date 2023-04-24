@@ -344,10 +344,9 @@ public class GameInator {
   /**
    * Removes an Ownable from the game, if it exists there.
    *
-   * @param params the parameters of the ownable
+   * @param id the parameters of the ownable
    */
-  public void removeOwnable(Map<ObjectParameter, String> params) {
-    String id = params.get(ObjectParameter.ID);
+  public void removeOwnable(String id) {
     if (!ownableIdManager.isIdInUse(id)) {
       return;
     }
@@ -364,45 +363,21 @@ public class GameInator {
     }
   }
 
-  /**
-   * Removes a Goal from the game, if it exists there.
-   *
-   * @param params the parameters of the goal
-   */
-  public void removeGoal(Map<ObjectParameter, String> params) {
-    String id = params.get(ObjectParameter.ID);
-    if (!goals.isIdInUse(id)) {
-      return;
-    }
-    goals.removeObject(id);
-  }
-
-  /**
-   * Removes a Rule from the game, if it exists there.
-   *
-   * @param params the parameters of the rule
-   */
-  public void removeRule(Map<ObjectParameter, String> params) {
-    String id = params.get(ObjectParameter.ID);
-    if (!rules.isIdInUse(id)) {
-      return;
-    }
-    rules.removeObject(id);
-  }
 
   /**
    * Method is called in order to send a request to the backend to delete an object.
+   * If removing a player, the id is not used and can be null
    *
    * @Type The class the object belongs to
    * @Params The params of the object
    **/
-  public void deleteObject(ObjectType type, Map<ObjectParameter, String> params)
+  public void deleteObject(ObjectType type, String id)
       throws IllegalArgumentException {
     switch (type) {
       case PLAYER -> removePlayer();
-      case OWNABLE -> removeOwnable(params);
-      case RULE -> removeRule(params);
-      case GOAL -> removeGoal(params);
+      case OWNABLE -> removeOwnable(id);
+//      case RULE -> removeRule(id);
+//      case GOAL -> removeGoal(id);
       default -> throw new IllegalArgumentException("Invalid type"); //TODO add to properties
     }
   }
@@ -412,56 +387,83 @@ public class GameInator {
   //region updateObjectProperties API
 
   /**
+   * check if owner id is numeric value
+   * @param str
+   * @return
+   */
+  public Integer isNumeric(String str) {
+    if (str == null) {
+      return null;
+    }
+    try {
+      return  Integer.parseInt(str);
+    } catch (NumberFormatException e) {
+      return null;
+    }
+  }
+
+  /**
    * Update an Ownable in the game.
    *
    * @param params the parameters of the ownable
    */
-  public void updateOwnable(Map<ObjectParameter, String> params) {
-    String ownableType = params.get(ObjectParameter.OWNABLE_TYPE);
-    String parentOwnerName = params.get(ObjectParameter.OWNER);
-    String id = params.get(ObjectParameter.ID);
-//    String parentOwnableName = params.get(ObjectParameter.PARENT_OWNABLE);
-//    String val = params.get(ObjectParameter.VALUE);
-//    double value = 0;
-//    if (ownableType == "Variable") {
-//      try {
-//        value = Double.parseDouble(val);
-//      } catch (NumberFormatException e) {
-//        ((Variable) (ownableIdManager.getObject(id))).set(val);
-//      }
-//      ((Variable) (ownableIdManager.getObject(id))).set(value);
-//    }
-    //ownableIdManager.getObject(id).setOwner(getOwner(parentOwnerName));
-    //TODO make this updateable for all things
+  public void updateOwnable(String targetObject, Map<ObjectParameter, Object> params) {
+    //change to new owner
+    String newOwnerNum = params.get(ObjectParameter.OWNER) != null ? params.get(ObjectParameter.OWNER).toString() : null;
+    Integer newOwnerInt = isNumeric(newOwnerNum);
+    if (newOwnerInt != null && newOwnerInt >= 0 && newOwnerInt < players.size()){
+      Player newOwner = players.get(newOwnerInt);
+      Ownable targetOwnable = ownableIdManager.getObject(targetObject);
+      targetOwnable.setOwner(newOwner);
+    }
+
+    //change parent ownable
+    String newParentOwnableId = params.get(ObjectParameter.PARENT_OWNABLE_ID) != null ? params.get(ObjectParameter.PARENT_OWNABLE_ID).toString() : null;
+    if (newParentOwnableId != null){
+      //ownableIdManager.changeParentId(targetObject, newParentOwnableId);
+    }
+
+    //change a variable value
+    Object newValue = params.get("value");
+    Ownable targetOwnable = ownableIdManager.getObject(targetObject);
+    if (targetOwnable instanceof Variable){
+      ((Variable) targetOwnable).set(newValue);
+    }
+
+    // change id of ownable
+    String newId = params.get(ObjectParameter.ID) != null ? params.get(ObjectParameter.ID).toString() : null;
+    if (newId != null){
+      ownableIdManager.changeId(targetObject, newId);
+    }
   }
 
-  /**
-   * Update a goal in the game.
-   *
-   * @param params the parameters of the goal
-   */
-  public void updateGoal(Map<ObjectParameter, String> params) {
-//    String ownableType = params.get(ObjectParameter.OWNABLE_TYPE);
-//    String parentOwnerName = params.get(ObjectParameter.OWNER);
-//    String id = params.get(ObjectParameter.ID);
-//    String parentOwnableName = params.get(ObjectParameter.PARENT_OWNABLE);
-//    String val = params.get(ObjectParameter.VALUE);
-    //TODO make this updateable for all things
-  }
-
-  /**
-   * Update a rule in the game.
-   *
-   * @param params the parameters of the rule
-   */
-  public void updateRule(Map<ObjectParameter, String> params) {
-//    String ownableType = params.get(ObjectParameter.OWNABLE_TYPE);
-//    String parentOwnerName = params.get(ObjectParameter.OWNER);
-//    String id = params.get(ObjectParameter.ID);
-//    String parentOwnableName = params.get(ObjectParameter.PARENT_OWNABLE);
-//    String val = params.get(ObjectParameter.VALUE);
-    //TODO make this updateable for all things
-  }
+//  /**
+//   * Update a goal in the game.
+//   *
+//   * @param params the parameters of the goal
+//   */
+//  public void updateGoal(Map<ObjectParameter, String> params) {
+////    String ownableType = params.get(ObjectParameter.OWNABLE_TYPE);
+////    String parentOwnerName = params.get(ObjectParameter.OWNER);
+////    String id = params.get(ObjectParameter.ID);
+////    String parentOwnableName = params.get(ObjectParameter.PARENT_OWNABLE);
+////    String val = params.get(ObjectParameter.VALUE);
+//    //TODO make this updateable for all things
+//  }
+//
+//  /**
+//   * Update a rule in the game.
+//   *
+//   * @param params the parameters of the rule
+//   */
+//  public void updateRule(Map<ObjectParameter, String> params) {
+////    String ownableType = params.get(ObjectParameter.OWNABLE_TYPE);
+////    String parentOwnerName = params.get(ObjectParameter.OWNER);
+////    String id = params.get(ObjectParameter.ID);
+////    String parentOwnableName = params.get(ObjectParameter.PARENT_OWNABLE);
+////    String val = params.get(ObjectParameter.VALUE);
+//    //TODO make this updateable for all things
+//  }
 
   /**
    * Method is called to update information about a modified object in teh front end. The controller
@@ -470,14 +472,14 @@ public class GameInator {
    * @type The class the object belongs to
    * @Params The updated params of the object
    **/
-  public void updateObjectProperties(ObjectType type, Map<ObjectParameter, String> params)
+  public void updateObjectProperties(String targetObject, ObjectType type, Map<ObjectParameter, Object> params)
       throws IllegalArgumentException {
     switch (type) {
       case PLAYER -> {
       }
-      case OWNABLE -> updateOwnable(params);
-      case RULE -> updateRule(params);
-      case GOAL -> updateGoal(params);
+      case OWNABLE -> updateOwnable(targetObject, params);
+//      case RULE -> updateRule(params);
+//      case GOAL -> updateGoal(params);
       default -> throw new IllegalArgumentException("Invalid type"); //TODO add to properties
     }
   }

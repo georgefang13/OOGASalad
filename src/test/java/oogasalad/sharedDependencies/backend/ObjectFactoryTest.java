@@ -59,6 +59,7 @@ public class ObjectFactoryTest {
     game.sendObject(type, params);
     assertEquals(5, idManager.getSimpleIds().size());
   }
+
   @Test
   public void testCreateGameObjects() {
     // GameObject
@@ -79,6 +80,46 @@ public class ObjectFactoryTest {
     params.put(ObjectParameter.PARENT_OWNABLE_ID, "myIdGameObject");
     game.sendObject(type, params);
     assertEquals(4, idManager.getSimpleIds().size());
+  }
+
+  @Test
+  public void testDeleteObject() {
+    ObjectType type = ObjectType.OWNABLE;
+    Map<ObjectParameter, Object> params = new HashMap<>();
+    params.put(ObjectParameter.OWNABLE_TYPE, "Variable");
+    Map<Object, Object> constructorParams = new HashMap<>();
+    constructorParams.put("value", 64);
+    params.put(ObjectParameter.CONSTRUCTOR_ARGS, constructorParams);
+    params.put(ObjectParameter.ID, "myId");
+    params.put(ObjectParameter.OWNER, "2");
+    game.sendObject(type, params);
+    assertEquals(1, idManager.getSimpleIds().size());
+    game.deleteObject(type, "myId");
+    assertEquals(0, idManager.getSimpleIds().size());
+  }
+
+  @Test
+  public void testUpdateObjectProperties() {
+    ObjectType type = ObjectType.OWNABLE;
+    Map<ObjectParameter, Object> params = new HashMap<>();
+    params.put(ObjectParameter.OWNABLE_TYPE, "Variable");
+    Map<Object, Object> constructorParams = new HashMap<>();
+    constructorParams.put("value", 64);
+    params.put(ObjectParameter.CONSTRUCTOR_ARGS, constructorParams);
+    params.put(ObjectParameter.ID, "myId");
+    params.put(ObjectParameter.OWNER, "2");
+    game.sendObject(type, params);
+    game.sendObject(type, params);
+    params.put(ObjectParameter.PARENT_OWNABLE_ID, "myId");
+    game.sendObject(type, params);
+    Map<ObjectParameter, Object> updateParams = new HashMap<>();
+    Map<Object, Object> updateConstructorParams = new HashMap<>();
+    updateConstructorParams.put("value", 30);
+    updateParams.put(ObjectParameter.CONSTRUCTOR_ARGS, constructorParams);
+    updateParams.put(ObjectParameter.ID, "updatedId");
+    updateParams.put(ObjectParameter.OWNER, "3");
+    updateParams.put(ObjectParameter.PARENT_OWNABLE_ID, "myId2");
+    game.updateObjectProperties("myId3", type, params);
   }
 
   @Test

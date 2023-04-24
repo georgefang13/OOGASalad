@@ -515,6 +515,20 @@ public class IdManager<T extends IdManageable> implements Iterable<Map.Entry<Str
     }
   }
 
+  /**
+   * Changes the ownership hierarchy of an object.
+   * @param id the id of the object to change
+   * @param newParentId the id of the new parent of the object
+   */
+  public void changeParentId(String id, String newParentId) {
+    T obj = getObject(id);
+    T newParent = getObject(newParentId);
+    //remove obj as key from ownershipMap
+    ownershipMap.remove(obj);
+    //add obj as key with newParent as value to ownershipMap
+    ownershipMap.put(obj, newParent);
+  }
+
   //TODO return multiple maps based on ownership (recursive)
 
   //TODO manipulate graph
