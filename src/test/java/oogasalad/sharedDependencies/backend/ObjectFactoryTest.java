@@ -1,6 +1,8 @@
 package oogasalad.sharedDependencies.backend;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -45,7 +47,7 @@ public class ObjectFactoryTest {
     // Variable with nothing
     game.sendObject(type, params);
     // Variable with Constructor Value
-    constructorParams.put("value", 64);
+    constructorParams.put(ObjectParameter.VALUE, 64);
     params.put(ObjectParameter.CONSTRUCTOR_ARGS, constructorParams);
     game.sendObject(type, params);
     // Variable with ID
@@ -88,7 +90,7 @@ public class ObjectFactoryTest {
     Map<ObjectParameter, Object> params = new HashMap<>();
     params.put(ObjectParameter.OWNABLE_TYPE, "Variable");
     Map<Object, Object> constructorParams = new HashMap<>();
-    constructorParams.put("value", 64);
+    constructorParams.put(ObjectParameter.VALUE, 64);
     params.put(ObjectParameter.CONSTRUCTOR_ARGS, constructorParams);
     params.put(ObjectParameter.ID, "myId");
     params.put(ObjectParameter.OWNER, "2");
@@ -104,28 +106,57 @@ public class ObjectFactoryTest {
     Map<ObjectParameter, Object> params = new HashMap<>();
     params.put(ObjectParameter.OWNABLE_TYPE, "Variable");
     Map<Object, Object> constructorParams = new HashMap<>();
-    constructorParams.put("value", 64);
+    constructorParams.put(ObjectParameter.VALUE, 64);
     params.put(ObjectParameter.CONSTRUCTOR_ARGS, constructorParams);
     params.put(ObjectParameter.ID, "myId");
-    params.put(ObjectParameter.OWNER, "2");
+    params.put(ObjectParameter.OWNER, "1");
     game.sendObject(type, params);
-    game.sendObject(type, params);
-    params.put(ObjectParameter.PARENT_OWNABLE_ID, "myId");
     game.sendObject(type, params);
     Map<ObjectParameter, Object> updateParams = new HashMap<>();
     Map<Object, Object> updateConstructorParams = new HashMap<>();
-    updateConstructorParams.put("value", 30);
-    updateParams.put(ObjectParameter.CONSTRUCTOR_ARGS, constructorParams);
+    updateConstructorParams.put(ObjectParameter.VALUE, 30);
+    updateParams.put(ObjectParameter.CONSTRUCTOR_ARGS, updateConstructorParams);
     updateParams.put(ObjectParameter.ID, "updatedId");
-    updateParams.put(ObjectParameter.OWNER, "3");
+    updateParams.put(ObjectParameter.OWNER, "2");
     updateParams.put(ObjectParameter.PARENT_OWNABLE_ID, "myId2");
-    game.updateObjectProperties("myId3", type, params);
+    game.updateObjectProperties("myId", type, updateParams);
+    Variable var = (Variable) game.getOwnable("updatedId");
+    assertEquals(30, var.get());
+    assertEquals(players.get(2-1), var.getOwner());
+    updateParams.replace(ObjectParameter.OWNER, "GameWorld");
+    updateParams.remove(ObjectParameter.ID);
+    updateParams.remove(ObjectParameter.PARENT_OWNABLE_ID);
+    updateParams.replace(ObjectParameter.CONSTRUCTOR_ARGS, new HashMap<>());
+    game.updateObjectProperties("updatedId", type, updateParams);
+    assertEquals(world, game.getOwnable("updatedId").getOwner());
   }
 
   @Test
   public void testBoardCreator() {
-    //TODO
-
+    ObjectType type = ObjectType.OWNABLE;
+    Map<ObjectParameter, Object> params = new HashMap<>();
+    params.put(ObjectParameter.OWNABLE_TYPE, "BoardCreator");
+    Map<Object, Object> constructorParams = new HashMap<>();
+    constructorParams.put(ObjectParameter.BOARD_TYPE, "createSquareLoop");
+    constructorParams.put(ObjectParameter.BOARD_ROWS, "3");
+    constructorParams.put(ObjectParameter.BOARD_COLS, "3");
+    params.put(ObjectParameter.CONSTRUCTOR_ARGS, constructorParams);
+    //params.put(ObjectParameter.ID, "myIdBoard");
+    game.sendObject(type, params);
   }
 
+  @Test
+  public void testBoardCreatorMultiple() {
+    ObjectType type = ObjectType.OWNABLE;
+    Map<ObjectParameter, Object> params = new HashMap<>();
+    params.put(ObjectParameter.OWNABLE_TYPE, "BoardCreator");
+    Map<Object, Object> constructorParams = new HashMap<>();
+    constructorParams.put(ObjectParameter.BOARD_TYPE, "createSquareLoop");
+    constructorParams.put(ObjectParameter.BOARD_ROWS, "3");
+    constructorParams.put(ObjectParameter.BOARD_COLS, "3");
+    params.put(ObjectParameter.CONSTRUCTOR_ARGS, constructorParams);
+    //params.put(ObjectParameter.ID, "myIdBoard");
+    game.sendObject(type, params);
+    game.sendObject(type, params);
+  }
 }

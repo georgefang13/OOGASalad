@@ -13,29 +13,19 @@ import oogasalad.sharedDependencies.backend.owners.Owner;
 
 public class DropZone extends GameObject {
 
-  private final String id;
   private final HashMap<String, DropZone> edges;
   private final HashMap<String, Object> holding;
 
-  public DropZone(String nodeId) {
-    this(nodeId, null);
+  public DropZone() {
+    this(null);
   }
 
-  public DropZone(String nodeId, Owner owner) {
+  public DropZone(Owner owner) {
     super(owner);
-    this.id = nodeId;
     edges = new HashMap<>();
     holding = new HashMap<>();
   }
 
-  /**
-   * Get the id of the node.
-   *
-   * @return the id of this node
-   */
-  public String getId() {
-    return id;
-  }
 
   /**
    * Adds an object to the node.
@@ -158,67 +148,18 @@ public class DropZone extends GameObject {
    * @param isBlocked a function that takes a node and returns true if it is blocked
    * @return a list of all the open nodes that can be reached with that path
    */
-  public List<String> findSpotsUntilBlocked(List<String> path, Predicate<DropZone> isBlocked) {
+  public List<DropZone> findSpotsUntilBlocked(List<String> path, Predicate<DropZone> isBlocked) {
     DropZone currentNode = this;
-    List<String> spots = new ArrayList<>();
+    List<DropZone> spots = new ArrayList<>();
     while (true) {
       currentNode = currentNode.followPath(path);
-      if (currentNode == null || spots.contains(currentNode.getId()) || isBlocked.test(
-          currentNode)) {
+      if (currentNode == null || spots.contains(currentNode) || isBlocked.test(currentNode)) {
         break;
       }
-      spots.add(currentNode.getId());
+      spots.add(currentNode);
     }
     return spots;
   }
 
-  @Override
-  public void buildFromJson(JsonObject object) {
-    // TODO: make validation check, likely as static method of FileManager
-    // TODO: pass ID into IdManager (maybe change constructor?)
-    // this.id = FileManager.getStringByKey(object, "id");
 
-    for (JsonElement edgeEntry : object.get("connections").getAsJsonArray()) {
-      JsonObject edge = edgeEntry.getAsJsonObject();
-//            edges.put(FileManager.getStringByKey(edge, "edgeId"));
-    }
-
-    for (JsonElement objectEntry : object.get("starterObjects").getAsJsonArray()) {
-      // TODO: get gameObject by Id and add it to holding
-    }
-
-
-  }
-
-  @Override
-  public JsonObject getAsJson() {
-    FileManager fileManager = new FileManager();
-    fileManager.addContent("id", new JsonPrimitive(id));
-    for (String edgeId : edges.keySet()) {
-      JsonObject edge = new JsonObject();
-      edge.add("edgeId", new JsonPrimitive(edgeId));
-      edge.add("nodeId", new JsonPrimitive(edges.get(edgeId).getId()));
-      fileManager.addContent("connections", edge);
-    }
-    return fileManager.getJson();
-  }
-
-
-  @Override
-  public boolean equals(Object o) {
-    if (o instanceof DropZone b) {
-      return id.equals(b.id);
-    }
-    return false;
-  }
-
-  @Override
-  public String toString() {
-    return id;
-  }
-
-  @Override
-  public int hashCode() {
-    return id.hashCode();
-  }
 }

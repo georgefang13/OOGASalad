@@ -7,12 +7,9 @@ import java.util.List;
 import java.util.Map;
 import oogasalad.gameeditor.backend.id.IdManager;
 import oogasalad.gameeditor.backend.rules.Rule;
-import oogasalad.gamerunner.backend.fsm.FSM;
 import oogasalad.gamerunner.backend.interpretables.Goal;
-import oogasalad.gamerunner.backend.interpreter.Interpreter;
 import oogasalad.sharedDependencies.backend.ObjectFactory;
 import oogasalad.sharedDependencies.backend.ownables.Ownable;
-import oogasalad.sharedDependencies.backend.ownables.gameobjects.GameObject;
 import oogasalad.sharedDependencies.backend.ownables.variables.Variable;
 import oogasalad.sharedDependencies.backend.owners.GameWorld;
 import oogasalad.sharedDependencies.backend.owners.Owner;
@@ -39,7 +36,7 @@ public class GameInator {
 
   /**
    * The Players of the game. Players own Ownables. Ids of Players are their index in the list. Ex:
-   * Player0, Player1, Player2, etc. These Ids are constant
+   * Player1, Player2, etc. These Ids are constant
    */
   private final ArrayList<Player> players = new ArrayList<>(); //TODO set to make number of players, make arraylist
 
@@ -53,88 +50,13 @@ public class GameInator {
    */
   private final GameWorld gameWorld = new GameWorld();
 
-  private final FSM<String> fsm = new FSM<>(ownableIdManager);
-
-  private final Interpreter interpreter = new Interpreter();
-
-  private int numPlayers = 1;
 
   /////////////////// PLAY THE GAME ///////////////////
 
-  public void initGame() {
-    interpreter.link(ownableIdManager);
-
-    Variable<Double> turn = new Variable<>(0.);
-    turn.setOwner(gameWorld);
-    ownableIdManager.addObject(turn, "turn");
-
-    Variable<Double> numPlayersVar = new Variable<>((double) numPlayers);
-    numPlayersVar.setOwner(gameWorld);
-    ownableIdManager.addObject(numPlayersVar, "playerCount");
-
-    Variable<List<GameObject>> available = new Variable<>(new ArrayList<>());
-    available.setOwner(gameWorld);
-    ownableIdManager.addObject(available, "available");
-
-    fsm.setState("INIT");
-    fsm.transition();
-  }
-
-  /**
-   * reacts to clicking a piece
-   */
-  public void clickPiece(String selectedObject) {
-    fsm.setStateInnerValue(selectedObject);
-    fsm.transition();
-
-    if (fsm.getCurrentState().equals("DONE")) {
-      fsm.setState("INIT");
-      // check goals
-      if (checkGoals() != -1) {
-        // TODO end game
-      }
-    }
-  }
-
-  public void keyDown(String key) {
-
-  }
-
-  public void keyUp(String key) {
-
-  }
-
-  private int checkGoals() {
-    for (Map.Entry<String, Goal> goal : goals) {
-      Goal g = goal.getValue();
-      int player = g.test(interpreter, ownableIdManager);
-      if (player != -1) {
-        return player;
-      }
-    }
-    return -1;
-  }
-
   // region LOADING
 
-  /**
-   * Loads a Game from a file.
-   *
-   * @param directory the name of the file to load from
-   */
-  public void loadGame(String directory) {
-    // TODO
-    // get num players
-
-    // load in players and player FSM
-
-    // load in ownables
-
-    // load in rules and goals
-  }
-
   private void initPlayers(JsonObject json) {
-    numPlayers = 1;
+
   }
 
   private void initOwnables(JsonObject json) {
@@ -182,50 +104,10 @@ public class GameInator {
   }
 
 
-  /**
-   * Adds a Rule to the game.
-   *
-   * @param rule the Rule to add
-   */
-  public void addRule(Rule rule) {
-    rules.addObject(rule);
-  }
 
 
-  /**
-   * Gets the Rules of the game.
-   *
-   * @return unmodifiable List of Rules
-   */
-  public List<Rule> getRules() {
-    ArrayList<Rule> listRules = new ArrayList<>();
-    for (Map.Entry<String, Rule> entry : rules) {
-      listRules.add(entry.getValue());
-    }
-    return Collections.unmodifiableList(listRules);
-  }
 
-  /**
-   * Adds a Goal to the game.
-   *
-   * @param goal the Goal to add
-   */
-  public void addGoal(Goal goal) {
-    goals.addObject(goal);
-  }
 
-  /**
-   * Gets the Goals of the game.
-   *
-   * @return unmodifiable List of Goals
-   */
-  public List<Goal> getGoals() {
-    ArrayList<Goal> listGoals = new ArrayList<>();
-    for (Map.Entry<String, Goal> entry : goals) {
-      listGoals.add(entry.getValue());
-    }
-    return Collections.unmodifiableList(listGoals);
-  }
 
   /**
    * Gets the GameWorld of the game.
@@ -237,34 +119,7 @@ public class GameInator {
   }
 
 
-  /**
-   * Adds an Ownable to the IdManager and Owner.
-   *
-   * @param owner   the Owner of the Ownable
-   * @param ownable the Ownable being added to owner
-   */
-  public void changeOwner(Owner owner, Ownable ownable) {
-    ownable.setOwner(owner);
-  }
-
   //region sendObject API
-
-//  /**
-//   * Creates an ownable using ownableFactory for player
-//   * Pass in null for any unused parameters (cannot pass null for type)
-//   * @param type the string type of ownable
-//   * @param owner the owner of the ownable
-//   * @param parentOwnable the parent of the ownable
-//   */
-//  @Deprecated
-//  private void createOwnable(String type, Owner owner, Ownable parentOwnable) {
-//    Owner destinationOwner = owner;
-//    if (owner == null){
-//      destinationOwner = gameWorld;
-//    }
-//    Ownable newOwnable = OwnableFactory.createOwnable(type, destinationOwner);
-//    ownableIdManager.addObject(newOwnable, parentOwnable);
-//  }
 
   /**
    * Creates an ownable using objectFactory and adds it to the game through the IdManager (IdManager
@@ -272,7 +127,7 @@ public class GameInator {
    *
    * @param params the parameters of the ownable
    */
-  private void createOwnable(Map<ObjectParameter, Object> params) {
+  private void createOwnable(Map<ObjectParameter, Object> params) throws IllegalArgumentException{
     objectFactory.createOwnable(params);
   }
 
@@ -323,8 +178,8 @@ public class GameInator {
    * variable has no initialized value In the future this would be added Currently, this
    * responsibility is handled by the updateObjectProperties API call
    *
-   * @Type The class the object belongs to
-   * @Params The params of the object
+   * @param type The class the object belongs to
+   * @param params The params of the object
    **/
   public void sendObject(ObjectType type, Map<ObjectParameter, Object> params)
       throws IllegalArgumentException {
@@ -407,12 +262,18 @@ public class GameInator {
    *
    * @param params the parameters of the ownable
    */
-  public void updateOwnable(String targetObject, Map<ObjectParameter, Object> params) {
+  public void updateOwnable(String targetObject, Map<ObjectParameter, Object> params) throws IllegalArgumentException{
     //change to new owner
     String newOwnerNum = params.get(ObjectParameter.OWNER) != null ? params.get(ObjectParameter.OWNER).toString() : null;
     Integer newOwnerInt = isNumeric(newOwnerNum);
-    if (newOwnerInt != null && newOwnerInt >= 0 && newOwnerInt < players.size()){
-      Player newOwner = players.get(newOwnerInt);
+    if (newOwnerInt != null && newOwnerInt >= 0 && newOwnerInt <= players.size()){
+      Owner newOwner = players.get(newOwnerInt-1);
+      Ownable targetOwnable = ownableIdManager.getObject(targetObject);
+      targetOwnable.setOwner(newOwner);
+    }
+    else if(newOwnerNum.equals("GameWorld")){ //if null it wasnt in there and we dont want to change it
+      //set to gameworld
+      Owner newOwner = gameWorld;
       Ownable targetOwnable = ownableIdManager.getObject(targetObject);
       targetOwnable.setOwner(newOwner);
     }
@@ -420,11 +281,12 @@ public class GameInator {
     //change parent ownable
     String newParentOwnableId = params.get(ObjectParameter.PARENT_OWNABLE_ID) != null ? params.get(ObjectParameter.PARENT_OWNABLE_ID).toString() : null;
     if (newParentOwnableId != null){
-      //ownableIdManager.changeParentId(targetObject, newParentOwnableId);
+      ownableIdManager.changeParentId(targetObject, newParentOwnableId);
     }
 
     //change a variable value
-    Object newValue = params.get("value");
+    Map<Object, Object> constructorParams = (Map<Object, Object>) params.get(ObjectParameter.CONSTRUCTOR_ARGS);
+    Object newValue = constructorParams.get(ObjectParameter.VALUE);
     Ownable targetOwnable = ownableIdManager.getObject(targetObject);
     if (targetOwnable instanceof Variable){
       ((Variable) targetOwnable).set(newValue);

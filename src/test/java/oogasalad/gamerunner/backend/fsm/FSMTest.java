@@ -207,7 +207,7 @@ public class FSMTest {
   @Test
   void testProgrammableState() {
     Interpreter interpreter = new Interpreter();
-    interpreter.link(idManager);
+    interpreter.linkIdManager(idManager);
 
     ArrayList<DropZone> zones = new ArrayList<>();
 

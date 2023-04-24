@@ -31,6 +31,11 @@ public enum ObjectParameter {
    */
   PARENT_OWNABLE_ID,
 
+  VALUE,
+
+  /**
+   * The Board Creator params
+   */
   BOARD_TYPE,
   BOARD_ROWS,
   BOARD_COLS,

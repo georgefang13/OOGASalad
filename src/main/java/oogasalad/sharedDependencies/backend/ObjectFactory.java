@@ -47,27 +47,7 @@ public class ObjectFactory {
     this.players = players;
   }
 
-  /**
-   * The null types that will result in a default Object for the given type.
-   */
-  private final String[] nullTypes = {"", "null", "NULL", "Null", "none", "NONE", "None"};
 
-  private final String playerIdentifier = "Player"; //Independent of language, should not be changed
-
-//  /**
-//   * Checks if the given type is a null type.
-//   *
-//   * @param type the type to check
-//   * @return true if the type is a null type, false otherwise
-//   */
-//  private boolean isNullType(String type) {
-//    for (String nullType : nullTypes) {
-//      if (type.equals(nullType)) {
-//        return true;
-//      }
-//    }
-//    return false;
-//  }
 //
 //  /**
 //   * Access a parameter from the map, returning null if the parameter is not present or is a null
@@ -88,54 +68,43 @@ public class ObjectFactory {
 
   private void handleBoardCreator(Map<Object, Object> params) {
     Owner owner = gameWorld;
-    String type = params.get(ObjectParameter.BOARD_TYPE).toString();
+    String type = params.get(ObjectParameter.BOARD_TYPE) != null ? params.get(ObjectParameter.BOARD_TYPE).toString() : null;;
     List<DropZone> dropZones = new ArrayList<>();
-    String boardRows = params.get(ObjectParameter.BOARD_ROWS).toString();
-    String boardCols = params.get(ObjectParameter.BOARD_COLS).toString();
-    String boardLength = params.get(ObjectParameter.BOARD_LENGTH).toString();
-    String boardForward = params.get(ObjectParameter.BOARD_FORWARD).toString();
-    String boardBackward = params.get(ObjectParameter.BOARD_BACKWARD).toString();
+    String boardRows = params.get(ObjectParameter.BOARD_ROWS) != null ? params.get(ObjectParameter.BOARD_ROWS).toString() : null;
+    String boardCols = params.get(ObjectParameter.BOARD_COLS) != null ? params.get(ObjectParameter.BOARD_COLS).toString() : null;
+    String boardLength = params.get(ObjectParameter.BOARD_LENGTH) != null ? params.get(ObjectParameter.BOARD_LENGTH).toString() : null;
+    String boardForward = params.get(ObjectParameter.BOARD_FORWARD) != null ? params.get(ObjectParameter.BOARD_FORWARD).toString() : null;
+    String boardBackward = params.get(ObjectParameter.BOARD_BACKWARD) != null ? params.get(ObjectParameter.BOARD_BACKWARD).toString() : null;
+    List<DropZone> boardCreatorMethod;
     try {
-      // Get the method from BoardCreator matching type
-      Class<?> boardCreatorClass = Class.forName("oogasalad/gameeditor/backend/ownables/gameobjects/BoardCreator.java");
-      Method boardCreatorMethod;
-      Object[] args;
-
       switch (type) {
         case "createGrid":
-          args = new Object[]{Integer.parseInt(boardRows), Integer.parseInt(boardCols)};
-          boardCreatorMethod = BoardCreator.class.getMethod(type, int.class, int.class);
+          boardCreatorMethod = BoardCreator.createGrid(Integer.parseInt(boardRows), Integer.parseInt(boardCols));
           break;
         case "createSquareLoop":
-          args = new Object[]{Integer.parseInt(boardRows), Integer.parseInt(boardCols)};
-          boardCreatorMethod = boardCreatorClass.getMethod(type, int.class, int.class);
+          boardCreatorMethod = BoardCreator.createSquareLoop(Integer.parseInt(boardRows), Integer.parseInt(boardCols));
           break;
         case "create1DLoop":
           if (boardForward == null || boardBackward == null) {
-            args = new Object[]{Integer.parseInt(boardLength)};
-            boardCreatorMethod = boardCreatorClass.getMethod(type, int.class);
+            boardCreatorMethod = BoardCreator.create1DLoop(Integer.parseInt(boardLength));
           } else {
-            args = new Object[]{Integer.parseInt(boardLength), boardForward, boardBackward};
-            boardCreatorMethod = boardCreatorClass.getMethod(type, int.class, String.class, String.class);
+            boardCreatorMethod = BoardCreator.create1DLoop(Integer.parseInt(boardLength), boardForward, boardBackward);
           }
           break;
         default:
           throw new RuntimeException("Unsupported BoardCreator type: " + type);
       }
 
-      dropZones = (List<DropZone>) boardCreatorMethod.invoke(null, args);
-    } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-      e.printStackTrace();
-    } catch (Exception e) {
-      throw new RuntimeException("Error creating game board", e);
+      dropZones = (List<DropZone>) boardCreatorMethod;
+    } catch (IllegalArgumentException e){
+      throw e;
     }
 
     //we have all the dropzones, now we need to add them to game manager (with owner as game world)
     for (DropZone dropZone : dropZones) {
       dropZone.setOwner(owner);
+//      System.out.println("ADDING ID: " + dropZone.getId());
       ownableIdManager.addObject(dropZone);
-      //get id of dropZone and print
-      System.out.println("DropZone ID: " + dropZone.getId());
     }
   }
 

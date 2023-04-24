@@ -34,7 +34,7 @@ public class FSMExample {
   public FSMExample() {
     idManager = new IdManager<>();
     interpreter = new Interpreter();
-    interpreter.link(idManager);
+    interpreter.linkIdManager(idManager);
     fsm = new FSM<>(idManager);
     Variable<Double> turn = new Variable<>(0.);
     turn.addListener((value) -> fsm.setState("INIT"));
@@ -81,6 +81,7 @@ public class FSMExample {
 
     List<DropZone> zones = BoardCreator.createGrid(3, 3);
     for (DropZone zone : zones) {
+      zone.addClass("board");
       idManager.addObject(zone, zone.getId());
     }
 
@@ -114,10 +115,10 @@ public class FSMExample {
 
     List<GameObject> available = availableVar.get();
     if (available.size() == 0) {
-      response += "DONE";
+      response += "\nDONE";
     }
 
-    response += "Available spots: ";
+    response += "\nAvailable spots: ";
     for (GameObject obj : available) {
       response = response + idManager.getId(obj) + " ";
     }

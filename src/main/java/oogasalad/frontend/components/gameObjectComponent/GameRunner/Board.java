@@ -1,5 +1,6 @@
-package oogasalad.frontend.objects;
+package oogasalad.frontend.components.gameObjectComponent.GameRunner;
 
+import javafx.geometry.Point2D;
 import javafx.scene.layout.GridPane;
 
 public class Board {
@@ -37,18 +38,25 @@ public class Board {
     return boardPane;
   }
 
-  public void addPiece(int x, int y, String pieceName) {
+  public void addPiece(int x, int y, BoardPiece boardPiece) {
     DropZone pieceSquare = boardDrops[x][y];
-    pieceSquare.addPiece(pieceName);
+    pieceSquare.addPiece(boardPiece);
   }
 
   public record BoardXY(int x, int y) {
-
   }
 
-  public BoardXY boardXYofClick(double mouseX, double mouseY) {
-    int x = (int) (mouseX / blockSize);
-    int y = (int) (mouseY / blockSize);
+  public BoardXY boardXYofNode(Point2D nodeXY) {
+    int x = (int) (nodeXY.getX() / blockSize);
+    int y = (int) (nodeXY.getY() / blockSize);
+    if (!checkValid(x,width) || !checkValid(y,height)){
+      x = -1;
+      y = -1;
+    }
     return new BoardXY(x, y);
+  }
+
+  private boolean checkValid(int xy, int max){
+    return ((0 <= xy) && (xy <= max));
   }
 }
