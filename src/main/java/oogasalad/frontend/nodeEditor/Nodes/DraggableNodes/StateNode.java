@@ -1,4 +1,4 @@
-package oogasalad.frontend.nodeEditorNodes.DraggableNodes;
+package oogasalad.frontend.nodeEditor.Nodes.DraggableNodes;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -8,7 +8,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import oogasalad.frontend.nodeEditor.NodeController;
-import oogasalad.frontend.nodeEditor.Nodes.DraggableNodes.DraggableAbstractNode;
+
 
 public class StateNode extends DraggableAbstractNode {
 
@@ -17,6 +17,7 @@ public class StateNode extends DraggableAbstractNode {
 
   public StateNode(NodeController nodeController) {
     super(nodeController, 0, 0, 300, 100, "orange");
+    setContent();
   }
 
   public StateNode(NodeController nodeController, double x, double y, double width, double height,

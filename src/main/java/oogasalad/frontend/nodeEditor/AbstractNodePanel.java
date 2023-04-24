@@ -86,15 +86,18 @@ public abstract class AbstractNodePanel extends Tab {
     }
   }
 
-  public GridPane makeNodeSelectionPane() {
+  public ScrollPane makeNodeSelectionPane() {
     List<Button> buttons = getNodeSelectionButtons();
+    ScrollPane scrollPane = new ScrollPane();
     GridPane pane = new GridPane();
     pane.setStyle("-fx-background-color: gray");
     for (Button button : buttons) {
       pane.add(button, 0, buttons.indexOf(button));
     }
-    pane.setMinSize(windowWidth / 4, windowHeight / 4);
-    return pane;
+    pane.setMinSize(windowWidth / 4, windowHeight);
+    scrollPane.setContent(pane);
+    scrollPane.setMinSize(windowWidth / 4, windowHeight);
+    return scrollPane;
   }
 
 
