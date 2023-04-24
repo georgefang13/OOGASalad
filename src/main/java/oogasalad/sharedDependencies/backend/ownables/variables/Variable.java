@@ -116,5 +116,10 @@ public class Variable<T> extends Ownable {
       listener.onChange(value);
     }
   }
+
+  @Override
+  public String toString(){
+    return "Var<" + value + ">";
+  }
 }
 

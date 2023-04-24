@@ -203,7 +203,7 @@ public class Game implements GameToInterpreterAPI{
             int width = Integer.parseInt(fm.getString(id, "position", "width"));
             int height = Integer.parseInt(fm.getString(id, "position", "height"));
 
-            DropZone dz = new DropZone(id);
+            DropZone dz = new DropZone();
             for (String cls : fm.getArray(id, "classes")){
                 dz.addClass(cls);
             }

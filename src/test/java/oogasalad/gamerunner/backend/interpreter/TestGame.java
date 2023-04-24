@@ -169,6 +169,10 @@ public class TestGame implements GameToInterpreterAPI {
     public void addElement(Ownable element, String id){
         ownableIdManager.addObject(element, id);
     }
+
+    public void addElement(Ownable element) {
+        ownableIdManager.addObject(element);
+    }
     @Override
     public void putInDropZone(Ownable element, DropZone dropZone, String name){
         pieceLocations.put(element, dropZone);

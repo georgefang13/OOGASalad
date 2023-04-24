@@ -91,7 +91,7 @@ public class CommandsTest {
 
   @Test
   public void testAddDropZoneItem() {
-    DropZone dz = new DropZone("dz");
+    DropZone dz = new DropZone();
     idManager.addObject(dz, "dz");
     GameObject obj = new GameObject(null);
     idManager.addObject(obj, "obj");
@@ -427,8 +427,8 @@ public class CommandsTest {
 
   @Test
   public void testDropZoneHasId(){
-    DropZone d1 = new DropZone("A");
-    DropZone d2 = new DropZone("B");
+    DropZone d1 = new DropZone();
+    DropZone d2 = new DropZone();
     idManager.addObject(d1, "A");
     idManager.addObject(d2, "B");
 
@@ -449,10 +449,10 @@ public class CommandsTest {
   public void testDropZonePaths(){
     List<DropZone> board = BoardCreator.createGrid(8, 8);
     for (DropZone dz : board) {
-      idManager.addObject(dz, dz.getId());
+      idManager.addObject(dz);
     }
-    String id1 = board.get(0).getId();
-    String id2 = board.get(18).getId();
+    String id1 = idManager.getId(board.get(0));
+    String id2 = idManager.getId(board.get(18));
     String input = "make :p1 dzpaths fromgame \"" + id1 + " make :p2 dzpaths fromgame \"" + id2;
     interpreter.interpret(input);
     Variable<List<String>> p1 = getVar("interpreter-:p1");
@@ -467,10 +467,10 @@ public class CommandsTest {
   public void testDzNeighbors(){
     List<DropZone> board = BoardCreator.createGrid(8, 8);
     for (DropZone dz : board) {
-      idManager.addObject(dz, dz.getId());
+      idManager.addObject(dz);
     }
-    String id1 = board.get(0).getId();
-    String id2 = board.get(18).getId();
+    String id1 = idManager.getId(board.get(0));
+    String id2 = idManager.getId(board.get(18));
     String input = "make :p1 dzneighbors fromgame \"" + id1 + " make :p2 dzneighbors fromgame \"" + id2;
     interpreter.interpret(input);
     Variable<List<DropZone>> p1 = getVar("interpreter-:p1");
@@ -615,9 +615,9 @@ public class CommandsTest {
   public void testFollowDropZonePath(){
     List<DropZone> board = BoardCreator.createGrid(8, 8);
     for (DropZone dz : board) {
-      idManager.addObject(dz, dz.getId());
+      idManager.addObject(dz);
     }
-    String id1 = board.get(0).getId();
+    String id1 = idManager.getId(board.get(0));
     String input = "make :dz fromgame \"" + id1 + " make :path [ \"Down \"DownRight ] make :p dzfollow :dz :path";
     interpreter.interpret(input);
     Variable<DropZone> p = getVar("interpreter-:p");
@@ -626,30 +626,21 @@ public class CommandsTest {
 
   @Test
   public void testGetAttribute() {
-    GameObject dropZone = new DropZone("A");
+    GameObject dropZone = new DropZone();
     Class<?> c = GameObject.class;
     System.out.println(c.isInstance(dropZone));
     idManager.addObject(dropZone, "dz");
-    String input = "make :x attr :game_dz \"id";
+    GameObject go = new GameObject(null);
+    idManager.addObject(go, "obj");
+    String input = "make :x == null attr :game_obj \"owner";
     interpreter.interpret(input);
-    Variable<String> x = getVar("interpreter-:x");
-    assertEquals("A", x.get());
-
-    idManager.removeObject(dropZone);
-
-    dropZone = new DropZone("Banana");
-    System.out.println(c.isInstance(dropZone));
-    idManager.addObject(dropZone, "dz");
-    input = "make :x attr :game_dz \"id";
-    interpreter.interpret(input);
-    x = getVar("interpreter-:x");
-    assertEquals("Banana", x.get());
-
+    Variable<Boolean> x = getVar("interpreter-:x");
+    assertEquals(true, x.get());
   }
 
   @Test
   public void testGetDropZoneItem() {
-    DropZone dropZone = new DropZone("A");
+    DropZone dropZone = new DropZone();
     GameObject obj = new GameObject(null);
     idManager.addObject(dropZone, "dz");
     idManager.addObject(obj, "obj");
@@ -681,7 +672,7 @@ public class CommandsTest {
 
   @Test
   public void testGetDropZoneItems() {
-    DropZone dropZone = new DropZone("A");
+    DropZone dropZone = new DropZone();
     idManager.addObject(dropZone, "dz");
     GameObject obj = new GameObject(null);
     idManager.addObject(obj, "obj");
@@ -713,7 +704,7 @@ public class CommandsTest {
     useGameVars();
     List<DropZone> board = BoardCreator.createGrid(2, 2);
     for (DropZone dz : board) {
-      game.addElement(dz, dz.getId());
+      game.addElement(dz);
     }
     // add items to dropZones
     GameObject p1 = new GameObject(game.getPlayer(0));
@@ -1111,7 +1102,7 @@ public class CommandsTest {
 
   @Test
   public void testIfDropZoneEmpty(){
-    DropZone d1 = new DropZone("A");
+    DropZone d1 = new DropZone();
     idManager.addObject(d1, "A");
 
     String input = "make :x dzempty :game_A";
@@ -1493,7 +1484,7 @@ public class CommandsTest {
     useGameVars();
     List<DropZone> dropZones = BoardCreator.createGrid(2, 2);
     for (DropZone dz : dropZones) {
-      game.addElement(dz, dz.getId());
+      game.addElement(dz);
     }
     GameObject p1 = new GameObject(game.getPlayer(0));
     game.addElement(p1, "p1");
@@ -1501,7 +1492,7 @@ public class CommandsTest {
 
     assertTrue(dropZones.get(0).hasObject("piece"));
 
-    String input = "make :x :game_p1 make :next_dz fromgame \"0,1 movepiece :x :next_dz";
+    String input = "make :x :game_p1 make :next_dz fromgame \"DropZone2 movepiece :x :next_dz";
     interpreter.interpret(input);
     assertTrue(dropZones.get(1).getAllObjects().contains(p1));
     assertTrue(dropZones.get(1).hasObject("piece"));
@@ -1515,7 +1506,7 @@ public class CommandsTest {
     useGameVars();
     List<DropZone> dropZones = BoardCreator.createGrid(2, 2);
     for (DropZone dz : dropZones) {
-      game.addElement(dz, dz.getId());
+      game.addElement(dz);
     }
     GameObject p1 = new GameObject(game.getPlayer(0));
     game.addElement(p1, "p1");
@@ -1523,7 +1514,7 @@ public class CommandsTest {
 
     assertTrue(dropZones.get(0).hasObject("piece"));
 
-    String input = "make :x :game_p1 make :next_dz fromgame \"0,1 movepieceas :x :next_dz \"thing";
+    String input = "make :x :game_p1 make :next_dz fromgame \"DropZone2 movepieceas :x :next_dz \"thing";
     interpreter.interpret(input);
     assertTrue(dropZones.get(1).hasObject("thing"));
     assertFalse(dropZones.get(1).hasObject("piece"));
@@ -1946,7 +1937,7 @@ public class CommandsTest {
     game.addElement(obj1, "obj1");
     game.addElement(obj2, "obj2");
     for (DropZone dz : board) {
-      game.addElement(dz, dz.getId());
+      game.addElement(dz);
     }
     game.putInDropZone(obj1, board.get(0), "obj");
 

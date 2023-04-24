@@ -1,10 +1,19 @@
 package oogasalad.sharedDependencies.backend;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
+import oogasalad.gameeditor.backend.GameInator;
 import oogasalad.gameeditor.backend.ObjectParameter;
+import oogasalad.gameeditor.backend.ObjectType;
 import oogasalad.gameeditor.backend.id.IdManager;
 import oogasalad.sharedDependencies.backend.ownables.Ownable;
 import oogasalad.sharedDependencies.backend.ownables.gameobjects.GameObject;
@@ -16,93 +25,156 @@ import org.junit.jupiter.api.Test;
 
 public class ObjectFactoryTest {
 
-  private ObjectFactory factory;
-  private IdManager<Ownable> idManager;
+  private IdManager idManager;
   private ArrayList<Player> players;
   private GameWorld world;
+  private GameInator game;
 
   @BeforeEach
   void setup() {
-    world = new GameWorld();
-    idManager = new IdManager<>();
-    players = new ArrayList<>();
-    for (int i = 0; i < 5; i++) {
-      players.add(new Player());
-    }
-    factory = new ObjectFactory(world, idManager, players);
+    game = new GameInator();
+    world = game.getGameWorld();
+    players = (ArrayList<Player>) game.getPlayers();
+    game.addPlayer(new Player());
+    game.addPlayer(new Player());
+    game.addPlayer(new Player());
+    idManager = game.getOwnableIdManager();
   }
 
   @Test
-  public void testCreateOwnables() {
-    Map<ObjectParameter, String> params = Map.of(ObjectParameter.OWNABLE_TYPE, "Variable");
-    factory.createOwnable(params);
-    //check that the ownable was created by looking at the idManager
-    assertEquals(1, idManager.getSimpleIds().size());
-    params = Map.of(ObjectParameter.OWNABLE_TYPE, "GameObject", ObjectParameter.OWNER, "Player1");
-    factory.createOwnable(params);
-    assertEquals(2, idManager.getSimpleIds().size());
-    Ownable ownable = idManager.getObject("GameObject");
-    //check that the owner is type Player
-    assertEquals(Player.class, ownable.getOwner().getClass());
-    params = Map.of(ObjectParameter.OWNABLE_TYPE, "GameObject", ObjectParameter.OWNER, "");
-    factory.createOwnable(params);
-    assertEquals(3, idManager.getSimpleIds().size());
-    ownable = idManager.getObject("GameObject2");
-    //check that the owner is type GameWorld
-    assertEquals(GameWorld.class, ownable.getOwner().getClass());
+  public void testCreateVariables() {
+    ObjectType type = ObjectType.OWNABLE;
+    Map<ObjectParameter, Object> params = new HashMap<>();
+    params.put(ObjectParameter.OWNABLE_TYPE, "Variable");
+    Map<Object, Object> constructorParams = new HashMap<>();
+    params.put(ObjectParameter.CONSTRUCTOR_ARGS, constructorParams);
+    // Variable with nothing
+    game.sendObject(type, params);
+    // Variable with Constructor Value
+    constructorParams.put(ObjectParameter.VALUE, 64);
+    params.put(ObjectParameter.CONSTRUCTOR_ARGS, constructorParams);
+    game.sendObject(type, params);
+    // Variable with ID
+    params.put(ObjectParameter.ID, "myId");
+    game.sendObject(type, params);
+    // Variable with owner
+    params.put(ObjectParameter.OWNER, "2");
+    game.sendObject(type, params);
+    // Variable with parent ownable
+    params.put(ObjectParameter.PARENT_OWNABLE_ID, "myId");
+    game.sendObject(type, params);
+    assertEquals(5, idManager.getSimpleIds().size());
   }
 
   @Test
-  public void testCreateWithId() {
-    Map<ObjectParameter, String> params = Map.of(ObjectParameter.OWNABLE_TYPE, "Variable",
-        ObjectParameter.ID, "test");
-    factory.createOwnable(params);
-    assertEquals(1, idManager.getSimpleIds().size());
-    Ownable ownable = idManager.getObject("test");
-    //check that the ownable is not null
-    assertEquals(Variable.class, ownable.getClass());
-    params = Map.of(ObjectParameter.OWNABLE_TYPE, "GameObject", ObjectParameter.ID, "test2");
-    factory.createOwnable(params);
-    assertEquals(2, idManager.getSimpleIds().size());
-    ownable = idManager.getObject("test2");
-    //check that the ownable is not null
-    assertEquals(GameObject.class, ownable.getClass());
+  public void testCreateGameObjects() {
+    // GameObject
+    ObjectType type = ObjectType.OWNABLE;
+    Map<ObjectParameter, Object> params = new HashMap<>();
+    params.put(ObjectParameter.OWNABLE_TYPE, "GameObject");
+    Map<Object, Object> constructorParams = new HashMap<>();
+    params.put(ObjectParameter.CONSTRUCTOR_ARGS, constructorParams);
+    // GameObject with nothing
+    game.sendObject(type, params);
+    // GameObject with ID
+    params.put(ObjectParameter.ID, "myIdGameObject");
+    game.sendObject(type, params);
+    // GameObject with owner
+    params.put(ObjectParameter.OWNER, "3");
+    game.sendObject(type, params);
+    // GameObject with parent ownable
+    params.put(ObjectParameter.PARENT_OWNABLE_ID, "myIdGameObject");
+    game.sendObject(type, params);
+    assertEquals(4, idManager.getSimpleIds().size());
   }
 
   @Test
-  public void testParentOwnable() {
-    Map<ObjectParameter, String> params = Map.of(ObjectParameter.OWNABLE_TYPE, "GameObject",
-        ObjectParameter.ID, "parent");
-    factory.createOwnable(params);
+  public void testDeleteObject() {
+    ObjectType type = ObjectType.OWNABLE;
+    Map<ObjectParameter, Object> params = new HashMap<>();
+    params.put(ObjectParameter.OWNABLE_TYPE, "Variable");
+    Map<Object, Object> constructorParams = new HashMap<>();
+    constructorParams.put(ObjectParameter.VALUE, 64);
+    params.put(ObjectParameter.CONSTRUCTOR_ARGS, constructorParams);
+    params.put(ObjectParameter.ID, "myId");
+    params.put(ObjectParameter.OWNER, "2");
+    game.sendObject(type, params);
     assertEquals(1, idManager.getSimpleIds().size());
-    params = Map.of(ObjectParameter.OWNABLE_TYPE, "Variable", ObjectParameter.PARENT_OWNABLE,
-        "parent");
-    factory.createOwnable(params);
-    assertEquals(2, idManager.getSimpleIds().size());
-    Ownable ownable = idManager.getObject("Variable");
-    //check that the ownable is not null
-    assertEquals(Variable.class, ownable.getClass());
-    //check that child.getId() contains parent.getId()
-    assertEquals("parent.Variable", idManager.getId(ownable));
+    game.deleteObject(type, "myId");
+    assertEquals(0, idManager.getSimpleIds().size());
+  }
+
+  @Test
+  public void testUpdateObjectProperties() {
+    ObjectType type = ObjectType.OWNABLE;
+    Map<ObjectParameter, Object> params = new HashMap<>();
+    params.put(ObjectParameter.OWNABLE_TYPE, "Variable");
+    Map<Object, Object> constructorParams = new HashMap<>();
+    constructorParams.put(ObjectParameter.VALUE, 64);
+    params.put(ObjectParameter.CONSTRUCTOR_ARGS, constructorParams);
+    params.put(ObjectParameter.ID, "myId");
+    params.put(ObjectParameter.OWNER, "1");
+    game.sendObject(type, params);
+    game.sendObject(type, params);
+    Map<ObjectParameter, Object> updateParams = new HashMap<>();
+    Map<Object, Object> updateConstructorParams = new HashMap<>();
+    updateConstructorParams.put(ObjectParameter.VALUE, 30);
+    updateParams.put(ObjectParameter.CONSTRUCTOR_ARGS, updateConstructorParams);
+    updateParams.put(ObjectParameter.ID, "updatedId");
+    updateParams.put(ObjectParameter.OWNER, "2");
+    updateParams.put(ObjectParameter.PARENT_OWNABLE_ID, "myId2");
+    game.updateObjectProperties("myId", type, updateParams);
+    Variable var = (Variable) game.getOwnable("updatedId");
+    assertEquals(30, var.get());
+    assertEquals(players.get(2-1), var.getOwner());
+    updateParams.replace(ObjectParameter.OWNER, "GameWorld");
+    updateParams.remove(ObjectParameter.ID);
+    updateParams.remove(ObjectParameter.PARENT_OWNABLE_ID);
+    updateParams.replace(ObjectParameter.CONSTRUCTOR_ARGS, new HashMap<>());
+    game.updateObjectProperties("updatedId", type, updateParams);
+    assertEquals(world, game.getOwnable("updatedId").getOwner());
   }
 
   @Test
   public void testBoardCreator() {
-    Map<ObjectParameter, String> params = Map.of(ObjectParameter.OWNABLE_TYPE, "BoardCreator",
-        ObjectParameter.BOARD_CREATOR_TYPE, "createGrid", ObjectParameter.BOARD_CREATOR_PARAM_1,
-        "5", ObjectParameter.BOARD_CREATOR_PARAM_2, "5");
-    factory.createOwnable(params);
-    assertEquals(25, idManager.getSimpleIds().size());
-    params = Map.of(ObjectParameter.OWNABLE_TYPE, "BoardCreator",
-        ObjectParameter.BOARD_CREATOR_TYPE, "createSquareLoop",
-        ObjectParameter.BOARD_CREATOR_PARAM_1, "5", ObjectParameter.BOARD_CREATOR_PARAM_2, "2");
-    factory.createOwnable(params);
-    assertEquals(25 + 10, idManager.getSimpleIds().size());
-    System.out.println(idManager.getSimpleIds());
-//    params = Map.of(ObjectParameter.OWNABLE_TYPE, "BoardCreator", ObjectParameter.BOARD_CREATOR_TYPE, "create1DLoop", ObjectParameter.BOARD_CREATOR_PARAM_1, "5");
-//    factory.createOwnable(params);
-//    assertEquals(25+10+5, idManager.getSimpleIds().size());
-
+    ObjectType type = ObjectType.OWNABLE;
+    Map<ObjectParameter, Object> params = new HashMap<>();
+    params.put(ObjectParameter.OWNABLE_TYPE, "BoardCreator");
+    Map<Object, Object> constructorParams = new HashMap<>();
+    constructorParams.put(ObjectParameter.BOARD_TYPE, "createSquareLoop");
+    constructorParams.put(ObjectParameter.BOARD_ROWS, "3");
+    constructorParams.put(ObjectParameter.BOARD_COLS, "3");
+    params.put(ObjectParameter.CONSTRUCTOR_ARGS, constructorParams);
+    //params.put(ObjectParameter.ID, "myIdBoard");
+    game.sendObject(type, params);
   }
 
+  @Test
+  public void testBoardCreatorMultiple() {
+    ObjectType type = ObjectType.OWNABLE;
+    Map<ObjectParameter, Object> params = new HashMap<>();
+    params.put(ObjectParameter.OWNABLE_TYPE, "BoardCreator");
+    Map<Object, Object> constructorParams = new HashMap<>();
+    constructorParams.put(ObjectParameter.BOARD_TYPE, "createSquareLoop");
+    constructorParams.put(ObjectParameter.BOARD_ROWS, "3");
+    constructorParams.put(ObjectParameter.BOARD_COLS, "3");
+    params.put(ObjectParameter.CONSTRUCTOR_ARGS, constructorParams);
+    //params.put(ObjectParameter.ID, "myIdBoard");
+    game.sendObject(type, params);
+    game.sendObject(type, params);
+    assertEquals(2*8, idManager.getSimpleIds().size());
+    //print out the id of all the things in id manager
+//    Iterator<Entry<String, Ownable>> it = idManager.iterator();
+//    ArrayList<String> ids = new ArrayList<>();
+//    while (it.hasNext()) {
+//      Entry<String, Ownable> entry = it.next();
+//      ids.add(entry.getKey());
+//    }
+//    //sort the ids
+//    Collections.sort(ids);
+//    //print out the ids
+//    for(String id : ids) {
+//      System.out.println(id);
+//    }
+  }
 }

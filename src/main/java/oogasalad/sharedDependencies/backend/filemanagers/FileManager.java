@@ -190,12 +190,7 @@ public class FileManager {
       throw new IllegalArgumentException();
     }
     JsonElement element = traverse(tags);
-    if (element.isJsonPrimitive()) {
-      return new Gson().fromJson(element, clazz);
-    }
-    else {
-      throw new IllegalArgumentException();
-    }
+    return myGson.fromJson(element, clazz);
   }
 
   /**
