@@ -10,7 +10,6 @@ import oogasalad.Controller.ConvertingStrategy;
 import oogasalad.frontend.components.Component;
 import oogasalad.frontend.components.ComponentsFactory;
 import oogasalad.frontend.components.gameObjectComponent.GameObject;
-import oogasalad.frontend.components.textObjectComponent.TextObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import util.DukeApplicationTest;
@@ -32,9 +31,15 @@ public class ConvertingStrategyTest extends DukeApplicationTest {
   }
   @Test
   public void sendGameObject(){
-    TextObject c = (TextObject) factory.create("TextObject");
+    GameObject c = (GameObject) factory.create("GameObject");
+    c.setName("Test");
     Map<String, String> map = converter.paramsToMap(c);
     System.out.println(map);
+    assertEquals(c.getName(), "Test");
     assertEquals(c.getID(), 0);
+    GameObject cd = (GameObject) factory.create("GameObject");
+    Map<String, String> map1 = converter.paramsToMap(cd);
+    assertEquals(cd.getID(), 1);
+    assertEquals(cd.getName(), null);
   }
 }

@@ -6,6 +6,8 @@ import javafx.scene.image.ImageView;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Field;
+import java.util.Map;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
@@ -25,18 +27,37 @@ public abstract class AbstractComponent implements Component {
   protected double YOffset;
   private Point absolute;
   private Point editor;
-  private final String DEFAULT_FILE_PATH = "frontend/properties/Defaults/GameObject";
-  private ResourceBundle DEFAULT_BUNDLE = ResourceBundle.getBundle(DEFAULT_FILE_PATH);
+  private String DEFAULT_FILE_PATH;
+  private ResourceBundle DEFAULT_BUNDLE;
 
   public AbstractComponent(int id) {
     ID = id;
+  }
+
+
+  protected void instantiatePropFile(String filepath) {
+    setDEFAULT_FILE_PATH(filepath);
+    setDEFAULT_BUNDLE(ResourceBundle.getBundle(getDEFAULT_FILE_PATH()));
+  }
+  protected void setValuesfromMap(Map<String, String> map) {
+    for(String param: map.keySet()){
+      try{
+        Field field = this.getClass().getDeclaredField(param);
+        field.setAccessible(true);
+        Class<?> fieldType = field.getType();
+        fieldType.getName();
+        Object value = fieldType.cast(map.get(param));
+        field.set(this, value);
+      } catch (Exception e){
+        e.printStackTrace();
+      }
+    }
   }
 
   @Override
   public Node getNode() {
     return node;
   }
-
   @Override
   public void setNode(Node node) {
     this.node = node;
@@ -46,22 +67,18 @@ public abstract class AbstractComponent implements Component {
   public int getID() {
     return ID;
   }
-
   @Override
   public void setID(int id) {
     ID = id;
   }
-
   @Override
   public void setDraggable(boolean draggable) {
     this.draggable = draggable;
   }
-
   @Override
   public void setActiveSelected(boolean active) {
     this.active = active;
   }
-
   @Override
   public void followMouse() {
     getNode().setOnMousePressed(e -> {
@@ -92,6 +109,19 @@ public abstract class AbstractComponent implements Component {
     this.size = size;
     getNode().setScaleY(size);
     getNode().setScaleX(size);
+  }
+
+  protected String getDEFAULT_FILE_PATH() {
+    return DEFAULT_FILE_PATH;
+  }
+  protected void setDEFAULT_FILE_PATH(String DEFAULT_FILE_PATH) {
+    this.DEFAULT_FILE_PATH = DEFAULT_FILE_PATH;
+  }
+  protected ResourceBundle getDEFAULT_BUNDLE() {
+    return DEFAULT_BUNDLE;
+  }
+  protected void setDEFAULT_BUNDLE(ResourceBundle DEFAULT_BUNDLE) {
+    this.DEFAULT_BUNDLE = DEFAULT_BUNDLE;
   }
 
   protected void setVisibleBool(boolean vis){

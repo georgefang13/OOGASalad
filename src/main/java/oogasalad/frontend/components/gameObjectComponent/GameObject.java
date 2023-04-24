@@ -24,34 +24,24 @@ public class GameObject extends AbstractComponent implements GameObjectComponent
   private boolean playable;
   private ImageView image;
 
-  private final String DEFAULT_FILE_PATH = "frontend.properties.Defaults.GameObject";
-  private ResourceBundle DEFAULT_BUNDLE = ResourceBundle.getBundle(DEFAULT_FILE_PATH);
-
   public GameObject(int ID) {
     super(ID);
     children = null;
-    setDefault();
-    followMouse();
+    instantiatePropFile("frontend.properties.Defaults.GameObject");
+    this.setDefault();
+    this.followMouse();
+    this.getNode();
   }
-  
+
   public GameObject(int ID, Map<String, String> map){
     super(ID);
     children = null;
-    setImage(DEFAULT_BUNDLE.getString(replaceWithFileLoadingByID()));
+    instantiatePropFile("frontend.properties.Defaults.GameObject");
+    setImage(getDEFAULT_BUNDLE().getString(replaceWithFileLoadingByID()));
     followMouse();
-    for(String param: map.keySet()){
-      try{
-        Field field = this.getClass().getDeclaredField(param);
-        field.setAccessible(true);
-        Class<?> fieldType = field.getType();
-        fieldType.getName();
-        Object value = fieldType.cast(map.get(param));
-        field.set(this, value);
-      } catch (Exception e){
-        e.printStackTrace();
-      }
-    }
+    setValuesfromMap(map);
   }
+
   private String replaceWithFileLoadingByID(){
     if (ID < 6){
       return "DEFAULT_IMAGE";
@@ -97,8 +87,8 @@ public class GameObject extends AbstractComponent implements GameObjectComponent
 
   @Override
   public void setDefault() {
-    Image newImage = new Image(DEFAULT_BUNDLE.getString("DEFAULT_IMAGE"));
-    setImage(DEFAULT_BUNDLE.getString("DEFAULT_IMAGE"));
+    Image newImage = new Image(getDEFAULT_BUNDLE().getString("DEFAULT_IMAGE"));
+    setImage(getDEFAULT_BUNDLE().getString("DEFAULT_IMAGE"));
   }
 
 }

@@ -13,11 +13,6 @@ public abstract class GameRunnerObject extends GameObject implements GameRunnerC
         this.gameRunnerController = gameRunnerController;
     }
 
-    public GameRunnerObject(int ID, Node container, GameRunnerController gameRunnerController) {
-        super(ID, container);
-        this.gameRunnerController = gameRunnerController;
-    }
-
     public GameRunnerObject(int ID, Map<String, String> map, GameRunnerController gameRunnerController) {
         super(ID, map);
         this.gameRunnerController = gameRunnerController;
