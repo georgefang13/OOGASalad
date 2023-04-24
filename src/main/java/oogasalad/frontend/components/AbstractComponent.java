@@ -12,7 +12,7 @@ import java.util.ResourceBundle;
 /**
  * @author Han and Aryan AbstractComponent is the abstraction that all Components are built off of.
  */
-public class AbstractComponent implements Component {
+public abstract class AbstractComponent implements Component {
 
   protected int ID;
   protected Node node;
@@ -20,8 +20,9 @@ public class AbstractComponent implements Component {
   private boolean active;
   private boolean visible;
   private int zIndex;
-  private int size;
-  private ImageView image;
+  private double size;
+  protected double XOffset;
+  protected double YOffset;
   private Point absolute;
   private Point editor;
   private final String DEFAULT_FILE_PATH = "frontend/properties/Defaults/GameObject";
@@ -29,11 +30,6 @@ public class AbstractComponent implements Component {
 
   public AbstractComponent(int id) {
     ID = id;
-  }
-
-  public AbstractComponent(int num, Node container) {
-    ID = num;
-    node = container;
   }
 
   @Override
@@ -67,28 +63,15 @@ public class AbstractComponent implements Component {
   }
 
   @Override
-  public void setDefault() {
-    Properties properties = new Properties();
-    try (InputStream inputStream = getClass().getResourceAsStream(DEFAULT_FILE_PATH)) {
-      properties.load(inputStream);
-      visible = Boolean.valueOf(properties.getProperty("VISIBLE"));
-      zIndex = Integer.parseInt(properties.getProperty("Z_INDEX"));
-      size = Integer.parseInt(properties.getProperty("SIZE"));
-      image.setImage(new Image(properties.getProperty("DEFAULT_IMAGE")));
-    } catch (IOException e) {
-      System.out.println("Failed");
-    }
-  }
-
-  @Override
   public void followMouse() {
-    image.setOnMousePressed(e -> {
-      double xOffset = e.getSceneX() - (getImage().getTranslateX() - getImage().getBoundsInLocal().getWidth()/2);
-      double yOffset = e.getSceneY() - (getImage().getTranslateY() - getImage().getBoundsInLocal().getHeight()/2);
+    getNode().setOnMousePressed(e -> {
+      XOffset = e.getSceneX() - (getNode().getTranslateX());
+      YOffset = e.getSceneY() - (getNode().getTranslateY());
+
     });
-    getImage().setOnMouseDragged(e -> {
-      getImage().setTranslateX(e.getSceneX());
-      getImage().setTranslateY(e.getSceneY());
+    getNode().setOnMouseDragged(e -> {
+      getNode().setTranslateX(e.getSceneX() - XOffset);
+      getNode().setTranslateY(e.getSceneY() - YOffset);
     });
   }
 
@@ -99,27 +82,16 @@ public class AbstractComponent implements Component {
 
   @Override
   public void setZIndex(int zIndex) {
-    image.setTranslateZ(zIndex);
+    getNode().setTranslateZ(zIndex);
     absolute.setZ(zIndex);
     editor.setZ(zIndex);
   }
 
   @Override
-  public void setImage(String imagePath) {
-    Image newImage = new Image(imagePath);
-    image = new ImageView(newImage);
-  }
-
-  @Override
-  public ImageView getImage() {
-    return image;
-  }
-
-  @Override
-  public void setSize(int size) {
+  public void setSize(double size) {
     this.size = size;
-    image.setScaleX(size);
-    image.setScaleY(size);
+    getNode().setScaleY(size);
+    getNode().setScaleX(size);
   }
 
   protected void setVisibleBool(boolean vis){

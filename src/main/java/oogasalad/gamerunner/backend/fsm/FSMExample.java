@@ -115,10 +115,10 @@ public class FSMExample {
 
     List<GameObject> available = availableVar.get();
     if (available.size() == 0) {
-      response += "DONE";
+      response += "\nDONE";
     }
 
-    response += "Available spots: ";
+    response += "\nAvailable spots: ";
     for (GameObject obj : available) {
       response = response + idManager.getId(obj) + " ";
     }
