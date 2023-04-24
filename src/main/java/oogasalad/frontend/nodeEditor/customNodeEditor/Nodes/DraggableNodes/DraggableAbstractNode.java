@@ -6,6 +6,7 @@ import javafx.scene.Node;
 import oogasalad.frontend.nodeEditor.customNodeEditor.Draggable;
 import oogasalad.frontend.nodeEditor.customNodeEditor.NodeController;
 import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.AbstractNode;
+import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.FileBasedNode;
 
 public abstract class DraggableAbstractNode extends AbstractNode implements Draggable {
 
@@ -61,13 +62,12 @@ public abstract class DraggableAbstractNode extends AbstractNode implements Drag
           double scaleFactor = this.getParent().getScaleX();
           double newX = e.getSceneX() / scaleFactor - xOffset;
           double newY = e.getSceneY() / scaleFactor - yOffset;
+
           move(newX, newY);
           if (this.getParentNode() != null) {
-              System.out.println("parent node = " + parentNode);
-              System.out.println("parent's child node = " + parentNode.getChildNode());
               this.parentNode.setChildNode(null);
               this.setParentNode(null);
-              System.out.println("parent node = " + parentNode);
+
           }
           e.consume();
         });
@@ -83,47 +83,54 @@ public abstract class DraggableAbstractNode extends AbstractNode implements Drag
         if (node instanceof AbstractNode && node != this) {
           if (this.getBoundsInParent().intersects(node.getBoundsInParent())
               && this.getChildNode() != node) {
-            //System.out.println("snapping " + this + " to " + node + "!");
-            snapTo((AbstractNode) node);
+              while(((AbstractNode) node).getChildNode()!=null){
+                  node = ((AbstractNode) node).getChildNode();
+              }
+              try {
+                    snapTo((AbstractNode) node);
+                } catch (InterruptedException interruptedException) {
+                    interruptedException.printStackTrace();
+              }
+              e.consume();
+              return;
           }
         }
       }
+
       e.consume();
     });
   }
 
-  protected void snapTo(AbstractNode node) {
-    // System.out.println("node is " + node);
+  protected void snapTo(AbstractNode node) throws InterruptedException {
+      if (node == this) {
+          return;
+      }
+
     while (node.getChildNode() != null && node.getChildNode() != this) {
       node = node.getChildNode();
-      // System.out.println("node is " + node);
     }
+
     this.setTranslateX(node.getTranslateX());
     this.setTranslateY(node.getTranslateY() + node.getHeight());
     AbstractNode temp = this;
+
     while (temp.getChildNode() != null) {
-      temp = temp.getChildNode();
-      temp.setTranslateX(this.getTranslateX());
-      temp.setTranslateY(this.getTranslateY() + this.getHeight());
+        AbstractNode tempOld = temp;
+        temp = temp.getChildNode();
+      temp.setTranslateX(tempOld.getTranslateX());
+      temp.setTranslateY(tempOld.getTranslateY() + tempOld.getHeight());
     }
-    if(node.getChildNode() == null) {
+    if(node.getChildNode() == null && node != this) {
         node.setChildNode(this);
         this.setParentNode(node);
     }
+
   }
 
   public void setBoundingBox(Bounds bounds) {
     boundingBox = bounds;
   }
 
-  //public String sendChildContent() {
-    //System.out.println("this is " + this);
-    //System.out.println("child node is " + this.getChildNode());
-    //if (this.getChildNode() == null) {
-    //  return "";
-    //}
-    //return "\n" + this.getChildNode().sendContent();
-  //}
 
   @Override
   public void move(double newX, double newY) {
