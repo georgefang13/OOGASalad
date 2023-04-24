@@ -587,7 +587,7 @@ public class IdManagerTest {
 
     Stream<Ownable> ownableStream = manager.objectStream()
         .filter(searchStream.isOfOwner(player))
-        .filter(searchStream.isOfClass("test"));
+        .filter(searchStream.isOfAnyClass("test"));
 
     //test that the stream is correct
     assertTrue(ownableStream.count() == 1);
@@ -603,7 +603,7 @@ public class IdManagerTest {
     assertTrue(ownableStream.count() == 0);
 
     ownableStream = manager.objectStream()
-        .filter(searchStream.isOfClass("test"));
+        .filter(searchStream.isOfAnyClass("test"));
 
     assertTrue(ownableStream.count() == 1);
 

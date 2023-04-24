@@ -24,14 +24,19 @@ public class OwnableSearchStream {
   public Predicate<Ownable> isOfOwner(Owner owner) {
     return ownable -> {
       List<String> ids = new ArrayList<>();
-      if (ownable.getOwner().equals(owner)) {
+      if (ownable.getOwner() != null && ownable.getOwner().equals(owner)) {
         ids.add(ownableIdManager.getId(ownable));
       }
       return new HashSet<>(ids).contains(ownableIdManager.getId(ownable));
     };
   }
 
-  public Predicate<Ownable> isOfClass(String... classNames) {
+  /**
+   * Test if an Ownable contains any of the classes specified
+   * @param classNames the classes to check for
+   * @return a Predicate that returns true if the Ownable contains any of the classes specified
+   */
+  public Predicate<Ownable> isOfAnyClass(String... classNames) {
     return ownable -> {
       if (ownable == null) {
         return false;
@@ -42,6 +47,25 @@ public class OwnableSearchStream {
         }
       }
       return false;
+    };
+  }
+
+  /**
+   * Test if an Ownable contains all the classes specified
+   * @param classNames the classes to check for
+   * @return a Predicate that returns true if the Ownable contains all of the classes specified
+   */
+  public Predicate<Ownable> isOfAllClasses(String... classNames) {
+    return ownable -> {
+      if (ownable == null) {
+        return false;
+      }
+      for (String className : classNames) {
+        if (!ownable.usesClass(className)) {
+          return false;
+        }
+      }
+      return true;
     };
   }
 

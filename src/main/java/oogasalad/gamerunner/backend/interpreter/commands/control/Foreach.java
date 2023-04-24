@@ -32,11 +32,11 @@ public class Foreach extends OperatorToken {
         for (Token item : list){
             env.addVariable(v.NAME, item);
             result = exprs.evaluate(env);
-            if (result instanceof ReturnToken || result instanceof BreakToken){
+            if (result instanceof ReturnToken || result instanceof Break){
                 break;
             }
         }
-        if (result instanceof BreakToken) result = null;
+        if (result instanceof Break) result = null;
         return result;
     }
 }

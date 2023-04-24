@@ -13,14 +13,4 @@ public abstract class Piece extends GameObject {
   public Piece(Owner owner) {
     super(owner);
   }
-
-  @Override
-  public void fromConfigFile(String path) {
-    // TODO: update ID + set initial dropbox (probably through IdManager?)
-  }
-
-  @Override
-  public String getAsJson() {
-    return null;
-  }
 }

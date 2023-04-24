@@ -1,15 +1,12 @@
 package oogasalad.sharedDependencies.backend.ownables.variables;
 
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import oogasalad.sharedDependencies.backend.filemanagers.FileManager;
 import oogasalad.sharedDependencies.backend.ownables.Ownable;
 import oogasalad.sharedDependencies.backend.owners.Owner;
 
@@ -118,31 +115,6 @@ public class Variable<T> extends Ownable {
     for (VariableListener<T> listener : listeners) {
       listener.onChange(value);
     }
-  }
-
-  @Override
-  public void fromConfigFile(String object) {
-//    // TODO: update ID
-//    String className = FileManager.getStringByKey(object, "type");
-//    try {
-//      Class<?> variableType = Class.forName(className);
-//      Class<?> instantiatedType = Class.forName(this.getClass().getTypeName());
-//      if (variableType != instantiatedType || !validClasses.contains(variableType)) {
-//        throw new ClassNotFoundException();
-//      }
-//      Constructor<?> constructor = instantiatedType.getConstructor(String.class);
-//      // NOTE: condition above checks that casting is valid
-//      value = (T) constructor.newInstance(FileManager.getStringByKey(object, "value"));
-//    } catch (ClassNotFoundException | NoSuchMethodException
-//             | InvocationTargetException | InstantiationException | IllegalAccessException e) {
-//      // TODO: add custom exception
-//      throw new RuntimeException(e);
-//    }
-  }
-
-  @Override
-  public String getAsJson() {
-    return null;
   }
 }
 

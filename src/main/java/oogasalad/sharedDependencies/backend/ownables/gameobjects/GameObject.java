@@ -1,6 +1,6 @@
 package oogasalad.sharedDependencies.backend.ownables.gameobjects;
 
-import oogasalad.sharedDependencies.backend.filemanagers.Configurable;
+import java.io.FileNotFoundException;
 import oogasalad.sharedDependencies.backend.ownables.Ownable;
 import oogasalad.sharedDependencies.backend.owners.Owner;
 
@@ -10,23 +10,13 @@ import oogasalad.sharedDependencies.backend.owners.Owner;
  *
  * @author Michael Bryant
  */
-public class GameObject extends Ownable implements Configurable {
+public class GameObject extends Ownable {
 
   /**
    * Creates a new GameObject.
    */
   public GameObject(Owner owner) {
     super(owner);
-  }
-
-  @Override
-  public void fromConfigFile(String path) {
-    // Does nothing
-  }
-
-  @Override
-  public String getAsJson() {
-    return null;
   }
 }
 
