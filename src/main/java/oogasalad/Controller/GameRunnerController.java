@@ -5,9 +5,11 @@ import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
 //import oogasalad.frontend.components.gameObjectComponent.GameObject;
 import oogasalad.frontend.components.gameObjectComponent.GameRunner.Board;
+import oogasalad.frontend.components.gameObjectComponent.GameRunner.GameRunnerObject;
 import oogasalad.frontend.components.gameObjectComponent.GameRunner.Piece;
 import oogasalad.frontend.scenes.GamePlayerMainScene;
 import oogasalad.gamerunner.backend.Game;
+import oogasalad.gamerunner.backend.GameController;
 import oogasalad.sharedDependencies.backend.filemanagers.FileManager;
 import oogasalad.sharedDependencies.backend.ownables.gameobjects.DropZone;
 import oogasalad.sharedDependencies.backend.ownables.gameobjects.GameObject;
@@ -15,9 +17,10 @@ import oogasalad.sharedDependencies.backend.ownables.gameobjects.GameObject;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public class GameRunnerController {
+public class GameRunnerController implements GameController {
     private Game game;
     private GamePlayerMainScene gamePlayerMainScene;
 
@@ -31,7 +34,7 @@ public class GameRunnerController {
     public GameRunnerController(GamePlayerMainScene gamePlayerMainScene) {
         this.gamePlayerMainScene = gamePlayerMainScene;
 
-        directory = "data/tictactoe";
+        directory = "data/games/tictactoe";
         int numPlayers = 2; //hardcoded read from file
 
         game = new Game(this,directory,numPlayers);
@@ -58,7 +61,26 @@ public class GameRunnerController {
 
         return board.getBoardVisual();
     }
-    public void initializeDropZone(DropZoneParameters params){
+
+    @Override
+    public void addDropZone(DropZoneParameters params){
+
+    }
+
+    @Override
+    public void addPiece(String id, String image, String DropZoneID, double size){
+//        GameObject piece = new Game
+//        piece.setImage(image);
+//        piece.setSize(size);
+    }
+
+    @Override
+    public void setClickable(List<String> ids){
+
+    }
+
+    @Override
+    public void movePiece(String id, String dropZoneID) {
 
 
     }
@@ -96,6 +118,7 @@ public class GameRunnerController {
         }
         return pieceNodes;
     }
+
     public void updatePieceMove(int id) {
         Piece piece = pieceMap.get(id);
         Board.BoardXY boardXY = getPieceBoardLocation(piece.getNode());

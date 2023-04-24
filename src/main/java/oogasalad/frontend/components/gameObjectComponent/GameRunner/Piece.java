@@ -3,6 +3,7 @@ package oogasalad.frontend.components.gameObjectComponent.GameRunner;
 import javafx.scene.Node;
 import oogasalad.Controller.GameRunnerController;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class Piece extends GameRunnerObject{
@@ -12,8 +13,10 @@ public class Piece extends GameRunnerObject{
         super(ID, gameRunnerController);
     }
 
+    //@TODO
+    // Owen what is this map bruh?
     public Piece(int ID, Node container, GameRunnerController gameRunnerController) {
-        super(ID, container, gameRunnerController);
+        super(ID, new HashMap<>(), gameRunnerController);
     }
 
     public Piece(int ID, Map<String, String> map, GameRunnerController gameRunnerController) {

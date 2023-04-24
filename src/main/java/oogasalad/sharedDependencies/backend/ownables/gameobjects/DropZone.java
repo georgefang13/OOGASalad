@@ -1,43 +1,28 @@
 package oogasalad.sharedDependencies.backend.ownables.gameobjects;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
-import oogasalad.sharedDependencies.backend.filemanagers.FileManager;
 import oogasalad.sharedDependencies.backend.owners.Owner;
 
 public class DropZone extends GameObject {
 
-  private String id;
   private final HashMap<String, DropZone> edges;
   private final HashMap<String, Object> holding;
 
-  public DropZone(String nodeId) {
-    this(nodeId, null);
+  public DropZone() {
+    this(null);
   }
 
-  public DropZone(String nodeId, Owner owner) {
+  public DropZone(Owner owner) {
     super(owner);
-    this.id = nodeId;
     edges = new HashMap<>();
     holding = new HashMap<>();
   }
 
-  /**
-   * Get the id of the node.
-   *
-   * @return the id of this node
-   */
-  public String getId() {
-    return id;
-  }
 
   /**
    * Adds an object to the node. If the object is already in the dropzone, it updates the key
@@ -60,10 +45,7 @@ public class DropZone extends GameObject {
    * @return the object that was removed
    */
   public Object removeObject(String key) {
-    if (key != null && holding.containsKey(key)){
-        return holding.remove(key);
-    }
-    return null;
+    return holding.remove(key);
   }
 
   /**
@@ -192,53 +174,8 @@ public class DropZone extends GameObject {
   }
 
   @Override
-  public void fromConfigFile(String path) throws FileNotFoundException {
-    // TODO: make validation check, likely as static method of FileManager
-    // TODO: pass ID into IdManager (maybe change constructor?)
-    FileManager reader = new FileManager(path);
-    this.id = reader.getString("id");
-
-    // this.id = FileManager.getStringByKey(object, "id");
-
-//    for (JsonElement edgeEntry : object.get("connections").getAsJsonArray()) {
-//      JsonObject edge = edgeEntry.getAsJsonObject();
-////            edges.put(FileManager.getStringByKey(edge, "edgeId"));
-//    }
-//
-//    for (JsonElement objectEntry : object.get("starterObjects").getAsJsonArray()) {
-//      // TODO: get gameObject by Id and add it to holding
-//    }
-
-
-  }
-
-  @Override
-  public void toConfigFile(String path) {
-    FileManager fileManager = new FileManager();
-    fileManager.addContent(id, "id");
-    for (String edgeId : edges.keySet()) {
-      fileManager.addContent(edgeId, "connections", "edgeId");
-      fileManager.addContent(edges.get(edgeId).getId(), "connections", "nodeId");
-    }
-    fileManager.saveToFile(path);
-  }
-
-
-  @Override
-  public boolean equals(Object o) {
-    if (o instanceof DropZone b) {
-      return id.equals(b.id);
-    }
-    return false;
-  }
-
-  @Override
   public String toString() {
-    return id;
+    return "DropZone";
   }
 
-  @Override
-  public int hashCode() {
-    return id.hashCode();
-  }
 }

@@ -17,7 +17,11 @@ public class AddItem extends OperatorToken {
 
   @Override
   public Token evaluate(Environment env) throws IllegalArgumentException {
-    Token t1 = getArg(0).evaluate(env);
+    Token t1 = getArg(0);
+    if (!(t1 instanceof ExpressionToken)){
+        t1 = t1.evaluate(env);
+    }
+
     Token t2 = getArg(1);
     if (t2 instanceof VariableToken) {
       t2 = t2.evaluate(env);

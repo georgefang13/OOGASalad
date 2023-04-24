@@ -3,6 +3,7 @@ package oogasalad.gamerunner.backend.interpretables;
 import oogasalad.gameeditor.backend.id.IdManager;
 import oogasalad.gamerunner.backend.interpreter.Interpreter;
 import oogasalad.sharedDependencies.backend.ownables.variables.Variable;
+import oogasalad.sharedDependencies.backend.owners.Player;
 
 /**
  * Defines a set of instructions that check whether some condition in the game has been met,
@@ -13,18 +14,18 @@ import oogasalad.sharedDependencies.backend.ownables.variables.Variable;
  */
 public class Goal extends Interpretable {
 
-  public int test(Interpreter interpreter, IdManager idmanager) {
-    interpreter.interpret("del :game_output_state");
+  public Player test(Interpreter interpreter, IdManager idmanager) {
+    interpreter.interpret("del :game_state_output");
 
     for (String instruction : getInstructions()) {
       interpreter.interpret(instruction);
     }
 
-    if (!idmanager.isIdInUse("output_state")) {
-      return -1;
+    if (!idmanager.isIdInUse("state_output")) {
+      return null;
     }
-    Variable<Double> v = (Variable<Double>) idmanager.getObject("output_state");
-    return v.get().intValue();
+    Variable<Player> v = (Variable<Player>) idmanager.getObject("state_output");
+    return v.get();
   }
 
 }
