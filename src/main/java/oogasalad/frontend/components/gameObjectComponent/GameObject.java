@@ -30,9 +30,6 @@ public class GameObject extends AbstractComponent implements GameObjectComponent
     setImage(DEFAULT_BUNDLE.getString("DEFAULT_IMAGE"));
     followMouse();
   }
-  public GameObject(int ID, Node container){
-    super(ID, container);
-  }
 
   //TODO fix default values for map constructor
   public GameObject(Map<String, String> map){
@@ -67,7 +64,21 @@ public class GameObject extends AbstractComponent implements GameObjectComponent
   }
 
   @Override
+  public void setImage(String imagePath) {
+
+  }
+
+  @Override
+  public ImageView getImage() {
+    return null;
+  }
+
+  @Override
   public Node getNode(){
     return getImage();
+  }
+
+  @Override
+  public void setDefault() {
   }
 }

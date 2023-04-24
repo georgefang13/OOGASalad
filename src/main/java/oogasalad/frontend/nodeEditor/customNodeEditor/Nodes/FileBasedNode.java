@@ -7,6 +7,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
+import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.DraggableNodes.DraggableAbstractNode;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -65,6 +66,7 @@ public class FileBasedNode extends DraggableAbstractNode {
             this.getChildren().addAll(tempInputArea);
         });
         outputLabel = new Label();
+        this.getChildren().addAll(outputLabel);
         updateOutput();
 
     }
@@ -80,7 +82,7 @@ public class FileBasedNode extends DraggableAbstractNode {
     }
 
     private void updateOutput() {
-        String output = String.format(myParseStr,"hi","bye");
+        String output = "output: ";
         outputLabel.setText(output);
     }
 

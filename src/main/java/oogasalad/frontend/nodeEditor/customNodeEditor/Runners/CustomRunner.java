@@ -25,6 +25,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.*;
+import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.DraggableNodes.DraggableAbstractNode;
 
 /**
  * Scrolling/panning based on
@@ -33,7 +34,7 @@ import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.*;
 
 public class CustomRunner extends Application {
 
-  public static final String NODES_FOLDER = "oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.";
+  public static final String NODES_FOLDER = "oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.DraggableNodes.";
 
   private Group group;
   private ImageView workspace;
@@ -79,7 +80,7 @@ public class CustomRunner extends Application {
 
     createNode("Sum", NODES_FOLDER + "SumNode");
     createNode("Difference", NODES_FOLDER + "DifferenceNode");
-    createNode("TextField", NODES_FOLDER + "CustomNodes.TextFieldNode");
+    createNode("TextField", NODES_FOLDER + "TextFieldNode");
 
     Button sendButton = new Button("Submit");
     sendButton.setOnAction(event -> {

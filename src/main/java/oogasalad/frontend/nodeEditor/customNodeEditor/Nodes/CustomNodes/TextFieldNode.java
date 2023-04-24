@@ -3,7 +3,7 @@ package oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.CustomNodes;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.AbstractNode;
-import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.DraggableAbstractNode;
+import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.DraggableNodes.DraggableAbstractNode;
 
 public class TextFieldNode extends DraggableAbstractNode {
 

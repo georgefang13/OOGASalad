@@ -12,10 +12,6 @@ public class BoardPiece extends GameRunnerObject{
         super(ID, gameRunnerController);
     }
 
-    public BoardPiece(int ID, Node container, GameRunnerController gameRunnerController) {
-        super(ID, container, gameRunnerController);
-    }
-
     public BoardPiece(int ID, Map<String, String> map, GameRunnerController gameRunnerController) {
         super(ID, map, gameRunnerController);
     }
