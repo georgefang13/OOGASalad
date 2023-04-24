@@ -5,6 +5,7 @@ import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
 //import oogasalad.frontend.components.gameObjectComponent.GameObject;
 import oogasalad.frontend.components.gameObjectComponent.GameRunner.Board;
+import oogasalad.frontend.components.gameObjectComponent.GameRunner.GameRunnerObject;
 import oogasalad.frontend.components.gameObjectComponent.GameRunner.Piece;
 import oogasalad.frontend.scenes.GamePlayerMainScene;
 import oogasalad.gamerunner.backend.Game;
@@ -62,6 +63,12 @@ public class GameRunnerController {
 
     }
 
+    public void initializePiece(String id, String image, int x, int y, double size){
+//        GameObject piece = new Game
+//        piece.setImage(image);
+//        piece.setSize(size);
+    }
+
     public record DropZoneParameters(String id, int x, int y, int height, int width){}
 
     private void parseDropZoneLayout() throws FileNotFoundException {
@@ -95,6 +102,7 @@ public class GameRunnerController {
         }
         return pieceNodes;
     }
+
     public void updatePieceMove(int id) {
         Piece piece = pieceMap.get(id);
         Board.BoardXY boardXY = getPieceBoardLocation(piece.getNode());

@@ -1,92 +1,161 @@
 {
-  "nodes": [
-    {
-      "id": "top-left",
-      "position": {
-        "x": 0,
-        "y": 0
-      },
-      "connections": []
+  "0,0": {
+    "position": {
+      "x": "0",
+      "y": "0",
+      "width": "100",
+      "height": "100"
     },
-    {
-      "id": "top-center",
-      "position": {
-        "x": 1,
-        "y": 0
-      },
-      "connections": []
+    "connections": {
+      "Right": "0,1",
+      "Down": "1,0",
+      "DownRight": "1,1"
     },
-    {
-      "id": "top-right",
-      "position": {
-        "x": 2,
-        "y": 0
-      },
-      "connections": []
+    "classes": "board"
+  },
+  "0,1": {
+    "position": {
+      "x": "0",
+      "y": "1",
+      "width": "100",
+      "height": "100"
     },
-    {
-      "id": "center-left",
-      "position": {
-        "x": 0,
-        "y": 1
-      },
-      "connections": []
+    "connections": {
+      "Right": "0,2",
+      "Down": "1,1",
+      "Left": "0,0",
+      "DownRight": "1,2",
+      "DownLeft": "1,0"
     },
-    {
-      "id": "center",
-      "position": {
-        "x": 1,
-        "y": 1
-      },
-      "connections": []
+    "classes": "board"
+  },
+  "0,2": {
+    "position": {
+      "x": "0",
+      "y": "2",
+      "width": "100",
+      "height": "100"
     },
-    {
-      "id": "center-right",
-      "position": {
-        "x": 2,
-        "y": 1
-      },
-      "connections": []
+    "connections": {
+      "Down": "1,2",
+      "Left": "0,1",
+      "DownLeft": "1,1"
     },
-    {
-      "id": "bottom-left",
-      "position": {
-        "x": 0,
-        "y": 2
-      },
-      "connections": []
+    "classes": "board"
+  },
+  "1,0": {
+    "position": {
+      "x": "1",
+      "y": "0",
+      "width": "100",
+      "height": "100"
     },
-    {
-      "id": "bottom-center",
-      "position": {
-        "x": 1,
-        "y": 2
-      },
-      "connections": []
+    "connections": {
+      "Right": "1,1",
+      "Down": "2,0",
+      "Up": "0,0",
+      "UpRight": "0,1",
+      "DownRight": "2,1"
     },
-    {
-      "id": "bottom-right",
-      "position": {
-        "x": 2,
-        "y": 2
-      },
-      "connections": []
+    "classes": "board"
+  },
+  "1,1": {
+    "position": {
+      "x": "1",
+      "y": "1",
+      "width": "100",
+      "height": "100"
     },
-    {
-      "id": "p1",
-      "position": {
-        "x": 0,
-        "y": -5
-      },
-      "connections": []
+    "connections": {
+      "Down": "2,1",
+      "Left": "1,0",
+      "UpRight": "0,2",
+      "DownRight": "2,2",
+      "Right": "1,2",
+      "UpLeft": "0,0",
+      "Up": "0,1",
+      "DownLeft": "2,0"
     },
-    {
-      "id": "p2",
-      "position": {
-        "x": 0,
-        "y": 5
-      },
-      "connections": []
-    }
-  ]
+    "classes": "board"
+  },
+  "1,2": {
+    "position": {
+      "x": "1",
+      "y": "2",
+      "width": "100",
+      "height": "100"
+    },
+    "connections": {
+      "UpLeft": "0,1",
+      "Down": "2,2",
+      "Left": "1,1",
+      "Up": "0,2",
+      "DownLeft": "2,1"
+    },
+    "classes": "board"
+  },
+  "2,0": {
+    "position": {
+      "x": "2",
+      "y": "0",
+      "width": "100",
+      "height": "100"
+    },
+    "connections": {
+      "Right": "2,1",
+      "Up": "1,0",
+      "UpRight": "1,1"
+    },
+    "classes": "board"
+  },
+  "2,1": {
+    "position": {
+      "x": "2",
+      "y": "1",
+      "width": "100",
+      "height": "100"
+    },
+    "connections": {
+      "Right": "2,2",
+      "UpLeft": "1,0",
+      "Left": "2,0",
+      "Up": "1,1",
+      "UpRight": "1,2"
+    },
+    "classes": "board"
+  },
+  "2,2": {
+    "position": {
+      "x": "2",
+      "y": "2",
+      "width": "100",
+      "height": "100"
+    },
+    "connections": {
+      "UpLeft": "1,1",
+      "Left": "2,1",
+      "Up": "1,2"
+    },
+    "classes": "board"
+  },
+  "XDropZone": {
+    "position": {
+      "x": "200",
+      "y": "200",
+      "width": "100",
+      "height": "300"
+    },
+    "connections": {},
+    "classes": []
+  },
+  "ODropZone": {
+    "position": {
+      "x": "200",
+      "y": "500",
+      "width": "100",
+      "height": "300"
+    },
+    "connections": {},
+    "classes": []
+  }
 }
