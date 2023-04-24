@@ -15,7 +15,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import oogasalad.frontend.panels.Panel;
 import oogasalad.frontend.panels.PanelController;
-import oogasalad.frontend.windows.GameEditorWindow;
 import oogasalad.frontend.windows.GamePlayerWindow;
 import org.kordamp.ikonli.fontawesome5.FontAwesomeSolid;
 import org.kordamp.ikonli.javafx.FontIcon;
@@ -34,9 +33,6 @@ public class LibraryGridPanel extends GridPane implements Panel {
   private final int IMAGE_HEIGHT = 150;
   private final int IMAGE_RADIUS = 20;
   PanelController panelController;
-  private final List<String> libraryGames = new ArrayList<>(
-      Arrays.asList("Tic-Tak-Toe", "Fortnite", "Backgammon", "Chess", "Checkers")); //TODO: TEMPORARY
-
   /**
    * Constructor for the environment panel
    */
@@ -46,48 +42,11 @@ public class LibraryGridPanel extends GridPane implements Panel {
     this.panelController = panelController;
     this.getStyleClass().add(ID_BUNDLE.getString(LIBRARY_GRID_PANE_ID));
   }
-  public VBox createGameBox(String gameName) {
-    VBox gameBox = new VBox();
-    gameBox.getStyleClass().add(ID_BUNDLE.getString(GAME_BOX_ID));
-    gameBox.getChildren().addAll(createImageView(gameName), createTextIconHBox(gameName));
-    return gameBox;
-  }
-  private ImageView createImageView(String gameName) {
-    ImageView gameImage = new ImageView("file:src/main/resources/frontend/images/GameLibrary/" + gameName + ".png"); //make file:src/main/resources/frontend/images/GameLibrary/ a vairable and have the game name find the image name from a helper function
-    gameImage.setPreserveRatio(false);
-    gameImage.setFitHeight(IMAGE_HEIGHT);
-    gameImage.setFitWidth(IMAGE_WIDTH);
-    Rectangle clip = new Rectangle();
-    clip.setWidth(gameImage.getFitWidth());
-    clip.setHeight(gameImage.getFitHeight());
-    clip.setArcWidth(IMAGE_RADIUS);
-    clip.setArcHeight(IMAGE_RADIUS);
-    gameImage.setClip(clip);
-    gameImage.setOnMouseClicked(
-        e -> panelController.newSceneFromPanel("test", GamePlayerWindow.WindowScenes.PLAY_SCENE));
-    gameImage.getStyleClass().add(ID_BUNDLE.getString(GAME_BOX_IMAGE_ID));
-    return gameImage;
-  }
-  private HBox createTextIconHBox(String gameName) {
-    HBox gameTextBox = new HBox();
-    gameTextBox.getStyleClass().add(ID_BUNDLE.getString(GAME_NAME_LABEL_BOX_ID));
-    Label gameNameLabel = new Label(gameName);
-    gameNameLabel.setOnMouseClicked(
-        e -> panelController.newSceneFromPanel("test", GamePlayerWindow.WindowScenes.PLAY_SCENE));
-    gameNameLabel.getStyleClass().add(ID_BUNDLE.getString(GAME_NAME_LABEL_ID));
-    gameTextBox.getChildren().add(gameNameLabel);
-
-    HBox iconBox = new HBox();
-    iconBox.getStyleClass().add(ID_BUNDLE.getString(GAME_BOX_EDIT_ICON_BOX_ID));
-    FontIcon editIcon = new FontIcon(FontAwesomeSolid.EDIT);
-    editIcon.getStyleClass().add(ID_BUNDLE.getString(GAME_BOX_EDIT_ICON_ID));
-    iconBox.getChildren().add(editIcon);
-
-    HBox gameNameEditBox = new HBox();
-    gameNameEditBox.getChildren().addAll(gameTextBox, iconBox);
-    return gameNameEditBox;
-  }
-
+  /**
+   * Creates the components that populate the panel for the grid panel
+   *
+   * @return Panel
+   */
   public Panel makePanel() {
     ColumnConstraints column1 = new ColumnConstraints();
     column1.setPercentWidth(25);
@@ -112,8 +71,52 @@ public class LibraryGridPanel extends GridPane implements Panel {
     }
     return this;
   }
+  private VBox createGameBox(String gameName) {
+    VBox gameBox = new VBox();
+    gameBox.getStyleClass().add(ID_BUNDLE.getString(GAME_BOX_ID));
+    gameBox.getChildren().addAll(createImageView(gameName), createTextIconHBox(gameName));
+    return gameBox;
+  }
+  private ImageView createImageView(String gameName) {
+    ImageView gameImage = new ImageView("file:src/main/resources/frontend/images/GameLibrary/" + gameName + ".png");
+    //TODO: change to fit Ethan file system
+    gameImage.setPreserveRatio(false);
+    gameImage.setFitHeight(IMAGE_HEIGHT);
+    gameImage.setFitWidth(IMAGE_WIDTH);
+    Rectangle clip = new Rectangle();
+    clip.setWidth(gameImage.getFitWidth());
+    clip.setHeight(gameImage.getFitHeight());
+    clip.setArcWidth(IMAGE_RADIUS);
+    clip.setArcHeight(IMAGE_RADIUS);
+    gameImage.setClip(clip);
+    gameImage.setOnMouseClicked(
+        e -> panelController.newSceneFromPanel("OWEN FIX THIS", GamePlayerWindow.WindowScenes.PLAY_SCENE));
+    gameImage.getStyleClass().add(ID_BUNDLE.getString(GAME_BOX_IMAGE_ID));
+    return gameImage;
+  }
+  private HBox createTextIconHBox(String gameName) {
+    HBox gameTextBox = new HBox();
+    gameTextBox.getStyleClass().add(ID_BUNDLE.getString(GAME_NAME_LABEL_BOX_ID));
+    Label gameNameLabel = new Label(gameName);
+    gameNameLabel.setOnMouseClicked(
+        e -> panelController.newSceneFromPanel("OWEN FIX THIS", GamePlayerWindow.WindowScenes.PLAY_SCENE));
+    gameNameLabel.getStyleClass().add(ID_BUNDLE.getString(GAME_NAME_LABEL_ID));
+    gameTextBox.getChildren().add(gameNameLabel);
+
+    HBox iconBox = new HBox();
+    iconBox.getStyleClass().add(ID_BUNDLE.getString(GAME_BOX_EDIT_ICON_BOX_ID));
+    FontIcon editIcon = new FontIcon(FontAwesomeSolid.EDIT);
+    editIcon.getStyleClass().add(ID_BUNDLE.getString(GAME_BOX_EDIT_ICON_ID));
+    iconBox.getChildren().add(editIcon);
+
+    HBox gameNameEditBox = new HBox();
+    gameNameEditBox.getChildren().addAll(gameTextBox, iconBox);
+    return gameNameEditBox;
+  }
+
   private List<String> getNamesOfFilesToLoad() {
     File folder = new File("src/main/resources/frontend/images/GameLibrary");
+    //TODO: FIX to match Ethan's file system
     File[] listOfGameImages = folder.listFiles();
 
     List<String> fileNames = new ArrayList<>();
@@ -122,7 +125,6 @@ public class LibraryGridPanel extends GridPane implements Panel {
         fileNames.add(listOfGameImages[i].getName().substring(0, listOfGameImages[i].getName().indexOf('.')));
       }
     }
-    fileNames.remove("UploadImage");
     return fileNames;
   }
 

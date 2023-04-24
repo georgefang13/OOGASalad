@@ -2,16 +2,12 @@ package oogasalad.frontend.scenes;
 
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
 import oogasalad.frontend.panels.libraryPanels.HeaderPanel;
 import oogasalad.frontend.panels.libraryPanels.LibraryGridPanel;
 import oogasalad.frontend.panels.libraryPanels.SortedGamesPanel;
-import oogasalad.frontend.windows.GamePlayerWindow;
 
 public class GamePlayerLibraryScene extends AbstractScene {
-  private Button editGridButton;
   private BorderPane root;
   private LibraryGridPanel libraryGridPanel;
   private HeaderPanel gameLibraryHeader;

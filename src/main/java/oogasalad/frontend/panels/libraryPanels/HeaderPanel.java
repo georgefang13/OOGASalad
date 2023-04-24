@@ -8,7 +8,6 @@ import javafx.scene.layout.HBox;
 import oogasalad.frontend.factories.ButtonFactory;
 import oogasalad.frontend.panels.Panel;
 import oogasalad.frontend.panels.PanelController;
-import oogasalad.frontend.windows.GameEditorWindow.WindowScenes;
 
 public class HeaderPanel extends HBox implements Panel {
   private static final String PUZZLE_ICON = "puzzle_piece";
