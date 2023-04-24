@@ -27,7 +27,7 @@ import javafx.stage.Stage;
 import oogasalad.frontend.nodeEditor.customNodeEditor.NodeController;
 import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.*;
 import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.DraggableNodes.DraggableAbstractNode;
-import oogasalad.frontend.panels.subPanels.ComponentPanel;
+import oogasalad.frontend.panels.editorPanels.ComponentPanel;
 import oogasalad.frontend.windows.NodeWindow;
 
 /**
