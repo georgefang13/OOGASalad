@@ -27,6 +27,7 @@ public class ComponentPanel extends VBoxPanel {
   private VBox gameComponents;
   private VBox players;
   private VBox displayable;
+  private VBox gameComponentInstances;
 
   private double xOffset;
   private double yOffset;
@@ -42,6 +43,7 @@ public class ComponentPanel extends VBoxPanel {
     gameComponents = new VBox();
     players = new VBox();
     displayable = new VBox();
+    gameComponentInstances = new VBox();
   }
 
   /**
@@ -93,18 +95,14 @@ public class ComponentPanel extends VBoxPanel {
   }
 
   private Accordion createActiveComponentsAccordion() {
+
     TitledPane t1 = new TitledPane("Game Objects",
-        createComponentInstance()); // TODO: make this dynamic so when you press ok on the modal after adding a compoennet it shows up in this panel
+        gameComponentInstances); // TODO: make this dynamic so when you press ok on the modal after adding a compoennet it shows up in this panel
     Accordion accordion = new Accordion();
     accordion.getPanes().addAll(t1);
     return accordion;
   }
 
-  private Button createComponentInstance() {
-    Button b = new Button("Make a new Game Object");
-    b.setOnAction(e -> createNewComponentInstance());
-    return b;
-  }
 
   public void addGameComponentTemplate(String name){
 
@@ -114,11 +112,12 @@ public class ComponentPanel extends VBoxPanel {
 //      xOffset = e.getSceneX();
 //      yOffset = e.getSceneY();
 //    });
-    
-    gameComponents.getChildren().add()
+    gameComponents.getChildren().add(b);
   }
   private void createNewComponentInstance(String name) {
     mController.createGameObjectInstance(name);
+    Button b = new Button(name);
+    gameComponentInstances.getChildren().add(b);
   }
 
   private void createNewComponentTemplate(){

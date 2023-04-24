@@ -1,5 +1,6 @@
 package oogasalad.frontend.modals;
 
+import java.util.HashMap;
 import java.util.Map;
 import javafx.scene.layout.Pane;
 import oogasalad.frontend.components.Component;
@@ -19,6 +20,7 @@ public class ModalController {
   public ModalController(ComponentPanel componentPanel) {
     parentPanel = componentPanel;
     factory = new ComponentsFactory();
+    componentMap = new HashMap<>();
   }
 
   public void createGameObjectTemplate(Map<String, String> map) {
