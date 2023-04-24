@@ -45,7 +45,7 @@ public class BoardCreator {
 
     for (int i = 0; i < rows; i++) {
       for (int j = 0; j < cols; j++) {
-        nodes[i][j] = new DropZone(i + "," + j);
+        nodes[i][j] = new DropZone();
       }
     }
 
@@ -139,7 +139,7 @@ public class BoardCreator {
   public static List<DropZone> create1DLoop(int length, String forward, String backward) {
     List<DropZone> nodes = new ArrayList<>();
     for (int i = 0; i < length; i++) {
-      nodes.add(new DropZone(i + ""));
+      nodes.add(new DropZone());
     }
     for (int i = 0; i < length; i++) {
       DropZone next = nodes.get((i + 1) % length);

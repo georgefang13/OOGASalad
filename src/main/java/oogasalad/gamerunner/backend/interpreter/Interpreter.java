@@ -81,9 +81,6 @@ public class Interpreter implements Runnable {
     env.linkIdManager(game);
   }
 
-  public void linkGame(GameToInterpreterAPI game){
-    env.linkGame(game);
-  }
 
   /**
    * Sets the language of the interpreter
@@ -92,5 +89,9 @@ public class Interpreter implements Runnable {
    */
   public void setLanguage(String language) {
     env.setLanguage(language);
+  }
+
+  public void linkGame(GameToInterpreterAPI game) {
+    env.linkGame(game);
   }
 }

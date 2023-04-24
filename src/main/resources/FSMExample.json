@@ -1,7 +1,7 @@
 {
   "states": {
     "INIT": {
-      "init": "make :game_log [ ] to getAvailable [ ] [ make :game_available [ ] foreach [ :x fromgameclass \"board ] [ additem :x :game_log if [ == 0 len dzitems :x ] [ additem :x :game_available ] ] ] getAvailable",
+      "init": "to getAvailable [ ] [ make :game_available [ ] foreach [ :x fromgameclass \"board ] [ if == 0 len dzitems :x [ additem :x :game_available ] ] ] getAvailable",
       "leave": "",
       "setValue": "",
       "to": "make :game_state_output \"MOVE"
@@ -9,7 +9,7 @@
     "MOVE": {
       "init": "",
       "leave": "getAvailable",
-      "setValue": "ifelse [ == :game_turn 0 ] [ putdzitem \"obj \"X fromgame :game_state_input  ] [ putdzitem \"obj \"O fromgame :game_state_input ]",
+      "setValue": "ifelse == :game_turn 0 [ putdzitem \"obj \"X fromgame :game_state_input  ] [ putdzitem \"obj \"O fromgame :game_state_input ]",
       "to": "make :game_state_output \"DONE"
     },
     "DONE": {
@@ -20,6 +20,6 @@
     }
   },
   "goals": [
-  "make :game_log [ ] make :piece \"X if [ == 0 :game_turn ] [ make :piece \"O ] to blocked [ :x ] [ != dzitem \"obj :x :piece ] for [ :i 0 3 ] [ for [ :j 0 3 ] [ make :dz fromgame ( + :i \", :j ) foreach [ :edge dzpaths :dz ] [ make :dzs dzfollowtoblock :dz [ :edge ] fvar blocked make :curspot dzitem \"obj :dz if [ and == :piece :curspot == 2 len :dzs ] [ make :game_state_output :piece ] ] ] ]"
+  "make :piece \"X if == 0 :game_turn  [ make :piece \"O ] to blocked [ :x ] [ return != dzitem \"obj :x :piece ] foreach [ :dz fromgameclass \"board ] [ foreach [ :edge dzpaths :dz ] [ make :dzs dzfollowtoblock :dz [ :edge ] fvar blocked make :curspot dzitem \"obj :dz if and == :piece :curspot == 2 len :dzs [ make :game_state_output :piece ] ] ]"
   ]
 }

@@ -41,9 +41,25 @@ public class FSMExample {
     Variable<Integer> numPlayers = new Variable<>(2);
     availableVar = new Variable<>(new ArrayList<>());
 
-    String absoluteFilePath =
-        System.getProperty("user.dir") + "/src/main/resources/FSMExample.json";
+    readFromJson();
 
+    List<DropZone> zones = BoardCreator.createGrid(3, 3);
+    for (DropZone zone : zones) {
+      zone.addClass("board");
+      idManager.addObject(zone);
+    }
+
+    idManager.addObject(turn, "turn");
+    idManager.addObject(numPlayers, "numPlayers");
+    idManager.addObject(availableVar, "available");
+
+    fsm.setState("INIT");
+  }
+
+  private void readFromJson(){
+    String absoluteFilePath =
+//            System.getProperty("user.dir") + "/src/main/resources/FSMExample.json";
+            System.getProperty("user.dir") + "/src/main/resources/export.json";
     String fileContent = "";
     // Read the entire file content
     try {
@@ -78,18 +94,6 @@ public class FSMExample {
       String goalString = goal.getAsString();
       goals.add(goalString);
     }
-
-    List<DropZone> zones = BoardCreator.createGrid(3, 3);
-    for (DropZone zone : zones) {
-      zone.addClass("board");
-      idManager.addObject(zone, zone.getId());
-    }
-
-    idManager.addObject(turn, "turn");
-    idManager.addObject(numPlayers, "numPlayers");
-    idManager.addObject(availableVar, "available");
-
-    fsm.setState("INIT");
   }
 
   public String run(String fromFront) {
@@ -115,10 +119,10 @@ public class FSMExample {
 
     List<GameObject> available = availableVar.get();
     if (available.size() == 0) {
-      response += "DONE";
+      response += "\nDONE";
     }
 
-    response += "Available spots: ";
+    response += "\nAvailable spots: ";
     for (GameObject obj : available) {
       response = response + idManager.getId(obj) + " ";
     }
@@ -156,7 +160,7 @@ public class FSMExample {
 
     List<DropZone> zones = BoardCreator.createGrid(3, 3);
     for (DropZone zone : zones) {
-      idManager.addObject(zone, zone.getId());
+      idManager.addObject(zone);
     }
 
     idManager.addObject(turn, "turn");

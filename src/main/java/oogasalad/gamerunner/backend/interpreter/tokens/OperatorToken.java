@@ -180,6 +180,12 @@ abstract public class OperatorToken extends Token {
   @Override
   public boolean equals(Token t, Environment env) {
     Token myt = evaluate(env);
+    if (!(t instanceof ExpressionToken) && t != null) {
+      t = t.evaluate(env);
+    }
+    if (myt == null){
+      return t == null;
+    }
     return myt.equals(t, env);
   }
 

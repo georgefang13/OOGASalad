@@ -1,59 +1,75 @@
 package oogasalad.frontend.components.gameObjectComponent;
 
 import java.lang.reflect.Field;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
-import oogasalad.frontend.components.draggableComponent.DraggableObject;
+import javafx.scene.image.ImageView;
+import oogasalad.frontend.components.AbstractComponent;
+import oogasalad.frontend.components.Component;
+import oogasalad.frontend.components.ConversionContext;
+import oogasalad.frontend.components.ParamFactory;
+import oogasalad.frontend.components.Point;
 
 
 /**
  * @author Han, Aryan Concrete Class for GameObject, a reflection of what is going to be a
  * "GameObject" on the backend
  */
-public class GameObject extends DraggableObject implements GameObjectComponent {
+public class GameObject extends AbstractComponent implements GameObjectComponent{
 
   private String name;
   private List<Node> children;
   private boolean playable;
-  private final String DEFAULT_FILE_PATH = "frontend.properties.Defaults.GameObject";
-  private ResourceBundle DEFAULT_BUNDLE = ResourceBundle.getBundle(DEFAULT_FILE_PATH);
+  private ImageView image;
 
   public GameObject(int ID) {
     super(ID);
     children = null;
-    Image newImage = new Image(DEFAULT_BUNDLE.getString("DEFAULT_IMAGE"));
-    setImage(DEFAULT_BUNDLE.getString("DEFAULT_IMAGE"));
-    followMouse();
+    instantiatePropFile("frontend.properties.Defaults.GameObject");
+    this.setDefault();
+    this.followMouse();
+    this.getNode();
   }
 
-  public GameObject(int ID, Node container) {
-    super(ID, container);
-  }
-
-  //TODO fix default values for map constructor
-  public GameObject(Map<String, String> map) {
-    super(2);
+  public GameObject(int ID, Map<String, String> map){
+    super(ID);
     children = null;
-    Image newImage = new Image(DEFAULT_BUNDLE.getString("DEFAULT_IMAGE"));
-    setImage(DEFAULT_BUNDLE.getString("DEFAULT_IMAGE"));
+    instantiatePropFile("frontend.properties.Defaults.GameObject");
+    setImage(getDEFAULT_BUNDLE().getString(replaceWithFileLoadingByID()));
+    setValuesfromMap(map);
     followMouse();
-    for (String param : map.keySet()) {
-      try {
-        Field field = getClass().getDeclaredField(param);
-        field.setAccessible(true);
-        field.set(this, map.get(param));
-      } catch (Exception e) {
-        System.out.println("Test");
-      }
+  }
+
+  private String replaceWithFileLoadingByID(){
+    if (ID < 6){
+      return "DEFAULT_IMAGE";
     }
+    else {
+      return "X_IMAGE";
+    }
+  }
+
+  @Override
+  public void setImage(String imagePath) {
+    Image newImage = new Image(imagePath);
+    image = new ImageView(newImage);
+  }
+
+  @Override
+  public ImageView getImage() {
+    return image;
   }
 
   @Override
   public void setName(String newName) {
     name = newName;
+  }
+  public String getName(){
+    return name;
   }
 
   @Override
@@ -69,5 +85,10 @@ public class GameObject extends DraggableObject implements GameObjectComponent {
   @Override
   public Node getNode() {
     return getImage();
+  }
+
+  @Override
+  public void setDefault() {
+
   }
 }
