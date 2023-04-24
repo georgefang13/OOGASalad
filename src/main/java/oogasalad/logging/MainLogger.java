@@ -8,19 +8,16 @@ public class MainLogger {
     private static MainLogger instance;
     private Logger logger;
 
-    private MainLogger() {
-        logger = (Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
+    private MainLogger(String className) {
+        logger = (Logger) LoggerFactory.getLogger(className);
     }
 
-    public static synchronized MainLogger getInstance() {
-        if (instance == null) {
-            instance = new MainLogger();
-        }
-        return instance;
+    public static MainLogger getInstance(Class<?> clazz) {
+        return new MainLogger(clazz.getName());
     }
 
     public void setLogLevel(Level level) {
-        logger.setLevel(level);
+        logger.setLevel(level); //Level.INFO - to set only progress log
     }
 
     public void info(String message) {
@@ -37,5 +34,9 @@ public class MainLogger {
 
     public void error(String message) {
         logger.error(message);
+    }
+
+    public void trace(String message) {
+        logger.trace(message);
     }
 }
