@@ -5,18 +5,18 @@ import oogasalad.Controller.GameRunnerController;
 
 import java.util.Map;
 
-public class BoardPiece extends GameRunnerObject{
+public class Piece extends GameRunnerObject{
     private double lastTranslateX;
     private double lastTranslateY;
-    public BoardPiece(int ID, GameRunnerController gameRunnerController) {
+    public Piece(int ID, GameRunnerController gameRunnerController) {
         super(ID, gameRunnerController);
     }
 
-    public BoardPiece(int ID, Node container, GameRunnerController gameRunnerController) {
+    public Piece(int ID, Node container, GameRunnerController gameRunnerController) {
         super(ID, container, gameRunnerController);
     }
 
-    public BoardPiece(int ID, Map<String, String> map, GameRunnerController gameRunnerController) {
+    public Piece(int ID, Map<String, String> map, GameRunnerController gameRunnerController) {
         super(ID, map, gameRunnerController);
     }
 

@@ -7,25 +7,25 @@ public class Board {
 
   private int height;
   private int width;
-  private DropZone[][] boardDrops;
+  private BoardCell[][] boardCells;
   private GridPane boardPane;
   private int blockSize;
 
   public Board(int height, int width) {
     this.height = height;
     this.width = width;
-    initializeBoard();
+    initializeEmptyBoard();
   }
 
-  private void initializeBoard() {
+  private void initializeEmptyBoard() {
     boardPane = new GridPane();
-    boardDrops = new DropSquare[height][width];
+    boardCells = new BoardCell[height][width];
     blockSize = readBlockSize();
     for (int row = 0; row < height; row++) {
       for (int col = 0; col < width; col++) {
-        DropZone gridSquare = new DropSquare(blockSize);
-        boardDrops[row][col] = gridSquare;
-        boardPane.add(gridSquare.getDropZoneVisual(), col, row);
+        BoardCell boardCell = new UnusedCell(blockSize);
+        boardCells[row][col] = boardCell;
+        boardPane.add(boardCell.getDropZoneVisual(), col, row);
       }
     }
   }
@@ -36,11 +36,6 @@ public class Board {
 
   public GridPane getBoardVisual() {
     return boardPane;
-  }
-
-  public void addPiece(int x, int y, BoardPiece boardPiece) {
-    DropZone pieceSquare = boardDrops[x][y];
-    pieceSquare.addPiece(boardPiece);
   }
 
   public record BoardXY(int x, int y) {

@@ -18,7 +18,6 @@ import oogasalad.frontend.components.Point;
  * "GameObject" on the backend
  */
 public class GameObject extends AbstractComponent implements GameObjectComponent{
-
   private String name;
   private List<Node> children;
   private boolean playable;
@@ -40,11 +39,10 @@ public class GameObject extends AbstractComponent implements GameObjectComponent
     super(ID, container);
   }
 
-  //TODO fix default values for map constructor
   public GameObject(int ID, Map<String, String> map){
     super(ID);
     children = null;
-    setImage(DEFAULT_BUNDLE.getString(replaceWithFileLoadingByID()));
+    setImage(DEFAULT_BUNDLE.getString("DEFAULT_IMAGE"));
     followMouse();
     for(String param: map.keySet()){
       try{
