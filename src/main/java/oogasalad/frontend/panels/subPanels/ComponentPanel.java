@@ -1,5 +1,6 @@
 package oogasalad.frontend.panels.subPanels;
 
+import java.util.HashMap;
 import java.util.ResourceBundle;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
@@ -9,6 +10,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import oogasalad.frontend.modals.InputModal;
 import oogasalad.frontend.modals.ModalController;
+import oogasalad.frontend.modals.subInputModals.CreateNewModal;
 import oogasalad.frontend.panels.Panel;
 import oogasalad.frontend.panels.VBoxPanel;
 
@@ -22,12 +24,13 @@ public class ComponentPanel extends VBoxPanel {
       "frontend/properties/StylingIDs/CSS_ID");
   private static final String ACCORDION_LABEL_ID = "AccordionLabelID";
   private Pane root;
-
+  private ModalController mController;
   /**
    * Constructor for HeaderMenu
    */
   public ComponentPanel() {
     super();
+    mController = new ModalController();
   }
 
   /**
@@ -63,7 +66,7 @@ public class ComponentPanel extends VBoxPanel {
   } //TODO: turn these two methods into one method that takes in a string
 
   private Accordion createComponenetLibraryAccordion() {
-    TitledPane t1 = new TitledPane("Game Objects", new Button("B1"));
+    TitledPane t1 = new TitledPane("Game Objects", createComponentTemplate());
     TitledPane t2 = new TitledPane("Players", new Button("B2"));
     TitledPane t3 = new TitledPane("Displayable", new Button("B3"));
     Accordion accordion = new Accordion();
@@ -71,29 +74,37 @@ public class ComponentPanel extends VBoxPanel {
     return accordion;
   }
 
+  private Button createComponentTemplate() {
+    Button b = new Button("Make a Game Object Template");
+    b.setOnAction(e -> createNewComponentTemplate());
+    return b;
+  }
+
   private Accordion createActiveComponentsAccordion() {
     TitledPane t1 = new TitledPane("Game Objects",
-        createAccordionButton()); // TODO: make this dynamic so when you press ok on the modal after adding a compoennet it shows up in this panel
+        createComponentInstance()); // TODO: make this dynamic so when you press ok on the modal after adding a compoennet it shows up in this panel
     Accordion accordion = new Accordion();
     accordion.getPanes().addAll(t1);
     return accordion;
   }
 
-  private Button createAccordionButton() {
+  private Button createComponentInstance() {
     Button b = new Button("Make a new Game Object");
-    b.setOnAction(e -> promptModal());
+    b.setOnAction(e -> createNewComponentInstance());
     return b;
   }
 
-  private void promptModal() {
-    InputModal modal = new InputModal("createComponent");
-    ModalController mController = new ModalController();
+  private void createNewComponentInstance() {
+    HashMap<String, String> map = new HashMap<>();
+    mController.createAGameObjectComponent(map);
+  }
+
+  private void createNewComponentTemplate(){
+    CreateNewModal modal = new CreateNewModal("createComponent");
     mController.setRoot(root);
     modal.attach(mController);
     modal.showAndWait();
-    System.out.println("Test");
   }
-
   @Override
   public Panel makePanel() {
     return null;

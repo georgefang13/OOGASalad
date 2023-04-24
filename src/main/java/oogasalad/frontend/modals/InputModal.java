@@ -199,7 +199,16 @@ public class InputModal extends Modal {
       String value = textFields.get(field).getText();
       map.put(param, value);
     }
+    //TODO remove, just for testing purposes
+    System.out.println(map);
     controller.createAGameObjectComponent(map);
     this.getDialogPane().getScene().getWindow().hide();
+  }
+
+  public Map<String, TextField> getTextFields() {
+    return textFields;
+  }
+  protected ModalController getController(){
+    return controller;
   }
 }
