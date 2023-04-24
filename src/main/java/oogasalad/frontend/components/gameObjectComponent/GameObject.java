@@ -10,6 +10,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import oogasalad.frontend.components.AbstractComponent;
 import oogasalad.frontend.components.Component;
+import oogasalad.frontend.components.ConversionContext;
+import oogasalad.frontend.components.ParamFactory;
 import oogasalad.frontend.components.Point;
 
 
@@ -36,10 +38,20 @@ public class GameObject extends AbstractComponent implements GameObjectComponent
   public GameObject(int ID, Map<String, String> map){
     super(ID);
     children = null;
-    instantiatePropFile("frontend.properties.Defaults.GameObject");
-    setImage(getDEFAULT_BUNDLE().getString(replaceWithFileLoadingByID()));
+    setImage(DEFAULT_BUNDLE.getString(replaceWithFileLoadingByID()));
+    for(String param: map.keySet()){
+      try{
+        Field field = this.getClass().getDeclaredField(param);
+        field.setAccessible(true);
+        Class<?> fieldType = field.getType();
+        ConversionContext<?> conversionContext = ParamFactory.createConversionContext(fieldType);
+        Object value = conversionContext.convert(map.get(param));
+        field.set(this, value);
+      } catch (Exception e){
+        e.printStackTrace();
+      }
+    }
     followMouse();
-    setValuesfromMap(map);
   }
 
   private String replaceWithFileLoadingByID(){
