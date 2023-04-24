@@ -18,8 +18,6 @@ public abstract class DraggableAbstractNode extends AbstractNode implements Drag
     onMouseReleased();
   }
 
-
-
   @Override
   protected void setContent() {
   }

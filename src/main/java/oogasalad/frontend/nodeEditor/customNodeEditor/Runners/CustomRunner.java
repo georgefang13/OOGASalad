@@ -26,6 +26,7 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.*;
 import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.DraggableNodes.DraggableAbstractNode;
+import oogasalad.frontend.panels.subPanels.ComponentPanel;
 
 /**
  * Scrolling/panning based on
@@ -86,8 +87,6 @@ public class CustomRunner extends Application {
     sendButton.setOnAction(event -> {
       System.out.println(sendAllNodeContent());
     });
-
-    nodeSelectionPane.add(sendButton, 0, buttonRow);
 
     ScrollPane scrollPane = new ScrollPane(content);
     scrollPane.setVbarPolicy(ScrollBarPolicy.NEVER);
