@@ -124,15 +124,32 @@
   -fx-background-radius: 20;
   -fx-pref-height: 200;
 }
-.game-name-edit-box {
+.game-name-label-box {
+  -fx-alignment: center-left;
+  -fx-background-radius: 0 0 0 10;
+  -fx-border-radius: 0 0 0 10;
+  -fx-background-color: #3E404E;
   -fx-pref-width: 290;
   -fx-pref-height: 68;
-  -fx-border-radius: 0 0 10 10;
-  -fx-background-color: #3E404E;
+  -fx-padding: 0 0 0 20;
 }
 .game-name-label {
   -fx-text-fill: white;
+  -fx-font-size: 16;
 }
+.game-box-edit-icon-box {
+  -fx-alignment: center-right;
+  -fx-background-radius: 0 0 10 0;
+  -fx-border-radius: 0 0 10 0;
+  -fx-background-color: #3E404E;
+  -fx-pref-height: 68;
+  -fx-padding: 0 20 0 0;
+}
+.game-box-edit-icon {
+  -fx-fill: white;
+  -fx-font-size: 16;
+}
+
 
 /* HeaderPanel */
 .right-header-box {
