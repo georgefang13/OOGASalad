@@ -42,36 +42,42 @@ public class ObjectFactoryTest {
     Map<ObjectParameter, Object> params = new HashMap<>();
     params.put(ObjectParameter.OWNABLE_TYPE, "Variable");
     Map<Object, Object> constructorParams = new HashMap<>();
-    constructorParams.put("value", 64);
-    params.put(ObjectParameter.ID, "myId");
-    params.put(ObjectParameter.OWNER, "2");
     params.put(ObjectParameter.CONSTRUCTOR_ARGS, constructorParams);
-//    params.put(ObjectParameter.PARENT_OWNABLE_ID, constructorParams);
+    // Variable with nothing
     game.sendObject(type, params);
-    assertEquals(1, idManager.getSimpleIds().size());
+    // Variable with Constructor Value
+    constructorParams.put("value", 64);
+    params.put(ObjectParameter.CONSTRUCTOR_ARGS, constructorParams);
+    game.sendObject(type, params);
+    // Variable with ID
+    params.put(ObjectParameter.ID, "myId");
+    game.sendObject(type, params);
+    // Variable with owner
+    params.put(ObjectParameter.OWNER, "2");
+    game.sendObject(type, params);
+    // Variable with parent ownable
+    params.put(ObjectParameter.PARENT_OWNABLE_ID, "myId");
+    game.sendObject(type, params);
+    assertEquals(5, idManager.getSimpleIds().size());
 
     // GameObject
     ObjectType type2 = ObjectType.OWNABLE;
     Map<ObjectParameter, Object> params2 = new HashMap<>();
     params2.put(ObjectParameter.OWNABLE_TYPE, "GameObject");
     Map<Object, Object> constructorParams2 = new HashMap<>();
-//    constructorParams2.put("value", 64);
-    params2.put(ObjectParameter.ID, "myId2");
-    params2.put(ObjectParameter.OWNER, "3");
     params2.put(ObjectParameter.CONSTRUCTOR_ARGS, constructorParams2);
-//    params2.put(ObjectParameter.PARENT_OWNABLE_ID, constructorParams);
+    // GameObject with nothing
     game.sendObject(type2, params2);
-    assertEquals(2, idManager.getSimpleIds().size());
-  }
-
-  @Test
-  public void testCreateWithId() {
-
-  }
-
-  @Test
-  public void testParentOwnable() {
-
+    // GameObject with ID
+    params2.put(ObjectParameter.ID, "myIdGameObject");
+    game.sendObject(type2, params2);
+    // GameObject with owner
+    params2.put(ObjectParameter.OWNER, "3");
+    game.sendObject(type2, params2);
+    // GameObject with parent ownable
+    params2.put(ObjectParameter.PARENT_OWNABLE_ID, "myIdGameObject");
+    game.sendObject(type2, params2);
+    assertEquals(9, idManager.getSimpleIds().size());
   }
 
   @Test
