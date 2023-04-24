@@ -12,8 +12,8 @@ public class MainLogger {
         logger = (Logger) LoggerFactory.getLogger(className);
     }
 
-    public static MainLogger getInstance(Class<?> clazz) {
-        return new MainLogger(clazz.getName());
+    public static MainLogger getInstance(Class<?> className) {
+        return new MainLogger(className.getName());
     }
 
     public void setLogLevel(Level level) {
