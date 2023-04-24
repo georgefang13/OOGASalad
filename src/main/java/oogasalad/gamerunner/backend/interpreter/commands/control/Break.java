@@ -11,6 +11,6 @@ public class Break extends OperatorToken {
         super(0, "Break");
     }
     public Token evaluate(Environment env) throws IllegalArgumentException{
-        return new BreakToken();
+        return this;
     }
 }

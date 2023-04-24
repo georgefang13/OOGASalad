@@ -30,7 +30,6 @@ public class ValueToken<T> extends Token {
             t = t.evaluate(env);
         }
 
-
         if(t instanceof ValueToken other){
             return VALUE.equals(other.VALUE);
         }

@@ -1,5 +1,10 @@
 package oogasalad.frontend.nodeEditor.customNodeEditor.Runners;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import javafx.application.Application;
@@ -11,12 +16,14 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.AbstractNode;
-import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.DifferenceNode;
-import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.DraggableAbstractNode;
-import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.SumNode;
+import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.DraggableNodes.DraggableAbstractNode;
+import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.DraggableNodes.StateNode;
 
 /**
  * Scrolling/panning based on
@@ -67,15 +74,17 @@ public class NodeExperiment extends Application {
       }
     });
 
-    createNode("Sum", NODES_FOLDER + "SumNode");
-    createNode("Difference", NODES_FOLDER + "DifferenceNode");
-    createNode("TextField", NODES_FOLDER + "CustomNodes.TextFieldNode");
+    createNode("State", NODES_FOLDER + "DraggableNodes.StateNode");
+    createNode("Sum", NODES_FOLDER + "DraggableNodes.SumNode");
+    createNode("Difference", NODES_FOLDER + "DraggableNodes.DifferenceNode");
+    createNode("TextField", NODES_FOLDER + "DraggableNodes.TextFieldNode");
 
     Button sendButton = new Button("Submit");
     sendButton.setOnAction(event -> {
-      System.out.println(sendAllNodeContent());
+      sendAllNodeContent("src/main/resources/export.json");
     });
-
+    sendButton.setMaxWidth(Double.MAX_VALUE);
+    GridPane.setHgrow(sendButton, Priority.ALWAYS);
     nodeSelectionPane.add(sendButton, 0, buttonRow);
 
     ScrollPane scrollPane = new ScrollPane(content);
@@ -112,19 +121,24 @@ public class NodeExperiment extends Application {
     }
   }
 
-  public String sendAllNodeContent() {
-    String returnable = "";
-//    for (Node node: group.getChildren()) {
-//    for (Node node: gameColumn.getChildren()) {
-    Node node = group.getChildren().get(1);
-    System.out.println(node);
-        if (node instanceof AbstractNode) {
-          returnable += ((AbstractNode) node).sendContent();
-          returnable += "\n";
-        }
-//      }
-    return returnable;
+  public void sendAllNodeContent(String filePath) {
+    Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    JsonObject statesObject = new JsonObject();
+    for (Node node : group.getChildren()) {
+      if (node instanceof StateNode) {
+        StateNode stateNode = (StateNode) node;
+        JsonObject stateObject = gson.fromJson(stateNode.sendJSONContent(), JsonObject.class);
+        String stateName = stateObject.keySet().iterator().next();
+        statesObject.add(stateName, stateObject.get(stateName));
+      }
+    }
+    JsonObject contentObject = new JsonObject();
+    contentObject.add("states", statesObject);
+
+    try (FileWriter fileWriter = new FileWriter(filePath)) {
+      gson.toJson(contentObject, fileWriter);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
-
-
 }

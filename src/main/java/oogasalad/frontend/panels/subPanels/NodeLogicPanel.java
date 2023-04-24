@@ -4,8 +4,6 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.DifferenceNode;
-import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.SumNode;
 import oogasalad.frontend.panels.Panel;
 import oogasalad.frontend.panels.VisualPanel;
 

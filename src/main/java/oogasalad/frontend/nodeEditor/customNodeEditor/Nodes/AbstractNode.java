@@ -29,7 +29,6 @@ public abstract class AbstractNode extends VBox {
   protected abstract void setContent();
 
 
-
   public abstract String sendContent();
   public void setChildNode(AbstractNode node){
     this.childNode = node;
@@ -37,7 +36,6 @@ public abstract class AbstractNode extends VBox {
   public AbstractNode getChildNode() {
     return childNode;
   }
-
 
   protected void delete() {
     Group parentGroup = (Group) getParent();

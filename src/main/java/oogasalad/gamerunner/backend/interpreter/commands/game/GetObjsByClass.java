@@ -1,9 +1,9 @@
 package oogasalad.gamerunner.backend.interpreter.commands.game;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import oogasalad.gameeditor.backend.id.IdManager;
+import oogasalad.gameeditor.backend.id.OwnableSearchStream;
 import oogasalad.gamerunner.backend.interpreter.Environment;
 import oogasalad.gamerunner.backend.interpreter.tokens.OperatorToken;
 import oogasalad.gamerunner.backend.interpreter.tokens.Token;
@@ -26,13 +26,13 @@ public class GetObjsByClass extends OperatorToken {
 
         String[] classes = x.VALUE.split("\\.");
 
-        IdManager<Ownable> game = env.getIdManager();
+        IdManager<Ownable> manager = env.getIdManager();
 
-        List<String> objIds = game.getIdsOfObjectsOfClass(classes);
-        List<Ownable> objs = new ArrayList<>();
-        for (String s : objIds){
-            objs.add(game.getObject(s));
-        }
+        OwnableSearchStream searchStream = new OwnableSearchStream(manager);
+
+        List<Ownable> objs = manager.objectStream()
+                .filter(searchStream.isOfAllClasses(classes)).toList();
+
         Variable<List<Ownable>> var = new Variable<>(objs);
         return env.convertVariableToToken(var);
     }

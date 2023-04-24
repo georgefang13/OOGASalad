@@ -108,7 +108,7 @@ public class FSM<T> {
     setState(chooser.chooseNextState(currentState, data));
   }
 
-  interface NextStateChooser<T> {
+  public interface NextStateChooser<T> {
 
     /**
      * Chooses the next state based on the current state and data
@@ -120,7 +120,7 @@ public class FSM<T> {
     T chooseNextState(State curState, StateData data);
   }
 
-  static class StateData {
+  public static class StateData {
 
     private final Map<String, Object> data = new HashMap<>();
 

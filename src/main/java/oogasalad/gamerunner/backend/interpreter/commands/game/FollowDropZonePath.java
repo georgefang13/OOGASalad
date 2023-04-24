@@ -1,10 +1,7 @@
 package oogasalad.gamerunner.backend.interpreter.commands.game;
 
 import oogasalad.gamerunner.backend.interpreter.Environment;
-import oogasalad.gamerunner.backend.interpreter.tokens.ExpressionToken;
-import oogasalad.gamerunner.backend.interpreter.tokens.OperatorToken;
-import oogasalad.gamerunner.backend.interpreter.tokens.Token;
-import oogasalad.gamerunner.backend.interpreter.tokens.ValueToken;
+import oogasalad.gamerunner.backend.interpreter.tokens.*;
 import oogasalad.sharedDependencies.backend.ownables.gameobjects.DropZone;
 import oogasalad.sharedDependencies.backend.ownables.variables.Variable;
 
@@ -20,6 +17,10 @@ public class FollowDropZonePath extends OperatorToken {
     public Token evaluate(Environment env) throws IllegalArgumentException {
         Token t1 = getArg(0).evaluate(env);
         Token t2 = getArg(1);
+
+        if (t2 instanceof VariableToken) {
+            t2 = t2.evaluate(env);
+        }
 
         ValueToken<DropZone> x = checkArgumentWithSubtype(env, t1, ValueToken.class, DropZone.class.getName());
         ExpressionToken y = checkArgument(env, t2, ExpressionToken.class);
