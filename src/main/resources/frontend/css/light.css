@@ -180,6 +180,7 @@
 /* SortedGamesPanel */
 .sorted-games-vbox {
   -fx-background-color: #3E404E;
+  -fx-pref-height: 620;
   -fx-pref-width: 250;
 }
 

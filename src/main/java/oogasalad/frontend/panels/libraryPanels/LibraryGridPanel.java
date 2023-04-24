@@ -51,7 +51,7 @@ public class LibraryGridPanel extends GridPane implements Panel {
     column4.setPercentWidth(25);
     this.getColumnConstraints().addAll(column1, column2, column3, column4);
 
-    // populate the grid with labels
+//     populate the grid with labels
 //    String[] items = {"Item 1", "Item 2", "Item 3", "Item 4", "Item 5"};
 //    int numRows = (int) Math.ceil((double) items.length / 4);
 //    int rowIndex = 0;

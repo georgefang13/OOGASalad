@@ -12,9 +12,11 @@ import oogasalad.frontend.windows.GamePlayerWindow;
 
 public class GamePlayerLibraryScene extends AbstractScene {
   private Button editGridButton;
-  private HeaderPanel gameLibraryHeader;
   private BorderPane root;
   private LibraryGridPanel libraryGridPanel;
+  private HeaderPanel gameLibraryHeader;
+  private SortedGamesPanel sortedGamesPanel;
+
 
   public GamePlayerLibraryScene(SceneController sceneController) {
     super(sceneController);
@@ -28,9 +30,8 @@ public class GamePlayerLibraryScene extends AbstractScene {
     editGridButton.setOnAction(
         e -> panelController.newSceneFromPanel("test", GamePlayerWindow.WindowScenes.PLAY_SCENE));
 
-    gameLibraryHeader = new HeaderPanel(panelController, "library");
-    root.setTop(gameLibraryHeader);
-    root.setLeft(new VBox(editGridButton));
+    root.setTop(gameLibraryHeader = new HeaderPanel(panelController, "library"));
+    root.setLeft(sortedGamesPanel = new SortedGamesPanel());
     root.setCenter(libraryGridPanel = new LibraryGridPanel());
     setScene(new Scene(root));
     setText();
