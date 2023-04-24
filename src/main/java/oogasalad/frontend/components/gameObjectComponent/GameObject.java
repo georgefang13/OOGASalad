@@ -26,23 +26,15 @@ public class GameObject extends AbstractComponent implements GameObjectComponent
   private boolean playable;
   private ImageView image;
 
-  private final String DEFAULT_FILE_PATH = "frontend.properties.Defaults.GameObject";
-  private ResourceBundle DEFAULT_BUNDLE = ResourceBundle.getBundle(DEFAULT_FILE_PATH);
-
   public GameObject(int ID) {
     super(ID);
     children = null;
-    setImage(DEFAULT_BUNDLE.getString(replaceWithFileLoadingByID()));
-    image.setFitHeight(200);
-    image.setFitWidth(200);
-    followMouse();
+    instantiatePropFile("frontend.properties.Defaults.GameObject");
+    this.setDefault();
+    this.followMouse();
+    this.getNode();
   }
 
-  public GameObject(int ID, Node container) {
-    super(ID, container);
-  }
-
-  //TODO fix default values for map constructor
   public GameObject(int ID, Map<String, String> map){
     super(ID);
     children = null;
@@ -61,6 +53,7 @@ public class GameObject extends AbstractComponent implements GameObjectComponent
     }
     followMouse();
   }
+
   private String replaceWithFileLoadingByID(){
     if (ID < 6){
       return "DEFAULT_IMAGE";
@@ -102,6 +95,12 @@ public class GameObject extends AbstractComponent implements GameObjectComponent
   @Override
   public Node getNode() {
     return getImage();
+  }
+
+  @Override
+  public void setDefault() {
+    Image newImage = new Image(getDEFAULT_BUNDLE().getString("DEFAULT_IMAGE"));
+    setImage(getDEFAULT_BUNDLE().getString("DEFAULT_IMAGE"));
   }
 
 }
