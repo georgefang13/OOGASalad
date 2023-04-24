@@ -3,13 +3,16 @@ package oogasalad.gameeditor.backend.filemanager;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import com.google.gson.JsonSyntaxException;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 import oogasalad.sharedDependencies.backend.filemanagers.FileManager;
+import com.google.gson.reflect.TypeToken;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -82,6 +85,19 @@ public class FileGetTest {
   }
 
   @Test
+  void differentTypesGetTest() throws FileNotFoundException {
+    fileManager = new FileManager(getPath("DIFFERENT_TYPES"));
+    HashMap<String, Double> map = new HashMap<>();
+
+    map.put("Rodrigo", 69.0);
+    map.put("Ethan", 10.0);
+    map.put("Dooval", 1000.0);
+    HashMap<Integer, String> map2 = fileManager.getObject(HashMap.class,
+        "OH HAROLD DO YOU WANT A WIFE THATS NOT A RAGING PUMPKIN");
+    assertEquals(map, map2);
+  }
+
+  @Test
   void sadTests() throws FileNotFoundException {
     fileManager = new FileManager(getPath("SAME_TAG"));
     assertThrows(IllegalArgumentException.class, () -> {
@@ -90,7 +106,7 @@ public class FileGetTest {
     assertThrows(IllegalArgumentException.class, () -> {
       fileManager.getString("invalid key");
     });
-    assertThrows(IllegalArgumentException.class, () -> {
+    assertThrows(JsonSyntaxException.class, () -> {
       fileManager.getString("name");
     });
     assertThrows(FileNotFoundException.class, () -> {
