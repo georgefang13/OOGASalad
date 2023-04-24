@@ -64,6 +64,16 @@ public class GameObject extends AbstractComponent implements GameObjectComponent
     return image;
   }
 
+=========
+        Field field = getClass().getDeclaredField(param);
+        field.setAccessible(true);
+        field.set(this, map.get(param));
+      } catch (Exception e){
+        System.out.println("Test");
+      }
+    }
+  }
+>>>>>>>>> Temporary merge branch 2
   @Override
   public void setName(String newName) {
     name = newName;
@@ -86,11 +96,4 @@ public class GameObject extends AbstractComponent implements GameObjectComponent
   public Node getNode() {
     return getImage();
   }
-
-  @Override
-  public void setDefault() {
-    Image newImage = new Image(getDEFAULT_BUNDLE().getString("DEFAULT_IMAGE"));
-    setImage(getDEFAULT_BUNDLE().getString("DEFAULT_IMAGE"));
-  }
-
 }

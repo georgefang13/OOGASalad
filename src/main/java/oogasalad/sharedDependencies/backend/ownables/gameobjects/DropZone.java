@@ -191,38 +191,6 @@ public class DropZone extends GameObject {
     return spots;
   }
 
-  @Override
-  public void fromConfigFile(String path) throws FileNotFoundException {
-    // TODO: make validation check, likely as static method of FileManager
-    // TODO: pass ID into IdManager (maybe change constructor?)
-    FileManager reader = new FileManager(path);
-    this.id = reader.getString("id");
-
-    // this.id = FileManager.getStringByKey(object, "id");
-
-//    for (JsonElement edgeEntry : object.get("connections").getAsJsonArray()) {
-//      JsonObject edge = edgeEntry.getAsJsonObject();
-////            edges.put(FileManager.getStringByKey(edge, "edgeId"));
-//    }
-//
-//    for (JsonElement objectEntry : object.get("starterObjects").getAsJsonArray()) {
-//      // TODO: get gameObject by Id and add it to holding
-//    }
-
-
-  }
-
-  @Override
-  public void toConfigFile(String path) {
-    FileManager fileManager = new FileManager();
-    fileManager.addContent(id, "id");
-    for (String edgeId : edges.keySet()) {
-      fileManager.addContent(edgeId, "connections", "edgeId");
-      fileManager.addContent(edges.get(edgeId).getId(), "connections", "nodeId");
-    }
-    fileManager.saveToFile(path);
-  }
-
 
   @Override
   public boolean equals(Object o) {
