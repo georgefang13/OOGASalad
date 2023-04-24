@@ -115,6 +115,15 @@ public class Game implements GameToInterpreterAPI{
         Variable<List<GameObject>> available = new Variable<>(new ArrayList<>());
         available.setOwner(gameWorld);
         ownableIdManager.addObject(available, "available");
+
+        Variable<List<Object>> log = new Variable<>(new ArrayList<>());
+        log.setOwner(gameWorld);
+        ownableIdManager.addObject(log, "log");
+    }
+
+    private List<Object> getLog(){
+        Variable<List<Object>> v = (Variable<List<Object>>) ownableIdManager.getObject("log");
+        return v.get();
     }
 
     private void sendClickable(){
@@ -140,13 +149,16 @@ public class Game implements GameToInterpreterAPI{
         sendClickable();
 
         if (fsm.getCurrentState().equals("DONE")){
-            startTurn();
             int playerWin = checkGoals();
+
             // check goals
             if (playerWin != -1){
                 // TODO end game
                 System.out.println("Player " + playerWin + " wins!");
             }
+
+            fsm.transition();
+            startTurn();
         }
     }
 
@@ -217,7 +229,7 @@ public class Game implements GameToInterpreterAPI{
     private void loadDropZones(String file) throws FileNotFoundException {
         FileManager fm = new FileManager(file);
 
-        Map<DropZone, String[]> edgeMap = new HashMap<>();
+        Map<DropZone, List<String[]>> edgeMap = new HashMap<>();
 
         for (String id : fm.getTagsAtLevel()){
 
@@ -231,10 +243,12 @@ public class Game implements GameToInterpreterAPI{
                 dz.addClass(cls);
             }
 
+            List<String[]> edges = new ArrayList<>();
             for (String edgeName : fm.getTagsAtLevel(id, "connections")){
                 String edge = fm.getString(id, "connections", edgeName);
-                edgeMap.put(dz, new String[]{edgeName, edge});
+                edges.add(new String[]{edgeName, edge});
             }
+            edgeMap.put(dz, edges);
 
             ownableIdManager.addObject(dz, id);
 
@@ -242,10 +256,11 @@ public class Game implements GameToInterpreterAPI{
         }
 
         for (DropZone dz : edgeMap.keySet()){
-            // [ edgeName, edge ]
-            String[] edge = edgeMap.get(dz);
-            DropZone other = (DropZone) ownableIdManager.getObject(edge[1]);
-            dz.addOutgoingConnection(other, edge[0]);
+            // [ [ edgeName, edge ] ]
+            for (String[] edge : edgeMap.get(dz)){
+                DropZone other = (DropZone) ownableIdManager.getObject(edge[1]);
+                dz.addOutgoingConnection(other, edge[0]);
+            }
         }
     }
 
@@ -368,6 +383,7 @@ public class Game implements GameToInterpreterAPI{
             oldDz.removeObject(oldDz.getKey(piece));
         }
         dz.putObject(name, piece);
+        pieceLocations.put(piece, dz);
         controller.movePiece(ownableIdManager.getId(piece), ownableIdManager.getId(dz));
     }
 
