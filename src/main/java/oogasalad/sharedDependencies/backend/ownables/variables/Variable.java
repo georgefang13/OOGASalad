@@ -116,30 +116,5 @@ public class Variable<T> extends Ownable {
       listener.onChange(value);
     }
   }
-
-  @Override
-  public void fromConfigFile(String object) {
-//    // TODO: update ID
-//    String className = FileManager.getStringByKey(object, "type");
-//    try {
-//      Class<?> variableType = Class.forName(className);
-//      Class<?> instantiatedType = Class.forName(this.getClass().getTypeName());
-//      if (variableType != instantiatedType || !validClasses.contains(variableType)) {
-//        throw new ClassNotFoundException();
-//      }
-//      Constructor<?> constructor = instantiatedType.getConstructor(String.class);
-//      // NOTE: condition above checks that casting is valid
-//      value = (T) constructor.newInstance(FileManager.getStringByKey(object, "value"));
-//    } catch (ClassNotFoundException | NoSuchMethodException
-//             | InvocationTargetException | InstantiationException | IllegalAccessException e) {
-//      // TODO: add custom exception
-//      throw new RuntimeException(e);
-//    }
-  }
-
-  @Override
-  public void toConfigFile(String path) {
-
-  }
 }
 
