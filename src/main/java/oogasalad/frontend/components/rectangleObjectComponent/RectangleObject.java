@@ -10,19 +10,12 @@ import java.util.ResourceBundle;
 
 
 public class RectangleObject extends AbstractComponent implements RectangleObjectComponent {
-    private double x;
-    private double y;
-    private double width;
-    private double height;
-    private Color fill;
-    private double strokeWidth;
-    private Color strokeColor;
     private Rectangle rectangle;
-    private final String DEFAULT_FILE_PATH = "frontend.properties.Defaults.RectangleObject";
-    private ResourceBundle DEFAULT_BUNDLE = ResourceBundle.getBundle(DEFAULT_FILE_PATH);
+
 
     public RectangleObject(int ID){
         super(ID);
+        instantiatePropFile("frontend.properties.Defaults.RectangleObject");
         this.setDefault();
         this.followMouse();
         this.getNode();
@@ -30,40 +23,38 @@ public class RectangleObject extends AbstractComponent implements RectangleObjec
 
     public RectangleObject(int ID, Map<String, String> map){
         super(ID);
+        setValuesfromMap(map);
     }
 
     @Override
     public void setFill(Color fill) {
-        this.fill = fill;
         rectangle.setFill(fill);
     }
 
     @Override
     public Color getFill() {
-        return fill;
+        return (Color)rectangle.getFill();
     }
 
     @Override
     public void setStrokeWidth(double strokeWidth) {
-        this.strokeWidth = strokeWidth;
         rectangle.setStrokeWidth(strokeWidth);
     }
 
     @Override
     public double getStrokeWidth() {
-        return strokeWidth;
+        return rectangle.getStrokeWidth();
     }
 
     @Override
     public void setStrokeColor(Color strokeColor) {
-        this.strokeColor = strokeColor;
         rectangle.setStroke(strokeColor);
 
     }
 
     @Override
     public Color getStrokeColor() {
-        return strokeColor;
+        return (Color)rectangle.getStroke();
     }
 
     @Override
@@ -73,10 +64,13 @@ public class RectangleObject extends AbstractComponent implements RectangleObjec
 
     @Override
     public void setDefault() {
-        x = Double.parseDouble(DEFAULT_BUNDLE.getString("rectangle.x"));
-        y = Double.parseDouble(DEFAULT_BUNDLE.getString("rectangle.y"));
-        width = Double.parseDouble(DEFAULT_BUNDLE.getString("rectangle.width"));
-        height = Double.parseDouble(DEFAULT_BUNDLE.getString("rectangle.height"));
+        double x = Double.parseDouble(getDEFAULT_BUNDLE().getString("rectangle.x"));
+        double y = Double.parseDouble(getDEFAULT_BUNDLE().getString("rectangle.y"));
+        double width = Double.parseDouble(getDEFAULT_BUNDLE().getString("rectangle.width"));
+        double height = Double.parseDouble(getDEFAULT_BUNDLE().getString("rectangle.height"));
+        Color fill;
+        double strokeWidth;
+        Color strokeColor;
         this.rectangle = new Rectangle(x, y, width, height);
     }
 }
