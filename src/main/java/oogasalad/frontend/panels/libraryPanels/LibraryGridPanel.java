@@ -17,6 +17,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import oogasalad.frontend.nodeEditor.GraphEditorTutorial;
 import oogasalad.frontend.panels.Panel;
+import oogasalad.frontend.windows.GamePlayerWindow;
 
 public class LibraryGridPanel extends GridPane implements Panel {
   private static final ResourceBundle ID_BUNDLE = ResourceBundle.getBundle(
@@ -114,8 +115,6 @@ public class LibraryGridPanel extends GridPane implements Panel {
     gameNameEditBox.getChildren().addAll(gameNameLabel, editIcon);
     gameBox.getStyleClass().add(ID_BUNDLE.getString(GAME_BOX_ID));
 //    gameBox.getChildren().addAll(gameImage, gameNameEditBox);
-
-
     return gameBox;
   }
 }

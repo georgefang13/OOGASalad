@@ -177,3 +177,9 @@
   -fx-font-size: 25;
 }
 
+/* SortedGamesPanel */
+.sorted-games-vbox {
+  -fx-background-color: #3E404E;
+  -fx-pref-width: 250;
+}
+

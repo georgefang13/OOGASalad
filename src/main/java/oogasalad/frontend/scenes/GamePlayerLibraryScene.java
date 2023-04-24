@@ -38,7 +38,6 @@ public class GamePlayerLibraryScene extends AbstractScene {
     return getScene();
   }
   private void refreshScene() {
-//    root.
     setScene(new Scene(root));
     setText();
     setTheme();

@@ -21,10 +21,9 @@ public class SortedGamesPanel extends VBox implements Panel {
 
   private static final ResourceBundle ELEMENT_LABELS = ResourceBundle.getBundle(
       "frontend/properties/text/english");
-  private static final String COMPONENT_LIBRARY_ACCORDION_LABEL = "ComponentLibrary";
-  private static final String ACTIVE_COMPONENTS_ACCORDION_LABEL = "ActiveComponents";
   private static final ResourceBundle ID_BUNDLE = ResourceBundle.getBundle(
       "frontend/properties/StylingIDs/CSS_ID");
+  private static final String SORTED_GAMES_VBOX_ID = "SortedGamesVBoxID";
   PanelController panelController;
 
   /**
@@ -33,7 +32,6 @@ public class SortedGamesPanel extends VBox implements Panel {
   public SortedGamesPanel() {
     super();
     this.makePanel();
-
   }
 
   /**
@@ -42,9 +40,15 @@ public class SortedGamesPanel extends VBox implements Panel {
    * @return
    */
   public Panel makePanel() {
+    this.getChildren().addAll(createSortedGamesVBox());
     return this;
   }
 
+  private VBox createSortedGamesVBox() {
+    VBox sortedGamesVBox = new VBox();
+    sortedGamesVBox.getStyleClass().add(ID_BUNDLE.getString(SORTED_GAMES_VBOX_ID));
+    return sortedGamesVBox;
+  }
   public Node asNode() {
     return this;
   }
