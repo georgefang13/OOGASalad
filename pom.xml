@@ -83,8 +83,12 @@
       <artifactId>maven-javadoc-plugin</artifactId>
       <version>3.5.0</version>
     </dependency>
+    <dependency>
+      <groupId>org.kordamp.ikonli</groupId>
+      <artifactId>ikonli-fontawesome5-pack</artifactId>
+      <version>12.3.1</version>
+    </dependency>
   </dependencies>
-
   <build>
     <plugins>
       <!-- compiles project source code using correct version and flags -->

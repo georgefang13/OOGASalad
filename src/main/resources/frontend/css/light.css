@@ -111,4 +111,99 @@
   -fx-background-color: #3E404E;
 }
 
+/* LibraryGridPanel */
+.library-grid-pane {
+  -fx-background-color: #24252e;
+  -fx-hgap: 20;
+  -fx-vgap: 20;
+  -fx-padding: 20;
+}
+.game-box {
+  -fx-background-color: #3E404E;
+  -fx-border-radius: 20;
+  -fx-background-radius: 20;
+  -fx-pref-height: 200;
+  -fx-alignment: center;
+}
+.game-box-image {
+  -fx-border-radius: 20 20 0 0;
+  -fx-background-radius: 20 20 0 0;
+  -fx-alignment: center;
+}
+.game-name-label-box {
+  -fx-alignment: center-left;
+  -fx-background-radius: 0 0 0 10;
+  -fx-border-radius: 0 0 0 10;
+  -fx-background-color: #3E404E;
+  -fx-pref-width: 290;
+  -fx-pref-height: 50;
+  -fx-padding: 0 0 0 20;
+}
+.game-name-label {
+  -fx-text-fill: white;
+  -fx-font-size: 16;
+}
+.game-box-edit-icon-box {
+  -fx-alignment: center-right;
+  -fx-background-radius: 0 0 10 0;
+  -fx-border-radius: 0 0 10 0;
+  -fx-background-color: #3E404E;
+  -fx-pref-height: 68;
+  -fx-padding: 0 20 0 0;
+}
+.game-box-edit-icon {
+  -fx-fill: white;
+  -fx-font-size: 16;
+}
+
+
+/* HeaderPanel */
+.right-header-box {
+  -fx-alignment: center-right;
+  -fx-spacing: 15;
+  -fx-padding: 0 15 0 0;
+  -fx-background-color: #3E404E;
+  -fx-pref-height: 80;
+  -fx-pref-width: 950;
+}
+.left-header-box {
+  -fx-alignment: center;
+  -fx-background-color: #54576F;
+  -fx-pref-height: 80;
+  -fx-pref-width: 250;
+}
+.game-library-title {
+  -fx-text-fill: white;
+  -fx-font-size: 30px;
+  -fx-font-weight: bold;
+}
+
+/* ButtonFactory */
+.icon-button {
+  -fx-background-color: #3180F5;
+  -fx-border-radius: 10;
+  -fx-background-radius: 10;
+  -fx-text-fill: white;
+  -fx-padding: 10;
+  -fx-pref-height: 50;
+}
+.icon-button .graphic {
+  -fx-graphic-text-gap: 10px;
+  -fx-alignment: center-left;
+}
+.icon-button .text {
+  -fx-graphic-text-gap: 10px;
+  -fx-font-size: 25;
+}
+.awesome-icon {
+  -fx-fill: white;
+  -fx-font-size: 25;
+}
+
+/* SortedGamesPanel */
+.sorted-games-vbox {
+  -fx-background-color: #3E404E;
+  -fx-pref-height: 620;
+  -fx-pref-width: 250;
+}
 

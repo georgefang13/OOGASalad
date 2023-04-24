@@ -18,8 +18,8 @@ public class ComponentsFactory {
   private ResourceBundle bundle;
   private int ID;
   private Stage stage;
-
-  public ComponentsFactory() {
+  Component component;
+  public ComponentsFactory(){
     ID = 0;
     bundle = ResourceBundle.getBundle(FACTOR_PROPERTIES);
   }
@@ -31,8 +31,7 @@ public class ComponentsFactory {
    * @param type type of component being created. If it's an invalid Component, an error is thrown.
    * @return the Component the client wanted
    */
-  public Component create(String type) {
-    Component component = null;
+  public Component create(String type){
     String lowercase = type.substring(0, 1).toLowerCase() + type.substring(1);
     try{
       Class<?> c = Class.forName(bundle.getString("package")+lowercase + "Component." + type);
@@ -49,8 +48,7 @@ public class ComponentsFactory {
    * Takes in Inputs of parameters to create a Component type. This can either establish the default
    * Component or create the input
    */
-  public Component create(String type, ArrayList<String> params) {
-    Component component = null;
+  public Component create(String type, ArrayList<String> params){
     Map<String, String> map = new HashMap<>();
 
     for (String s : params) {
@@ -67,9 +65,7 @@ public class ComponentsFactory {
     }
     return component;
   }
-
-  public Component create(String type, Map<String, String> map) {
-    Component component = null;
+  public Component create(String type, Map<String, String> map){
     String lowercase = type.substring(0, 1).toLowerCase() + type.substring(1);
     try{
       Class<?> c = Class.forName(bundle.getString("package")+lowercase + "Component." + type);
