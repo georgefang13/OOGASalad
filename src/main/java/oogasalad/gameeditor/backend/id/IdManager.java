@@ -235,6 +235,7 @@ public class IdManager<T extends IdManageable> implements Iterable<Map.Entry<Str
         ownable.setOwner(((Ownable) parent).getOwner());
       }
     }
+
   }
 
   /**
@@ -413,7 +414,7 @@ public class IdManager<T extends IdManageable> implements Iterable<Map.Entry<Str
 
   /**
    * Returns a List of all ids of objects of the given classes in the IdManager.
-   * Returns only classes that use all of the given classes.
+   * Returns only classes that use all the given classes.
    *
    * @param classNames the classes to check for
    * @return a List of all ids of objects of the given class in the IdManager
@@ -443,20 +444,18 @@ public class IdManager<T extends IdManageable> implements Iterable<Map.Entry<Str
     return simpleIds.values().stream();
   }
 
-
-
-
-
-
-  //TODO return multiple maps based on ownership (recursive)
-
-  //TODO manipulate graph
-
-  //TODO check for loops in graph
-
-  //TODO get an unmodifiable list of all things owned by a given object
-
-  //TODO every Ownable will have Owner variable, use idmanager to search
-
+  /**
+   * Changes the ownership hierarchy of an object within the idManager.
+   * @param id the id of the object to change. Can be the simple id or the full id.
+   * @param newParentId the id of the new parent of the object (within the idManager)
+   */
+  public void changeParentId(String id, String newParentId) {
+    T obj = getObject(id);
+    T newParent = getObject(newParentId);
+    //remove obj as key from ownershipMap
+    ownershipMap.remove(obj);
+    //add obj as key with newParent as value to ownershipMap
+    ownershipMap.put(obj, newParent);
+  }
 
 }
