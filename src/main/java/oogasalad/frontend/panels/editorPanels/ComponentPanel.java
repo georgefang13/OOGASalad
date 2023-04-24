@@ -1,5 +1,6 @@
 package oogasalad.frontend.panels.editorPanels;
 
+import java.util.HashMap;
 import java.util.ResourceBundle;
 import javafx.scene.Node;
 import javafx.scene.control.Accordion;
@@ -8,8 +9,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import oogasalad.frontend.modals.InputModal;
 import oogasalad.frontend.modals.ModalController;
+import oogasalad.frontend.modals.subInputModals.CreateNewModal;
 import oogasalad.frontend.panels.Panel;
 
 public class ComponentPanel extends VBox implements Panel {
@@ -22,12 +23,27 @@ public class ComponentPanel extends VBox implements Panel {
       "frontend/properties/StylingIDs/CSS_ID");
   private static final String ACCORDION_LABEL_ID = "AccordionLabelID";
   private Pane root;
+  private ModalController mController;
+  private VBox gameComponents;
+  private VBox players;
+  private VBox displayable;
+  private VBox gameComponentInstances;
+
+  private double xOffset;
+  private double yOffset;
 
   /**
    * Constructor for HeaderMenu
    */
   public ComponentPanel() {
     super();
+    mController = new ModalController(this);
+
+    //TODO is there a better way?
+    gameComponents = new VBox();
+    players = new VBox();
+    displayable = new VBox();
+    gameComponentInstances = new VBox();
     this.makePanel();
   }
 
@@ -63,36 +79,56 @@ public class ComponentPanel extends VBox implements Panel {
   } //TODO: turn these two methods into one method that takes in a string
 
   private Accordion createComponenetLibraryAccordion() {
-    TitledPane t1 = new TitledPane("Game Objects", new Button("B1"));
-    TitledPane t2 = new TitledPane("Players", new Button("B2"));
-    TitledPane t3 = new TitledPane("Displayable", new Button("B3"));
+    TitledPane t1 = new TitledPane("Game Objects", gameComponents);
+    TitledPane t2 = new TitledPane("Players", players);
+    TitledPane t3 = new TitledPane("Displayable", displayable);
+    gameComponents.getChildren().addAll(createComponentTemplate("gameObject"),
+            createComponentTemplate("lineObject"), createComponentTemplate("textObject"),
+            createComponentTemplate("rectangleObject"));
     Accordion accordion = new Accordion();
     accordion.getPanes().addAll(t1, t2, t3);
     return accordion;
   }
 
+  private Button createComponentTemplate(String objectType) {
+    Button b = new Button("Make a " + objectType + " Template");
+    b.setOnAction(e -> createNewComponentTemplate(objectType));
+    return b;
+  }
+
   private Accordion createActiveComponentsAccordion() {
+
     TitledPane t1 = new TitledPane("Game Objects",
-        createAccordionButton()); // TODO: make this dynamic so when you press ok on the modal after adding a compoennet it shows up in this panel
+        gameComponentInstances); // TODO: make this dynamic so when you press ok on the modal after adding a compoennet it shows up in this panel
     Accordion accordion = new Accordion();
     accordion.getPanes().addAll(t1);
     return accordion;
   }
 
-  private Button createAccordionButton() {
-    Button b = new Button("Make a new Game Object");
-    b.setOnAction(e -> promptModal());
-    return b;
+
+  public void addComponentTemplate(String name, String objectType){
+
+    Button b = new Button(name);
+    b.setOnAction(e -> createNewComponentInstance(name, objectType));
+//    b.setOnMousePressed(e -> {
+//      xOffset = e.getSceneX();
+//      yOffset = e.getSceneY();
+//    });
+    gameComponents.getChildren().add(b);
+  }
+  private void createNewComponentInstance(String name, String objectType) {
+    mController.createObjectInstance(name, objectType);
+    Button b = new Button(name);
+    gameComponentInstances.getChildren().add(b);
   }
 
-  private void promptModal() {
-    InputModal modal = new InputModal("createComponent");
-    ModalController mController = new ModalController();
+  private void createNewComponentTemplate(String title){
+    CreateNewModal modal = new CreateNewModal(title);
     mController.setRoot(root);
     modal.attach(mController);
     modal.showAndWait();
-    System.out.println("Test");
   }
+
   public Node asNode() {
     return this;
   }

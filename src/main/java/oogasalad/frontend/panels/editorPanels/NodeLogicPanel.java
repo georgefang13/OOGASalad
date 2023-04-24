@@ -4,8 +4,6 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import oogasalad.frontend.nodeEditor.customNodeEditor.DifferenceNode;
-import oogasalad.frontend.nodeEditor.customNodeEditor.SumNode;
 import oogasalad.frontend.panels.Panel;
 
 public class NodeLogicPanel extends Pane implements Panel {
@@ -29,12 +27,12 @@ public class NodeLogicPanel extends Pane implements Panel {
 
     Button sumButton = new Button("sum");
     sumButton.setStyle("-fx-min-width: 100");
-    sumButton.setOnAction(event -> pane2.getChildren()
-        .add(new SumNode(50, 50, DEFAULT_WIDTH, DEFAULT_HEIGHT, "white")));
+    //sumButton.setOnAction(event -> pane2.getChildren()
+    //    .add(new SumNode(50, 50, DEFAULT_WIDTH, DEFAULT_HEIGHT, "white")));
     Button differenceButton = new Button("difference");
     differenceButton.setStyle("-fx-min-width: 100");
-    differenceButton.setOnAction(event -> pane2.getChildren()
-        .add(new DifferenceNode(50, 50, DEFAULT_WIDTH, DEFAULT_HEIGHT, "lightpink")));
+    //differenceButton.setOnAction(event -> pane2.getChildren()
+    //    .add(new DifferenceNode(50, 50, DEFAULT_WIDTH, DEFAULT_HEIGHT, "lightpink")));
     pane1.getChildren().addAll(new VBox(sumButton, differenceButton));
 
     this.getChildren().addAll(pane1, pane2);

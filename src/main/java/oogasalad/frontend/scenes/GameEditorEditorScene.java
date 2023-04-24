@@ -52,8 +52,6 @@ public class GameEditorEditorScene extends AbstractScene {
 
   /**
    * Creates the scene for the visual editor
-   *
-   * @return
    */
   @Override
   public Scene makeScene() {

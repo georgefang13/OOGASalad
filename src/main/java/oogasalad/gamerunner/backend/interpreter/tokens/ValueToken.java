@@ -21,16 +21,20 @@ public class ValueToken<T> extends Token {
     return VALUE;
   }
 
-  @Override
-  public boolean equals(Token t, Environment env) {
-    if (t instanceof OperatorToken o) {
-      t = t.evaluate(env);
+    @Override
+    public boolean equals(Token t, Environment env){
+        if (t instanceof OperatorToken o) {
+            t = o.evaluate(env);
+        }
+        else if (t instanceof VariableToken) {
+            t = t.evaluate(env);
+        }
+
+        if(t instanceof ValueToken other){
+            return VALUE.equals(other.VALUE);
+        }
+        return false;
     }
-    if (t instanceof ValueToken other) {
-      return VALUE.equals(other.VALUE);
-    }
-    return false;
-  }
 
   @Override
   public String toString() {

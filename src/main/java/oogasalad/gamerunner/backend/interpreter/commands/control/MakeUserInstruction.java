@@ -28,6 +28,6 @@ public class MakeUserInstruction extends OperatorToken {
 
     UserInstruction instruction = new UserInstruction(name.NAME, argTokens, exprs);
     env.addVariable(name.NAME, instruction);
-    return null;
+    return instruction;
   }
 }

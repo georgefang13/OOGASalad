@@ -1,10 +1,7 @@
 package oogasalad.gamerunner.backend.interpreter.commands.control;
 
 import oogasalad.gamerunner.backend.interpreter.Environment;
-import oogasalad.gamerunner.backend.interpreter.tokens.ExpressionToken;
-import oogasalad.gamerunner.backend.interpreter.tokens.OperatorToken;
-import oogasalad.gamerunner.backend.interpreter.tokens.Token;
-import oogasalad.gamerunner.backend.interpreter.tokens.ValueToken;
+import oogasalad.gamerunner.backend.interpreter.tokens.*;
 
 /**
  * Repeats the given expressions the given number of times
@@ -25,11 +22,15 @@ public class Repeat extends OperatorToken {
         Double.class.getName());
 
     int reps = repeats.VALUE.intValue();
-
+    Token ret = null;
     for (int i = 0; i < reps; i++) {
       env.addVariable(":repcount", new ValueToken<>((double) i));
-      exprs.evaluate(env);
+      ret = exprs.evaluate(env);
+      if (ret instanceof ReturnToken || ret instanceof Break) {
+        break;
+      }
     }
-    return null;
+    if (ret instanceof Break) ret = null;
+    return ret;
   }
 }

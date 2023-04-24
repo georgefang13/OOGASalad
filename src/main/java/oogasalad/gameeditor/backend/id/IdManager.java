@@ -3,10 +3,14 @@ package oogasalad.gameeditor.backend.id;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.stream.Stream;
+import oogasalad.sharedDependencies.backend.ownables.Ownable;
+import oogasalad.sharedDependencies.backend.owners.Owner;
 
 /**
  * Manages the ids of all Objects of type T (such as an Ownable). For example, an IdManager<Ownable>
@@ -82,7 +86,7 @@ public class IdManager<T extends IdManageable> implements Iterable<Map.Entry<Str
    * @return the id of the given T
    * @throws IllegalArgumentException if the T is not in the set of ids
    */
-  private String getSimpleId(T obj) throws IllegalArgumentException {
+  public String getSimpleId(T obj) throws IllegalArgumentException {
     for (Map.Entry<String, T> entry : simpleIds.entrySet()) {
       if (entry.getValue().equals(obj)) {
         return entry.getKey();
@@ -224,6 +228,13 @@ public class IdManager<T extends IdManageable> implements Iterable<Map.Entry<Str
     }
     simpleIds.put(id, obj);
     ownershipMap.put(obj, parent);
+    //If T is Ownable, remap the owner of the Object to the Owner of the parent
+    if (obj instanceof Ownable) {
+      Ownable ownable = (Ownable) obj;
+      if (parent != null) {
+        ownable.setOwner(((Ownable) parent).getOwner());
+      }
+    }
   }
 
   /**
@@ -352,6 +363,33 @@ public class IdManager<T extends IdManageable> implements Iterable<Map.Entry<Str
     return Collections.unmodifiableMap(simpleIds);
   }
 
+  public List<T> getObjectsOwnedBy(T owner) {
+    List<T> ownedObjects = new ArrayList<>();
+    for (Map.Entry<T, T> entry : ownershipMap.entrySet()) {
+      if (entry.getValue() == owner) {
+        ownedObjects.add(entry.getKey());
+      }
+    }
+    return ownedObjects;
+  }
+
+  public void setOwner(T obj, T owner) {
+    if (ownershipMap.containsKey(obj)) {
+      ownershipMap.put(obj, owner);
+      //If T is Ownable, remap the owner of the Object to the Owner of the parent
+      if (obj instanceof Ownable) {
+        Ownable ownable = (Ownable) obj;
+        if (owner != null) {
+          ownable.setOwner(((Ownable) owner).getOwner());
+        }
+      }
+
+      for (T ownable : getObjectsOwnedBy(obj)) {
+        setOwner(ownable, obj);
+      }
+
+    }
+  }
 
   /**
    * Clears everything in the IdManager.
@@ -374,21 +412,41 @@ public class IdManager<T extends IdManageable> implements Iterable<Map.Entry<Str
   }
 
   /**
-   * Returns a List of all ids of objects of the given class in the IdManager.
+   * Returns a List of all ids of objects of the given classes in the IdManager.
+   * Returns only classes that use all of the given classes.
    *
-   * @param c the class to check for You're welcome Ethan
+   * @param classNames the classes to check for
    * @return a List of all ids of objects of the given class in the IdManager
    */
-  public List getIdsOfObjectsOfClass(String c) {
-//    loop through all ids and check if they are of the given class using usesClass
-    List ids = new ArrayList();
+  public List<String> getIdsOfObjectsOfClass(String... classNames) {
+    List<String> ids = new ArrayList<>();
     for (Map.Entry<String, T> entry : simpleIds.entrySet()) {
-      if (entry.getValue().usesClass(c)) {
+      boolean allClassesMatch = true;
+      for (String className : classNames) {
+        if (!entry.getValue().usesClass(className)) {
+          allClassesMatch = false;
+          break;
+        }
+      }
+      if (allClassesMatch) {
         ids.add(getId(getObject(entry.getKey())));
       }
     }
     return ids;
   }
+
+  /**
+   * Returns a Steam of all objects in the IdManager.
+   * @return
+   */
+  public Stream<T> objectStream() {
+    return simpleIds.values().stream();
+  }
+
+
+
+
+
 
   //TODO return multiple maps based on ownership (recursive)
 
