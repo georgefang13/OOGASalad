@@ -3,8 +3,8 @@ package oogasalad.frontend.windows;
 import java.util.HashMap;
 import java.util.Map;
 import oogasalad.frontend.windows.WindowTypes.WindowType;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import oogasalad.logging.MainLogger;
+import ch.qos.logback.classic.Level;
 
 /**
  * @author Connor Wells
@@ -16,7 +16,8 @@ public class WindowController implements WindowMediator {
   private Map<String, AbstractWindow> windowMap;
   private int windowIDCounter;
 
-  private static final Logger logger = LoggerFactory.getLogger(WindowController.class);
+  private static final MainLogger logger = MainLogger.getInstance(); //LoggerFactory.getLogger(WindowController.class);
+  //logger.setLogLevel(Level.DEBUG);
 
   public WindowController() {
     windowMap = new HashMap<>();

@@ -13,11 +13,11 @@
         </encoder>
     </appender>
 
-    <logger name="oogasalad.frontend.windows" level="DEBUG">
+    <logger name="oogasalad" level="DEBUG">
         <appender-ref ref="FILE" />
     </logger>
 
-    <logger name="oogasalad.frontend.windows" level="WARN">
+    <logger name="oogasalad" level="WARN">
         <appender-ref ref="FILE" />
     </logger>
 
