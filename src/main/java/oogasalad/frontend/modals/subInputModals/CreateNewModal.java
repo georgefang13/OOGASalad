@@ -7,15 +7,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DialogPane;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import oogasalad.frontend.modals.InputModal;
-import oogasalad.frontend.modals.ModalController;
 import oogasalad.frontend.modals.fields.ImagePickerComponent;
 import oogasalad.frontend.modals.fields.TextFieldComponent;
 
@@ -135,7 +132,7 @@ public class CreateNewModal extends InputModal {
     }
     //TODO remove, just for testing purposes
     System.out.println(map);
-    this.getController().createAGameObjectComponent(map);
+    this.getController().createGameObjectTemplate(map);
     this.getDialogPane().getScene().getWindow().hide();
   }
 }

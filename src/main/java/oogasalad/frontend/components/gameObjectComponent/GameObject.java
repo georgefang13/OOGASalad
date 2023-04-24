@@ -10,6 +10,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import oogasalad.frontend.components.AbstractComponent;
 import oogasalad.frontend.components.Component;
+import oogasalad.frontend.components.ConversionContext;
+import oogasalad.frontend.components.ParamFactory;
 import oogasalad.frontend.components.Point;
 
 
@@ -45,19 +47,19 @@ public class GameObject extends AbstractComponent implements GameObjectComponent
     super(ID);
     children = null;
     setImage(DEFAULT_BUNDLE.getString(replaceWithFileLoadingByID()));
-    followMouse();
     for(String param: map.keySet()){
       try{
         Field field = this.getClass().getDeclaredField(param);
         field.setAccessible(true);
         Class<?> fieldType = field.getType();
-        fieldType.getName();
-        Object value = fieldType.cast(map.get(param));
+        ConversionContext<?> conversionContext = ParamFactory.createConversionContext(fieldType);
+        Object value = conversionContext.convert(map.get(param));
         field.set(this, value);
       } catch (Exception e){
         e.printStackTrace();
       }
     }
+    followMouse();
   }
   private String replaceWithFileLoadingByID(){
     if (ID < 6){

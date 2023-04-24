@@ -8,7 +8,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import oogasalad.frontend.modals.InputModal;
 import oogasalad.frontend.modals.ModalController;
 import oogasalad.frontend.modals.subInputModals.CreateNewModal;
 import oogasalad.frontend.panels.Panel;
@@ -25,12 +24,24 @@ public class ComponentPanel extends VBoxPanel {
   private static final String ACCORDION_LABEL_ID = "AccordionLabelID";
   private Pane root;
   private ModalController mController;
+  private VBox gameComponents;
+  private VBox players;
+  private VBox displayable;
+
+  private double xOffset;
+  private double yOffset;
+
   /**
    * Constructor for HeaderMenu
    */
   public ComponentPanel() {
     super();
-    mController = new ModalController();
+    mController = new ModalController(this);
+
+    //TODO is there a better way?
+    gameComponents = new VBox();
+    players = new VBox();
+    displayable = new VBox();
   }
 
   /**
@@ -66,9 +77,10 @@ public class ComponentPanel extends VBoxPanel {
   } //TODO: turn these two methods into one method that takes in a string
 
   private Accordion createComponenetLibraryAccordion() {
-    TitledPane t1 = new TitledPane("Game Objects", createComponentTemplate());
-    TitledPane t2 = new TitledPane("Players", new Button("B2"));
-    TitledPane t3 = new TitledPane("Displayable", new Button("B3"));
+    TitledPane t1 = new TitledPane("Game Objects", gameComponents);
+    TitledPane t2 = new TitledPane("Players", players);
+    TitledPane t3 = new TitledPane("Displayable", displayable);
+    gameComponents.getChildren().add(createComponentTemplate());
     Accordion accordion = new Accordion();
     accordion.getPanes().addAll(t1, t2, t3);
     return accordion;
@@ -94,9 +106,19 @@ public class ComponentPanel extends VBoxPanel {
     return b;
   }
 
-  private void createNewComponentInstance() {
-    HashMap<String, String> map = new HashMap<>();
-    mController.createAGameObjectComponent(map);
+  public void addGameComponentTemplate(String name){
+
+    Button b = new Button(name);
+    b.setOnAction(e -> createNewComponentInstance(name));
+//    b.setOnMousePressed(e -> {
+//      xOffset = e.getSceneX();
+//      yOffset = e.getSceneY();
+//    });
+    
+    gameComponents.getChildren().add()
+  }
+  private void createNewComponentInstance(String name) {
+    mController.createGameObjectInstance(name);
   }
 
   private void createNewComponentTemplate(){
