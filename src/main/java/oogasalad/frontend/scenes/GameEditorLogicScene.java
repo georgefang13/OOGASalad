@@ -2,9 +2,9 @@ package oogasalad.frontend.scenes;
 
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
-import oogasalad.frontend.panels.subPanels.ComponentPanel;
-import oogasalad.frontend.panels.subPanels.HeaderMenuPanel;
-import oogasalad.frontend.panels.subPanels.NodeLogicPanel;
+import oogasalad.frontend.panels.editorPanels.ComponentPanel;
+import oogasalad.frontend.panels.editorPanels.HeaderMenuPanel;
+import oogasalad.frontend.panels.editorPanels.NodeLogicPanel;
 
 /**
  * @author George Fang
@@ -36,9 +36,9 @@ public class GameEditorLogicScene extends AbstractScene {
 
   private void refreshScene() {
     root.setCenter(nodeLogicPanel);
-    root.setTop(headerMenu.createMenu());
+    root.setTop(headerMenu);
     root.setLeft(componentPanel.createSingleAccordionVBox());
-    root.setCenter(nodeLogicPanel.createNodeLogicEnvironment());
+    root.setCenter(nodeLogicPanel.makePanel().asNode());
     setScene(new Scene(root));
     setTheme();
   }

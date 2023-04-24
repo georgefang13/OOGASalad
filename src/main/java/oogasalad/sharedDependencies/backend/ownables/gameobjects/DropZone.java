@@ -1,19 +1,21 @@
 package oogasalad.sharedDependencies.backend.ownables.gameobjects;
 
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
+
 import oogasalad.sharedDependencies.backend.filemanagers.FileManager;
 import oogasalad.sharedDependencies.backend.owners.Owner;
 
 public class DropZone extends GameObject {
 
-  private final String id;
+  private String id;
   private final HashMap<String, DropZone> edges;
   private final HashMap<String, Object> holding;
 
@@ -38,12 +40,16 @@ public class DropZone extends GameObject {
   }
 
   /**
-   * Adds an object to the node.
+   * Adds an object to the node. If the object is already in the dropzone, it updates the key
    *
    * @param key   the key of the object
    * @param value the object to add
    */
   public void putObject(String key, Object value) {
+    if (holding.containsValue(value)){
+      String prevKey = getKey(value);
+      holding.remove(prevKey);
+    }
     holding.put(key, value);
   }
 
@@ -54,7 +60,10 @@ public class DropZone extends GameObject {
    * @return the object that was removed
    */
   public Object removeObject(String key) {
-    return holding.remove(key);
+    if (key != null && holding.containsKey(key)){
+        return holding.remove(key);
+    }
+    return null;
   }
 
   /**
@@ -65,6 +74,17 @@ public class DropZone extends GameObject {
    */
   public Object getObject(String key) {
     return holding.get(key);
+  }
+
+  public String getKey(Object value) {
+    List<Map.Entry<String, Object>> key = holding.entrySet()
+            .stream()
+            .filter(entry -> value.equals(entry.getValue()))
+            .toList();
+    if (key.size() == 1) {
+      return key.get(0).getKey();
+    }
+    return null;
   }
 
   public List<Object> getAllObjects() {
@@ -158,49 +178,17 @@ public class DropZone extends GameObject {
    * @param isBlocked a function that takes a node and returns true if it is blocked
    * @return a list of all the open nodes that can be reached with that path
    */
-  public List<String> findSpotsUntilBlocked(List<String> path, Predicate<DropZone> isBlocked) {
+  public List<DropZone> findSpotsUntilBlocked(List<String> path, Predicate<DropZone> isBlocked) {
     DropZone currentNode = this;
-    List<String> spots = new ArrayList<>();
+    List<DropZone> spots = new ArrayList<>();
     while (true) {
       currentNode = currentNode.followPath(path);
-      if (currentNode == null || spots.contains(currentNode.getId()) || isBlocked.test(
-          currentNode)) {
+      if (currentNode == null || spots.contains(currentNode) || isBlocked.test(currentNode)) {
         break;
       }
-      spots.add(currentNode.getId());
+      spots.add(currentNode);
     }
     return spots;
-  }
-
-  @Override
-  public void buildFromJson(JsonObject object) {
-    // TODO: make validation check, likely as static method of FileManager
-    // TODO: pass ID into IdManager (maybe change constructor?)
-    // this.id = FileManager.getStringByKey(object, "id");
-
-    for (JsonElement edgeEntry : object.get("connections").getAsJsonArray()) {
-      JsonObject edge = edgeEntry.getAsJsonObject();
-//            edges.put(FileManager.getStringByKey(edge, "edgeId"));
-    }
-
-    for (JsonElement objectEntry : object.get("starterObjects").getAsJsonArray()) {
-      // TODO: get gameObject by Id and add it to holding
-    }
-
-
-  }
-
-  @Override
-  public JsonObject getAsJson() {
-    FileManager fileManager = new FileManager();
-    fileManager.addContent("id", new JsonPrimitive(id));
-    for (String edgeId : edges.keySet()) {
-      JsonObject edge = new JsonObject();
-      edge.add("edgeId", new JsonPrimitive(edgeId));
-      edge.add("nodeId", new JsonPrimitive(edges.get(edgeId).getId()));
-      fileManager.addContent("connections", edge);
-    }
-    return fileManager.getJson();
   }
 
 

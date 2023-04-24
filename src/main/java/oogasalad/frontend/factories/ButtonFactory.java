@@ -6,7 +6,14 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.ResourceBundle;
 import javafx.scene.control.Button;
+import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Tooltip;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import org.kordamp.ikonli.javafx.FontIcon;
+import org.kordamp.ikonli.fontawesome5.FontAwesomeBrands;
+import org.kordamp.ikonli.fontawesome5.FontAwesomeSolid;
+
 
 /**
  * This class represents a factory for creating buttons
@@ -23,6 +30,11 @@ public class ButtonFactory {
   private static final String BUTTON_PREFIX = "Button";
   private static final String TOOLTIP_PREFIX = "Tooltip";
   private static final Integer ROTATE_CCW_90 = -90;
+  private static final ResourceBundle ID_BUNDLE = ResourceBundle.getBundle(
+      "frontend/properties/StylingIDs/CSS_ID");
+  private static final String ICON_BUTTON_ID = "IconButtonID";
+  private static final String AWESOME_ICON_ID = "AwesomeIconID";
+
 
   public ButtonFactory() {
     this.textBundle = ResourceBundle.getBundle(ENGLISH_PROPERTIES);
@@ -65,6 +77,15 @@ public class ButtonFactory {
     verticalButton.setText(myButtonPropertiesMap.get(property));
     verticalButton.setRotate(ROTATE_CCW_90);
     return verticalButton;
+  }
+
+  public Button createIconButton(String text, String iconText) {
+    Button iconButton = new Button(text);
+    FontIcon icon = new FontIcon(FontAwesomeSolid.valueOf(iconText.toUpperCase()));
+    icon.getStyleClass().add(ID_BUNDLE.getString(AWESOME_ICON_ID));
+    iconButton.setGraphic(icon);
+    iconButton.getStyleClass().add(ID_BUNDLE.getString(ICON_BUTTON_ID));
+    return iconButton;
   }
 
   /**

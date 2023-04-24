@@ -26,7 +26,7 @@ public class InterpreterTest {
     tokenizer = new Tokenizer();
     evaluator = new Evaluator(env);
     interpreter = new Interpreter();
-    interpreter.link(idManager);
+    interpreter.linkIdManager(idManager);
   }
 
   private <T> T getVar(String name) {

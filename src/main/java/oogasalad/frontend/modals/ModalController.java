@@ -6,7 +6,7 @@ import javafx.scene.layout.Pane;
 import oogasalad.frontend.components.Component;
 import oogasalad.frontend.components.ComponentsFactory;
 import oogasalad.frontend.components.GraphicHandler;
-import oogasalad.frontend.panels.subPanels.ComponentPanel;
+import oogasalad.frontend.panels.editorPanels.ComponentPanel;
 
 /**
  * @author Han Allows the Modal to Communicate inputs and actions back with the rest of frontend
@@ -23,15 +23,17 @@ public class ModalController {
     componentMap = new HashMap<>();
   }
 
-  public void createGameObjectTemplate(Map<String, String> map) {
+  public void createObjectTemplate(Map<String, String> map, String objectType) {
     String name = map.get("name");
     componentMap.put(name, map);
-    parentPanel.addGameComponentTemplate(name);
+    parentPanel.addComponentTemplate(name, objectType);
   }
 
-  public void createGameObjectInstance(String name){
+  public void createObjectInstance(String name, String objectType){
+    objectType = objectType.substring(0, 1).toUpperCase() + objectType.substring(1);
+    System.out.println(objectType);
     Map<String, String> map = componentMap.get(name);
-    Component c = factory.create("GameObject", map);
+    Component c = factory.create(objectType, map);
     GraphicHandler handler = new GraphicHandler();
     handler.moveToCenter(c);
     root.getChildren().add(c.getNode());

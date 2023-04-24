@@ -2,7 +2,6 @@ package oogasalad.sharedDependencies.backend.ownables;
 
 
 import oogasalad.gameeditor.backend.id.IdManageable;
-import oogasalad.sharedDependencies.backend.filemanagers.JsonSaveable;
 import oogasalad.sharedDependencies.backend.owners.GameWorld;
 import oogasalad.sharedDependencies.backend.owners.Owner;
 import oogasalad.sharedDependencies.backend.owners.Player;
@@ -19,7 +18,7 @@ import oogasalad.sharedDependencies.backend.owners.Player;
  * @see Player
  * @see GameWorld The Owner of an Ownable can be changed.
  */
-public abstract class Ownable extends IdManageable implements JsonSaveable {
+public abstract class Ownable extends IdManageable {
 
   private Owner owner;
 

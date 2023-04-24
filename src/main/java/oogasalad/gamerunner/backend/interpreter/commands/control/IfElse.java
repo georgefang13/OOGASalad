@@ -24,12 +24,14 @@ public class IfElse extends OperatorToken {
     ValueToken<Boolean> b = checkArgumentWithSubtype(env, t, ValueToken.class,
         Boolean.class.getName());
 
+    Token result;
+
     if (b.VALUE) {
-      exprs1.evaluate(env);
+      result = exprs1.evaluate(env);
     } else {
-      exprs2.evaluate(env);
+      result = exprs2.evaluate(env);
     }
 
-    return null;
+    return result;
   }
 }

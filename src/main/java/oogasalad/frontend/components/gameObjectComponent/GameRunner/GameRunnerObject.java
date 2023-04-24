@@ -14,7 +14,7 @@ public abstract class GameRunnerObject extends GameObject implements GameRunnerC
     }
 
     public GameRunnerObject(int ID, Map<String, String> map, GameRunnerController gameRunnerController) {
-        super(ID, map);
+        super(ID);
         this.gameRunnerController = gameRunnerController;
     }
 

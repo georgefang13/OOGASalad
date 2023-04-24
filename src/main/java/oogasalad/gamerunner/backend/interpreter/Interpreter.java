@@ -2,6 +2,8 @@ package oogasalad.gamerunner.backend.interpreter;
 
 import java.util.List;
 import oogasalad.gameeditor.backend.id.IdManager;
+import oogasalad.gamerunner.backend.Game;
+import oogasalad.gamerunner.backend.GameToInterpreterAPI;
 import oogasalad.gamerunner.backend.interpreter.tokens.Token;
 import oogasalad.sharedDependencies.backend.ownables.Ownable;
 
@@ -76,9 +78,10 @@ public class Interpreter implements Runnable {
    *
    * @param game the simulation to link to
    */
-  public void link(IdManager<Ownable> game) {
-    env.linkSimulation(game);
+  public void linkIdManager(IdManager<Ownable> game) {
+    env.linkIdManager(game);
   }
+
 
   /**
    * Sets the language of the interpreter
@@ -87,5 +90,9 @@ public class Interpreter implements Runnable {
    */
   public void setLanguage(String language) {
     env.setLanguage(language);
+  }
+
+  public void linkGame(GameToInterpreterAPI game) {
+    env.linkGame(game);
   }
 }

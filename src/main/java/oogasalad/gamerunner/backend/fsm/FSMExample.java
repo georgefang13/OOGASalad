@@ -34,16 +34,32 @@ public class FSMExample {
   public FSMExample() {
     idManager = new IdManager<>();
     interpreter = new Interpreter();
-    interpreter.link(idManager);
+    interpreter.linkIdManager(idManager);
     fsm = new FSM<>(idManager);
     Variable<Double> turn = new Variable<>(0.);
     turn.addListener((value) -> fsm.setState("INIT"));
     Variable<Integer> numPlayers = new Variable<>(2);
     availableVar = new Variable<>(new ArrayList<>());
 
-    String absoluteFilePath =
-        System.getProperty("user.dir") + "/src/main/resources/FSMExample.json";
+    readFromJson();
 
+    List<DropZone> zones = BoardCreator.createGrid(3, 3);
+    for (DropZone zone : zones) {
+      zone.addClass("board");
+      idManager.addObject(zone, zone.getId());
+    }
+
+    idManager.addObject(turn, "turn");
+    idManager.addObject(numPlayers, "numPlayers");
+    idManager.addObject(availableVar, "available");
+
+    fsm.setState("INIT");
+  }
+
+  private void readFromJson(){
+    String absoluteFilePath =
+//            System.getProperty("user.dir") + "/src/main/resources/FSMExample.json";
+            System.getProperty("user.dir") + "/src/main/resources/export.json";
     String fileContent = "";
     // Read the entire file content
     try {
@@ -78,17 +94,6 @@ public class FSMExample {
       String goalString = goal.getAsString();
       goals.add(goalString);
     }
-
-    List<DropZone> zones = BoardCreator.createGrid(3, 3);
-    for (DropZone zone : zones) {
-      idManager.addObject(zone, zone.getId());
-    }
-
-    idManager.addObject(turn, "turn");
-    idManager.addObject(numPlayers, "numPlayers");
-    idManager.addObject(availableVar, "available");
-
-    fsm.setState("INIT");
   }
 
   public String run(String fromFront) {

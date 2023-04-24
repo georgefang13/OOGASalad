@@ -15,7 +15,6 @@ import java.util.ResourceBundle;
  * @author Han and Aryan AbstractComponent is the abstraction that all Components are built off of.
  */
 public abstract class AbstractComponent implements Component {
-
   protected int ID;
   protected Node node;
   private boolean draggable;
