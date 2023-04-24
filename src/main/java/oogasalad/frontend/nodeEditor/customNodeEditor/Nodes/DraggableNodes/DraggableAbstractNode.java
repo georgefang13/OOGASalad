@@ -68,7 +68,6 @@ public abstract class DraggableAbstractNode extends AbstractNode implements Drag
               this.parentNode.setChildNode(null);
               this.setParentNode(null);
               System.out.println("parent node = " + parentNode);
-
           }
           e.consume();
         });
@@ -107,8 +106,10 @@ public abstract class DraggableAbstractNode extends AbstractNode implements Drag
       temp.setTranslateX(this.getTranslateX());
       temp.setTranslateY(this.getTranslateY() + this.getHeight());
     }
-    node.setChildNode(this);
-    this.parentNode= node;
+    if(node.getChildNode() == null) {
+        node.setChildNode(this);
+        this.setParentNode(node);
+    }
   }
 
   public void setBoundingBox(Bounds bounds) {
