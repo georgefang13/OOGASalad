@@ -28,7 +28,7 @@ public abstract class AbstractWindow extends Stage {
     setWidth(propertyManager.getNumeric("WindowWidth"));
     setHeight(propertyManager.getNumeric("WindowHeight"));
 
-    logger.setLogLevel(Level.ALL); // uncomment if you want to add lover level logs specific to this class
+    //logger.setLogLevel(Level.ALL); // uncomment if you want to add lover level logs specific to this class
     logger.trace("Created a new scene ↑");
   }
 

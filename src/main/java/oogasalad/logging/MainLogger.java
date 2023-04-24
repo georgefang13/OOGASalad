@@ -4,6 +4,9 @@ import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.net.URL;
+import java.util.Properties;
+
 /**
  * @author Yegor Kursakov
  */
@@ -14,7 +17,29 @@ public class MainLogger {
 
     private MainLogger(String className) {
         logger = (Logger) LoggerFactory.getLogger(className);
-        logger.setLevel(Level.INFO); //Level.INFO - to set only progress log
+        loadConfiguration();
+    }
+
+    private void loadConfiguration() {
+        // Load logging configuration from properties file
+        URL configUrl = getClass().getClassLoader().getResource("logging/logging_config.properties");
+        if (configUrl != null) {
+            Properties props = new Properties();
+            try {
+                props.load(configUrl.openStream());
+                String level = props.getProperty("logging.level");
+                if (level != null) {
+                    logger.setLevel(Level.toLevel(level));
+                }
+            } catch (Exception e) {
+                // Failed to load configuration, log error and continue with default settings
+                logger.error("Failed to load logging configuration", e);
+                logger.setLevel(Level.INFO);
+            }
+        } else {
+            logger.warn("Logging configuration file not found. Set default to INFO");
+            logger.setLevel(Level.INFO);
+        }
     }
 
     public static MainLogger getInstance(Class<?> className) {
