@@ -13,7 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import oogasalad.frontend.nodeEditor.Nodes.DraggableNodes.DraggableAbstractNode;
-import oogasalad.frontend.nodeEditor.Nodes.FileBasedNode;
+import oogasalad.frontend.nodeEditor.Nodes.DraggableNodes.FileBasedNode;
 
 public class CodeEditorPanel extends AbstractNodePanel {
 

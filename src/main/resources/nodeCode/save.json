@@ -1,9 +1,5 @@
 {
-  "B": {
-    "next": "hello world"
-  },
-  "A": {
-    "next": "2 + 1 \u003d 3.0 5 - 3 \u003d 2.0",
-    "on enter": "Duvalley Boys"
+  "": {
+    "on enter": "+ 2 3"
   }
 }

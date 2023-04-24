@@ -1,6 +1,5 @@
 package oogasalad.frontend.nodeEditor.Runners;
 
-import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -26,7 +25,7 @@ import javafx.stage.Stage;
 import oogasalad.frontend.nodeEditor.NodeController;
 import oogasalad.frontend.nodeEditor.Nodes.AbstractNode;
 import oogasalad.frontend.nodeEditor.Nodes.DraggableNodes.DraggableAbstractNode;
-import oogasalad.frontend.nodeEditor.Nodes.FileBasedNode;
+import oogasalad.frontend.nodeEditor.Nodes.DraggableNodes.FileBasedNode;
 import oogasalad.frontend.windows.NodeWindow;
 
 /**
