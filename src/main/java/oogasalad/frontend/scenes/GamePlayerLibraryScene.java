@@ -25,14 +25,9 @@ public class GamePlayerLibraryScene extends AbstractScene {
   @Override
   public Scene makeScene() {
     root = new BorderPane();
-
-    editGridButton = new Button("IN THE LIBRARY: CLICK TO Edit Grid");
-    editGridButton.setOnAction(
-        e -> panelController.newSceneFromPanel("test", GamePlayerWindow.WindowScenes.PLAY_SCENE));
-
     root.setTop(gameLibraryHeader = new HeaderPanel(panelController, "library"));
     root.setLeft(sortedGamesPanel = new SortedGamesPanel());
-    root.setCenter(libraryGridPanel = new LibraryGridPanel());
+    root.setCenter(libraryGridPanel = new LibraryGridPanel(panelController));
     setScene(new Scene(root));
     setText();
     setTheme();

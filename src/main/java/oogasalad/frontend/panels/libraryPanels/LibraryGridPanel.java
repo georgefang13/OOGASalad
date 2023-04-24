@@ -5,20 +5,17 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
-import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
-import oogasalad.frontend.nodeEditor.GraphEditorTutorial;
 import oogasalad.frontend.panels.Panel;
+import oogasalad.frontend.panels.PanelController;
+import oogasalad.frontend.windows.GameEditorWindow;
 import oogasalad.frontend.windows.GamePlayerWindow;
 import org.kordamp.ikonli.fontawesome5.FontAwesomeSolid;
 import org.kordamp.ikonli.javafx.FontIcon;
@@ -36,15 +33,17 @@ public class LibraryGridPanel extends GridPane implements Panel {
   private final int IMAGE_WIDTH = 212;
   private final int IMAGE_HEIGHT = 150;
   private final int IMAGE_RADIUS = 20;
+  PanelController panelController;
   private final List<String> libraryGames = new ArrayList<>(
       Arrays.asList("Tic-Tak-Toe", "Fortnite", "Backgammon", "Chess", "Checkers")); //TODO: TEMPORARY
 
   /**
    * Constructor for the environment panel
    */
-  public LibraryGridPanel() {
+  public LibraryGridPanel(PanelController panelController) {
     super();
     this.makePanel();
+    this.panelController = panelController;
     this.getStyleClass().add(ID_BUNDLE.getString(LIBRARY_GRID_PANE_ID));
   }
   public VBox createGameBox(String gameName) {
@@ -64,6 +63,8 @@ public class LibraryGridPanel extends GridPane implements Panel {
     clip.setArcWidth(IMAGE_RADIUS);
     clip.setArcHeight(IMAGE_RADIUS);
     gameImage.setClip(clip);
+    gameImage.setOnMouseClicked(
+        e -> panelController.newSceneFromPanel("test", GamePlayerWindow.WindowScenes.PLAY_SCENE));
     gameImage.getStyleClass().add(ID_BUNDLE.getString(GAME_BOX_IMAGE_ID));
     return gameImage;
   }
@@ -71,6 +72,8 @@ public class LibraryGridPanel extends GridPane implements Panel {
     HBox gameTextBox = new HBox();
     gameTextBox.getStyleClass().add(ID_BUNDLE.getString(GAME_NAME_LABEL_BOX_ID));
     Label gameNameLabel = new Label(gameName);
+    gameNameLabel.setOnMouseClicked(
+        e -> panelController.newSceneFromPanel("test", GamePlayerWindow.WindowScenes.PLAY_SCENE));
     gameNameLabel.getStyleClass().add(ID_BUNDLE.getString(GAME_NAME_LABEL_ID));
     gameTextBox.getChildren().add(gameNameLabel);
 
