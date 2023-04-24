@@ -10,6 +10,8 @@ public class TextFieldNode extends DraggableAbstractNode {
     private TextField field;
     public TextFieldNode(double x, double y, double width, double height, String color) {
         super(x, y, width, height, color);
+        setContent();
+
     }
 
     public TextFieldNode(){

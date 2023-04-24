@@ -23,7 +23,6 @@ public abstract class AbstractNode extends VBox {
     setLayoutY(y);
     setPrefSize(width, height);
     setColor(color);
-    setContent();
     setToolTips();
   }
 

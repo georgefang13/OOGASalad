@@ -13,6 +13,8 @@ public class SumNode extends DraggableAbstractNode {
 
   public SumNode() {
     super(0, 0, 100, 100, "red");
+    setContent();
+
   }
 
   @Override

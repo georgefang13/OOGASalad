@@ -12,6 +12,8 @@ public class DifferenceNode extends DraggableAbstractNode {
 
   public DifferenceNode() {
     super(0, 0, 100, 100, "blue");
+    setContent();
+
   }
 
   @Override

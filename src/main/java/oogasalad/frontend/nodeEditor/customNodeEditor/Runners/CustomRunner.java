@@ -24,10 +24,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.AbstractNode;
-import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.DifferenceNode;
-import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.DraggableAbstractNode;
-import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.SumNode;
+import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.*;
 
 /**
  * Scrolling/panning based on
@@ -133,11 +130,20 @@ public class CustomRunner extends Application {
         JsonArray inpTypes = inpObj.get("type").getAsJsonArray();
       }
       Button button = new Button(name);
-        button.setMaxWidth(Double.MAX_VALUE);
-        GridPane.setHgrow(button, Priority.ALWAYS);
-        nodeSelectionPane.add(button, 0, buttonRow);
-        buttonRow += 1;
+      button.setOnAction(event -> {
+        try {
+            DraggableAbstractNode node = new FileBasedNode(name, innerBlocks, outputTypes, parseStr, inputs);
+            group.getChildren().add(node);
+            node.setBoundingBox(workspace.getBoundsInParent());
+        } catch (Exception e) {
+          e.printStackTrace();
+        }
+      });
 
+      button.setMaxWidth(Double.MAX_VALUE);
+      GridPane.setHgrow(button, Priority.ALWAYS);
+      nodeSelectionPane.add(button, 0, buttonRow);
+      buttonRow += 1;
     }
   }
 

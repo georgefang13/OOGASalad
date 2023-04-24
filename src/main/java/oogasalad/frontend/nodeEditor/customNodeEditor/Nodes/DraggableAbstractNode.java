@@ -1,5 +1,6 @@
 package oogasalad.frontend.nodeEditor.customNodeEditor.Nodes;
 
+import com.google.gson.JsonArray;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import oogasalad.frontend.nodeEditor.customNodeEditor.Draggable;
@@ -15,6 +16,8 @@ public abstract class DraggableAbstractNode extends AbstractNode implements Drag
     onMouseDragged();
     onMouseReleased();
   }
+
+
 
   @Override
   public void onDragDetected() {
