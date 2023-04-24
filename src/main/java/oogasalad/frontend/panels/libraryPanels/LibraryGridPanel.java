@@ -1,5 +1,6 @@
 package oogasalad.frontend.panels.libraryPanels;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -45,42 +46,6 @@ public class LibraryGridPanel extends GridPane implements Panel {
     super();
     this.makePanel();
     this.getStyleClass().add(ID_BUNDLE.getString(LIBRARY_GRID_PANE_ID));
-
-    // set column constraints to evenly distribute the available width
-    ColumnConstraints column1 = new ColumnConstraints();
-    column1.setPercentWidth(25);
-    ColumnConstraints column2 = new ColumnConstraints();
-    column2.setPercentWidth(25);
-    ColumnConstraints column3 = new ColumnConstraints();
-    column3.setPercentWidth(25);
-    ColumnConstraints column4 = new ColumnConstraints();
-    column4.setPercentWidth(25);
-    this.getColumnConstraints().addAll(column1, column2, column3, column4);
-
-//     populate the grid with labels
-//    String[] items = {"Item 1", "Item 2", "Item 3", "Item 4", "Item 5"};
-//    int numRows = (int) Math.ceil((double) items.length / 4);
-//    int rowIndex = 0;
-//    int columnIndex = 0;
-//    for (String item : items) {
-//      Label label = new Label(item);
-//      GridPane.setHgrow(label, Priority.ALWAYS);
-//      GridPane.setVgrow(label, Priority.ALWAYS);
-//      this.add(label, columnIndex, rowIndex);
-//      columnIndex++;
-//      if (columnIndex > 3) {
-//        columnIndex = 0;
-//        rowIndex++;
-//      }
-//    }
-    this.add(createGameBox("Chess"), 0, 0);
-    this.add(createGameBox("Chess"), 1, 0);
-    this.add(createGameBox("Chess"), 2, 0);
-    this.add(createGameBox("Chess"), 3, 0);
-//    this.add(createGameBox("Fortnite"), 0, 1);
-//    this.add(createGameBox("Backgammon"), 1, 1);
-
-
   }
   public VBox createGameBox(String gameName) {
     VBox gameBox = new VBox();
@@ -121,9 +86,43 @@ public class LibraryGridPanel extends GridPane implements Panel {
   }
 
   public Panel makePanel() {
-    //TODO: make this a grid of buttons
+    ColumnConstraints column1 = new ColumnConstraints();
+    column1.setPercentWidth(25);
+    ColumnConstraints column2 = new ColumnConstraints();
+    column2.setPercentWidth(25);
+    ColumnConstraints column3 = new ColumnConstraints();
+    column3.setPercentWidth(25);
+    ColumnConstraints column4 = new ColumnConstraints();
+    column4.setPercentWidth(25);
+    this.getColumnConstraints().addAll(column1, column2, column3, column4);
+
+    List<String> games = getNamesOfFilesToLoad();
+    int rowIndex = 0;
+    int columnIndex = 0;
+    for (String game : games) {
+      this.add(createGameBox(game), columnIndex, rowIndex);
+      columnIndex++;
+      if (columnIndex > 3) {
+        columnIndex = 0;
+        rowIndex++;
+      }
+    }
     return this;
   }
+  private List<String> getNamesOfFilesToLoad() {
+    File folder = new File("src/main/resources/frontend/images/GameLibrary");
+    File[] listOfGameImages = folder.listFiles();
+
+    List<String> fileNames = new ArrayList<>();
+    for (int i = 0; i < listOfGameImages.length; i++) {
+      if (listOfGameImages[i].isFile()) {
+        fileNames.add(listOfGameImages[i].getName().substring(0, listOfGameImages[i].getName().indexOf('.')));
+      }
+    }
+    fileNames.remove("UploadImage");
+    return fileNames;
+  }
+
 
   public Node asNode(){
     return (Node) this;
