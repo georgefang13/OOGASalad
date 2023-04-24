@@ -38,19 +38,9 @@ public class GameObject extends AbstractComponent implements GameObjectComponent
   public GameObject(int ID, Map<String, String> map){
     super(ID);
     children = null;
-    setImage(DEFAULT_BUNDLE.getString(replaceWithFileLoadingByID()));
-    for(String param: map.keySet()){
-      try{
-        Field field = this.getClass().getDeclaredField(param);
-        field.setAccessible(true);
-        Class<?> fieldType = field.getType();
-        ConversionContext<?> conversionContext = ParamFactory.createConversionContext(fieldType);
-        Object value = conversionContext.convert(map.get(param));
-        field.set(this, value);
-      } catch (Exception e){
-        e.printStackTrace();
-      }
-    }
+    instantiatePropFile("frontend.properties.Defaults.GameObject");
+    setImage(getDEFAULT_BUNDLE().getString(replaceWithFileLoadingByID()));
+    setValuesfromMap(map);
     followMouse();
   }
 

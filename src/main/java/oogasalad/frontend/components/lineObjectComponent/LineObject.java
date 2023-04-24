@@ -19,12 +19,13 @@ public class LineObject extends AbstractComponent implements LineObjectComponent
         instantiatePropFile("frontend.properties.Defaults.LineObject");
         this.setDefault();
         this.followMouse();
-        this.getNode();
     }
 
     public LineObject(int ID, Map<String, String> map){
         super(ID);
+        instantiatePropFile("frontend.properties.Defaults.LineObject");
         setValuesfromMap(map);
+        followMouse();
     }
 
     @Override

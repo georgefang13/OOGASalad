@@ -82,15 +82,17 @@ public class ComponentPanel extends VBoxPanel {
     TitledPane t1 = new TitledPane("Game Objects", gameComponents);
     TitledPane t2 = new TitledPane("Players", players);
     TitledPane t3 = new TitledPane("Displayable", displayable);
-    gameComponents.getChildren().add(createComponentTemplate());
+    gameComponents.getChildren().addAll(createComponentTemplate("gameObject"),
+            createComponentTemplate("lineObject"), createComponentTemplate("textObject"),
+            createComponentTemplate("rectangleObject"));
     Accordion accordion = new Accordion();
     accordion.getPanes().addAll(t1, t2, t3);
     return accordion;
   }
 
-  private Button createComponentTemplate() {
-    Button b = new Button("Make a Game Object Template");
-    b.setOnAction(e -> createNewComponentTemplate());
+  private Button createComponentTemplate(String objectType) {
+    Button b = new Button("Make a " + objectType + " Template");
+    b.setOnAction(e -> createNewComponentTemplate(objectType));
     return b;
   }
 
@@ -120,8 +122,8 @@ public class ComponentPanel extends VBoxPanel {
     gameComponentInstances.getChildren().add(b);
   }
 
-  private void createNewComponentTemplate(){
-    CreateNewModal modal = new CreateNewModal("createComponent");
+  private void createNewComponentTemplate(String title){
+    CreateNewModal modal = new CreateNewModal(title);
     mController.setRoot(root);
     modal.attach(mController);
     modal.showAndWait();

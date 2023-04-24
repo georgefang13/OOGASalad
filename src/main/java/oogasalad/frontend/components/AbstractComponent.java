@@ -39,14 +39,15 @@ public abstract class AbstractComponent implements Component {
     setDEFAULT_FILE_PATH(filepath);
     setDEFAULT_BUNDLE(ResourceBundle.getBundle(getDEFAULT_FILE_PATH()));
   }
+
   protected void setValuesfromMap(Map<String, String> map) {
     for(String param: map.keySet()){
       try{
         Field field = this.getClass().getDeclaredField(param);
         field.setAccessible(true);
         Class<?> fieldType = field.getType();
-        fieldType.getName();
-        Object value = fieldType.cast(map.get(param));
+        ConversionContext<?> conversionContext = ParamFactory.createConversionContext(fieldType);
+        Object value = conversionContext.convert(map.get(param));
         field.set(this, value);
       } catch (Exception e){
         e.printStackTrace();
