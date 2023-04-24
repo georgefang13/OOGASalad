@@ -184,19 +184,13 @@ public class FileManager {
     if (tags.length == 0) {
       throw new IllegalArgumentException();
     }
-    JsonObject object = myFileInfo;
-    for (String tag : tags) {
-      if (! object.has(tag)) {
-        throw new IllegalArgumentException();
-      }
-      if (object.get(tag).isJsonPrimitive()) {
-        return object.get(tag).getAsString();
-      }
-      else if (object.get(tag).isJsonObject()) {
-        object = object.getAsJsonObject(tag);
-      }
+    JsonElement element = traverse(tags);
+    if (element.isJsonPrimitive()) {
+      return element.getAsString();
     }
-    throw new IllegalArgumentException();
+    else {
+      throw new IllegalArgumentException();
+    }
   }
 
   /**
@@ -210,22 +204,22 @@ public class FileManager {
     if (tags.length == 0) {
       throw new IllegalArgumentException();
     }
-    JsonObject object = myFileInfo;
-    for (String tag : tags) {
-      if (! object.has(tag)) {
-        throw new IllegalArgumentException();
-      }
-      if (object.get(tag).isJsonArray()) {
-        return JsonArrayToIterable(object.get(tag).getAsJsonArray());
-      }
-      else if (object.get(tag).isJsonPrimitive()) {
-        return new ArrayList<>(Collections.singletonList(object.get(tag).getAsString()));
-      }
-      object = object.getAsJsonObject(tag);
+    JsonElement element = traverse(tags);
+    if (element.isJsonArray()) {
+      return JsonArrayToIterable(element.getAsJsonArray());
+    }
+    else if (element.isJsonPrimitive()) {
+      return new ArrayList<>(Arrays.asList(element.getAsString()));
     }
     throw new IllegalArgumentException();
   }
 
+  /**
+   * Returns an Iterable of Strings containing all the tags at the specified hierarchy
+   *
+   * @param tags variable number of String parameters in order of hierarchy (from high to low)
+   * @return Iterable of Strings containing tags at specified hierarchy
+   */
   public Iterable<String> getTagsAtLevel(String... tags) {
     JsonObject object = myFileInfo;
     for (String tag : tags) {
@@ -236,6 +230,19 @@ public class FileManager {
       tagList.add(entry.getKey());
     }
     return tagList;
+  }
+
+  private JsonElement traverse(String... tags) {
+    JsonElement element = myFileInfo;
+    JsonObject object;
+    for (String tag : tags) {
+      object = element.getAsJsonObject();
+      if (! object.has(tag)) {
+        throw new IllegalArgumentException();
+      }
+      element = object.get(tag);
+    }
+    return element;
   }
 
   private Iterable<String> JsonArrayToIterable(JsonArray array) {
