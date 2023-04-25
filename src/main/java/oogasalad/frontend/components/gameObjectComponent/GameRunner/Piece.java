@@ -3,18 +3,20 @@ package oogasalad.frontend.components.gameObjectComponent.GameRunner;
 import javafx.scene.Node;
 import oogasalad.Controller.GameRunnerController;
 
+import java.io.FileInputStream;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Piece extends GameRunnerObject{
     private double lastTranslateX;
     private double lastTranslateY;
-    public Piece(int ID, GameRunnerController gameRunnerController) {
-        super(ID, gameRunnerController);
+    public Piece(String ID, GameRunnerController gameRunnerController, FileInputStream imagepath) {
+        super(ID, gameRunnerController, imagepath);
     }
 
     //@TODO
     // Owen what is this map bruh?
+    //bro im right with you. Ask Aryan and Han monster
     public Piece(int ID, Node container, GameRunnerController gameRunnerController) {
         super(ID, new HashMap<>(), gameRunnerController);
     }

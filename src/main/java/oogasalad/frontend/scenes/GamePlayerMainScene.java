@@ -33,7 +33,7 @@ public class GamePlayerMainScene extends AbstractScene {
 
     gameRunnerController = new GameRunnerController(this);
 
-    boardPane = gameRunnerController.initializeBoard();
+    boardPane = gameRunnerController.getBoardVisual();
     VBox boardVBOX = new VBox(boardPane);
     boardVBOX.setAlignment(Pos.CENTER);
     root.setCenter(boardVBOX);
@@ -42,10 +42,10 @@ public class GamePlayerMainScene extends AbstractScene {
     System.out.println(pieces);
     root.getChildren().addAll(pieces);
 
-    textInstructions = new Label("START");
-    initializeText();
-    VBox textVBOX = new VBox(textInstructions);
-    root.setBottom(textVBOX);
+    //textInstructions = new Label("START");
+    //initializeText();
+    //VBox textVBOX = new VBox(textInstructions);
+    //root.setBottom(textVBOX);
 
     setScene(new Scene(root));
     setText();

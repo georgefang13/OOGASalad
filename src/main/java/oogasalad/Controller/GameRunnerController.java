@@ -2,30 +2,47 @@ package oogasalad.Controller;
 
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 //import oogasalad.frontend.components.gameObjectComponent.GameObject;
+import javafx.scene.layout.HBox;
 import oogasalad.frontend.components.gameObjectComponent.GameRunner.Board;
-import oogasalad.frontend.components.gameObjectComponent.GameRunner.GameRunnerObject;
 import oogasalad.frontend.components.gameObjectComponent.GameRunner.Piece;
 import oogasalad.frontend.scenes.GamePlayerMainScene;
 import oogasalad.gamerunner.backend.Game;
 import oogasalad.gamerunner.backend.GameController;
 import oogasalad.sharedDependencies.backend.filemanagers.FileManager;
+import oogasalad.frontend.components.gameObjectComponent.GameRunner.DropZoneCell;
 import oogasalad.sharedDependencies.backend.ownables.gameobjects.DropZone;
 import oogasalad.sharedDependencies.backend.ownables.gameobjects.GameObject;
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class GameRunnerController implements GameController {
     private Game game;
+    private final Map<String, Node> nodes = new HashMap<>();
+    private final Map<String, String> pieceToDropZoneMap = new HashMap<>();
+    private HashSet<String> clickable = new HashSet<>();
+    public static final String GAME_STYlE_FILE_PATH = "frontend/css/simpleGameView.css";
+    private final String MODAL_STYLE_SHEET = Objects
+            .requireNonNull(getClass().getClassLoader().getResource(GAME_STYlE_FILE_PATH))
+            .toExternalForm();
+
+    private Board board;
+
+
+
+
+
+
+
     private GamePlayerMainScene gamePlayerMainScene;
 
     private String playerTurn;
-    private Board board;
+
     private Map<Integer, Piece> pieceMap;
     private Map<String, GameObject> backendPieces;
     private Map<String, DropZone> backendDropZones;
@@ -33,13 +50,82 @@ public class GameRunnerController implements GameController {
 
     public GameRunnerController(GamePlayerMainScene gamePlayerMainScene) {
         this.gamePlayerMainScene = gamePlayerMainScene;
-
+        //this.gamePlayerMainScene.makeScene().getStylesheets().add(MODAL_STYLE_SHEET);
         directory = "data/games/tictactoe";
         int numPlayers = 2; //hardcoded read from file
-
         game = new Game(this,directory,numPlayers);
+
+        initializeBoard();
         pieceMap = new HashMap<>();
+
     }
+
+    private void initializeBoard() {
+        int height = 3;
+        int width = 3;
+        board = new Board(height, width);
+    }
+
+    public GridPane getBoardVisual() {
+        return board.getBoardVisual();
+    }
+
+    @Override
+    public void addDropZone(DropZoneParameters params){
+        // String id, int x, int y, int height, int width
+        String id = params.id();
+        int x = params.x();
+        int y = params.y();
+        int height = params.height();
+        DropZoneCell DZfrontend = new DropZoneCell(id,height);
+        board.addBoardCell(DZfrontend, x, y);
+    }
+    @Override
+    public void addPiece(String id, String image, String dropZoneID, double size) {
+        Piece piece;
+        try {
+            piece = new Piece(id ,this, new FileInputStream(image));
+        } catch (Exception e) {
+            System.out.println("Image " + image + " not found");
+            return;
+        }
+
+        piece.setSize(0.2);
+        pieceMap.put(pieceID,piece);
+        pieceNodes.add(piece.getNode());
+
+
+        Image img;
+        try {
+            img = new Image(new FileInputStream(image));
+        } catch (Exception e) {
+            System.out.println("Image " + image + " not found");
+            return;
+        }
+
+        ImageView imgv = new ImageView(img);
+        imgv.setFitWidth(size);
+        imgv.setFitHeight(size);
+
+        HBox piece = new HBox();
+        piece.getChildren().add(imgv);
+        piece.setPrefHeight(size);
+        piece.setPrefWidth(size);
+        piece.setMaxHeight(size);
+        piece.setMaxHeight(size);
+
+        piece.setOnMouseClicked(e -> select(id));
+
+        ((HBox) nodes.get(dropZoneID)).getChildren().add(piece);
+        nodes.put(id, piece);
+
+        pieceToDropZoneMap.put(id, dropZoneID);
+    }
+
+
+
+
+
 
     public String userResponds(String pieceID, String dropzoneID) {
         GameObject piece = backendPieces.get(pieceID);
@@ -51,27 +137,6 @@ public class GameRunnerController implements GameController {
     public String initialInstruction() {
         //String response = fsmExample.getInstruction();
         return "pass"; //parseResponse(response);
-    }
-
-    public GridPane initializeBoard() {
-        //Will load these from backend file somehow or when created via modal
-        int height = 3;
-        int width = 3;
-        board = new Board(height, width);
-
-        return board.getBoardVisual();
-    }
-
-    @Override
-    public void addDropZone(DropZoneParameters params){
-
-    }
-
-    @Override
-    public void addPiece(String id, String image, String DropZoneID, double size){
-//        GameObject piece = new Game
-//        piece.setImage(image);
-//        piece.setSize(size);
     }
 
     @Override

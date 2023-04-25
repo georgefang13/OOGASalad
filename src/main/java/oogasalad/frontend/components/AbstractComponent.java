@@ -15,7 +15,7 @@ import java.util.ResourceBundle;
  * @author Han and Aryan AbstractComponent is the abstraction that all Components are built off of.
  */
 public abstract class AbstractComponent implements Component {
-  protected int ID;
+  protected String ID;
   protected Node node;
   private boolean draggable;
   private boolean active;
@@ -29,7 +29,7 @@ public abstract class AbstractComponent implements Component {
   private String DEFAULT_FILE_PATH;
   private ResourceBundle DEFAULT_BUNDLE;
 
-  public AbstractComponent(int id) {
+  public AbstractComponent(String id) {
     ID = id;
   }
 
@@ -64,11 +64,11 @@ public abstract class AbstractComponent implements Component {
   }
 
   @Override
-  public int getID() {
+  public String getID() {
     return ID;
   }
   @Override
-  public void setID(int id) {
+  public void setID(String id) {
     ID = id;
   }
   @Override

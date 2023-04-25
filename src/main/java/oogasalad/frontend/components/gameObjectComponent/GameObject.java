@@ -26,7 +26,7 @@ public class GameObject extends AbstractComponent implements GameObjectComponent
   private boolean playable;
   private ImageView image;
 
-  public GameObject(int ID) {
+  public GameObject(String ID) {
     super(ID);
     children = null;
     instantiatePropFile("frontend.properties.Defaults.GameObject");
@@ -34,24 +34,17 @@ public class GameObject extends AbstractComponent implements GameObjectComponent
     this.followMouse();
     this.getNode();
   }
-
+  /*
   public GameObject(int ID, Map<String, String> map){
     super(ID);
     children = null;
     instantiatePropFile("frontend.properties.Defaults.GameObject");
-    setImage(getDEFAULT_BUNDLE().getString(replaceWithFileLoadingByID()));
+    //setImage(getDEFAULT_BUNDLE().getString(replaceWithFileLoadingByID()));
     setValuesfromMap(map);
     followMouse();
   }
 
-  private String replaceWithFileLoadingByID(){
-    if (ID < 6){
-      return "DEFAULT_IMAGE";
-    }
-    else {
-      return "X_IMAGE";
-    }
-  }
+   */
 
   @Override
   public void setImage(String imagePath) {

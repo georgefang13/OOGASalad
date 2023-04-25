@@ -24,10 +24,14 @@ public class Board {
     for (int row = 0; row < height; row++) {
       for (int col = 0; col < width; col++) {
         BoardCell boardCell = new UnusedCell(blockSize);
-        boardCells[row][col] = boardCell;
-        boardPane.add(boardCell.getDropZoneVisual(), col, row);
+        addBoardCell(boardCell,row,col);
       }
     }
+  }
+
+  public void addBoardCell(BoardCell boardCell, int row, int col){
+    boardCells[row][col] = boardCell;
+    boardPane.add(boardCell.getDropZoneVisual(), col, row);
   }
 
   private int readBlockSize() {
