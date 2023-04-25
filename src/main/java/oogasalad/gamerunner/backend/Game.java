@@ -2,7 +2,6 @@ package oogasalad.gamerunner.backend;
 
 import oogasalad.Controller.GameRunnerController;
 import oogasalad.gameeditor.backend.id.IdManager;
-import oogasalad.gameeditor.backend.rules.Rule;
 import oogasalad.gamerunner.backend.fsm.FSM;
 import oogasalad.gamerunner.backend.fsm.ProgrammableState;
 import oogasalad.gamerunner.backend.interpretables.Goal;
@@ -15,6 +14,7 @@ import oogasalad.sharedDependencies.backend.ownables.variables.Variable;
 import oogasalad.sharedDependencies.backend.owners.GameWorld;
 import oogasalad.sharedDependencies.backend.owners.Owner;
 import oogasalad.sharedDependencies.backend.owners.Player;
+import oogasalad.sharedDependencies.backend.rules.RuleManager;
 
 import java.io.FileNotFoundException;
 import java.util.*;
@@ -32,7 +32,7 @@ public class Game implements GameToInterpreterAPI{
     /**
      * The Rules of the game.
      */
-    private final IdManager<Rule> rules = new IdManager<>();
+    private final RuleManager rules = new RuleManager();
 
     /**
      * The Goals of the game.
@@ -43,7 +43,7 @@ public class Game implements GameToInterpreterAPI{
      * The Players of the game.
      * Players own Ownables.
      */
-    private final ArrayList<Player> players = new ArrayList<>();
+    private final List<Player> players = new ArrayList<>();
 
     /**
      * The IdManager of the game for Ownables.
@@ -175,6 +175,9 @@ public class Game implements GameToInterpreterAPI{
         }
     }
 
+    /**
+     * Goes to the previous state. Will break the game if going to the previous state would change turns or modify the board.
+     */
     public void undoClickPiece(){
         interpreter.interpret("make :game_available [ ]");
         fsm.undo();
@@ -213,6 +216,7 @@ public class Game implements GameToInterpreterAPI{
         loadDropZones(directory + "/layout.json");
         loadGameObjects(directory + "/objects.json");
         loadVariables(directory + "/variables.json");
+        loadRules(directory + "/rules.json");
     }
 
     private void loadFSM(String file) throws FileNotFoundException {
@@ -341,8 +345,14 @@ public class Game implements GameToInterpreterAPI{
         }
     }
 
-    private void loadRules(){
-
+    private void loadRules(String file) throws FileNotFoundException{
+        FileManager fm = new FileManager(file);
+        for (String id : fm.getTagsAtLevel()){
+            for (String ruleName : fm.getTagsAtLevel(id)){
+                String rule = fm.getString(id, ruleName);
+                rules.addRule(id, ruleName, rule);
+            }
+        }
     }
 
     //endregion
@@ -442,11 +452,12 @@ public class Game implements GameToInterpreterAPI{
      * @return unmodifiable List of Rules
      */
     public List<Rule> getRules() {
-        ArrayList<Rule> listRules= new ArrayList<>();
-        for(Map.Entry<String, Rule> entry : rules) {
-            listRules.add(entry.getValue());
-        }
-        return Collections.unmodifiableList(listRules);
+//        ArrayList<Rule> listRules= new ArrayList<>();
+//        for(Map.Entry<String, Rule> entry : rules) {
+//            listRules.add(entry.getValue());
+//        }
+//        return Collections.unmodifiableList(listRules);
+        return null;
     }
 
     /**

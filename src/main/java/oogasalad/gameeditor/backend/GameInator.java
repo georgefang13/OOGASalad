@@ -2,7 +2,6 @@ package oogasalad.gameeditor.backend;
 
 import com.google.gson.JsonObject;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import oogasalad.gameeditor.backend.id.IdManager;

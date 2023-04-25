@@ -1,12 +1,11 @@
 package oogasalad.sharedDependencies.backend.rules;
 
+import oogasalad.sharedDependencies.backend.ownables.gameobjects.GameObject;
+
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
-import oogasalad.sharedDependencies.backend.ownables.Ownable;
 
 /**
  * This class is responsible for managing the rules of the game.
@@ -33,59 +32,80 @@ import oogasalad.sharedDependencies.backend.ownables.Ownable;
 public class RuleManager {
 
   /**
-   * All Ownables are mapped to a map of rules that they are associated with.
+   * All class names are mapped to a map of rules that they are associated with.
    * The rules are mapped to their names.
    */
-  private final List<Map<Ownable, Map<String, String>>> rules = new ArrayList<>();
+  private final List<RuleClass> rules = new ArrayList<>();
+
+  private RuleClass getRuleClass(String str){
+    for(RuleClass rc : rules){
+      if(rc.getName().equals(str)){
+        return rc;
+      }
+    }
+    return null;
+  }
 
   /**
    * Adds a rule to the manager.
-   * @param ownable The object that the rule is associated with.
+   * @param cls The class that the rule is associated with.
    * @param ruleName The name of the rule.
    * @param rule The rule itself.
    */
-  public void addRule(Ownable ownable, String ruleName, String rule) {
-    //don't use map.of because it is immutable
-    //if the ownable is already in the rules, then add the rule to the existing map
-    for (Map<Ownable, Map<String, String>> existingRuleMap : rules) {
-      if (existingRuleMap.containsKey(ownable)) {
-        existingRuleMap.get(ownable).put(ruleName, rule);
-        return;
-      }
+  public void addRule(String cls, String ruleName, String rule) {
+    // if the class is already in the rules, then add the rule to the existing rule class
+    RuleClass rc = getRuleClass(cls);
+    if (rc == null){
+      String[] classes = cls.split("\\.");
+      RuleClass newRule = new RuleClass(classes);
+      newRule.setRule(ruleName, rule);
+      rules.add(newRule);
     }
-    //otherwise, add the rule to the end of the list
-    Map<Ownable, Map<String, String>> ruleMap = new HashMap<>();
-    ruleMap.put(ownable, new HashMap<>());
-    ruleMap.get(ownable).put(ruleName, rule);
-    rules.add(ruleMap);
+    else {
+      rc.setRule(ruleName, rule);
+    }
   }
 
   /**
    * Adds a rule to the manager.
-   * @param ruleMap
+   * @param ruleList a map of multiple class names to the rules associated with them
    */
-  public void addRule(Map<Ownable, Map<String, String>> ruleMap) {
-    //if the ownable is already in the rules, then add the rule to the existing map
-    for (Map<Ownable, Map<String, String>> existingRuleMap : rules) {
-      if (existingRuleMap.containsKey(ruleMap.keySet().iterator().next())) {
-        existingRuleMap.putAll(ruleMap);
-        return;
+  public void addRules(List<RuleClass> ruleList) {
+    //if the class is already in the rules, then add the rule to the existing map
+    for (RuleClass rc : ruleList) {
+      if (rules.contains(rc)){
+        RuleClass r = getRuleClass(rc.getName());
+        r.copyRules(rc);
+      }
+      else {
+        rules.add(rc);
       }
     }
-    //otherwise, add the rule to the end of the list
-    rules.add(ruleMap);
   }
 
   /**
-   * Returns the rule associated with the given object and rule name.
+   * Gets a rule from class cls with name ruleName
+   * @param cls the class name
+   * @param ruleName the rule name
+   * @return the rule
+   */
+  public String getRule(String cls, String ruleName){
+    RuleClass rc = getRuleClass(cls);
+    if (rc == null) return null;
+    return rc.get(ruleName);
+  }
+
+  /**
+   * Returns the rule associated with the given class and rule name.
    * @param obj The object that the rule is associated with.
    * @param ruleName The name of the rule.
    * @return The rule itself.
    */
-  public String getRuleFromObject(Ownable obj, String ruleName) {
-    for (Map<Ownable, Map<String, String>> ruleMap : rules) {
-      if (ruleMap.containsKey(obj)) {
-        return ruleMap.get(obj).get(ruleName);
+  public String getRuleFromObject(GameObject obj, String ruleName) {
+    for (int i = rules.size() - 1; i >= 0; i--){
+      RuleClass rc = rules.get(i);
+      if (rc.containsRule(ruleName) &&  rc.applies(obj)){
+        return rc.get(ruleName);
       }
     }
     return null;
@@ -93,44 +113,38 @@ public class RuleManager {
 
   /**
    * Overwrites the rule associated with the given object and rule name.
-   * @param obj The object that the rule is associated with.
+   * @param cls The class that the rule is associated with.
    * @param ruleName The name of the rule.
    * @param rule The rule itself.
    */
-  public void modifyRule(Ownable obj, String ruleName, String rule) {
-    for (Map<Ownable, Map<String, String>> ruleMap : rules) {
-      if (ruleMap.containsKey(obj)) {
-        //set the rule to the new rule
-        ruleMap.get(obj).put(ruleName, rule);
-      }
+  public void modifyRule(String cls, String ruleName, String rule) {
+    RuleClass rc = getRuleClass(cls);
+    if (rc == null) return;
+    if (rc.containsRule(ruleName)){
+      rc.setRule(ruleName, rule);
     }
   }
 
   /**
-   * Removes the rule associated with the given object and rule name.
-   * @param obj The object that the rule is associated with.
+   * Removes the rule associated with the given class and rule name.
+   * @param cls The class that the rule is associated with.
    * @param ruleName The name of the rule.
    */
-  public void removeRule(Ownable obj, String ruleName) {
-    for (Map<Ownable, Map<String, String>> ruleMap : rules) {
-      if (ruleMap.containsKey(obj)) {
-        ruleMap.get(obj).remove(ruleName);
-        return;
-      }
+  public void removeRule(String cls, String ruleName) {
+    RuleClass rc = getRuleClass(cls);
+    if (rc == null) return;
+    if (rc.containsRule(ruleName)){
+      rc.removeRule(ruleName);
     }
   }
 
   /**
-   * Removes all rules associated with the given object.
-   * @param obj The object that the rules are associated with.
+   * Removes all rules associated with the given class.
+   * @param cls The class that the rules are associated with.
    */
-  public void clearOwnable(Ownable obj) {
-    for (Map<Ownable, Map<String, String>> ruleMap : rules) {
-      if (ruleMap.containsKey(obj)) {
-        ruleMap.remove(obj);
-        return;
-      }
-    }
+  public void clearClass(String cls) {
+    RuleClass rc = getRuleClass(cls);
+    if (rc != null) rc.clear();
   }
 
   /**
@@ -140,31 +154,8 @@ public class RuleManager {
    */
   public void clearRule(String ruleName) {
     //remove all rules associated with the given rule name
-    for (Map<Ownable, Map<String, String>> ruleMap : rules) {
-      //avoid concurrent modification exception
-      List<Ownable> toRemove = new ArrayList<>();
-      for (Ownable obj : ruleMap.keySet()) {
-        if (ruleMap.get(obj).containsKey(ruleName)) {
-          toRemove.add(obj);
-        }
-      }
-      for (Ownable obj : toRemove) {
-        ruleMap.get(obj).remove(ruleName);
-      }
-    }
-  }
-
-  /**
-   * Removes all rules associated with the given object and rule name.
-   * @param obj The object that the rule is associated with.
-   * @param ruleName The name of the rule.
-   */
-  public void clearOwnableRule(Ownable obj, String ruleName) {
-    for (Map<Ownable, Map<String, String>> ruleMap : rules) {
-      if (ruleMap.containsKey(obj)) {
-        ruleMap.get(obj).remove(ruleName);
-        return;
-      }
+    for (RuleClass rc : rules){
+      rc.removeRule(ruleName);
     }
   }
 
@@ -179,12 +170,8 @@ public class RuleManager {
    * Returns a set of all objects that have rules associated with them.
    * @return A set of all objects that have rules associated with them.
    */
-  public Set<Ownable> getTrackedOwnables() {
-    Set<Ownable> trackedOwnables = new HashSet<>();
-    for (Map<Ownable, Map<String, String>> ruleMap : rules) {
-      trackedOwnables.addAll(ruleMap.keySet());
-    }
-    return trackedOwnables;
+  public Set<String> getTrackedClasses() {
+    return new HashSet<>(rules.stream().map(RuleClass::getName).toList());
   }
 
   /**
@@ -193,22 +180,10 @@ public class RuleManager {
    */
   @Override
   public String toString() {
-    StringBuilder result = new StringBuilder("{\n");
-    for (Map<Ownable, Map<String, String>> ruleMap : rules) {
-      for (Ownable ownable : ruleMap.keySet()) {
-        String className = ownable.toString().split("\\.")[ownable.toString().split("\\.").length-1];
-        result.append("\t\"").append(className).append("\": {\n");
-        Map<String, String> innerMap = ruleMap.get(ownable);
-        for (String ruleName : innerMap.keySet()) {
-          result.append("\t\t\"").append(ruleName).append("\": \"").append(innerMap.get(ruleName)).append("\",\n");
-        }
-        // remove the extra comma at the end
-        result.deleteCharAt(result.length() - 2);
-        result.append("\t},\n");
-      }
+    StringBuilder result = new StringBuilder("RuleManager {\n");
+    for (RuleClass rc : rules){
+      result.append(rc.toString()).append("\n");
     }
-    // remove the extra comma at the end
-    result.deleteCharAt(result.length() - 2);
     result.append("}");
     return result.toString();
   }
