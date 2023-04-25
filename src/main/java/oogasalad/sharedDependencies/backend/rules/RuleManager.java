@@ -1,5 +1,6 @@
 package oogasalad.sharedDependencies.backend.rules;
 
+import oogasalad.sharedDependencies.backend.ownables.Ownable;
 import oogasalad.sharedDependencies.backend.ownables.gameobjects.GameObject;
 
 import java.util.ArrayList;
@@ -101,7 +102,7 @@ public class RuleManager {
    * @param ruleName The name of the rule.
    * @return The rule itself.
    */
-  public String getRuleFromObject(GameObject obj, String ruleName) {
+  public String getRuleFromObject(Ownable obj, String ruleName) {
     for (int i = rules.size() - 1; i >= 0; i--){
       RuleClass rc = rules.get(i);
       if (rc.containsRule(ruleName) &&  rc.applies(obj)){

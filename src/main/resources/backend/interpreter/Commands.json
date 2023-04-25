@@ -477,6 +477,24 @@
       "parse": "getplayer %s"
     }
   },
+  "GetRule": {
+    "name": "Get Rule From Object",
+    "folder": "game",
+    "str": "getrule",
+    "description": "Gets the rule with a specific name from a GameObject",
+    "example": "getrule :game_obj \"rulename [ ] # getrule <GameObject> <rule name> <parameters>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        { "name": "object", "type": ["gameobject"] },
+        { "name": "rule name", "type": ["string"] },
+        { "name": "parameters", "type": ["list"] }
+      ],
+      "outputs": ["any"],
+      "parse": "getrule %s %s %s"
+    }
+  },
+
   "GetObjsByClass": {
     "name": "Get Objects In The Game By Class",
     "folder": "game",

@@ -22,8 +22,8 @@ public class ReturnToken extends Token {
     }
 
     @Override
-    public ReturnToken copy(){
-        return new ReturnToken(VALUE);
+    public Token copy(){
+        return VALUE.copy();
     }
 
     @Override

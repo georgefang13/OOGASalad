@@ -11,6 +11,7 @@ import oogasalad.sharedDependencies.backend.ownables.gameobjects.GameObject;
 import oogasalad.sharedDependencies.backend.ownables.variables.Variable;
 import oogasalad.sharedDependencies.backend.owners.GameWorld;
 import oogasalad.sharedDependencies.backend.owners.Player;
+import oogasalad.sharedDependencies.backend.rules.RuleManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,7 +20,7 @@ import java.util.Map;
 
 public class TestGame implements GameToInterpreterAPI {
 
-    private final IdManager<Rule> rules = new IdManager<>();
+    private final RuleManager rules = new RuleManager();
     private final IdManager<Goal> goals = new IdManager<>();
     private final ArrayList<Player> players = new ArrayList<>();
 
@@ -181,6 +182,11 @@ public class TestGame implements GameToInterpreterAPI {
     @Override
     public void increaseTurn() {
         turn.set((turn.get() + 1) % players.size());
+    }
+
+    @Override
+    public RuleManager getRules() {
+        return rules;
     }
 
     public void setTurn(int i){

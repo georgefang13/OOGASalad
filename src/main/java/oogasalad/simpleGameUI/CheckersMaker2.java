@@ -1,4 +1,4 @@
-package oogasalad;
+package oogasalad.simpleGameUI;
 
 import oogasalad.gameeditor.backend.id.IdManager;
 import oogasalad.gameeditor.backend.ownables.gameobjects.BoardCreator;
@@ -9,19 +9,22 @@ import oogasalad.sharedDependencies.backend.ownables.gameobjects.DropZone;
 import java.util.List;
 import java.util.Map;
 
-public class FileMaker {
+public class CheckersMaker2 {
 
     public static void main(String[] args) {
 
         IdManager<Ownable> manager = new IdManager<>();
 
-        saveDropZones(manager);
-        saveGameObjects(manager);
-        saveFSM();
+        String folder = "data/games/checkers2/";
+
+        saveDropZones(manager, folder);
+        saveGameObjects(folder);
+        saveRules(folder);
+        saveFSM(folder);
 
     }
 
-    static void saveDropZones(IdManager<Ownable> manager){
+    static void saveDropZones(IdManager<Ownable> manager, String folder){
         FileManager fm = new FileManager();
         List<DropZone> nodes = BoardCreator.createGrid(8, 8);
         nodes.forEach(manager::addObject);
@@ -47,10 +50,10 @@ public class FileMaker {
             fm.addContent("board", id, "classes");
         }
 
-        fm.saveToFile("data/games/checkers/layout.json");
+        fm.saveToFile(folder + "layout.json");
     }
 
-    static void saveGameObjects(IdManager<Ownable> manager){
+    static void saveGameObjects(String folder){
         FileManager fm = new FileManager();
 
         int counter = 0;
@@ -101,19 +104,44 @@ public class FileMaker {
             }
         }
 
-        fm.saveToFile("data/games/checkers/objects.json");
+        fm.saveToFile(folder + "objects.json");
     }
 
-    static void saveFSM(){
+    static void saveRules(String folder){
+        String redAvailable = """
+                to available [ :dz ] [
+                    make :moveset [ [ "UpRight ] [ "UpLeft ] ]
+                    make :ret pieceAvailable :dz :moveset
+                    return :ret
+                ]
+                """;
+
+        String blackAvailable = """
+                to available [ :dz ] [
+                    make :moveset [ [ "DownRight ] [ "DownLeft ] ]
+                    make :ret pieceAvailable :dz :moveset
+                    return :ret
+                ]
+                """;
+        String kingAvailable = """
+                to available [ :dz ] [
+                    make :moveset [ [ "DownRight ] [ "DownLeft ] [ "UpRight ] [ "UpLeft ] ]
+                    make :ret pieceAvailable :dz :moveset
+                    return :ret
+                ]
+                """;
+
+        FileManager fm = new FileManager();
+        fm.addContent(redAvailable, "red", "available");
+        fm.addContent(blackAvailable, "black", "available");
+        fm.addContent(kingAvailable, "king", "available");
+        fm.saveToFile(folder + "rules.json");
+    }
+
+    static void saveFSM(String folder){
         // INIT
             String INITinit = """
-                    to pieceAvailable [ :dz ] [
-                        make :moveset [ [ "UpRight ] [ "UpLeft ] [ "DownRight ] [ "DownLeft ] ]
-                        ifelse == curplayer getplayer 0 [
-                            make :moveset [ [ "UpRight ] [ "UpLeft ] ]
-                        ] [
-                            make :moveset [ [ "DownRight ] [ "DownLeft ] ]
-                        ]
+                    to pieceAvailable [ :dz :moveset ] [
                              
                         make :available [ ]
                         make :available_paths [ ]
@@ -146,7 +174,7 @@ public class FileMaker {
         // CHOOSE_PIECE
             String CHOOSEinit = """
                     foreach [ :p fromplayer curplayer "piece  ] [
-                        make :possible pieceAvailable objdz :p
+                        make :possible getrule :p "available [ objdz :p ]
                         if != 0 len item 0 :possible [
                             makeavailable :p
                         ]
@@ -158,14 +186,13 @@ public class FileMaker {
 
         // CHOOSE_SQUARE
             String SQUAREinit = """
-                    make :available_items pieceAvailable :old_dz
+                    make :available_items getrule :piece_selected "available [ :old_dz ]
                     make :available item 0 :available_items
                     
                     if >= len :available 0 [
-                        make :available_paths item 1 :available_items                
+                        make :available_paths item 1 :available_items
                         makeallavailable :available
                     ]
-                    
                     """;
             String SQUAREsetValue = """            
                     make :dz fromgame :game_state_input
@@ -190,26 +217,26 @@ public class FileMaker {
 
         // build the FSM
         FileManager fm = new FileManager();
-        fm.addContent(INITinit, "states", "INIT", "init");
+        fm.addContent(INITinit.replace("\n", " "), "states", "INIT", "init");
         fm.addContent("","states",  "INIT", "leave");
         fm.addContent("","states",  "INIT", "setValue");
-        fm.addContent(INITto,"states",  "INIT", "to");
-        fm.addContent(CHOOSEinit, "states", "CHOOSE_PIECE", "init");
+        fm.addContent(INITto.replace("\n", " "),"states",  "INIT", "to");
+        fm.addContent(CHOOSEinit.replace("\n", " "), "states", "CHOOSE_PIECE", "init");
         fm.addContent("","states",  "CHOOSE_PIECE", "leave");
-        fm.addContent(CHOOSEsetValue,"states",  "CHOOSE_PIECE", "setValue");
+        fm.addContent(CHOOSEsetValue.replace("\n", " "),"states",  "CHOOSE_PIECE", "setValue");
         fm.addContent(CHOOSEto,"states",  "CHOOSE_PIECE", "to");
-        fm.addContent(SQUAREinit, "states", "CHOOSE_SQUARE", "init");
+        fm.addContent(SQUAREinit.replace("\n", " "), "states", "CHOOSE_SQUARE", "init");
         fm.addContent("", "states", "CHOOSE_SQUARE", "leave");
-        fm.addContent(SQUAREsetValue, "states", "CHOOSE_SQUARE", "setValue");
-        fm.addContent(SQUAREto, "states", "CHOOSE_SQUARE", "to");
+        fm.addContent(SQUAREsetValue.replace("\n", " "), "states", "CHOOSE_SQUARE", "setValue");
+        fm.addContent(SQUAREto.replace("\n", " "), "states", "CHOOSE_SQUARE", "to");
         fm.addContent("", "states", "DONE", "init");
-        fm.addContent(DONEleave, "states", "DONE", "leave");
+        fm.addContent(DONEleave.replace("\n", " "), "states", "DONE", "leave");
         fm.addContent("", "states", "DONE", "setValue");
-        fm.addContent(DONEto, "states", "DONE", "to");
+        fm.addContent(DONEto.replace("\n", " "), "states", "DONE", "to");
 
         fm.addEmptyArray("goals");
 
-        fm.saveToFile("data/games/checkers/fsm.json");
+        fm.saveToFile(folder + "fsm.json");
     }
 
 }

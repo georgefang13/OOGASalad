@@ -21,4 +21,9 @@ public class CommandToken extends Token {
   public CommandToken copy(){
     return new CommandToken(NAME);
   }
+
+  @Override
+  public String toString(){
+    return "<Command " + NAME + ">";
+  }
 }

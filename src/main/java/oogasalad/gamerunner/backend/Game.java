@@ -451,13 +451,9 @@ public class Game implements GameToInterpreterAPI{
      * Gets the Rules of the game.
      * @return unmodifiable List of Rules
      */
-    public List<Rule> getRules() {
-//        ArrayList<Rule> listRules= new ArrayList<>();
-//        for(Map.Entry<String, Rule> entry : rules) {
-//            listRules.add(entry.getValue());
-//        }
-//        return Collections.unmodifiableList(listRules);
-        return null;
+    @Override
+    public RuleManager getRules() {
+        return rules;
     }
 
     /**

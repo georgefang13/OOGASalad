@@ -4,6 +4,8 @@ import com.sun.jdi.Value;
 import oogasalad.gamerunner.backend.interpreter.Environment;
 import oogasalad.gamerunner.backend.interpreter.exceptions.IllegalTokenTypeException;
 
+import java.util.Arrays;
+
 abstract public class OperatorToken extends Token {
 
   private Token[] args;
@@ -27,6 +29,7 @@ abstract public class OperatorToken extends Token {
    * @param args array of arguments
    */
   public void passArguments(Token[] args) {
+//    System.out.println("Passing arguments to " + NAME + ": " + Arrays.asList(args) );
     this.args = new Token[args.length];
     System.arraycopy(args, 0, this.args, 0, args.length);
   }
@@ -202,7 +205,7 @@ abstract public class OperatorToken extends Token {
         }
         op.passArguments(argsCopy);
       }
-        return op;
+      return op;
     } catch (Exception e) {
       e.printStackTrace();
 
@@ -212,6 +215,6 @@ abstract public class OperatorToken extends Token {
 
   @Override
   public String toString() {
-    return String.format("<%s %s[%d]>", TYPE, NAME, numArgs);
+    return String.format("<%s %s[%d]>", TYPE, NAME + " " + this.getClass().getSimpleName(), numArgs);
   }
 }

@@ -21,6 +21,7 @@ import oogasalad.sharedDependencies.backend.ownables.gameobjects.DropZone;
 import oogasalad.sharedDependencies.backend.ownables.gameobjects.GameObject;
 import oogasalad.sharedDependencies.backend.ownables.variables.Variable;
 import oogasalad.sharedDependencies.backend.owners.Player;
+import oogasalad.sharedDependencies.backend.rules.RuleManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -919,6 +920,26 @@ public class CommandsTest {
       assertEquals("Invalid syntax: Not enough arguments for operator GetObjectsFromPlayer", e.getMessage());
     }
 
+  }
+
+  @Test
+  public void testGetRule(){
+    game.noFSMInit(2);
+    useGameVars();
+    RuleManager rm = game.getRules();
+    String func = """
+            to available [ ] [
+              return 1
+            ]
+            """;
+    rm.addRule("piece", "available", func);
+    GameObject obj1 = new GameObject(game.getPlayer(0));
+    obj1.addClass("piece");
+    game.addElement(obj1, "obj");
+    String input = "make :x getrule :game_obj \"available [ ]";
+    interpreter.interpret(input);
+    Variable<Double> x = getVar("interpreter-:x");
+    assertEquals(1., x.get());
   }
 
   @Test
