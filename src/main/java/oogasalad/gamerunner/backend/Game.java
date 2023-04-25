@@ -141,10 +141,16 @@ public class Game implements GameToInterpreterAPI{
      * reacts to clicking a piece
      */
     public void clickPiece(String selectedObject) {
+
         interpreter.interpret("make :game_available [ ]");
 
-        fsm.setStateInnerValue(selectedObject);
-        fsm.transition();
+        try {
+            fsm.setStateInnerValue(selectedObject);
+            fsm.transition();
+        } catch (Exception e) {
+            System.out.println(getLog());
+            throw e;
+        }
 
         sendClickable();
 
