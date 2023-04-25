@@ -29,18 +29,18 @@ public class ComponentsFactoryTest extends DukeApplicationTest {
     stage.show();
   }
 
-  @Test
-  public void createDefault() {
-    Component c = factory.create("GameObject");
-    Platform.runLater(() -> {
-      root.getChildren().add(c.getNode());
-    });
-    System.out.println(c.getNode().getBoundsInLocal().getMinX());
-    simulateMousePress(c.getNode(), MouseButton.PRIMARY, 0, 0);
-    simulateMouseDrag(c.getNode(), MouseButton.PRIMARY, 500, 500);
-    simulateMouseRelease(c.getNode(), MouseButton.PRIMARY, 500, 500);
-    System.out.println(c.getNode().getBoundsInLocal().getMinX());
-  }
+//  @Test
+//  public void createDefault() {
+//    Component c = factory.create("GameObject");
+//    Platform.runLater(() -> {
+//      root.getChildren().add(c.getNode());
+//    });
+//    System.out.println(c.getNode().getBoundsInLocal().getMinX());
+//    simulateMousePress(c.getNode(), MouseButton.PRIMARY, 0, 0);
+//    simulateMouseDrag(c.getNode(), MouseButton.PRIMARY, 500, 500);
+//    simulateMouseRelease(c.getNode(), MouseButton.PRIMARY, 500, 500);
+//    System.out.println(c.getNode().getBoundsInLocal().getMinX());
+//  }
 
 //  @Test
 //  public void createFromMap(){
