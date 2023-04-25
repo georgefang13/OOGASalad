@@ -2,7 +2,6 @@ package oogasalad.frontend.panels.editorPanels;
 
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
-import oogasalad.frontend.nodeEditor.GraphEditorTutorial;
 import oogasalad.frontend.panels.Panel;
 
 public class EnvironmentPanel extends Pane implements Panel {
@@ -18,7 +17,7 @@ public class EnvironmentPanel extends Pane implements Panel {
   public Panel makePanel() {
     this.setStyle(
         "-fx-background-color: #24252e;"); //TODO: delete, here just so we can see the pane
-    GraphEditorTutorial graphEditorTutorial = new GraphEditorTutorial();
+//    GraphEditorTutorial graphEditorTutorial = new GraphEditorTutorial();
     //GraphEditorContainer container = graphEditorTutorial.getContainer();
     //container.prefHeightProperty().bind(environment.heightProperty());
     //container.prefWidthProperty().bind(environment.widthProperty());
