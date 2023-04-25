@@ -69,7 +69,6 @@ public class Game implements GameToInterpreterAPI{
 
     /////////////////// PLAY THE GAME ///////////////////
 
-
     public Game(GameController controller, String directory, int numPlayers) {
         this.controller = controller;
 
@@ -337,7 +336,7 @@ public class Game implements GameToInterpreterAPI{
             String value = fm.getString(id, "value");
             String type = fm.getString(id, "type");
 
-//            Variable var = new Variable();
+            // Variable var = new Variable();
             // TODO: replace with GSON thing
         }
     }

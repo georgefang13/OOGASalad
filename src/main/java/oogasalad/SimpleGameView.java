@@ -27,9 +27,9 @@ public class SimpleGameView extends Application implements GameController {
 
     private final Group root = new Group();
 
-    private HashSet<String> clickable = new HashSet<>();
+    private final HashSet<String> clickable = new HashSet<>();
 
-    private Button undoButton = new Button("Undo");
+    private final Button undoButton = new Button("Undo");
 
     private Game game;
 
@@ -42,10 +42,7 @@ public class SimpleGameView extends Application implements GameController {
         Scene scene = new Scene(root, SCREEN_WIDTH, SCREEN_HEIGHT);
         scene.getStylesheets().add(MODAL_STYLE_SHEET);
 
-        FileMaker fm = new FileMaker();
-        fm.main(new String[]{});
-
-        game = new Game(this, "data/games/checkers", 2);
+        game = new Game(this, "data/games/tictactoe", 2);
 
         undoButton.setOnAction(e -> game.undoClickPiece());
         root.getChildren().add(undoButton);
@@ -78,7 +75,6 @@ public class SimpleGameView extends Application implements GameController {
         dropZone.setOnMouseClicked(e -> select(params.id()));
         nodes.put(params.id(), dropZone);
         root.getChildren().add(dropZone);
-
     }
 
     @Override
