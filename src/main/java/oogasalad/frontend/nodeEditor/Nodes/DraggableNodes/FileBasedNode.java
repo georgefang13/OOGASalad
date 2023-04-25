@@ -65,9 +65,13 @@ public class FileBasedNode extends DraggableAbstractNode {
         for (TextField input:inputFields) {
             inputsAsStrings.add(input.getText().toString());
         }
-
-        return String.format(myParseStr,inputsAsStrings.toArray());
+        String output = String.format(myParseStr,inputsAsStrings.toArray());
+        if (this.getChildNode() == null){
+            return output;
+        }
+        return (output + " " + this.getChildNode().getJSONString());
     }
+
     private void updateOutput() {
         String output = "output: ";
         outputLabel.setText(output);

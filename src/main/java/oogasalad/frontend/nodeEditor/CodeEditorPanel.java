@@ -30,6 +30,7 @@ public class CodeEditorPanel extends AbstractNodePanel {
   protected List<Button> getNodeSelectionButtons() {
     String absoluteFilePath = System.getProperty("user.dir") + COMMANDS_RESOURCE_PATH;
     ArrayList<Button> buttons = new ArrayList<>();
+
     String fileContent = "";
     try {
       fileContent = Files.readString(Paths.get(absoluteFilePath));

@@ -22,6 +22,8 @@ import oogasalad.frontend.managers.PropertyManager;
 import oogasalad.frontend.managers.StandardPropertyManager;
 import oogasalad.frontend.nodeEditor.Nodes.AbstractNode;
 import oogasalad.frontend.nodeEditor.Nodes.DraggableNodes.DraggableAbstractNode;
+import oogasalad.frontend.nodeEditor.Nodes.DraggableNodes.FileBasedNode;
+import oogasalad.frontend.nodeEditor.Nodes.DraggableNodes.MainNode;
 
 public abstract class AbstractNodePanel extends Tab {
 
@@ -43,27 +45,14 @@ public abstract class AbstractNodePanel extends Tab {
   protected abstract List<Button> getNodeSelectionButtons();
 
   public String getAllNodeContent() {
-    List<String> code = new ArrayList<String>();
+    String code = "";
     for (Node node : group.getChildren()) {
-      if (node instanceof AbstractNode) {
-        code.add(((AbstractNode) node).getJSONString());
+      if (node instanceof MainNode) {
+        code += (((AbstractNode) node).getJSONString());
       }
     }
-    return String.join(" ", code);
+    return code;
   }
-
-//  public JsonObject sendJSONContent() {
-//    Gson gson = new GsonBuilder().setPrettyPrinting().create();
-//    JsonObject moveObject = new JsonObject();
-//    //moveObject.addProperty("init", init.getText());
-//    //moveObject.addProperty("leave", leave.getText());
-//    //moveObject.addProperty("setValue", setValue.getText());
-//    //moveObject.addProperty("to", to.getText());
-//    JsonObject contentObject = new JsonObject();
-//    contentObject.add(stateName.getText(), moveObject);
-//    return contentObject;
-//  }
-
 
   protected Button makeButton(String buttonName, EventHandler<ActionEvent> handler) {
     Button button = new Button(buttonName);
@@ -130,6 +119,10 @@ public abstract class AbstractNodePanel extends Tab {
     scrollPane.setFitToHeight(true);
     workspace.setFitWidth(5 * windowWidth);
     workspace.setFitHeight(5 * windowHeight);
+
+    MainNode node = new MainNode(nodeController);
+    group.getChildren().add(node);
+    node.setBoundingBox(workspace.getBoundsInParent());
     return scrollPane;
   }
 
