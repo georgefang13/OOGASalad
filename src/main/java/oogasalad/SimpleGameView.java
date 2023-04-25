@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -28,13 +29,14 @@ public class SimpleGameView extends Application implements GameController {
 
     private HashSet<String> clickable = new HashSet<>();
 
+    private Button undoButton = new Button("Undo");
+
     private Game game;
 
     public static final String GAME_STYlE_FILE_PATH = "frontend/css/simpleGameView.css";
     private final String MODAL_STYLE_SHEET = Objects
             .requireNonNull(getClass().getClassLoader().getResource(GAME_STYlE_FILE_PATH))
             .toExternalForm();
-
     @Override
     public void start(Stage stage) throws Exception {
         Scene scene = new Scene(root, SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -43,7 +45,10 @@ public class SimpleGameView extends Application implements GameController {
         FileMaker fm = new FileMaker();
         fm.main(new String[]{});
 
-         game = new Game(this, "data/games/checkers", 2);
+        game = new Game(this, "data/games/checkers", 2);
+
+        undoButton.setOnAction(e -> game.undoClickPiece());
+        root.getChildren().add(undoButton);
 
         stage.setScene(scene);
         stage.show();
@@ -73,6 +78,7 @@ public class SimpleGameView extends Application implements GameController {
         dropZone.setOnMouseClicked(e -> select(params.id()));
         nodes.put(params.id(), dropZone);
         root.getChildren().add(dropZone);
+
     }
 
     @Override

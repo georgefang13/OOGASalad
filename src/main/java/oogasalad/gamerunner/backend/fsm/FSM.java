@@ -12,6 +12,8 @@ public class FSM<T> {
   private final Map<T, State> states = new HashMap<>();
   private State currentState;
   private T currentStateName;
+
+  private List<T> history = new ArrayList<>();
   private final StateData data = new StateData();
 
   public FSM(IdManager<?> idManager) {
@@ -50,9 +52,18 @@ public class FSM<T> {
       currentState.onLeave(data);
     }
 
+    history.add(name);
+
     currentState = states.get(name);
     currentStateName = name;
     currentState.onEnter(data);
+  }
+
+  public void undo(){
+    if(history.size() > 1){
+      history.remove(history.size() - 1);
+      setState(history.get(history.size() - 1));
+    }
   }
 
   /**

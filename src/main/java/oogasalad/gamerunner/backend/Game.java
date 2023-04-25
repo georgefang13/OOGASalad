@@ -176,6 +176,12 @@ public class Game implements GameToInterpreterAPI{
         }
     }
 
+    public void undoClickPiece(){
+        interpreter.interpret("make :game_available [ ]");
+        fsm.undo();
+        sendClickable();
+    }
+
     public void keyDown(String key) {
 
     }
@@ -193,6 +199,7 @@ public class Game implements GameToInterpreterAPI{
         }
         return -1;
     }
+
 
     // region LOADING
 
