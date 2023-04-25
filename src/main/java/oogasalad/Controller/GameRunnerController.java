@@ -1,5 +1,6 @@
 package oogasalad.Controller;
 
+import javafx.application.Application;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
@@ -7,6 +8,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 //import oogasalad.frontend.components.gameObjectComponent.GameObject;
 import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
 import oogasalad.frontend.components.gameObjectComponent.GameRunner.Board;
 import oogasalad.frontend.components.gameObjectComponent.GameRunner.Piece;
 import oogasalad.frontend.scenes.GamePlayerMainScene;
@@ -21,7 +23,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.*;
 
-public class GameRunnerController implements GameController {
+public class GameRunnerController extends Application implements GameController {
     private Game game;
     private final Map<String, Node> nodes = new HashMap<>();
     private final Map<String, String> pieceToDropZoneMap = new HashMap<>();
@@ -51,12 +53,12 @@ public class GameRunnerController implements GameController {
     public GameRunnerController(GamePlayerMainScene gamePlayerMainScene) {
         this.gamePlayerMainScene = gamePlayerMainScene;
         //this.gamePlayerMainScene.makeScene().getStylesheets().add(MODAL_STYLE_SHEET);
-        directory = "data/games/tictactoe";
+        directory = "data/games/tictactoe2";
         int numPlayers = 2; //hardcoded read from file
-        game = new Game(this,directory,numPlayers);
-
         initializeBoard();
         pieceMap = new HashMap<>();
+
+        game = new Game(this,directory,numPlayers);
     }
     private void initializeBoard() {
         int height = 3;
@@ -96,6 +98,37 @@ public class GameRunnerController implements GameController {
             game.clickPiece(id);
         }
     }
+    @Override
+    public void setClickable(List<String> ids) {
+        clearClickables();
+
+        clickable.addAll(ids);
+        for (String id : ids){
+            nodes.get(id).setStyle("-fx-border-color: red; -fx-border-width: 1px;");
+        }
+    }
+    private void clearClickables(){
+        for (String id : clickable){
+            nodes.get(id).setStyle("");
+        }
+        clickable.clear();
+    }
+
+    @Override
+    public void movePiece(String id, String dropZoneID) {
+        String dzid = pieceToDropZoneMap.get(id);
+        ((HBox) nodes.get(dzid)).getChildren().remove(nodes.get(id));
+        ((HBox) nodes.get(dropZoneID)).getChildren().add(nodes.get(id));
+    }
+
+    public void updatePieceMove(String pieceId) {
+        String dropZoneID = pieceToDropZoneMap.get(pieceId);
+        select(dropZoneID);
+    }
+
+    public ArrayList<Node> initializePieces(){
+        return (ArrayList<Node>) nodes.values();
+    }
 
 
 
@@ -116,16 +149,14 @@ public class GameRunnerController implements GameController {
         return "pass"; //parseResponse(response);
     }
 
-    @Override
-    public void setClickable(List<String> ids){
 
-    }
 
     @Override
-    public void movePiece(String id, String dropZoneID) {
-
-
+    public void start(Stage primaryStage) throws Exception {
+        //never call this shouldnt be here
     }
+
+
 
     public record DropZoneParameters(String id, int x, int y, int height, int width){}
 

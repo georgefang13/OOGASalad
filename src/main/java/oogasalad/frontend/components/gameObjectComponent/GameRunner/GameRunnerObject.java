@@ -24,11 +24,11 @@ public abstract class GameRunnerObject extends GameObject implements GameRunnerC
     @Override
     public void followMouse() {
         super.followMouse();
+        getNode().setOnMouseClicked(e -> {
+            onClick();
+        });
         getNode().setOnMouseReleased(e -> {
             onDragDropped();
         });
-    }
-    public void OnClick() {
-
     }
 }

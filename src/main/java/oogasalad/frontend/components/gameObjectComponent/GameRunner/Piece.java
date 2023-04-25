@@ -34,6 +34,11 @@ public class Piece extends GameRunnerObject{
     }
 
     @Override
+    public void onClick() {
+        gameRunnerController.select(ID);
+    }
+
+    @Override
     public void acceptDrag() {
         Node node = getNode();
         lastTranslateX = node.getTranslateX();

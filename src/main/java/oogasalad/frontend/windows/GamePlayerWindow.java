@@ -24,8 +24,8 @@ public class GamePlayerWindow extends AbstractWindow {
 
   @Override
   public SceneTypes getDefaultSceneType() {
-    return WindowScenes.LIBRARY_SCENE;
-  }
+    return WindowScenes.PLAY_SCENE;
+  } //TODO: OWEN FIX THIS back to library
 
   @Override
   public AbstractScene addNewScene(SceneTypes sceneType) {
