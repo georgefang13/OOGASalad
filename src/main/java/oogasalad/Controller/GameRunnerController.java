@@ -95,7 +95,7 @@ public class GameRunnerController {
         ArrayList<Node> pieceNodes = new ArrayList<>();
         for (int i = 1; i <= 10; i++) {
             int pieceID = i;
-            Piece piece = new Piece(pieceID,this);
+            Piece piece = new Piece(pieceID.,this);
             piece.setSize(0.2);
             pieceMap.put(pieceID,piece);
             pieceNodes.add(piece.getNode());

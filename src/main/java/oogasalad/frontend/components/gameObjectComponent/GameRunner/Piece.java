@@ -9,17 +9,17 @@ import java.util.Map;
 public class Piece extends GameRunnerObject{
     private double lastTranslateX;
     private double lastTranslateY;
-    public Piece(int ID, GameRunnerController gameRunnerController) {
+    public Piece(String ID, GameRunnerController gameRunnerController) {
         super(ID, gameRunnerController);
     }
 
     //@TODO
     // Owen what is this map bruh?
-    public Piece(int ID, Node container, GameRunnerController gameRunnerController) {
+    public Piece(String ID, Node container, GameRunnerController gameRunnerController) {
         super(ID, new HashMap<>(), gameRunnerController);
     }
 
-    public Piece(int ID, Map<String, String> map, GameRunnerController gameRunnerController) {
+    public Piece(String ID, Map<String, String> map, GameRunnerController gameRunnerController) {
         super(ID, map, gameRunnerController);
     }
 
