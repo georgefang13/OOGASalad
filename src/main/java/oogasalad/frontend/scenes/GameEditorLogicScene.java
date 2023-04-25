@@ -2,6 +2,8 @@ package oogasalad.frontend.scenes;
 
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
+import oogasalad.frontend.nodeEditor.NodeController;
+import oogasalad.frontend.nodeEditor.NodeScene;
 import oogasalad.frontend.panels.editorPanels.ComponentPanel;
 import oogasalad.frontend.panels.editorPanels.HeaderMenuPanel;
 import oogasalad.frontend.panels.editorPanels.NodeLogicPanel;
@@ -17,7 +19,7 @@ public class GameEditorLogicScene extends AbstractScene {
   private BorderPane root;
   private HeaderMenuPanel headerMenu;
   private ComponentPanel componentPanel;
-  private NodeLogicPanel nodeLogicPanel;
+  private NodeController nodeController;
   private static final String LOGIC_EDITOR_SCENE = "logic";
 
   public GameEditorLogicScene(SceneController sceneController) {
@@ -35,16 +37,15 @@ public class GameEditorLogicScene extends AbstractScene {
   }
 
   private void refreshScene() {
-    root.setCenter(nodeLogicPanel);
+    root.setCenter(nodeController.getScene().getRoot());
     root.setTop(headerMenu);
     root.setLeft(componentPanel.createSingleAccordionVBox());
-    root.setCenter(nodeLogicPanel.makePanel().asNode());
     setScene(new Scene(root));
     setTheme();
   }
 
   private void createCenterPanel() {
-    nodeLogicPanel = new NodeLogicPanel();
+    nodeController = new NodeController();
   }
 
   private void createTopPanel() {

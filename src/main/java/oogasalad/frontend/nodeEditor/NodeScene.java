@@ -25,13 +25,13 @@ public class NodeScene extends AbstractScene {
   public NodeScene(NodeController nodeController) {
     super();
     this.nodeController = nodeController;
+    tabs.getTabs().add(makeTab("state editor", false, new StateEditorPanel(nodeController)));
   }
 
   @Override
   public Scene makeScene() {
     tabs = new TabPane();
     tabMap = new HashMap<>();
-    tabs.getTabs().add(makeTab("state editor", false, new StateEditorPanel(nodeController)));
     return new Scene(tabs);
   }
 
@@ -75,6 +75,10 @@ public class NodeScene extends AbstractScene {
     } catch (IOException e) {
       e.printStackTrace();
     }
+  }
+
+  public Scene getScene() {
+    return scene;
   }
 
   @Override
