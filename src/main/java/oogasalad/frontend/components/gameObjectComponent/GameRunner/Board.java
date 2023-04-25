@@ -3,7 +3,7 @@ package oogasalad.frontend.components.gameObjectComponent.GameRunner;
 import javafx.geometry.Point2D;
 import javafx.scene.layout.GridPane;
 
-public class Board {
+public class Board implements FloatingDropHolder{
 
   private int height;
   private int width;
