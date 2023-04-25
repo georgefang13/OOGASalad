@@ -1,4 +1,4 @@
-package oogasalad.frontend.nodeEditor.customNodeEditor;
+package oogasalad.frontend.nodeEditor;
 
 public interface Draggable {
 

@@ -1,4 +1,4 @@
-package oogasalad.frontend.nodeEditor.customNodeEditor;
+package oogasalad.frontend.nodeEditor;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -20,12 +20,14 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import oogasalad.frontend.managers.PropertyManager;
 import oogasalad.frontend.managers.StandardPropertyManager;
-import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.AbstractNode;
-import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.DraggableNodes.DraggableAbstractNode;
+import oogasalad.frontend.nodeEditor.Nodes.AbstractNode;
+import oogasalad.frontend.nodeEditor.Nodes.DraggableNodes.DraggableAbstractNode;
+import oogasalad.frontend.nodeEditor.Nodes.DraggableNodes.FileBasedNode;
+import oogasalad.frontend.nodeEditor.Nodes.DraggableNodes.MainNode;
 
 public abstract class AbstractNodePanel extends Tab {
 
-  public static final String NODES_FOLDER = "oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.";
+  public static final String NODES_FOLDER = "oogasalad.frontend.nodeEditor.Nodes.";
   public static final String NODES_JSON_PATH = "src/main/resources/nodeCode/save.json";
   protected Group group;
   protected ImageView workspace;
@@ -43,27 +45,14 @@ public abstract class AbstractNodePanel extends Tab {
   protected abstract List<Button> getNodeSelectionButtons();
 
   public String getAllNodeContent() {
-    List<String> code = new ArrayList<String>();
+    String code = "";
     for (Node node : group.getChildren()) {
-      if (node instanceof AbstractNode) {
-        code.add(((AbstractNode) node).getJSONString());
+      if (node instanceof MainNode) {
+        code += (((AbstractNode) node).getJSONString());
       }
     }
-    return String.join(" ", code);
+    return code;
   }
-
-//  public JsonObject sendJSONContent() {
-//    Gson gson = new GsonBuilder().setPrettyPrinting().create();
-//    JsonObject moveObject = new JsonObject();
-//    //moveObject.addProperty("init", init.getText());
-//    //moveObject.addProperty("leave", leave.getText());
-//    //moveObject.addProperty("setValue", setValue.getText());
-//    //moveObject.addProperty("to", to.getText());
-//    JsonObject contentObject = new JsonObject();
-//    contentObject.add(stateName.getText(), moveObject);
-//    return contentObject;
-//  }
-
 
   protected Button makeButton(String buttonName, EventHandler<ActionEvent> handler) {
     Button button = new Button(buttonName);
@@ -86,15 +75,18 @@ public abstract class AbstractNodePanel extends Tab {
     }
   }
 
-  public GridPane makeNodeSelectionPane() {
+  public ScrollPane makeNodeSelectionPane() {
     List<Button> buttons = getNodeSelectionButtons();
+    ScrollPane scrollPane = new ScrollPane();
     GridPane pane = new GridPane();
     pane.setStyle("-fx-background-color: gray");
     for (Button button : buttons) {
       pane.add(button, 0, buttons.indexOf(button));
     }
-    pane.setMinSize(windowWidth / 4, windowHeight / 4);
-    return pane;
+    pane.setMinSize(windowWidth / 4, windowHeight);
+    scrollPane.setContent(pane);
+    scrollPane.setMinSize(windowWidth / 4, windowHeight);
+    return scrollPane;
   }
 
 
@@ -127,6 +119,10 @@ public abstract class AbstractNodePanel extends Tab {
     scrollPane.setFitToHeight(true);
     workspace.setFitWidth(5 * windowWidth);
     workspace.setFitHeight(5 * windowHeight);
+
+    MainNode node = new MainNode(nodeController);
+    group.getChildren().add(node);
+    node.setBoundingBox(workspace.getBoundsInParent());
     return scrollPane;
   }
 

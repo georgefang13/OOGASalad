@@ -1,13 +1,10 @@
-package oogasalad.frontend.nodeEditor.customNodeEditor.Runners;
+package oogasalad.frontend.nodeEditor.Runners;
 
-import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.AbstractMap;
-import java.util.regex.Pattern;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -24,10 +21,11 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-import oogasalad.frontend.nodeEditor.customNodeEditor.NodeController;
-import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.*;
-import oogasalad.frontend.nodeEditor.customNodeEditor.Nodes.DraggableNodes.DraggableAbstractNode;
-import oogasalad.frontend.panels.editorPanels.ComponentPanel;
+
+import oogasalad.frontend.nodeEditor.NodeController;
+import oogasalad.frontend.nodeEditor.Nodes.AbstractNode;
+import oogasalad.frontend.nodeEditor.Nodes.DraggableNodes.DraggableAbstractNode;
+import oogasalad.frontend.nodeEditor.Nodes.DraggableNodes.FileBasedNode;
 import oogasalad.frontend.windows.NodeWindow;
 
 /**
