@@ -173,7 +173,9 @@ public class DropZone extends GameObject {
     return spots;
   }
 
-
-
+  @Override
+  public String toString() {
+    return "DropZone";
+  }
 
 }

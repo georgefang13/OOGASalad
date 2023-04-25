@@ -1,0 +1,11 @@
+{
+  "name": "Checkers",
+  "author": "DuVALLEY Boiz",
+  "image": "display.png",
+  "description": "Checkers. You know how to play :)",
+  "tags": ["board game", "grid game"],
+  "players": {
+    "min": 2,
+    "max": 2
+  }
+}

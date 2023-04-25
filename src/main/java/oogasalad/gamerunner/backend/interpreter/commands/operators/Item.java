@@ -21,7 +21,7 @@ public class Item extends OperatorToken {
     Token t1 = getArg(0).evaluate(env);
 
     Token t2 = getArg(1);
-    if (t2 instanceof VariableToken) {
+    if (! (t2 instanceof ExpressionToken)) {
       t2 = t2.evaluate(env);
     }
 
