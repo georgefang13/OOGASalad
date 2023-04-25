@@ -114,23 +114,26 @@ public class FileMaker {
                         ] [
                             make :moveset [ [ "DownRight ] [ "DownLeft ] ]
                         ]
-                                        
+                             
                         make :available [ ]
                         make :available_paths [ ]
-                                        
+                        
                         foreach [ :path :moveset ] [
                             make :dz1 dzfollow :dz :path
                             if == null :dz1 [ continue ]
-                            make :dz2 dzfollow :dz1 :path
-                            if or == null :dz1 == null :dz2 [ continue ]
-                            if ( and not dzempty :dz1   dzempty :dz2   != curplayer owner item 0 dzitems :dz1 ) [
-                                additem :dz2 :available
-                                additem aslist [ :path :path ] :available_paths
-                            ]
-                            if dzempty :dz1 [
+                            
+                            ifelse dzempty :dz1 [
                                 additem :dz1 :available
                                 additem aslist [ :path ] :available_paths
+                            ] [
+                                make :dz2 dzfollow :dz1 :path
+                                if or == null :dz2 not dzempty :dz2 [ continue ]
+                                if  != curplayer owner item 0 dzitems :dz1 [
+                                    additem :dz2 :available
+                                    additem aslist [ :path :path ] :available_paths
+                                ]
                             ]
+                            
                         ]
                         
                         make :ret aslist [ :available :available_paths ]
@@ -141,7 +144,14 @@ public class FileMaker {
             String INITto = "make :game_state_output \"CHOOSE_PIECE";
 
         // CHOOSE_PIECE
-            String CHOOSEinit = "makeallavailable fromplayer curplayer \"piece";
+            String CHOOSEinit = """
+                    foreach [ :p fromplayer curplayer "piece  ] [
+                        make :possible pieceAvailable objdz :p
+                        if != 0 len item 0 :possible [
+                            makeavailable :p
+                        ]
+                    ]
+                    """;
             String CHOOSEsetValue = "make :piece_selected fromgame :game_state_input\n" +
                     "make :old_dz objdz :piece_selected";
             String CHOOSEto = "make :game_state_output \"CHOOSE_SQUARE";
@@ -149,10 +159,7 @@ public class FileMaker {
         // CHOOSE_SQUARE
             String SQUAREinit = """
                     make :available_items pieceAvailable :old_dz
-                    
                     make :available item 0 :available_items
-                    
-                    additem item 0 :available_items :game_log
                     
                     if >= len :available 0 [
                         make :available_paths item 1 :available_items                
@@ -160,20 +167,18 @@ public class FileMaker {
                     ]
                     
                     """;
-            String SQUAREsetValue = """
-                    make :old_dz objdz :piece_selected
-                    make :choice_num index :old_dz :available
-                    make :chosen_path item :choice_num :available_paths
-                                        
+            String SQUAREsetValue = """            
                     make :dz fromgame :game_state_input
+                    make :choice_num index :dz :available
+                    make :chosen_path item :choice_num :available_paths
                     movepiece :piece_selected :dz
                                         
-                    if == 2 length :chosen_path [
+                    if == 2 len :chosen_path [
                         make :dir item 0 :chosen_path
-                        make :dz_cross dzfollow :old_dz [ :dir ]
-                        make :item dzitem "obj :dz_cross
+                        make :dz_cross dzfollow :old_dz :dir
+                        make :piece item 0 dzitems :dz_cross
                         if != null :piece [
-                            removepiece :item fromgameclass "piece
+                            removepiece :piece
                         ]
                     ]
                     """;

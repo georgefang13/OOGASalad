@@ -16,4 +16,9 @@ public class CommandToken extends Token {
   public Token evaluate(Environment env) {
     return env.getLocalVariable(NAME);
   }
+
+  @Override
+  public CommandToken copy(){
+    return new CommandToken(NAME);
+  }
 }

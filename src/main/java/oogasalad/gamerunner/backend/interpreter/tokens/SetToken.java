@@ -71,6 +71,17 @@ public class SetToken extends Token {
   }
 
   @Override
+  public SetToken copy(){
+    SetToken copy = new SetToken(headOperator.copy());
+    List<Token> tokenCopies = new ArrayList<>();
+    for (Token t : tokens){
+      tokenCopies.add(t.copy());
+    }
+    copy.passTokens(tokenCopies);
+    return copy;
+  }
+
+  @Override
   public String toString() {
     StringBuilder s = new StringBuilder("(" + TYPE + " " + headOperator.toString() + " ");
     for (Token t : tokens) {

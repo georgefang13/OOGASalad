@@ -131,6 +131,7 @@ public class Environment {
         }
       }
     }
+
     scope.get(scope.size() - 1).put(name, val);
   }
 

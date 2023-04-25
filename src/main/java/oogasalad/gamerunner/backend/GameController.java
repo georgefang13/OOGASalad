@@ -13,4 +13,6 @@ public interface GameController {
     void setClickable(List<String> ids);
 
     void movePiece(String id, String dropZoneID);
+
+    void removePiece(String id);
 }

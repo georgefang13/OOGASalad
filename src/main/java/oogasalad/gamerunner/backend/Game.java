@@ -97,9 +97,17 @@ public class Game implements GameToInterpreterAPI{
     }
 
     private void startTurn(){
-        fsm.setState("INIT");
-        fsm.transition();
-        sendClickable();
+        try {
+            fsm.setState("INIT");
+            fsm.transition();
+            sendClickable();
+        } catch (Exception e) {
+            System.out.println(getLog());
+            throw e;
+        }
+        for (Object o : getLog()){
+            System.out.println(o);
+        }
     }
     
     private void initVariables(){
@@ -400,6 +408,7 @@ public class Game implements GameToInterpreterAPI{
             dz.removeObject(dz.getKey(piece));
             pieceLocations.remove(piece);
         }
+        controller.removePiece(ownableIdManager.getId(piece));
         ownableIdManager.removeObject(piece);
     }
 
@@ -493,8 +502,6 @@ public class Game implements GameToInterpreterAPI{
         ownableIdManager.getObject(id).setOwner(owner);
     }
 
-    public void init(int i) {
-    }
 
     // endregion
 

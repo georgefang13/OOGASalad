@@ -175,7 +175,7 @@ public class DropZone extends GameObject {
 
   @Override
   public String toString() {
-    return "DropZone";
+    return "DropZone-" + hashCode();
   }
 
 }

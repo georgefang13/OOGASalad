@@ -22,6 +22,11 @@ public class ReturnToken extends Token {
     }
 
     @Override
+    public ReturnToken copy(){
+        return new ReturnToken(VALUE);
+    }
+
+    @Override
     public String toString() {
         return "<" + TYPE + " " + VALUE + ">";
     }

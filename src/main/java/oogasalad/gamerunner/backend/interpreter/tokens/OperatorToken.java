@@ -191,6 +191,26 @@ abstract public class OperatorToken extends Token {
   }
 
   @Override
+  public OperatorToken copy(){
+    Class clazz = this.getClass();
+    try {
+      OperatorToken op = (OperatorToken) clazz.getConstructor().newInstance();
+      if (args != null) {
+        Token[] argsCopy = new Token[numArgs];
+        for (int i = 0; i < numArgs; i++) {
+          argsCopy[i] = args[i].copy();
+        }
+        op.passArguments(argsCopy);
+      }
+        return op;
+    } catch (Exception e) {
+      e.printStackTrace();
+
+    }
+    return this;
+  }
+
+  @Override
   public String toString() {
     return String.format("<%s %s[%d]>", TYPE, NAME, numArgs);
   }

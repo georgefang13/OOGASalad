@@ -40,6 +40,9 @@ public class SimpleGameView extends Application implements GameController {
         Scene scene = new Scene(root, SCREEN_WIDTH, SCREEN_HEIGHT);
         scene.getStylesheets().add(MODAL_STYLE_SHEET);
 
+        FileMaker fm = new FileMaker();
+        fm.main(new String[]{});
+
          game = new Game(this, "data/games/checkers", 2);
 
         stage.setScene(scene);
@@ -116,6 +119,17 @@ public class SimpleGameView extends Application implements GameController {
         String dzid = pieceToDropZoneMap.get(id);
         ((HBox) nodes.get(dzid)).getChildren().remove(nodes.get(id));
         ((HBox) nodes.get(dropZoneID)).getChildren().add(nodes.get(id));
+        pieceToDropZoneMap.put(id, dropZoneID);
+    }
+
+    @Override
+    public void removePiece(String id) {
+        String dzid = pieceToDropZoneMap.get(id);
+        Node n = nodes.get(id);
+        HBox dz = (HBox) nodes.get(dzid);
+        pieceToDropZoneMap.remove(id);
+        dz.getChildren().remove(n);
+        root.getChildren().remove(n);
     }
 
     private void clearClickables(){

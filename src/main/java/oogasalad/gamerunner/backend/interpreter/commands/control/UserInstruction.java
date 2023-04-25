@@ -23,14 +23,22 @@ public class UserInstruction extends OperatorToken {
   }
 
   @Override
+  public UserInstruction copy(){
+    return null;
+  }
+
+  @Override
   public Token evaluate(Environment env) {
+
+    ExpressionToken exprsCopy = exprs.copy();
+
     env.createLocalScope();
     for (int i = 0; i < argTokens.size(); i++) {
       VariableToken var = (VariableToken) argTokens.get(i);
       ValueToken<?> val = (ValueToken<?>) getArg(i).evaluate(env);
       env.addVariable(var.NAME, val);
     }
-    Token t = exprs.evaluate(env);
+    Token t = exprsCopy.evaluate(env);
     env.endLocalScope();
 
     if (t instanceof ReturnToken r){

@@ -137,6 +137,19 @@ public class ExpressionToken extends Token implements Iterable<Token> {
   }
 
   @Override
+  public ExpressionToken copy(){
+    System.out.println("copying expression");
+    ExpressionToken copy = new ExpressionToken();
+    List<Token> innerCopy = new ArrayList<>();
+    for (Token t : tokens){
+      System.out.println(t);
+      innerCopy.add(t.copy());
+    }
+    copy.passTokens(innerCopy);
+    return copy;
+  }
+
+  @Override
   public String toString() {
     StringBuilder s = new StringBuilder("<" + TYPE + " ");
     for (Token t : tokens) {
