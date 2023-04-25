@@ -10,13 +10,14 @@ import java.util.Map;
 public class Piece extends GameRunnerObject{
     private double lastTranslateX;
     private double lastTranslateY;
-    public Piece(String ID, GameRunnerController gameRunnerController, FileInputStream imagepath) {
+    public Piece(String ID, GameRunnerController gameRunnerController, String imagepath) {
         super(ID, gameRunnerController, imagepath);
     }
 
     //@TODO
     // Owen what is this map bruh?
     //bro im right with you. Ask Aryan and Han monster
+    /*
     public Piece(int ID, Node container, GameRunnerController gameRunnerController) {
         super(ID, new HashMap<>(), gameRunnerController);
     }
@@ -25,6 +26,8 @@ public class Piece extends GameRunnerObject{
         super(ID, map, gameRunnerController);
     }
 
+
+     */
     @Override
     public void onDragDropped() {
         gameRunnerController.updatePieceMove(ID);

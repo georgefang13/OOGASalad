@@ -8,10 +8,10 @@ import java.util.Map;
 
 public abstract class GameRunnerObject extends GameObject implements GameRunnerComponent {
     GameRunnerController gameRunnerController;
-    public GameRunnerObject(String ID, GameRunnerController gameRunnerController, FileInputStream imagepath) {
+    public GameRunnerObject(String ID, GameRunnerController gameRunnerController, String imagepath) {
         super(ID);
         this.gameRunnerController = gameRunnerController;
-        setImage(imagepath.toString());
+        setImage(imagepath);
     }
     /*
     public GameRunnerObject(int ID, Map<String, String> map, GameRunnerController gameRunnerController) {
@@ -27,5 +27,8 @@ public abstract class GameRunnerObject extends GameObject implements GameRunnerC
         getNode().setOnMouseReleased(e -> {
             onDragDropped();
         });
+    }
+    public void OnClick() {
+
     }
 }

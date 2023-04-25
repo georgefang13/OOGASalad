@@ -57,9 +57,7 @@ public class GameRunnerController implements GameController {
 
         initializeBoard();
         pieceMap = new HashMap<>();
-
     }
-
     private void initializeBoard() {
         int height = 3;
         int width = 3;
@@ -84,43 +82,22 @@ public class GameRunnerController implements GameController {
     public void addPiece(String id, String image, String dropZoneID, double size) {
         Piece piece;
         try {
-            piece = new Piece(id ,this, new FileInputStream(image));
+            piece = new Piece(id ,this, image);
+            piece.setSize(0.2);
         } catch (Exception e) {
             System.out.println("Image " + image + " not found");
             return;
         }
-
-        piece.setSize(0.2);
-        pieceMap.put(pieceID,piece);
-        pieceNodes.add(piece.getNode());
-
-
-        Image img;
-        try {
-            img = new Image(new FileInputStream(image));
-        } catch (Exception e) {
-            System.out.println("Image " + image + " not found");
-            return;
-        }
-
-        ImageView imgv = new ImageView(img);
-        imgv.setFitWidth(size);
-        imgv.setFitHeight(size);
-
-        HBox piece = new HBox();
-        piece.getChildren().add(imgv);
-        piece.setPrefHeight(size);
-        piece.setPrefWidth(size);
-        piece.setMaxHeight(size);
-        piece.setMaxHeight(size);
-
-        piece.setOnMouseClicked(e -> select(id));
-
-        ((HBox) nodes.get(dropZoneID)).getChildren().add(piece);
-        nodes.put(id, piece);
-
+        nodes.put(id, piece.getNode());
         pieceToDropZoneMap.put(id, dropZoneID);
     }
+    public void select(String id) {
+        if (clickable.contains(id)) {
+            game.clickPiece(id);
+        }
+    }
+
+
 
 
 
@@ -171,18 +148,20 @@ public class GameRunnerController implements GameController {
         String[] players = {"X","O"};
         return players[playeridx];
     }
-
+    /*
     public ArrayList<Node> initializePieces() {
         ArrayList<Node> pieceNodes = new ArrayList<>();
         for (int i = 1; i <= 10; i++) {
             int pieceID = i;
-            Piece piece = new Piece(pieceID,this);
+            Piece piece = new Piece(pieceID,this,"bad");
             piece.setSize(0.2);
             pieceMap.put(pieceID,piece);
             pieceNodes.add(piece.getNode());
         }
         return pieceNodes;
     }
+
+
 
     public void updatePieceMove(int id) {
         Piece piece = pieceMap.get(id);
@@ -218,4 +197,6 @@ public class GameRunnerController implements GameController {
         Board.BoardXY boardXY = board.boardXYofNode(gridPaneXY);
         return boardXY;
     }
+
+     */
 }
