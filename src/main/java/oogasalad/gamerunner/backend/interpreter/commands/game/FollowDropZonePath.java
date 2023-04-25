@@ -31,6 +31,8 @@ public class FollowDropZonePath extends OperatorToken {
 
         DropZone next = d.followPath(path);
 
+        if (next == null) return null;
+
         Variable<DropZone> var = new Variable<>(next);
         return env.convertVariableToToken(var);
     }

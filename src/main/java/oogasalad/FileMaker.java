@@ -119,25 +119,23 @@ public class FileMaker {
                         make :available_paths [ ]
                                         
                         foreach [ :path :moveset ] [
-                            additem "here1 :game_log
                             make :dz1 dzfollow :dz :path
-                            additem "here2 :game_log
                             if == null :dz1 [ continue ]
-                            additem :dz1 :game_log
                             make :dz2 dzfollow :dz1 :path
-                            additem "here3 :game_log
                             if or == null :dz1 == null :dz2 [ continue ]
-                            if ( and dzhasid "obj :dz1   dzempty :dz2   != curplayer owner dzitem "obj :dz1 ) [
+                            if ( and not dzempty :dz1   dzempty :dz2   != curplayer owner item 0 dzitems :dz1 ) [
                                 additem :dz2 :available
-                                additem [ :path :path ] :available_paths
+                                additem aslist [ :path :path ] :available_paths
                             ]
                             if dzempty :dz1 [
                                 additem :dz1 :available
-                                additem [ :path ] :available_paths
+                                additem aslist [ :path ] :available_paths
                             ]
                         ]
-                                        
-                        return [ :available :available_paths ]
+                        
+                        make :ret aslist [ :available :available_paths ]
+                                     
+                        return :ret
                     ]
                         """;
             String INITto = "make :game_state_output \"CHOOSE_PIECE";
@@ -151,10 +149,16 @@ public class FileMaker {
         // CHOOSE_SQUARE
             String SQUAREinit = """
                     make :available_items pieceAvailable :old_dz
+                    
                     make :available item 0 :available_items
-                    make :available_paths item 1 :available_items
-                                        
-                    makeallavailable :available
+                    
+                    additem item 0 :available_items :game_log
+                    
+                    if >= len :available 0 [
+                        make :available_paths item 1 :available_items                
+                        makeallavailable :available
+                    ]
+                    
                     """;
             String SQUAREsetValue = """
                     make :old_dz objdz :piece_selected

@@ -193,6 +193,15 @@ public class CommandsTest {
   }
 
   @Test
+  public void testAsList(){
+    String input = "make :x 1 make :y 2 make :z aslist [ :x :y ]";
+    interpreter.interpret(input);
+    Variable<List> z = getVar("interpreter-:z");
+    List<Double> expected = new ArrayList<>(List.of(1., 2.));
+    assertEquals(expected, z.get());
+  }
+
+  @Test
   public void testBreak(){
     // break
     String input = "make :x 0 for [ :i 1 10 1 ] [ global :x if <= :i 5 [ make :x :i ] if > :i 5 [ break ] ]";

@@ -184,7 +184,8 @@ abstract public class OperatorToken extends Token {
       t = t.evaluate(env);
     }
     if (myt == null){
-      return t == null;
+      if (t == null) return true;
+      return t.evaluate(env) == null;
     }
     return myt.equals(t, env);
   }

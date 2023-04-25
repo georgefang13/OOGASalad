@@ -1,7 +1,5 @@
 package oogasalad.gamerunner.backend.interpreter;
 
-import com.google.gson.JsonObject;
-import oogasalad.gameeditor.backend.id.IdManageable;
 import oogasalad.gameeditor.backend.id.IdManager;
 import oogasalad.gameeditor.backend.rules.Rule;
 import oogasalad.gamerunner.backend.GameToInterpreterAPI;
@@ -89,10 +87,11 @@ public class TestGame implements GameToInterpreterAPI {
     private int checkGoals() {
         for (Map.Entry<String, Goal> goal : goals){
             Goal g = goal.getValue();
-            int player = g.test(interpreter, ownableIdManager);
-            if (player != -1){
-                return player;
+            Player player = g.test(interpreter, ownableIdManager);
+            if (player != null){
+                return players.indexOf(player);
             }
+
         }
         return -1;
     }

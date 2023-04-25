@@ -904,6 +904,21 @@
       "parse": "additem %s %s"
     }
   },
+  "AsList": {
+    "name": "As List",
+    "folder": "operators",
+    "str": "aslist",
+    "description": "Used to use proper values in list when initializing list with variables",
+    "example": "aslist [ :var1 :var2 ] # aslist <list>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        { "name": "list", "type": ["list"] }
+      ],
+      "outputs": [],
+      "parse": "aslist %s"
+    }
+  },
   "Equal": {
     "name": "Equal",
     "folder": "operators",
