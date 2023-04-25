@@ -51,7 +51,7 @@ public class CustomRunner extends Application {
   public void start(Stage primaryStage) {
     NodeWindow nodeWindow = new NodeWindow();
     NodeController nodeController = new NodeController(nodeWindow);
-    nodeWindow.close();
+//    nodeWindow.close();
     primaryStage.setResizable(false);
     primaryStage.setWidth(1200);
     primaryStage.setHeight(700);
