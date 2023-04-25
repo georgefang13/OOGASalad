@@ -89,8 +89,6 @@ public class GameObject extends AbstractComponent implements GameObjectComponent
 
   @Override
   public void setDefault() {
-    Image newImage = new Image(getDEFAULT_BUNDLE().getString("DEFAULT_IMAGE"));
-    setImage(getDEFAULT_BUNDLE().getString("DEFAULT_IMAGE"));
-  }
 
+  }
 }

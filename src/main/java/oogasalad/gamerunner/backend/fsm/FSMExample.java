@@ -46,7 +46,7 @@ public class FSMExample {
     List<DropZone> zones = BoardCreator.createGrid(3, 3);
     for (DropZone zone : zones) {
       zone.addClass("board");
-      idManager.addObject(zone, zone.getId());
+      idManager.addObject(zone);
     }
 
     idManager.addObject(turn, "turn");
@@ -160,7 +160,7 @@ public class FSMExample {
 
     List<DropZone> zones = BoardCreator.createGrid(3, 3);
     for (DropZone zone : zones) {
-      idManager.addObject(zone, zone.getId());
+      idManager.addObject(zone);
     }
 
     idManager.addObject(turn, "turn");

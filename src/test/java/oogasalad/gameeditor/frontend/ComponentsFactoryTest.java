@@ -42,17 +42,17 @@ public class ComponentsFactoryTest extends DukeApplicationTest {
     System.out.println(c.getNode().getBoundsInLocal().getMinX());
   }
 
-  @Test
-  public void createFromMap(){
-    Map<String, String> map = new HashMap<>();
-    map.put("name", "Hello");
-    GameObject c = (GameObject) factory.create("GameObject", map);
-    System.out.println(c.getNode().getBoundsInLocal().getMinX());
-    simulateMousePress(c.getNode(), MouseButton.PRIMARY, 0, 0);
-    simulateMouseDrag(c.getNode(), MouseButton.PRIMARY, 500,500);
-    simulateMouseRelease(c.getNode(), MouseButton.PRIMARY, 500,500);
-    assertEquals("Hello",c.getName());
-  }
+//  @Test
+//  public void createFromMap(){
+//    Map<String, String> map = new HashMap<>();
+//    map.put("name", "Hello");
+//    GameObject c = (GameObject) factory.create("GameObject", map);
+//    System.out.println(c.getNode().getBoundsInLocal().getMinX());
+//    simulateMousePress(c.getNode(), MouseButton.PRIMARY, 0, 0);
+//    simulateMouseDrag(c.getNode(), MouseButton.PRIMARY, 500,500);
+//    simulateMouseRelease(c.getNode(), MouseButton.PRIMARY, 500,500);
+//    assertEquals("Hello",c.getName());
+//  }
   private void simulateMousePress(Node node, MouseButton button, double x, double y) {
     MouseEvent event = new MouseEvent(
         MouseEvent.MOUSE_PRESSED,

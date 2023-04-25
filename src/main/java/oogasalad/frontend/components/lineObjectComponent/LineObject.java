@@ -12,7 +12,14 @@ import java.util.Properties;
 import java.util.ResourceBundle;
 
 public class LineObject extends AbstractComponent implements LineObjectComponent {
+    private String name;
     private Line myLine;
+    private double startX;
+    private double startY;
+    private double endX;
+    private double endY;
+    private String color;
+    private double strokeWidth;
 
     public LineObject(int ID){
         super(ID);
@@ -25,7 +32,15 @@ public class LineObject extends AbstractComponent implements LineObjectComponent
         super(ID);
         instantiatePropFile("frontend.properties.Defaults.LineObject");
         setValuesfromMap(map);
+        myLine = new Line(startX,startY,endX, endY);
         followMouse();
+    }
+
+    public void setName(String newName) {
+        name = newName;
+    }
+    public String getName(){
+        return name;
     }
 
     @Override
@@ -94,12 +109,12 @@ public class LineObject extends AbstractComponent implements LineObjectComponent
 
     @Override
     public void setDefault() {
-        double startX = Double.parseDouble(getDEFAULT_BUNDLE().getString("line.startX"));
-        double startY = Double.parseDouble(getDEFAULT_BUNDLE().getString("line.startY"));
-        double endX = Double.parseDouble(getDEFAULT_BUNDLE().getString("line.endX"));
-        double endY = Double.parseDouble(getDEFAULT_BUNDLE().getString("line.endY"));
-        String color = getDEFAULT_BUNDLE().getString("line.color");
-        double strokeWidth = Double.parseDouble(getDEFAULT_BUNDLE().getString("line.strokeWidth"));
+        startX = Double.parseDouble(getDEFAULT_BUNDLE().getString("line.startX"));
+        startY = Double.parseDouble(getDEFAULT_BUNDLE().getString("line.startY"));
+        endX = Double.parseDouble(getDEFAULT_BUNDLE().getString("line.endX"));
+        endY = Double.parseDouble(getDEFAULT_BUNDLE().getString("line.endY"));
+        color = getDEFAULT_BUNDLE().getString("line.color");
+        strokeWidth = Double.parseDouble(getDEFAULT_BUNDLE().getString("line.strokeWidth"));
 
         myLine = new Line(startX,startY,endX,endY);
         myLine.setFill(Color.BLACK);
