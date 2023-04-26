@@ -25,7 +25,7 @@ public class Piece extends GameRunnerObject{
 
     @Override
     public void onDragDropped() {
-        gameRunnerController.updatePieceMove(ID);
+        gameRunnerController.updatePieceMove(Integer.parseInt(getID()));
     }
 
     @Override

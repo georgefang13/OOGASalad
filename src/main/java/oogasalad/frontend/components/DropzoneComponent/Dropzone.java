@@ -1,10 +1,11 @@
 package oogasalad.frontend.components.DropzoneComponent;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.StackPane;
+import java.util.Set;
+import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import oogasalad.frontend.components.AbstractComponent;
 import oogasalad.frontend.components.gameObjectComponent.GameObject;
 
@@ -14,55 +15,77 @@ import oogasalad.frontend.components.gameObjectComponent.GameObject;
  */
 public class Dropzone extends AbstractComponent {
 
-  private String ID;
   private final String DEFAULT_PATH = "frontend.properties.Defaults.Dropzone.properties";
-  private List<Dropzone> edges;
-  private List<GameObject> content;
-  private StackPane pane;
+  private Map<String, Dropzone> edges;
+  private Map<String, GameObject> content;
+  private HBox node;
+  private Color fill;
+  private Color border;
+  private Rectangle square;
   /**
    * Dropzone
    * @param ID the id of the DropZone
    */
   public Dropzone(String ID){
     super(ID);
-    edges = new ArrayList<>();
-    content = new ArrayList<>();
-    instantiatePropFile(DEFAULT_PATH);
-
+    initializeValues();
   }
 
+  /**
+   * Constructor of Dropzone with param
+   * @param ID string ID for Dropzone
+   * @param params
+   */
   public Dropzone(String ID, Map<String, String> params){
     super(ID);
+    initializeValues();
     setValuesfromMap(params);
   }
 
+  private void initializeValues(){
+    node = new HBox();
+    edges = new HashMap<>();
+    content = new HashMap<>();
+    square = new Rectangle();
+    node.getChildren().add(square);
+    setNode(node);
+    instantiatePropFile(DEFAULT_PATH);
+    setColor();
+  }
   /**
    * Adds a neighbor to whatever you need
    */
   public void addEdges(Dropzone edge){
-    edges.add(edge);
+    edges.put(edge.getID(), edge);
   }
   /**
    * Returns the list of Neighbors that the dropzone is adjacent to
+   *
    * @return the list of Neighbors
    */
-  public List<Dropzone> getEdges(){
-    return edges;
+  public Set<String> getEdges(){
+    return edges.keySet();
   }
-
   /**
-   * For GameObject, remove
-   * @param object
+   * set the color of the square inside fill and border
+   */
+  public void setColor(){
+    square.setFill(fill);
+    square.setStroke(border);
+  }
+  /**
+   * For GameObject, remove the object
    */
   public void addContent(GameObject object){
-    content.add(object);
+    content.put(object.getID(), object);
   }
   /**
    * Returns the list of GameObjects contained inside the dropzone
-   * @return the List of GameObjects
+   *
+   * @return the Set of GameObjects
    */
-  public List<GameObject> returnContent(){
-    return content;
+  public Set<String> returnContent(){
+    return content.keySet();
   }
   /**
    *
@@ -70,10 +93,6 @@ public class Dropzone extends AbstractComponent {
   @Override
   public void setDefault() {
 
-  }
-  @Override
-  public ImageView getNode(){
-    return image;
   }
 
 }
