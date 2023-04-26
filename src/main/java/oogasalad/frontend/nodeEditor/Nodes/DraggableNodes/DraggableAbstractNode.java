@@ -62,11 +62,7 @@ public abstract class DraggableAbstractNode extends AbstractNode implements Drag
           double newY = e.getSceneY() / scaleFactor - yOffset;
 
           move(newX, newY);
-          if (this.getParentNode() != null) {
-              this.parentNode.setChildNode(null);
-              this.setParentNode(null);
-
-          }
+          clearLinks();
           e.consume();
         });
   }
@@ -125,6 +121,12 @@ public abstract class DraggableAbstractNode extends AbstractNode implements Drag
 
   }
 
+  @Override
+  protected void delete() {
+    clearLinks();
+    super.delete();
+  }
+
   public void setBoundingBox(Bounds bounds) {
     boundingBox = bounds;
   }
@@ -153,6 +155,13 @@ public abstract class DraggableAbstractNode extends AbstractNode implements Drag
 
     public AbstractNode getParentNode() {
         return parentNode;
+    }
+
+    protected void clearLinks(){
+      if (this.getParentNode() != null) {
+        this.parentNode.setChildNode(null);
+        this.setParentNode(null);
+      }
     }
 
 }

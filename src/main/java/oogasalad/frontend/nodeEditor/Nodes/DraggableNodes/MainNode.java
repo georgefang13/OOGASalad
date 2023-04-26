@@ -3,6 +3,7 @@ package oogasalad.frontend.nodeEditor.Nodes.DraggableNodes;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 import oogasalad.frontend.nodeEditor.NodeController;
+import oogasalad.frontend.nodeEditor.Nodes.AbstractNode;
 
 public class MainNode extends DraggableAbstractNode {
 
@@ -33,4 +34,12 @@ public class MainNode extends DraggableAbstractNode {
     }
     return "";
   }
+
+  @Override
+  protected void snapTo(AbstractNode node) throws InterruptedException{}
+
+  @Override
+  protected void delete(){}
+
+
 }
