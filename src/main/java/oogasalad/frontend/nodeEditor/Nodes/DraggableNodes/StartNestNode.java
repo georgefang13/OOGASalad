@@ -6,7 +6,7 @@ public class StartNestNode extends DraggableAbstractNode {
 
   public StartNestNode(NodeController nodeController, double x,
       double y, double width, double height, String color) {
-    super(nodeController, x, y, width, height, color);
+    super(nodeController, x, y, width, height, "red");
   }
 
   @Override

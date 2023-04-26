@@ -10,24 +10,18 @@
   "StartNest": {
     "name": "Start nest",
     "folder": "control",
-    "str": "startnest"
-  },
+    "str": "startnest",
+    "description": "Starts a nest structure",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        { "name": "index", "type": ["number"] },
+        { "name": "list", "type": ["list"] },
+        { "name": "value", "type": ["any"] }
+      ],
+      "outputs": ["list"],
+      "parse": "setitem %s %s %s"
+    }
 
-
-  "name": "Set List Item",
-  "folder": "operators",
-  "str": "setitem",
-  "description": "Sets the value of an element in a list",
-  "example": "setitem 1 [1 2 3] 4 # -> [1 4 3] -- setitem <index> <list> <value>",
-  "specs": {
-    "innerBlocks": [],
-    "inputs": [
-      { "name": "index", "type": ["number"] },
-      { "name": "list", "type": ["list"] },
-      { "name": "value", "type": ["any"] }
-    ],
-    "outputs": ["list"],
-    "parse": "setitem %s %s %s"
   }
-
 }

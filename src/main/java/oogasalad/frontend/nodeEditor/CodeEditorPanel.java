@@ -10,6 +10,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.control.Button;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import oogasalad.frontend.nodeEditor.Nodes.DraggableNodes.DraggableAbstractNode;
@@ -43,6 +44,7 @@ public class CodeEditorPanel extends AbstractNodePanel {
       JsonObject value = (JsonObject) obj.get(key);
       String name = value.get("name").getAsString();
       JsonObject specs = value.get("specs").getAsJsonObject();
+      String description = value.get("description").getAsString();
       JsonArray innerBlocks = specs.get("innerBlocks").getAsJsonArray();
       JsonArray outputTypes = specs.get("outputs").getAsJsonArray();
       String parseStr = specs.get("parse").getAsString();
@@ -53,6 +55,8 @@ public class CodeEditorPanel extends AbstractNodePanel {
         JsonArray inpTypes = inpObj.get("type").getAsJsonArray();
       }
       Button button = new Button(name);
+      Tooltip tip = new Tooltip(description);
+      Tooltip.install(button,tip);
       button.setOnAction(event -> {
         try {
           DraggableAbstractNode node = new FileBasedNode(nodeController,name, innerBlocks, outputTypes, parseStr, inputs);
