@@ -24,13 +24,14 @@ public class GamePlayerWindow extends AbstractWindow {
 
   @Override
   public SceneTypes getDefaultSceneType() {
-    return WindowScenes.PLAY_SCENE;
+    return WindowScenes.LIBRARY_SCENE;
   } //TODO: OWEN FIX THIS back to library
 
   @Override
   public AbstractScene addNewScene(SceneTypes sceneType) {
     if (sceneType.equals(WindowScenes.PLAY_SCENE)) {
-      return new GamePlayerMainScene(this.sceneController);
+      System.out.println("making new play scene");
+      return new GamePlayerMainScene(this.sceneController); //TODO:FIX
     } else if (sceneType.equals(WindowScenes.LIBRARY_SCENE)) {
       return new GamePlayerLibraryScene(this.sceneController);
     }

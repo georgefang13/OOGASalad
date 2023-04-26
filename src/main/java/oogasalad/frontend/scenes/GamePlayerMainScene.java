@@ -22,6 +22,7 @@ public class GamePlayerMainScene extends AbstractScene {
   private BorderPane root;
   private GridPane boardPane;
   private GameRunnerController gameRunnerController;
+  private String gameName;
 
   public GamePlayerMainScene(SceneController sceneController) {
     super(sceneController);
@@ -30,7 +31,6 @@ public class GamePlayerMainScene extends AbstractScene {
   @Override
   public Scene makeScene() {
     root = new BorderPane();
-
     gameRunnerController = new GameRunnerController(this);
 
     boardPane = gameRunnerController.getBoardVisual();

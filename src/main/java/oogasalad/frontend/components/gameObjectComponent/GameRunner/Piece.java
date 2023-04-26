@@ -1,6 +1,7 @@
 package oogasalad.frontend.components.gameObjectComponent.GameRunner;
 
 import javafx.scene.Node;
+import javafx.scene.layout.VBox;
 import oogasalad.Controller.GameRunnerController;
 
 import java.io.FileInputStream;
@@ -13,21 +14,12 @@ public class Piece extends GameRunnerObject{
     public Piece(String ID, GameRunnerController gameRunnerController, String imagepath) {
         super(ID, gameRunnerController, imagepath);
     }
-
-    //@TODO
-    // Owen what is this map bruh?
-    //bro im right with you. Ask Aryan and Han monster
-    /*
-    public Piece(int ID, Node container, GameRunnerController gameRunnerController) {
-        super(ID, new HashMap<>(), gameRunnerController);
+    @Override
+    public Node getNode(){
+        Node pieceNode = super.getNode();
+        VBox pieceBox = new VBox(pieceNode);
+        return pieceBox;
     }
-
-    public Piece(int ID, Map<String, String> map, GameRunnerController gameRunnerController) {
-        super(ID, map, gameRunnerController);
-    }
-
-
-     */
     @Override
     public void onDragDropped() {
         gameRunnerController.updatePieceMove(ID);

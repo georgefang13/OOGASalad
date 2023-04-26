@@ -34,8 +34,7 @@ public class GameObject extends AbstractComponent implements GameObjectComponent
     this.followMouse();
     this.getNode();
   }
-  /*
-  public GameObject(int ID, Map<String, String> map){
+  public GameObject(String ID, Map<String, String> map){
     super(ID);
     children = null;
     instantiatePropFile("frontend.properties.Defaults.GameObject");
@@ -43,8 +42,6 @@ public class GameObject extends AbstractComponent implements GameObjectComponent
     setValuesfromMap(map);
     followMouse();
   }
-
-   */
 
   @Override
   public void setImage(String imagePath) {

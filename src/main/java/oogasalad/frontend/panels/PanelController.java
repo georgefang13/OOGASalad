@@ -21,6 +21,7 @@ public class PanelController {
     switchSceneFromPanel(newSceneID);
   }
 
+
   public void switchSceneFromPanel(String newSceneID) {
     sceneController.switchToScene(newSceneID);
   }

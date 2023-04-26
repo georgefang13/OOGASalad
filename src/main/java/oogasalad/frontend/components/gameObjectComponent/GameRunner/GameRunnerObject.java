@@ -13,13 +13,6 @@ public abstract class GameRunnerObject extends GameObject implements GameRunnerC
         this.gameRunnerController = gameRunnerController;
         setImage(imagepath);
     }
-    /*
-    public GameRunnerObject(int ID, Map<String, String> map, GameRunnerController gameRunnerController) {
-        super(ID);
-        this.gameRunnerController = gameRunnerController;
-    }
-
-     */
 
     @Override
     public void followMouse() {

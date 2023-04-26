@@ -52,12 +52,10 @@ public class GameRunnerController extends Application implements GameController 
 
     public GameRunnerController(GamePlayerMainScene gamePlayerMainScene) {
         this.gamePlayerMainScene = gamePlayerMainScene;
-        //this.gamePlayerMainScene.makeScene().getStylesheets().add(MODAL_STYLE_SHEET);
-        directory = "data/games/tictactoe2";
-        int numPlayers = 2; //hardcoded read from file
-        initializeBoard();
+        directory = "data/games/tictactoe";
+        int numPlayers = 2;
+        //initializeBoard();
         pieceMap = new HashMap<>();
-
         game = new Game(this,directory,numPlayers);
     }
     private void initializeBoard() {
@@ -67,7 +65,7 @@ public class GameRunnerController extends Application implements GameController 
     }
 
     public GridPane getBoardVisual() {
-        return board.getBoardVisual();
+        return null; //board.getBoardVisual();
     }
 
     @Override
