@@ -33,19 +33,21 @@ public class GamePlayerMainScene extends AbstractScene {
     root = new BorderPane();
     gameRunnerController = new GameRunnerController(this);
 
+    ArrayList<Node> pieces = gameRunnerController.initializePieces();
+    root.getChildren().addAll(pieces);
+
+    /*
     boardPane = gameRunnerController.getBoardVisual();
     VBox boardVBOX = new VBox(boardPane);
     boardVBOX.setAlignment(Pos.CENTER);
     root.setCenter(boardVBOX);
 
+
     ArrayList<Node> pieces = gameRunnerController.initializePieces();
     System.out.println(pieces);
     root.getChildren().addAll(pieces);
 
-    //textInstructions = new Label("START");
-    //initializeText();
-    //VBox textVBOX = new VBox(textInstructions);
-    //root.setBottom(textVBOX);
+     */
 
     setScene(new Scene(root));
     setText();
@@ -54,17 +56,6 @@ public class GamePlayerMainScene extends AbstractScene {
   }
   public Point2D getNodeXYOnGrid(Node node){
     return boardPane.sceneToLocal(node.getTranslateX(), node.getTranslateY());
-  }
-
-  public void refreshInstructions(String instruction) {
-    System.out.println(instruction);
-    textInstructions.setText(instruction);
-  }
-
-  private void initializeText() {
-    String firstInstruction = gameRunnerController.initialInstruction();
-    System.out.println(firstInstruction);
-    refreshInstructions(firstInstruction);
   }
 
   @Override

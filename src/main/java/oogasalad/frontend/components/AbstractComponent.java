@@ -21,7 +21,7 @@ public abstract class AbstractComponent implements Component {
   private boolean active;
   private boolean visible;
   private int zIndex;
-  private double size;
+  protected double size;
   protected double XOffset;
   protected double YOffset;
   private Point absolute;
@@ -107,8 +107,8 @@ public abstract class AbstractComponent implements Component {
   @Override
   public void setSize(double size) {
     this.size = size;
-    getNode().setScaleY(size);
-    getNode().setScaleX(size);
+    //getNode().setScaleY(size);
+    //getNode().setScaleX(size);
   }
 
   protected String getDEFAULT_FILE_PATH() {

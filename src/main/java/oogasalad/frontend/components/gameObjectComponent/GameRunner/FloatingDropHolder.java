@@ -4,4 +4,5 @@ import javafx.scene.layout.VBox;
 
 public interface FloatingDropHolder {
     VBox getVisual();
+    String getDropZoneID();
 }

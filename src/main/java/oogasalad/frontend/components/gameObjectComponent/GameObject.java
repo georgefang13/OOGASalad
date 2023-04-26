@@ -1,5 +1,6 @@
 package oogasalad.frontend.components.gameObjectComponent;
 
+import java.io.FileInputStream;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.List;
@@ -30,9 +31,6 @@ public class GameObject extends AbstractComponent implements GameObjectComponent
     super(ID);
     children = null;
     instantiatePropFile("frontend.properties.Defaults.GameObject");
-    this.setDefault();
-    this.followMouse();
-    this.getNode();
   }
   public GameObject(String ID, Map<String, String> map){
     super(ID);
@@ -45,8 +43,16 @@ public class GameObject extends AbstractComponent implements GameObjectComponent
 
   @Override
   public void setImage(String imagePath) {
-    Image newImage = new Image(imagePath);
+    Image newImage;
+    try {
+      newImage = new Image(new FileInputStream(imagePath));
+    } catch (Exception e) {
+      System.out.println("Image " + imagePath + " not found");
+      return;
+    }
     image = new ImageView(newImage);
+    image.setFitWidth(size);
+    image.setFitHeight(size);
   }
 
   @Override

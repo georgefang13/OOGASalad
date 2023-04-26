@@ -11,12 +11,15 @@ import java.util.Map;
 public class Piece extends GameRunnerObject{
     private double lastTranslateX;
     private double lastTranslateY;
-    public Piece(String ID, GameRunnerController gameRunnerController, String imagepath) {
-        super(ID, gameRunnerController, imagepath);
+    public Piece(String ID, GameRunnerController gameRunnerController, String imagepath, double size) {
+        super(ID, gameRunnerController, imagepath, size);
     }
-    @Override
-    public Node getNode(){
-        Node pieceNode = super.getNode();
+    public void moveToDropZoneXY(double x, double y){
+        getNode().setLayoutX(x);
+        getNode().setLayoutY(y);
+    }
+    public Node getPieceBox(){
+        Node pieceNode = getNode();
         VBox pieceBox = new VBox(pieceNode);
         return pieceBox;
     }

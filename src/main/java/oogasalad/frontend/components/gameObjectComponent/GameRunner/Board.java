@@ -49,6 +49,11 @@ public class Board implements FloatingDropHolder{
     return boardVisual;
   }
 
+  @Override
+  public String getDropZoneID() {
+    return null;
+  }
+
   public record BoardXY(int x, int y) {
   }
 

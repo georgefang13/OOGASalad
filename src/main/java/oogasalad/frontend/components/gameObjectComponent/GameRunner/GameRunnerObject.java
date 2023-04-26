@@ -8,10 +8,12 @@ import java.util.Map;
 
 public abstract class GameRunnerObject extends GameObject implements GameRunnerComponent {
     GameRunnerController gameRunnerController;
-    public GameRunnerObject(String ID, GameRunnerController gameRunnerController, String imagepath) {
+    public GameRunnerObject(String ID, GameRunnerController gameRunnerController, String imagepath, double size) {
         super(ID);
         this.gameRunnerController = gameRunnerController;
+        setSize(size);
         setImage(imagepath);
+        followMouse();
     }
 
     @Override
