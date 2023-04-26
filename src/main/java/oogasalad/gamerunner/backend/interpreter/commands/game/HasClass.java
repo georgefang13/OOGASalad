@@ -1,6 +1,6 @@
 package oogasalad.gamerunner.backend.interpreter.commands.game;
 
-import oogasalad.gameeditor.backend.id.IdManageable;
+import oogasalad.sharedDependencies.backend.id.IdManageable;
 import oogasalad.gamerunner.backend.interpreter.Environment;
 import oogasalad.gamerunner.backend.interpreter.tokens.OperatorToken;
 import oogasalad.gamerunner.backend.interpreter.tokens.Token;

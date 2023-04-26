@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 import oogasalad.frontend.scenes.SceneController;
 import oogasalad.frontend.scenes.SceneTypes;
+import oogasalad.frontend.windows.AbstractWindow;
+import oogasalad.frontend.windows.WindowTypes.WindowType;
 
 public class PanelController {
 
@@ -19,6 +21,11 @@ public class PanelController {
   public void newSceneFromPanel(String newSceneID, SceneTypes sceneType) {
     sceneController.addAndLinkScene(sceneType, newSceneID);
     switchSceneFromPanel(newSceneID);
+  }
+  public AbstractWindow newWindowFromPanel(WindowType windowType) {
+    String newWindowID = sceneController.getWindowController().registerWindow(windowType);
+    sceneController.getWindowController().showWindow(newWindowID);
+    return sceneController.getWindowController().getWindow(newWindowID);
   }
 
 

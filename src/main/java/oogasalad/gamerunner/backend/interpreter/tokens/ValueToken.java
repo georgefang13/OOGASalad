@@ -7,7 +7,7 @@ public class ValueToken<T> extends Token {
   public final T VALUE;
 
   public ValueToken(T value) {
-    super("Value", value == null ? "null" : value.getClass().getName());
+    super("Value", value.getClass().getName());
     VALUE = value;
   }
 
@@ -19,6 +19,11 @@ public class ValueToken<T> extends Token {
   @Override
   public Object export(Environment env) {
     return VALUE;
+  }
+
+  @Override
+  public ValueToken<T> copy(){
+    return new ValueToken<>(VALUE);
   }
 
     @Override

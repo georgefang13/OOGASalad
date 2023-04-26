@@ -22,11 +22,16 @@ public class VariableToken extends Token {
     return t.export(env);
   }
 
-    @Override
-    public boolean equals(Token t, Environment env){
-        Token t1 = evaluate(env);
-        return t.equals(t1, env);
-    }
+  @Override
+  public VariableToken copy(){
+    return new VariableToken(NAME);
+  }
+
+  @Override
+  public boolean equals(Token t, Environment env){
+      Token t1 = evaluate(env);
+      return t.equals(t1, env);
+  }
 
   @Override
   public String toString() {

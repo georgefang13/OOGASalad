@@ -12,11 +12,18 @@ import oogasalad.gamerunner.backend.interpreter.tokens.VariableToken;
  */
 public class MakeUserInstruction extends OperatorToken {
 
+  private boolean addToScope = true;
+
   public MakeUserInstruction() {
     super(3, "MakeUserInstruction");
   }
 
-  public Token evaluate(Environment env) {
+  public void modifyScope(boolean modify) {
+    addToScope = modify;
+  }
+
+  @Override
+  public UserInstruction evaluate(Environment env) {
 
     CommandToken name = checkArgument(env, getArg(0), CommandToken.class);
     ExpressionToken argTokens = checkArgument(env, getArg(1), ExpressionToken.class);
@@ -27,7 +34,7 @@ public class MakeUserInstruction extends OperatorToken {
     }
 
     UserInstruction instruction = new UserInstruction(name.NAME, argTokens, exprs);
-    env.addVariable(name.NAME, instruction);
+    if (addToScope) env.addVariable(name.NAME, instruction);
     return instruction;
   }
 }

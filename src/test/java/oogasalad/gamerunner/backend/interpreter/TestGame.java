@@ -1,9 +1,7 @@
 package oogasalad.gamerunner.backend.interpreter;
 
-import com.google.gson.JsonObject;
-import oogasalad.gameeditor.backend.id.IdManageable;
-import oogasalad.gameeditor.backend.id.IdManager;
-import oogasalad.gameeditor.backend.rules.Rule;
+import oogasalad.sharedDependencies.backend.id.IdManageable;
+import oogasalad.sharedDependencies.backend.id.IdManager;
 import oogasalad.gamerunner.backend.GameToInterpreterAPI;
 import oogasalad.gamerunner.backend.fsm.FSM;
 import oogasalad.gamerunner.backend.interpretables.Goal;
@@ -13,6 +11,7 @@ import oogasalad.sharedDependencies.backend.ownables.gameobjects.GameObject;
 import oogasalad.sharedDependencies.backend.ownables.variables.Variable;
 import oogasalad.sharedDependencies.backend.owners.GameWorld;
 import oogasalad.sharedDependencies.backend.owners.Player;
+import oogasalad.sharedDependencies.backend.rules.RuleManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,7 +20,7 @@ import java.util.Map;
 
 public class TestGame implements GameToInterpreterAPI {
 
-    private final IdManager<Rule> rules = new IdManager<>();
+    private final RuleManager rules = new RuleManager();
     private final IdManager<Goal> goals = new IdManager<>();
     private final ArrayList<Player> players = new ArrayList<>();
 
@@ -89,10 +88,11 @@ public class TestGame implements GameToInterpreterAPI {
     private int checkGoals() {
         for (Map.Entry<String, Goal> goal : goals){
             Goal g = goal.getValue();
-            int player = g.test(interpreter, ownableIdManager);
-            if (player != -1){
-                return player;
+            Player player = g.test(interpreter, ownableIdManager);
+            if (player != null){
+                return players.indexOf(player);
             }
+
         }
         return -1;
     }
@@ -182,6 +182,26 @@ public class TestGame implements GameToInterpreterAPI {
     @Override
     public void increaseTurn() {
         turn.set((turn.get() + 1) % players.size());
+    }
+
+    @Override
+    public void putClass(IdManageable obj, String name) {
+
+    }
+
+    @Override
+    public void removeClass(IdManageable obj, String name) {
+
+    }
+
+    @Override
+    public void setObjectImage(Ownable obj, String image) {
+
+    }
+
+    @Override
+    public RuleManager getRules() {
+        return rules;
     }
 
     public void setTurn(int i){

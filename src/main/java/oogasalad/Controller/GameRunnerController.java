@@ -150,6 +150,16 @@ public class GameRunnerController extends Application implements GameController 
 
 
 
+    @Override
+    public void removePiece(String id) {
+
+    }
+
+    @Override
+    public void setObjectImage(String id, String imagePath) {
+
+    }
+
     public record DropZoneParameters(String id, int x, int y, int height, int width){}
 
     private void parseDropZoneLayout() throws FileNotFoundException {

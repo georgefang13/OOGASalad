@@ -1,7 +1,7 @@
 package oogasalad.sharedDependencies.backend.ownables;
 
 
-import oogasalad.gameeditor.backend.id.IdManageable;
+import oogasalad.sharedDependencies.backend.id.IdManageable;
 import oogasalad.sharedDependencies.backend.owners.GameWorld;
 import oogasalad.sharedDependencies.backend.owners.Owner;
 import oogasalad.sharedDependencies.backend.owners.Player;

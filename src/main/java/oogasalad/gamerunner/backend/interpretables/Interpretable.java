@@ -3,7 +3,7 @@ package oogasalad.gamerunner.backend.interpretables;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import oogasalad.gameeditor.backend.id.IdManageable;
+import oogasalad.sharedDependencies.backend.id.IdManageable;
 
 /**
  * Abstract implementation for classes that handle instructions Main goal is to encapsulate how

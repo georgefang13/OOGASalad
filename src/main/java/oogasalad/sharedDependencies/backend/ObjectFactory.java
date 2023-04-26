@@ -1,14 +1,11 @@
 package oogasalad.sharedDependencies.backend;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import oogasalad.gameeditor.backend.ObjectParameter;
-import oogasalad.gameeditor.backend.id.IdManager;
+import oogasalad.sharedDependencies.backend.id.IdManager;
 import oogasalad.gameeditor.backend.ownables.gameobjects.BoardCreator;
 import oogasalad.gameeditor.backend.rules.Rule;
 import oogasalad.gamerunner.backend.interpretables.Goal;

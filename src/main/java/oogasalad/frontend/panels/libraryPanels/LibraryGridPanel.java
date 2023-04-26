@@ -15,7 +15,11 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import oogasalad.frontend.panels.Panel;
 import oogasalad.frontend.panels.PanelController;
+import oogasalad.frontend.scenes.AbstractScene;
+import oogasalad.frontend.windows.AbstractWindow;
+import oogasalad.frontend.windows.GameEditorWindow;
 import oogasalad.frontend.windows.GamePlayerWindow;
+import oogasalad.frontend.windows.WindowTypes.WindowType;
 import org.kordamp.ikonli.fontawesome5.FontAwesomeSolid;
 import org.kordamp.ikonli.javafx.FontIcon;
 
@@ -106,6 +110,12 @@ public class LibraryGridPanel extends GridPane implements Panel {
     HBox iconBox = new HBox();
     iconBox.getStyleClass().add(ID_BUNDLE.getString(GAME_BOX_EDIT_ICON_BOX_ID));
     FontIcon editIcon = new FontIcon(FontAwesomeSolid.EDIT);
+    editIcon.setOnMouseClicked(
+        e -> {
+          AbstractWindow newWindow = panelController.newWindowFromPanel(WindowType.EDIT_WINDOW);
+          AbstractScene editScene = newWindow.addNewScene(GameEditorWindow.WindowScenes.EDITOR_SCENE);
+          newWindow.showScene(editScene);
+        });
     editIcon.getStyleClass().add(ID_BUNDLE.getString(GAME_BOX_EDIT_ICON_ID));
     iconBox.getChildren().add(editIcon);
 
