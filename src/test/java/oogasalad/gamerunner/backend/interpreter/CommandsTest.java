@@ -2152,7 +2152,7 @@ public class CommandsTest {
       fail();
     } catch (Exception e) {
       assertEquals(
-          "Invalid syntax: Set called with operator <Operator SquareRoot[1]> that takes less than 2 arguments",
+          "Invalid syntax: Set called with operator <Operator SquareRoot SquareRoot[1]> that takes less than 2 arguments",
           e.getMessage());
     }
 

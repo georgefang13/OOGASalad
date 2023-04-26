@@ -28,10 +28,6 @@ import java.util.stream.StreamSupport;
 public class GameLoader {
 
     private final RuleManager rules = new RuleManager();
-
-    /**
-     * The Goals of the game.
-     */
     private final List<Goal> goals = new ArrayList<>();
     private final List<Player> players = new ArrayList<>();
     private final IdManager<Ownable> ownableIdManager = new IdManager<>();

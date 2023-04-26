@@ -29,10 +29,11 @@ public class ObjectFactoryTest {
   void setup() {
     game = new GameInator();
     world = game.getGameWorld();
-    players = (ArrayList<Player>) game.getPlayers();
+    //set players from unmodifiable list to modifiable list
     game.addPlayer(new Player());
     game.addPlayer(new Player());
     game.addPlayer(new Player());
+    players = new ArrayList<>(game.getPlayers());
     idManager = game.getOwnableIdManager();
   }
 

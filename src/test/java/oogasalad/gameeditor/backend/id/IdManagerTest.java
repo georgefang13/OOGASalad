@@ -2,6 +2,7 @@ package oogasalad.gameeditor.backend.id;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -690,6 +691,42 @@ public class IdManagerTest {
 
     assertEquals(obj1Id, "var1.obj3");
     assertEquals(obj2Id, "var1.obj3.obj2");
+  }
+
+  @Test
+  public void testRemoveObjectsOwnedByOwner() {
+    Player player = new Player();
+    Player player2 = new Player();
+    Player player3 = new Player();
+
+    variable1.setOwner(player);
+    variable2.setOwner(player);
+    variable3.setOwner(player2);
+    object1.setOwner(player2);
+    object2.setOwner(player3);
+    object3.setOwner(player3);
+
+    manager.addObject(variable1, "var1");
+    manager.addObject(variable2, "var2");
+    manager.addObject(variable3, "var3");
+    manager.addObject(object1, "obj1");
+    manager.addObject(object2, "obj2");
+    manager.addObject(object3, "obj3", "obj2");
+
+    manager.removeObjectsOwnedByOwner(player);
+
+    //check that the parent id has changed
+    String obj1Id = manager.getId(object1);
+    String obj2Id = manager.getId(object2);
+    String obj3Id = manager.getId(object3);
+    assertThrows(IllegalArgumentException.class, () -> manager.getId(variable1));
+    assertThrows(IllegalArgumentException.class, () -> manager.getId(variable2));
+    String var3Id = manager.getId(variable3);
+
+    assertEquals(obj1Id, "obj1");
+    assertEquals(obj2Id, "obj2");
+    assertEquals(obj3Id, "obj2.obj3");
+    assertEquals(var3Id, "var3");
   }
 
 }

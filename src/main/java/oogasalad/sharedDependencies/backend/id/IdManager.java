@@ -464,4 +464,22 @@ public class IdManager<T extends IdManageable> implements Iterable<Map.Entry<Str
     ownershipMap.put(obj, newParent);
   }
 
+  /**
+   * Removes all objects owned by the given owner.
+   * @param owner
+   */
+  public void removeObjectsOwnedByOwner(Owner owner) {
+    //if T is Ownable, remove all objects with owner as owner avoiding ConcurrentModificationException
+    List<T> ownedObjects = new ArrayList<>();
+    for (Map.Entry<T, T> entry : ownershipMap.entrySet()) {
+      Ownable ownable = (Ownable) entry.getKey();
+      if (ownable.getOwner() == owner) {
+        ownedObjects.add(entry.getKey());
+      }
+    }
+    for (T ownedObject : ownedObjects) {
+      removeObject(ownedObject);
+    }
+  }
+
 }
