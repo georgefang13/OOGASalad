@@ -147,8 +147,8 @@ public class GameLoader {
         Map<DropZone, List<String[]>> edgeMap = new HashMap<>();
 
         for (String id : fm.getTagsAtLevel()){
-
-            DropZone dz = new DropZone();
+            //assume all dropzones are owned by the game world
+            DropZone dz = new DropZone(gameWorld);
             for (String cls : fm.getArray(id, "classes")){
                 dz.addClass(cls);
             }
@@ -196,7 +196,7 @@ public class GameLoader {
             String location = fm.getString(id, "location");
             List<String> owns = StreamSupport.stream(fm.getArray(id, "owns").spliterator(), false).toList();
 
-            Owner own = null;
+            Owner own = gameWorld;
             if (!owner.isEmpty()){
                 own = players.get(Integer.parseInt(owner));
             }

@@ -1,4 +1,4 @@
-package oogasalad.gameeditor.backend.id;
+package oogasalad.sharedDependencies.backend.id;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
