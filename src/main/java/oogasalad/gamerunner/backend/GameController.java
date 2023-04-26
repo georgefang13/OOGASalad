@@ -15,4 +15,6 @@ public interface GameController {
     void movePiece(String id, String dropZoneID);
 
     void removePiece(String id);
+
+    void setObjectImage(String id, String imagePath);
 }

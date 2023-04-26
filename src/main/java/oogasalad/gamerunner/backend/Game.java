@@ -1,6 +1,7 @@
 package oogasalad.gamerunner.backend;
 
 import oogasalad.Controller.GameRunnerController;
+import oogasalad.gameeditor.backend.id.IdManageable;
 import oogasalad.gameeditor.backend.id.IdManager;
 import oogasalad.gamerunner.backend.fsm.FSM;
 import oogasalad.gamerunner.backend.fsm.ProgrammableState;
@@ -66,11 +67,14 @@ public class Game implements GameToInterpreterAPI{
 
     private final GameController controller;
 
+    private final String directory;
+
 
     /////////////////// PLAY THE GAME ///////////////////
 
     public Game(GameController controller, String directory, int numPlayers) {
         this.controller = controller;
+        this.directory = directory;
 
         initGame(numPlayers, directory);
     }
@@ -393,6 +397,8 @@ public class Game implements GameToInterpreterAPI{
         return Collections.unmodifiableList(players);
     }
 
+    //endregion
+
     @Override
     public Player getPlayer(int playerNum) {
         return players.get(playerNum);
@@ -443,7 +449,19 @@ public class Game implements GameToInterpreterAPI{
         turn.set((turn.get() + 1) % players.size());
     }
 
-    //endregion
+    @Override
+    public void putClass(IdManageable obj, String name) {
+        obj.addClass(name);
+    }
+
+    @Override
+    public void setObjectImage(Ownable obj, String image) {
+        String id = ownableIdManager.getId(obj);
+        String imagePath = this.directory + "/assets/" + image;
+        controller.setObjectImage(id, imagePath);
+    }
+
+
 
     // region RULES AND GOALS
 

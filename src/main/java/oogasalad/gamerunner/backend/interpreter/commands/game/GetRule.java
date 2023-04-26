@@ -47,7 +47,7 @@ public class GetRule extends OperatorToken {
             args[i] = arg;
         }
         ui.passArguments(args);
-        Token texp = ui.evaluate(env);
-        return texp;
+        return ui.evaluate(env);
+
     }
 }

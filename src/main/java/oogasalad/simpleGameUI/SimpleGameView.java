@@ -42,6 +42,8 @@ public class SimpleGameView extends Application implements GameController {
         Scene scene = new Scene(root, SCREEN_WIDTH, SCREEN_HEIGHT);
         scene.getStylesheets().add(MODAL_STYLE_SHEET);
 
+        CheckersMaker2.main(new String[]{});
+
         game = new Game(this, "data/games/checkers2", 2);
 
         undoButton.setOnAction(e -> game.undoClickPiece());
@@ -132,6 +134,30 @@ public class SimpleGameView extends Application implements GameController {
         pieceToDropZoneMap.remove(id);
         dz.getChildren().remove(n);
         root.getChildren().remove(n);
+    }
+
+    @Override
+    public void setObjectImage(String id, String imagePath) {
+        Image img;
+        try {
+            img = new Image(new FileInputStream(imagePath));
+        } catch (Exception e) {
+            System.out.println("Image " + imagePath + " not found");
+            return;
+        }
+
+        ImageView imgv = new ImageView(img);
+
+
+        ImageView oldimg = (ImageView) ((HBox) nodes.get(id)).getChildren().get(0);
+        int size = (int) oldimg.getFitWidth();
+
+        imgv.setFitWidth(size);
+        imgv.setFitHeight(size);
+
+        HBox piece = (HBox) nodes.get(id);
+        piece.getChildren().clear();
+        piece.getChildren().add(imgv);
     }
 
     private void clearClickables(){

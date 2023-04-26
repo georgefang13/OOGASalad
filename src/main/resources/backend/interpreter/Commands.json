@@ -52,6 +52,7 @@
     }
   },
 
+
   "Break": {
     "name": "Break from loop",
     "folder": "control",
@@ -494,7 +495,6 @@
       "parse": "getrule %s %s %s"
     }
   },
-
   "GetObjsByClass": {
     "name": "Get Objects In The Game By Class",
     "folder": "game",
@@ -638,6 +638,32 @@
       "parse": "movepieceas %s %s %s"
     }
   },
+  "PutClass": {
+    "name": "Add Class to Object",
+    "folder": "game",
+    "str": "putclass",
+    "description": "Adds a class to a gameobject",
+    "example": "putclass :game_piece1 \"some_class # putclass <ownable> <string>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        {
+          "name": "object",
+          "type": [
+            "any"
+          ]
+        },
+        {
+          "name": "class",
+          "type": [
+            "string"
+          ]
+        }
+      ],
+      "outputs": [],
+      "parse": "putclass %s %s"
+    }
+  },
   "RemovePiece": {
     "name": "Get Dropzone of Objects",
     "folder": "game",
@@ -651,6 +677,22 @@
       ],
       "outputs": [],
       "parse": "removepiece %s"
+    }
+  },
+  "SetObjImage": {
+    "name": "Set Object Image",
+    "folder": "game",
+    "str": "setobjimg",
+    "description": "Set the image for a specific gameobject Use URLEncode to encode the image name",
+    "example": "setobjimg :game_obj \"fire.png  # setobjimg <obj> <image name>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        { "name": "object", "type": ["any"] },
+        { "name": "image", "type": ["string"] }
+      ],
+      "outputs": [],
+      "parse": "setobjimg %s %s"
     }
   },
 

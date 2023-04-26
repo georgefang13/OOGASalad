@@ -48,6 +48,8 @@ public class CheckersMaker2 {
             }
 
             fm.addContent("board", id, "classes");
+            if (y == 0) fm.addContent("endzone", id, "classes");
+            if (y == 7) fm.addContent("endzone", id, "classes");
         }
 
         fm.saveToFile(folder + "layout.json");
@@ -115,6 +117,19 @@ public class CheckersMaker2 {
                     return :ret
                 ]
                 """;
+        String toKing = """
+                to checkKing [ :piece ] [
+                    make :dz objdz :piece
+                    if hasclass :dz "endzone [ 
+                        putclass "king :piece 
+                        ifelse hasclass :piece "red [
+                            setobjimg :piece "redKing.png
+                        ] [
+                            setobjimg :piece "blackKing.png
+                        ]
+                    ]
+                ]
+                """;
 
         String blackAvailable = """
                 to available [ :dz ] [
@@ -132,6 +147,7 @@ public class CheckersMaker2 {
                 """;
 
         FileManager fm = new FileManager();
+        fm.addContent(toKing, "piece", "checkKing");
         fm.addContent(redAvailable, "red", "available");
         fm.addContent(blackAvailable, "black", "available");
         fm.addContent(kingAvailable, "king", "available");
@@ -199,6 +215,8 @@ public class CheckersMaker2 {
                     make :choice_num index :dz :available
                     make :chosen_path item :choice_num :available_paths
                     movepiece :piece_selected :dz
+                    
+                    getrule :piece_selected "checkKing [ :piece_selected ]
                                         
                     if == 2 len :chosen_path [
                         make :dir item 0 :chosen_path

@@ -90,6 +90,11 @@ public class GameRunnerController implements GameController {
 
     }
 
+    @Override
+    public void setObjectImage(String id, String imagePath) {
+
+    }
+
     public record DropZoneParameters(String id, int x, int y, int height, int width){}
 
     private void parseDropZoneLayout() throws FileNotFoundException {

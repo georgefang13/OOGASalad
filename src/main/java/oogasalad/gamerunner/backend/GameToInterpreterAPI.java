@@ -1,5 +1,6 @@
 package oogasalad.gamerunner.backend;
 
+import oogasalad.gameeditor.backend.id.IdManageable;
 import oogasalad.sharedDependencies.backend.ownables.Ownable;
 import oogasalad.sharedDependencies.backend.ownables.gameobjects.DropZone;
 import oogasalad.sharedDependencies.backend.ownables.gameobjects.GameObject;
@@ -22,6 +23,10 @@ public interface GameToInterpreterAPI {
     void putInDropZone(Ownable element, DropZone dropZone, String name);
 
     void increaseTurn();
+
+    void putClass(IdManageable obj, String name);
+
+    void setObjectImage(Ownable obj, String image);
 
     RuleManager getRules();
 
