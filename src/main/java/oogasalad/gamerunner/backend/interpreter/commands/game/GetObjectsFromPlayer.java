@@ -35,7 +35,7 @@ public class GetObjectsFromPlayer extends OperatorToken {
         OwnableSearchStream searchStream = new OwnableSearchStream(manager);
 
         List<Ownable> objs = manager.objectStream()
-                .filter(searchStream.isOfOwner(player.VALUE))
+                .filter(searchStream.isOwnedByOwner(player.VALUE))
                 .filter(searchStream.isOfAllClasses(classes)).toList();
 
         Variable<List<Ownable>> var = new Variable<>(objs);

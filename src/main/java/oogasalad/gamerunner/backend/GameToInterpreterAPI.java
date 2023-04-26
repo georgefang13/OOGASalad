@@ -26,6 +26,8 @@ public interface GameToInterpreterAPI {
 
     void putClass(IdManageable obj, String name);
 
+    void removeClass(IdManageable obj, String name);
+
     void setObjectImage(Ownable obj, String image);
 
     RuleManager getRules();

@@ -15,7 +15,7 @@ public class CheckersMaker2 {
 
         IdManager<Ownable> manager = new IdManager<>();
 
-        String folder = "data/games/checkers2/";
+        String folder = "data/games/checkers/";
 
         saveDropZones(manager, folder);
         saveGameObjects(folder);

@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Map;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import oogasalad.gameeditor.backend.ownables.gameobjects.EmptyGameObject;
 import oogasalad.sharedDependencies.backend.ownables.Ownable;
@@ -586,19 +585,19 @@ public class IdManagerTest {
     variable2.addClass("test");
 
     Stream<Ownable> ownableStream = manager.objectStream()
-        .filter(searchStream.isOfOwner(player))
+        .filter(searchStream.isOwnedByOwner(player))
         .filter(searchStream.isOfAnyClass("test"));
 
     //test that the stream is correct
     assertTrue(ownableStream.count() == 1);
 
     ownableStream = manager.objectStream()
-        .filter(searchStream.isOfOwner(player2));
+        .filter(searchStream.isOwnedByOwner(player2));
 
     assertTrue(ownableStream.count() == 3);
 
     ownableStream = manager.objectStream()
-        .filter(searchStream.isOfOwner(player3));
+        .filter(searchStream.isOwnedByOwner(player3));
 
     assertTrue(ownableStream.count() == 0);
 
@@ -606,6 +605,27 @@ public class IdManagerTest {
         .filter(searchStream.isOfAnyClass("test"));
 
     assertTrue(ownableStream.count() == 1);
+
+    ownableStream = manager.objectStream()
+            .filter(searchStream.isOwnedByOwnable(object2));
+
+    assertEquals(1, ownableStream.count());
+
+    manager.setOwner(object1, object3);
+
+    ownableStream = manager.objectStream()
+            .filter(searchStream.isOwnedByOwnable(object2));
+
+    assertEquals(2, ownableStream.count());
+
+    ownableStream = manager.objectStream()
+            .filter(searchStream.isOwnedByOwnable(object3));
+
+    assertEquals(1, ownableStream.count());
+
+
+
+
 
   }
 

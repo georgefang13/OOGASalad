@@ -89,7 +89,7 @@ public class Game implements GameToInterpreterAPI{
 
         try {
             loadGame(directory);
-        } catch (FileNotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -188,14 +188,6 @@ public class Game implements GameToInterpreterAPI{
         sendClickable();
     }
 
-    public void keyDown(String key) {
-
-    }
-
-    public void keyUp(String key) {
-
-    }
-
     private int checkGoals() {
         for (Goal g : goals){
             Player player = g.test(interpreter, ownableIdManager);
@@ -213,13 +205,12 @@ public class Game implements GameToInterpreterAPI{
      * Loads a Game from a file.
      * @param directory the name of the file to load from
      */
-    public void loadGame(String directory) throws FileNotFoundException {
+    public void loadGame(String directory) throws FileNotFoundException, ClassNotFoundException {
         pieceLocations.clear();
 
         loadFSM(directory + "/fsm.json");
         loadDropZones(directory + "/layout.json");
-        loadGameObjects(directory + "/objects.json");
-        loadVariables(directory + "/variables.json");
+        loadObjectsAndVariables(directory);
         loadRules(directory + "/rules.json");
     }
 
@@ -292,7 +283,20 @@ public class Game implements GameToInterpreterAPI{
         }
     }
 
-    private void loadGameObjects(String file) throws FileNotFoundException {
+    private void loadObjectsAndVariables(String directory) throws FileNotFoundException, ClassNotFoundException {
+        Map<String, List<String>> ownMap = loadGameObjects(directory + "/objects.json");
+        loadVariables(directory + "/variables.json");
+
+        for (String s : ownMap.keySet()) {
+            GameObject mainObj = (GameObject) ownableIdManager.getObject(s);
+            for (String o : ownMap.get(s)) {
+                Ownable obj = ownableIdManager.getObject(o);
+                ownableIdManager.setOwner(obj, mainObj);
+            }
+        }
+    }
+
+    private Map<String, List<String>> loadGameObjects(String file) throws FileNotFoundException {
 
         FileManager fm = new FileManager(file);
 
@@ -328,24 +332,39 @@ public class Game implements GameToInterpreterAPI{
             ownMap.put(id, owns);
         }
 
-        for (String s : ownMap.keySet()){
-            GameObject mainObj = (GameObject) ownableIdManager.getObject(s);
-            for (String o : ownMap.get(s)){
-                GameObject obj = (GameObject) ownableIdManager.getObject(o);
-                ownableIdManager.setOwner(obj, mainObj);
-            }
-        }
+        return ownMap;
     }
 
-    private void loadVariables(String file) throws FileNotFoundException {
+    private void loadVariables(String file) throws FileNotFoundException, ClassNotFoundException {
         FileManager fm = new FileManager(file);
         for (String id : fm.getTagsAtLevel()){
-            String owner = fm.getString(id, "owner");
-            String value = fm.getString(id, "value");
-            String type = fm.getString(id, "type");
+            String ownerName = fm.getString(id, "owner");
 
-            // Variable var = new Variable();
-            // TODO: replace with GSON thing
+            String type = fm.getString(id, "type");
+            Class<?> clazz = Class.forName(type);
+            Object obj = fm.getObject(clazz, id, "value");
+
+            Variable<Object> var;
+
+            try {
+                int ownerIndex = Integer.parseInt(ownerName);
+                Owner owner = gameWorld;
+                if (ownerIndex != -1){
+                    owner = players.get(ownerIndex);
+                }
+                var = new Variable<>(obj, owner);
+
+            } catch (Exception e){
+                var = new Variable<>(obj);
+                Ownable owner = ownableIdManager.getObject(ownerName);
+                ownableIdManager.setOwner(var, owner);
+            }
+
+            for (String cls : fm.getArray(id, "classes")){
+                var.addClass(cls);
+            }
+
+            ownableIdManager.addObject(var, id);
         }
     }
 
@@ -455,13 +474,16 @@ public class Game implements GameToInterpreterAPI{
     }
 
     @Override
+    public void removeClass(IdManageable obj, String name) {
+        obj.removeClass(name);
+    }
+
+    @Override
     public void setObjectImage(Ownable obj, String image) {
         String id = ownableIdManager.getId(obj);
         String imagePath = this.directory + "/assets/" + image;
         controller.setObjectImage(id, imagePath);
     }
-
-
 
     // region RULES AND GOALS
 

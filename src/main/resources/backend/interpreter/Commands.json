@@ -432,11 +432,27 @@
       "parse": "dzneighbors %s"
     }
   },
+  "GetObjChildren": {
+    "name": "Get Child of Object",
+    "folder": "game",
+    "str": "objchildren",
+    "description": "Get an object owned by another object by class name",
+    "example": "objchildren :x \"var_name  # objchildren <object> <child name>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        { "name": "object", "type": ["any"] },
+        { "name": "child class", "type": ["string"] }
+      ],
+      "outputs": ["any"],
+      "parse": "objchildren %s %s"
+    }
+  },
   "GetObjDz": {
     "name": "Get Dropzone of Objects",
     "folder": "game",
     "str": "objdz",
-    "description": "Get the dropzone tht a GameObject is in",
+    "description": "Get the dropzone that a GameObject is in",
     "example": "objdz :x  # objdz <obj>",
     "specs": {
       "innerBlocks": [],
@@ -444,7 +460,7 @@
         { "name": "object", "type": ["any"] }
       ],
       "outputs": ["dropzone"],
-      "parse": "gameobjdz %s"
+      "parse": "objdz %s"
     }
   },
   "GetObjectsFromPlayer": {
@@ -662,6 +678,32 @@
       ],
       "outputs": [],
       "parse": "putclass %s %s"
+    }
+  },
+  "RemoveClass": {
+    "name": "Remove Class from Object",
+    "folder": "game",
+    "str": "removeclass",
+    "description": "removes a class from a gameobject",
+    "example": "removeclass :game_piece1 \"some_class # removeclass <ownable> <string>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        {
+          "name": "object",
+          "type": [
+            "any"
+          ]
+        },
+        {
+          "name": "class",
+          "type": [
+            "string"
+          ]
+        }
+      ],
+      "outputs": [],
+      "parse": "removeclass %s %s"
     }
   },
   "RemovePiece": {

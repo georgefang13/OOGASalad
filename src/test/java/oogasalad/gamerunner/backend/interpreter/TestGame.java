@@ -1,5 +1,6 @@
 package oogasalad.gamerunner.backend.interpreter;
 
+import oogasalad.gameeditor.backend.id.IdManageable;
 import oogasalad.gameeditor.backend.id.IdManager;
 import oogasalad.gameeditor.backend.rules.Rule;
 import oogasalad.gamerunner.backend.GameToInterpreterAPI;
@@ -182,6 +183,21 @@ public class TestGame implements GameToInterpreterAPI {
     @Override
     public void increaseTurn() {
         turn.set((turn.get() + 1) % players.size());
+    }
+
+    @Override
+    public void putClass(IdManageable obj, String name) {
+
+    }
+
+    @Override
+    public void removeClass(IdManageable obj, String name) {
+
+    }
+
+    @Override
+    public void setObjectImage(Ownable obj, String image) {
+
     }
 
     @Override

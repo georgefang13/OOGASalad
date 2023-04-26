@@ -21,7 +21,7 @@ public class OwnableSearchStream {
    * @param owner the owner to check for
    * @return a Predicate that returns true if the Ownable is directly owned by the owner
    */
-  public Predicate<Ownable> isOfOwner(Owner owner) {
+  public Predicate<Ownable> isOwnedByOwner(Owner owner) {
     return ownable -> {
       List<String> ids = new ArrayList<>();
       if (ownable.getOwner() != null && ownable.getOwner().equals(owner)) {
@@ -69,6 +69,8 @@ public class OwnableSearchStream {
     };
   }
 
-
+  public Predicate<Ownable> isOwnedByOwnable(Ownable owner) {
+    return ownable -> ownableIdManager.getId(ownable).startsWith(ownableIdManager.getId(owner) + ".");
+  }
 
 }
