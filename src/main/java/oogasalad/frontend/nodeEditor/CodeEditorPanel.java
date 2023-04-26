@@ -14,7 +14,9 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import oogasalad.frontend.nodeEditor.Nodes.DraggableNodes.DraggableAbstractNode;
+import oogasalad.frontend.nodeEditor.Nodes.DraggableNodes.EndNestNode;
 import oogasalad.frontend.nodeEditor.Nodes.DraggableNodes.FileBasedNode;
+import oogasalad.frontend.nodeEditor.Nodes.DraggableNodes.StartNestNode;
 
 public class CodeEditorPanel extends AbstractNodePanel {
 
@@ -59,9 +61,19 @@ public class CodeEditorPanel extends AbstractNodePanel {
       Tooltip.install(button,tip);
       button.setOnAction(event -> {
         try {
-          DraggableAbstractNode node = new FileBasedNode(nodeController,name, innerBlocks, outputTypes, parseStr, inputs);
+          DraggableAbstractNode node = new FileBasedNode(nodeController, name, innerBlocks, outputTypes, parseStr, inputs);
           group.getChildren().add(node);
           node.setBoundingBox(workspace.getBoundsInParent());
+          for (JsonElement nestBlock : innerBlocks.asList()) {
+            DraggableAbstractNode start = new StartNestNode(nodeController, 0, node.getTranslateY(), node.getIncrementIndent(), node.getWidth(), node.getHeight(), "green");
+            group.getChildren().add(start);
+            start.setBoundingBox(workspace.getBoundsInParent());
+            start.snapTo(node);
+//            DraggableAbstractNode end = new EndNestNode(nodeController, 0 , 0, node.getIncrementIndent(), node.getWidth(), node.getHeight(), "red");
+//            group.getChildren().add(end);
+//            end.setBoundingBox(workspace.getBoundsInParent());
+//            end.snapTo(start);
+          }
         } catch (Exception e) {
           e.printStackTrace();
         }

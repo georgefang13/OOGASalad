@@ -8,7 +8,9 @@ import oogasalad.frontend.nodeEditor.Nodes.DraggableNodes.DraggableAbstractNode;
 
 public abstract class AbstractNode extends VBox {
 
-  protected double x, y;
+  protected final double INDENT_SIZE = 30;
+
+  protected double x, y, width, height;
   protected double indent;
   protected double xOffset, yOffset;
 
@@ -19,17 +21,21 @@ public abstract class AbstractNode extends VBox {
 
 //    protected List<Port> ports;
 
-  public AbstractNode(NodeController nodeController, double x, double y, double indent, double width,
+  public AbstractNode(NodeController nodeController, double x, double y, double indent,
+      double width,
       double height, String color) {
     this.x = x;
     this.y = y;
     this.indent = indent;
+    this.width = width;
+    this.height = height;
     this.color = color;
     this.nodeController = nodeController;
-    setLayoutX(x);
-    setLayoutY(y);
-    setPrefSize(width, height);
-    setColor(color);
+    System.out.println(this.x + this.indent);
+    setLayoutX(this.x + this.indent);
+    setLayoutY(this.y);
+    setPrefSize(this.width, this.height);
+    setColor(this.color);
     setToolTips();
   }
 
@@ -63,5 +69,13 @@ public abstract class AbstractNode extends VBox {
 
   public double getIndent() {
     return indent;
+  }
+
+  public double getIncrementIndent() {
+    System.out.println(indent + INDENT_SIZE + " GET");
+    return indent + INDENT_SIZE;
+  }
+  public double getDecrementIndent() {
+    return indent - INDENT_SIZE;
   }
 }

@@ -11,6 +11,12 @@ public abstract class DraggableAbstractNode extends AbstractNode implements Drag
   private Bounds boundingBox;
 
   private AbstractNode parentNode;
+  protected static final double DEFAULT_X = 0;
+  protected static final double DEFAULT_Y = 0;
+  protected static final double INDENT = 0;
+
+  protected static final double WIDTH = 300;
+  protected static final double HEIGHT = 100;
 
   public DraggableAbstractNode(NodeController nodeController, double x, double y, double indent,
       double width,
@@ -56,12 +62,9 @@ public abstract class DraggableAbstractNode extends AbstractNode implements Drag
           if (this.getParent() == null) {
             return;
           }
-          double x = e.getSceneX();
-          double y = e.getSceneY();
           double scaleFactor = this.getParent().getScaleX();
           double newX = e.getSceneX() / scaleFactor - xOffset;
           double newY = e.getSceneY() / scaleFactor - yOffset;
-
           move(newX, newY);
           clearLinks();
           e.consume();
@@ -96,7 +99,7 @@ public abstract class DraggableAbstractNode extends AbstractNode implements Drag
     });
   }
 
-  protected void snapTo(AbstractNode node) throws InterruptedException {
+  public void snapTo(AbstractNode node) throws InterruptedException {
     if (node == this) {
       return;
     }
@@ -104,22 +107,18 @@ public abstract class DraggableAbstractNode extends AbstractNode implements Drag
     while (node.getChildNode() != null && node.getChildNode() != this) {
       node = node.getChildNode();
     }
-
-    this.setTranslateX(node.getTranslateX() + node.getIndent());
-    this.setTranslateY(node.getTranslateY() + node.getHeight());
+    move(node.getTranslateX() + node.getIndent(), node.getTranslateY() + node.getHeight());
     AbstractNode temp = this;
 
     while (temp.getChildNode() != null) {
       AbstractNode tempOld = temp;
       temp = temp.getChildNode();
-      temp.setTranslateX(tempOld.getTranslateX() + tempOld.getIndent());
-      temp.setTranslateY(tempOld.getTranslateY() + tempOld.getHeight());
+      temp.move(tempOld.getTranslateX() + tempOld.getIndent(), tempOld.getTranslateY() + tempOld.getHeight());
     }
     if (node.getChildNode() == null && node != this) {
       node.setChildNode(this);
       this.setParentNode(node);
     }
-
   }
 
   @Override
