@@ -1,6 +1,7 @@
 package oogasalad.frontend.nodeEditor;
 
 import javafx.scene.Scene;
+import javafx.stage.Stage;
 import oogasalad.frontend.windows.NodeWindow;
 
 public class NodeController {
@@ -9,7 +10,10 @@ public class NodeController {
 
   public NodeController(NodeWindow nodeWindow) {
     scene = new NodeScene(this);
-    nodeWindow.showScene(scene);
+    Stage stage = new Stage();
+    stage.setScene(scene.getScene());
+    stage.show();
+    //nodeWindow.showScene(scene);
   }
 
   public NodeController() {

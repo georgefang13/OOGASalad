@@ -12,11 +12,12 @@ public class MainNode extends DraggableAbstractNode {
 
   private static final double WIDTH = 300;
   private static final double HEIGHT = 100;
+  private static final double INDENT = 0;
 
   private static final String COLOR = "#9BE70F";
 
   public MainNode(NodeController nodeController) {
-    super(nodeController, DEFAULT_X, DEFAULT_Y, WIDTH, HEIGHT, COLOR);
+    super(nodeController, DEFAULT_X, DEFAULT_Y, INDENT, WIDTH, HEIGHT, COLOR);
     setContent();
   }
 
@@ -36,10 +37,12 @@ public class MainNode extends DraggableAbstractNode {
   }
 
   @Override
-  protected void snapTo(AbstractNode node) throws InterruptedException{}
+  protected void snapTo(AbstractNode node) throws InterruptedException {
+  }
 
   @Override
-  protected void delete(){}
+  protected void delete() {
+  }
 
 
 }

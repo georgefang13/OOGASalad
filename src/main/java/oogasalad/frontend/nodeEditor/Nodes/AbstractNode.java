@@ -9,6 +9,7 @@ import oogasalad.frontend.nodeEditor.Nodes.DraggableNodes.DraggableAbstractNode;
 public abstract class AbstractNode extends VBox {
 
   protected double x, y;
+  protected double indent;
   protected double xOffset, yOffset;
 
   protected String color;
@@ -16,13 +17,13 @@ public abstract class AbstractNode extends VBox {
   protected NodeController nodeController;
   private DraggableAbstractNode childNode;
 
-
 //    protected List<Port> ports;
 
-  public AbstractNode(NodeController nodeController, double x, double y, double width,
+  public AbstractNode(NodeController nodeController, double x, double y, double indent, double width,
       double height, String color) {
     this.x = x;
     this.y = y;
+    this.indent = indent;
     this.color = color;
     this.nodeController = nodeController;
     setLayoutX(x);
@@ -60,7 +61,7 @@ public abstract class AbstractNode extends VBox {
     Tooltip.install(this, t);
   }
 
-
-
-
+  public double getIndent() {
+    return indent;
+  }
 }

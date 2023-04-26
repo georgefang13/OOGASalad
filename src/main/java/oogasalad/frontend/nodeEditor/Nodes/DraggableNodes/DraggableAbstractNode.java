@@ -12,9 +12,10 @@ public abstract class DraggableAbstractNode extends AbstractNode implements Drag
 
   private AbstractNode parentNode;
 
-  public DraggableAbstractNode(NodeController nodeController, double x, double y, double width,
+  public DraggableAbstractNode(NodeController nodeController, double x, double y, double indent,
+      double width,
       double height, String color) {
-    super(nodeController, x, y, width, height, color);
+    super(nodeController, x, y, indent, width, height, color);
     onDragDetected();
     onMousePressed();
     onMouseDragged();
@@ -77,16 +78,16 @@ public abstract class DraggableAbstractNode extends AbstractNode implements Drag
         if (node instanceof AbstractNode && node != this) {
           if (this.getBoundsInParent().intersects(node.getBoundsInParent())
               && this.getChildNode() != node) {
-              while(((AbstractNode) node).getChildNode()!=null){
-                  node = ((AbstractNode) node).getChildNode();
-              }
-              try {
-                    snapTo((AbstractNode) node);
-                } catch (InterruptedException interruptedException) {
-                    interruptedException.printStackTrace();
-              }
-              e.consume();
-              return;
+            while (((AbstractNode) node).getChildNode() != null) {
+              node = ((AbstractNode) node).getChildNode();
+            }
+            try {
+              snapTo((AbstractNode) node);
+            } catch (InterruptedException interruptedException) {
+              interruptedException.printStackTrace();
+            }
+            e.consume();
+            return;
           }
         }
       }
@@ -96,27 +97,27 @@ public abstract class DraggableAbstractNode extends AbstractNode implements Drag
   }
 
   protected void snapTo(AbstractNode node) throws InterruptedException {
-      if (node == this) {
-          return;
-      }
+    if (node == this) {
+      return;
+    }
 
     while (node.getChildNode() != null && node.getChildNode() != this) {
       node = node.getChildNode();
     }
 
-    this.setTranslateX(node.getTranslateX());
+    this.setTranslateX(node.getTranslateX() + node.getIndent());
     this.setTranslateY(node.getTranslateY() + node.getHeight());
     AbstractNode temp = this;
 
     while (temp.getChildNode() != null) {
-        AbstractNode tempOld = temp;
-        temp = temp.getChildNode();
-      temp.setTranslateX(tempOld.getTranslateX());
+      AbstractNode tempOld = temp;
+      temp = temp.getChildNode();
+      temp.setTranslateX(tempOld.getTranslateX() + tempOld.getIndent());
       temp.setTranslateY(tempOld.getTranslateY() + tempOld.getHeight());
     }
-    if(node.getChildNode() == null && node != this) {
-        node.setChildNode(this);
-        this.setParentNode(node);
+    if (node.getChildNode() == null && node != this) {
+      node.setChildNode(this);
+      this.setParentNode(node);
     }
 
   }
@@ -138,7 +139,7 @@ public abstract class DraggableAbstractNode extends AbstractNode implements Drag
       setTranslateX(newX);
       setTranslateY(newY);
       if (this.getChildNode() != null) {
-        this.getChildNode().move(newX, newY + this.getHeight());
+        this.getChildNode().move(newX + this.getIndent(), newY + this.getHeight());
       }
     } else {
       double clampedX = Math.min(Math.max(newX, boundingBox.getMinX()),
@@ -149,19 +150,20 @@ public abstract class DraggableAbstractNode extends AbstractNode implements Drag
       setTranslateY(clampedY);
     }
   }
-    public void setParentNode(AbstractNode node) {
-        this.parentNode = node;
-    }
 
-    public AbstractNode getParentNode() {
-        return parentNode;
-    }
+  public void setParentNode(AbstractNode node) {
+    this.parentNode = node;
+  }
 
-    protected void clearLinks(){
-      if (this.getParentNode() != null) {
-        this.parentNode.setChildNode(null);
-        this.setParentNode(null);
-      }
+  public AbstractNode getParentNode() {
+    return parentNode;
+  }
+
+  protected void clearLinks() {
+    if (this.getParentNode() != null) {
+      this.parentNode.setChildNode(null);
+      this.setParentNode(null);
     }
+  }
 
 }
