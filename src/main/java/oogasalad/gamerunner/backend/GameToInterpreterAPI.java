@@ -1,6 +1,6 @@
 package oogasalad.gamerunner.backend;
 
-import oogasalad.gameeditor.backend.id.IdManageable;
+import oogasalad.sharedDependencies.backend.id.IdManageable;
 import oogasalad.sharedDependencies.backend.ownables.Ownable;
 import oogasalad.sharedDependencies.backend.ownables.gameobjects.DropZone;
 import oogasalad.sharedDependencies.backend.ownables.gameobjects.GameObject;

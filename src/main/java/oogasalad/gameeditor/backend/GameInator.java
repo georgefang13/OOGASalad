@@ -1,14 +1,24 @@
 package oogasalad.gameeditor.backend;
 
 import com.google.gson.JsonObject;
+
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import oogasalad.gameeditor.backend.id.IdManager;
+import java.util.stream.StreamSupport;
+
+import oogasalad.Controller.GameRunnerController;
+import oogasalad.gamerunner.backend.fsm.ProgrammableState;
+import oogasalad.sharedDependencies.backend.filemanagers.FileManager;
+import oogasalad.sharedDependencies.backend.id.IdManager;
 import oogasalad.gameeditor.backend.rules.Rule;
 import oogasalad.gamerunner.backend.interpretables.Goal;
 import oogasalad.sharedDependencies.backend.ObjectFactory;
 import oogasalad.sharedDependencies.backend.ownables.Ownable;
+import oogasalad.sharedDependencies.backend.ownables.gameobjects.DropZone;
+import oogasalad.sharedDependencies.backend.ownables.gameobjects.GameObject;
 import oogasalad.sharedDependencies.backend.ownables.variables.Variable;
 import oogasalad.sharedDependencies.backend.owners.GameWorld;
 import oogasalad.sharedDependencies.backend.owners.Owner;

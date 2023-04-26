@@ -1,14 +1,8 @@
 package oogasalad.simpleGameUI;
 
-import oogasalad.gameeditor.backend.id.IdManager;
-import oogasalad.gameeditor.backend.ownables.gameobjects.BoardCreator;
+import oogasalad.sharedDependencies.backend.id.IdManager;
 import oogasalad.sharedDependencies.backend.filemanagers.FileManager;
 import oogasalad.sharedDependencies.backend.ownables.Ownable;
-import oogasalad.sharedDependencies.backend.ownables.gameobjects.DropZone;
-import oogasalad.sharedDependencies.backend.ownables.variables.Variable;
-
-import java.util.List;
-import java.util.Map;
 
 public class CardFlip {
 

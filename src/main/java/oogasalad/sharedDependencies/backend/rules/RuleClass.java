@@ -1,6 +1,6 @@
 package oogasalad.sharedDependencies.backend.rules;
 
-import oogasalad.gameeditor.backend.id.IdManageable;
+import oogasalad.sharedDependencies.backend.id.IdManageable;
 
 import java.util.*;
 

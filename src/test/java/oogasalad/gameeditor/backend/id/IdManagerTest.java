@@ -8,6 +8,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.Map;
 import java.util.stream.Stream;
 import oogasalad.gameeditor.backend.ownables.gameobjects.EmptyGameObject;
+import oogasalad.sharedDependencies.backend.id.IdManager;
+import oogasalad.sharedDependencies.backend.id.OwnableSearchStream;
 import oogasalad.sharedDependencies.backend.ownables.Ownable;
 import oogasalad.sharedDependencies.backend.ownables.gameobjects.GameObject;
 import oogasalad.sharedDependencies.backend.ownables.variables.Variable;

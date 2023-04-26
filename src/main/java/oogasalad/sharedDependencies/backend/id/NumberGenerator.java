@@ -1,4 +1,4 @@
-package oogasalad.gameeditor.backend.id;
+package oogasalad.sharedDependencies.backend.id;
 
 import java.util.Iterator;
 
