@@ -35,12 +35,6 @@ public class GameRunnerController extends Application implements GameController 
 
     private Board board;
 
-
-
-
-
-
-
     private GamePlayerMainScene gamePlayerMainScene;
 
     private String playerTurn;
@@ -54,7 +48,7 @@ public class GameRunnerController extends Application implements GameController 
         this.gamePlayerMainScene = gamePlayerMainScene;
         directory = "data/games/tictactoe";
         int numPlayers = 2;
-        //initializeBoard();
+        initializeBoard();
         pieceMap = new HashMap<>();
         game = new Game(this,directory,numPlayers);
     }

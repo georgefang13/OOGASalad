@@ -31,16 +31,19 @@ public class GamePlayerMainScene extends AbstractScene {
   @Override
   public Scene makeScene() {
     root = new BorderPane();
-    gameRunnerController = new GameRunnerController(this);
-
-    boardPane = gameRunnerController.getBoardVisual();
-    VBox boardVBOX = new VBox(boardPane);
-    boardVBOX.setAlignment(Pos.CENTER);
-    root.setCenter(boardVBOX);
-
-    ArrayList<Node> pieces = gameRunnerController.initializePieces();
-    System.out.println(pieces);
-    root.getChildren().addAll(pieces);
+    //TODO:UNCOMMENT THESE LINES:
+//    gameRunnerController = new GameRunnerController(this);
+//
+//    boardPane = gameRunnerController.getBoardVisual();
+//    VBox boardVBOX = new VBox(boardPane);
+//    boardVBOX.setAlignment(Pos.CENTER);
+//    root.setCenter(boardVBOX);
+//
+//    ArrayList<Node> pieces = gameRunnerController.initializePieces();
+//    System.out.println(pieces);
+//    root.getChildren().addAll(pieces);
+    //TODO: STOP UNCOMMENTING HERE
+    root.setCenter(new Label("Hello World"));
 
     //textInstructions = new Label("START");
     //initializeText();
