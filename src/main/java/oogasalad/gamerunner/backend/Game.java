@@ -291,7 +291,7 @@ public class Game implements GameToInterpreterAPI{
             GameObject mainObj = (GameObject) ownableIdManager.getObject(s);
             for (String o : ownMap.get(s)) {
                 Ownable obj = ownableIdManager.getObject(o);
-                ownableIdManager.setOwner(obj, mainObj);
+                ownableIdManager.setObjectOwner(obj, mainObj);
             }
         }
     }
@@ -357,7 +357,7 @@ public class Game implements GameToInterpreterAPI{
             } catch (Exception e){
                 var = new Variable<>(obj);
                 Ownable owner = ownableIdManager.getObject(ownerName);
-                ownableIdManager.setOwner(var, owner);
+                ownableIdManager.setObjectOwner(var, owner);
             }
 
             for (String cls : fm.getArray(id, "classes")){
@@ -487,7 +487,7 @@ public class Game implements GameToInterpreterAPI{
 
     @Override
     public void setObjectOwner(Ownable obj, Ownable owner) {
-        ownableIdManager.setOwner(obj, owner);
+        ownableIdManager.setObjectOwner(obj, owner);
     }
 
     @Override

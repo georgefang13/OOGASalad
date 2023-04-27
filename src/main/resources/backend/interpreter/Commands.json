@@ -300,7 +300,7 @@
     }
   },
   "DropZoneFollowUntilBlocked": {
-    "name": "Follow a Path Through Dropzones Until That Path is Blocked",
+    "name": "Follow Path Through Dropzones Until Blocked",
     "folder": "game",
     "str": "dzfollowtoblock",
     "description": "Gets all dropzones among a repeated path until the path is blocked or no longer exists",

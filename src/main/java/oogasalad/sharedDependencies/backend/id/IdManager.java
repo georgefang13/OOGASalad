@@ -364,6 +364,11 @@ public class IdManager<T extends IdManageable> implements Iterable<Map.Entry<Str
     return Collections.unmodifiableMap(simpleIds);
   }
 
+  /**
+   * Get all objects owned by the given object
+   * @param owner the object to get the owned objects of
+   * @return a list of all objects owned by the given object
+   */
   public List<T> getObjectsOwnedBy(T owner) {
     List<T> ownedObjects = new ArrayList<>();
     for (Map.Entry<T, T> entry : ownershipMap.entrySet()) {
@@ -375,11 +380,11 @@ public class IdManager<T extends IdManageable> implements Iterable<Map.Entry<Str
   }
 
   /**
-   * Set one object tobe owned by another object
+   * Set one object to be owned by another object
    * @param obj the object to set the owner of
    * @param owner the object to set as the owner
    */
-  public void setOwner(T obj, T owner) {
+  public void setObjectOwner(T obj, T owner) {
     if (ownershipMap.containsKey(obj)) {
       ownershipMap.put(obj, owner);
       //If T is Ownable, remap the owner of the Object to the Owner of the parent
@@ -391,7 +396,7 @@ public class IdManager<T extends IdManageable> implements Iterable<Map.Entry<Str
       }
 
       for (T ownable : getObjectsOwnedBy(obj)) {
-        setOwner(ownable, obj);
+        setObjectOwner(ownable, obj);
       }
 
     }
@@ -469,10 +474,7 @@ public class IdManager<T extends IdManageable> implements Iterable<Map.Entry<Str
   public void changeParentId(String id, String newParentId) {
     T obj = getObject(id);
     T newParent = getObject(newParentId);
-    //remove obj as key from ownershipMap
-    ownershipMap.remove(obj);
-    //add obj as key with newParent as value to ownershipMap
-    ownershipMap.put(obj, newParent);
+    setObjectOwner(obj, newParent);
   }
 
   /**

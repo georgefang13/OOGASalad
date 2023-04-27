@@ -9,7 +9,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+
+import oogasalad.gamerunner.backend.fsm.FSM;
 import oogasalad.gamerunner.backend.interpretables.Goal;
+import oogasalad.gamerunner.backend.interpreter.Interpreter;
+import oogasalad.gamerunner.backend.interpreter.TestGame;
 import oogasalad.sharedDependencies.backend.ownables.Ownable;
 import oogasalad.sharedDependencies.backend.ownables.gameobjects.DropZone;
 import oogasalad.sharedDependencies.backend.ownables.gameobjects.GameObject;
@@ -94,13 +98,20 @@ class GameLoaderTest {
 
   @Test
   void testGetFSM() {
-    assertNotNull(gameLoader.getFSM());
-    assertEquals(4, gameLoader.getFSM().getStates().size());
+    FSM<String> testFSM = gameLoader.getFSM();
+
+    assertNotNull(testFSM);
+    assertEquals(4, testFSM.getStates().size());
     Set expectedStates = new HashSet<>(Arrays.asList("INIT", "DONE", "SELECTPIECE", "SELECTZONE"));
-    assertEquals(expectedStates, new HashSet<>(gameLoader.getFSM().getStates()));
+    assertEquals(expectedStates, new HashSet<>(testFSM.getStates()));
+
+    Interpreter interpreter = gameLoader.getInterpreter();
+    TestGame game = new TestGame();
+    interpreter.linkGame(game);
+
     try {
-      gameLoader.getFSM().setState("INIT"); //FIXME fails seemingly because id manager has not been linked
-      assertEquals("INIT", gameLoader.getFSM().getCurrentState());
+      testFSM.setState("INIT"); //FIXME fails seemingly because id manager has not been linked
+      assertEquals("INIT", testFSM.getCurrentState());
       gameLoader.getFSM().transition();
     } catch (Exception e) {
       e.printStackTrace();

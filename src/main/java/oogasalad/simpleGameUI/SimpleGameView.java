@@ -42,7 +42,7 @@ public class SimpleGameView extends Application implements GameController {
         Scene scene = new Scene(root, SCREEN_WIDTH, SCREEN_HEIGHT);
         scene.getStylesheets().add(MODAL_STYLE_SHEET);
 
-        game = new Game(this, "data/games/cardflip", 2);
+        game = new Game(this, "data/games/checkers", 2);
 
         undoButton.setOnAction(e -> game.undoClickPiece());
         root.getChildren().add(undoButton);

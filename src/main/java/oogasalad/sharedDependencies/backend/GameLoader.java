@@ -87,6 +87,10 @@ public class GameLoader {
         return fsm;
     }
 
+    public Interpreter getInterpreter(){
+        return interpreter;
+    }
+
     /**
      * Access map specifying which DropZone each object should start in
      * @return Unmodifiable map containing ownables and associated locations
@@ -183,7 +187,7 @@ public class GameLoader {
             GameObject mainObj = (GameObject) ownableIdManager.getObject(s);
             for (String o : ownMap.get(s)) {
                 Ownable obj = ownableIdManager.getObject(o);
-                ownableIdManager.setOwner(obj, mainObj);
+                ownableIdManager.setObjectOwner(obj, mainObj);
             }
         }
     }
@@ -244,7 +248,7 @@ public class GameLoader {
             } catch (Exception e){
                 var = new Variable<>(obj);
                 Ownable owner = ownableIdManager.getObject(ownerName);
-                ownableIdManager.setOwner(var, owner);
+                ownableIdManager.setObjectOwner(var, owner);
             }
 
             for (String cls : fm.getArray(id, "classes")){

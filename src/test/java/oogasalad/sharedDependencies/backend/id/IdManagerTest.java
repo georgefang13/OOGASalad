@@ -9,8 +9,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.Map;
 import java.util.stream.Stream;
 import oogasalad.gameeditor.backend.ownables.gameobjects.EmptyGameObject;
-import oogasalad.sharedDependencies.backend.id.IdManager;
-import oogasalad.sharedDependencies.backend.id.OwnableSearchStream;
 import oogasalad.sharedDependencies.backend.ownables.Ownable;
 import oogasalad.sharedDependencies.backend.ownables.gameobjects.GameObject;
 import oogasalad.sharedDependencies.backend.ownables.variables.Variable;
@@ -545,8 +543,6 @@ public class IdManagerTest {
     assertTrue(manager.getIdsOfObjectsOfClass("test", "test4").size() == 1);
     assertTrue(manager.getIdsOfObjectsOfClass("test", "test2", "test3").size() == 1);
     assertTrue(manager.getIdsOfObjectsOfClass("test", "test2", "test3", "test4").size() == 0);
-
-
   }
 
   @Test
@@ -614,7 +610,7 @@ public class IdManagerTest {
 
     assertEquals(1, ownableStream.count());
 
-    manager.setOwner(object1, object3);
+    manager.setObjectOwner(object1, object3);
 
     ownableStream = manager.objectStream()
             .filter(searchStream.isOwnedByOwnable(object2));
@@ -625,11 +621,6 @@ public class IdManagerTest {
             .filter(searchStream.isOwnedByOwnable(object3));
 
     assertEquals(1, ownableStream.count());
-
-
-
-
-
   }
 
   @Test
