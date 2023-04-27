@@ -10,11 +10,11 @@ import oogasalad.frontend.nodeEditor.Nodes.DraggableNodes.StartNestNode;
 
 public abstract class AbstractNode extends VBox {
 
-  public static final double INDENT_SIZE = 20;
+  public static final int INDENT_SIZE = 40;
 
   protected double x, y, width, height;
   protected double xOffset, yOffset;
-  protected double indent;
+  protected int indent;
 
   protected String color;
 
@@ -95,10 +95,14 @@ public abstract class AbstractNode extends VBox {
   }
 
   public void incrementIndent() {
-    this.indent += INDENT_SIZE;
+    if (this.indent == 0) {
+      this.indent += INDENT_SIZE;
+    }
   }
 
   public void decrementIndent() {
-    this.indent -= INDENT_SIZE;
+    if (this.indent == 0) {
+      this.indent -= INDENT_SIZE;
+    }
   }
 }
