@@ -1,7 +1,6 @@
 package oogasalad.frontend.windows;
 
 import oogasalad.frontend.scenes.AbstractScene;
-import oogasalad.frontend.scenes.GameEditorEditorScene;
 import oogasalad.frontend.scenes.GamePlayerLibraryScene;
 import oogasalad.frontend.scenes.GamePlayerMainScene;
 import oogasalad.frontend.scenes.SceneTypes;
@@ -11,14 +10,14 @@ import oogasalad.frontend.scenes.SceneTypes;
  * @author Owen MacKenzie
  */
 
-public class GamePlayerWindow extends AbstractWindow {
+public class LibraryWindow extends AbstractWindow {
 
   public enum WindowScenes implements SceneTypes {
     LIBRARY_SCENE,
     PLAY_SCENE
   }
 
-  public GamePlayerWindow(String windowID, WindowMediator windowController) {
+  public LibraryWindow(String windowID, WindowMediator windowController) {
     super(windowID, windowController);
   }
 

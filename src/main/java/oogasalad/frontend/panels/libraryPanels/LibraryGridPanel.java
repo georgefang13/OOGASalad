@@ -2,7 +2,6 @@ package oogasalad.frontend.panels.libraryPanels;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.scene.Node;
@@ -18,7 +17,8 @@ import oogasalad.frontend.panels.PanelController;
 import oogasalad.frontend.scenes.AbstractScene;
 import oogasalad.frontend.windows.AbstractWindow;
 import oogasalad.frontend.windows.GameEditorWindow;
-import oogasalad.frontend.windows.GamePlayerWindow;
+import oogasalad.frontend.windows.LibraryWindow;
+import oogasalad.frontend.windows.WindowTypes;
 import oogasalad.frontend.windows.WindowTypes.WindowType;
 import org.kordamp.ikonli.fontawesome5.FontAwesomeSolid;
 import org.kordamp.ikonli.javafx.FontIcon;
@@ -94,7 +94,11 @@ public class LibraryGridPanel extends GridPane implements Panel {
     clip.setArcHeight(IMAGE_RADIUS);
     gameImage.setClip(clip);
     gameImage.setOnMouseClicked(
-        e -> panelController.newSceneFromPanel("OWEN FIX THIS", GamePlayerWindow.WindowScenes.PLAY_SCENE));
+        e -> {
+          panelController.getSceneController().getWindowController().passData(gameName);
+          panelController.getSceneController().getWindowController().registerAndShow(
+              WindowTypes.WindowType.GAME_WINDOW);
+        });
     gameImage.getStyleClass().add(ID_BUNDLE.getString(GAME_BOX_IMAGE_ID));
     return gameImage;
   }
@@ -103,7 +107,7 @@ public class LibraryGridPanel extends GridPane implements Panel {
     gameTextBox.getStyleClass().add(ID_BUNDLE.getString(GAME_NAME_LABEL_BOX_ID));
     Label gameNameLabel = new Label(gameName);
     gameNameLabel.setOnMouseClicked(
-        e -> panelController.newSceneFromPanel("OWEN FIX THIS", GamePlayerWindow.WindowScenes.PLAY_SCENE));
+        e -> panelController.newSceneFromPanel("OWEN FIX THIS", LibraryWindow.WindowScenes.PLAY_SCENE));
     gameNameLabel.getStyleClass().add(ID_BUNDLE.getString(GAME_NAME_LABEL_ID));
     gameTextBox.getChildren().add(gameNameLabel);
 
