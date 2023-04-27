@@ -44,25 +44,6 @@ public class ObjectFactory {
     this.players = players;
   }
 
-
-//
-//  /**
-//   * Access a parameter from the map, returning null if the parameter is not present or is a null
-//   * type.
-//   *
-//   * @param params the map of parameters
-//   * @param param  the parameter to get
-//   * @return
-//   */
-//  private String getWithNull(Map<ObjectParameter, String> params, ObjectParameter param) {
-//    String result = params.get(param);
-//    if (result == null || isNullType(result)) {
-//      return null;
-//    } else {
-//      return result;
-//    }
-//  }
-
   private void handleBoardCreator(Map<Object, Object> params) {
     Owner owner = gameWorld;
     String type = params.get(ObjectParameter.BOARD_TYPE) != null ? params.get(ObjectParameter.BOARD_TYPE).toString() : null;;
@@ -100,34 +81,9 @@ public class ObjectFactory {
     //we have all the dropzones, now we need to add them to game manager (with owner as game world)
     for (DropZone dropZone : dropZones) {
       dropZone.setOwner(owner);
-//      System.out.println("ADDING ID: " + dropZone.getId());
       ownableIdManager.addObject(dropZone);
     }
   }
-
-
-  public Ownable createOwnable(String ownableType, Owner owner) {
-    try {
-      String basePackage = "oogasalad.sharedDependencies.backend.ownables."; //TODO make less ugly
-      if (ownableType.contains("Variable")) {
-        basePackage += "variables.";
-      } else {
-        basePackage += "gameobjects.";
-      }
-      Class<?> clazz = Class.forName(basePackage + ownableType);
-      System.out.println(clazz.getName());
-      if (Ownable.class.isAssignableFrom(clazz)) {
-        Constructor<?> constructor = clazz.getConstructor(Owner.class);
-        return (Ownable) constructor.newInstance(owner);
-      } else {
-        throw new IllegalArgumentException(
-            "Class " + ownableType + " is not a subclass of Ownable"); //TODO add to properties file
-      }
-    } catch (Exception e) {
-      throw new RuntimeException("Error instantiating " + ownableType,
-          e); //TODO add to properties file
-    }
-  } //TODO
 
   public Ownable constructOwnable(String ownableType, Owner owner, Map<Object, Object> constructorParams) throws IllegalArgumentException {
 
@@ -217,17 +173,23 @@ public class ObjectFactory {
         throw new RuntimeException("Error creating ownable", e);
       }
     }
-
-
   }
 
-  public static Rule createRule(Map<ObjectParameter, Object> params) {
-    return null; //TODO move to shared dependencies
+
+  public void createObserver(Map<ObjectParameter, Object> params) {
+    String id = params.get(ObjectParameter.ID) != null ? params.get(ObjectParameter.ID).toString() : null;
+    if(id == null) {
+      throw new IllegalArgumentException("Observer must have an id"); //TODO add to properties file
+    }
+    //find the variable that the observer is observing using the idmanager
+    try{
+      Variable observedVariable = (Variable) ownableIdManager.getObject(id);
+    }
+    catch (ClassCastException e){
+      throw new IllegalArgumentException("Observer must observe a variable in the id manager"); //TODO add to properties file
+    }
   }
 
-  public static Goal createGoal(Map<ObjectParameter, Object> params) {
-    return null; //TODO move to shared dependencies
-  }
 
 
 }

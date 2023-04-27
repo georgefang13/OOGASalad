@@ -119,9 +119,18 @@ public class GameInator {
     addPlayer(new Player());
   }
 
+  /**
+   * Creates an observer using objectFactory and adds it to the game through the IdManager (IdManager
+   * @param params the parameters of the observer
+   * @throws IllegalArgumentException
+   */
+  private void createObserver(Map<ObjectParameter, Object> params) throws IllegalArgumentException{
+    objectFactory.createObserver(params);
+  }
+
 
   /**
-   * Method is called in order to send information about a newly constructed   object that was made
+   * Method is called in order to send information about a newly constructed object that was made
    * in the front end sent to the backend. The controller sends to the backend for the backend to
    * input these into a file Note: currently it only constructs Ownables with default values. Ex. a
    * variable has no initialized value In the future this would be added Currently, this
@@ -135,6 +144,7 @@ public class GameInator {
     switch (type) {
       case PLAYER -> createPlayer();
       case OWNABLE -> createOwnable(params);
+      case OBSERVER -> createObserver(params);
       default -> throw new IllegalArgumentException("Invalid type"); //TODO add to properties
     }
   }
