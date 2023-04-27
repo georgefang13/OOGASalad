@@ -16,14 +16,14 @@ public class StateNode extends DraggableAbstractNode {
   private GridPane buttonGrid;
 
   public StateNode(NodeController nodeController) {
-    super(nodeController, 0, 0, 0, 300, 100, "orange");
+    super(nodeController, 0, 0, 300, 100, "orange");
     setContent();
   }
 
-  public StateNode(NodeController nodeController, double x, double y, double indent, double width,
+  public StateNode(NodeController nodeController, double x, double y, double width,
       double height,
       String color) {
-    super(nodeController, x, y, indent, width, height, color);
+    super(nodeController, x, y, width, height, color);
   }
 
   @Override
@@ -46,6 +46,7 @@ public class StateNode extends DraggableAbstractNode {
   public String getJSONString() {
     return null;
   }
+
 
   private Button makeButton(String label, EventHandler<ActionEvent> handler) {
     Button button = new Button(label);

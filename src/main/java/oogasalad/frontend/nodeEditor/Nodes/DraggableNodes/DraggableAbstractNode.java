@@ -7,21 +7,14 @@ import oogasalad.frontend.nodeEditor.NodeController;
 import oogasalad.frontend.nodeEditor.Nodes.AbstractNode;
 
 public abstract class DraggableAbstractNode extends AbstractNode implements Draggable {
-
   private Bounds boundingBox;
-
-  private AbstractNode parentNode;
   protected static final double DEFAULT_X = 0;
   protected static final double DEFAULT_Y = 0;
-  protected static final double INDENT = 0;
-
   protected static final double WIDTH = 300;
   protected static final double HEIGHT = 100;
 
-  public DraggableAbstractNode(NodeController nodeController, double x, double y, double indent,
-      double width,
-      double height, String color) {
-    super(nodeController, x, y, indent, width, height, color);
+  public DraggableAbstractNode(NodeController nodeController, double x, double y, double width, double height, String color) {
+    super(nodeController, x, y, width, height, color);
     onDragDetected();
     onMousePressed();
     onMouseDragged();
@@ -94,7 +87,6 @@ public abstract class DraggableAbstractNode extends AbstractNode implements Drag
           }
         }
       }
-
       e.consume();
     });
   }
@@ -107,13 +99,13 @@ public abstract class DraggableAbstractNode extends AbstractNode implements Drag
     while (node.getChildNode() != null && node.getChildNode() != this) {
       node = node.getChildNode();
     }
-    move(node.getTranslateX() + node.getIndent(), node.getTranslateY() + node.getHeight());
+    move(node.getTranslateX(), node.getTranslateY() + node.getHeight());
     AbstractNode temp = this;
 
     while (temp.getChildNode() != null) {
       AbstractNode tempOld = temp;
       temp = temp.getChildNode();
-      temp.move(tempOld.getTranslateX() + tempOld.getIndent(), tempOld.getTranslateY() + tempOld.getHeight());
+      temp.move(tempOld.getTranslateX(), tempOld.getTranslateY() + tempOld.getHeight());
     }
     if (node.getChildNode() == null && node != this) {
       node.setChildNode(this);
@@ -138,7 +130,7 @@ public abstract class DraggableAbstractNode extends AbstractNode implements Drag
       setTranslateX(newX);
       setTranslateY(newY);
       if (this.getChildNode() != null) {
-        this.getChildNode().move(newX + this.getIndent(), newY + this.getHeight());
+        this.getChildNode().move(newX + this.getChildNode().getIndent(), newY + this.getHeight());
       }
     } else {
       double clampedX = Math.min(Math.max(newX, boundingBox.getMinX()),
@@ -148,14 +140,6 @@ public abstract class DraggableAbstractNode extends AbstractNode implements Drag
       setTranslateX(clampedX);
       setTranslateY(clampedY);
     }
-  }
-
-  public void setParentNode(AbstractNode node) {
-    this.parentNode = node;
-  }
-
-  public AbstractNode getParentNode() {
-    return parentNode;
   }
 
   protected void clearLinks() {

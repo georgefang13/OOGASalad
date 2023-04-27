@@ -5,35 +5,33 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.layout.VBox;
 import oogasalad.frontend.nodeEditor.NodeController;
 import oogasalad.frontend.nodeEditor.Nodes.DraggableNodes.DraggableAbstractNode;
+import oogasalad.frontend.nodeEditor.Nodes.DraggableNodes.EndNestNode;
+import oogasalad.frontend.nodeEditor.Nodes.DraggableNodes.StartNestNode;
 
 public abstract class AbstractNode extends VBox {
 
-  protected final double INDENT_SIZE = 30;
+  public static final double INDENT_SIZE = 20;
 
   protected double x, y, width, height;
-  protected double indent;
   protected double xOffset, yOffset;
+  protected double indent;
 
   protected String color;
 
   protected NodeController nodeController;
-  private DraggableAbstractNode childNode;
+  protected AbstractNode parentNode;
+  protected AbstractNode childNode;
 
-//    protected List<Port> ports;
-
-  public AbstractNode(NodeController nodeController, double x, double y, double indent,
-      double width,
+  public AbstractNode(NodeController nodeController, double x, double y, double width,
       double height, String color) {
     this.x = x;
     this.y = y;
-    this.indent = indent;
     this.width = width;
     this.height = height;
     this.color = color;
     this.nodeController = nodeController;
-    System.out.println(this.x + this.indent);
-    setLayoutX(this.x + this.indent);
-    setLayoutY(this.y);
+    setTranslateX(this.x);
+    setTranslateY(this.y);
     setPrefSize(this.width, this.height);
     setColor(this.color);
     setToolTips();
@@ -44,14 +42,6 @@ public abstract class AbstractNode extends VBox {
   public abstract void move(double x, double y);
 
   public abstract String getJSONString();
-
-  public void setChildNode(DraggableAbstractNode node) {
-    this.childNode = node;
-  }
-
-  public DraggableAbstractNode getChildNode() {
-    return childNode;
-  }
 
   protected void delete() {
     Group parentGroup = (Group) getParent();
@@ -67,15 +57,48 @@ public abstract class AbstractNode extends VBox {
     Tooltip.install(this, t);
   }
 
+  public void setParentNode(AbstractNode node) {
+    this.parentNode = node;
+    if (this.parentNode != null) {
+      if (!(this instanceof EndNestNode)) {
+        if (this.parentNode instanceof StartNestNode) {
+          move(this.parentNode.getTranslateX() + INDENT_SIZE, getTranslateY());
+          incrementIndent();
+        } else {
+          move(this.parentNode.getTranslateX(), getTranslateY());
+        }
+      } else {
+        if (this.parentNode instanceof StartNestNode) {
+          move(this.parentNode.getTranslateX(), getTranslateY());
+        } else {
+          move(this.parentNode.getTranslateX() - INDENT_SIZE, getTranslateY());
+          decrementIndent();
+        }
+      }
+    }
+  }
+
+  public AbstractNode getParentNode() {
+    return parentNode;
+  }
+
+  public void setChildNode(DraggableAbstractNode node) {
+    this.childNode = node;
+  }
+
+  public AbstractNode getChildNode() {
+    return childNode;
+  }
+
   public double getIndent() {
     return indent;
   }
 
-  public double getIncrementIndent() {
-    System.out.println(indent + INDENT_SIZE + " GET");
-    return indent + INDENT_SIZE;
+  public void incrementIndent() {
+    this.indent += INDENT_SIZE;
   }
-  public double getDecrementIndent() {
-    return indent - INDENT_SIZE;
+
+  public void decrementIndent() {
+    this.indent -= INDENT_SIZE;
   }
 }

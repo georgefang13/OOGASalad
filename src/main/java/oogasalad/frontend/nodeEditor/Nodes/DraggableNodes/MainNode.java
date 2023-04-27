@@ -17,7 +17,7 @@ public class MainNode extends DraggableAbstractNode {
   private static final String COLOR = "#9BE70F";
 
   public MainNode(NodeController nodeController) {
-    super(nodeController, DEFAULT_X, DEFAULT_Y, INDENT, WIDTH, HEIGHT, COLOR);
+    super(nodeController, DEFAULT_X, DEFAULT_Y, WIDTH, HEIGHT, COLOR);
     setContent();
   }
 
