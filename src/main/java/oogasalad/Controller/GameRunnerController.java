@@ -97,16 +97,19 @@ public class GameRunnerController extends Application implements GameController 
     }
     @Override
     public void setClickable(List<String> ids) {
-        clearClickables();
-
+        Map<String,Node> allNodes = new HashMap<>();
+        allNodes.putAll(pieceNodes);
+        allNodes.putAll(dropNodes);
+        clearClickables(allNodes);
         clickable.addAll(ids);
-        //for (String id : ids){
-            //nodes.get(id).setStyle("-fx-border-color: red; -fx-border-width: 1px;");
-        //}
+        for (String id : ids){
+            Node n = allNodes.get(id);
+            n.setStyle("-fx-border-color: red; -fx-border-width: 1px;");
+        }
     }
-    private void clearClickables(){
+    private void clearClickables(Map<String,Node> allNodes){
         for (String id : clickable){
-            pieceNodes.get(id).setStyle("");
+            allNodes.get(id).setStyle("");
         }
         clickable.clear();
     }

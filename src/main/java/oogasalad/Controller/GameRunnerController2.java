@@ -1,4 +1,4 @@
-package oogasalad.simpleGameUI;
+package oogasalad.Controller;
 
 import javafx.application.Application;
 import javafx.scene.Group;
@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import oogasalad.Controller.GameRunnerController;
@@ -16,7 +17,7 @@ import oogasalad.gamerunner.backend.GameController;
 import java.io.FileInputStream;
 import java.util.*;
 
-public class SimpleGameView extends Application implements GameController {
+public class GameRunnerController2 implements GameController {
 
     private static final int SCREEN_WIDTH = 1080;
     private static final int SCREEN_HEIGHT = 700;
@@ -25,7 +26,7 @@ public class SimpleGameView extends Application implements GameController {
 
     private final Map<String, String> pieceToDropZoneMap = new HashMap<>();
 
-    private final Group root = new Group();
+    private BorderPane root;
 
     private final HashSet<String> clickable = new HashSet<>();
 
@@ -37,23 +38,13 @@ public class SimpleGameView extends Application implements GameController {
     private final String MODAL_STYLE_SHEET = Objects
             .requireNonNull(getClass().getClassLoader().getResource(GAME_STYlE_FILE_PATH))
             .toExternalForm();
-    @Override
-    public void start(Stage stage) throws Exception {
-        Scene scene = new Scene(root, SCREEN_WIDTH, SCREEN_HEIGHT);
-        scene.getStylesheets().add(MODAL_STYLE_SHEET);
 
-        game = new Game(this, "data/games/checkers", 2);
-
-        undoButton.setOnAction(e -> game.undoClickPiece());
-        root.getChildren().add(undoButton);
-
-        stage.setScene(scene);
-        stage.show();
-        stage.setResizable(false);
-    }
-
-    public static void main(String[] args) {
-        launch(args);
+    public GameRunnerController2(BorderPane root, String gameName) {
+        this.root = root;
+        String directory = "data/games/"+gameName;
+        int numPlayers = 2;
+        //initializeBoard();
+        game = new Game(this,directory,numPlayers);
     }
 
     private void select(String id) {
@@ -165,4 +156,14 @@ public class SimpleGameView extends Application implements GameController {
         }
         clickable.clear();
     }
+
+    public ArrayList<Node> getNodes(){
+        ArrayList<Node> nodelist = new ArrayList<>();
+        for (Node node: nodes.values()) {
+            node.toBack();
+            nodelist.add(node);
+        }
+        return nodelist;
+    }
 }
+

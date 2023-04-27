@@ -24,6 +24,7 @@ import org.kordamp.ikonli.fontawesome5.FontAwesomeSolid;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 public class LibraryGridPanel extends GridPane implements Panel {
+  private static final String GAMES_FILEPATH = "data/games/";
   private static final ResourceBundle ID_BUNDLE = ResourceBundle.getBundle(
       "frontend/properties/StylingIDs/CSS_ID");
   private static final String GAME_BOX_ID = "GameBoxID";
@@ -141,7 +142,6 @@ public class LibraryGridPanel extends GridPane implements Panel {
     }
     return fileNames;
   }
-
 
   public Node asNode(){
     return (Node) this;

@@ -5,12 +5,18 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 import oogasalad.Controller.GameRunnerController;
+import oogasalad.Controller.GameRunnerController2;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * @author Connor Wells
@@ -21,8 +27,12 @@ public class GamePlayerMainScene extends AbstractScene {
   private Label textInstructions;
   private BorderPane root;
   private GridPane boardPane;
-  private GameRunnerController gameRunnerController;
+  private GameRunnerController2 gameRunnerController;
   private String gameName;
+  public static final String GAME_STYlE_FILE_PATH = "frontend/css/simpleGameView.css";
+  private final String MODAL_STYLE_SHEET = Objects
+          .requireNonNull(getClass().getClassLoader().getResource(GAME_STYlE_FILE_PATH))
+          .toExternalForm();
 
   public GamePlayerMainScene(SceneController sceneController) {
     super(sceneController);
@@ -30,15 +40,12 @@ public class GamePlayerMainScene extends AbstractScene {
 
   @Override
   public Scene makeScene() {
-
     root = new BorderPane();
+
     gameName = panelController.getSceneController().getWindowController().getData().toString();
     System.out.println(gameName);
 
-    gameRunnerController = new GameRunnerController(this,gameName);
-
-    ArrayList<Node> pieces = gameRunnerController.initializePieces();
-    root.getChildren().addAll(pieces);
+    gameRunnerController = new GameRunnerController2(root,gameName);
 
     /*
     boardPane = gameRunnerController.getBoardVisual();
@@ -67,8 +74,9 @@ public class GamePlayerMainScene extends AbstractScene {
 >>>>>>> 61d2e67fb4369949e66ba37513777f21b7d77aa4
 
      */
-
-    setScene(new Scene(root));
+    Scene scene = new Scene(root);
+    scene.getStylesheets().add(MODAL_STYLE_SHEET);
+    setScene(scene);
     setText();
     setTheme();
     return getScene();
