@@ -15,7 +15,7 @@ import oogasalad.sharedDependencies.backend.owners.Owner;
 import oogasalad.sharedDependencies.backend.owners.Player;
 
 /**
- * The Game class represents the game itself. It contains Owners such as the GameWorld and Players.
+ * The GameInator class represents the game itself. It contains Owners such as the GameWorld and Players.
  * It contains the Rules and Goals.
  *
  * @author Michael Bryant
@@ -38,37 +38,6 @@ public class GameInator {
    * The GameWorld of the game. The GameWorld owns Ownables not owned by Players.
    */
   private GameWorld gameWorld = new GameWorld();
-
-  /**
-   * The ObjectFactory of the game.
-   */
-  private final ObjectFactory objectFactory;
-
-  /**
-   * Creates a new Game with no information.
-   */
-  public GameInator() {
-    objectFactory = new ObjectFactory(gameWorld, ownableIdManager, players);
-  }
-
-  /**
-   * Creates a new Game with the given file name.
-   * Removes all current information and overwrites it with the information from the file.
-   * @param directory the directory of the files to load
-   */
-  public GameInator(String directory) {
-    //Use gameLoader to load the game from a file
-    GameLoader loader = new GameLoader(directory);
-    players.addAll(loader.getPlayers());
-    ownableIdManager = loader.getOwnableIdManager();
-    gameWorld = loader.getGameWorld();
-    objectFactory = new ObjectFactory(gameWorld, ownableIdManager, players);
-  }
-
-
-  //endregion
-
-  // region PLAYERS
 
   /**
    * The ObjectFactory of the game.
