@@ -3,6 +3,7 @@ package oogasalad.frontend.nodeEditor.Nodes.DraggableNodes;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -55,11 +56,13 @@ public class FileBasedNode extends DraggableAbstractNode {
     for (TextField input : inputFields) {
       inputsAsStrings.add(input.getText().toString());
     }
-    String output = String.format(parseStr, inputsAsStrings.toArray());
+    String[] parseSplit = parseStr.split("\\[ %s \\]");
+    System.out.println(Arrays.toString(inputsAsStrings.toArray()));
+    String output = String.format(parseSplit[0], inputsAsStrings.toArray());
     if (this.getChildNode() == null) {
       return output;
     }
-    return (output + " " + this.getChildNode().getJSONString());
+    return (output + this.getChildNode().getJSONString());
   }
 
   private void updateOutput() {

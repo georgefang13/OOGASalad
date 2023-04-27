@@ -10,7 +10,7 @@ import oogasalad.frontend.nodeEditor.Nodes.DraggableNodes.StartNestNode;
 
 public abstract class AbstractNode extends VBox {
 
-  public static final int INDENT_SIZE = 40;
+  public static final int INDENT_SIZE = 20;
 
   protected double x, y, width, height;
   protected double xOffset, yOffset;

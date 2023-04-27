@@ -15,6 +15,9 @@ public class EndNestNode extends DraggableAbstractNode {
 
   @Override
   public String getJSONString() {
+    if (this.getChildNode() != null) {
+      return "]" + this.getChildNode().getJSONString();
+    }
     return "]";
   }
 
