@@ -8,7 +8,10 @@ import com.google.gson.JsonElement;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.util.HashMap;
 import java.util.ResourceBundle;
+import java.util.concurrent.atomic.AtomicInteger;
+import oogasalad.gamerunner.backend.interpreter.Tokenizer;
 import oogasalad.sharedDependencies.backend.filemanagers.FileManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -88,6 +91,16 @@ public class FileAddTest {
     fileManager.addContent("Rodrigo", "person1", "name");
     fileManager.addContent("Hot Rod", "person1", "name");
     saveAndCompare("HIERARCHY_LIST");
+  }
+
+  @Test
+  void differentTypesTest() {
+    HashMap<String, Integer> map = new HashMap<>();
+    map.put("Rodrigo", 69);
+    map.put("Ethan", 10);
+    map.put("Dooval", 1000);
+    fileManager.addContent(map, "OH HAROLD DO YOU WANT A WIFE THATS NOT A RAGING PUMPKIN");
+    saveAndCompare("DIFFERENT_TYPES");
   }
 
   private void saveAndCompare(String key) {

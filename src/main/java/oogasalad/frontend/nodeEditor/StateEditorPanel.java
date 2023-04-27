@@ -1,4 +1,4 @@
-package oogasalad.frontend.nodeEditor.customNodeEditor;
+package oogasalad.frontend.nodeEditor;
 
 import java.util.List;
 import javafx.scene.control.Button;

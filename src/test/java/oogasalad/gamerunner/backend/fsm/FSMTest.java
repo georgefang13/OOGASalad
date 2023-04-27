@@ -199,9 +199,9 @@ public class FSMTest {
     assertNotEquals("test", fsm.getCurrentStateObject().getValue());
   }
 
-  private static DropZone addDropZone(int y, int x, IdManager idManager) {
-    DropZone dropZone = new DropZone(y + "," + x);
-    idManager.addObject(dropZone, y + "," + x);
+  private static DropZone addDropZone(int y, int x, IdManager idManager, String name) {
+    DropZone dropZone = new DropZone();
+    idManager.addObject(dropZone, name);
     return dropZone;
   }
 
@@ -229,7 +229,7 @@ public class FSMTest {
 
     for (int i = 0; i < 3; i++) {
       for (int j = 0; j < 3; j++) {
-        zones.add(addDropZone(i, j, idManager));
+        zones.add(addDropZone(i, j, idManager, i + "," + j));
       }
     }
 

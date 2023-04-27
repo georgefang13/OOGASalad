@@ -15,7 +15,11 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import oogasalad.frontend.panels.Panel;
 import oogasalad.frontend.panels.PanelController;
+import oogasalad.frontend.scenes.AbstractScene;
+import oogasalad.frontend.windows.AbstractWindow;
+import oogasalad.frontend.windows.GameEditorWindow;
 import oogasalad.frontend.windows.GamePlayerWindow;
+import oogasalad.frontend.windows.WindowTypes.WindowType;
 import org.kordamp.ikonli.fontawesome5.FontAwesomeSolid;
 import org.kordamp.ikonli.javafx.FontIcon;
 
@@ -32,6 +36,10 @@ public class LibraryGridPanel extends GridPane implements Panel {
   private final int IMAGE_WIDTH = 212;
   private final int IMAGE_HEIGHT = 150;
   private final int IMAGE_RADIUS = 20;
+  private final int COLUMN_PERCENT_WIDTH = 25;
+  private final int COLUMN_INDEX = 0;
+  private final int ROW_INDEX = 0;
+  private final int MAX_COLUMN_INDEX = 3;
   PanelController panelController;
   /**
    * Constructor for the environment panel
@@ -49,23 +57,23 @@ public class LibraryGridPanel extends GridPane implements Panel {
    */
   public Panel makePanel() {
     ColumnConstraints column1 = new ColumnConstraints();
-    column1.setPercentWidth(25);
+    column1.setPercentWidth(COLUMN_PERCENT_WIDTH);
     ColumnConstraints column2 = new ColumnConstraints();
-    column2.setPercentWidth(25);
+    column2.setPercentWidth(COLUMN_PERCENT_WIDTH);
     ColumnConstraints column3 = new ColumnConstraints();
-    column3.setPercentWidth(25);
+    column3.setPercentWidth(COLUMN_PERCENT_WIDTH);
     ColumnConstraints column4 = new ColumnConstraints();
-    column4.setPercentWidth(25);
+    column4.setPercentWidth(COLUMN_PERCENT_WIDTH);
     this.getColumnConstraints().addAll(column1, column2, column3, column4);
 
     List<String> games = getNamesOfFilesToLoad();
-    int rowIndex = 0;
-    int columnIndex = 0;
+    int rowIndex = ROW_INDEX;
+    int columnIndex = COLUMN_INDEX;
     for (String game : games) {
       this.add(createGameBox(game), columnIndex, rowIndex);
       columnIndex++;
-      if (columnIndex > 3) {
-        columnIndex = 0;
+      if (columnIndex > MAX_COLUMN_INDEX) {
+        columnIndex = COLUMN_INDEX;
         rowIndex++;
       }
     }
@@ -106,6 +114,12 @@ public class LibraryGridPanel extends GridPane implements Panel {
     HBox iconBox = new HBox();
     iconBox.getStyleClass().add(ID_BUNDLE.getString(GAME_BOX_EDIT_ICON_BOX_ID));
     FontIcon editIcon = new FontIcon(FontAwesomeSolid.EDIT);
+    editIcon.setOnMouseClicked(
+        e -> {
+          AbstractWindow newWindow = panelController.newWindowFromPanel(WindowType.EDIT_WINDOW);
+          AbstractScene editScene = newWindow.addNewScene(GameEditorWindow.WindowScenes.EDITOR_SCENE);
+          newWindow.showScene(editScene);
+        });
     editIcon.getStyleClass().add(ID_BUNDLE.getString(GAME_BOX_EDIT_ICON_ID));
     iconBox.getChildren().add(editIcon);
 
