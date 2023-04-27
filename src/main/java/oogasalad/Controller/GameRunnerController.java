@@ -44,9 +44,9 @@ public class GameRunnerController extends Application implements GameController 
     private Map<String, DropZone> backendDropZones;
     String directory;
 
-    public GameRunnerController(GamePlayerMainScene gamePlayerMainScene) {
+    public GameRunnerController(GamePlayerMainScene gamePlayerMainScene, String gameName) {
         this.gamePlayerMainScene = gamePlayerMainScene;
-        directory = "data/games/tictactoe";
+        directory = "data/games/"+gameName;
         int numPlayers = 2;
         initializeBoard();
         pieceMap = new HashMap<>();
