@@ -1,5 +1,5 @@
 {
   "": {
-    "select": "if check [+ 10 20]"
+    "on enter": "trueif  [fromgame ]"
   }
 }

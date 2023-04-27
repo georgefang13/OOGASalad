@@ -76,9 +76,6 @@ public abstract class DraggableAbstractNode extends AbstractNode implements Drag
         if (node instanceof AbstractNode && node != this) {
           if (this.getBoundsInParent().intersects(node.getBoundsInParent())
               && this.getChildNode() != node) {
-            while (((AbstractNode) node).getChildNode() != null) {
-              node = ((AbstractNode) node).getChildNode();
-            }
             try {
               snapTo((AbstractNode) node);
             } catch (InterruptedException interruptedException) {
@@ -130,11 +127,11 @@ public abstract class DraggableAbstractNode extends AbstractNode implements Drag
   public void move(double newX, double newY) {
     System.out.println(newX + " " + newY);
     if (boundingBox.contains(newX, newY, getWidth(), getHeight())) {
-      setTranslateX(newX);
+      setTranslateX(newX + this.getIndent());
       setTranslateY(newY);
       if (this.getChildNode() != null) {
         System.out.println("here");
-        this.getChildNode().move(newX + this.getChildNode().getIndent(), newY + this.getHeight());
+        this.getChildNode().move(newX, newY + this.getHeight());
       }
     } else {
       double clampedX = Math.min(Math.max(newX, boundingBox.getMinX()),
