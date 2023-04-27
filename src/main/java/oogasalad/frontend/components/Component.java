@@ -22,14 +22,14 @@ public interface Component {
    *
    * @return the Int to represent the ID
    */
-  int getID();
+  String getID();
 
   /**
    * a method to set the ID of the Component
    *
    * @param id the Int to represent the ID
    */
-  void setID(int id);
+  void setID(String id);
 
   /**
    * This is the method that allows us to lock and unlock if the component can be dragged.

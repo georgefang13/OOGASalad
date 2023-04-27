@@ -21,14 +21,14 @@ public class LineObject extends AbstractComponent implements LineObjectComponent
     private String color;
     private double strokeWidth;
 
-    public LineObject(int ID){
+    public LineObject(String ID){
         super(ID);
         instantiatePropFile("frontend.properties.Defaults.LineObject");
         this.setDefault();
         this.followMouse();
     }
 
-    public LineObject(int ID, Map<String, String> map){
+    public LineObject(String ID, Map<String, String> map){
         super(ID);
         instantiatePropFile("frontend.properties.Defaults.LineObject");
         setValuesfromMap(map);

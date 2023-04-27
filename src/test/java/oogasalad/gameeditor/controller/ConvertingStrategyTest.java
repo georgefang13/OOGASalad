@@ -36,10 +36,10 @@ public class ConvertingStrategyTest extends DukeApplicationTest {
     Map<String, String> map = converter.paramsToMap(c);
     System.out.println(map);
     assertEquals(c.getName(), "Test");
-    assertEquals(c.getID(), 0);
+    assertEquals(c.getID(), "0");
     GameObject cd = (GameObject) factory.create("GameObject");
     Map<String, String> map1 = converter.paramsToMap(cd);
-    assertEquals(cd.getID(), 1);
+    assertEquals(cd.getID(), "1");
     assertEquals(cd.getName(), null);
   }
 }

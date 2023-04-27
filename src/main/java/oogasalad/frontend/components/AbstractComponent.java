@@ -1,11 +1,6 @@
 package oogasalad.frontend.components;
 
 import javafx.scene.Node;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-
-import java.io.IOException;
-import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.util.Map;
 import java.util.Properties;
@@ -15,21 +10,21 @@ import java.util.ResourceBundle;
  * @author Han and Aryan AbstractComponent is the abstraction that all Components are built off of.
  */
 public abstract class AbstractComponent implements Component {
-  protected int ID;
-  protected Node node;
+  private String ID;
+  private Node node;
   private boolean draggable;
   private boolean active;
   private boolean visible;
   private int zIndex;
   private double size;
-  protected double XOffset;
-  protected double YOffset;
+  private double XOffset;
+  private double YOffset;
   private Point absolute;
   private Point editor;
   private String DEFAULT_FILE_PATH;
   private ResourceBundle DEFAULT_BUNDLE;
 
-  public AbstractComponent(int id) {
+  public AbstractComponent(String id) {
     ID = id;
   }
 
@@ -64,11 +59,11 @@ public abstract class AbstractComponent implements Component {
   }
 
   @Override
-  public int getID() {
+  public String getID() {
     return ID;
   }
   @Override
-  public void setID(int id) {
+  public void setID(String id) {
     ID = id;
   }
   @Override
@@ -136,4 +131,5 @@ public abstract class AbstractComponent implements Component {
   protected void setEditorPoint(Point ed){
     editor = ed;
   }
+
 }
