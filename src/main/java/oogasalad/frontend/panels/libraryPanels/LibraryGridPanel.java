@@ -1,8 +1,15 @@
 package oogasalad.frontend.panels.libraryPanels;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -20,10 +27,12 @@ import oogasalad.frontend.windows.GameEditorWindow;
 import oogasalad.frontend.windows.LibraryWindow;
 import oogasalad.frontend.windows.WindowTypes;
 import oogasalad.frontend.windows.WindowTypes.WindowType;
+import oogasalad.sharedDependencies.backend.filemanagers.FileManager;
 import org.kordamp.ikonli.fontawesome5.FontAwesomeSolid;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 public class LibraryGridPanel extends GridPane implements Panel {
+  private static final String GAMES_FILEPATH = "data/games/";
   private static final ResourceBundle ID_BUNDLE = ResourceBundle.getBundle(
       "frontend/properties/StylingIDs/CSS_ID");
   private static final String GAME_BOX_ID = "GameBoxID";
@@ -62,7 +71,8 @@ public class LibraryGridPanel extends GridPane implements Panel {
     column4.setPercentWidth(25);
     this.getColumnConstraints().addAll(column1, column2, column3, column4);
 
-    List<String> games = getNamesOfFilesToLoad();
+    List<String> games = getGameNamesWithTag("board game");
+    System.out.println(games);
     int rowIndex = 0;
     int columnIndex = 0;
     for (String game : games) {
@@ -140,6 +150,29 @@ public class LibraryGridPanel extends GridPane implements Panel {
       }
     }
     return fileNames;
+  }
+
+  private List<String> getGameNamesWithTag(String tag) {
+    List<String> gameNames = new ArrayList<>();
+
+    File gamesDirectory = new File(GAMES_FILEPATH);
+    File[] gameDirectories = gamesDirectory.listFiles(File::isDirectory);
+    FileManager fm;
+
+    for (File gameDirectory : Objects.requireNonNull(gameDirectories)) {
+      try {
+        fm = new FileManager(gameDirectory.getPath() + "/general.json");
+      } catch (FileNotFoundException e) {
+        throw new RuntimeException(e);
+      }
+      Iterable<String> currentTags = fm.getArray("tags");
+      for (String s : currentTags) {
+        if (s.equals(tag)) {
+          gameNames.add(fm.getString("name"));
+        }
+      }
+    }
+    return gameNames;
   }
 
 
