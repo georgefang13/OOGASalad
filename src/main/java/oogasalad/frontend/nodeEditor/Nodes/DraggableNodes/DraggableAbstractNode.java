@@ -7,13 +7,15 @@ import oogasalad.frontend.nodeEditor.NodeController;
 import oogasalad.frontend.nodeEditor.Nodes.AbstractNode;
 
 public abstract class DraggableAbstractNode extends AbstractNode implements Draggable {
+
   private Bounds boundingBox;
   protected static final double DEFAULT_X = 0;
   protected static final double DEFAULT_Y = 0;
   protected static final double WIDTH = 300;
   protected static final double HEIGHT = 100;
 
-  public DraggableAbstractNode(NodeController nodeController, double x, double y, double width, double height, String color) {
+  public DraggableAbstractNode(NodeController nodeController, double x, double y, double width,
+      double height, String color) {
     super(nodeController, x, y, width, height, color);
     onDragDetected();
     onMousePressed();
@@ -126,10 +128,12 @@ public abstract class DraggableAbstractNode extends AbstractNode implements Drag
 
   @Override
   public void move(double newX, double newY) {
+    System.out.println(newX + " " + newY);
     if (boundingBox.contains(newX, newY, getWidth(), getHeight())) {
       setTranslateX(newX);
       setTranslateY(newY);
       if (this.getChildNode() != null) {
+        System.out.println("here");
         this.getChildNode().move(newX + this.getChildNode().getIndent(), newY + this.getHeight());
       }
     } else {
