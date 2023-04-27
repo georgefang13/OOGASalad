@@ -1,5 +1,5 @@
 {
   "": {
-    "on enter": "trueif  [fromgame ]"
+    "on enter": "if  [global :if  [continue]]"
   }
 }

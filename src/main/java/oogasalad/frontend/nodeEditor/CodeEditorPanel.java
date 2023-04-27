@@ -69,11 +69,9 @@ public class CodeEditorPanel extends AbstractNodePanel {
             DraggableAbstractNode start = new StartNestNode(nodeController, node.getTranslateX(), node.getTranslateY(), node.getWidth(), node.getHeight(),"green");
             group.getChildren().add(start);
             start.setBoundingBox(workspace.getBoundsInParent());
-            start.snapTo(node);
             DraggableAbstractNode end = new EndNestNode(nodeController, node.getTranslateX(), node.getTranslateY(), node.getWidth(), node.getHeight(), "red");
             group.getChildren().add(end);
             end.setBoundingBox(workspace.getBoundsInParent());
-            end.snapTo(start);
           }
         } catch (Exception e) {
           e.printStackTrace();

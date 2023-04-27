@@ -10,7 +10,7 @@ import oogasalad.frontend.nodeEditor.Nodes.DraggableNodes.StartNestNode;
 
 public abstract class AbstractNode extends VBox {
 
-  public static final int INDENT_SIZE = 20;
+  public static final int INDENT_SIZE = 60;
 
   protected double x, y, width, height;
   protected double xOffset, yOffset;
@@ -60,21 +60,14 @@ public abstract class AbstractNode extends VBox {
   public void setParentNode(AbstractNode node) {
     this.parentNode = node;
     if (this.parentNode != null) {
-      if (!(this instanceof EndNestNode)) {
-        if (this.parentNode instanceof StartNestNode) {
-          move(this.parentNode.getTranslateX() + INDENT_SIZE, getTranslateY());
-          incrementIndent();
-        } else {
-          move(this.parentNode.getTranslateX(), getTranslateY());
-        }
-      } else {
-        if (this.parentNode instanceof StartNestNode) {
-          move(this.parentNode.getTranslateX(), getTranslateY());
-        } else {
-          move(this.parentNode.getTranslateX() - INDENT_SIZE, getTranslateY());
-          decrementIndent();
-        }
+      double parentX = this.parentNode.getTranslateX();
+      double nodeY = getTranslateY();
+      if (this instanceof EndNestNode && !(this.parentNode instanceof StartNestNode)) {
+        decrementIndent();
+      } else if (!(this instanceof EndNestNode) && this.parentNode instanceof StartNestNode) {
+        incrementIndent();
       }
+      move(parentX, nodeY);
     }
   }
 
@@ -82,7 +75,7 @@ public abstract class AbstractNode extends VBox {
     return parentNode;
   }
 
-  public void setChildNode(DraggableAbstractNode node) {
+  public void setChildNode(AbstractNode node) {
     this.childNode = node;
   }
 
@@ -101,8 +94,6 @@ public abstract class AbstractNode extends VBox {
   }
 
   public void decrementIndent() {
-    if (this.indent == 0) {
-      this.indent -= INDENT_SIZE;
-    }
+    this.indent = 0;
   }
 }

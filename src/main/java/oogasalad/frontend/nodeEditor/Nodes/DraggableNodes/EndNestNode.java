@@ -27,5 +27,4 @@ public class EndNestNode extends DraggableAbstractNode {
     this.getChildren().add(title);
   }
 
-
 }

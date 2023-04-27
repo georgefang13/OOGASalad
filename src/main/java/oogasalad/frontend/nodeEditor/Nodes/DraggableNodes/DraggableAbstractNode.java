@@ -78,8 +78,8 @@ public abstract class DraggableAbstractNode extends AbstractNode implements Drag
               && this.getChildNode() != node) {
             try {
               snapTo((AbstractNode) node);
-            } catch (InterruptedException interruptedException) {
-              interruptedException.printStackTrace();
+            } catch (InterruptedException ex) {
+              throw new RuntimeException(ex);
             }
             e.consume();
             return;
@@ -125,12 +125,10 @@ public abstract class DraggableAbstractNode extends AbstractNode implements Drag
 
   @Override
   public void move(double newX, double newY) {
-    System.out.println(newX + " " + newY);
     if (boundingBox.contains(newX, newY, getWidth(), getHeight())) {
       setTranslateX(newX + this.getIndent());
       setTranslateY(newY);
       if (this.getChildNode() != null) {
-        System.out.println("here");
         this.getChildNode().move(newX, newY + this.getHeight());
       }
     } else {
@@ -149,5 +147,4 @@ public abstract class DraggableAbstractNode extends AbstractNode implements Drag
       this.setParentNode(null);
     }
   }
-
 }
