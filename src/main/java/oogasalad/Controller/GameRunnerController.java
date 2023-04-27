@@ -90,6 +90,7 @@ public class GameRunnerController extends Application implements GameController 
         pieceNode.setLayoutY(dzNode.getLayoutY());
     }
     public void select(String id) {
+        System.out.println(id);
         if (clickable.contains(id)) {
             game.clickPiece(id);
         }
