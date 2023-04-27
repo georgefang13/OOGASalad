@@ -311,7 +311,7 @@ public class Game implements GameToInterpreterAPI{
 
             image = System.getProperty("user.dir") + "/" + file.substring(0, file.lastIndexOf("/")) + "/assets/" + image;
 
-            Owner own = null;
+            Owner own = gameWorld;
             if (!owner.isEmpty()){
                 own = players.get(Integer.parseInt(owner));
             }
@@ -483,6 +483,17 @@ public class Game implements GameToInterpreterAPI{
         String id = ownableIdManager.getId(obj);
         String imagePath = this.directory + "/assets/" + image;
         controller.setObjectImage(id, imagePath);
+    }
+
+    @Override
+    public void setObjectOwner(Ownable obj, Ownable owner) {
+        ownableIdManager.setOwner(obj, owner);
+    }
+
+    @Override
+    public void setPlayerOwner(Ownable obj, Owner owner) {
+        ownableIdManager.setPlayerOwner(obj, owner);
+
     }
 
     // region RULES AND GOALS

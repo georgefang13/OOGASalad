@@ -10,6 +10,7 @@ import oogasalad.sharedDependencies.backend.ownables.gameobjects.DropZone;
 import oogasalad.sharedDependencies.backend.ownables.gameobjects.GameObject;
 import oogasalad.sharedDependencies.backend.ownables.variables.Variable;
 import oogasalad.sharedDependencies.backend.owners.GameWorld;
+import oogasalad.sharedDependencies.backend.owners.Owner;
 import oogasalad.sharedDependencies.backend.owners.Player;
 import oogasalad.sharedDependencies.backend.rules.RuleManager;
 
@@ -196,6 +197,16 @@ public class TestGame implements GameToInterpreterAPI {
 
     @Override
     public void setObjectImage(Ownable obj, String image) {
+
+    }
+
+    @Override
+    public void setObjectOwner(Ownable obj, Ownable owner) {
+
+    }
+
+    @Override
+    public void setPlayerOwner(Ownable obj, Owner owner) {
 
     }
 

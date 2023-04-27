@@ -374,6 +374,11 @@ public class IdManager<T extends IdManageable> implements Iterable<Map.Entry<Str
     return ownedObjects;
   }
 
+  /**
+   * Set one object tobe owned by another object
+   * @param obj the object to set the owner of
+   * @param owner the object to set as the owner
+   */
   public void setOwner(T obj, T owner) {
     if (ownershipMap.containsKey(obj)) {
       ownershipMap.put(obj, owner);
@@ -389,6 +394,18 @@ public class IdManager<T extends IdManageable> implements Iterable<Map.Entry<Str
         setOwner(ownable, obj);
       }
 
+    }
+  }
+
+  /**
+   * Sets the player owner of the given object to the given owner.
+   * @param obj the object to set the owner of
+   * @param owner the owner to set the object to
+   */
+  public void setPlayerOwner(Ownable obj, Owner owner){
+    obj.setOwner(owner);
+    for (T ownable : getObjectsOwnedBy((T) obj)) {
+      setPlayerOwner((Ownable) ownable, owner);
     }
   }
 

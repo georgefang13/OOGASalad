@@ -88,15 +88,27 @@ public class SimpleGameView extends Application implements GameController {
         }
 
         ImageView imgv = new ImageView(img);
-        imgv.setFitWidth(size);
-        imgv.setFitHeight(size);
+//        imgv.setFitWidth(size);
+//        imgv.setFitHeight(size);
+
+        double h = img.getHeight();
+        double w = img.getWidth();
+        if (h > w) {
+            w = size * w / h;
+            h = size;
+        } else {
+            h = size * h / w;
+            w = size;
+        }
+        imgv.setFitWidth(w);
+        imgv.setFitHeight(h);
 
         HBox piece = new HBox();
         piece.getChildren().add(imgv);
-        piece.setPrefHeight(size);
-        piece.setPrefWidth(size);
-        piece.setMaxHeight(size);
-        piece.setMaxHeight(size);
+        piece.setPrefHeight(h);
+        piece.setPrefWidth(w);
+        piece.setMaxHeight(h);
+        piece.setMaxHeight(w);
 
         piece.setOnMouseClicked(e -> select(id));
 
@@ -148,10 +160,11 @@ public class SimpleGameView extends Application implements GameController {
 
 
         ImageView oldimg = (ImageView) ((HBox) nodes.get(id)).getChildren().get(0);
-        int size = (int) oldimg.getFitWidth();
+        int w = (int) oldimg.getFitWidth();
+        int h = (int) oldimg.getFitHeight();
 
-        imgv.setFitWidth(size);
-        imgv.setFitHeight(size);
+        imgv.setFitWidth(w);
+        imgv.setFitHeight(h);
 
         HBox piece = (HBox) nodes.get(id);
         piece.getChildren().clear();

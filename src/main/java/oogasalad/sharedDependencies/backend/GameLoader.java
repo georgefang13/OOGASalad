@@ -32,11 +32,14 @@ public class GameLoader {
     private final List<Player> players = new ArrayList<>();
     private final IdManager<Ownable> ownableIdManager = new IdManager<>();
     private final GameWorld gameWorld = new GameWorld();
-    private final FSM<String> fsm = new FSM<>(ownableIdManager);
-    private final Interpreter interpreter = new Interpreter();
+    private final FSM<String> fsm;
+    private final Interpreter interpreter;
     private final Map<Ownable, DropZone> pieceLocations = new HashMap<>();
 
     public GameLoader(String directory) {
+        fsm = new FSM<>(ownableIdManager);
+        interpreter = new Interpreter();
+        interpreter.linkIdManager(ownableIdManager);
         try {
             loadGame(directory);
         } catch (FileNotFoundException | ClassNotFoundException e) {

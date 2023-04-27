@@ -4,6 +4,7 @@ import oogasalad.sharedDependencies.backend.id.IdManageable;
 import oogasalad.sharedDependencies.backend.ownables.Ownable;
 import oogasalad.sharedDependencies.backend.ownables.gameobjects.DropZone;
 import oogasalad.sharedDependencies.backend.ownables.gameobjects.GameObject;
+import oogasalad.sharedDependencies.backend.owners.Owner;
 import oogasalad.sharedDependencies.backend.owners.Player;
 import oogasalad.sharedDependencies.backend.rules.RuleManager;
 
@@ -29,6 +30,10 @@ public interface GameToInterpreterAPI {
     void removeClass(IdManageable obj, String name);
 
     void setObjectImage(Ownable obj, String image);
+
+    void setObjectOwner(Ownable obj, Ownable owner);
+
+    void setPlayerOwner(Ownable obj, Owner owner);
 
     RuleManager getRules();
 
