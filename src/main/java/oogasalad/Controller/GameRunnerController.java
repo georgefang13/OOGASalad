@@ -40,9 +40,9 @@ public class GameRunnerController extends Application implements GameController 
     private GamePlayerMainScene gamePlayerMainScene;
     String directory;
 
-    public GameRunnerController(GamePlayerMainScene gamePlayerMainScene) {
+    public GameRunnerController(GamePlayerMainScene gamePlayerMainScene, String gameName) {
         this.gamePlayerMainScene = gamePlayerMainScene;
-        directory = "data/games/tictactoe";
+        directory = "data/games/"+gameName;
         int numPlayers = 2;
         //initializeBoard();
         game = new Game(this,directory,numPlayers);
@@ -117,6 +117,16 @@ public class GameRunnerController extends Application implements GameController 
         movePieceToDropZone(pieceNodes.get(id),dropNodes.get(dropZoneID));
     }
 
+    @Override
+    public void removePiece(String id) {
+
+    }
+
+    @Override
+    public void setObjectImage(String id, String imagePath) {
+
+    }
+
     public void updatePieceMove(String pieceId) {
         String dropZoneID = pieceToDropZoneMap.get(pieceId);
         select(dropZoneID);
@@ -133,15 +143,6 @@ public class GameRunnerController extends Application implements GameController 
         }
         return nodelist;
     }
-
-
-
-
-
-
-
-
-
 
 
     private void initializeBoard() {
@@ -169,6 +170,18 @@ public class GameRunnerController extends Application implements GameController 
         game.movePiece(piece,dropZone,pieceID);
         return "pass";
     }
+
+    @Override
+    public void removePiece(String id) {
+
+    }
+
+    @Override
+    public void setObjectImage(String id, String imagePath) {
+
+    }
+
+    public record DropZoneParameters(String id, int x, int y, int height, int width){}
 
     private void parseDropZoneLayout() throws FileNotFoundException {
         FileManager DZparser = new FileManager(directory + "/layout.json");

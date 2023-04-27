@@ -30,8 +30,12 @@ public class GamePlayerMainScene extends AbstractScene {
 
   @Override
   public Scene makeScene() {
+
     root = new BorderPane();
-    gameRunnerController = new GameRunnerController(this);
+    gameName = panelController.getSceneController().getWindowController().getData().toString();
+    System.out.println(gameName);
+
+    gameRunnerController = new GameRunnerController(this,gameName);
 
     ArrayList<Node> pieces = gameRunnerController.initializePieces();
     root.getChildren().addAll(pieces);
@@ -46,6 +50,21 @@ public class GamePlayerMainScene extends AbstractScene {
     ArrayList<Node> pieces = gameRunnerController.initializePieces();
     System.out.println(pieces);
     root.getChildren().addAll(pieces);
+=======
+    System.out.println(panelController.getSceneController().getWindowController().getData().toString());
+
+//    gameRunnerController = new GameRunnerController(this, sceneController.getWindowController().getData().toString());
+//    boardPane = gameRunnerController.getBoardVisual();
+//    VBox boardVBOX = new VBox(boardPane);
+//    boardVBOX.setAlignment(Pos.CENTER);
+//    root.setCenter(boardVBOX);
+//
+//    ArrayList<Node> pieces = gameRunnerController.initializePieces();
+//    System.out.println(pieces);
+//    root.getChildren().addAll(pieces);
+
+    root.setCenter(new Label("Hello World"));
+>>>>>>> 61d2e67fb4369949e66ba37513777f21b7d77aa4
 
      */
 

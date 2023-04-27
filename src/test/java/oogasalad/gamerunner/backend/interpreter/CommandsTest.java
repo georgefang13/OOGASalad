@@ -7,8 +7,8 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.*;
 
-import oogasalad.gameeditor.backend.id.IdManageable;
-import oogasalad.gameeditor.backend.id.IdManager;
+import oogasalad.sharedDependencies.backend.id.IdManageable;
+import oogasalad.sharedDependencies.backend.id.IdManager;
 import oogasalad.gameeditor.backend.ownables.gameobjects.BoardCreator;
 import oogasalad.gamerunner.backend.interpreter.commands.math.Sum;
 import oogasalad.gamerunner.backend.interpreter.tokens.ExpressionToken;
@@ -21,6 +21,7 @@ import oogasalad.sharedDependencies.backend.ownables.gameobjects.DropZone;
 import oogasalad.sharedDependencies.backend.ownables.gameobjects.GameObject;
 import oogasalad.sharedDependencies.backend.ownables.variables.Variable;
 import oogasalad.sharedDependencies.backend.owners.Player;
+import oogasalad.sharedDependencies.backend.rules.RuleManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -190,6 +191,15 @@ public class CommandsTest {
       assertEquals(checkSubtypeErrorMsg(t, "ArcTangent", ValueToken.class, Double.class),
           e.getMessage());
     }
+  }
+
+  @Test
+  public void testAsList(){
+    String input = "make :x 1 make :y 2 make :z aslist [ :x :y ]";
+    interpreter.interpret(input);
+    Variable<List> z = getVar("interpreter-:z");
+    List<Double> expected = new ArrayList<>(List.of(1., 2.));
+    assertEquals(expected, z.get());
   }
 
   @Test
@@ -910,6 +920,26 @@ public class CommandsTest {
       assertEquals("Invalid syntax: Not enough arguments for operator GetObjectsFromPlayer", e.getMessage());
     }
 
+  }
+
+  @Test
+  public void testGetRule(){
+    game.noFSMInit(2);
+    useGameVars();
+    RuleManager rm = game.getRules();
+    String func = """
+            to available [ ] [
+              return 1
+            ]
+            """;
+    rm.addRule("piece", "available", func);
+    GameObject obj1 = new GameObject(game.getPlayer(0));
+    obj1.addClass("piece");
+    game.addElement(obj1, "obj");
+    String input = "make :x getrule :game_obj \"available [ ]";
+    interpreter.interpret(input);
+    Variable<Double> x = getVar("interpreter-:x");
+    assertEquals(1., x.get());
   }
 
   @Test
@@ -2122,7 +2152,7 @@ public class CommandsTest {
       fail();
     } catch (Exception e) {
       assertEquals(
-          "Invalid syntax: Set called with operator <Operator SquareRoot[1]> that takes less than 2 arguments",
+          "Invalid syntax: Set called with operator <Operator SquareRoot SquareRoot[1]> that takes less than 2 arguments",
           e.getMessage());
     }
 

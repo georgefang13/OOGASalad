@@ -5,7 +5,6 @@
     -fx-alignment: center;
 }
 
-
 .selected {
     -fx-border-color: red;
     -fx-border-width: 1px;
