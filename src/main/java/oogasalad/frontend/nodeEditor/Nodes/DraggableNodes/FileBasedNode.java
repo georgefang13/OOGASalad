@@ -36,7 +36,7 @@ public class FileBasedNode extends DraggableAbstractNode {
         myParseStr = parseStr;
         myInputs = inputs;
         setContent();
-        this.setStyle("-fx-border-color: black; -fx-border-width: 2px; -fx-border-radius: 5px; -fx-background-color: transparent; -fx-background-radius: 5px; -fx-padding: 5px;");
+        this.setStyle("-fx-border-color: black; -fx-border-width: 2px; -fx-border-radius: 5px; -fx-background-color: white; -fx-background-radius: 5px; -fx-padding: 5px;");
 
     }
 
@@ -79,6 +79,14 @@ public class FileBasedNode extends DraggableAbstractNode {
 
     public String getName() {
         return myName;
+    }
+
+    protected void checkInner(){
+        setJumpNode(null);
+        for (int i = 0; i < myInnerBlocks.size(); i++) {
+            setEndJumpNode(makeNest());
+
+        }
     }
 
 //    @Override

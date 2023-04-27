@@ -12,6 +12,7 @@ public abstract class DraggableAbstractNode extends AbstractNode implements Drag
 
   private AbstractNode parentNode;
 
+
   public DraggableAbstractNode(NodeController nodeController, double x, double y, double width,
       double height, String color) {
     super(nodeController, x, y, width, height, color);
@@ -109,6 +110,13 @@ public abstract class DraggableAbstractNode extends AbstractNode implements Drag
     AbstractNode temp = this;
 
     while (temp.getChildNode() != null) {
+
+        ////////
+        if (temp.getChildNode() instanceof Nestable) {;
+            temp= temp.getJumpNode();
+        }
+        ////////
+
         AbstractNode tempOld = temp;
         temp = temp.getChildNode();
       temp.setTranslateX(tempOld.getTranslateX());
@@ -157,11 +165,15 @@ public abstract class DraggableAbstractNode extends AbstractNode implements Drag
         return parentNode;
     }
 
+
+
     protected void clearLinks(){
       if (this.getParentNode() != null) {
         this.parentNode.setChildNode(null);
         this.setParentNode(null);
       }
     }
+
+
 
 }
