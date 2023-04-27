@@ -13,7 +13,7 @@ public class RectangleObject extends AbstractComponent implements RectangleObjec
     private Rectangle rectangle;
 
 
-    public RectangleObject(int ID){
+    public RectangleObject(String ID){
         super(ID);
         instantiatePropFile("frontend.properties.Defaults.RectangleObject");
         this.setDefault();
@@ -21,7 +21,7 @@ public class RectangleObject extends AbstractComponent implements RectangleObjec
         this.getNode();
     }
 
-    public RectangleObject(int ID, Map<String, String> map){
+    public RectangleObject(String ID, Map<String, String> map){
         super(ID);
         setValuesfromMap(map);
     }

@@ -5,6 +5,7 @@ import java.util.Map;
 import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -35,24 +36,29 @@ public class ComponentsFactoryTest extends DukeApplicationTest {
     Platform.runLater(() -> {
       root.getChildren().add(c.getNode());
     });
-    System.out.println(c.getNode().getBoundsInLocal().getMinX());
+    ImageView image = (ImageView) c.getNode();
     simulateMousePress(c.getNode(), MouseButton.PRIMARY, 0, 0);
-    simulateMouseDrag(c.getNode(), MouseButton.PRIMARY, 500, 500);
-    simulateMouseRelease(c.getNode(), MouseButton.PRIMARY, 500, 500);
-    System.out.println(c.getNode().getBoundsInLocal().getMinX());
+    simulateMouseDrag(c.getNode(), MouseButton.PRIMARY, 500, 400);
+    simulateMouseRelease(c.getNode(), MouseButton.PRIMARY, 500, 400);
+    sleep(100);
+    assertEquals(500, image.getTranslateX());
+    assertEquals(400, image.getTranslateY());
   }
 
-//  @Test
-//  public void createFromMap(){
-//    Map<String, String> map = new HashMap<>();
-//    map.put("name", "Hello");
-//    GameObject c = (GameObject) factory.create("GameObject", map);
-//    System.out.println(c.getNode().getBoundsInLocal().getMinX());
-//    simulateMousePress(c.getNode(), MouseButton.PRIMARY, 0, 0);
-//    simulateMouseDrag(c.getNode(), MouseButton.PRIMARY, 500,500);
-//    simulateMouseRelease(c.getNode(), MouseButton.PRIMARY, 500,500);
-//    assertEquals("Hello",c.getName());
-//  }
+  @Test
+  public void createFromMap(){
+    Map<String, String> map = new HashMap<>();
+    map.put("name", "Hello");
+    GameObject c = (GameObject) factory.create("GameObject", map);
+    ImageView image = (ImageView) c.getNode();
+    simulateMousePress(c.getNode(), MouseButton.PRIMARY, 0, 0);
+    simulateMouseDrag(c.getNode(), MouseButton.PRIMARY, 500,400);
+    simulateMouseRelease(c.getNode(), MouseButton.PRIMARY, 500,400);
+    assertEquals("Hello",c.getName());
+    sleep(10);
+    assertEquals(500, image.getTranslateX());
+    assertEquals(400, image.getTranslateY());
+  }
   private void simulateMousePress(Node node, MouseButton button, double x, double y) {
     MouseEvent event = new MouseEvent(
         MouseEvent.MOUSE_PRESSED,
