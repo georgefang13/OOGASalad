@@ -206,11 +206,22 @@ public class Game implements GameToInterpreterAPI{
     public void clickPiece(String selectedObject) {
         clickPiece(selectedObject, true);
     }
+
+    private boolean isPieceAvailable(String id){
+        Variable<List<GameObject>> v = (Variable<List<GameObject>>) ownableIdManager.getObject("available");
+        for (GameObject o : v.get()){
+            if (ownableIdManager.getId(o).equals(id)) return true;
+        }
+        return false;
+    }
+
     /**
      * reacts to clicking a piece
      */
     public void clickPiece(String selectedObject, boolean send) {
         if (send) onlineRunner.send(selectedObject);
+
+        if (!isPieceAvailable(selectedObject)) return;
 
         System.out.println("clicking " + selectedObject + " with " + send);
 
