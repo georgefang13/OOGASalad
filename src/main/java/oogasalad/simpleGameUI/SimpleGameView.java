@@ -49,15 +49,15 @@ public class SimpleGameView extends Application implements GameController {
 
         loadGame(directory);
 
-        game = new Game(this, directory, 2, true);
+        game = new Game(this, directory, 2, false);
 
         undoButton.setOnAction(e -> game.undoClickPiece());
         root.getChildren().add(undoButton);
 
-//        game.startGame();
+        game.startGame();
 
 //        game.createOnlineGame();
-        game.joinOnlineGame("525");
+//        game.joinOnlineGame("525");
 
         stage.setScene(scene);
         stage.show();
@@ -169,7 +169,6 @@ public class SimpleGameView extends Application implements GameController {
 
     @Override
     public void movePiece(String id, String dropZoneID) {
-//        System.out.println(id + " " + dropZoneID);
         String dzid = pieceToDropZoneMap.get(id);
         Platform.runLater(() -> {
             ((HBox) nodes.get(dzid)).getChildren().remove(nodes.get(id));
@@ -201,7 +200,6 @@ public class SimpleGameView extends Application implements GameController {
         }
 
         ImageView imgv = new ImageView(img);
-
 
         ImageView oldimg = (ImageView) ((HBox) nodes.get(id)).getChildren().get(0);
         int w = (int) oldimg.getFitWidth();

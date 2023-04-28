@@ -223,8 +223,6 @@ public class Game implements GameToInterpreterAPI{
 
         if (!isPieceAvailable(selectedObject)) return;
 
-        System.out.println("clicking " + selectedObject + " with " + send);
-
         interpreter.interpret("make :game_available [ ]");
 
         try {
@@ -390,6 +388,7 @@ public class Game implements GameToInterpreterAPI{
     public void setObjectImage(Ownable obj, String image) {
         String id = ownableIdManager.getId(obj);
         String imagePath = this.directory + "/assets/" + image;
+        controller.setObjectImage(id, imagePath);
     }
 
     @Override
