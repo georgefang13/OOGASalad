@@ -60,10 +60,9 @@ public class Database {
    * @param collection high-level collection to be updated
    * @param entry entry within collection
    * @param field field inside entry
-   * @param expectedClass expected class of returned Object
    * @return Object contained in specified field of database, if its class is the one expected
    */
-  public Object getData(String collection, String entry, String field, Class<?> expectedClass) {
+  public Object getData(String collection, String entry, String field) {
     // Code adapted from https://firebase.google.com/docs/firestore/quickstart
     ApiFuture<DocumentSnapshot> document = database.collection(collection).document(entry).get();
     DocumentSnapshot documentSnapshot;
@@ -72,13 +71,7 @@ public class Database {
     } catch (InterruptedException | ExecutionException e) {
       throw new RuntimeException(e);
     }
-    Object data = documentSnapshot.get(field);
-    if (expectedClass == data.getClass()) {
-      return data;
-    }
-    else {
-      throw new IllegalArgumentException();
-    }
+    return documentSnapshot.get(field);
   }
 
   /**
