@@ -144,11 +144,11 @@ public class Game implements GameToInterpreterAPI{
             onlineRunner.start();
             onlinePlayerNum = onlineRunner.getPlayerNum();
             startGame();
+            System.out.println("PLAYER " + onlinePlayerNum);
         }
     }
 
     private void startTurn(){
-        System.out.println(turn.get());
         try {
             interpreter.interpret("make :game_available [ ]");
             fsm.setState("INIT");
@@ -204,6 +204,15 @@ public class Game implements GameToInterpreterAPI{
      * reacts to clicking a piece
      */
     public void clickPiece(String selectedObject) {
+        clickPiece(selectedObject, true);
+    }
+    /**
+     * reacts to clicking a piece
+     */
+    public void clickPiece(String selectedObject, boolean send) {
+        if (send) onlineRunner.send(selectedObject);
+
+        System.out.println("clicking " + selectedObject + " with " + send);
 
         interpreter.interpret("make :game_available [ ]");
 
@@ -322,12 +331,10 @@ public class Game implements GameToInterpreterAPI{
         dz.putObject(name, piece);
         pieceLocations.put(piece, dz);
         controller.movePiece(ownableIdManager.getId(piece), ownableIdManager.getId(dz));
-        onlineRunner.send("movePiece", ownableIdManager.getId(piece), ownableIdManager.getId(dz), name);
     }
 
     @Override
     public void removePiece(GameObject piece) {
-        onlineRunner.send("removePiece", ownableIdManager.getId(piece));
         if (pieceLocations.containsKey(piece)){
             DropZone dz = pieceLocations.get(piece);
             dz.removeObject(dz.getKey(piece));
@@ -345,7 +352,6 @@ public class Game implements GameToInterpreterAPI{
         }
         pieceLocations.put(element, dropZone);
         dropZone.putObject(name, element);
-        onlineRunner.send("putInDropZone", ownableIdManager.getId(element), ownableIdManager.getId(dropZone), name);
     }
 
     @Override
@@ -356,34 +362,28 @@ public class Game implements GameToInterpreterAPI{
     @Override
     public void setTurn(double turn) {
         this.turn.set(turn);
-        onlineRunner.send("setTurn", turn);
         startTurn();
     }
 
     @Override
     public void putClass(IdManageable obj, String name) {
         obj.addClass(name);
-        onlineRunner.send("putClass", ownableIdManager.getId((Ownable) obj), name);
     }
 
     @Override
     public void removeClass(IdManageable obj, String name) {
         obj.removeClass(name);
-        onlineRunner.send("removeClass", ownableIdManager.getId((Ownable) obj), name);
     }
 
     @Override
     public void setObjectImage(Ownable obj, String image) {
         String id = ownableIdManager.getId(obj);
         String imagePath = this.directory + "/assets/" + image;
-        controller.setObjectImage(id, imagePath);
-        onlineRunner.send("setObjectImage", id, imagePath);
     }
 
     @Override
     public void setObjectOwner(Ownable obj, Ownable owner) {
         ownableIdManager.setObjectOwner(obj, owner);
-        onlineRunner.send("setObjectOwner", ownableIdManager.getId(obj), ownableIdManager.getId(owner));
     }
 
     @Override
@@ -391,7 +391,6 @@ public class Game implements GameToInterpreterAPI{
         ownableIdManager.setPlayerOwner(obj, owner);
         int ownerNum = -1;
         if (owner != gameWorld) ownerNum = players.indexOf((Player) owner);
-        onlineRunner.send("setPlayerOwner", ownableIdManager.getId(obj), ownerNum);
     }
 
     /**

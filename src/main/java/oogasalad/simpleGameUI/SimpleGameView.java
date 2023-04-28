@@ -57,11 +57,11 @@ public class SimpleGameView extends Application implements GameController {
 //        game.startGame();
 
 //        game.createOnlineGame();
-        game.joinOnlineGame("613");
+        game.joinOnlineGame("838");
 
         stage.setScene(scene);
         stage.show();
-        stage.setResizable(false);
+        stage.setResizable(true);
     }
 
     public static void main(String[] args) {
@@ -161,7 +161,6 @@ public class SimpleGameView extends Application implements GameController {
     @Override
     public void setClickable(List<String> ids) {
         clearClickables();
-        System.out.println(ids);
         clickable.addAll(ids);
         for (String id : ids){
             nodes.get(id).setStyle("-fx-border-color: red; -fx-border-width: 1px;");
