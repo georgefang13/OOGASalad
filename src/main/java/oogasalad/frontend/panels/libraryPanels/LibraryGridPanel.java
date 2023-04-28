@@ -74,7 +74,6 @@ public class LibraryGridPanel extends GridPane implements Panel {
     this.getColumnConstraints().addAll(column1, column2, column3, column4);
 
     gameNames = getGameNamesWithTag(DEFAULT_TAG);
-    System.out.println(gameNames);
     int rowIndex = 0;
     int columnIndex = 0;
     for (String game : gameNames.keySet()) {
