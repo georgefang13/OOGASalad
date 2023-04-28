@@ -37,7 +37,7 @@ public class GameRunnerController implements GameController {
         directory = "data/games/tictactoe";
         int numPlayers = 2; //hardcoded read from file
 
-        game = new Game(this,directory,numPlayers);
+        game = new Game(this,directory,numPlayers, false);
         pieceMap = new HashMap<>();
     }
 
