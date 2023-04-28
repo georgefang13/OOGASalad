@@ -32,7 +32,7 @@ public class FileBasedNode extends DraggableAbstractNode {
     this.height = HEIGHT;
     setContent();
     this.setStyle(
-        "-fx-border-color: black; -fx-border-width: 2px; -fx-border-radius: 5px; -fx-background-color: transparent; -fx-background-radius: 5px; -fx-padding: 5px;");
+        "-fx-border-color: black; -fx-border-width: 2px; -fx-border-radius: 5px; -fx-background-color: white; -fx-background-radius: 5px; -fx-padding: 5px;");
   }
 
   @Override
