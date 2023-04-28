@@ -1,0 +1,52 @@
+{
+  "pieceX0": {
+    "image": "X.png",
+    "size": "40",
+    "location": "XDropZone"
+  },
+  "pieceX1": {
+    "image": "X.png",
+    "size": "40",
+    "location": "XDropZone"
+  },
+  "pieceX2": {
+    "image": "X.png",
+    "size": "40",
+    "location": "XDropZone"
+  },
+  "pieceX3": {
+    "image": "X.png",
+    "size": "40",
+    "location": "XDropZone"
+  },
+  "pieceX4": {
+    "image": "X.png",
+    "size": "40",
+    "location": "XDropZone"
+  },
+  "pieceO0": {
+    "image": "O.png",
+    "size": "40",
+    "location": "ODropZone"
+  },
+  "pieceO1": {
+    "image": "O.png",
+    "size": "40",
+    "location": "ODropZone"
+  },
+  "pieceO2": {
+    "image": "O.png",
+    "size": "40",
+    "location": "ODropZone"
+  },
+  "pieceO3": {
+    "image": "O.png",
+    "size": "40",
+    "location": "ODropZone"
+  },
+  "pieceO4": {
+    "image": "O.png",
+    "size": "40",
+    "location": "ODropZone"
+  }
+}

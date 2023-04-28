@@ -1,6 +1,6 @@
 package oogasalad.sharedDependencies.backend.owners;
 
-import oogasalad.gameeditor.backend.id.IdManageable;
+import oogasalad.sharedDependencies.backend.id.IdManageable;
 
 /**
  * An Owner owns Ownables. It does not store the Ownables, but can retrieve them from the
