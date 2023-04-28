@@ -14,6 +14,6 @@ public class MockDatabase extends Database {
   }
 
   public MockDatabase(String... tags) throws IOException {
-    super(INFO_PATH, URL, tags);
+    super(tags);
   }
 }
