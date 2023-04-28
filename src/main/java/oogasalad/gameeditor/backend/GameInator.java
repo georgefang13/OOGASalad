@@ -6,9 +6,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import oogasalad.gamerunner.backend.Rule;
 import oogasalad.gamerunner.backend.interpretables.Goal;
-//import oogasalad.sharedDependencies.backend.GameLoader;
+import oogasalad.sharedDependencies.backend.GameLoader;
 import oogasalad.sharedDependencies.backend.id.IdManager;
 import oogasalad.sharedDependencies.backend.ObjectFactory;
 import oogasalad.sharedDependencies.backend.ownables.Ownable;
@@ -51,12 +50,12 @@ public class GameInator {
   /**
    * The GameWorld of the game. The GameWorld owns Ownables not owned by Players.
    */
-  private GameWorld gameWorld = new GameWorld();
+  private final GameWorld gameWorld = new GameWorld();
 
   /**
    * The ObjectFactory of the game.
    */
-  private ObjectFactory objectFactory;
+  private final ObjectFactory objectFactory;
 
   /**
    * Creates a new Game with no information.
@@ -72,11 +71,18 @@ public class GameInator {
    */
   public GameInator(String directory) {
     //Use gameLoader to load the game from a file
-//    GameLoader loader = new GameLoader(directory);
-//    players.addAll(loader.getPlayers());
-//    ownableIdManager = loader.getOwnableIdManager();
-//    gameWorld = loader.getGameWorld();
-//    objectFactory = new ObjectFactory(gameWorld, ownableIdManager, players);
+    GameLoader loader = new GameLoader(directory);
+    try{
+      players.addAll(loader.loadPlayers());
+      loader.loadDropZones(ownableIdManager, gameWorld);
+      loader.loadObjectsAndVariables(ownableIdManager, players, gameWorld);
+      goals.addAll(loader.loadGoals());
+      ruleManager = loader.loadRules();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+
+    objectFactory = new ObjectFactory(gameWorld, ownableIdManager, players);
   }
 
 
@@ -238,8 +244,8 @@ public class GameInator {
    * Method is called in order to send a request to the backend to delete an object.
    * If removing a player, the id is not used and can be null
    *
-   * @Type The class the object belongs to
-   * @Params The params of the object
+   * @param type The class the object belongs to
+   * @param params The params of the object
    **/
   public void deleteObject(ObjectType type, Map<ObjectParameter, Object> params)
       throws IllegalArgumentException {
@@ -258,8 +264,8 @@ public class GameInator {
 
   /**
    * check if owner id is numeric value
-   * @param str
-   * @return
+   * @param str owner id
+   * @return owner id if it is numeric, null otherwise
    */
   private Integer isNumeric(String str) {
     if (str == null) {
@@ -305,8 +311,8 @@ public class GameInator {
   /**
    * Updates the owner of an ownable.
    *
-   * @param targetObject
-   * @param params
+   * @param targetObject the ownable to update
+   * @param params the parameters of the ownable
    * @throws IllegalArgumentException
    */
   private void updateOwner(String targetObject, Map<ObjectParameter, Object> params) throws IllegalArgumentException {
@@ -339,8 +345,8 @@ public class GameInator {
    * Method is called to update information about a modified object in teh front end. The controller
    * sends updates to the Backend by giving the type and params for identification
    *
-   * @type The class the object belongs to
-   * @Params The updated params of the object
+   * @param type The class the object belongs to
+   * @param params The updated params of the object
    **/
   public void updateObjectProperties(String targetObject, ObjectType type, Map<ObjectParameter, Object> params)
       throws IllegalArgumentException {
