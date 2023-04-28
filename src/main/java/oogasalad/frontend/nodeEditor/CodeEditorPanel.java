@@ -64,7 +64,6 @@ public class CodeEditorPanel extends AbstractNodePanel {
         try {
           DraggableAbstractNode node = new FileBasedNode(nodeController, name, innerBlocks,
               outputTypes, parseStr, inputs);
-          System.out.println("myheight" + node.getHeight());
           group.getChildren().add(node);
           node.setBoundingBox(workspace.getBoundsInParent());
           for (JsonElement nestBlock : innerBlocks.asList()) {
@@ -72,13 +71,11 @@ public class CodeEditorPanel extends AbstractNodePanel {
                 node.getHeight(), "green");
             group.getChildren().add(start);
             start.setBoundingBox(workspace.getBoundsInParent());
-            System.out.println("start-node");
             start.snapTo(node);
             DraggableAbstractNode end = new EndNestNode(nodeController, 0, 0, node.getWidth(),
                 node.getHeight(), "red");
             group.getChildren().add(end);
             end.setBoundingBox(workspace.getBoundsInParent());
-            System.out.println("end-start");
             end.snapTo(start);
           }
         } catch (Exception e) {

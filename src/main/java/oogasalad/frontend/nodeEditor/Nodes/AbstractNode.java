@@ -103,7 +103,6 @@ public abstract class AbstractNode extends VBox {
       fromNode.move(toNode.getTranslateX() - INDENT_SIZE,
           toNode.getTranslateY() + toNode.getHeight());
     } else {
-      System.out.println("adjust" + (toNode.getTranslateY() + toNode.getHeight()));
       fromNode.move(toNode.getTranslateX(), toNode.getTranslateY() + toNode.getHeight());
     }
   }

@@ -60,12 +60,11 @@ public class FileBasedNode extends DraggableAbstractNode {
       inputsAsStrings.add(input.getText().toString());
     }
     String[] parseSplit = parseStr.split("\\[ %s \\]");
-    System.out.println(Arrays.toString(inputsAsStrings.toArray()));
     String output = String.format(parseSplit[0], inputsAsStrings.toArray());
     if (this.getChildNode() == null) {
       return output;
     }
-    return (output + this.getChildNode().getJSONString());
+    return (output + " " + this.getChildNode().getJSONString());
   }
 
   private void updateOutput() {

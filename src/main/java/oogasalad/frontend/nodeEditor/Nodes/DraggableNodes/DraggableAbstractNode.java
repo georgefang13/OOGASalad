@@ -93,7 +93,6 @@ public abstract class DraggableAbstractNode extends AbstractNode implements Drag
   @Override
   public void move(double newX, double newY) {
     if (boundingBox.contains(newX, newY, getWidth(), getHeight())) {
-      System.out.println(newX + " " + newY);
       setTranslateX(newX);
       setTranslateY(newY);
     } else {
