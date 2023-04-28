@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
@@ -41,6 +42,7 @@ public class LibraryGridPanel extends GridPane implements Panel {
   private static final String GAME_BOX_EDIT_ICON_BOX_ID = "GameBoxEditIconBoxID";
   private static final String GAME_BOX_EDIT_ICON_ID = "GameBoxEditIconID";
   private static final String LIBRARY_GRID_PANE_ID = "LibraryGridPaneID";
+  private static final String GAME_BOX_TOOLTIP_ID = "GameBoxTooltipID";
   private final int IMAGE_WIDTH = 212;
   private final int IMAGE_HEIGHT = 150;
   private final int IMAGE_RADIUS = 20;
@@ -49,6 +51,7 @@ public class LibraryGridPanel extends GridPane implements Panel {
   private Map<String, String> gameNames;
   private static final String JSON_NAME = "name";
   private static final String JSON_TAGS = "tags";
+  private static final String JSON_DESCRIPTION = "description";
   private static final String JSON_GENERAL_PATH = "/general.json";
   private static final String GAME_IMAGE_PATH = "/display.png";
   private static final String DEFAULT_TAG = "board game"; //TODO: CHANGE TO "default" and put that in every general.json
@@ -94,7 +97,7 @@ public class LibraryGridPanel extends GridPane implements Panel {
     VBox gameBox = new VBox();
     gameBox.getStyleClass().add(ID_BUNDLE.getString(GAME_BOX_ID));
     gameBox.getChildren().addAll(createImageView(directoryName), createTextIconHBox(realGameName));
-    gameBox.setTooltip(buttonFactory.createTooltip("hello"));
+    createTooltip(gameBox, directoryName);
     return gameBox;
   }
   private ImageView createImageView(String gameName) {
@@ -163,6 +166,20 @@ public class LibraryGridPanel extends GridPane implements Panel {
       }
     }
     return gameNamesAndFolderNames;
+  }
+
+  private Tooltip createTooltip(VBox box, String gameName) {
+    FileManager fm;
+    try {
+      fm = new FileManager(GAMES_FILEPATH + gameName + JSON_GENERAL_PATH);
+    } catch (FileNotFoundException e) {
+      throw new RuntimeException(e);
+    }
+    Tooltip tooltip = new Tooltip(fm.getString(JSON_DESCRIPTION));
+    Tooltip.install(box, tooltip);
+    tooltip.setShowDelay(Duration.millis(0));
+    tooltip.getStyleClass().add(ID_BUNDLE.getString(GAME_BOX_TOOLTIP_ID));
+    return tooltip;
   }
 
   public Node asNode(){
