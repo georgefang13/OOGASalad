@@ -2,11 +2,11 @@ package oogasalad.frontend.nodeEditor.Nodes.DraggableNodes;
 
 import javafx.scene.control.Label;
 import oogasalad.frontend.nodeEditor.NodeController;
-import org.dom4j.tree.AbstractNode;
 
 public class EndNestNode extends DraggableAbstractNode {
 
-  public EndNestNode(NodeController nodeController, double x, double y, double width, double height, String color) {
+  public EndNestNode(NodeController nodeController, double x, double y, double width, double height,
+      String color) {
     super(nodeController, x, y, WIDTH, HEIGHT, "red");
     setContent();
     this.setStyle(

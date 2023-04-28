@@ -59,19 +59,27 @@ public class CodeEditorPanel extends AbstractNodePanel {
       }
       Button button = new Button(name);
       Tooltip tip = new Tooltip(description);
-      Tooltip.install(button,tip);
+      Tooltip.install(button, tip);
       button.setOnAction(event -> {
         try {
-          DraggableAbstractNode node = new FileBasedNode(nodeController, name, innerBlocks, outputTypes, parseStr, inputs);
+          DraggableAbstractNode node = new FileBasedNode(nodeController, name, innerBlocks,
+              outputTypes, parseStr, inputs);
+          System.out.println("myheight" + node.getHeight());
           group.getChildren().add(node);
           node.setBoundingBox(workspace.getBoundsInParent());
           for (JsonElement nestBlock : innerBlocks.asList()) {
-            DraggableAbstractNode start = new StartNestNode(nodeController, node.getTranslateX(), node.getTranslateY(), node.getWidth(), node.getHeight(),"green");
+            DraggableAbstractNode start = new StartNestNode(nodeController, 0, 0, node.getWidth(),
+                node.getHeight(), "green");
             group.getChildren().add(start);
             start.setBoundingBox(workspace.getBoundsInParent());
-            DraggableAbstractNode end = new EndNestNode(nodeController, node.getTranslateX(), node.getTranslateY(), node.getWidth(), node.getHeight(), "red");
+            System.out.println("start-node");
+            start.snapTo(node);
+            DraggableAbstractNode end = new EndNestNode(nodeController, 0, 0, node.getWidth(),
+                node.getHeight(), "red");
             group.getChildren().add(end);
             end.setBoundingBox(workspace.getBoundsInParent());
+            System.out.println("end-start");
+            end.snapTo(start);
           }
         } catch (Exception e) {
           e.printStackTrace();

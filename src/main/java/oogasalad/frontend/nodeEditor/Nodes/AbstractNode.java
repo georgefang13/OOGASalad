@@ -4,7 +4,6 @@ import javafx.scene.Group;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.VBox;
 import oogasalad.frontend.nodeEditor.NodeController;
-import oogasalad.frontend.nodeEditor.Nodes.DraggableNodes.DraggableAbstractNode;
 import oogasalad.frontend.nodeEditor.Nodes.DraggableNodes.EndNestNode;
 import oogasalad.frontend.nodeEditor.Nodes.DraggableNodes.StartNestNode;
 
@@ -32,6 +31,8 @@ public abstract class AbstractNode extends VBox {
     this.nodeController = nodeController;
     setTranslateX(this.x);
     setTranslateY(this.y);
+    setWidth(this.width);
+    setHeight(this.height);
     setPrefSize(this.width, this.height);
     setColor(this.color);
     setToolTips();
@@ -102,8 +103,8 @@ public abstract class AbstractNode extends VBox {
       fromNode.move(toNode.getTranslateX() - INDENT_SIZE,
           toNode.getTranslateY() + toNode.getHeight());
     } else {
+      System.out.println("adjust" + (toNode.getTranslateY() + toNode.getHeight()));
       fromNode.move(toNode.getTranslateX(), toNode.getTranslateY() + toNode.getHeight());
     }
   }
-
 }

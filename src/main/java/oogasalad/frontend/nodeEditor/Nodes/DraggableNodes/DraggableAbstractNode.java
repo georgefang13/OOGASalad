@@ -62,7 +62,6 @@ public abstract class DraggableAbstractNode extends AbstractNode implements Drag
           double newY = e.getSceneY() / scaleFactor - yOffset;
           this.move(newX, newY);
           if (this.getChildNode() != null) {
-            //this.getChildNode().move(newX, newY + this.getHeight());
             this.getChildNode().snapTo(this);
           }
           clearLinks();
@@ -94,6 +93,7 @@ public abstract class DraggableAbstractNode extends AbstractNode implements Drag
   @Override
   public void move(double newX, double newY) {
     if (boundingBox.contains(newX, newY, getWidth(), getHeight())) {
+      System.out.println(newX + " " + newY);
       setTranslateX(newX);
       setTranslateY(newY);
     } else {

@@ -11,6 +11,7 @@ import javafx.scene.layout.HBox;
 import oogasalad.frontend.nodeEditor.NodeController;
 
 public class FileBasedNode extends DraggableAbstractNode {
+
   private String name;
   private JsonArray innerBlocks;
   private JsonArray outputTypes;
@@ -27,6 +28,8 @@ public class FileBasedNode extends DraggableAbstractNode {
     this.outputTypes = outputTypes;
     this.parseStr = parseStr;
     this.inputs = inputs;
+    this.width = WIDTH;
+    this.height = HEIGHT;
     setContent();
     this.setStyle(
         "-fx-border-color: black; -fx-border-width: 2px; -fx-border-radius: 5px; -fx-background-color: transparent; -fx-background-radius: 5px; -fx-padding: 5px;");
