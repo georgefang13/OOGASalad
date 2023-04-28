@@ -1,38 +1,26 @@
 package oogasalad.frontend.nodeEditor.Nodes.DraggableNodes;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
-import oogasalad.frontend.nodeEditor.NodeController;
+import oogasalad.frontend.nodeEditor.Nodes.AbstractNode;
 
-public class FileBasedNode extends DraggableAbstractNode {
+public class JsonNode extends AbstractNode {
 
-  private String name;
-  private JsonArray innerBlocks;
-  private JsonArray outputTypes;
-  private String parseStr;
-  private JsonArray inputs;
+  private String name, parseStr;
+  private List<String> innerBlocks, outputTypes, inputs;
   private List<TextField> inputFields = new ArrayList<>();
-  private Label outputLabel;
 
-  public FileBasedNode(NodeController nodeController, String name, JsonArray innerBlocks,
-      JsonArray outputTypes, String parseStr, JsonArray inputs) {
-    super(nodeController, DEFAULT_X, DEFAULT_Y, WIDTH, HEIGHT, "white");
+  public JsonNode(String name, List<String> innerBlocks, List<String> outputTypes, String parseStr,
+      List<String> inputs) {
+    super();
     this.name = name;
     this.innerBlocks = innerBlocks;
     this.outputTypes = outputTypes;
     this.parseStr = parseStr;
     this.inputs = inputs;
-    this.width = WIDTH;
-    this.height = HEIGHT;
-    setContent();
-    this.setStyle(
-        "-fx-border-color: black; -fx-border-width: 2px; -fx-border-radius: 5px; -fx-background-color: white; -fx-background-radius: 5px; -fx-padding: 5px;");
   }
 
   @Override
@@ -41,16 +29,12 @@ public class FileBasedNode extends DraggableAbstractNode {
     this.getChildren().addAll(title);
     inputs.forEach(item -> {
       HBox tempInputArea = new HBox();
-      JsonObject object = item.getAsJsonObject();
-      Label input = new Label(object.get("name").getAsString() + ": ");
+      Label input = new Label(name + ": ");
       TextField inputField = new TextField();
       tempInputArea.getChildren().addAll(input, inputField);
       this.getChildren().addAll(tempInputArea);
       inputFields.add(inputField);
     });
-    outputLabel = new Label();
-    this.getChildren().addAll(outputLabel);
-    updateOutput();
   }
 
   @Override
@@ -65,14 +49,5 @@ public class FileBasedNode extends DraggableAbstractNode {
       return output;
     }
     return (output + " " + this.getChildNode().getJSONString());
-  }
-
-  private void updateOutput() {
-    String output = "output: ";
-    outputLabel.setText(output);
-  }
-
-  public String getName() {
-    return name;
   }
 }

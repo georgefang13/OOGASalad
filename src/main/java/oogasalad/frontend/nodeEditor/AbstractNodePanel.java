@@ -2,7 +2,6 @@ package oogasalad.frontend.nodeEditor;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.List;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -21,8 +20,7 @@ import javafx.scene.layout.StackPane;
 import oogasalad.frontend.managers.PropertyManager;
 import oogasalad.frontend.managers.StandardPropertyManager;
 import oogasalad.frontend.nodeEditor.Nodes.AbstractNode;
-import oogasalad.frontend.nodeEditor.Nodes.DraggableNodes.DraggableAbstractNode;
-import oogasalad.frontend.nodeEditor.Nodes.DraggableNodes.FileBasedNode;
+import oogasalad.frontend.nodeEditor.Nodes.DraggableNodes.JsonNode;
 import oogasalad.frontend.nodeEditor.Nodes.DraggableNodes.MainNode;
 
 public abstract class AbstractNodePanel extends Tab {
@@ -66,13 +64,17 @@ public abstract class AbstractNodePanel extends Tab {
     try {
       Class<?> clazz = Class.forName(className);
       Constructor<?> constructor = clazz.getConstructor(NodeController.class);
-      DraggableAbstractNode node = (DraggableAbstractNode) constructor.newInstance(nodeController);
-      group.getChildren().add(node);
-      node.setBoundingBox(workspace.getBoundsInParent());
+      AbstractNode node = (AbstractNode) constructor.newInstance(nodeController);
+      putNode(node);
     } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException |
              IllegalAccessException | InvocationTargetException e) {
       e.printStackTrace();
     }
+  }
+
+  protected void putNode(AbstractNode node) {
+    node.setBoundingBox((workspace.getBoundsInParent()));
+    group.getChildren().add(node);
   }
 
   public ScrollPane makeNodeSelectionPane() {

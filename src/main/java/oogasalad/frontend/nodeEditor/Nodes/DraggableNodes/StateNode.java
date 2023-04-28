@@ -19,14 +19,14 @@ public class StateNode extends AbstractNode {
   private GridPane buttonGrid;
 
   public StateNode(NodeController nodeController) {
-    super(nodeController, 0, 0, 300, 100, "orange");
+    super(0, 0, 300, 100);
     setContent();
   }
 
   public StateNode(NodeController nodeController, double x, double y, double width,
       double height,
       String color) {
-    super(nodeController, x, y, width, height, color);
+    super(x, y, width, height);
   }
 
   @Override

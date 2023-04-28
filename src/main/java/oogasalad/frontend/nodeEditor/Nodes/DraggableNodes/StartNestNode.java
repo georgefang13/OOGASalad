@@ -7,12 +7,10 @@ import oogasalad.frontend.nodeEditor.NodeController;
 
 public class StartNestNode extends AbstractNode {
 
-  public StartNestNode(NodeController nodeController, double x, double y, double width,
+  public StartNestNode( double x, double y, double width,
       double height, String color) {
-    super(nodeController, x, y, WIDTH, HEIGHT, "green");
+    super(x, y, width, height);
     setContent();
-    this.setStyle(
-        "-fx-border-color: black; -fx-border-width: 2px; -fx-border-radius: 5px; -fx-background-color: white; -fx-background-radius: 5px; -fx-padding: 5px;");
   }
 
   @Override
