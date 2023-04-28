@@ -1,8 +1,6 @@
 package oogasalad.sharedDependencies.backend.database;
 
 import java.io.IOException;
-import java.net.URL;
-import oogasalad.gamerunner.backend.database.Database;
 
 public class MockDatabase extends Database {
   private static final String INFO_PATH = System.getProperty("user.dir")

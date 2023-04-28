@@ -1,4 +1,4 @@
-package oogasalad.gamerunner.backend.database;
+package oogasalad.sharedDependencies.backend.database;
 
 
 import com.google.api.core.ApiFuture;
