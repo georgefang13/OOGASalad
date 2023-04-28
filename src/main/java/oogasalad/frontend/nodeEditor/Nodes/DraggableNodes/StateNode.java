@@ -20,7 +20,8 @@ public class StateNode extends DraggableAbstractNode {
     setContent();
   }
 
-  public StateNode(NodeController nodeController, double x, double y, double width, double height,
+  public StateNode(NodeController nodeController, double x, double y, double width,
+      double height,
       String color) {
     super(nodeController, x, y, width, height, color);
   }
@@ -45,6 +46,7 @@ public class StateNode extends DraggableAbstractNode {
   public String getJSONString() {
     return null;
   }
+
 
   private Button makeButton(String label, EventHandler<ActionEvent> handler) {
     Button button = new Button(label);
