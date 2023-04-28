@@ -189,4 +189,7 @@ public class RuleManager {
     return result.toString();
   }
 
+  public List<RuleClass> getRules() {
+    return rules;
+  }
 }

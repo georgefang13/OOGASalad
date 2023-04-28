@@ -25,6 +25,8 @@ public interface GameToInterpreterAPI {
 
     void increaseTurn();
 
+    void setTurn(double turn);
+
     void putClass(IdManageable obj, String name);
 
     void removeClass(IdManageable obj, String name);

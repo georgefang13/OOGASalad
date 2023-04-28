@@ -15,6 +15,8 @@ import oogasalad.sharedDependencies.backend.id.IdManager;
 import oogasalad.sharedDependencies.backend.ownables.variables.Variable;
 import oogasalad.sharedDependencies.backend.owners.GameWorld;
 import oogasalad.sharedDependencies.backend.owners.Player;
+import oogasalad.sharedDependencies.backend.rules.RuleManager;
+import org.junit.Rule;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -24,6 +26,7 @@ public class ObjectFactoryTest {
   private ArrayList<Player> players;
   private GameWorld world;
   private GameInator game;
+  private RuleManager ruleManager;
 
   @BeforeEach
   void setup() {
@@ -35,6 +38,7 @@ public class ObjectFactoryTest {
     game.addPlayer(new Player());
     players = new ArrayList<>(game.getPlayers());
     idManager = game.getOwnableIdManager();
+    ruleManager = game.getRuleManager();
   }
 
   @Test
@@ -85,6 +89,19 @@ public class ObjectFactoryTest {
   }
 
   @Test
+  public void testCreateRule() {
+    ObjectType type = ObjectType.RULE;
+    Map<ObjectParameter, Object> params = new HashMap<>();
+    params.put(ObjectParameter.RULE_STR, "value1");
+    params.put(ObjectParameter.RULE_NAME, "rule1");
+    params.put(ObjectParameter.RULE_CLS, "red");
+    Map<Object, Object> constructorParams = new HashMap<>();
+    params.put(ObjectParameter.CONSTRUCTOR_ARGS, constructorParams);
+    game.sendObject(type, params);
+    assertEquals(1, ruleManager.getRules().size());
+  }
+
+  @Test
   public void testDeleteObject() {
     ObjectType type = ObjectType.OWNABLE;
     Map<ObjectParameter, Object> params = new HashMap<>();
@@ -96,8 +113,8 @@ public class ObjectFactoryTest {
     params.put(ObjectParameter.OWNER, "2");
     game.sendObject(type, params);
     assertEquals(1, idManager.getSimpleIds().size());
-//    game.deleteObject(type, "myId");
-//    assertEquals(0, idManager.getSimpleIds().size());
+    game.deleteObject(type, params);
+    assertEquals(0, idManager.getSimpleIds().size());
   }
 
   @Test
@@ -122,13 +139,13 @@ public class ObjectFactoryTest {
     game.updateObjectProperties("myId", type, updateParams);
     Variable var = (Variable) game.getOwnable("updatedId");
     assertEquals(30, var.get());
-//    assertEquals(players.get(1), var.getOwner());
-//    updateParams.replace(ObjectParameter.OWNER, "GameWorld");
-//    updateParams.remove(ObjectParameter.ID);
-//    updateParams.remove(ObjectParameter.PARENT_OWNABLE_ID);
-//    updateParams.replace(ObjectParameter.CONSTRUCTOR_ARGS, new HashMap<>());
-//    game.updateObjectProperties("updatedId", type, updateParams);
-//    assertEquals(world, game.getOwnable("updatedId").getOwner());
+    assertEquals(players.get(1), var.getOwner());
+    updateParams.replace(ObjectParameter.OWNER, "GameWorld");
+    updateParams.remove(ObjectParameter.ID);
+    updateParams.remove(ObjectParameter.PARENT_OWNABLE_ID);
+    updateParams.replace(ObjectParameter.CONSTRUCTOR_ARGS, new HashMap<>());
+    game.updateObjectProperties("updatedId", type, updateParams);
+    assertEquals(world, game.getOwnable("updatedId").getOwner());
   }
 
   @Test
@@ -141,7 +158,6 @@ public class ObjectFactoryTest {
     constructorParams.put(ObjectParameter.BOARD_ROWS, "3");
     constructorParams.put(ObjectParameter.BOARD_COLS, "3");
     params.put(ObjectParameter.CONSTRUCTOR_ARGS, constructorParams);
-    //params.put(ObjectParameter.ID, "myIdBoard");
     game.sendObject(type, params);
   }
 

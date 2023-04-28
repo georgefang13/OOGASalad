@@ -186,6 +186,11 @@ public class TestGame implements GameToInterpreterAPI {
     }
 
     @Override
+    public void setTurn(double turn) {
+
+    }
+
+    @Override
     public void putClass(IdManageable obj, String name) {
 
     }

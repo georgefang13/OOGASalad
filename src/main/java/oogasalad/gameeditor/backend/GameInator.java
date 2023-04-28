@@ -6,9 +6,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import oogasalad.gamerunner.backend.Rule;
 import oogasalad.gamerunner.backend.interpretables.Goal;
-//import oogasalad.sharedDependencies.backend.GameLoader;
+import oogasalad.sharedDependencies.backend.GameLoader;
 import oogasalad.sharedDependencies.backend.id.IdManager;
 import oogasalad.sharedDependencies.backend.ObjectFactory;
 import oogasalad.sharedDependencies.backend.ownables.Ownable;
@@ -51,12 +50,12 @@ public class GameInator {
   /**
    * The GameWorld of the game. The GameWorld owns Ownables not owned by Players.
    */
-  private GameWorld gameWorld = new GameWorld();
+  private final GameWorld gameWorld = new GameWorld();
 
   /**
    * The ObjectFactory of the game.
    */
-  private ObjectFactory objectFactory;
+  private final ObjectFactory objectFactory;
 
   /**
    * Creates a new Game with no information.
@@ -72,11 +71,18 @@ public class GameInator {
    */
   public GameInator(String directory) {
     //Use gameLoader to load the game from a file
-//    GameLoader loader = new GameLoader(directory);
-//    players.addAll(loader.getPlayers());
-//    ownableIdManager = loader.getOwnableIdManager();
-//    gameWorld = loader.getGameWorld();
-//    objectFactory = new ObjectFactory(gameWorld, ownableIdManager, players);
+    GameLoader loader = new GameLoader(directory);
+    try{
+      players.addAll(loader.loadPlayers());
+      loader.loadDropZones(ownableIdManager, gameWorld);
+      loader.loadObjectsAndVariables(ownableIdManager, players, gameWorld);
+      goals.addAll(loader.loadGoals());
+      ruleManager = loader.loadRules();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+
+    objectFactory = new ObjectFactory(gameWorld, ownableIdManager, players);
   }
 
 
@@ -240,8 +246,8 @@ public class GameInator {
    * Method is called in order to send a request to the backend to delete an object.
    * If removing a player, the id is not used and can be null
    *
-   * @Type The class the object belongs to
-   * @Params The params of the object
+   * @param type The class the object belongs to
+   * @param params The params of the object
    **/
   public void deleteObject(ObjectType type, Map<ObjectParameter, Object> params)
       throws IllegalArgumentException {
@@ -260,8 +266,8 @@ public class GameInator {
 
   /**
    * check if owner id is numeric value
-   * @param str
-   * @return
+   * @param str owner id
+   * @return owner id if it is numeric, null otherwise
    */
   private Integer isNumeric(String str) {
     if (str == null) {
@@ -280,21 +286,7 @@ public class GameInator {
    * @param params the parameters of the ownable
    */
   public void updateOwnable(String targetObject, Map<ObjectParameter, Object> params) throws IllegalArgumentException{
-    //change to new owner
-    String newOwnerNum = params.get(ObjectParameter.OWNER) != null ? params.get(ObjectParameter.OWNER).toString() : null;
-    Integer newOwnerInt = isNumeric(newOwnerNum);
-    if (newOwnerInt != null && newOwnerInt >= 0 && newOwnerInt <= players.size()){
-      Owner newOwner = players.get(newOwnerInt-1);
-      Ownable targetOwnable = ownableIdManager.getObject(targetObject);
-      targetOwnable.setOwner(newOwner);
-    }
-    else if(newOwnerNum != null && newOwnerNum.equals("GameWorld")){ //if null it wasnt in there and we dont want to change it
-      //set to gameworld
-      Owner newOwner = gameWorld;
-      Ownable targetOwnable = ownableIdManager.getObject(targetObject);
-      targetOwnable.setOwner(newOwner);
-    }
-
+    Ownable targetOwnable = ownableIdManager.getObject(targetObject);
     //change parent ownable
     String newParentOwnableId = params.get(ObjectParameter.PARENT_OWNABLE_ID) != null ? params.get(ObjectParameter.PARENT_OWNABLE_ID).toString() : null;
     if (newParentOwnableId != null){
@@ -304,31 +296,67 @@ public class GameInator {
     //change a variable value
     Map<Object, Object> constructorParams = (Map<Object, Object>) params.get(ObjectParameter.CONSTRUCTOR_ARGS);
     Object newValue = constructorParams.get(ObjectParameter.VALUE);
-    Ownable targetOwnable = ownableIdManager.getObject(targetObject);
     if (targetOwnable instanceof Variable){
       ((Variable) targetOwnable).set(newValue);
     }
 
-    // change id of ownable
+    // change id and owner of ownable
     String newId = params.get(ObjectParameter.ID) != null ? params.get(ObjectParameter.ID).toString() : null;
     if (newId != null){
       ownableIdManager.changeId(targetObject, newId);
+      updateOwner(newId, params);
+    } else {
+      updateOwner(targetObject, params);
     }
+  }
+
+  /**
+   * Updates the owner of an ownable.
+   *
+   * @param targetObject the ownable to update
+   * @param params the parameters of the ownable
+   * @throws IllegalArgumentException
+   */
+  private void updateOwner(String targetObject, Map<ObjectParameter, Object> params) throws IllegalArgumentException {
+    String newOwnerNum = params.get(ObjectParameter.OWNER) != null ? params.get(ObjectParameter.OWNER).toString() : null;
+    Integer newOwnerInt = isNumeric(newOwnerNum);
+    if (newOwnerInt != null && newOwnerInt >= 0 && newOwnerInt <= players.size()){
+      Owner newOwner = players.get(newOwnerInt-1);
+      ownableIdManager.getObject(targetObject).setOwner(newOwner);
+    }
+    else if(newOwnerNum != null && newOwnerNum.equals("GameWorld")){ //if null it wasnt in there and we dont want to change it
+      //set to gameworld
+      Owner newOwner = gameWorld;
+      ownableIdManager.getObject(targetObject).setOwner(newOwner);
+    }
+  }
+  /**
+   * Update Rule in the game.
+   *
+   * @param params the parameters of the rule
+   */
+  public void updateRule(String targetObject, Map<ObjectParameter, Object> params) throws IllegalArgumentException{
+    String rule = params.get(ObjectParameter.RULE_STR) != null ? params.get(ObjectParameter.RULE_STR).toString() : null;
+    String ruleName = params.get(ObjectParameter.RULE_NAME) != null ? params.get(ObjectParameter.RULE_NAME).toString() : null;
+    String ruleCls = params.get(ObjectParameter.RULE_CLS) != null ? params.get(ObjectParameter.RULE_CLS).toString() : null;
+    ruleManager.removeRule(ruleCls, targetObject);
+    ruleManager.addRule(ruleCls, ruleName, rule);
   }
 
   /**
    * Method is called to update information about a modified object in teh front end. The controller
    * sends updates to the Backend by giving the type and params for identification
    *
-   * @type The class the object belongs to
-   * @Params The updated params of the object
+   * @param type The class the object belongs to
+   * @param params The updated params of the object
    **/
   public void updateObjectProperties(String targetObject, ObjectType type, Map<ObjectParameter, Object> params)
       throws IllegalArgumentException {
     switch (type) {
-      case PLAYER -> {
+      case PLAYER, GOAL -> {
       }
       case OWNABLE -> updateOwnable(targetObject, params);
+      case RULE -> updateRule(targetObject, params);
       default -> throw new IllegalArgumentException("Invalid type"); //TODO add to properties
     }
   }
@@ -358,4 +386,11 @@ public class GameInator {
     return ownableIdManager;
   }
 
+  /**
+   * Gets the ruleManager for the Rules.
+   * @return the ruleManager for the Rules
+   */
+  public RuleManager getRuleManager() {
+    return ruleManager;
+  }
 }

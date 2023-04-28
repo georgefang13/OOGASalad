@@ -1,1 +1,14 @@
-{"g1":{"image":"9heart.png","owner":"0","size":"80","location":"dz1","classes":"card","owns":"img1"},"g2":{"image":"acespade.png","owner":"0","size":"80","location":"dz2","classes":"card","owns":"img2"}}
+{
+  "g1": {
+    "owner": "0",
+    "location": "dz1",
+    "classes": "card",
+    "owns": "img1"
+  },
+  "g2": {
+    "owner": "0",
+    "location": "dz2",
+    "classes": "card",
+    "owns": "img2"
+  }
+}

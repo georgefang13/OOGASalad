@@ -10,10 +10,14 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.control.Button;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
+import oogasalad.frontend.nodeEditor.Nodes.AbstractNode;
 import oogasalad.frontend.nodeEditor.Nodes.DraggableNodes.DraggableAbstractNode;
+import oogasalad.frontend.nodeEditor.Nodes.DraggableNodes.EndNestNode;
 import oogasalad.frontend.nodeEditor.Nodes.DraggableNodes.FileBasedNode;
+import oogasalad.frontend.nodeEditor.Nodes.DraggableNodes.StartNestNode;
 
 public class CodeEditorPanel extends AbstractNodePanel {
 
@@ -43,6 +47,7 @@ public class CodeEditorPanel extends AbstractNodePanel {
       JsonObject value = (JsonObject) obj.get(key);
       String name = value.get("name").getAsString();
       JsonObject specs = value.get("specs").getAsJsonObject();
+      String description = value.get("description").getAsString();
       JsonArray innerBlocks = specs.get("innerBlocks").getAsJsonArray();
       JsonArray outputTypes = specs.get("outputs").getAsJsonArray();
       String parseStr = specs.get("parse").getAsString();
@@ -53,11 +58,26 @@ public class CodeEditorPanel extends AbstractNodePanel {
         JsonArray inpTypes = inpObj.get("type").getAsJsonArray();
       }
       Button button = new Button(name);
+      Tooltip tip = new Tooltip(description);
+      Tooltip.install(button, tip);
       button.setOnAction(event -> {
         try {
-          DraggableAbstractNode node = new FileBasedNode(nodeController,name, innerBlocks, outputTypes, parseStr, inputs);
+          DraggableAbstractNode node = new FileBasedNode(nodeController, name, innerBlocks,
+              outputTypes, parseStr, inputs);
           group.getChildren().add(node);
           node.setBoundingBox(workspace.getBoundsInParent());
+          for (JsonElement nestBlock : innerBlocks.asList()) {
+            DraggableAbstractNode start = new StartNestNode(nodeController, 0, 0, node.getWidth(),
+                node.getHeight(), "green");
+            group.getChildren().add(start);
+            start.setBoundingBox(workspace.getBoundsInParent());
+            start.snapTo(node);
+            DraggableAbstractNode end = new EndNestNode(nodeController, 0, 0, node.getWidth(),
+                node.getHeight(), "red");
+            group.getChildren().add(end);
+            end.setBoundingBox(workspace.getBoundsInParent());
+            end.snapTo(start);
+          }
         } catch (Exception e) {
           e.printStackTrace();
         }
