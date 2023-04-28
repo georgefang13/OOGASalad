@@ -1,13 +1,17 @@
 package oogasalad.simpleGameUI;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import oogasalad.Controller.GameRunnerController;
 import oogasalad.gamerunner.backend.Game;
@@ -34,6 +38,8 @@ public class SimpleGameView extends Application implements GameController {
     private final Button undoButton = new Button("Undo");
 
     private Game game;
+    private String directory;
+    private String code;
 
     public static final String GAME_STYlE_FILE_PATH = "frontend/css/simpleGameView.css";
     private final String MODAL_STYLE_SHEET = Objects
@@ -44,19 +50,53 @@ public class SimpleGameView extends Application implements GameController {
         Scene scene = new Scene(root, SCREEN_WIDTH, SCREEN_HEIGHT);
         scene.getStylesheets().add(MODAL_STYLE_SHEET);
 
-        String directory = "data/games/checkers";
+        directory = "data/games/checkers";
 
-        loadGame(directory);
-
-        game = new Game(this, directory, 2);
-
-        undoButton.setOnAction(e -> game.undoClickPiece());
-        root.getChildren().add(undoButton);
+        showStartScreen();
 
         stage.setScene(scene);
         stage.show();
-        stage.setResizable(false);
+        stage.setResizable(true);
     }
+
+    private void showStartScreen() {
+        Button btn = new Button("Start Local Game");
+        btn.setOnAction(e -> startGame("local"));
+        Button btn2 = new Button("Create Online Game");
+        btn2.setOnAction(e -> startGame("create"));
+        TextField codeField = new TextField();
+        codeField.setPromptText("Enter Code");
+        Button btn3 = new Button("Join Online Game");
+        btn3.setOnAction(e -> {
+            code = codeField.getText();
+            startGame("join");
+        });
+        VBox hbox = new VBox(btn, btn2, codeField, btn3);
+        root.getChildren().add(hbox);
+    }
+
+
+    private void startGame(String type) {
+
+        root.getChildren().retainAll();
+        try {
+            loadGame(directory);
+
+            game = new Game(this, directory, 2,  !type.equals("local"));
+
+            undoButton.setOnAction(e -> game.undoClickPiece());
+            root.getChildren().add(undoButton);
+
+            switch (type) {
+                case "local" -> game.startGame();
+                case "create" -> game.createOnlineGame();
+                case "join" -> game.joinOnlineGame(code);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public static void main(String[] args) {
         launch(args);
@@ -164,19 +204,23 @@ public class SimpleGameView extends Application implements GameController {
     @Override
     public void movePiece(String id, String dropZoneID) {
         String dzid = pieceToDropZoneMap.get(id);
-        ((HBox) nodes.get(dzid)).getChildren().remove(nodes.get(id));
-        ((HBox) nodes.get(dropZoneID)).getChildren().add(nodes.get(id));
-        pieceToDropZoneMap.put(id, dropZoneID);
+        Platform.runLater(() -> {
+            ((HBox) nodes.get(dzid)).getChildren().remove(nodes.get(id));
+            ((HBox) nodes.get(dropZoneID)).getChildren().add(nodes.get(id));
+            pieceToDropZoneMap.put(id, dropZoneID);
+        });
     }
 
     @Override
     public void removePiece(String id) {
         String dzid = pieceToDropZoneMap.get(id);
-        Node n = nodes.get(id);
-        HBox dz = (HBox) nodes.get(dzid);
-        pieceToDropZoneMap.remove(id);
-        dz.getChildren().remove(n);
-        root.getChildren().remove(n);
+        Platform.runLater(() -> {
+            Node n = nodes.get(id);
+            HBox dz = (HBox) nodes.get(dzid);
+            pieceToDropZoneMap.remove(id);
+            dz.getChildren().remove(n);
+            root.getChildren().remove(n);
+        });
     }
 
     @Override
@@ -191,7 +235,6 @@ public class SimpleGameView extends Application implements GameController {
 
         ImageView imgv = new ImageView(img);
 
-
         ImageView oldimg = (ImageView) ((HBox) nodes.get(id)).getChildren().get(0);
         int w = (int) oldimg.getFitWidth();
         int h = (int) oldimg.getFitHeight();
@@ -202,6 +245,16 @@ public class SimpleGameView extends Application implements GameController {
         HBox piece = (HBox) nodes.get(id);
         piece.getChildren().clear();
         piece.getChildren().add(imgv);
+    }
+
+    @Override
+    public void passGameId(String code) {
+        Platform.runLater(() -> {
+            Label label = new Label("Game ID: " + code);
+            label.setLayoutX(100);
+            label.setLayoutY(10);
+            root.getChildren().add(label);
+        });
     }
 
     private void clearClickables(){

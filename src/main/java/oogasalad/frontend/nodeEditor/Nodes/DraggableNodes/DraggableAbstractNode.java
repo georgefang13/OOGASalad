@@ -9,8 +9,10 @@ import oogasalad.frontend.nodeEditor.Nodes.AbstractNode;
 public abstract class DraggableAbstractNode extends AbstractNode implements Draggable {
 
   private Bounds boundingBox;
-
-  private AbstractNode parentNode;
+  protected static final double DEFAULT_X = 0;
+  protected static final double DEFAULT_Y = 0;
+  protected static final double WIDTH = 300;
+  protected static final double HEIGHT = 100;
 
   public DraggableAbstractNode(NodeController nodeController, double x, double y, double width,
       double height, String color) {
@@ -55,18 +57,14 @@ public abstract class DraggableAbstractNode extends AbstractNode implements Drag
           if (this.getParent() == null) {
             return;
           }
-          double x = e.getSceneX();
-          double y = e.getSceneY();
           double scaleFactor = this.getParent().getScaleX();
           double newX = e.getSceneX() / scaleFactor - xOffset;
           double newY = e.getSceneY() / scaleFactor - yOffset;
-
-          move(newX, newY);
-          if (this.getParentNode() != null) {
-              this.parentNode.setChildNode(null);
-              this.setParentNode(null);
-
+          this.move(newX, newY);
+          if (this.getChildNode() != null) {
+            this.getChildNode().snapTo(this);
           }
+          clearLinks();
           e.consume();
         });
   }
@@ -81,52 +79,14 @@ public abstract class DraggableAbstractNode extends AbstractNode implements Drag
         if (node instanceof AbstractNode && node != this) {
           if (this.getBoundsInParent().intersects(node.getBoundsInParent())
               && this.getChildNode() != node) {
-              while(((AbstractNode) node).getChildNode()!=null){
-                  node = ((AbstractNode) node).getChildNode();
-              }
-              try {
-                    snapTo((AbstractNode) node);
-                } catch (InterruptedException interruptedException) {
-                    interruptedException.printStackTrace();
-              }
-              e.consume();
-              return;
+            snapTo((AbstractNode) node);
+            e.consume();
+            return;
           }
         }
       }
-
       e.consume();
     });
-  }
-
-  protected void snapTo(AbstractNode node) throws InterruptedException {
-      if (node == this) {
-          return;
-      }
-
-    while (node.getChildNode() != null && node.getChildNode() != this) {
-      node = node.getChildNode();
-    }
-
-    this.setTranslateX(node.getTranslateX());
-    this.setTranslateY(node.getTranslateY() + node.getHeight());
-    AbstractNode temp = this;
-
-    while (temp.getChildNode() != null) {
-        AbstractNode tempOld = temp;
-        temp = temp.getChildNode();
-      temp.setTranslateX(tempOld.getTranslateX());
-      temp.setTranslateY(tempOld.getTranslateY() + tempOld.getHeight());
-    }
-    if(node.getChildNode() == null && node != this) {
-        node.setChildNode(this);
-        this.setParentNode(node);
-    }
-
-  }
-
-  public void setBoundingBox(Bounds bounds) {
-    boundingBox = bounds;
   }
 
 
@@ -135,9 +95,6 @@ public abstract class DraggableAbstractNode extends AbstractNode implements Drag
     if (boundingBox.contains(newX, newY, getWidth(), getHeight())) {
       setTranslateX(newX);
       setTranslateY(newY);
-      if (this.getChildNode() != null) {
-        this.getChildNode().move(newX, newY + this.getHeight());
-      }
     } else {
       double clampedX = Math.min(Math.max(newX, boundingBox.getMinX()),
           boundingBox.getMaxX() - getWidth());
@@ -147,12 +104,21 @@ public abstract class DraggableAbstractNode extends AbstractNode implements Drag
       setTranslateY(clampedY);
     }
   }
-    public void setParentNode(AbstractNode node) {
-        this.parentNode = node;
-    }
 
-    public AbstractNode getParentNode() {
-        return parentNode;
-    }
+  @Override
+  protected void delete() {
+    clearLinks();
+    super.delete();
+  }
 
+  public void setBoundingBox(Bounds bounds) {
+    boundingBox = bounds;
+  }
+
+  protected void clearLinks() {
+    if (this.getParentNode() != null) {
+      this.parentNode.setChildNode(null);
+      this.setParentNode(null);
+    }
+  }
 }

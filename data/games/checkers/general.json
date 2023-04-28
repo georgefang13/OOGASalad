@@ -1,9 +1,8 @@
 {
   "name": "Checkers",
   "author": "DuVALLEY Boiz",
-  "image": "display.png",
   "description": "Checkers. Improved checkers. You know how to play :)",
-  "tags": ["board game", "grid game"],
+  "tags": ["all", "board game", "grid game"],
   "players": {
     "min": 2,
     "max": 2

@@ -1,14 +1,14 @@
 package oogasalad.gamerunner.backend;
 
-import oogasalad.Controller.GameRunnerController;
+import oogasalad.gamerunner.backend.online.EmptyOnlineRunner;
+import oogasalad.gamerunner.backend.online.OnlineRunner;
+import oogasalad.gamerunner.backend.online.SocketRunner;
 import oogasalad.sharedDependencies.backend.GameLoader;
 import oogasalad.sharedDependencies.backend.id.IdManageable;
 import oogasalad.sharedDependencies.backend.id.IdManager;
 import oogasalad.gamerunner.backend.fsm.FSM;
-import oogasalad.gamerunner.backend.fsm.ProgrammableState;
 import oogasalad.gamerunner.backend.interpretables.Goal;
 import oogasalad.gamerunner.backend.interpreter.Interpreter;
-import oogasalad.sharedDependencies.backend.filemanagers.FileManager;
 import oogasalad.sharedDependencies.backend.ownables.Ownable;
 import oogasalad.sharedDependencies.backend.ownables.gameobjects.DropZone;
 import oogasalad.sharedDependencies.backend.ownables.gameobjects.GameObject;
@@ -20,7 +20,6 @@ import oogasalad.sharedDependencies.backend.rules.RuleManager;
 
 import java.io.FileNotFoundException;
 import java.util.*;
-import java.util.stream.StreamSupport;
 
 /**
  * The Game class represents the game itself.
@@ -70,25 +69,51 @@ public class Game implements GameToInterpreterAPI{
 
     private final String directory;
 
+    private final OnlineRunner onlineRunner;
+
+    private int numPlayers;
+
+    private boolean startedOnline = false;
+    private int onlinePlayerNum = -1;
+
 
     /////////////////// PLAY THE GAME ///////////////////
 
-    public Game(GameController controller, String directory, int numPlayers) {
+    public Game(GameController controller, String directory, int numPlayers, boolean online) {
+        this.numPlayers = numPlayers;
         this.controller = controller;
         this.directory = directory;
 
-        try{
-            initGame(numPlayers, directory);
-        } catch (Exception e){
+        if (online) {
+            onlineRunner = new SocketRunner(this);
+        } else {
+            onlineRunner = new EmptyOnlineRunner();
+        }
+    }
+
+    public void setNumPlayers(int num){
+        numPlayers = num;
+        if (numPlayers == 2){
+            startOnlineGame();
+        }
+    }
+
+    public void startGame(){
+        try {
+            initGame(directory);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    private void initGame(int numPlayers, String directory) throws FileNotFoundException, ClassNotFoundException {
+
+    private void initGame(String directory) throws FileNotFoundException, ClassNotFoundException {
 
         GameLoader gl = new GameLoader(directory);
 
-        players.addAll(gl.loadPlayers());
-
+        // players are added by the SocketRunner if online
+        for (int i = 0; i < numPlayers; i++) {
+            players.add(new Player());
+        }
         
         interpreter.linkIdManager(ownableIdManager);
         interpreter.linkGame(this);
@@ -102,11 +127,38 @@ public class Game implements GameToInterpreterAPI{
         initVariables();
 
         startTurn();
+    }
 
+    public void createOnlineGame(){
+        onlineRunner.create();
+    }
+    public void joinOnlineGame(String code){
+        onlineRunner.join(code);
+    }
+    public String getOnlineGameCode(){
+        return onlineRunner.getCode();
+    }
+    public void startOnlineGame(){
+        if (!startedOnline) {
+            startedOnline = true;
+            onlineRunner.start();
+            onlinePlayerNum = onlineRunner.getPlayerNum();
+            startGame();
+            System.out.println("PLAYER " + onlinePlayerNum);
+        }
+    }
+
+    /**
+     * sends the online game code to the controller
+     * @param code the code to send
+     */
+    public void sendCode(String code){
+        controller.passGameId(code);
     }
 
     private void startTurn(){
         try {
+            interpreter.interpret("make :game_available [ ]");
             fsm.setState("INIT");
             fsm.transition();
             sendClickable();
@@ -144,6 +196,8 @@ public class Game implements GameToInterpreterAPI{
     }
 
     private void sendClickable(){
+        if (onlinePlayerNum > -1 && onlinePlayerNum != turn.get().intValue()) return;
+
         Variable<List<GameObject>> v = (Variable<List<GameObject>>) ownableIdManager.getObject("available");
 
         List<String> ids = new ArrayList<>();
@@ -158,6 +212,24 @@ public class Game implements GameToInterpreterAPI{
      * reacts to clicking a piece
      */
     public void clickPiece(String selectedObject) {
+        clickPiece(selectedObject, true);
+    }
+
+    private boolean isPieceAvailable(String id){
+        Variable<List<GameObject>> v = (Variable<List<GameObject>>) ownableIdManager.getObject("available");
+        for (GameObject o : v.get()){
+            if (ownableIdManager.getId(o).equals(id)) return true;
+        }
+        return false;
+    }
+
+    /**
+     * reacts to clicking a piece
+     */
+    public void clickPiece(String selectedObject, boolean send) {
+        if (send) onlineRunner.send(selectedObject);
+
+        if (!isPieceAvailable(selectedObject)) return;
 
         interpreter.interpret("make :game_available [ ]");
 
@@ -181,7 +253,7 @@ public class Game implements GameToInterpreterAPI{
             }
 
             fsm.transition();
-            startTurn();
+            setTurn(turn.get());
         }
     }
 
@@ -189,8 +261,12 @@ public class Game implements GameToInterpreterAPI{
      * Goes to the previous state. Will break the game if going to the previous state would change turns or modify the board.
      */
     public void undoClickPiece(){
+        undoClickPiece(true);
+    }
+    public void undoClickPiece(boolean send){
         interpreter.interpret("make :game_available [ ]");
         fsm.undo();
+        if (send) onlineRunner.send("^undo");
         sendClickable();
     }
 
@@ -212,6 +288,7 @@ public class Game implements GameToInterpreterAPI{
      */
     public void addPlayer(Player player) {
         players.add(player);
+        ((Variable) ownableIdManager.getObject("numPlayers")).set((double) players.size());
     }
 
     /**
@@ -241,6 +318,17 @@ public class Game implements GameToInterpreterAPI{
     }
 
     //endregion
+
+    public Ownable getVariable(String name){
+        if (ownableIdManager.isIdInUse(name)){
+            return ownableIdManager.getObject(name);
+        }
+        return null;
+    }
+    public Owner getOwner(int num){
+        if (num == -1) return gameWorld;
+        return players.get(num);
+    }
 
     @Override
     public Player getPlayer(int playerNum) {
@@ -293,6 +381,12 @@ public class Game implements GameToInterpreterAPI{
     }
 
     @Override
+    public void setTurn(double turn) {
+        this.turn.set(turn);
+        startTurn();
+    }
+
+    @Override
     public void putClass(IdManageable obj, String name) {
         obj.addClass(name);
     }
@@ -317,7 +411,8 @@ public class Game implements GameToInterpreterAPI{
     @Override
     public void setPlayerOwner(Ownable obj, Owner owner) {
         ownableIdManager.setPlayerOwner(obj, owner);
-
+        int ownerNum = -1;
+        if (owner != gameWorld) ownerNum = players.indexOf((Player) owner);
     }
 
     /**
