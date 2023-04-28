@@ -19,5 +19,7 @@ public interface GameController {
 
     void setObjectImage(String id, String imagePath);
 
-    void select(String dropID);
+    void selectPiece(String dropID);
+
+    void selectDropZone(String dropID);
 }

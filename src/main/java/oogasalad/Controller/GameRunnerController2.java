@@ -51,7 +51,13 @@ public class GameRunnerController2 implements GameController {
         game = new Game(this,directory,numPlayers);
     }
     @Override
-    public void select(String id) {
+    public void selectPiece(String id) {
+        if (clickable.contains(id)) {
+            game.clickPiece(id);
+        }
+    }
+    @Override
+    public void selectDropZone(String id) {
         if (clickable.contains(id)) {
             game.clickPiece(id);
         }

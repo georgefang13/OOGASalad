@@ -1,9 +1,10 @@
 package oogasalad.frontend.components.gameObjectComponent.GameRunner;
 
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import oogasalad.Controller.GameRunnerController;
+import oogasalad.Controller.GameRunnerController2;
 import oogasalad.gamerunner.backend.GameController;
 
 import java.io.FileInputStream;
@@ -22,11 +23,13 @@ public class Piece extends GameRunnerObject{
     private void initializePieceBox() {
         Node pieceNode = getNode();
         pieceBox = new HBox(pieceNode);
+        //pieceBox.setAlignment(Pos.CENTER);
         pieceBox.setPrefHeight(size);
         pieceBox.setPrefWidth(size);
         pieceBox.setMaxHeight(size);
         pieceBox.setMaxHeight(size);
-        pieceBox.setOnMouseClicked(e -> gameRunnerController.select(ID));
+        pieceBox.setOnDragDetected(e -> gameRunnerController.selectPiece(ID));
+        pieceBox.setOnMouseReleased(e -> onDragDropped());
     }
 
     public void moveToDropZoneXY(DropZoneFE.dropZoneCenter DZcenter){
@@ -35,18 +38,20 @@ public class Piece extends GameRunnerObject{
     private void setCentertoCenter(double x, double y){
         pieceBox.setLayoutX(x-size/2);
         pieceBox.setLayoutY(y-size/2);
+        pieceBox.setTranslateX(0.0);
+        pieceBox.setTranslateY(0.0);
     }
     public Node getPieceBox(){
         return pieceBox;
     }
     @Override
     public void onDragDropped() {
-        gameRunnerController.select(ID);
+        gameRunnerController.selectDropZone(ID);
     }
 
     @Override
     public void onClick() {
-        gameRunnerController.select(ID);
+        gameRunnerController.selectPiece(ID);
     }
 
     @Override
