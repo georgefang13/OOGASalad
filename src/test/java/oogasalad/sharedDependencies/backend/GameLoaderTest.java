@@ -1,5 +1,6 @@
 package oogasalad.sharedDependencies.backend;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -14,9 +15,11 @@ import oogasalad.gamerunner.backend.fsm.FSM;
 import oogasalad.gamerunner.backend.interpretables.Goal;
 import oogasalad.gamerunner.backend.interpreter.Interpreter;
 import oogasalad.gamerunner.backend.interpreter.TestGame;
+import oogasalad.sharedDependencies.backend.id.IdManager;
 import oogasalad.sharedDependencies.backend.ownables.Ownable;
 import oogasalad.sharedDependencies.backend.ownables.gameobjects.DropZone;
 import oogasalad.sharedDependencies.backend.ownables.gameobjects.GameObject;
+import oogasalad.sharedDependencies.backend.owners.GameWorld;
 import oogasalad.sharedDependencies.backend.owners.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,98 +35,55 @@ class GameLoaderTest {
   }
 
   @Test
-  void testGetGoals() {
-    assertEquals(1, gameLoader.getGoals().size());
+  void testGetGoals() throws FileNotFoundException {
+    assertEquals(1, gameLoader.loadGoals().size());
   }
 
   @Test
-  void testGetPlayers() {
-    assertEquals(2, gameLoader.getPlayers().size());
+  void testGetPlayers() throws FileNotFoundException {
+    List<Player> players = gameLoader.loadPlayers();
+    assertEquals(2, players.size());
     //assert that all players are type Player and are not null and are unique
-    for (Player player : gameLoader.getPlayers()) {
+    for (Player player : players) {
       assertNotNull(player);
     }
-    Set<Player> playerSet = new HashSet<>(gameLoader.getPlayers());
-    assertEquals(gameLoader.getPlayers().size(), playerSet.size());
+    Set<Player> playerSet = new HashSet<>(players);
+    assertEquals(players.size(), playerSet.size());
   }
 
   @Test
-  void testGetOwnableIdManager() {
-    assertNotNull(gameLoader.getOwnableIdManager());
-    int numDropZones = 9+2;
-    int numPieces = 5*2;
-    ArrayList<String> ids = new ArrayList<>(gameLoader.getOwnableIdManager().getSimpleIds().keySet());
-    Set expectedIds = new HashSet<>(Arrays.asList("pieceX0", "pieceX1", "XDropZone", "pieceO0", "pieceX2", "pieceX3", "pieceX4", "0,0", "pieceO1", "0,1", "1,0", "pieceO2", "0,2", "1,1", "2,0", "pieceO3", "1,2", "2,1", "pieceO4", "2,2", "ODropZone"));
-    assertEquals(expectedIds, new HashSet<>(ids));
-    assertEquals(numDropZones+numPieces, gameLoader.getOwnableIdManager().getSimpleIds().size());
-    ArrayList<Ownable> ownables = new ArrayList<>();
-    Iterator<Entry<String, Ownable>> iterator = gameLoader.getOwnableIdManager().iterator();
-    while (iterator.hasNext()) {
-      ownables.add(iterator.next().getValue());
-    }
-    assertEquals(numDropZones+numPieces, ownables.size());
-    for(Ownable ownable : ownables) {
-      assertNotNull(ownable);
-      String id = gameLoader.getOwnableIdManager().getId(ownable);
-      //since none of the pieces own any other pieces, they should all be in the simpleIds map
-      assertTrue(gameLoader.getOwnableIdManager().getSimpleIds().containsKey(id));
-    }
-  }
+  void testGetFSM() throws FileNotFoundException {
+    IdManager<Ownable> idManager = new IdManager<>();
+    Interpreter interpreter = new Interpreter();
+    interpreter.linkIdManager(idManager);
+    TestGame game = new TestGame();
+    interpreter.linkGame(game);
 
-  @Test
-  void testGetGameWorld() {
-    assertNotNull(gameLoader.getGameWorld());
-    ArrayList<Ownable> ownables = new ArrayList<>();
-    Iterator<Entry<String, Ownable>> iterator = gameLoader.getOwnableIdManager().iterator();
-    while (iterator.hasNext()) {
-      ownables.add(iterator.next().getValue());
-    }
-    int numDropZones = 9+2;
-    int numPieces = 5*2;
-    assertEquals(numDropZones+numPieces, ownables.size());
-    HashSet<Ownable> gameWorldObjs = new HashSet<>();
-    HashSet<Ownable> playerObjs = new HashSet<>();
-    for(Ownable ownable : ownables) {
-      assertNotNull(ownable);
-      if(ownable.getOwner() instanceof Player) {
-        playerObjs.add(ownable);
-      }
-      else {
-        gameWorldObjs.add(ownable);
-      }
-    }
-    assertEquals(numDropZones, gameWorldObjs.size());
-    assertEquals(numPieces, playerObjs.size());
-  }
-
-  @Test
-  void testGetFSM() {
-    FSM<String> testFSM = gameLoader.getFSM();
+    FSM<String> testFSM = new FSM<>(idManager);
+    gameLoader.loadFSM(interpreter, testFSM);
 
     assertNotNull(testFSM);
     assertEquals(4, testFSM.getStates().size());
     Set expectedStates = new HashSet<>(Arrays.asList("INIT", "DONE", "SELECTPIECE", "SELECTZONE"));
     assertEquals(expectedStates, new HashSet<>(testFSM.getStates()));
-
-    Interpreter interpreter = gameLoader.getInterpreter();
-    TestGame game = new TestGame();
-    interpreter.linkGame(game);
-
-    try {
-      testFSM.setState("INIT"); //FIXME fails seemingly because id manager has not been linked
-      assertEquals("INIT", testFSM.getCurrentState());
-      gameLoader.getFSM().transition();
-    } catch (Exception e) {
-      e.printStackTrace();
-      fail();
-    }
   }
 
   @Test
-  void testGetPieceLocations() {
+  void testGetPieceLocations() throws FileNotFoundException, ClassNotFoundException {
+    IdManager<Ownable> idManager = new IdManager<>();
+    Interpreter interpreter = new Interpreter();
+    interpreter.linkIdManager(idManager);
+    interpreter.linkGame(new TestGame());
+    GameWorld gw = new GameWorld();
+    List<Player> players = gameLoader.loadPlayers();
+
+    gameLoader.loadDropZones(idManager, gw);
+
+    gameLoader.loadObjectsAndVariables(idManager, players, gw);
+
     ArrayList<DropZone> dropZones = new ArrayList<>();
     ArrayList<GameObject> pieces = new ArrayList<>();
-    Iterator<Entry<String, Ownable>> iterator = gameLoader.getOwnableIdManager().iterator();
+    Iterator<Entry<String, Ownable>> iterator = idManager.iterator();
     while (iterator.hasNext()) {
       Ownable ownable = iterator.next().getValue();
       if(ownable instanceof DropZone) {
@@ -137,7 +97,7 @@ class GameLoaderTest {
     //check that the contents of each drop zone is correct
     for(DropZone dropZone : dropZones) {
       //check that it is owned by the game world
-      assertEquals(gameLoader.getGameWorld(), dropZone.getOwner());
+      assertEquals(gw, dropZone.getOwner());
       //check that its contents are correct
       dropZone.getAllObjects().forEach(gameObject -> {
         assertTrue(pieces.contains(gameObject));

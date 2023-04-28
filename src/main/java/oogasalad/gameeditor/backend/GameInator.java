@@ -42,7 +42,7 @@ public class GameInator {
   /**
    * The ObjectFactory of the game.
    */
-  private final ObjectFactory objectFactory;
+  private ObjectFactory objectFactory;
 
   /**
    * Creates a new Game with no information.
@@ -58,11 +58,11 @@ public class GameInator {
    */
   public GameInator(String directory) {
     //Use gameLoader to load the game from a file
-    GameLoader loader = new GameLoader(directory);
-    players.addAll(loader.getPlayers());
-    ownableIdManager = loader.getOwnableIdManager();
-    gameWorld = loader.getGameWorld();
-    objectFactory = new ObjectFactory(gameWorld, ownableIdManager, players);
+//    GameLoader loader = new GameLoader(directory);
+//    players.addAll(loader.getPlayers());
+//    ownableIdManager = loader.getOwnableIdManager();
+//    gameWorld = loader.getGameWorld();
+//    objectFactory = new ObjectFactory(gameWorld, ownableIdManager, players);
   }
 
 
