@@ -5,6 +5,7 @@ import com.google.api.core.ApiFuture;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.DocumentSnapshot;
+import com.google.cloud.firestore.FieldValue;
 import com.google.cloud.firestore.SetOptions;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
@@ -73,6 +74,16 @@ public class Database {
       throw new RuntimeException(e);
     }
     return documentSnapshot.get(field);
+  }
+
+  /**
+   * Delete data from database at specified location
+   * @param collection high-level collection to be updated
+   * @param entry entry within collection
+   * @param field field inside entry
+   */
+  public void deleteData(String collection, String entry, String field) {
+    addData(collection, entry, field, FieldValue.delete());
   }
 
   /**

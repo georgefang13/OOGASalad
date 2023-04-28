@@ -7,8 +7,8 @@ public class UserManager {
 
   private final Database db;
 
-  public UserManager() {
-    db = new Database();
+  public UserManager(Database database) {
+    db = database;
   }
 
   /**
@@ -30,7 +30,7 @@ public class UserManager {
    */
   public boolean tryRegister(String username, String password) {
     Object storedPassword = db.getData(COLLECTION, ENTRY, username);
-    if (storedPassword == null) {
+    if (storedPassword != null) {
       return false;
     }
     db.addData(COLLECTION, ENTRY, username, password);
