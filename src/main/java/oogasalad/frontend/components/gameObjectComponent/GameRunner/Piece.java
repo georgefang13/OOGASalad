@@ -3,6 +3,7 @@ package oogasalad.frontend.components.gameObjectComponent.GameRunner;
 import javafx.scene.Node;
 import javafx.scene.layout.VBox;
 import oogasalad.Controller.GameRunnerController;
+import oogasalad.gamerunner.backend.GameController;
 
 import java.io.FileInputStream;
 import java.util.HashMap;
@@ -11,7 +12,7 @@ import java.util.Map;
 public class Piece extends GameRunnerObject{
     private double lastTranslateX;
     private double lastTranslateY;
-    public Piece(String ID, GameRunnerController gameRunnerController, String imagepath, double size) {
+    public Piece(String ID, GameController gameRunnerController, String imagepath, double size) {
         super(ID, gameRunnerController, imagepath, size);
     }
     public void moveToDropZoneXY(double x, double y){
@@ -25,7 +26,7 @@ public class Piece extends GameRunnerObject{
     }
     @Override
     public void onDragDropped() {
-        gameRunnerController.updatePieceMove(ID);
+        gameRunnerController.select(ID);
     }
 
     @Override

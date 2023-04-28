@@ -13,6 +13,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import oogasalad.Controller.GameRunnerController;
 import oogasalad.frontend.components.gameObjectComponent.GameRunner.DropZoneFE;
+import oogasalad.frontend.components.gameObjectComponent.GameRunner.Piece;
 import oogasalad.gamerunner.backend.Game;
 import oogasalad.gamerunner.backend.GameController;
 
@@ -97,8 +98,12 @@ public class GameRunnerController2 implements GameController {
         imgv.setFitWidth(size);
         imgv.setFitHeight(size);
 
+
+
+        Piece p = new Piece(id,this,image,size);
         HBox piece = new HBox();
-        piece.getChildren().add(imgv);
+        //piece.getChildren().add(imgv);
+        piece.getChildren().add(p.getPieceBox());
         piece.setPrefHeight(size);
         piece.setPrefWidth(size);
         piece.setMaxHeight(size);
