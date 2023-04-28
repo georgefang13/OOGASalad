@@ -9,8 +9,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import oogasalad.Controller.GameRunnerController;
+import oogasalad.frontend.components.gameObjectComponent.GameRunner.DropZoneFE;
 import oogasalad.gamerunner.backend.Game;
 import oogasalad.gamerunner.backend.GameController;
 
@@ -23,6 +25,7 @@ public class GameRunnerController2 implements GameController {
     private static final int SCREEN_HEIGHT = 700;
 
     private final Map<String, Node> nodes = new HashMap<>();
+    private final Map<String, DropZoneFE> dropZones = new HashMap<>();
 
     private final Map<String, String> pieceToDropZoneMap = new HashMap<>();
 
@@ -46,8 +49,8 @@ public class GameRunnerController2 implements GameController {
         //initializeBoard();
         game = new Game(this,directory,numPlayers);
     }
-
-    private void select(String id) {
+    @Override
+    public void select(String id) {
         if (clickable.contains(id)) {
             game.clickPiece(id);
         }
@@ -56,15 +59,27 @@ public class GameRunnerController2 implements GameController {
     @Override
     public void addDropZone(GameRunnerController.DropZoneParameters params) {
         // String id, int x, int y, int height, int width
-        HBox dropZone = new HBox();
+
+        //dropZone.getStyleClass().add("dropzone");
+        String id = params.id();
+        int x = params.x();
+        int y = params.y();
+        int width = params.width();
+        int height = params.height();
+        DropZoneFE newdrop = new DropZoneFE(id, width, height, x,y,this);
+        //dropZone.getChildren().add(newdrop.getVisual());
+
+        //dropZone.setStyle("-fx-background-color: rgba(200, 200, 255, 0.5); -fx-border-color: black; -fx-border-width: 1px; -fx-alignment: center;");
+
+        //dropZone.setOnMouseClicked(e -> select(params.id()));
+        HBox dropZone = new HBox(newdrop.getDropStack());
         dropZone.setPrefWidth(params.width());
         dropZone.setPrefHeight(params.height());
         dropZone.setLayoutX(params.x());
         dropZone.setLayoutY(params.y());
-        dropZone.getStyleClass().add("dropzone");
 
-        dropZone.setOnMouseClicked(e -> select(params.id()));
-        nodes.put(params.id(), dropZone);
+        nodes.put(params.id(),dropZone);
+        dropZones.put(params.id(),newdrop);
         root.getChildren().add(dropZone);
     }
 
@@ -91,7 +106,8 @@ public class GameRunnerController2 implements GameController {
 
         piece.setOnMouseClicked(e -> select(id));
 
-        ((HBox) nodes.get(dropZoneID)).getChildren().add(piece);
+        //((StackPane) nodes.get(dropZoneID)).getChildren().add(piece);
+        dropZones.get(dropZoneID).addPieceToDropZone(piece);
         nodes.put(id, piece);
 
         pieceToDropZoneMap.put(id, dropZoneID);
@@ -99,6 +115,8 @@ public class GameRunnerController2 implements GameController {
 
     @Override
     public void setClickable(List<String> ids) {
+        System.out.println("clickables:");
+        System.out.println(ids);
         clearClickables();
 
         clickable.addAll(ids);
@@ -111,8 +129,12 @@ public class GameRunnerController2 implements GameController {
     @Override
     public void movePiece(String id, String dropZoneID) {
         String dzid = pieceToDropZoneMap.get(id);
-        ((HBox) nodes.get(dzid)).getChildren().remove(nodes.get(id));
-        ((HBox) nodes.get(dropZoneID)).getChildren().add(nodes.get(id));
+        DropZoneFE olddz = dropZones.get(dzid);
+        DropZoneFE newdz = dropZones.get(dropZoneID);
+        newdz.addPieceToDropZone(nodes.get(id));
+        olddz.removePieceFromDropZone(nodes.get(id));
+        //((HBox) nodes.get(dzid)).getChildren().remove(nodes.get(id));
+        //((HBox) nodes.get(dropZoneID)).getChildren().add(nodes.get(id));
         pieceToDropZoneMap.put(id, dropZoneID);
     }
 

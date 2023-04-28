@@ -56,7 +56,7 @@ public class SimpleGameView extends Application implements GameController {
         launch(args);
     }
 
-    private void select(String id) {
+    public void select(String id) {
         if (clickable.contains(id)) {
             game.clickPiece(id);
         }

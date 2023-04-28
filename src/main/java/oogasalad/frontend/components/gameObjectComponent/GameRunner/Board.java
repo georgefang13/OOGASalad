@@ -2,6 +2,7 @@ package oogasalad.frontend.components.gameObjectComponent.GameRunner;
 
 import javafx.geometry.Point2D;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 public class Board implements FloatingDropHolder{
@@ -44,8 +45,8 @@ public class Board implements FloatingDropHolder{
   }
 
   @Override
-  public VBox getVisual() {
-    VBox boardVisual = new VBox(getBoardVisual());
+  public HBox getVisual() {
+    HBox boardVisual = new HBox(getBoardVisual());
     return boardVisual;
   }
 

@@ -18,4 +18,6 @@ public interface GameController {
     void removePiece(String id);
 
     void setObjectImage(String id, String imagePath);
+
+    void select(String dropID);
 }
