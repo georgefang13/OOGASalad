@@ -1,15 +1,8 @@
 package oogasalad.frontend.panels.libraryPanels;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -35,6 +28,7 @@ import org.kordamp.ikonli.javafx.FontIcon;
 
 public class LibraryGridPanel extends GridPane implements Panel {
   private static final String GAMES_FILEPATH = "data/games/";
+  private static final String GAMES_FILEPATH_WITH_FILE = "file:data/games/";
   private static final ResourceBundle ID_BUNDLE = ResourceBundle.getBundle(
       "frontend/properties/StylingIDs/CSS_ID");
   private static final String GAME_BOX_ID = "GameBoxID";
@@ -49,6 +43,11 @@ public class LibraryGridPanel extends GridPane implements Panel {
   private final int IMAGE_RADIUS = 20;
   PanelController panelController;
   private Map<String, String> gameNames;
+  private static final String JSON_NAME = "name";
+  private static final String JSON_TAGS = "tags";
+  private static final String JSON_GENERAL_PATH = "/general.json";
+  private static final String GAME_IMAGE_PATH = "/display.png";
+  private static final String DEFAULT_TAG = "board game"; //TODO: CHANGE TO "default" and put that in every general.json
   /**
    * Constructor for the environment panel
    */
@@ -74,7 +73,7 @@ public class LibraryGridPanel extends GridPane implements Panel {
     column4.setPercentWidth(25);
     this.getColumnConstraints().addAll(column1, column2, column3, column4);
 
-    gameNames = getGameNamesWithTag("board game");
+    gameNames = getGameNamesWithTag(DEFAULT_TAG);
     System.out.println(gameNames);
     int rowIndex = 0;
     int columnIndex = 0;
@@ -95,7 +94,7 @@ public class LibraryGridPanel extends GridPane implements Panel {
     return gameBox;
   }
   private ImageView createImageView(String gameName) {
-    ImageView gameImage = new ImageView("file:data/games/" + gameName + "/display.png");
+    ImageView gameImage = new ImageView(GAMES_FILEPATH_WITH_FILE + gameName + GAME_IMAGE_PATH);
     gameImage.setPreserveRatio(false);
     gameImage.setFitHeight(IMAGE_HEIGHT);
     gameImage.setFitWidth(IMAGE_WIDTH);
@@ -148,20 +147,19 @@ public class LibraryGridPanel extends GridPane implements Panel {
 
     for (File gameDirectory : Objects.requireNonNull(gameDirectories)) {
       try {
-        fm = new FileManager(gameDirectory.getPath() + "/general.json");
+        fm = new FileManager(gameDirectory.getPath() + JSON_GENERAL_PATH);
       } catch (FileNotFoundException e) {
         throw new RuntimeException(e);
       }
-      Iterable<String> currentTags = fm.getArray("tags");
+      Iterable<String> currentTags = fm.getArray(JSON_TAGS);
       for (String s : currentTags) {
         if (s.equals(tag)) {
-          gameNamesAndFolderNames.put(fm.getString("name"), gameDirectory.getName());
+          gameNamesAndFolderNames.put(fm.getString(JSON_NAME), gameDirectory.getName());
         }
       }
     }
     return gameNamesAndFolderNames;
   }
-
 
   public Node asNode(){
     return (Node) this;
