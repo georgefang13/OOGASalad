@@ -11,6 +11,12 @@ import java.util.ResourceBundle;
 
 public class TextObject extends AbstractComponent implements TextObjectComponent {
     private Text text;
+    String content;
+    double x;
+    double y;
+    String colorString;
+    double fontSize;
+    Color color;
 
     public TextObject(int id) {
         super(id);
@@ -23,8 +29,9 @@ public class TextObject extends AbstractComponent implements TextObjectComponent
     public TextObject(int ID, Map<String, String> map){
         super(ID);
         setValuesfromMap(map);
+        this.followMouse();
+        text = new Text(x, y, content);
     }
-
 
     @Override
     public void setText(String content) {
@@ -54,12 +61,12 @@ public class TextObject extends AbstractComponent implements TextObjectComponent
 
     @Override
     public void setDefault() {
-        String content = getDEFAULT_BUNDLE().getString("text.content");
-        double x = Double.parseDouble(getDEFAULT_BUNDLE().getString("text.x"));
-        double y = Double.parseDouble(getDEFAULT_BUNDLE().getString("text.y"));
-        String colorString = getDEFAULT_BUNDLE().getString("text.color");
-        double fontSize = Double.parseDouble(getDEFAULT_BUNDLE().getString("text.fontSize"));
-        Color color = Color.web(colorString);
+        content = getDEFAULT_BUNDLE().getString("text.content");
+        x = Double.parseDouble(getDEFAULT_BUNDLE().getString("text.x"));
+        y = Double.parseDouble(getDEFAULT_BUNDLE().getString("text.y"));
+        colorString = getDEFAULT_BUNDLE().getString("text.color");
+        fontSize = Double.parseDouble(getDEFAULT_BUNDLE().getString("text.fontSize"));
+        color = Color.web(colorString);
 
         text = new Text(x, y, content);
         text.setFont(Font.font(fontSize));

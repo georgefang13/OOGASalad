@@ -12,7 +12,6 @@ import java.util.Properties;
 import java.util.ResourceBundle;
 
 public class LineObject extends AbstractComponent implements LineObjectComponent {
-    private String name;
     private Line myLine;
     private double startX;
     private double startY;
@@ -21,26 +20,12 @@ public class LineObject extends AbstractComponent implements LineObjectComponent
     private String color;
     private double strokeWidth;
 
-    public LineObject(int ID){
-        super(ID);
-        instantiatePropFile("frontend.properties.Defaults.LineObject");
-        this.setDefault();
-        this.followMouse();
-    }
-
     public LineObject(int ID, Map<String, String> map){
         super(ID);
         instantiatePropFile("frontend.properties.Defaults.LineObject");
         setValuesfromMap(map);
         myLine = new Line(startX,startY,endX, endY);
         followMouse();
-    }
-
-    public void setName(String newName) {
-        name = newName;
-    }
-    public String getName(){
-        return name;
     }
 
     @Override

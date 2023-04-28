@@ -11,19 +11,17 @@ import java.util.ResourceBundle;
 
 public class RectangleObject extends AbstractComponent implements RectangleObjectComponent {
     private Rectangle rectangle;
-
-
-    public RectangleObject(int ID){
-        super(ID);
-        instantiatePropFile("frontend.properties.Defaults.RectangleObject");
-        this.setDefault();
-        this.followMouse();
-        this.getNode();
-    }
+    double x;
+    double y;
+    double width;
+    double height;
 
     public RectangleObject(int ID, Map<String, String> map){
         super(ID);
         setValuesfromMap(map);
+        rectangle = new Rectangle(x,y,width,height);
+        this.followMouse();
+
     }
 
     @Override
@@ -64,10 +62,10 @@ public class RectangleObject extends AbstractComponent implements RectangleObjec
 
     @Override
     public void setDefault() {
-        double x = Double.parseDouble(getDEFAULT_BUNDLE().getString("rectangle.x"));
-        double y = Double.parseDouble(getDEFAULT_BUNDLE().getString("rectangle.y"));
-        double width = Double.parseDouble(getDEFAULT_BUNDLE().getString("rectangle.width"));
-        double height = Double.parseDouble(getDEFAULT_BUNDLE().getString("rectangle.height"));
+        x = Double.parseDouble(getDEFAULT_BUNDLE().getString("rectangle.x"));
+        y = Double.parseDouble(getDEFAULT_BUNDLE().getString("rectangle.y"));
+        width = Double.parseDouble(getDEFAULT_BUNDLE().getString("rectangle.width"));
+        height = Double.parseDouble(getDEFAULT_BUNDLE().getString("rectangle.height"));
         Color fill;
         double strokeWidth;
         Color strokeColor;
