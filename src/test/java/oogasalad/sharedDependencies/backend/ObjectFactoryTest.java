@@ -16,7 +16,6 @@ import oogasalad.sharedDependencies.backend.ownables.variables.Variable;
 import oogasalad.sharedDependencies.backend.owners.GameWorld;
 import oogasalad.sharedDependencies.backend.owners.Player;
 import oogasalad.sharedDependencies.backend.rules.RuleManager;
-import org.junit.Rule;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
