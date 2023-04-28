@@ -77,6 +77,7 @@ public class GameInator {
    */
   public void addPlayer(Player player) {
     players.add(player);
+    //TODO save to max number players
   }
 
 
@@ -110,6 +111,7 @@ public class GameInator {
    */
   private void createOwnable(Map<ObjectParameter, Object> params) throws IllegalArgumentException{
     objectFactory.createOwnable(params);
+    //TODO update GameObject or Variable or DropZones
   }
 
   /**
