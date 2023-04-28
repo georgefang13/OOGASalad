@@ -32,13 +32,17 @@ public class GridObject extends AbstractComponent {
         grid = new GridPane();
         grid.setPrefWidth(width);
         grid.setPrefHeight(height);
+        double rectWidth = width/rows;
+        double rectHeight = height/cols;
 
-//        for (int i = 0; i < rows; i++) {
-//            for (int j = 0; j < cols; j++) {
-//                Rectangle rect = new Rectangle();
-//                grid.add(, i, j);
-//            }
-//        }
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                Rectangle rect = new Rectangle(rectWidth, rectHeight);
+                rect.setFill(Color.WHITE);
+                rect.setStroke(Color.BLACK);
+                grid.add(rect,i,j);
+            }
+        }
 
         followMouse();
     }
