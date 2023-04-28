@@ -9,11 +9,11 @@ public class MockDatabase extends Database {
 
   private static final String PROJECT_ID = "duvalley-boiz-test";
 
-  public MockDatabase() throws IOException {
+  public MockDatabase() {
     this(PROJECT_ID, INFO_PATH, URL);
   }
 
-  public MockDatabase(String projectId, String infoPath, String url) throws IOException {
+  public MockDatabase(String projectId, String infoPath, String url) {
     super(projectId, infoPath, url);
   }
 }

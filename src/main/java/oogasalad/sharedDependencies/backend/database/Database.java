@@ -11,6 +11,7 @@ import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.FirestoreClient;
 import com.google.firebase.database.DatabaseReference;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import com.google.cloud.firestore.Firestore;
 import java.util.HashMap;
@@ -32,11 +33,11 @@ public class Database {
 
   private final Firestore database;
 
-  public Database() throws IOException {
+  public Database() {
     this(PROJECT_ID, DATABASE_INFO_PATH, DATABASE_URL);
   }
 
-  protected Database(String projectId, String infoPath, String url) throws IOException {
+  protected Database(String projectId, String infoPath, String url) {
     initializeDatabase(projectId, infoPath, url);
     database = FirestoreClient.getFirestore();
   }
@@ -80,10 +81,16 @@ public class Database {
    * @param infoPath path to JSON file containing initialization details
    * @param url URL associated with database
    */
-  protected void initializeDatabase(String projectId, String infoPath, String url) throws IOException {
+  protected void initializeDatabase(String projectId, String infoPath, String url){
     // Code from https://firebase.google.com/docs/firestore/quickstart
-    FileInputStream serviceAccount = new FileInputStream(infoPath);
-    GoogleCredentials credentials = GoogleCredentials.fromStream(serviceAccount);
+    FileInputStream serviceAccount = null;
+    GoogleCredentials credentials;
+    try {
+      serviceAccount = new FileInputStream(infoPath);
+      credentials = GoogleCredentials.fromStream(serviceAccount);
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
     FirebaseOptions options = new FirebaseOptions.Builder()
         .setCredentials(credentials)
         .setDatabaseUrl(url)
