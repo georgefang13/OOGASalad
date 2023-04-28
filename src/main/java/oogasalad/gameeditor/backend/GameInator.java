@@ -5,7 +5,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import oogasalad.sharedDependencies.backend.GameLoader;
+
+import oogasalad.gamerunner.backend.Rule;
+import oogasalad.gamerunner.backend.interpretables.Goal;
+//import oogasalad.sharedDependencies.backend.GameLoader;
 import oogasalad.sharedDependencies.backend.id.IdManager;
 import oogasalad.sharedDependencies.backend.ObjectFactory;
 import oogasalad.sharedDependencies.backend.ownables.Ownable;
@@ -13,6 +16,7 @@ import oogasalad.sharedDependencies.backend.ownables.variables.Variable;
 import oogasalad.sharedDependencies.backend.owners.GameWorld;
 import oogasalad.sharedDependencies.backend.owners.Owner;
 import oogasalad.sharedDependencies.backend.owners.Player;
+import oogasalad.sharedDependencies.backend.rules.RuleManager;
 
 /**
  * The GameInator class represents the game itself. It contains Owners such as the GameWorld and Players.
@@ -30,9 +34,19 @@ public class GameInator {
   private final ArrayList<Player> players = new ArrayList<>();
 
   /**
+   * The Goals of the game.
+   */
+  private final ArrayList<Goal> goals = new ArrayList<>();
+
+  /**
    * The IdManager of the game for Ownables.
    */
   private IdManager<Ownable> ownableIdManager = new IdManager<>();
+
+  /**
+   * The rule manager of the game for rules and goals.
+   */
+  private RuleManager ruleManager = new RuleManager();
 
   /**
    * The GameWorld of the game. The GameWorld owns Ownables not owned by Players.
@@ -79,6 +93,15 @@ public class GameInator {
     players.add(player);
   }
 
+  /**
+   * Adds a Goal to the game.
+   *
+   * @param goal the goal to add
+   */
+  public void addGoal(Goal goal) {
+    goals.add(goal);
+  }
+
 
   /**
    * Gets the Players of the game.
@@ -119,6 +142,25 @@ public class GameInator {
     addPlayer(new Player());
   }
 
+  /**
+   * Creates a rule and adds it to the game through the rule manager
+   *
+   * @param params the parameters of the rule
+   */
+  private void createRule(Map<ObjectParameter, Object> params) throws IllegalArgumentException{
+    String rule = params.get(ObjectParameter.RULE_STR) != null ? params.get(ObjectParameter.RULE_STR).toString() : null;
+    String ruleName = params.get(ObjectParameter.RULE_NAME) != null ? params.get(ObjectParameter.RULE_NAME).toString() : null;
+    String ruleCls = params.get(ObjectParameter.RULE_CLS) != null ? params.get(ObjectParameter.RULE_CLS).toString() : null;
+    ruleManager.addRule(ruleCls, ruleName, rule);
+  }
+
+  /**
+   * Creates a goal and adds it to the game
+   */
+  private void createGoal() {
+    addGoal(new Goal());
+  }
+
 
   /**
    * Method is called in order to send information about a newly constructed   object that was made
@@ -135,6 +177,8 @@ public class GameInator {
     switch (type) {
       case PLAYER -> createPlayer();
       case OWNABLE -> createOwnable(params);
+      case RULE -> createRule(params);
+      case GOAL -> createGoal();
       default -> throw new IllegalArgumentException("Invalid type"); //TODO add to properties
     }
   }
@@ -146,9 +190,10 @@ public class GameInator {
   /**
    * Removes an Ownable from the game, if it exists there.
    *
-   * @param id the parameters of the ownable
+   * @param params the parameters of the ownable
    */
-  public void removeOwnable(String id) {
+  public void removeOwnable(Map<ObjectParameter, Object> params) throws IllegalArgumentException {
+    String id = params.get(ObjectParameter.ID) != null ? params.get(ObjectParameter.ID).toString() : null;
     if (!ownableIdManager.isIdInUse(id)) {
       return;
     }
@@ -168,6 +213,26 @@ public class GameInator {
     }
   }
 
+  /**
+   * Removes a rule from the game.
+   *
+   * @param params of the rule
+   */
+  public void removeRule(Map<ObjectParameter, Object> params) throws IllegalArgumentException{
+    String rule = params.get(ObjectParameter.RULE_STR) != null ? params.get(ObjectParameter.RULE_STR).toString() : null;
+    String ruleCls = params.get(ObjectParameter.RULE_CLS) != null ? params.get(ObjectParameter.RULE_CLS).toString() : null;
+    ruleManager.removeRule(ruleCls, rule);
+  }
+
+  /**
+   * Removes a Goal from the game, if there is one.
+   */
+  public void removeGoal() {
+    if (goals.size() > 0) {
+      //remove the last player
+      goals.remove(goals.size() - 1);
+    }
+  }
 
   /**
    * Method is called in order to send a request to the backend to delete an object.
@@ -176,11 +241,13 @@ public class GameInator {
    * @Type The class the object belongs to
    * @Params The params of the object
    **/
-  public void deleteObject(ObjectType type, String id)
+  public void deleteObject(ObjectType type, Map<ObjectParameter, Object> params)
       throws IllegalArgumentException {
     switch (type) {
       case PLAYER -> removePlayer();
-      case OWNABLE -> removeOwnable(id);
+      case OWNABLE -> removeOwnable(params);
+      case RULE -> removeRule(params);
+      case GOAL -> removeGoal();
       default -> throw new IllegalArgumentException("Invalid type"); //TODO add to properties
     }
   }

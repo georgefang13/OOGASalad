@@ -165,17 +165,5 @@ public class ObjectFactory {
         throw new RuntimeException("Error creating ownable", e);
       }
     }
-
-
   }
-
-  public static Rule createRule(Map<ObjectParameter, Object> params) {
-    return null; //TODO move to shared dependencies
-  }
-
-  public static Goal createGoal(Map<ObjectParameter, Object> params) {
-    return null; //TODO move to shared dependencies
-  }
-
-
 }

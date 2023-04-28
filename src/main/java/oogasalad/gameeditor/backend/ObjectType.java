@@ -1,5 +1,5 @@
 package oogasalad.gameeditor.backend;
 
 public enum ObjectType {
-  OWNABLE, PLAYER
+  OWNABLE, PLAYER, RULE, GOAL
 }
