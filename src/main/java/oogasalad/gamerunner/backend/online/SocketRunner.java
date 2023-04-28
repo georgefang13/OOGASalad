@@ -4,15 +4,7 @@ package oogasalad.gamerunner.backend.online;
 import io.socket.client.IO;
 import io.socket.client.Socket;
 import oogasalad.gamerunner.backend.Game;
-import oogasalad.sharedDependencies.backend.ownables.gameobjects.DropZone;
-import oogasalad.sharedDependencies.backend.ownables.gameobjects.GameObject;
-import oogasalad.sharedDependencies.backend.owners.Player;
-import org.json.JSONArray;
-import org.json.JSONException;
-
-import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
-import java.sql.SQLOutput;
 import java.util.HashMap;
 import java.util.Map;
 

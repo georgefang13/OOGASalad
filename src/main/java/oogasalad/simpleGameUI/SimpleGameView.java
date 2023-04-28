@@ -56,8 +56,8 @@ public class SimpleGameView extends Application implements GameController {
 
 //        game.startGame();
 
-        game.createOnlineGame();
-//        game.joinOnlineGame("838");
+//        game.createOnlineGame();
+        game.joinOnlineGame("525");
 
         stage.setScene(scene);
         stage.show();
