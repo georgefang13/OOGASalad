@@ -26,6 +26,8 @@ public class CheckersMaker2 {
 
     static void saveDropZones(IdManager<Ownable> manager, String folder){
         FileManager fm = new FileManager();
+        FileManager fefm = new FileManager();
+
         List<DropZone> nodes = BoardCreator.createGrid(8, 8);
         nodes.forEach(manager::addObject);
         // add board DropZones
@@ -37,10 +39,10 @@ public class CheckersMaker2 {
 
             String id = manager.getId(node);
 
-            fm.addContent(String.valueOf(50 + x*50), id, "position", "x");
-            fm.addContent(String.valueOf(50 + y*50), id, "position", "y");
-            fm.addContent(String.valueOf(50), id, "position", "width");
-            fm.addContent(String.valueOf(50), id, "position", "height");
+            fefm.addContent(String.valueOf(50 + x*50), id, "x");
+            fefm.addContent(String.valueOf(50 + y*50), id, "y");
+            fefm.addContent(String.valueOf(50), id, "width");
+            fefm.addContent(String.valueOf(50), id, "height");
 
             for (Map.Entry<String, DropZone> dzEdge : node.getEdges().entrySet()) {
                 String nodeId = manager.getId(dzEdge.getValue());
@@ -53,10 +55,12 @@ public class CheckersMaker2 {
         }
 
         fm.saveToFile(folder + "layout.json");
+        fefm.saveToFile(folder + "frontend/layout.json");
     }
 
     static void saveGameObjects(String folder){
         FileManager fm = new FileManager();
+        FileManager fefm = new FileManager();
 
         int counter = 0;
         // add red pieces
@@ -70,11 +74,12 @@ public class CheckersMaker2 {
                 String location = "DropZone";
                 if (num != 1) location += num;
 
-                fm.addContent("red.png", id, "image");
+                fefm.addContent("red.png", id, "image");
                 fm.addContent("0", id, "owner");
-                fm.addContent("30", id, "size");
+                fefm.addContent("30", id, "size");
 
                 fm.addContent(location, id, "location");
+                fefm.addContent(location, id, "location");
                 fm.addContent("red", id, "classes");
                 fm.addContent("piece", id, "classes");
 
@@ -94,11 +99,12 @@ public class CheckersMaker2 {
                 String location = "DropZone";
                 if (num != 1) location += num;
 
-                fm.addContent("black.png", id, "image");
+                fefm.addContent("black.png", id, "image");
                 fm.addContent("1", id, "owner");
-                fm.addContent("30", id, "size");
+                fefm.addContent("30", id, "size");
 
                 fm.addContent(location, id, "location");
+                fefm.addContent(location, id, "location");
                 fm.addContent("black", id, "classes");
                 fm.addContent("piece", id, "classes");
 
@@ -107,6 +113,7 @@ public class CheckersMaker2 {
         }
 
         fm.saveToFile(folder + "objects.json");
+        fefm.saveToFile(folder + "frontend/objects.json");
     }
 
     static void saveRules(String folder){

@@ -12,8 +12,10 @@ import javafx.stage.Stage;
 import oogasalad.Controller.GameRunnerController;
 import oogasalad.gamerunner.backend.Game;
 import oogasalad.gamerunner.backend.GameController;
+import oogasalad.sharedDependencies.backend.filemanagers.FileManager;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.*;
 
 public class SimpleGameView extends Application implements GameController {
@@ -42,7 +44,11 @@ public class SimpleGameView extends Application implements GameController {
         Scene scene = new Scene(root, SCREEN_WIDTH, SCREEN_HEIGHT);
         scene.getStylesheets().add(MODAL_STYLE_SHEET);
 
-        game = new Game(this, "data/games/checkers", 2);
+        String directory = "data/games/checkers";
+
+        loadGame(directory);
+
+        game = new Game(this, directory, 2);
 
         undoButton.setOnAction(e -> game.undoClickPiece());
         root.getChildren().add(undoButton);
@@ -54,6 +60,34 @@ public class SimpleGameView extends Application implements GameController {
 
     public static void main(String[] args) {
         launch(args);
+    }
+
+    private void loadGame(String directory) throws FileNotFoundException {
+        directory = directory + "/frontend";
+        loadDropZones(directory);
+        loadPieces(directory);
+    }
+
+    private void loadDropZones(String directory) throws FileNotFoundException {
+        FileManager fm = new FileManager(directory + "/layout.json");
+        for (String id : fm.getTagsAtLevel()){
+            int x = Integer.parseInt(fm.getString(id, "x"));
+            int y = Integer.parseInt(fm.getString(id, "y"));
+            int height = Integer.parseInt(fm.getString(id, "height"));
+            int width = Integer.parseInt(fm.getString(id, "width"));
+            addDropZone(new GameRunnerController.DropZoneParameters(id, x, y, height, width));
+        }
+    }
+
+    private void loadPieces(String directory) throws FileNotFoundException {
+        FileManager fm = new FileManager(directory + "/objects.json");
+        for (String id : fm.getTagsAtLevel()){
+            String image = fm.getString(id, "image");
+            image = directory.substring(0, directory.lastIndexOf("/")) + "/assets/" + image;
+            String dropZoneID = fm.getString(id, "location");
+            double size = Double.parseDouble(fm.getString(id, "size"));
+            addPiece(id, image, dropZoneID, size);
+        }
     }
 
     private void select(String id) {
@@ -121,7 +155,6 @@ public class SimpleGameView extends Application implements GameController {
     @Override
     public void setClickable(List<String> ids) {
         clearClickables();
-
         clickable.addAll(ids);
         for (String id : ids){
             nodes.get(id).setStyle("-fx-border-color: red; -fx-border-width: 1px;");
