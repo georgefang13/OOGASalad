@@ -8,7 +8,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import javafx.scene.Node;
@@ -46,6 +48,7 @@ public class LibraryGridPanel extends GridPane implements Panel {
   private final int IMAGE_HEIGHT = 150;
   private final int IMAGE_RADIUS = 20;
   PanelController panelController;
+  private Map<String, String> gameNames;
   /**
    * Constructor for the environment panel
    */
@@ -71,12 +74,12 @@ public class LibraryGridPanel extends GridPane implements Panel {
     column4.setPercentWidth(25);
     this.getColumnConstraints().addAll(column1, column2, column3, column4);
 
-    List<String> games = getGameNamesWithTag("board game");
-    System.out.println(games);
+    gameNames = getGameNamesWithTag("board game");
+    System.out.println(gameNames);
     int rowIndex = 0;
     int columnIndex = 0;
-    for (String game : games) {
-      this.add(createGameBox(game), columnIndex, rowIndex);
+    for (String game : gameNames.keySet()) {
+      this.add(createGameBox(game, gameNames.get(game)), columnIndex, rowIndex);
       columnIndex++;
       if (columnIndex > 3) {
         columnIndex = 0;
@@ -85,15 +88,14 @@ public class LibraryGridPanel extends GridPane implements Panel {
     }
     return this;
   }
-  private VBox createGameBox(String gameName) {
+  private VBox createGameBox(String realGameName, String directoryName) {
     VBox gameBox = new VBox();
     gameBox.getStyleClass().add(ID_BUNDLE.getString(GAME_BOX_ID));
-    gameBox.getChildren().addAll(createImageView(gameName), createTextIconHBox(gameName));
+    gameBox.getChildren().addAll(createImageView(directoryName), createTextIconHBox(realGameName));
     return gameBox;
   }
   private ImageView createImageView(String gameName) {
-    ImageView gameImage = new ImageView("file:src/main/resources/frontend/images/GameLibrary/" + gameName + ".png");
-    //TODO: change to fit Ethan file system
+    ImageView gameImage = new ImageView("file:data/games/" + gameName + "/display.png");
     gameImage.setPreserveRatio(false);
     gameImage.setFitHeight(IMAGE_HEIGHT);
     gameImage.setFitWidth(IMAGE_WIDTH);
@@ -138,23 +140,8 @@ public class LibraryGridPanel extends GridPane implements Panel {
     return gameNameEditBox;
   }
 
-  private List<String> getNamesOfFilesToLoad() {
-    File folder = new File("src/main/resources/frontend/images/GameLibrary");
-    //TODO: FIX to match Ethan's file system
-    File[] listOfGameImages = folder.listFiles();
-
-    List<String> fileNames = new ArrayList<>();
-    for (int i = 0; i < listOfGameImages.length; i++) {
-      if (listOfGameImages[i].isFile()) {
-        fileNames.add(listOfGameImages[i].getName().substring(0, listOfGameImages[i].getName().indexOf('.')));
-      }
-    }
-    return fileNames;
-  }
-
-  private List<String> getGameNamesWithTag(String tag) {
-    List<String> gameNames = new ArrayList<>();
-
+  private Map<String, String> getGameNamesWithTag(String tag) {
+    Map<String, String> gameNamesAndFolderNames = new HashMap<>();
     File gamesDirectory = new File(GAMES_FILEPATH);
     File[] gameDirectories = gamesDirectory.listFiles(File::isDirectory);
     FileManager fm;
@@ -168,11 +155,11 @@ public class LibraryGridPanel extends GridPane implements Panel {
       Iterable<String> currentTags = fm.getArray("tags");
       for (String s : currentTags) {
         if (s.equals(tag)) {
-          gameNames.add(fm.getString("name"));
+          gameNamesAndFolderNames.put(fm.getString("name"), gameDirectory.getName());
         }
       }
     }
-    return gameNames;
+    return gameNamesAndFolderNames;
   }
 
 
