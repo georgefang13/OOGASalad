@@ -14,7 +14,16 @@ public class DropZoneFE implements FloatingDropHolder{
     StackPane dropStack;
     String dropID;
     GameController gameRunnerController;
+    private int x;
+    private int y;
+    private int height;
+    private int width;
     public DropZoneFE(String id, int width, int height, int x, int y, GameController gameRunnerController) {
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+
         dropID = id;
         Rectangle fill = new Rectangle(width, height);
         fill.setStroke(Color.BLACK);
@@ -53,12 +62,24 @@ public class DropZoneFE implements FloatingDropHolder{
         return dropID;
     }
 
-    void droppable(){
+    public void droppable(){
         dropZone.setOnMouseReleased( e -> {
         });
     }
-    void onDrop(){
+    public void onDrop(){
         gameRunnerController.select(dropID);
+    }
+
+    record dropZoneCenter(double x, double y){};
+
+    private double toCenter(int start,int length){
+        return start + ((double) length)/2;
+    }
+
+    public dropZoneCenter getDropZoneCenter(){
+        double centerX = toCenter(x,width);
+        double centerY = toCenter(y,height);
+        return new dropZoneCenter(centerX,centerY);
     }
 
 }

@@ -101,21 +101,17 @@ public class GameRunnerController2 implements GameController {
 
 
         Piece p = new Piece(id,this,image,size);
-        HBox piece = new HBox();
+        DropZoneFE dz = dropZones.get(dropZoneID);
+        p.moveToDropZoneXY(dz.getDropZoneCenter());
+        Node n = p.getNode();
+
         //piece.getChildren().add(imgv);
-        piece.getChildren().add(p.getPieceBox());
-        piece.setPrefHeight(size);
-        piece.setPrefWidth(size);
-        piece.setMaxHeight(size);
-        piece.setMaxHeight(size);
-
-        piece.setOnMouseClicked(e -> select(id));
-
         //((StackPane) nodes.get(dropZoneID)).getChildren().add(piece);
-        dropZones.get(dropZoneID).addPieceToDropZone(piece);
-        nodes.put(id, piece);
 
+        //dz.addPieceToDropZone(piece);
+        nodes.put(id, p.getPieceBox());
         pieceToDropZoneMap.put(id, dropZoneID);
+        root.getChildren().add(p.getPieceBox());
     }
 
     @Override
