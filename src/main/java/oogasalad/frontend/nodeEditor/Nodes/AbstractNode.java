@@ -59,16 +59,6 @@ public abstract class AbstractNode extends VBox {
 
   public void setParentNode(AbstractNode node) {
     this.parentNode = node;
-    if (this.parentNode != null) {
-      double parentX = this.parentNode.getTranslateX();
-      double nodeY = getTranslateY();
-      if (this instanceof EndNestNode && !(this.parentNode instanceof StartNestNode)) {
-        decrementIndent();
-      } else if (!(this instanceof EndNestNode) && this.parentNode instanceof StartNestNode) {
-        incrementIndent();
-      }
-      move(parentX, nodeY);
-    }
   }
 
   public AbstractNode getParentNode() {
@@ -83,17 +73,37 @@ public abstract class AbstractNode extends VBox {
     return childNode;
   }
 
-  public double getIndent() {
-    return indent;
-  }
-
-  public void incrementIndent() {
-    if (this.indent == 0) {
-      this.indent += INDENT_SIZE;
+  public void snapTo(AbstractNode node) {
+    while (node.getChildNode() != null && node.getChildNode() != this) {
+      node = node.getChildNode();
+    }
+    adjust(this, node);
+    AbstractNode temp = this;
+    while (temp.getChildNode() != null) {
+      AbstractNode tempOld = temp;
+      temp = temp.getChildNode();
+      adjust(temp, tempOld);
+    }
+    if (node.getChildNode() == null) {
+      node.setChildNode(this);
+      this.setParentNode(node);
     }
   }
 
-  public void decrementIndent() {
-    this.indent = 0;
+  private void adjust(AbstractNode fromNode, AbstractNode toNode) {
+    if (toNode instanceof StartNestNode) {
+      if (fromNode instanceof EndNestNode) {
+        fromNode.move(toNode.getTranslateX(), toNode.getTranslateY() + toNode.getHeight());
+      } else {
+        fromNode.move(toNode.getTranslateX() + INDENT_SIZE,
+            toNode.getTranslateY() + toNode.getHeight());
+      }
+    } else if (fromNode instanceof EndNestNode) {
+      fromNode.move(toNode.getTranslateX() - INDENT_SIZE,
+          toNode.getTranslateY() + toNode.getHeight());
+    } else {
+      fromNode.move(toNode.getTranslateX(), toNode.getTranslateY() + toNode.getHeight());
+    }
   }
+
 }

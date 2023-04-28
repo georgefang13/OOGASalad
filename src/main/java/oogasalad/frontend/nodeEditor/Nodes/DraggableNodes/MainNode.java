@@ -34,7 +34,7 @@ public class MainNode extends DraggableAbstractNode {
   }
 
   @Override
-  public void snapTo(AbstractNode node) throws InterruptedException {
+  public void snapTo(AbstractNode node) {
   }
 
   @Override

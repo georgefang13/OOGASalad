@@ -60,7 +60,11 @@ public abstract class DraggableAbstractNode extends AbstractNode implements Drag
           double scaleFactor = this.getParent().getScaleX();
           double newX = e.getSceneX() / scaleFactor - xOffset;
           double newY = e.getSceneY() / scaleFactor - yOffset;
-          move(newX, newY);
+          this.move(newX, newY);
+          if (this.getChildNode() != null) {
+            //this.getChildNode().move(newX, newY + this.getHeight());
+            this.getChildNode().snapTo(this);
+          }
           clearLinks();
           e.consume();
         });
@@ -76,11 +80,7 @@ public abstract class DraggableAbstractNode extends AbstractNode implements Drag
         if (node instanceof AbstractNode && node != this) {
           if (this.getBoundsInParent().intersects(node.getBoundsInParent())
               && this.getChildNode() != node) {
-            try {
-              snapTo((AbstractNode) node);
-            } catch (InterruptedException ex) {
-              throw new RuntimeException(ex);
-            }
+            snapTo((AbstractNode) node);
             e.consume();
             return;
           }
@@ -90,25 +90,19 @@ public abstract class DraggableAbstractNode extends AbstractNode implements Drag
     });
   }
 
-  public void snapTo(AbstractNode node) throws InterruptedException {
-    if (node == this) {
-      return;
-    }
 
-    while (node.getChildNode() != null && node.getChildNode() != this) {
-      node = node.getChildNode();
-    }
-    move(node.getTranslateX(), node.getTranslateY() + node.getHeight());
-    AbstractNode temp = this;
-
-    while (temp.getChildNode() != null) {
-      AbstractNode tempOld = temp;
-      temp = temp.getChildNode();
-      temp.move(tempOld.getTranslateX(), tempOld.getTranslateY() + tempOld.getHeight());
-    }
-    if (node.getChildNode() == null && node != this) {
-      node.setChildNode(this);
-      this.setParentNode(node);
+  @Override
+  public void move(double newX, double newY) {
+    if (boundingBox.contains(newX, newY, getWidth(), getHeight())) {
+      setTranslateX(newX);
+      setTranslateY(newY);
+    } else {
+      double clampedX = Math.min(Math.max(newX, boundingBox.getMinX()),
+          boundingBox.getMaxX() - getWidth());
+      double clampedY = Math.min(Math.max(newY, boundingBox.getMinY()),
+          boundingBox.getMaxY() - getHeight());
+      setTranslateX(clampedX);
+      setTranslateY(clampedY);
     }
   }
 
@@ -120,25 +114,6 @@ public abstract class DraggableAbstractNode extends AbstractNode implements Drag
 
   public void setBoundingBox(Bounds bounds) {
     boundingBox = bounds;
-  }
-
-
-  @Override
-  public void move(double newX, double newY) {
-    if (boundingBox.contains(newX, newY, getWidth(), getHeight())) {
-      setTranslateX(newX + this.getIndent());
-      setTranslateY(newY);
-      if (this.getChildNode() != null) {
-        this.getChildNode().move(newX, newY + this.getHeight());
-      }
-    } else {
-      double clampedX = Math.min(Math.max(newX, boundingBox.getMinX()),
-          boundingBox.getMaxX() - getWidth());
-      double clampedY = Math.min(Math.max(newY, boundingBox.getMinY()),
-          boundingBox.getMaxY() - getHeight());
-      setTranslateX(clampedX);
-      setTranslateY(clampedY);
-    }
   }
 
   protected void clearLinks() {

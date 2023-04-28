@@ -1,5 +1,1 @@
-{
-  "": {
-    "on enter": "if  [global :if  [continue]]"
-  }
-}
+{}
