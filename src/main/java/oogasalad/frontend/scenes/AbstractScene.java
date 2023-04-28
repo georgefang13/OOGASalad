@@ -62,9 +62,7 @@ public abstract class AbstractScene implements PropertiesObserver, ThemeObserver
     return themeManager;
   }
 
-  protected void setScene(Scene scene) {
-    this.scene = scene;
-  }
+  protected void setScene(Scene scene) {this.scene = scene;}
 
   public final void setTheme() {
     scene.getStylesheets().clear();

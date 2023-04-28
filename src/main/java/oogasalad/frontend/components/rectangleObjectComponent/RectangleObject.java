@@ -16,7 +16,7 @@ public class RectangleObject extends AbstractComponent implements RectangleObjec
     double width;
     double height;
 
-    public RectangleObject(int ID, Map<String, String> map){
+    public RectangleObject(String ID, Map<String, String> map){
         super(ID);
         setValuesfromMap(map);
         rectangle = new Rectangle(x,y,width,height);

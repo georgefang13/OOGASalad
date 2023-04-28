@@ -2,7 +2,6 @@ package oogasalad.gamerunner.backend.interpreter;
 
 import java.util.List;
 import oogasalad.gameeditor.backend.id.IdManager;
-import oogasalad.gamerunner.backend.Game;
 import oogasalad.gamerunner.backend.GameToInterpreterAPI;
 import oogasalad.gamerunner.backend.interpreter.tokens.Token;
 import oogasalad.sharedDependencies.backend.ownables.Ownable;

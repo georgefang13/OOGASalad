@@ -6,10 +6,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import oogasalad.frontend.panels.subPanels.ComponentPanel;
-import oogasalad.frontend.panels.subPanels.EnvironmentPanel;
-import oogasalad.frontend.panels.subPanels.HeaderMenuPanel;
-import oogasalad.frontend.panels.subPanels.PropertiesPanel;
+import oogasalad.frontend.panels.editorPanels.ComponentPanel;
+import oogasalad.frontend.panels.editorPanels.EnvironmentPanel;
+import oogasalad.frontend.panels.editorPanels.HeaderMenuPanel;
+import oogasalad.frontend.panels.editorPanels.PropertiesPanel;
 
 /**
  * @author George Fang
@@ -20,7 +20,6 @@ public class GameEditorEditorScene extends AbstractScene {
   private static final String VISUAL_EDITOR_SCENE = "visual";
   private BorderPane root;
   private VBox rightTab; //REPLACE WITH A PANEL
-  private VBox leftTab;
   private Map<Button, VBox> buttonVBoxMap;
   private HeaderMenuPanel headerMenu;
   private ComponentPanel componentsPanel;
@@ -34,6 +33,7 @@ public class GameEditorEditorScene extends AbstractScene {
    */
   public GameEditorEditorScene(SceneController sceneController) {
     super(sceneController);
+
   }
 
   private void setButtonVisualPanel(Button button, String title) {
@@ -67,9 +67,9 @@ public class GameEditorEditorScene extends AbstractScene {
   private void refreshScene() {
     root.setRight(rightTab);
     root.setCenter(environmentPanel);
-    root.setTop(headerMenu.createMenu());
-    root.setLeft(componentsPanel.createDualAccordionVBox());
-    root.setCenter(environmentPanel.createEnvironment());
+    root.setTop(headerMenu);
+    root.setLeft(componentsPanel);
+    root.setCenter(environmentPanel);
     setScene(new Scene(root));
     setText();
     setTheme();
@@ -93,7 +93,7 @@ public class GameEditorEditorScene extends AbstractScene {
 //        backButton.setOnAction(e -> panelController.switchSceneFromPanel("main"));
 //        rightTab.getChildren().addAll(boardButton,variableButton,playerButton,backButton);
     propertiesPanel = new PropertiesPanel();
-    rightTab.getChildren().addAll(propertiesPanel.createPanel());
+    rightTab.getChildren().addAll(propertiesPanel);
   }
 
   private void createCenterPanel() {

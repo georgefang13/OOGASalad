@@ -2,9 +2,11 @@ package oogasalad.frontend.scenes;
 
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
-import oogasalad.frontend.panels.subPanels.ComponentPanel;
-import oogasalad.frontend.panels.subPanels.HeaderMenuPanel;
-import oogasalad.frontend.panels.subPanels.NodeLogicPanel;
+import oogasalad.frontend.nodeEditor.NodeController;
+import oogasalad.frontend.nodeEditor.NodeScene;
+import oogasalad.frontend.panels.editorPanels.ComponentPanel;
+import oogasalad.frontend.panels.editorPanels.HeaderMenuPanel;
+import oogasalad.frontend.panels.editorPanels.NodeLogicPanel;
 
 /**
  * @author George Fang
@@ -17,7 +19,7 @@ public class GameEditorLogicScene extends AbstractScene {
   private BorderPane root;
   private HeaderMenuPanel headerMenu;
   private ComponentPanel componentPanel;
-  private NodeLogicPanel nodeLogicPanel;
+  private NodeController nodeController;
   private static final String LOGIC_EDITOR_SCENE = "logic";
 
   public GameEditorLogicScene(SceneController sceneController) {
@@ -35,16 +37,15 @@ public class GameEditorLogicScene extends AbstractScene {
   }
 
   private void refreshScene() {
-    root.setCenter(nodeLogicPanel);
-    root.setTop(headerMenu.createMenu());
+    root.setCenter(nodeController.getScene().getRoot());
+    root.setTop(headerMenu);
     root.setLeft(componentPanel.createSingleAccordionVBox());
-    root.setCenter(nodeLogicPanel.createNodeLogicEnvironment());
     setScene(new Scene(root));
     setTheme();
   }
 
   private void createCenterPanel() {
-    nodeLogicPanel = new NodeLogicPanel();
+    nodeController = new NodeController();
   }
 
   private void createTopPanel() {

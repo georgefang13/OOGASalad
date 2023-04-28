@@ -609,5 +609,66 @@ public class IdManagerTest {
 
   }
 
+  @Test
+  public void testChangeParentId() {
+    Player player = new Player();
+    Player player2 = new Player();
+    Player player3 = new Player();
+
+    variable1.setOwner(player);
+    variable2.setOwner(player);
+    variable3.setOwner(player2);
+    object1.setOwner(player2);
+    object2.setOwner(player3);
+    object3.setOwner(player3);
+
+    manager.addObject(variable1, "var1");
+    manager.addObject(variable2, "var2");
+    manager.addObject(variable3, "var3");
+    manager.addObject(object1, "obj1");
+    manager.addObject(object2, "obj2");
+    manager.addObject(object3, "obj3", "obj2");
+
+
+    manager.changeParentId("obj1", "var3");
+
+    //check that the parent id has changed
+    String obj1Id = manager.getId(object1);
+    assertEquals(obj1Id, "var3.obj1");
+  }
+
+  @Test
+  public void testChangeParentIdBig() {
+    Player player = new Player();
+
+    variable1.setOwner(player);
+    variable2.setOwner(player);
+    variable3.setOwner(player);
+    object1.setOwner(player);
+    object2.setOwner(player);
+    object3.setOwner(player);
+
+    manager.addObject(variable1, "var1");
+    manager.addObject(variable2, "var2");
+    manager.addObject(variable3, "var3");
+    manager.addObject(object1, "obj1");
+    manager.addObject(object2, "obj2");
+    manager.addObject(object3, "obj3", "obj2");
+
+    manager.changeParentId("obj3", "var1");
+
+    //check that the parent id has changed
+    String obj1Id = manager.getId(object3);
+
+    //change the parent id of another one to obj3
+    manager.changeParentId("obj2", "obj3");
+
+    //check that the parent id has changed
+    String obj2Id = manager.getId(object2);
+
+    assertEquals(obj1Id, "var1.obj3");
+    assertEquals(obj2Id, "var1.obj3.obj2");
+  }
+
 }
 

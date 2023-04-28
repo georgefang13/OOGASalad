@@ -6,7 +6,7 @@ import javafx.scene.layout.Pane;
 import oogasalad.frontend.components.Component;
 import oogasalad.frontend.components.ComponentsFactory;
 import oogasalad.frontend.components.GraphicHandler;
-import oogasalad.frontend.panels.subPanels.ComponentPanel;
+import oogasalad.frontend.panels.editorPanels.ComponentPanel;
 
 /**
  * @author Han Allows the Modal to Communicate inputs and actions back with the rest of frontend

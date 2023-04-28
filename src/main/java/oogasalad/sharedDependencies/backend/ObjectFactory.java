@@ -4,6 +4,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import oogasalad.gameeditor.backend.ObjectParameter;
@@ -13,6 +14,8 @@ import oogasalad.gameeditor.backend.rules.Rule;
 import oogasalad.gamerunner.backend.interpretables.Goal;
 import oogasalad.sharedDependencies.backend.ownables.Ownable;
 import oogasalad.sharedDependencies.backend.ownables.gameobjects.DropZone;
+import oogasalad.sharedDependencies.backend.ownables.gameobjects.GameObject;
+import oogasalad.sharedDependencies.backend.ownables.variables.Variable;
 import oogasalad.sharedDependencies.backend.owners.GameWorld;
 import oogasalad.sharedDependencies.backend.owners.Owner;
 import oogasalad.sharedDependencies.backend.owners.Player;
@@ -44,95 +47,64 @@ public class ObjectFactory {
     this.players = players;
   }
 
-  /**
-   * The null types that will result in a default Object for the given type.
-   */
-  private final String[] nullTypes = {"", "null", "NULL", "Null", "none", "NONE", "None"};
 
-  private final String playerIdentifier = "Player"; //Independent of language, should not be changed
+//
+//  /**
+//   * Access a parameter from the map, returning null if the parameter is not present or is a null
+//   * type.
+//   *
+//   * @param params the map of parameters
+//   * @param param  the parameter to get
+//   * @return
+//   */
+//  private String getWithNull(Map<ObjectParameter, String> params, ObjectParameter param) {
+//    String result = params.get(param);
+//    if (result == null || isNullType(result)) {
+//      return null;
+//    } else {
+//      return result;
+//    }
+//  }
 
-  /**
-   * Checks if the given type is a null type.
-   *
-   * @param type the type to check
-   * @return true if the type is a null type, false otherwise
-   */
-  private boolean isNullType(String type) {
-    for (String nullType : nullTypes) {
-      if (type.equals(nullType)) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  /**
-   * Access a parameter from the map, returning null if the parameter is not present or is a null
-   * type.
-   *
-   * @param params the map of parameters
-   * @param param  the parameter to get
-   * @return
-   */
-  private String getWithNull(Map<ObjectParameter, String> params, ObjectParameter param) {
-    String result = params.get(param);
-    if (result == null || isNullType(result)) {
-      return null;
-    } else {
-      return result;
-    }
-  }
-
-  private void handleBoardCreator(Map<ObjectParameter, String> params) {
+  private void handleBoardCreator(Map<Object, Object> params) {
     Owner owner = gameWorld;
-
-    String type = getWithNull(params, ObjectParameter.BOARD_CREATOR_TYPE);
-    String param1 = getWithNull(params, ObjectParameter.BOARD_CREATOR_PARAM_1);
-    String param2 = getWithNull(params, ObjectParameter.BOARD_CREATOR_PARAM_2);
-    String param3 = getWithNull(params, ObjectParameter.BOARD_CREATOR_PARAM_3);
-
+    String type = params.get(ObjectParameter.BOARD_TYPE) != null ? params.get(ObjectParameter.BOARD_TYPE).toString() : null;;
     List<DropZone> dropZones = new ArrayList<>();
-
+    String boardRows = params.get(ObjectParameter.BOARD_ROWS) != null ? params.get(ObjectParameter.BOARD_ROWS).toString() : null;
+    String boardCols = params.get(ObjectParameter.BOARD_COLS) != null ? params.get(ObjectParameter.BOARD_COLS).toString() : null;
+    String boardLength = params.get(ObjectParameter.BOARD_LENGTH) != null ? params.get(ObjectParameter.BOARD_LENGTH).toString() : null;
+    String boardForward = params.get(ObjectParameter.BOARD_FORWARD) != null ? params.get(ObjectParameter.BOARD_FORWARD).toString() : null;
+    String boardBackward = params.get(ObjectParameter.BOARD_BACKWARD) != null ? params.get(ObjectParameter.BOARD_BACKWARD).toString() : null;
+    List<DropZone> boardCreatorMethod;
     try {
-      // Get the method from BoardCreator matching type
-      Method boardCreatorMethod;
-
-      if (type.equals("createGrid")) {
-        int param1Int = Integer.parseInt(param1);
-        int param2Int = Integer.parseInt(param2);
-        boardCreatorMethod = BoardCreator.class.getMethod(type, int.class, int.class);
-        dropZones = (List<DropZone>) boardCreatorMethod.invoke(null, param1Int, param2Int);
-      } else if (type.equals("createSquareLoop")) {
-        int param1Int = Integer.parseInt(param1);
-        int param2Int = Integer.parseInt(param2);
-        boardCreatorMethod = BoardCreator.class.getMethod(type, int.class, int.class);
-        dropZones = (List<DropZone>) boardCreatorMethod.invoke(null, param1Int, param2Int);
-      } else if (type.equals("create1DLoop")) {
-        if (param3 == null) {
-          boardCreatorMethod = BoardCreator.class.getMethod(type, int.class);
-          int param1Int = Integer.parseInt(param1);
-          dropZones = (List<DropZone>) boardCreatorMethod.invoke(null, param1Int);
-        } else {
-          boardCreatorMethod = BoardCreator.class.getMethod(type, int.class, String.class,
-              String.class);
-          int param1Int = Integer.parseInt(param1);
-          dropZones = (List<DropZone>) boardCreatorMethod.invoke(null, param1Int, param2, param3);
-        }
-
-      } else {
-        throw new RuntimeException("Unsupported BoardCreator type: " + type);
+      switch (type) {
+        case "createGrid":
+          boardCreatorMethod = BoardCreator.createGrid(Integer.parseInt(boardRows), Integer.parseInt(boardCols));
+          break;
+        case "createSquareLoop":
+          boardCreatorMethod = BoardCreator.createSquareLoop(Integer.parseInt(boardRows), Integer.parseInt(boardCols));
+          break;
+        case "create1DLoop":
+          if (boardForward == null || boardBackward == null) {
+            boardCreatorMethod = BoardCreator.create1DLoop(Integer.parseInt(boardLength));
+          } else {
+            boardCreatorMethod = BoardCreator.create1DLoop(Integer.parseInt(boardLength), boardForward, boardBackward);
+          }
+          break;
+        default:
+          throw new RuntimeException("Unsupported BoardCreator type: " + type);
       }
-    } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-      e.printStackTrace();
-    } catch (Exception e) {
-      throw new RuntimeException("Error creating game board", e);
+
+      dropZones = (List<DropZone>) boardCreatorMethod;
+    } catch (IllegalArgumentException e){
+      throw e;
     }
+
     //we have all the dropzones, now we need to add them to game manager (with owner as game world)
     for (DropZone dropZone : dropZones) {
       dropZone.setOwner(owner);
+//      System.out.println("ADDING ID: " + dropZone.getId());
       ownableIdManager.addObject(dropZone);
-      //get id of dropZone and print
-      System.out.println("DropZone ID: " + dropZone.getId());
     }
   }
 
@@ -160,6 +132,53 @@ public class ObjectFactory {
     }
   } //TODO
 
+  public Ownable constructOwnable(String ownableType, Owner owner, Map<Object, Object> constructorParams) throws IllegalArgumentException {
+
+    //Assume that only Variables and GameObjects will be created in this way
+    //Could be changed to use reflection to create any type of Ownable, but only Variables and GameObjects are needed
+    if(ownableType.contains("Variable")) {
+      Object value = constructorParams.get("value");
+      //if neither value or owner are null, then we can create the variable
+      if(value != null && owner != null) {
+        Variable variable = new Variable(value, owner);
+        return variable;
+      } else if(value == null && owner != null) {
+        //if value is null, then we need to create a variable with a default value
+        Variable variable = new Variable(owner);
+        return variable;
+      } else if(value != null && owner == null) {
+        //if owner is null, then we need to create a variable with a default owner
+        Variable variable = new Variable(value, gameWorld);
+        return variable;
+      } else if(value == null && owner == null) {
+        //if both value and owner are null, then we need to create a variable with a default value and owner
+        Variable variable = new Variable(gameWorld);
+        return variable;
+      }
+
+    } else if(ownableType.contains("GameObject")){
+      return new GameObject(owner);
+    } else {
+      throw new IllegalArgumentException("Invalid ownableType: " + ownableType);
+    }
+    return null; //should never reach this point
+  }
+
+  /**
+   * check if owner id is numeric value
+   * @param str
+   * @return
+   */
+  public Integer isNumeric(String str) {
+    if (str == null) {
+      return null;
+    }
+    try {
+      return  Integer.parseInt(str);
+    } catch (NumberFormatException e) {
+      return null;
+    }
+  }
 
   /**
    * Creates an ownable from the given parameters and adds it to the IdManager. If OWNABLE_TYPE is
@@ -168,46 +187,48 @@ public class ObjectFactory {
    * @param params
    * @return
    */
-  public void createOwnable(Map<ObjectParameter, String> params) {
-    String ownableType = getWithNull(params, ObjectParameter.OWNABLE_TYPE);
-    String parentOwnerName = getWithNull(params, ObjectParameter.OWNER);
-    String id = getWithNull(params, ObjectParameter.ID);
-    String parentOwnableName = getWithNull(params, ObjectParameter.PARENT_OWNABLE);
+  public void createOwnable(Map<ObjectParameter, Object> params) throws IllegalArgumentException {
+    String ownableType = params.get(ObjectParameter.OWNABLE_TYPE) != null ? params.get(ObjectParameter.OWNABLE_TYPE).toString() : null;
+    Map<Object, Object> constructorParams = (Map<Object, Object>) params.get(ObjectParameter.CONSTRUCTOR_ARGS);
+    String ownerNum = params.get(ObjectParameter.OWNER) != null ? params.get(ObjectParameter.OWNER).toString() : null;
+    Integer ownerInt = isNumeric(ownerNum);
+    String parentOwnableId = params.get(ObjectParameter.PARENT_OWNABLE_ID) != null ? params.get(ObjectParameter.PARENT_OWNABLE_ID).toString() : null;
+    String id = params.get(ObjectParameter.ID) != null ? params.get(ObjectParameter.ID).toString() : null;
+    Owner owner;
     Ownable parentOwnable;
-    try {
-      parentOwnable = ownableIdManager.getObject(parentOwnableName);
-    } catch (Exception e) {
-      parentOwnable = null;
-    }
-    //if null or does not contain playerIdentifier, then it is the gameWorld
-    Owner Owner;
-    if (parentOwnerName == null || !parentOwnerName.contains(playerIdentifier)) {
-      Owner = gameWorld;
+    //owner from constructor params
+    if (ownerInt != null && players.size() >= ownerInt){
+      owner = players.get(ownerInt - 1);
     } else {
-      //get player from player list
-      try {
-        Owner = players.get(Integer.parseInt(parentOwnerName.substring(playerIdentifier.length()))
-            - 1); //Because player numbers start at 1
-      } catch (NumberFormatException e) {
-        Owner = gameWorld;
-      }
+      owner = gameWorld;
+    }
+    //parent ownable from constructor params
+    if (parentOwnableId != null){
+      parentOwnable = ownableIdManager.getObject(parentOwnableId);
+    } else {
+      parentOwnable = null;
     }
     //if ownableType is BoardCreator
     if (ownableType.equals("BoardCreator")) {
-      handleBoardCreator(params);
+      //below method also adds dropzones to ownableIdManager
+      handleBoardCreator(constructorParams);
     } else {
-      Ownable newOwnable = createOwnable(ownableType, Owner);
-      ownableIdManager.addObject(newOwnable, id, parentOwnable);
+      try {
+        Ownable newOwnable = constructOwnable(ownableType, owner, constructorParams);
+        ownableIdManager.addObject(newOwnable, id, parentOwnable);
+      } catch (IllegalArgumentException e) {
+        throw new RuntimeException("Error creating ownable", e);
+      }
     }
 
 
   }
 
-  public static Rule createRule(Map<ObjectParameter, String> params) {
+  public static Rule createRule(Map<ObjectParameter, Object> params) {
     return null; //TODO move to shared dependencies
   }
 
-  public static Goal createGoal(Map<ObjectParameter, String> params) {
+  public static Goal createGoal(Map<ObjectParameter, Object> params) {
     return null; //TODO move to shared dependencies
   }
 

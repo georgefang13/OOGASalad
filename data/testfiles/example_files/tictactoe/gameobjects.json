@@ -1,7 +1,7 @@
 {
   "ID": {
     "image": "path of image",
-    "size": [100, 100],
+    "size": 2.2,
     "owner": "",
     "location": "dropzone id",
     "classes": ["class1", "class2", "class3"],

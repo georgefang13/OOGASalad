@@ -18,7 +18,7 @@ public class TextObject extends AbstractComponent implements TextObjectComponent
     double fontSize;
     Color color;
 
-    public TextObject(int id) {
+    public TextObject(String id) {
         super(id);
         instantiatePropFile("frontend.properties.Defaults.TextObject");
         this.setDefault();
@@ -26,7 +26,7 @@ public class TextObject extends AbstractComponent implements TextObjectComponent
         this.getNode();
     }
 
-    public TextObject(int ID, Map<String, String> map){
+    public TextObject(String ID, Map<String, String> map){
         super(ID);
         setValuesfromMap(map);
         this.followMouse();
