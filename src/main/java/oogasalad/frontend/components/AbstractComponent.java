@@ -23,6 +23,7 @@ public abstract class AbstractComponent implements Component {
   private Point editor;
   private String DEFAULT_FILE_PATH;
   private ResourceBundle DEFAULT_BUNDLE;
+  private String name;
 
   public AbstractComponent(String id) {
     ID = id;
@@ -104,6 +105,16 @@ public abstract class AbstractComponent implements Component {
     this.size = size;
     getNode().setScaleY(size);
     getNode().setScaleX(size);
+  }
+
+  @Override
+  public void setName(String newName) {
+    name = newName;
+  }
+
+  @Override
+  public String getName(){
+    return name;
   }
 
   protected String getDEFAULT_FILE_PATH() {

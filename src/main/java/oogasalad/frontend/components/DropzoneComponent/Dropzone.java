@@ -87,12 +87,6 @@ public class Dropzone extends AbstractComponent {
   public Set<String> returnContent(){
     return content.keySet();
   }
-  /**
-   *
-   */
-  @Override
-  public void setDefault() {
 
-  }
 
 }

@@ -10,15 +10,6 @@ import oogasalad.frontend.components.Component;
  * @author Han, Aryan These are the components of the View that are playable objects in Gameplay
  */
 public interface GameObjectComponent extends Component {
-
-
-  /**
-   * Change the name of the GameObject being edited
-   *
-   * @param name
-   */
-  void setName(String name);
-
   /**
    * Retrieve all children that belong to the GameObject
    */

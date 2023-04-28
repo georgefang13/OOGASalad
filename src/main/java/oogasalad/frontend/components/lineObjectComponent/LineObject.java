@@ -91,18 +91,4 @@ public class LineObject extends AbstractComponent implements LineObjectComponent
     public Node getNode(){
         return myLine;
     }
-
-    @Override
-    public void setDefault() {
-        startX = Double.parseDouble(getDEFAULT_BUNDLE().getString("line.startX"));
-        startY = Double.parseDouble(getDEFAULT_BUNDLE().getString("line.startY"));
-        endX = Double.parseDouble(getDEFAULT_BUNDLE().getString("line.endX"));
-        endY = Double.parseDouble(getDEFAULT_BUNDLE().getString("line.endY"));
-        color = getDEFAULT_BUNDLE().getString("line.color");
-        strokeWidth = Double.parseDouble(getDEFAULT_BUNDLE().getString("line.strokeWidth"));
-
-        myLine = new Line(startX,startY,endX,endY);
-        myLine.setFill(Color.BLACK);
-        myLine.setStrokeWidth(strokeWidth);
-    }
 }

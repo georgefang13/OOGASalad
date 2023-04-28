@@ -59,16 +59,4 @@ public class RectangleObject extends AbstractComponent implements RectangleObjec
     public Shape getNode() {
         return rectangle;
     }
-
-    @Override
-    public void setDefault() {
-        x = Double.parseDouble(getDEFAULT_BUNDLE().getString("rectangle.x"));
-        y = Double.parseDouble(getDEFAULT_BUNDLE().getString("rectangle.y"));
-        width = Double.parseDouble(getDEFAULT_BUNDLE().getString("rectangle.width"));
-        height = Double.parseDouble(getDEFAULT_BUNDLE().getString("rectangle.height"));
-        Color fill;
-        double strokeWidth;
-        Color strokeColor;
-        this.rectangle = new Rectangle(x, y, width, height);
-    }
 }

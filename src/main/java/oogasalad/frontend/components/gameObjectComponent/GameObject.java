@@ -21,7 +21,6 @@ import oogasalad.frontend.components.Point;
  */
 public class GameObject extends AbstractComponent implements GameObjectComponent{
 
-  private String name;
   private List<Node> children;
   private boolean playable;
   private ImageView image;
@@ -30,7 +29,6 @@ public class GameObject extends AbstractComponent implements GameObjectComponent
     super(ID);
     children = null;
     instantiatePropFile("frontend.properties.Defaults.GameObject");
-    this.setDefault();
     followMouse();
   }
 
@@ -64,14 +62,6 @@ public class GameObject extends AbstractComponent implements GameObjectComponent
   }
 
   @Override
-  public void setName(String newName) {
-    name = newName;
-  }
-  public String getName(){
-    return name;
-  }
-
-  @Override
   public List<Node> getChildren() {
     return children;
   }
@@ -84,10 +74,5 @@ public class GameObject extends AbstractComponent implements GameObjectComponent
   @Override
   public Node getNode() {
     return getImage();
-  }
-
-  @Override
-  public void setDefault() {
-    image = new ImageView(getDEFAULT_BUNDLE().getString("DEFAULT_IMAGE"));
   }
 }

@@ -18,16 +18,9 @@ public class TextObject extends AbstractComponent implements TextObjectComponent
     double fontSize;
     Color color;
 
-    public TextObject(String id) {
-        super(id);
-        instantiatePropFile("frontend.properties.Defaults.TextObject");
-        this.setDefault();
-        this.followMouse();
-        this.getNode();
-    }
-
     public TextObject(String ID, Map<String, String> map){
         super(ID);
+        instantiatePropFile("frontend.properties.Defaults.TextObject");
         setValuesfromMap(map);
         this.followMouse();
         text = new Text(x, y, content);
@@ -59,17 +52,4 @@ public class TextObject extends AbstractComponent implements TextObjectComponent
         return text;
     }
 
-    @Override
-    public void setDefault() {
-        content = getDEFAULT_BUNDLE().getString("text.content");
-        x = Double.parseDouble(getDEFAULT_BUNDLE().getString("text.x"));
-        y = Double.parseDouble(getDEFAULT_BUNDLE().getString("text.y"));
-        colorString = getDEFAULT_BUNDLE().getString("text.color");
-        fontSize = Double.parseDouble(getDEFAULT_BUNDLE().getString("text.fontSize"));
-        color = Color.web(colorString);
-
-        text = new Text(x, y, content);
-        text.setFont(Font.font(fontSize));
-        text.setFill(Color.BLACK);
-    }
 }
