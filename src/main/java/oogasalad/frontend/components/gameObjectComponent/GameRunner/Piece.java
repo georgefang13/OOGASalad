@@ -2,14 +2,18 @@ package oogasalad.frontend.components.gameObjectComponent.GameRunner;
 
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import oogasalad.Controller.GameRunnerController2;
 import oogasalad.gamerunner.backend.GameController;
 
+import javafx.event.Event;
 import java.io.FileInputStream;
 import java.util.HashMap;
 import java.util.Map;
+
+import static java.awt.event.MouseEvent.MOUSE_RELEASED;
 
 public class Piece extends GameRunnerObject{
     private double lastTranslateX;
@@ -28,7 +32,7 @@ public class Piece extends GameRunnerObject{
         pieceBox.setPrefWidth(size);
         pieceBox.setMaxHeight(size);
         pieceBox.setMaxHeight(size);
-        pieceBox.setOnDragDetected(e -> gameRunnerController.selectPiece(ID));
+        pieceBox.setOnDragDetected(e -> gameRunnerController.select(ID));
         pieceBox.setOnMouseReleased(e -> onDragDropped());
     }
 
@@ -46,12 +50,13 @@ public class Piece extends GameRunnerObject{
     }
     @Override
     public void onDragDropped() {
-        gameRunnerController.selectDropZone(ID);
+        Event mousereleased = (Event) new MouseEvent(MouseEvent.MOUSE_RELEASED);
+        pieceBox.fireEvent(new Event(MouseEvent.MOUSE_RELEASED));
     }
 
     @Override
     public void onClick() {
-        gameRunnerController.selectPiece(ID);
+        gameRunnerController.select(ID);
     }
 
     @Override

@@ -37,9 +37,10 @@ public class DropZoneFE implements FloatingDropHolder{
         dropZone.setLayoutY(y);
         dropZone.toBack();
         dropStack.setOnMouseClicked(e -> gameRunnerController.select(dropID));
+        dropStack.setOnMouseReleased(e -> onDrop());
 
         this.gameRunnerController = gameRunnerController;
-        droppable();
+        //droppable();
     }
 
     @Override
@@ -64,6 +65,7 @@ public class DropZoneFE implements FloatingDropHolder{
 
     public void droppable(){
         dropZone.setOnMouseReleased( e -> {
+            onDrop();
         });
     }
     public void onDrop(){
