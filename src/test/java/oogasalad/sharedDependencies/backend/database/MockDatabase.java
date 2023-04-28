@@ -9,11 +9,13 @@ public class MockDatabase extends Database {
       + "/src/main/resources/backend/database/duvalley-boiz-test-firebase-adminsdk-tafql-0dbd665e45.json";
   private static final String URL = "https://duvalley-boiz-test.firebaseio.com/";
 
+  private static final String PROJECT_ID = "duvalley-boiz-test";
+
   public MockDatabase() throws IOException {
-    this("");
+    this(PROJECT_ID, INFO_PATH, URL);
   }
 
-  public MockDatabase(String... tags) throws IOException {
-    super(tags);
+  public MockDatabase(String projectId, String infoPath, String url) throws IOException {
+    super(projectId, infoPath, url);
   }
 }
