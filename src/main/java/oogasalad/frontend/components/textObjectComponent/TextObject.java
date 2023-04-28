@@ -6,24 +6,25 @@ import javafx.scene.text.Text;
 import oogasalad.frontend.components.AbstractComponent;
 
 import java.util.Map;
-import java.util.ResourceBundle;
 
 
 public class TextObject extends AbstractComponent implements TextObjectComponent {
     private Text text;
     String content;
-    double x;
-    double y;
-    String colorString;
     double fontSize;
     Color color;
 
     public TextObject(String ID, Map<String, String> map){
         super(ID);
-        instantiatePropFile("frontend.properties.Defaults.TextObject");
         setValuesfromMap(map);
-        this.followMouse();
-        text = new Text(x, y, content);
+        initialize();
+    }
+
+    private void initialize() {
+        text = new Text(content);
+        text.setFill(color);
+        setTextSize(fontSize);
+        followMouse();
     }
 
     @Override

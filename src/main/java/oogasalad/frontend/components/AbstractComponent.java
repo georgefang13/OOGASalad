@@ -16,9 +16,11 @@ public abstract class AbstractComponent implements Component {
   private boolean active;
   private boolean visible;
   private int zIndex;
+
   private double size;
   private double XOffset;
   private double YOffset;
+
   private Point absolute;
   private Point editor;
   private String DEFAULT_FILE_PATH;
@@ -129,6 +131,20 @@ public abstract class AbstractComponent implements Component {
   protected void setDEFAULT_BUNDLE(ResourceBundle DEFAULT_BUNDLE) {
     this.DEFAULT_BUNDLE = DEFAULT_BUNDLE;
   }
+
+  protected double getXOffset() {
+    return XOffset;
+  }
+  protected void setXOffset(double XOffset) {
+    this.XOffset = XOffset;
+  }
+  protected double getYOffset() {
+    return YOffset;
+  }
+  protected void setYOffset(double YOffset) {
+    this.YOffset = YOffset;
+  }
+
 
   protected void setVisibleBool(boolean vis){
     visible = vis;

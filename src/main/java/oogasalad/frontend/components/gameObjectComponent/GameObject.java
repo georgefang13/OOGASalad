@@ -35,10 +35,12 @@ public class GameObject extends AbstractComponent implements GameObjectComponent
   public GameObject(String ID, Map<String, String> map){
     super(ID);
     children = null;
-    instantiatePropFile("frontend.properties.Defaults.GameObject");
-    setImage(getDEFAULT_BUNDLE().getString(replaceWithFileLoadingByID()));
     setValuesfromMap(map);
     followMouse();
+  }
+
+  private void initialize() {
+    setImage(getDEFAULT_BUNDLE().getString(replaceWithFileLoadingByID()));
   }
 
   private String replaceWithFileLoadingByID(){

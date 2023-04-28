@@ -2,14 +2,8 @@ package oogasalad.frontend.components.lineObjectComponent;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
-import oogasalad.Controller.ConvertingStrategy;
 import oogasalad.frontend.components.AbstractComponent;
-
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.Map;
-import java.util.Properties;
-import java.util.ResourceBundle;
 
 public class LineObject extends AbstractComponent implements LineObjectComponent {
     private Line myLine;
@@ -17,14 +11,19 @@ public class LineObject extends AbstractComponent implements LineObjectComponent
     private double startY;
     private double endX;
     private double endY;
-    private String color;
+    private Color color;
     private double strokeWidth;
 
     public LineObject(String ID, Map<String, String> map){
         super(ID);
-        instantiatePropFile("frontend.properties.Defaults.LineObject");
         setValuesfromMap(map);
+        initialize();
+    }
+
+    private void initialize() {
         myLine = new Line(startX,startY,endX, endY);
+        myLine.setFill(color);
+        myLine.setStrokeWidth(strokeWidth);
         followMouse();
     }
 
@@ -69,12 +68,13 @@ public class LineObject extends AbstractComponent implements LineObjectComponent
     }
 
     @Override
-    public String getColor() {
-        return "hi";
+    public Color getColor() {
+        return (Color)myLine.getFill();
     }
 
     @Override
-    public void setColor(String color) {
+    public void setColor(Color color) {
+        myLine.setFill(color);
     }
 
     @Override

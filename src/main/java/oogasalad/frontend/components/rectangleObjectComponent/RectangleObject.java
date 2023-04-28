@@ -11,52 +11,57 @@ import java.util.ResourceBundle;
 
 public class RectangleObject extends AbstractComponent implements RectangleObjectComponent {
     private Rectangle rectangle;
-    double x;
-    double y;
     double width;
     double height;
+    Color color;
 
     public RectangleObject(String ID, Map<String, String> map){
         super(ID);
         setValuesfromMap(map);
-        rectangle = new Rectangle(x,y,width,height);
-        this.followMouse();
+        initialize();
+    }
 
+    private void initialize() {
+        rectangle = new Rectangle(width,height);
+        rectangle.setFill(color);
+        followMouse();
+    }
+
+    @Override
+    public Shape getNode() {
+        return rectangle;
+    }
+
+    @Override
+    public void setWidth(double width) {
+        this.width = width;
+        rectangle.setWidth(width);
+    }
+
+    @Override
+    public double getWidth(double width) {
+        return rectangle.getWidth();
+    }
+
+    @Override
+    public void setHeight(double height) {
+        this.height = height;
+        rectangle.setHeight(height);
+    }
+
+    @Override
+    public double getHeight(double height) {
+        return rectangle.getHeight();
     }
 
     @Override
     public void setFill(Color fill) {
+        this.color = color;
         rectangle.setFill(fill);
     }
 
     @Override
     public Color getFill() {
         return (Color)rectangle.getFill();
-    }
-
-    @Override
-    public void setStrokeWidth(double strokeWidth) {
-        rectangle.setStrokeWidth(strokeWidth);
-    }
-
-    @Override
-    public double getStrokeWidth() {
-        return rectangle.getStrokeWidth();
-    }
-
-    @Override
-    public void setStrokeColor(Color strokeColor) {
-        rectangle.setStroke(strokeColor);
-
-    }
-
-    @Override
-    public Color getStrokeColor() {
-        return (Color)rectangle.getStroke();
-    }
-
-    @Override
-    public Shape getNode() {
-        return rectangle;
     }
 }
