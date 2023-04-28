@@ -95,6 +95,11 @@ public class GameRunnerController implements GameController {
 
     }
 
+    @Override
+    public void passGameId(String code) {
+
+    }
+
     public record DropZoneParameters(String id, int x, int y, int height, int width){}
 
     private void parseDropZoneLayout() throws FileNotFoundException {

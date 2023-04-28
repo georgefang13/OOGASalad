@@ -60,9 +60,11 @@ public class SocketRunner implements OnlineRunner {
     @Override
     public void create(){
         socket.emit("create");
+        System.out.println("creating room...");
         socket.once("room", args -> {
             playerNum = 0;
             code = (String) args[0];
+            game.sendCode(code);
             System.out.println("CODE: " + code);
         });
     }

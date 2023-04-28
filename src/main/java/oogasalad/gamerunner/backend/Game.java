@@ -148,6 +148,14 @@ public class Game implements GameToInterpreterAPI{
         }
     }
 
+    /**
+     * sends the online game code to the controller
+     * @param code the code to send
+     */
+    public void sendCode(String code){
+        controller.passGameId(code);
+    }
+
     private void startTurn(){
         try {
             interpreter.interpret("make :game_available [ ]");
