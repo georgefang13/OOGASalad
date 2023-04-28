@@ -1,8 +1,10 @@
 package oogasalad.gamerunner.backend.database;
 
 
+import com.google.api.core.ApiFuture;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.firestore.DocumentReference;
+import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.SetOptions;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
@@ -13,6 +15,8 @@ import java.io.IOException;
 import com.google.cloud.firestore.Firestore;
 import java.util.HashMap;
 import java.util.Map;
+import com.google.cloud.firestore.QuerySnapshot;
+import java.util.concurrent.ExecutionException;
 
 
 /**
@@ -37,14 +41,45 @@ public class Database {
     database = FirestoreClient.getFirestore();
   }
 
-  public void addData(String collection, String entry, String tag, Object data) {
+  /**
+   * Add data to database
+   * @param collection high-level collection to be updated
+   * @param entry entry within collection
+   * @param field field inside entry
+   * @param data data to be saved under specified field
+   */
+  public void addData(String collection, String entry, String field, Object data) {
     DocumentReference document = database.collection(collection).document(entry);
     Map<String, Object> dataMap = new HashMap<>();
-    dataMap.put(tag, data);
+    dataMap.put(field, data);
     document.set(dataMap, SetOptions.merge());
   }
 
-//  public void getData(Class<?> clazz, )
+  /**
+   * Retrieve data from database
+   * @param collection high-level collection to be updated
+   * @param entry entry within collection
+   * @param field field inside entry
+   * @param expectedClass expected class of returned Object
+   * @return Object contained in specified field of database, if its class is the one expected
+   */
+  public Object getData(String collection, String entry, String field, Class<?> expectedClass) {
+    // Code adapted from https://firebase.google.com/docs/firestore/quickstart
+    ApiFuture<DocumentSnapshot> document = database.collection(collection).document(entry).get();
+    DocumentSnapshot documentSnapshot;
+    try {
+      documentSnapshot = document.get();
+    } catch (InterruptedException | ExecutionException e) {
+      throw new RuntimeException(e);
+    }
+    Object data = documentSnapshot.get(field);
+    if (expectedClass == data.getClass()) {
+      return data;
+    }
+    else {
+      throw new IllegalArgumentException();
+    }
+  }
 
   /**
    * Goes through standard procedure of initializing Firebase
