@@ -113,7 +113,7 @@ public abstract class DraggableAbstractNode extends AbstractNode implements Drag
 
         ////////
         if (temp.getChildNode() instanceof Nestable) {;
-            temp= temp.getJumpNode();
+//            temp= temp.getJumpNode();
         }
         ////////
 
