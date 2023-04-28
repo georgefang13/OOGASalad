@@ -4,7 +4,7 @@ import javafx.scene.control.Label;
 import oogasalad.frontend.nodeEditor.NodeController;
 import oogasalad.frontend.nodeEditor.Nodes.AbstractNode;
 
-public class MainNode extends DraggableAbstractNode {
+public class MainNode extends AbstractNode {
 
   private static final double DEFAULT_X = 0;
   private static final double DEFAULT_Y = 0;
@@ -13,7 +13,7 @@ public class MainNode extends DraggableAbstractNode {
   private static final String COLOR = "#9BE70F";
 
   public MainNode(NodeController nodeController) {
-    super(nodeController, DEFAULT_X, DEFAULT_Y, WIDTH, HEIGHT, COLOR);
+    super();
     setContent();
   }
 

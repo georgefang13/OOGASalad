@@ -1,13 +1,13 @@
 package oogasalad.frontend.nodeEditor.Nodes.DraggableNodes;
 
 import javafx.scene.control.Label;
-import oogasalad.frontend.nodeEditor.NodeController;
+import oogasalad.frontend.nodeEditor.Nodes.AbstractNode;
 
-public class EndNestNode extends DraggableAbstractNode {
+public class EndNestNode extends AbstractNode {
 
-  public EndNestNode(NodeController nodeController, double x, double y, double width, double height,
+  public EndNestNode(double x, double y, double width, double height,
       String color) {
-    super(nodeController, x, y, WIDTH, HEIGHT, "red");
+    super( x, y, WIDTH, HEIGHT);
     setContent();
     this.setStyle(
         "-fx-border-color: black; -fx-border-width: 2px; -fx-border-radius: 5px; -fx-background-color: white; -fx-background-radius: 5px; -fx-padding: 5px;");

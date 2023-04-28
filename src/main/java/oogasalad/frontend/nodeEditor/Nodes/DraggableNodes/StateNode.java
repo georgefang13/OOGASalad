@@ -8,9 +8,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import oogasalad.frontend.nodeEditor.NodeController;
+import oogasalad.frontend.nodeEditor.Nodes.AbstractNode;
 
 
-public class StateNode extends DraggableAbstractNode {
+
+
+public class StateNode extends AbstractNode {
 
   private TextField stateName;
   private GridPane buttonGrid;
@@ -57,18 +60,18 @@ public class StateNode extends DraggableAbstractNode {
   }
 
   private void onInitialize(ActionEvent event) {
-    nodeController.openAndSwitchToTab(stateName.getText(), "on enter");
+    //nodeController.openAndSwitchToTab(stateName.getText(), "on enter");
   }
 
   private void onLeave(ActionEvent event) {
-    nodeController.openAndSwitchToTab(stateName.getText(), "on leave");
+    //nodeController.openAndSwitchToTab(stateName.getText(), "on leave");
   }
 
   private void onSetValue(ActionEvent event) {
-    nodeController.openAndSwitchToTab(stateName.getText(), "select");
+    //nodeController.openAndSwitchToTab(stateName.getText(), "select");
   }
 
   private void onNext(ActionEvent event) {
-    nodeController.openAndSwitchToTab(stateName.getText(), "next");
+   //nodeController.openAndSwitchToTab(stateName.getText(), "next");
   }
 }
