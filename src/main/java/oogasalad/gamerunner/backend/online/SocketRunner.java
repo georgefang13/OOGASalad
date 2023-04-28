@@ -29,8 +29,11 @@ public class SocketRunner implements OnlineRunner {
 
         socket.on("change", args -> {
            String obj = (String) args[0];
-            System.out.println("FOUND CLICK " + obj);
-           game.clickPiece(obj, false);
+           if (obj.equals("^undo")){
+               game.undoClickPiece(false);
+           } else {
+               game.clickPiece(obj, false);
+           }
         });
         socket.on("player", args -> {
             game.setNumPlayers((int) args[0]);

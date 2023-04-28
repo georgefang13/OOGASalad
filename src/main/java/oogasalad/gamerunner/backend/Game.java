@@ -261,8 +261,12 @@ public class Game implements GameToInterpreterAPI{
      * Goes to the previous state. Will break the game if going to the previous state would change turns or modify the board.
      */
     public void undoClickPiece(){
+        undoClickPiece(true);
+    }
+    public void undoClickPiece(boolean send){
         interpreter.interpret("make :game_available [ ]");
         fsm.undo();
+        if (send) onlineRunner.send("^undo");
         sendClickable();
     }
 
