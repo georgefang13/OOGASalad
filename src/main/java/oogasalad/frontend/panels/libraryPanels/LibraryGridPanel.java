@@ -8,12 +8,15 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
+import oogasalad.frontend.factories.ButtonFactory;
 import oogasalad.frontend.panels.Panel;
 import oogasalad.frontend.panels.PanelController;
 import oogasalad.frontend.scenes.AbstractScene;
@@ -42,6 +45,7 @@ public class LibraryGridPanel extends GridPane implements Panel {
   private final int IMAGE_HEIGHT = 150;
   private final int IMAGE_RADIUS = 20;
   PanelController panelController;
+  private ButtonFactory buttonFactory = new ButtonFactory();
   private Map<String, String> gameNames;
   private static final String JSON_NAME = "name";
   private static final String JSON_TAGS = "tags";
@@ -90,6 +94,7 @@ public class LibraryGridPanel extends GridPane implements Panel {
     VBox gameBox = new VBox();
     gameBox.getStyleClass().add(ID_BUNDLE.getString(GAME_BOX_ID));
     gameBox.getChildren().addAll(createImageView(directoryName), createTextIconHBox(realGameName));
+    gameBox.setTooltip(buttonFactory.createTooltip("hello"));
     return gameBox;
   }
   private ImageView createImageView(String gameName) {
