@@ -1,6 +1,6 @@
 package oogasalad.frontend.components.gameObjectComponent.GameRunner;
 
 public interface DropCell extends BoardCell{
-  public void assignDropZoneID(String id);
-  public String getDropZoneID();
+  void assignDropZoneID(String id);
+  String getDropZoneID();
 }

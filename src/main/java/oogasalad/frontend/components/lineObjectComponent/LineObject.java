@@ -14,7 +14,6 @@ public class LineObject extends AbstractComponent implements LineObjectComponent
     private double endY;
     private Color color;
     private double strokeWidth;
-
     public LineObject(String ID, Map<String, String> map){
         super(ID);
         setValuesfromMap(map);

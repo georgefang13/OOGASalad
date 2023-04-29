@@ -28,6 +28,7 @@ public class PanelController {
     return sceneController.getWindowController().getWindow(newWindowID);
   }
 
+
   public void switchSceneFromPanel(String newSceneID) {
     sceneController.switchToScene(newSceneID);
   }

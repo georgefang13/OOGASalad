@@ -28,7 +28,7 @@ public class SplashMainScene extends AbstractScene {
     playButton = new Button();
     playButton.setOnAction(
         e -> panelController.getSceneController().getWindowController()
-            .registerAndShow(WindowTypes.WindowType.GAME_WINDOW));
+            .registerAndShow(WindowTypes.WindowType.LIBRARY_WINDOW));
     editButton = new Button();
     editButton.setOnAction(
         e -> panelController.getSceneController().getWindowController()
