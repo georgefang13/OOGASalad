@@ -13,4 +13,6 @@ public abstract class AbstractSelectableVisual extends HBox implements Selectabl
     public String getObjectID(){
         return objectID;
     }
+
+    public abstract void updateVisual(Node newVisual);
 }

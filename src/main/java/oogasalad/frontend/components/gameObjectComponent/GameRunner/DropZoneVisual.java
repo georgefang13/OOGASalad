@@ -1,7 +1,6 @@
 package oogasalad.frontend.components.gameObjectComponent.GameRunner;
 
 import javafx.scene.Node;
-import javafx.scene.layout.HBox;
 
 public class DropZoneVisual extends AbstractSelectableVisual {
     private Node unselectedVisual;
@@ -14,11 +13,12 @@ public class DropZoneVisual extends AbstractSelectableVisual {
         this.getChildren().add(unselectedVisual);
     }
     private void initHBox(double width, double height, double x, double y){
-        this.setPrefWidth(width);
         this.setPrefHeight(height);
+        this.setPrefWidth(width);
+        this.setMaxHeight(height);
+        this.setMaxWidth(width);
         this.setLayoutX(x);
         this.setLayoutY(y);
-        this.toBack();
     }
 
     @Override
@@ -31,5 +31,10 @@ public class DropZoneVisual extends AbstractSelectableVisual {
     public void showUnclickable() {
         this.getChildren().remove(selectedVisual);
         this.getChildren().add(unselectedVisual);
+    }
+
+    @Override
+    public void updateVisual(Node newVisual) {
+        unselectedVisual = newVisual;
     }
 }

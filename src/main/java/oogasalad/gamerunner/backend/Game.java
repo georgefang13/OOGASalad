@@ -1,6 +1,5 @@
 package oogasalad.gamerunner.backend;
 
-import oogasalad.Controller.GameRunnerController;
 import oogasalad.sharedDependencies.backend.id.IdManageable;
 import oogasalad.sharedDependencies.backend.id.IdManager;
 import oogasalad.gamerunner.backend.fsm.FSM;
@@ -271,7 +270,7 @@ public class Game implements GameToInterpreterAPI{
 
             ownableIdManager.addObject(dz, id);
 
-            controller.addDropZone(new GameRunnerController.DropZoneParameters(id, x, y, height, width));
+            controller.addDropZone(new GameController.DropZoneParameters(id, x, y, height, width));
         }
 
         for (DropZone dz : edgeMap.keySet()){

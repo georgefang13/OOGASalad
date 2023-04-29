@@ -9,7 +9,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
-import oogasalad.Controller.GameRunnerController;
 import oogasalad.gamerunner.backend.Game;
 import oogasalad.gamerunner.backend.GameController;
 
@@ -63,7 +62,7 @@ public class SimpleGameView extends Application implements GameController {
     }
 
     @Override
-    public void addDropZone(GameRunnerController.DropZoneParameters params) {
+    public void addDropZone(GameController.DropZoneParameters params) {
         // String id, int x, int y, int height, int width
         HBox dropZone = new HBox();
         dropZone.setPrefWidth(params.width());

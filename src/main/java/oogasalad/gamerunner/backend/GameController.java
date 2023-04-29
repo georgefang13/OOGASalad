@@ -1,13 +1,11 @@
 package oogasalad.gamerunner.backend;
 
-import oogasalad.Controller.GameRunnerController;
-
 import java.io.FileNotFoundException;
 import java.util.List;
 
 public interface GameController {
 
-    void addDropZone(GameRunnerController.DropZoneParameters params);
+    void addDropZone(DropZoneParameters params);
 
     void addPiece(String id, String image, String dropZoneID, double size) throws FileNotFoundException;
 
@@ -20,5 +18,7 @@ public interface GameController {
     void setObjectImage(String id, String imagePath);
 
     void select(String dropID);
+
+    record DropZoneParameters(String id, int x, int y, int height, int width){}
 
 }

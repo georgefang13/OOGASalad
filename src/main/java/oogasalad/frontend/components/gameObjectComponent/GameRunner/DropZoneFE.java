@@ -1,12 +1,8 @@
 package oogasalad.frontend.components.gameObjectComponent.GameRunner;
 
-import javafx.scene.Node;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import oogasalad.Controller.GameRunnerController;
 import oogasalad.gamerunner.backend.GameController;
 
 public class DropZoneFE implements FloatingDropHolder{

@@ -7,10 +7,12 @@ import javafx.scene.shape.Rectangle;
 
 public class PieceVisual extends AbstractSelectableVisual{
     private Rectangle highlightBorder;
+    private Node pieceImage;
 
-    public PieceVisual(Node pieceImage, double size, String id) {
+    public PieceVisual(Node pieceImg, double size, String id) {
         super(id);
         initHBox(size);
+        pieceImage = pieceImg;
         highlightBorder = new Rectangle(size,size,Color.TRANSPARENT);
         highlightBorder.setStroke(Color.TRANSPARENT);
         StackPane stackPane = new StackPane(highlightBorder,pieceImage);
@@ -20,7 +22,7 @@ public class PieceVisual extends AbstractSelectableVisual{
         this.setPrefHeight(size);
         this.setPrefWidth(size);
         this.setMaxHeight(size);
-        this.setMaxHeight(size);
+        this.setMaxWidth(size);
     }
 
     @Override
@@ -31,5 +33,10 @@ public class PieceVisual extends AbstractSelectableVisual{
     @Override
     public void showUnclickable() {
         highlightBorder.setStroke(Color.TRANSPARENT);
+    }
+
+    @Override
+    public void updateVisual(Node newVisual) {
+        pieceImage = newVisual;
     }
 }

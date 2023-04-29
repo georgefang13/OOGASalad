@@ -1,21 +1,13 @@
 package oogasalad.frontend.scenes;
 
 import javafx.geometry.Point2D;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
 import oogasalad.Controller.GameRunnerController;
-import oogasalad.Controller.GameRunnerController2;
 
-import java.util.ArrayList;
 import java.util.Objects;
 
 /**
@@ -27,7 +19,7 @@ public class GamePlayerMainScene extends AbstractScene {
   private Label textInstructions;
   private BorderPane root;
   private GridPane boardPane;
-  private GameRunnerController2 gameRunnerController;
+  private GameRunnerController gameRunnerController;
   private String gameName;
   public static final String GAME_STYlE_FILE_PATH = "frontend/css/simpleGameView.css";
   private final String MODAL_STYLE_SHEET = Objects
@@ -45,7 +37,7 @@ public class GamePlayerMainScene extends AbstractScene {
     gameName = panelController.getSceneController().getWindowController().getData().toString();
     System.out.println(gameName);
 
-    gameRunnerController = new GameRunnerController2(root,gameName);
+    gameRunnerController = new GameRunnerController(root,gameName);
 
     /*
     boardPane = gameRunnerController.getBoardVisual();
