@@ -19,6 +19,8 @@ import oogasalad.sharedDependencies.backend.id.IdManager;
 import oogasalad.sharedDependencies.backend.ObjectFactory;
 import oogasalad.sharedDependencies.backend.id.OwnableSearchStream;
 import oogasalad.sharedDependencies.backend.ownables.Ownable;
+import oogasalad.sharedDependencies.backend.ownables.gameobjects.DropZone;
+import oogasalad.sharedDependencies.backend.ownables.gameobjects.GameObject;
 import oogasalad.sharedDependencies.backend.ownables.variables.Variable;
 import oogasalad.sharedDependencies.backend.owners.GameWorld;
 import oogasalad.sharedDependencies.backend.owners.Owner;
@@ -143,70 +145,79 @@ public class GameInator {
    * @param o - the Owner
    * @return the String representation of the Owner
    */
-  private String getOwnerType(Owner o) {
-    try {
-      return "player" + players.indexOf((Player) o);
-    } catch (Exception e) {
-      return "GameWorld";
+  private int getOwnerType(Owner o) {
+    if (o instanceof GameWorld) {
+      return 0;
     }
+    return players.indexOf((Player) o);
   }
 
   private void updateVariableFile() {
-    ArrayList<Variable<?>> variables = new ArrayList<>();
-    //loop through idManager and add all variables to list
-    for (Entry<String, Ownable> entry : idManager) {
-      if (entry.getValue() instanceof Variable) {
-        variables.add((Variable<?>) entry.getValue());
-      }
-    }
-
-    OwnableSearchStream sstream = new OwnableSearchStream(idManager);
+    FileManager fm = new FileManager();
 
     idManager.objectStream().filter(obj -> obj instanceof Variable<?>).forEach(var -> {
       Variable v = (Variable) var;
+      String id = idManager.getId(v);
+      String owner = String.valueOf(getOwnerType(v.getOwner()));
+      String type = v.get().getClass().getName();
+
+      fm.addContent(owner, id, "owner");
+      fm.addContent(type, id, "type");
+      fm.addContent(v.get(), id, "value");
 
     });
 
-    JsonObject json = new JsonObject();
-    Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    fm.saveToFile(gameDirectory + "/variables.json");
+  }
 
-    for (Variable variable : variables) {
-      JsonObject variableJson = new JsonObject();
-      variableJson.addProperty("owner", getOwnerType(variable.getOwner()));
-      variableJson.addProperty("value", gson.toJson(variable));
-      variableJson.addProperty("type", variable.getType());
-      json.add(idManager.getSimpleId(variable), variableJson);
-    }
+  private DropZone getLocation(GameObject g){
+    List<Ownable> dzs = idManager.objectStream().filter(obj -> obj instanceof DropZone).filter(dz -> {
+      DropZone dropZone = (DropZone) dz;
+      return dropZone.getAllObjects().contains(g);
+    }).toList();
 
-    System.out.println(gson.toJson(json));
-
+    return (DropZone) dzs.get(0);
   }
 
   private void updateObjectFile() {
     FileManager fm = new FileManager();
     OwnableSearchStream stream = new OwnableSearchStream(idManager);
-    idManager.objectStream().forEach(obj -> {
+    idManager.objectStream().filter(o -> o instanceof GameObject) .forEach(obj -> {
       String objId = idManager.getId(obj);
-      List<String> owned = idManager.objectStream()
-          .filter(stream.isDirectlyOwnedByOwnable(obj))
-          .map(o -> idManager.getId(o))
-          .toList();
       int owner = -1;
       if (obj.getOwner() != gameWorld) owner = players.indexOf((Player) obj.getOwner());
 
       fm.addContent(String.valueOf(owner), objId);
       obj.getClasses().forEach(cls -> fm.addContent(objId, "classes"));
-      owned.forEach(id -> fm.addContent(objId, "owns"));
-      // TODO: location
 
+      idManager.objectStream()
+              .filter(stream.isDirectlyOwnedByOwnable(obj))
+              .map(o -> idManager.getId(o))
+              .forEach(s -> fm.addContent(s, objId, "owns"));
 
-
+      DropZone location = getLocation((GameObject) obj);
+      fm.addContent(idManager.getId(location), objId, "location");
     });
-    //TODO
+
+
+    fm.saveToFile(gameDirectory + "/objects.json");
   }
 
   private void updateLayoutFile() {
-    //TODO
+    FileManager fm = new FileManager();
+
+    idManager.objectStream().filter(obj -> obj instanceof DropZone).forEach(dz -> {
+      DropZone dropZone = (DropZone) dz;
+      String id = idManager.getId(dropZone);
+      // get connections
+        dropZone.getEdges().forEach((edgeName, value) -> {
+          String edgeId = idManager.getId(value);
+          fm.addContent(edgeId, id, "connections", edgeName);
+        });
+        // get classes
+        dropZone.getClasses().forEach(cls -> fm.addContent(id, "classes"));
+    });
+    fm.saveToFile(gameDirectory + "/layout.json");
   }
 
   private void idManagerFileUpdate() {
