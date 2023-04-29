@@ -76,6 +76,8 @@ public class NodeScene extends AbstractScene {
     } catch (IOException e) {
       e.printStackTrace();
     }
+
+
   }
 
   public Scene getScene() {
