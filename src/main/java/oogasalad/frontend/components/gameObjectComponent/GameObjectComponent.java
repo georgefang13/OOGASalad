@@ -28,7 +28,6 @@ public interface GameObjectComponent extends Component {
    * Toggle the gameObject on or off depending on whether the user wants the GameObject to display
    * in game
    */
-  void setPlayable(boolean playable);
 
   /**
    * This is the method that allows for visual for DisplayableComponent to be changed

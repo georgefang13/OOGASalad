@@ -90,6 +90,9 @@ public abstract class AbstractComponent implements Component {
         getNode().setTranslateX(e.getSceneX() - XOffset);
         getNode().setTranslateY(e.getSceneY() - YOffset);
       }
+      else {
+        System.out.println("not draggable");
+      }
     });
   }
 

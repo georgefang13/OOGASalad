@@ -54,8 +54,9 @@ public class GameRunnerController implements GameController {
         clearClickables();
         clickable.addAll(ids);
         for (String id : ids){
-            AbstractSelectableVisual gameObjectVisual = (AbstractSelectableVisual) gameObjects.get(id).getNode();
-            gameObjectVisual.showClickable();
+            gameObjects.get(id).makePlayable();
+            //AbstractSelectableVisual gameObjectVisual = (AbstractSelectableVisual) gameObjects.get(id).getNode();
+            //gameObjectVisual.showClickable();
         }
     }
 
@@ -104,8 +105,9 @@ public class GameRunnerController implements GameController {
 
     private void clearClickables(){
         for (String id : clickable){
-            AbstractSelectableVisual gameObjectVisual = (AbstractSelectableVisual) gameObjects.get(id).getNode();
-            gameObjectVisual.showUnclickable();
+            gameObjects.get(id).makeUnplayable();
+            //AbstractSelectableVisual gameObjectVisual = (AbstractSelectableVisual) gameObjects.get(id).getNode();
+            //gameObjectVisual.showUnclickable();
         }
         clickable.clear();
     }

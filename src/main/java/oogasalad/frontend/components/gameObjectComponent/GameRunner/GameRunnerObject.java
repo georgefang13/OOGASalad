@@ -8,22 +8,26 @@ import oogasalad.gamerunner.backend.interpreter.commands.False;
 public abstract class GameRunnerObject extends GameObject implements GameRunnerComponent {
     protected GameController gameRunnerController;
     protected AbstractSelectableVisual selectableVisual;
+    protected boolean playable;
     public GameRunnerObject(String ID, GameController gameRunnerController) {
         super(ID);
         this.gameRunnerController = gameRunnerController;
+        setDraggable(false);
     }
     @Override
     public Node getNode(){
         return selectableVisual;
     }
     @Override
-    public void makeClickable(){
-        setDraggable(true);
+    public void makePlayable(){
+        playable = true;
         selectableVisual.showClickable();
+        setDraggable(playable);
     }
     @Override
-    public void makeUnclickable(){
-        setDraggable(false);
+    public void makeUnplayable(){
+        playable = false;
         selectableVisual.showUnclickable();
+        setDraggable(playable);
     }
 }

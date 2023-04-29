@@ -24,7 +24,7 @@ public class GameObject extends AbstractComponent implements GameObjectComponent
 
   private String name;
   private List<Node> children;
-  private boolean playable;
+
   private ImageView image;
 
   public GameObject(String ID) {
@@ -71,11 +71,6 @@ public class GameObject extends AbstractComponent implements GameObjectComponent
   @Override
   public List<Node> getChildren() {
     return children;
-  }
-
-  @Override
-  public void setPlayable(boolean play) {
-    playable = play;
   }
 
   @Override
