@@ -67,7 +67,7 @@ public class NodeScene extends AbstractScene {
       String action = entry.getValue().getAction();
       String content = entry.getValue().getAllNodeContent();
       List<AbstractNode> listOfNodes = entry.getValue().getAllNodes();
-      entry.getValue().saveNodesToFile(listOfNodes, CONFIG_JSON_PATH);
+//      entry.getValue().saveNodesToFile(listOfNodes, CONFIG_JSON_PATH);
 
       if (!stateObject.has(state)) {
         JsonObject stateJson = new JsonObject();
