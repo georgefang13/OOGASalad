@@ -19,7 +19,7 @@ public class Arrow {
   private Line line;
   private Group arrow;
 
-  private static final double HEAD_SIZE = 10;
+  private static final double HEAD_SIZE = 15;
 
   /**
    * Constructor for arrow that represents connections between dropzones
@@ -57,9 +57,14 @@ public class Arrow {
     double endY = endSquare.getTranslateY() + end.getHeight()/2;
     line = new Line(startX, startY, endX, endY);
 
+    createArrowHead(startX, startY, endX, endY);
+  }
+
+  private void createArrowHead(double startX, double startY, double endX, double endY) {
     double length = Math.sqrt(Math.pow(endX - startX, 2) + Math.pow(endY - startY, 2));
     System.out.println(length);
     double angle = Math.atan2(endY - startY, endX - startX);
+    System.out.println("Angle" + angle);
     double headLength = Math.min(HEAD_SIZE, length / 3);
     double headWidth = Math.min(HEAD_SIZE, headLength / 2);
 
@@ -67,12 +72,11 @@ public class Arrow {
     double xPointCalc = endX - headLength * Math.cos(angle);
     double yPointCalc = endY - headLength * Math.sin(angle);
     triangle.getPoints().addAll(
-        xPointCalc,
-        yPointCalc,
-        endX - headLength * Math.cos(angle) - headWidth * Math.sin(angle),
-        yPointCalc + headWidth * Math.cos(angle),
-        xPointCalc + headWidth * Math.sin(angle),
-        endY - headLength * Math.sin(angle) - headWidth * Math.cos(angle)
+        endX, endY,
+        endX - headLength * Math.cos(angle + Math.PI / 4) + headWidth * Math.sin(angle),
+        endY - headLength * Math.sin(angle + Math.PI / 4) - headWidth * Math.cos(angle),
+        endX - headLength * Math.cos(angle - Math.PI / 4) + headWidth * Math.sin(angle),
+        endY - headLength * Math.sin(angle - Math.PI / 4) - headWidth * Math.cos(angle)
     );
     triangle.setRotate(Math.toDegrees(angle));
   }
