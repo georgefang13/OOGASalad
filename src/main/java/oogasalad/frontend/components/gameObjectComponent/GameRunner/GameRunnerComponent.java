@@ -6,4 +6,5 @@ public interface GameRunnerComponent extends Component {
     void setSelectableVisual();
     void makePlayable();
     void makeUnplayable();
+    boolean getPlayable();
 }

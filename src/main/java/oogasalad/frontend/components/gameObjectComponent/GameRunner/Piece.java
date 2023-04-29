@@ -35,10 +35,20 @@ public class Piece extends GameRunnerObject{
         getNode().setOnMouseReleased(e -> selectDropZoneBelow());
     }
     private void selectDropZoneBelow(){
-        DropZoneVisual dzv = getIntersectingDropZones();
-        gameRunnerController.select(dzv.getObjectID());
-        active = false;
-        setDraggable(playable);
+        DropZoneVisual dropZoneVisual = getIntersectingDropZones();
+        if (dropZoneVisual == null){
+            goBack();
+            return;
+        }
+        if (gameRunnerController.isObjectPlayable(dropZoneVisual.objectID)){
+            gameRunnerController.select(dropZoneVisual.getObjectID());
+            acceptDrag();
+            active = false;
+            setDraggable(playable);
+        } else {
+            goBack();
+        }
+
     }
     public DropZoneVisual getIntersectingDropZones(){
         Bounds pieceBounds = getNode().localToScene(getNode().getBoundsInLocal());
@@ -49,13 +59,12 @@ public class Piece extends GameRunnerObject{
                 }
             }
         }
-        //goBack();
         return null;
     }
 
     public void moveToDropZoneXY(DropZoneFE.DropZoneCenter DZcenter){
         setCentertoCenter(DZcenter.x(), DZcenter.y());
-        //acceptDrag();
+        acceptDrag();
     }
     private void setCentertoCenter(double x, double y){
         //double actualX = pieceBox.getLayoutX() + pieceBox.getTranslateX();

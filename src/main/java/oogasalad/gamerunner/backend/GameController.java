@@ -18,6 +18,7 @@ public interface GameController {
     void setObjectImage(String id, String imagePath);
 
     void select(String dropID);
+    boolean isObjectPlayable(String id);
 
     record DropZoneParameters(String id, int x, int y, int height, int width){}
 

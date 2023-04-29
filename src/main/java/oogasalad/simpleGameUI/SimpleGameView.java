@@ -62,6 +62,11 @@ public class SimpleGameView extends Application implements GameController {
     }
 
     @Override
+    public boolean isObjectPlayable(String id) {
+        return false;
+    }
+
+    @Override
     public void addDropZone(GameController.DropZoneParameters params) {
         // String id, int x, int y, int height, int width
         HBox dropZone = new HBox();

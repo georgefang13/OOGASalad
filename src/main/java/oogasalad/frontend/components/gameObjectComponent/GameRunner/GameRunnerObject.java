@@ -33,4 +33,8 @@ public abstract class GameRunnerObject extends GameObject implements GameRunnerC
         selectableVisual.showUnclickable();
         setDraggable(playable || active);
     }
+    @Override
+    public boolean getPlayable(){
+        return playable;
+    }
 }

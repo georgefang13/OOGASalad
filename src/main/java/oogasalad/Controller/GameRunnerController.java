@@ -111,6 +111,10 @@ public class GameRunnerController implements GameController {
         }
         clickable.clear();
     }
+    @Override
+    public boolean isObjectPlayable(String id){
+        return gameObjects.get(id).getPlayable();
+    }
 
     public ArrayList<Node> getNodes(){
         ArrayList<Node> nodelist = new ArrayList<>();
