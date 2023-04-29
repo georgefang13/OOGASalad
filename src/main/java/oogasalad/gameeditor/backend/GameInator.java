@@ -1,15 +1,23 @@
 package oogasalad.gameeditor.backend;
 
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import java.util.Map.Entry;
 import oogasalad.gamerunner.backend.interpretables.Goal;
 import oogasalad.sharedDependencies.backend.GameLoader;
+import oogasalad.sharedDependencies.backend.filemanagers.FileManager;
 import oogasalad.sharedDependencies.backend.id.IdManager;
 import oogasalad.sharedDependencies.backend.ObjectFactory;
+import oogasalad.sharedDependencies.backend.id.OwnableSearchStream;
 import oogasalad.sharedDependencies.backend.ownables.Ownable;
 import oogasalad.sharedDependencies.backend.ownables.variables.Variable;
 import oogasalad.sharedDependencies.backend.owners.GameWorld;
@@ -40,7 +48,7 @@ public class GameInator {
   /**
    * The IdManager of the game for Ownables.
    */
-  private IdManager<Ownable> ownableIdManager = new IdManager<>();
+  private IdManager<Ownable> idManager = new IdManager<>();
 
   /**
    * The rule manager of the game for rules and goals.
@@ -58,10 +66,24 @@ public class GameInator {
   private final ObjectFactory objectFactory;
 
   /**
+   * The name of the game.
+   * Used for accessing the correct directory for files
+   */
+  private final String gameName;
+
+  private String gameDirectory;
+  private String generalInfoFile;
+  private String layoutFile;
+  private String variablesFile;
+  private String objectsFile;
+
+  /**
    * Creates a new Game with no information.
    */
-  public GameInator() {
-    objectFactory = new ObjectFactory(gameWorld, ownableIdManager, players);
+  public GameInator(String gameName) {
+    objectFactory = new ObjectFactory(gameWorld, idManager, players);
+    this.gameName = gameName;
+    initDirectories();
   }
 
   /**
@@ -69,22 +91,129 @@ public class GameInator {
    * Removes all current information and overwrites it with the information from the file.
    * @param directory the directory of the files to load
    */
-  public GameInator(String directory) {
+  public GameInator(String directory, String gameName) {
+    this.gameName = gameName;
+    initDirectories();
     //Use gameLoader to load the game from a file
     GameLoader loader = new GameLoader(directory);
     try{
       players.addAll(loader.loadPlayers());
-      loader.loadDropZones(ownableIdManager, gameWorld);
-      loader.loadObjectsAndVariables(ownableIdManager, players, gameWorld);
+      loader.loadDropZones(idManager, gameWorld);
+      loader.loadObjectsAndVariables(idManager, players, gameWorld);
       goals.addAll(loader.loadGoals());
       ruleManager = loader.loadRules();
     } catch (Exception e) {
       e.printStackTrace();
     }
 
-    objectFactory = new ObjectFactory(gameWorld, ownableIdManager, players);
+    objectFactory = new ObjectFactory(gameWorld, idManager, players);
   }
 
+  private void initDirectories() {
+    gameDirectory = "data/games/" + gameName + "/";
+    generalInfoFile = gameDirectory + "general.json";
+    layoutFile = gameDirectory + "layout.json";
+    variablesFile = gameDirectory + "variables.json";
+    objectsFile = gameDirectory + "objects.json";
+    //TODO throw error or create if not exist
+  }
+
+
+  /**
+   * Updates the general.json file with the current information of the game.
+   * For the backend, this is only the max number of players.
+   */
+  private void updateGeneralFile() {
+    Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+    try (FileReader reader = new FileReader(generalInfoFile)) {
+      JsonObject jsonObject = gson.fromJson(reader, JsonObject.class);
+      jsonObject.getAsJsonObject("players").addProperty("max", players.size());
+
+      try (FileWriter writer = new FileWriter(generalInfoFile)) {
+        gson.toJson(jsonObject, writer);
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+  /**
+   * Returns the String representation of the Owner
+   * @param o - the Owner
+   * @return the String representation of the Owner
+   */
+  private String getOwnerType(Owner o) {
+    try {
+      return "player" + players.indexOf((Player) o);
+    } catch (Exception e) {
+      return "GameWorld";
+    }
+  }
+
+  private void updateVariableFile() {
+    ArrayList<Variable<?>> variables = new ArrayList<>();
+    //loop through idManager and add all variables to list
+    for (Entry<String, Ownable> entry : idManager) {
+      if (entry.getValue() instanceof Variable) {
+        variables.add((Variable<?>) entry.getValue());
+      }
+    }
+
+    OwnableSearchStream sstream = new OwnableSearchStream(idManager);
+
+    idManager.objectStream().filter(obj -> obj instanceof Variable<?>).forEach(var -> {
+      Variable v = (Variable) var;
+
+    });
+
+    JsonObject json = new JsonObject();
+    Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+    for (Variable variable : variables) {
+      JsonObject variableJson = new JsonObject();
+      variableJson.addProperty("owner", getOwnerType(variable.getOwner()));
+      variableJson.addProperty("value", gson.toJson(variable));
+      variableJson.addProperty("type", variable.getType());
+      json.add(idManager.getSimpleId(variable), variableJson);
+    }
+
+    System.out.println(gson.toJson(json));
+
+  }
+
+  private void updateObjectFile() {
+    FileManager fm = new FileManager();
+    OwnableSearchStream stream = new OwnableSearchStream(idManager);
+    idManager.objectStream().forEach(obj -> {
+      String objId = idManager.getId(obj);
+      List<String> owned = idManager.objectStream()
+          .filter(stream.isDirectlyOwnedByOwnable(obj))
+          .map(o -> idManager.getId(o))
+          .toList();
+      int owner = -1;
+      if (obj.getOwner() != gameWorld) owner = players.indexOf((Player) obj.getOwner());
+
+      fm.addContent(String.valueOf(owner), objId);
+      obj.getClasses().forEach(cls -> fm.addContent(objId, "classes"));
+      owned.forEach(id -> fm.addContent(objId, "owns"));
+      // TODO: location
+
+
+
+    });
+    //TODO
+  }
+
+  private void updateLayoutFile() {
+    //TODO
+  }
+
+  private void idManagerFileUpdate() {
+    updateVariableFile();
+    updateObjectFile();
+    updateLayoutFile();
+  }
 
   //endregion
 
@@ -97,6 +226,8 @@ public class GameInator {
    */
   public void addPlayer(Player player) {
     players.add(player);
+    //add player to general.json
+    updateGeneralFile();
   }
 
   /**
@@ -139,6 +270,7 @@ public class GameInator {
    */
   private void createOwnable(Map<ObjectParameter, Object> params) throws IllegalArgumentException{
     objectFactory.createOwnable(params);
+    idManagerFileUpdate();
   }
 
   /**
@@ -187,6 +319,7 @@ public class GameInator {
       case GOAL -> createGoal();
       default -> throw new IllegalArgumentException("Invalid type"); //TODO add to properties
     }
+    idManagerFileUpdate();
   }
 
   //endregion sendObject API
@@ -200,10 +333,11 @@ public class GameInator {
    */
   public void removeOwnable(Map<ObjectParameter, Object> params) throws IllegalArgumentException {
     String id = params.get(ObjectParameter.ID) != null ? params.get(ObjectParameter.ID).toString() : null;
-    if (!ownableIdManager.isIdInUse(id)) {
+    if (!idManager.isIdInUse(id)) {
       return;
     }
-    ownableIdManager.removeObject(id);
+    idManager.removeObject(id);
+    idManagerFileUpdate();
   }
 
   /**
@@ -212,11 +346,13 @@ public class GameInator {
    */
   public void removePlayer() {
     //remove all ownables owned by the player
-    ownableIdManager.removeObjectsOwnedByOwner(players.get(players.size() - 1));
+    idManager.removeObjectsOwnedByOwner(players.get(players.size() - 1));
     if (players.size() > 0) {
       //remove the last player
       players.remove(players.size() - 1);
     }
+    //add player to general.json
+    updateGeneralFile();
   }
 
   /**
@@ -256,6 +392,8 @@ public class GameInator {
       case GOAL -> removeGoal();
       default -> throw new IllegalArgumentException("Invalid type"); //TODO add to properties
     }
+    idManagerFileUpdate();
+
   }
 
   //endregion deleteObject API
@@ -284,11 +422,11 @@ public class GameInator {
    * @param params the parameters of the ownable
    */
   public void updateOwnable(String targetObject, Map<ObjectParameter, Object> params) throws IllegalArgumentException{
-    Ownable targetOwnable = ownableIdManager.getObject(targetObject);
+    Ownable targetOwnable = idManager.getObject(targetObject);
     //change parent ownable
     String newParentOwnableId = params.get(ObjectParameter.PARENT_OWNABLE_ID) != null ? params.get(ObjectParameter.PARENT_OWNABLE_ID).toString() : null;
     if (newParentOwnableId != null){
-      ownableIdManager.changeParentId(targetObject, newParentOwnableId);
+      idManager.changeParentId(targetObject, newParentOwnableId);
     }
 
     //change a variable value
@@ -301,11 +439,12 @@ public class GameInator {
     // change id and owner of ownable
     String newId = params.get(ObjectParameter.ID) != null ? params.get(ObjectParameter.ID).toString() : null;
     if (newId != null){
-      ownableIdManager.changeId(targetObject, newId);
+      idManager.changeId(targetObject, newId);
       updateOwner(newId, params);
     } else {
       updateOwner(targetObject, params);
     }
+    idManagerFileUpdate();
   }
 
   /**
@@ -320,12 +459,12 @@ public class GameInator {
     Integer newOwnerInt = isNumeric(newOwnerNum);
     if (newOwnerInt != null && newOwnerInt >= 0 && newOwnerInt <= players.size()){
       Owner newOwner = players.get(newOwnerInt-1);
-      ownableIdManager.getObject(targetObject).setOwner(newOwner);
+      idManager.getObject(targetObject).setOwner(newOwner);
     }
     else if(newOwnerNum != null && newOwnerNum.equals("GameWorld")){ //if null it wasnt in there and we dont want to change it
       //set to gameworld
       Owner newOwner = gameWorld;
-      ownableIdManager.getObject(targetObject).setOwner(newOwner);
+      idManager.getObject(targetObject).setOwner(newOwner);
     }
   }
   /**
@@ -357,6 +496,7 @@ public class GameInator {
       case RULE -> updateRule(targetObject, params);
       default -> throw new IllegalArgumentException("Invalid type"); //TODO add to properties
     }
+    idManagerFileUpdate();
   }
 
   //endregion updateObjectProperties API
@@ -369,10 +509,10 @@ public class GameInator {
    * @throws IllegalArgumentException if the id is not in use
    */
   public Ownable getOwnable(String id) throws IllegalArgumentException {
-    if (!ownableIdManager.isIdInUse(id)) {
+    if (!idManager.isIdInUse(id)) {
       return null;
     }
-    return ownableIdManager.getObject(id);
+    return idManager.getObject(id);
   }
 
 
@@ -381,7 +521,7 @@ public class GameInator {
    * @return the IdManager for the Ownables
    */
   public IdManager getOwnableIdManager() {
-    return ownableIdManager;
+    return idManager;
   }
 
   /**

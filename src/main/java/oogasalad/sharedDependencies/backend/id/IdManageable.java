@@ -56,29 +56,12 @@ public abstract class IdManageable {
     return classes.contains(className);
   }
 
-  //TODO decide if we want methods like these to access the IdManager from the class
-  //also need to ensure non-recursive behavior by changing method names here or in IdManager
-//  /**
-//   * Gets the id of the this.
-//   * @return the id of this
-//   */
-//  public String getId() {
-//    return idManager.getId(this);
-//  }
-//
-//  /**
-//   * Changes the id of this.
-//   * @param newId the new id of this
-//   */
-//  public void changeId(String newId) {
-//    idManager.changeId(this.getId(), newId);
-//  }
-//
-//  /**
-//   * @return the IdManager used by this
-//   */
-//  protected IdManager getIdManager() {
-//    return idManager;
-//  }
+  /**
+   * Retrieves all the classes the object contains
+   * @return a hashset of all the classes
+   */
+  public HashSet<String> getClasses(){
+    return new HashSet<>(classes);
+  }
 
 }
