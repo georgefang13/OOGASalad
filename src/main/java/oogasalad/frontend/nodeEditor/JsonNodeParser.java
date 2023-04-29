@@ -32,13 +32,8 @@ public class JsonNodeParser {
       String description = value.get("description").getAsString();
       JsonArray innerBlocksArray = specs.get("innerBlocks").getAsJsonArray();
       List<String> innerBlocks = new ArrayList<>();
-      for (JsonElement element:innerBlocksArray) {
+      for (JsonElement element : innerBlocksArray) {
         innerBlocks.add(element.getAsString());
-      }
-      JsonArray outputTypesArray = specs.get("outputs").getAsJsonArray();
-      List<String> outputTypes = new ArrayList<>();
-      for (JsonElement element:outputTypesArray) {
-        outputTypesArray.add(element.getAsString());
       }
       String parseStr = specs.get("parse").getAsString();
       JsonArray inputs = specs.get("inputs").getAsJsonArray();
@@ -48,7 +43,7 @@ public class JsonNodeParser {
         String inpName = inpObj.get("name").getAsString();
         inputList.add(inpName);
       }
-      commands.add(new Command(name, description, innerBlocks, outputTypes, parseStr, inputList));
+      commands.add(new Command(name, description, innerBlocks, parseStr, inputList));
     }
     return commands;
   }

@@ -250,7 +250,7 @@
     "specs": {
       "innerBlocks": [],
       "inputs": [{ "name": "value", "type": ["any"] }],
-      "outputs": ["any"],
+      "outputs": [],
       "parse": "return :%s"
     }
   },
@@ -282,7 +282,7 @@
         { "name": "value", "type": ["any"] },
         { "name": "dropzone", "type": ["dropzone"] }
       ],
-      "outputs": ["dropzone"],
+      "outputs": [{ "name": "dropzone", "type": ["dropzone"] }],
       "parse": "putdzitem %s %s %s"
     }
   },

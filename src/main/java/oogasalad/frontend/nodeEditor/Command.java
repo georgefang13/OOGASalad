@@ -6,7 +6,8 @@ public record Command(
     String name,
     String description,
     List<String> innerBlocks,
-    List<String> outputTypes,
     String parseStr,
     List<String> inputs
-) {}
+) {
+
+}

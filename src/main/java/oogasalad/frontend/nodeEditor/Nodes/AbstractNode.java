@@ -27,7 +27,6 @@ public abstract class AbstractNode extends VBox implements Draggable {
     this.indent = propertyManager.getNumeric("AbstractNode.IndentSize");
     setNodeFormatProperties();
     setNodeDragProperties();
-    setContent();
   }
 
   public AbstractNode(double x, double y, double width,

@@ -1,16 +1,15 @@
 package oogasalad.frontend.nodeEditor.Nodes.DraggableNodes;
-import oogasalad.frontend.nodeEditor.Nodes.AbstractNode;
-
 
 import javafx.scene.control.Label;
-import oogasalad.frontend.nodeEditor.NodeController;
+import oogasalad.frontend.nodeEditor.Nodes.AbstractNode;
 
 public class StartNestNode extends AbstractNode {
 
-  public StartNestNode( double x, double y, double width,
-      double height, String color) {
+  public StartNestNode(double x, double y, double width, double height) {
     super(x, y, width, height);
     setContent();
+    this.getStyleClass().add("control");
+
   }
 
   @Override

@@ -11,22 +11,22 @@ import oogasalad.frontend.nodeEditor.NodeController;
 import oogasalad.frontend.nodeEditor.Nodes.AbstractNode;
 
 
-
-
 public class StateNode extends AbstractNode {
 
   private TextField stateName;
   private GridPane buttonGrid;
+  private NodeController nodeController;
 
   public StateNode(NodeController nodeController) {
-    super(0, 0, 300, 100);
+    super();
+    this.nodeController = nodeController;
     setContent();
   }
 
   public StateNode(NodeController nodeController, double x, double y, double width,
-      double height,
-      String color) {
+      double height) {
     super(x, y, width, height);
+    this.nodeController = nodeController;
   }
 
   @Override
@@ -60,18 +60,18 @@ public class StateNode extends AbstractNode {
   }
 
   private void onInitialize(ActionEvent event) {
-    //nodeController.openAndSwitchToTab(stateName.getText(), "on enter");
+    nodeController.openAndSwitchToTab(stateName.getText(), "on enter");
   }
 
   private void onLeave(ActionEvent event) {
-    //nodeController.openAndSwitchToTab(stateName.getText(), "on leave");
+    nodeController.openAndSwitchToTab(stateName.getText(), "on leave");
   }
 
   private void onSetValue(ActionEvent event) {
-    //nodeController.openAndSwitchToTab(stateName.getText(), "select");
+    nodeController.openAndSwitchToTab(stateName.getText(), "select");
   }
 
   private void onNext(ActionEvent event) {
-   //nodeController.openAndSwitchToTab(stateName.getText(), "next");
+    nodeController.openAndSwitchToTab(stateName.getText(), "next");
   }
 }

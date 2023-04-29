@@ -15,6 +15,8 @@ public class MainNode extends AbstractNode {
   public MainNode(NodeController nodeController) {
     super();
     setContent();
+    this.getStyleClass().add("main-node");
+
   }
 
   @Override

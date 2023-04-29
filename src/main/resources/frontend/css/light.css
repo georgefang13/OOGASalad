@@ -207,3 +207,43 @@
   -fx-pref-width: 250;
 }
 
+.cum-bucket{
+  -fx-background-color: #F1F1EF ;
+  -fx-pref-height: -1;
+  -fx-pref-width: -1;
+  -fx-font-size: 25;
+  -fx-opacity: 0.8;
+  -fx-border-width: 4;
+  -fx-border-color: black;
+  -fx-font-size: 35;
+  -fx-padding: 25;
+  -fx-font-weight: 700;
+
+
+}
+
+.control{
+  -fx-background-color: orange;
+  -fx-border-width: 4;
+  -fx-border-color: black;
+  -fx-opacity: 0.8;
+  -fx-pref-width: 400;
+  -fx-pref-height: 50;
+  -fx-font-size: 35;
+  -fx-padding: 25;
+  -fx-font-weight: 700;
+
+}
+
+.main-node{
+  -fx-background-color: #A2EE17;
+  -fx-text-alignment: center;
+  -fx-opacity: 0.8;
+  -fx-alignment: center;
+  -fx-border-width: 5;
+  -fx-border-color: black;
+  -fx-font-weight: 700;
+
+
+
+}

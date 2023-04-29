@@ -10,17 +10,19 @@ import oogasalad.frontend.nodeEditor.Nodes.AbstractNode;
 public class JsonNode extends AbstractNode {
 
   private String name, parseStr;
-  private List<String> innerBlocks, outputTypes, inputs;
+  private List<String> innerBlocks, inputs;
   private List<TextField> inputFields = new ArrayList<>();
 
-  public JsonNode(String name, List<String> innerBlocks, List<String> outputTypes, String parseStr,
+  public JsonNode(String name, List<String> innerBlocks, String parseStr,
       List<String> inputs) {
     super();
     this.name = name;
     this.innerBlocks = innerBlocks;
-    this.outputTypes = outputTypes;
     this.parseStr = parseStr;
     this.inputs = inputs;
+    setContent();
+    this.getStyleClass().add("cum-bucket");
+
   }
 
   @Override
@@ -29,7 +31,7 @@ public class JsonNode extends AbstractNode {
     this.getChildren().addAll(title);
     inputs.forEach(item -> {
       HBox tempInputArea = new HBox();
-      Label input = new Label(name + ": ");
+      Label input = new Label(item + ": ");
       TextField inputField = new TextField();
       tempInputArea.getChildren().addAll(input, inputField);
       this.getChildren().addAll(tempInputArea);
