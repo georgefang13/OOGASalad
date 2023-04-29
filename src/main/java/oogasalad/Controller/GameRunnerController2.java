@@ -13,6 +13,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import oogasalad.Controller.GameRunnerController;
 import oogasalad.frontend.components.gameObjectComponent.GameRunner.DropZoneFE;
+import oogasalad.frontend.components.gameObjectComponent.GameRunner.DropZoneVisual;
 import oogasalad.frontend.components.gameObjectComponent.GameRunner.Piece;
 import oogasalad.gamerunner.backend.Game;
 import oogasalad.gamerunner.backend.GameController;
@@ -27,6 +28,7 @@ public class GameRunnerController2 implements GameController {
 
     private final Map<String, Node> nodes = new HashMap<>();
     private final Map<String, DropZoneFE> dropZones = new HashMap<>();
+    private final Map<String, Piece> pieces = new HashMap<>();
 
     private final Map<String, String> pieceToDropZoneMap = new HashMap<>();
 
@@ -68,20 +70,10 @@ public class GameRunnerController2 implements GameController {
         int width = params.width();
         int height = params.height();
         DropZoneFE newdrop = new DropZoneFE(id, width, height, x,y,this);
-        //dropZone.getChildren().add(newdrop.getVisual());
 
-        //dropZone.setStyle("-fx-background-color: rgba(200, 200, 255, 0.5); -fx-border-color: black; -fx-border-width: 1px; -fx-alignment: center;");
-
-        //dropZone.setOnMouseClicked(e -> select(params.id()));
-        HBox dropZone = new HBox(newdrop.getDropStack());
-        dropZone.setPrefWidth(params.width());
-        dropZone.setPrefHeight(params.height());
-        dropZone.setLayoutX(params.x());
-        dropZone.setLayoutY(params.y());
-
-        nodes.put(params.id(),dropZone);
+        nodes.put(params.id(),newdrop.getVisual());
         dropZones.put(params.id(),newdrop);
-        root.getChildren().add(dropZone);
+        root.getChildren().add(newdrop.getVisual());
     }
 
     @Override
@@ -93,12 +85,9 @@ public class GameRunnerController2 implements GameController {
             System.out.println("Image " + image + " not found");
             return;
         }
-
         ImageView imgv = new ImageView(img);
         imgv.setFitWidth(size);
         imgv.setFitHeight(size);
-
-
 
         Piece p = new Piece(id,this,image,size);
         DropZoneFE dz = dropZones.get(dropZoneID);
@@ -110,6 +99,7 @@ public class GameRunnerController2 implements GameController {
 
         //dz.addPieceToDropZone(piece);
         nodes.put(id, p.getPieceBox());
+        pieces.put(id,p);
         pieceToDropZoneMap.put(id, dropZoneID);
         root.getChildren().add(p.getPieceBox());
     }
@@ -122,8 +112,12 @@ public class GameRunnerController2 implements GameController {
 
         clickable.addAll(ids);
         for (String id : ids){
-            Node n = nodes.get(id);
-            n.setStyle("-fx-border-color: red; -fx-border-width: 1px;");
+            Node gameobject = nodes.get(id);
+            gameobject.setStyle("-fx-border-color: red; -fx-border-width: 1px;");
+            if (gameobject instanceof DropZoneVisual){
+                DropZoneVisual dzv = (DropZoneVisual) gameobject;
+                dzv.selected();
+            }
         }
     }
 
@@ -132,8 +126,13 @@ public class GameRunnerController2 implements GameController {
         String dzid = pieceToDropZoneMap.get(id);
         DropZoneFE olddz = dropZones.get(dzid);
         DropZoneFE newdz = dropZones.get(dropZoneID);
-        newdz.addPieceToDropZone(nodes.get(id));
-        olddz.removePieceFromDropZone(nodes.get(id));
+
+        Piece p = pieces.get(id);
+        p.moveToDropZoneXY(newdz.getDropZoneCenter());
+
+
+        //newdz.addPieceToDropZone(nodes.get(id));
+        //olddz.removePieceFromDropZone(nodes.get(id));
         //((HBox) nodes.get(dzid)).getChildren().remove(nodes.get(id));
         //((HBox) nodes.get(dropZoneID)).getChildren().add(nodes.get(id));
         pieceToDropZoneMap.put(id, dropZoneID);
@@ -158,10 +157,7 @@ public class GameRunnerController2 implements GameController {
             System.out.println("Image " + imagePath + " not found");
             return;
         }
-
         ImageView imgv = new ImageView(img);
-
-
         ImageView oldimg = (ImageView) ((HBox) nodes.get(id)).getChildren().get(0);
         int size = (int) oldimg.getFitWidth();
 
@@ -175,7 +171,12 @@ public class GameRunnerController2 implements GameController {
 
     private void clearClickables(){
         for (String id : clickable){
-            nodes.get(id).setStyle("");
+            Node gameobject = nodes.get(id);
+            if (gameobject instanceof DropZoneVisual){
+                DropZoneVisual dzv = (DropZoneVisual) gameobject;
+                dzv.deselected();
+            }
+            gameobject.setStyle("");
         }
         clickable.clear();
     }

@@ -10,8 +10,7 @@ import oogasalad.Controller.GameRunnerController;
 import oogasalad.gamerunner.backend.GameController;
 
 public class DropZoneFE implements FloatingDropHolder{
-    HBox dropZone;
-    StackPane dropStack;
+    DropZoneVisual dropZoneVisual;
     String dropID;
     GameController gameRunnerController;
     private int x;
@@ -23,21 +22,19 @@ public class DropZoneFE implements FloatingDropHolder{
         this.y = y;
         this.width = width;
         this.height = height;
-
         dropID = id;
-        Rectangle fill = new Rectangle(width, height);
-        fill.setStroke(Color.BLACK);
-        fill.setFill(Color.SKYBLUE);
-        dropStack = new StackPane(fill);
-        dropZone = new HBox(dropStack);
-        dropZone.setStyle("-fx-border-color: black; -fx-border-width: 1px;");
-        dropZone.setPrefWidth(width);
-        dropZone.setPrefHeight(height);
-        dropZone.setLayoutX(x);
-        dropZone.setLayoutY(y);
-        dropZone.toBack();
-        dropStack.setOnMouseClicked(e -> gameRunnerController.select(dropID));
-        dropStack.setOnMouseReleased(e -> onDrop());
+
+        Rectangle unselectedfill = new Rectangle(width, height);
+        unselectedfill.setStroke(Color.BLACK);
+        unselectedfill.setFill(Color.SKYBLUE);
+
+        Rectangle selectedfill = new Rectangle(width, height);
+        selectedfill.setStroke(Color.BLACK);
+        selectedfill.setFill(Color.YELLOW);
+
+        dropZoneVisual = new DropZoneVisual(unselectedfill,selectedfill,width,height,x,y);
+        dropZoneVisual.setOnMouseClicked(e -> gameRunnerController.select(dropID));
+        dropZoneVisual.setOnMouseReleased(e -> onDrop());
 
         this.gameRunnerController = gameRunnerController;
         //droppable();
@@ -45,12 +42,9 @@ public class DropZoneFE implements FloatingDropHolder{
 
     @Override
     public HBox getVisual() {
-        return dropZone;
+        return dropZoneVisual;
     }
-
-    public StackPane getDropStack(){
-        return dropStack;
-    }
+    /*
     public void addPieceToDropZone(Node piece){
         dropStack.getChildren().add(piece);
     }
@@ -58,16 +52,20 @@ public class DropZoneFE implements FloatingDropHolder{
         dropStack.getChildren().remove(piece);
     }
 
+     */
+
     @Override
     public String getDropZoneID() {
         return dropID;
     }
-
+/*
     public void droppable(){
         dropZone.setOnMouseReleased( e -> {
             onDrop();
         });
     }
+
+ */
     public void onDrop(){
         gameRunnerController.select(dropID);
     }

@@ -2,7 +2,9 @@ package oogasalad.frontend.components.gameObjectComponent.GameRunner;
 
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.PickResult;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import oogasalad.Controller.GameRunnerController2;
@@ -33,7 +35,20 @@ public class Piece extends GameRunnerObject{
         pieceBox.setMaxHeight(size);
         pieceBox.setMaxHeight(size);
         pieceBox.setOnDragDetected(e -> gameRunnerController.select(ID));
-        pieceBox.setOnMouseReleased(e -> onDragDropped());
+        pieceBox.setOnMouseReleased(e -> {
+            PickResult pickResult = e.getPickResult();
+        });
+    }
+    private void selectDropZoneBelow(PickResult pickResult){
+        Node[] intersectedNodes = pickResult.getIntersectedNodes();
+        for (Node n : intersectedNodes) {
+            if (n instanceof Circle) {
+                // perform some action for a circle node
+            } else if (n instanceof Rectangle) {
+                // perform some action for a rectangle node
+            }
+            // add more checks for other node types as needed
+        }
     }
 
     public void moveToDropZoneXY(DropZoneFE.dropZoneCenter DZcenter){
@@ -50,8 +65,6 @@ public class Piece extends GameRunnerObject{
     }
     @Override
     public void onDragDropped() {
-        Event mousereleased = (Event) new MouseEvent(MouseEvent.MOUSE_RELEASED);
-        pieceBox.fireEvent(new Event(MouseEvent.MOUSE_RELEASED));
     }
 
     @Override
