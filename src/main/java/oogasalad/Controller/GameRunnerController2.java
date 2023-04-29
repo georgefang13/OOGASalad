@@ -117,7 +117,7 @@ public class GameRunnerController2 implements GameController {
             Node gameobject = nodes.get(id);
             if (gameobject instanceof DropZoneVisual){
                 DropZoneVisual dzv = (DropZoneVisual) gameobject;
-                dzv.selected();
+                dzv.showClickable();
             }
             else {
                 gameobject.setStyle("-fx-border-color: red; -fx-border-width: 1px;");
@@ -178,7 +178,7 @@ public class GameRunnerController2 implements GameController {
             Node gameobject = nodes.get(id);
             if (gameobject instanceof DropZoneVisual){
                 DropZoneVisual dzv = (DropZoneVisual) gameobject;
-                dzv.deselected();
+                dzv.showUnclickable();
             }
             else {
                 gameobject.setStyle("");

@@ -3,31 +3,33 @@ package oogasalad.frontend.components.gameObjectComponent.GameRunner;
 import javafx.scene.Node;
 import javafx.scene.layout.HBox;
 
-public class DropZoneVisual extends HBox {
+public class DropZoneVisual extends AbstractSelectableVisual {
     private Node unselectedVisual;
     private Node selectedVisual;
-    private String dropID;
     public DropZoneVisual(Node dropZoneImage,Node selectedDropZoneImage, double width, double height, double x, double y,String id) {
-        super(dropZoneImage);
+        super(id);
         unselectedVisual = dropZoneImage;
         selectedVisual = selectedDropZoneImage;
-        dropID = id;
-        this.setStyle("-fx-border-color: black; -fx-border-width: 1px;");
+        initHBox(width,height,x,y);
+        this.getChildren().add(unselectedVisual);
+    }
+    private void initHBox(double width, double height, double x, double y){
         this.setPrefWidth(width);
         this.setPrefHeight(height);
         this.setLayoutX(x);
         this.setLayoutY(y);
         this.toBack();
     }
-    public void selected(){
-        this.getChildren().remove(unselectedVisual);
+
+    @Override
+    public void showClickable() {
         this.getChildren().add(selectedVisual);
+        this.getChildren().remove(unselectedVisual);
     }
-    public void deselected(){
+
+    @Override
+    public void showUnclickable() {
         this.getChildren().remove(selectedVisual);
         this.getChildren().add(unselectedVisual);
-    }
-    public String getDropID(){
-        return dropID;
     }
 }
