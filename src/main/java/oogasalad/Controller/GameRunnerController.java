@@ -1,15 +1,14 @@
 package oogasalad.Controller;
 
 import javafx.scene.Node;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import oogasalad.frontend.components.gameObjectComponent.GameRunner.*;
+import oogasalad.frontend.components.gameObjectComponent.GameRunner.DropZoneFE;
+import oogasalad.frontend.components.gameObjectComponent.GameRunner.GameRunnerObject;
+import oogasalad.frontend.components.gameObjectComponent.GameRunner.Piece;
+import oogasalad.frontend.components.gameObjectComponent.GameRunner.SelectableVisual;
 import oogasalad.gamerunner.backend.Game;
 import oogasalad.gamerunner.backend.GameController;
 
-import java.io.FileInputStream;
 import java.util.*;
 
 public class GameRunnerController implements GameController {
