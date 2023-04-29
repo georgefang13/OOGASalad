@@ -1,22 +1,13 @@
 package oogasalad.sharedDependencies.backend;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.Map.Entry;
 import oogasalad.gameeditor.backend.GameInator;
 import oogasalad.gameeditor.backend.ObjectParameter;
 import oogasalad.gameeditor.backend.ObjectType;
 import oogasalad.gameeditor.backend.id.IdManager;
-import oogasalad.sharedDependencies.backend.ownables.Ownable;
-import oogasalad.sharedDependencies.backend.ownables.gameobjects.GameObject;
 import oogasalad.sharedDependencies.backend.ownables.variables.Variable;
 import oogasalad.sharedDependencies.backend.owners.GameWorld;
 import oogasalad.sharedDependencies.backend.owners.Player;

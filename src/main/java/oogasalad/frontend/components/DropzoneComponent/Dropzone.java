@@ -90,9 +90,9 @@ public class Dropzone extends AbstractComponent {
   /**
    *
    */
-  @Override
-  public void setDefault() {
-
-  }
+//  @Override
+//  public void setDefault() {
+//
+//  }
 
 }
