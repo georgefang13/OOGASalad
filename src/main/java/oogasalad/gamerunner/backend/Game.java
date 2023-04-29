@@ -365,29 +365,9 @@ public class Game implements GameToInterpreterAPI{
             GameObject mainObj = (GameObject) ownableIdManager.getObject(s);
             for (String o : ownMap.get(s)) {
                 Ownable obj = ownableIdManager.getObject(o);
-                obj.setOwner(o);
-                 ownableIdManager.setOwner(obj, mainObj);
+                ownableIdManager.setOwner(obj, mainObj);
             }
         }
-        Owner own = null;
-        if (!owner.isEmpty()){
-            own = players.get(Integer.parseInt(owner));
-        }
-
-        GameObject obj = new GameObject(own);
-
-        for (String cls : fm.getArray(id, "classes")){
-            obj.addClass(cls);
-        }
-
-        ownableIdManager.addObject(obj, id);
-        controller.addPiece(id, image, location, size);
-
-        DropZone dz = (DropZone) ownableIdManager.getObject(location);
-
-        putInDropZone(obj, dz, id);
-
-        ownMap.put(id, owns);
     }
 
     private Map<String, List<String>> loadGameObjects(String file) throws FileNotFoundException {
