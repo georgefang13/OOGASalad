@@ -1,4 +1,4 @@
-package oogasalad.frontend.components.DropzoneComponent;
+package oogasalad.frontend.components.dropzoneComponent;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,6 +22,8 @@ public class Dropzone extends AbstractComponent {
   private Color fill;
   private Color border;
   private Rectangle square;
+  private double x;
+  private double y;
   /**
    * Dropzone
    * @param ID the id of the DropZone
@@ -40,6 +42,7 @@ public class Dropzone extends AbstractComponent {
     super(ID);
     initializeValues();
     setValuesfromMap(params);
+    setSquareParams();
   }
 
   private void initializeValues(){
@@ -49,8 +52,7 @@ public class Dropzone extends AbstractComponent {
     square = new Rectangle();
     node.getChildren().add(square);
     setNode(node);
-    instantiatePropFile(DEFAULT_PATH);
-    setColor();
+    followMouse();
   }
   /**
    * Adds a neighbor to whatever you need
@@ -67,11 +69,13 @@ public class Dropzone extends AbstractComponent {
     return edges.keySet();
   }
   /**
-   * set the color of the square inside fill and border
+   * set the params of the square based on the input
    */
-  public void setColor(){
+  public void setSquareParams(){
     square.setFill(fill);
     square.setStroke(border);
+    square.setWidth(x);
+    square.setHeight(y);
   }
   /**
    * For GameObject, remove the object
@@ -87,12 +91,12 @@ public class Dropzone extends AbstractComponent {
   public Set<String> returnContent(){
     return content.keySet();
   }
+
   /**
-   *
+   * Returns the visual representation of the dropzone, which is hte rectangle
+   * @return square, the visual representation of dropzone
    */
-  @Override
-  public void setDefault() {
-
+  public Rectangle getSquare() {
+    return square;
   }
-
 }

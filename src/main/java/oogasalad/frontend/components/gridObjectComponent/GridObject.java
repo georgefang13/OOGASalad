@@ -1,13 +1,11 @@
 package oogasalad.frontend.components.gridObjectComponent;
 
 import javafx.scene.Node;
-import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import oogasalad.frontend.components.AbstractComponent;
-import oogasalad.frontend.components.DropzoneComponent.Dropzone;
+import oogasalad.frontend.components.dropzoneComponent.Dropzone;
 import oogasalad.sharedDependencies.backend.ownables.gameobjects.DropZone;
 
 import java.util.Map;
