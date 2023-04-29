@@ -9,9 +9,12 @@ public abstract class GameRunnerObject extends GameObject implements GameRunnerC
     protected GameController gameRunnerController;
     protected AbstractSelectableVisual selectableVisual;
     protected boolean playable;
+    protected boolean active;
     public GameRunnerObject(String ID, GameController gameRunnerController) {
         super(ID);
         this.gameRunnerController = gameRunnerController;
+        playable = false;
+        active = false;
         setDraggable(false);
     }
     @Override
@@ -28,6 +31,6 @@ public abstract class GameRunnerObject extends GameObject implements GameRunnerC
     public void makeUnplayable(){
         playable = false;
         selectableVisual.showUnclickable();
-        setDraggable(playable);
+        setDraggable(playable || active);
     }
 }

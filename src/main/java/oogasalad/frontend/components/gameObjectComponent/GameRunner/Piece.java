@@ -24,19 +24,20 @@ public class Piece extends GameRunnerObject{
         img.setFitHeight(size);
         selectableVisual = new PieceVisual(img,size,ID);
     }
-    @Override
-    public void makeUnplayable(){
-        playable = false;
-        selectableVisual.showUnclickable();
-    }
 
     private void setDragSelection() {
-        getNode().setOnDragDetected(e -> gameRunnerController.select(ID));
+        getNode().setOnDragDetected(e -> {
+            if (playable){
+                active = true;
+                gameRunnerController.select(ID);
+            }
+        });
         getNode().setOnMouseReleased(e -> selectDropZoneBelow());
     }
     private void selectDropZoneBelow(){
         DropZoneVisual dzv = getIntersectingDropZones();
         gameRunnerController.select(dzv.getObjectID());
+        active = false;
         setDraggable(playable);
     }
     public DropZoneVisual getIntersectingDropZones(){
