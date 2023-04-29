@@ -1,4 +1,4 @@
-package oogasalad.frontend.components.DropzoneComponent;
+package oogasalad.frontend.components.dropzoneComponent;
 
 import java.util.List;
 import oogasalad.frontend.components.Component;

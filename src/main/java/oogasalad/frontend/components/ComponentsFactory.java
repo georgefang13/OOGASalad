@@ -18,7 +18,7 @@ public class ComponentsFactory {
   private ResourceBundle bundle;
   private int ID;
   private Stage stage;
-  Component component;
+  private Component component;
   public ComponentsFactory(){
     ID = 0;
     bundle = ResourceBundle.getBundle(FACTOR_PROPERTIES);
