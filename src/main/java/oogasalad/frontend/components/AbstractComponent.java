@@ -5,6 +5,8 @@ import java.lang.reflect.Field;
 import java.util.Map;
 import java.util.Properties;
 import java.util.ResourceBundle;
+import javafx.scene.control.ColorPicker;
+
 
 /**
  * @author Han and Aryan AbstractComponent is the abstraction that all Components are built off of.

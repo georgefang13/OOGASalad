@@ -79,14 +79,13 @@ public class ComponentPanel extends VBox implements Panel {
   } //TODO: turn these two methods into one method that takes in a string
 
   private Accordion createComponenetLibraryAccordion() {
-    TitledPane t1 = new TitledPane("Game Objects", gameComponents);
+    TitledPane t1 = new TitledPane("Components", gameComponents);
     TitledPane t2 = new TitledPane("Players", players);
-    TitledPane t3 = new TitledPane("Displayable", displayable);
     gameComponents.getChildren().addAll(createComponentTemplate("gameObject"),
             createComponentTemplate("lineObject"), createComponentTemplate("textObject"),
             createComponentTemplate("rectangleObject"), createComponentTemplate("gridObject"));
     Accordion accordion = new Accordion();
-    accordion.getPanes().addAll(t1, t2, t3);
+    accordion.getPanes().addAll(t1, t2);
     return accordion;
   }
 
@@ -98,7 +97,7 @@ public class ComponentPanel extends VBox implements Panel {
 
   private Accordion createActiveComponentsAccordion() {
 
-    TitledPane t1 = new TitledPane("Game Objects",
+    TitledPane t1 = new TitledPane("Objects",
         gameComponentInstances); // TODO: make this dynamic so when you press ok on the modal after adding a compoennet it shows up in this panel
     Accordion accordion = new Accordion();
     accordion.getPanes().addAll(t1);

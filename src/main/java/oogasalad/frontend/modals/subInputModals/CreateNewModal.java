@@ -13,6 +13,7 @@ import javafx.scene.control.DialogPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import oogasalad.frontend.modals.InputModal;
+import oogasalad.frontend.modals.fields.ColorPickerComponent;
 import oogasalad.frontend.modals.fields.ImagePickerComponent;
 import oogasalad.frontend.modals.fields.TextFieldComponent;
 
@@ -23,6 +24,7 @@ public class CreateNewModal extends InputModal {
   private Map<String, String> myPropertiesMap;
   private List<ImagePickerComponent> ImagePickers;
   private List<TextFieldComponent> textFields;
+  private List<ColorPickerComponent> colorPickers;
   private String myTitle;
 
   /**
