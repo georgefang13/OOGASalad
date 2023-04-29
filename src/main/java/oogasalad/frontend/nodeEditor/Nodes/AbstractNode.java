@@ -14,11 +14,14 @@ import oogasalad.frontend.managers.PropertyManager;
 import oogasalad.frontend.managers.StandardPropertyManager;
 import oogasalad.frontend.nodeEditor.Draggable;
 
+import java.io.Serializable;
+
 public abstract class AbstractNode extends VBox implements Draggable {
 
   protected Bounds boundingBox;
 
   protected double x, y, xOffset, yOffset, width, height, indent;
+
   protected AbstractNode parentNode, childNode;
   protected PropertyManager propertyManager = StandardPropertyManager.getInstance();
 

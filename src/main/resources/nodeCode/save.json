@@ -1,5 +1,5 @@
 {
   "": {
-    "on enter": "to pieceAvailable  [ make :available  [  ]  make :available_paths  [  ]  foreach [ :path :moveset ]  [ make :dz1 dzfollow :dz :pathif \u003d\u003d null :dz1  [ continue ]  ifelse dzempty :dz1  [ additem :dz1 :availableadditem aslist [ :path ]  :available_paths ]   [ make :dz2 dzfollow dz1 path if or \u003d\u003d null :dz2 not dzempty :dz2 [ continue  ]  if !\u003d curplayer owner item 0 dzitems :dz1  [ additem :dz2 :availableadditem aslist [ :path :path ]  :available_paths ]   ]   ]  make :ret aslist [ :available :available_paths ] return ::ret ]  "
+    "on enter": "+ 12 31"
   }
 }
