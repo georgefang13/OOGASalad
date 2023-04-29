@@ -2,6 +2,7 @@ package oogasalad.frontend.nodeEditor;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.List;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -39,7 +40,7 @@ public abstract class AbstractNodePanel extends Tab {
     windowHeight = propertyManager.getNumeric("WindowHeight");
   }
 
-  protected abstract List<Button> getNodeSelectionButtons();
+  protected abstract List<Button> getNodeSelectionButtons(String fileName);
 
   public String getAllNodeContent() {
     String code = "";
@@ -77,12 +78,16 @@ public abstract class AbstractNodePanel extends Tab {
   }
 
   public ScrollPane makeNodeSelectionPane() {
-    List<Button> buttons = getNodeSelectionButtons();
+    List<Button> buttons = getNodeSelectionButtons("Commands.json");
+//    buttons.addAll(getNodeSelectionButtons("Metablocks.json"));
+    ArrayList<Button> temp = new ArrayList<>(buttons);
+    temp.addAll(getNodeSelectionButtons("Metablocks.json"));
+
     ScrollPane scrollPane = new ScrollPane();
     GridPane pane = new GridPane();
-    pane.setStyle("-fx-background-color: gray");
-    for (Button button : buttons) {
-      pane.add(button, 0, buttons.indexOf(button));
+    pane.setStyle("-fx-background-color: gray"); // @TODO: move to css
+    for (Button button : temp) {
+      pane.add(button, 0, temp.indexOf(button));
     }
     pane.setMinSize(windowWidth / 4, windowHeight);
     scrollPane.setContent(pane);

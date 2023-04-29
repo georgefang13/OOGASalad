@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
+import javafx.util.Duration;
 import oogasalad.frontend.nodeEditor.Nodes.AbstractNode;
 import oogasalad.frontend.nodeEditor.Nodes.EndNestNode;
 import oogasalad.frontend.nodeEditor.Nodes.JsonNode;
@@ -15,7 +16,7 @@ import oogasalad.frontend.nodeEditor.Nodes.StartNestNode;
 public class CodeEditorPanel extends AbstractNodePanel {
 
   protected String state, action;
-  private static final String COMMANDS_RESOURCE_PATH = "/src/main/resources/backend/interpreter/Commands.json";
+  private static final String COMMANDS_RESOURCE_PATH = "/src/main/resources/backend/interpreter/";
 
 
   public CodeEditorPanel(NodeController nodeController, String state, String action) {
@@ -24,14 +25,15 @@ public class CodeEditorPanel extends AbstractNodePanel {
     this.action = action;
   }
 
-  protected List<Button> getNodeSelectionButtons() {
-    String absoluteFilePath = System.getProperty("user.dir") + COMMANDS_RESOURCE_PATH;
-    List<Button> buttons = new ArrayList<>();
+  protected List<Button> getNodeSelectionButtons(String fileName) {
+    String absoluteFilePath = System.getProperty("user.dir") + COMMANDS_RESOURCE_PATH + fileName;
+    ArrayList<Button> buttons = new ArrayList<>();
     JsonNodeParser parser = new JsonNodeParser();
     List<Command> commands = parser.readCommands(absoluteFilePath);
     for (Command command : commands) {
       Button button = new Button(command.name());
       Tooltip tip = new Tooltip(command.description());
+      tip.setShowDelay(Duration.millis(0));
       Tooltip.install(button, tip);
       button.setOnAction(event -> {
         try {
