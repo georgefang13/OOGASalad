@@ -7,9 +7,9 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import oogasalad.frontend.nodeEditor.Nodes.AbstractNode;
-import oogasalad.frontend.nodeEditor.Nodes.DraggableNodes.EndNestNode;
-import oogasalad.frontend.nodeEditor.Nodes.DraggableNodes.JsonNode;
-import oogasalad.frontend.nodeEditor.Nodes.DraggableNodes.StartNestNode;
+import oogasalad.frontend.nodeEditor.Nodes.EndNestNode;
+import oogasalad.frontend.nodeEditor.Nodes.JsonNode;
+import oogasalad.frontend.nodeEditor.Nodes.StartNestNode;
 
 
 public class CodeEditorPanel extends AbstractNodePanel {
@@ -40,13 +40,11 @@ public class CodeEditorPanel extends AbstractNodePanel {
           group.getChildren().add(node);
           node.setBoundingBox(workspace.getBoundsInParent());
           for (String nestBlock : command.innerBlocks()) {
-            AbstractNode start = new StartNestNode(0, 0, node.getWidth(),
-                node.getHeight());
+            AbstractNode start = new StartNestNode();
             group.getChildren().add(start);
             start.setBoundingBox(workspace.getBoundsInParent());
             start.snapTo(node);
-            AbstractNode end = new EndNestNode(0, 0, node.getWidth(),
-                node.getHeight());
+            AbstractNode end = new EndNestNode();
             group.getChildren().add(end);
             end.setBoundingBox(workspace.getBoundsInParent());
             end.snapTo(start);

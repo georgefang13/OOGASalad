@@ -24,7 +24,7 @@
 //
 //import oogasalad.frontend.nodeEditor.NodeController;
 //import oogasalad.frontend.nodeEditor.Nodes.AbstractNode;
-//import oogasalad.frontend.nodeEditor.Nodes.DraggableNodes.JsonNode;
+//import oogasalad.frontend.nodeEditor.Nodes.JsonNode;
 //import oogasalad.frontend.windows.NodeWindow;
 //
 ///**

@@ -1,15 +1,18 @@
 package oogasalad.frontend.nodeEditor.Nodes;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Bounds;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Tooltip;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import oogasalad.frontend.managers.PropertyManager;
 import oogasalad.frontend.managers.StandardPropertyManager;
 import oogasalad.frontend.nodeEditor.Draggable;
-import oogasalad.frontend.nodeEditor.Nodes.DraggableNodes.EndNestNode;
-import oogasalad.frontend.nodeEditor.Nodes.DraggableNodes.StartNestNode;
 
 public abstract class AbstractNode extends VBox implements Draggable {
 
@@ -27,6 +30,7 @@ public abstract class AbstractNode extends VBox implements Draggable {
     this.indent = propertyManager.getNumeric("AbstractNode.IndentSize");
     setNodeFormatProperties();
     setNodeDragProperties();
+    this.getStyleClass().add(propertyManager.getText("AbstractNode.StyleClass"));
   }
 
   public AbstractNode(double x, double y, double width,
@@ -195,6 +199,15 @@ public abstract class AbstractNode extends VBox implements Draggable {
     }
   }
 
+  protected Button makeButton(String label, EventHandler<ActionEvent> handler) {
+    Button button = new Button(label);
+    button.setOnAction(handler);
+    button.setMaxWidth(Double.MAX_VALUE);
+    GridPane.setHgrow(button, Priority.ALWAYS);
+    return button;
+  }
+
+
   private void setNodeFormatProperties() {
     setTranslateX(this.x);
     setTranslateY(this.y);
@@ -210,4 +223,5 @@ public abstract class AbstractNode extends VBox implements Draggable {
     onMouseDragged();
     onMouseReleased();
   }
+
 }

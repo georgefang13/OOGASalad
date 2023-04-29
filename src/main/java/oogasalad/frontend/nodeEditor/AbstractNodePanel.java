@@ -20,8 +20,7 @@ import javafx.scene.layout.StackPane;
 import oogasalad.frontend.managers.PropertyManager;
 import oogasalad.frontend.managers.StandardPropertyManager;
 import oogasalad.frontend.nodeEditor.Nodes.AbstractNode;
-import oogasalad.frontend.nodeEditor.Nodes.DraggableNodes.JsonNode;
-import oogasalad.frontend.nodeEditor.Nodes.DraggableNodes.MainNode;
+import oogasalad.frontend.nodeEditor.Nodes.MainNode;
 
 public abstract class AbstractNodePanel extends Tab {
 
@@ -122,7 +121,7 @@ public abstract class AbstractNodePanel extends Tab {
     workspace.setFitWidth(5 * windowWidth);
     workspace.setFitHeight(5 * windowHeight);
 
-    MainNode node = new MainNode(nodeController);
+    MainNode node = new MainNode();
     group.getChildren().add(node);
     node.setBoundingBox(workspace.getBoundsInParent());
     return scrollPane;

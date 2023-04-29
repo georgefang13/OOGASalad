@@ -1,11 +1,10 @@
-package oogasalad.frontend.nodeEditor.Nodes.DraggableNodes;
+package oogasalad.frontend.nodeEditor.Nodes;
 
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
-import oogasalad.frontend.nodeEditor.Nodes.AbstractNode;
 
 public class JsonNode extends AbstractNode {
 
@@ -21,17 +20,17 @@ public class JsonNode extends AbstractNode {
     this.parseStr = parseStr;
     this.inputs = inputs;
     setContent();
-    this.getStyleClass().add("cum-bucket");
-
+    this.getStyleClass().add(propertyManager.getText("JsonNode.StyleClass"));
   }
 
   @Override
   protected void setContent() {
     Label title = new Label(name);
+    title.getStyleClass().add(propertyManager.getText("JsonNode.Title"));
     this.getChildren().addAll(title);
     inputs.forEach(item -> {
       HBox tempInputArea = new HBox();
-      Label input = new Label(item + ": ");
+      Label input = new Label(item + propertyManager.getText("JsonNode.LabelDelimiter"));
       TextField inputField = new TextField();
       tempInputArea.getChildren().addAll(input, inputField);
       this.getChildren().addAll(tempInputArea);
@@ -45,11 +44,11 @@ public class JsonNode extends AbstractNode {
     for (TextField input : inputFields) {
       inputsAsStrings.add(input.getText().toString());
     }
-    String[] parseSplit = parseStr.split("\\[ %s \\]");
+    String[] parseSplit = parseStr.split(propertyManager.getText("JsonNode.Regex"));
     String output = String.format(parseSplit[0], inputsAsStrings.toArray());
     if (this.getChildNode() == null) {
       return output;
     }
-    return (output + " " + this.getChildNode().getJSONString());
+    return (output + propertyManager.getText("SPACE") + this.getChildNode().getJSONString());
   }
 }
