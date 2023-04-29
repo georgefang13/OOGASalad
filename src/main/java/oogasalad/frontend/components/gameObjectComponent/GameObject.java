@@ -30,17 +30,18 @@ public class GameObject extends AbstractComponent implements GameObjectComponent
     super(ID);
     children = null;
     instantiatePropFile("frontend.properties.Defaults.GameObject");
-    this.setDefault();
     followMouse();
   }
 
   public GameObject(String ID, Map<String, String> map){
     super(ID);
     children = null;
-    instantiatePropFile("frontend.properties.Defaults.GameObject");
-    setImage(getDEFAULT_BUNDLE().getString(replaceWithFileLoadingByID()));
     setValuesfromMap(map);
     followMouse();
+  }
+
+  private void initialize() {
+    setImage(getDEFAULT_BUNDLE().getString(replaceWithFileLoadingByID()));
   }
 
   private String replaceWithFileLoadingByID(){
@@ -64,14 +65,6 @@ public class GameObject extends AbstractComponent implements GameObjectComponent
   }
 
   @Override
-  public void setName(String newName) {
-    name = newName;
-  }
-  public String getName(){
-    return name;
-  }
-
-  @Override
   public List<Node> getChildren() {
     return children;
   }
@@ -84,10 +77,5 @@ public class GameObject extends AbstractComponent implements GameObjectComponent
   @Override
   public Node getNode() {
     return getImage();
-  }
-
-  @Override
-  public void setDefault() {
-    image = new ImageView(getDEFAULT_BUNDLE().getString("DEFAULT_IMAGE"));
   }
 }

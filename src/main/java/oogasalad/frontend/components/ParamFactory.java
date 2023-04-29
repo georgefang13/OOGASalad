@@ -1,6 +1,7 @@
 package oogasalad.frontend.components;
 
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
 import oogasalad.frontend.components.ParameterStrategies.*;
 
 public class ParamFactory {
@@ -15,7 +16,10 @@ public class ParamFactory {
       return new ConversionContext<>(new DoubleParameterStrategy());
     } else if (outputClass == int.class) {
       return new ConversionContext<>(new IntegerParameterStrategy());
-    } else {
+    } else if (outputClass == Color.class) {
+      return new ConversionContext<>(new ColorParameterStrategy());
+    }
+    else {
       throw new IllegalArgumentException("Unsupported output class type: " + outputClass);
     }
   }

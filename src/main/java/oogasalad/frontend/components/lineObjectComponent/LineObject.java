@@ -2,45 +2,29 @@ package oogasalad.frontend.components.lineObjectComponent;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
-import oogasalad.Controller.ConvertingStrategy;
 import oogasalad.frontend.components.AbstractComponent;
-
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.Map;
-import java.util.Properties;
-import java.util.ResourceBundle;
 
 public class LineObject extends AbstractComponent implements LineObjectComponent {
-    private String name;
     private Line myLine;
     private double startX;
     private double startY;
     private double endX;
     private double endY;
-    private String color;
+    private Color color;
     private double strokeWidth;
-
-    public LineObject(String ID){
-        super(ID);
-        instantiatePropFile("frontend.properties.Defaults.LineObject");
-        this.setDefault();
-        this.followMouse();
-    }
 
     public LineObject(String ID, Map<String, String> map){
         super(ID);
-        instantiatePropFile("frontend.properties.Defaults.LineObject");
         setValuesfromMap(map);
-        myLine = new Line(startX,startY,endX, endY);
-        followMouse();
+        initialize();
     }
 
-    public void setName(String newName) {
-        name = newName;
-    }
-    public String getName(){
-        return name;
+    private void initialize() {
+        myLine = new Line(startX,startY,endX, endY);
+        myLine.setFill(color);
+        myLine.setStrokeWidth(strokeWidth);
+        followMouse();
     }
 
     @Override
@@ -84,12 +68,13 @@ public class LineObject extends AbstractComponent implements LineObjectComponent
     }
 
     @Override
-    public String getColor() {
-        return "hi";
+    public Color getColor() {
+        return (Color)myLine.getFill();
     }
 
     @Override
-    public void setColor(String color) {
+    public void setColor(Color color) {
+        myLine.setFill(color);
     }
 
     @Override
@@ -105,19 +90,5 @@ public class LineObject extends AbstractComponent implements LineObjectComponent
     @Override
     public Node getNode(){
         return myLine;
-    }
-
-    @Override
-    public void setDefault() {
-        startX = Double.parseDouble(getDEFAULT_BUNDLE().getString("line.startX"));
-        startY = Double.parseDouble(getDEFAULT_BUNDLE().getString("line.startY"));
-        endX = Double.parseDouble(getDEFAULT_BUNDLE().getString("line.endX"));
-        endY = Double.parseDouble(getDEFAULT_BUNDLE().getString("line.endY"));
-        color = getDEFAULT_BUNDLE().getString("line.color");
-        strokeWidth = Double.parseDouble(getDEFAULT_BUNDLE().getString("line.strokeWidth"));
-
-        myLine = new Line(startX,startY,endX,endY);
-        myLine.setFill(Color.BLACK);
-        myLine.setStrokeWidth(strokeWidth);
     }
 }

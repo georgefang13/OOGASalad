@@ -64,6 +64,7 @@ public interface Component {
 
   void followMouse();
 
-  void setDefault();
+  void setName(String newName);
+  String getName();
 
 }
