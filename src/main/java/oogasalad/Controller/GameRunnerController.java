@@ -17,7 +17,7 @@ import java.util.*;
 
 public class GameRunnerController implements GameController {
     private final Map<String, GameRunnerObject> gameObjects = new HashMap<>();
-    private final Map<String, Node> nodes = new HashMap<>();
+    //private final Map<String, Node> nodes = new HashMap<>();
     //private final Map<String, DropZoneFE> dropZones = new HashMap<>();
     private final Map<String, String> pieceToDropZoneMap = new HashMap<>();
     private BorderPane root;
@@ -40,7 +40,7 @@ public class GameRunnerController implements GameController {
     @Override
     public void addDropZone(GameController.DropZoneParameters params) {
         DropZoneFE dropZone = new DropZoneFE(params.id(), params.width(), params.height(), params.x(),params.y(),this);
-        nodes.put(params.id(),dropZone.getNode());
+        //nodes.put(params.id(),dropZone.getNode());
         gameObjects.put(params.id(),dropZone);
         //dropZones.put(params.id(),dropZone);
         root.getChildren().add(dropZone.getNode());
@@ -52,7 +52,8 @@ public class GameRunnerController implements GameController {
         //DropZoneFE dz = dropZones.get(dropZoneID);
         DropZoneFE dropZone = (DropZoneFE) gameObjects.get(dropZoneID);
         piece.moveToDropZoneXY(dropZone.getDropZoneCenter());
-        nodes.put(id, piece.getNode());
+        //nodes.put(id, piece.getNode());
+        gameObjects.put(id,piece);
         pieceToDropZoneMap.put(id, dropZoneID);
         root.getChildren().add(piece.getNode());
     }
@@ -62,7 +63,7 @@ public class GameRunnerController implements GameController {
         clearClickables();
         clickable.addAll(ids);
         for (String id : ids){
-            AbstractSelectableVisual gameObjectVisual = (AbstractSelectableVisual) nodes.get(id);
+            AbstractSelectableVisual gameObjectVisual = (AbstractSelectableVisual) gameObjects.get(id).getNode();
             gameObjectVisual.showClickable();
         }
     }
@@ -78,12 +79,13 @@ public class GameRunnerController implements GameController {
     @Override
     public void removePiece(String pieceID) {
         pieceToDropZoneMap.remove(pieceID);
-        root.getChildren().remove(nodes.get(pieceID));
-        nodes.remove(pieceID);
+        root.getChildren().remove(gameObjects.get(pieceID).getNode());
+        //nodes.remove(pieceID);
     }
 
     @Override
     public void setObjectImage(String id, String imagePath) {
+        /*
         Image img;
         try {
             img = new Image(new FileInputStream(imagePath));
@@ -92,19 +94,23 @@ public class GameRunnerController implements GameController {
             return;
         }
         ImageView imgv = new ImageView(img);
-        ImageView oldimg = (ImageView) ((HBox) nodes.get(id)).getChildren().get(0);
+        ImageView oldimg = (ImageView) ((HBox) gameObjects.get(id).getNode()).getChildren().get(0);
         int size = (int) oldimg.getFitWidth();
 
         imgv.setFitWidth(size);
         imgv.setFitHeight(size);
-
-        AbstractSelectableVisual gameObject = (AbstractSelectableVisual) nodes.get(id);
-        gameObject.updateVisual(imgv);
+        AbstractSelectableVisual gameObjectVisual = (AbstractSelectableVisual) gameObjects.get(id).getNode();
+        gameObjectVisual.updateVisual(imgv);
+         */
+        System.out.println("updating Visual");
+        System.out.println(imagePath);
+        GameRunnerObject gameObject = gameObjects.get(id);
+        gameObject.setImage(imagePath);
     }
 
     private void clearClickables(){
         for (String id : clickable){
-            AbstractSelectableVisual gameObjectVisual = (AbstractSelectableVisual) nodes.get(id);
+            AbstractSelectableVisual gameObjectVisual = (AbstractSelectableVisual) gameObjects.get(id).getNode();
             gameObjectVisual.showUnclickable();
         }
         clickable.clear();
@@ -112,9 +118,8 @@ public class GameRunnerController implements GameController {
 
     public ArrayList<Node> getNodes(){
         ArrayList<Node> nodelist = new ArrayList<>();
-        for (Node node: nodes.values()) {
-            node.toBack();
-            nodelist.add(node);
+        for (GameRunnerObject gameObject : gameObjects.values()) {
+            nodelist.add(gameObject.getNode());
         }
         return nodelist;
     }
