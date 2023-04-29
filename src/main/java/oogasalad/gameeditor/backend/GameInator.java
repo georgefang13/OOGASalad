@@ -12,6 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 import org.apache.commons.io.FileUtils;
 
 import oogasalad.gamerunner.backend.interpretables.Goal;
@@ -199,7 +200,6 @@ public class GameInator {
 
     idManager.objectStream().filter(obj -> obj instanceof Variable<?>).filter(obj -> ((Variable)obj).get() != null).forEach(var -> {
       Variable v = (Variable) var;
-      System.out.println("have a variable");
       String id = idManager.getId(v);
       String owner = String.valueOf(getOwnerType(v.getOwner()));
       String type = v.get().getClass().getName();
@@ -223,15 +223,14 @@ public class GameInator {
   }
 
   private void updateObjectFile() {
-    System.out.println(idManager.getSimpleIds());
     FileManager fm = new FileManager();
     OwnableSearchStream stream = new OwnableSearchStream(idManager);
-    idManager.objectStream().filter(o -> o instanceof GameObject).forEach(obj -> {
+    idManager.objectStream().filter(o -> o instanceof GameObject && !(o instanceof DropZone)).forEach(obj -> {
       String objId = idManager.getId(obj);
       int owner = -1;
       if (obj.getOwner() != gameWorld) owner = players.indexOf((Player) obj.getOwner());
 
-      fm.addContent(String.valueOf(owner), objId);
+      fm.addContent(String.valueOf(owner), objId, "owner");
       obj.getClasses().forEach(cls -> fm.addContent(objId, "classes"));
 
       idManager.objectStream()
@@ -240,7 +239,12 @@ public class GameInator {
               .forEach(s -> fm.addContent(s, objId, "owns"));
 
       DropZone location = getLocation((GameObject) obj);
-      fm.addContent(idManager.getId(location), objId, "location");
+
+      try {
+        fm.addContent(idManager.getId(location), objId, "location");
+      } catch (Exception ignored) {
+        fm.addContent("", objId, "location");
+      }
     });
 
     fm.saveToFile(objectsFile);
@@ -253,10 +257,13 @@ public class GameInator {
       DropZone dropZone = (DropZone) dz;
       String id = idManager.getId(dropZone);
       // get connections
+      AtomicBoolean hadConnections = new AtomicBoolean(false);
         dropZone.getEdges().forEach((edgeName, value) -> {
           String edgeId = idManager.getId(value);
           fm.addContent(edgeId, id, "connections", edgeName);
+          hadConnections.set(true);
         });
+      if (!hadConnections.get()) fm.addContent("", id, "connections");
         // get classes
         dropZone.getClasses().forEach(cls -> fm.addContent(id, "classes"));
     });

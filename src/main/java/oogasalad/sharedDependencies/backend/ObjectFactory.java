@@ -77,7 +77,6 @@ public class ObjectFactory {
     //we have all the dropzones, now we need to add them to game manager (with owner as game world)
     for (DropZone dropZone : dropZones) {
       dropZone.setOwner(gameWorld);
-//      System.out.println("ADDING ID: " + dropZone.getId());
       ownableIdManager.addObject(dropZone);
     }
   }
@@ -87,7 +86,7 @@ public class ObjectFactory {
     //Assume that only Variables and GameObjects will be created in this way
     //Could be changed to use reflection to create any type of Ownable, but only Variables and GameObjects are needed
     if(ownableType.contains("Variable")) {
-      Object value = constructorParams.get("value");
+      Object value = constructorParams.get(ObjectParameter.VALUE);
       //if neither value nor owner are null, then we can create the variable
       if(value != null && owner != null) {
         return new Variable<>(value, owner);
@@ -119,7 +118,6 @@ public class ObjectFactory {
       throw new IllegalArgumentException("Invalid ownableType: " + ownableType);
     }
   }
-
 
   /**
    * Creates an ownable from the given parameters and adds it to the IdManager. If OWNABLE_TYPE is
@@ -159,6 +157,7 @@ public class ObjectFactory {
     } catch (Exception ignored){}
 
     try {
+      assert ownableType != null;
       Ownable newOwnable = constructOwnable(ownableType, owner, constructorParams);
       ownableIdManager.addObject(newOwnable, id, parentOwnable);
     } catch (IllegalArgumentException e) {
