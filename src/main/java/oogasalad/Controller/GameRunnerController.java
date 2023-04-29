@@ -14,8 +14,6 @@ import java.util.*;
 
 public class GameRunnerController implements GameController {
     private final Map<String, GameRunnerObject> gameObjects = new HashMap<>();
-    //private final Map<String, Node> nodes = new HashMap<>();
-    //private final Map<String, DropZoneFE> dropZones = new HashMap<>();
     private final Map<String, String> pieceToDropZoneMap = new HashMap<>();
     private BorderPane root;
     private final HashSet<String> clickable = new HashSet<>();
@@ -29,7 +27,6 @@ public class GameRunnerController implements GameController {
     }
     @Override
     public void select(String id) {
-        System.out.println(id);
         if (clickable.contains(id)) {
             game.clickPiece(id);
         }
@@ -38,19 +35,15 @@ public class GameRunnerController implements GameController {
     @Override
     public void addDropZone(GameController.DropZoneParameters params) {
         DropZoneFE dropZone = new DropZoneFE(params.id(), params.width(), params.height(), params.x(),params.y(),this);
-        //nodes.put(params.id(),dropZone.getNode());
         gameObjects.put(params.id(),dropZone);
-        //dropZones.put(params.id(),dropZone);
         root.getChildren().add(dropZone.getNode());
     }
 
     @Override
     public void addPiece(String id, String imagePath, String dropZoneID, double size) {
         Piece piece = new Piece(id,this, imagePath, size);
-        //DropZoneFE dz = dropZones.get(dropZoneID);
         DropZoneFE dropZone = (DropZoneFE) gameObjects.get(dropZoneID);
         piece.moveToDropZoneXY(dropZone.getDropZoneCenter());
-        //nodes.put(id, piece.getNode());
         gameObjects.put(id,piece);
         pieceToDropZoneMap.put(id, dropZoneID);
         root.getChildren().add(piece.getNode());
@@ -68,7 +61,6 @@ public class GameRunnerController implements GameController {
 
     @Override
     public void movePiece(String pieceID, String dropZoneID) {
-        //DropZoneFE dropZone = dropZones.get(dropZoneID);
         DropZoneFE dropZone = (DropZoneFE) gameObjects.get(dropZoneID);
         //pieces.get(pieceID).moveToDropZoneXY(dropZone.getDropZoneCenter());
         pieceToDropZoneMap.put(pieceID, dropZoneID);
@@ -78,7 +70,7 @@ public class GameRunnerController implements GameController {
     public void removePiece(String pieceID) {
         pieceToDropZoneMap.remove(pieceID);
         root.getChildren().remove(gameObjects.get(pieceID).getNode());
-        //nodes.remove(pieceID);
+        gameObjects.remove(gameObjects.get(pieceID));
     }
 
     @Override

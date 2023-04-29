@@ -84,11 +84,12 @@ public abstract class AbstractComponent implements Component {
     getNode().setOnMousePressed(e -> {
       XOffset = e.getSceneX() - (getNode().getTranslateX());
       YOffset = e.getSceneY() - (getNode().getTranslateY());
-
     });
     getNode().setOnMouseDragged(e -> {
-      getNode().setTranslateX(e.getSceneX() - XOffset);
-      getNode().setTranslateY(e.getSceneY() - YOffset);
+      if (draggable) {
+        getNode().setTranslateX(e.getSceneX() - XOffset);
+        getNode().setTranslateY(e.getSceneY() - YOffset);
+      }
     });
   }
 

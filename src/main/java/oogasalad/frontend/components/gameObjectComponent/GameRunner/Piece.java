@@ -13,9 +13,9 @@ public class Piece extends GameRunnerObject{
         setImage(imagepath);
         setSize(size);
         setSelectableVisual();
-        getNode().setOnMouseClicked(e -> gameRunnerController.select(ID));
-        //followMouse();
-        //setDragSelection();
+        //getNode().setOnMouseClicked(e -> gameRunnerController.select(ID));
+        followMouse();
+        setDragSelection();
     }
     @Override
     public void setSelectableVisual() {
