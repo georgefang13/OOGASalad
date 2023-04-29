@@ -36,14 +36,11 @@ public class GameObject extends AbstractComponent implements GameObjectComponent
     instantiatePropFile("frontend.properties.Defaults.GameObject");
     followMouse();
   }
-  /*
+
   public GameObject(String ID, Map<String, String> map){
     super(ID);
     children = null;
-  }
-  public GameObject(String ID, Map<String, String> map){
-    super(ID);
-    children = null;
+    setDraggable(true);
     instantiatePropFile("frontend.properties.Defaults.GameObject");
     //setImage(getDEFAULT_BUNDLE().getString(replaceWithFileLoadingByID()));
     setValuesfromMap(map);
@@ -51,7 +48,7 @@ public class GameObject extends AbstractComponent implements GameObjectComponent
     followMouse();
   }
 
-   */
+
   private void initialize() {
     image.setFitWidth(width);
     image.setFitHeight(height);
