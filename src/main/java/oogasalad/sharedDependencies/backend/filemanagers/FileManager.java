@@ -269,5 +269,31 @@ public class FileManager {
     }
     return list;
   }
+
+  public void updateFile(String filePath, JsonObject newContent) throws IOException {
+    Gson gson = new Gson();
+    JsonObject existingContent = gson.fromJson(new FileReader(filePath), JsonObject.class);
+    mergeJsonObjects(existingContent, newContent);
+    try (Writer writer = new FileWriter(filePath)) {
+      writer.write(existingContent.toString());
+    }
+  }
+
+  private void mergeJsonObjects(JsonObject existingObject, JsonObject newObject) {
+    for (Map.Entry<String, JsonElement> entry : newObject.entrySet()) {
+      String key = entry.getKey();
+      JsonElement value = entry.getValue();
+      if (value.isJsonObject()) {
+        if (existingObject.has(key) && existingObject.get(key).isJsonObject()) {
+          mergeJsonObjects(existingObject.getAsJsonObject(key), value.getAsJsonObject());
+        } else {
+          existingObject.add(key, value);
+        }
+      } else {
+        existingObject.add(key, value);
+      }
+    }
+  }
+
 }
 

@@ -1,8 +1,6 @@
 package oogasalad.sharedDependencies.backend;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,7 +14,6 @@ import oogasalad.sharedDependencies.backend.ownables.variables.Variable;
 import oogasalad.sharedDependencies.backend.owners.GameWorld;
 import oogasalad.sharedDependencies.backend.owners.Player;
 import oogasalad.sharedDependencies.backend.rules.RuleManager;
-import org.junit.Rule;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -30,7 +27,7 @@ public class ObjectFactoryTest {
 
   @BeforeEach
   void setup() {
-    game = new GameInator();
+    game = new GameInator("testGame");
     world = game.getGameWorld();
     //set players from unmodifiable list to modifiable list
     game.addPlayer(new Player());
