@@ -1,5 +1,6 @@
 package oogasalad.frontend.components.lineObjectComponent;
 
+import javafx.scene.paint.Color;
 import oogasalad.frontend.components.Component;
 
 public interface LineObjectComponent extends Component {
@@ -12,8 +13,8 @@ public interface LineObjectComponent extends Component {
     void setEndX(double endX);
     double getEndY();
     void setEndY(double endY);
-    public String getColor();
-    void setColor(String color);
+    public Color getColor();
+    void setColor(Color color);
     double getStrokeWidth();
     void setStrokeWidth(double strokeWidth);
     

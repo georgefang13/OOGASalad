@@ -1,7 +1,11 @@
 package oogasalad.frontend.nodeEditor;
 
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.List;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -19,6 +23,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import oogasalad.frontend.managers.PropertyManager;
 import oogasalad.frontend.managers.StandardPropertyManager;
+import oogasalad.frontend.nodeEditor.Config.NodeConfiguration;
 import oogasalad.frontend.nodeEditor.Nodes.AbstractNode;
 import oogasalad.frontend.nodeEditor.Nodes.MainNode;
 
@@ -26,6 +31,8 @@ public abstract class AbstractNodePanel extends Tab {
 
   public static final String NODES_FOLDER = "oogasalad.frontend.nodeEditor.Nodes.";
   public static final String NODES_JSON_PATH = "src/main/resources/nodeCode/save.json";
+  public static final String CONFIG_JSON_PATH = "src/main/resources/nodeCode/config.json";
+
   protected Group group;
   protected ImageView workspace;
   protected double windowWidth, windowHeight;
@@ -39,7 +46,7 @@ public abstract class AbstractNodePanel extends Tab {
     windowHeight = propertyManager.getNumeric("WindowHeight");
   }
 
-  protected abstract List<Button> getNodeSelectionButtons();
+  protected abstract List<Button> getNodeSelectionButtons(String fileName);
 
   public String getAllNodeContent() {
     String code = "";
@@ -49,6 +56,21 @@ public abstract class AbstractNodePanel extends Tab {
       }
     }
     return code;
+  }
+
+  public List<AbstractNode> getAllNodes(){
+    List<AbstractNode> nodes = new ArrayList<>();
+    for (Node node : group.getChildren()) {
+      if (node instanceof MainNode) {
+        AbstractNode tempNode = (AbstractNode) node;
+        while(tempNode.getChildNode() != null){
+          nodes.add(tempNode);
+          tempNode = tempNode.getChildNode();
+        }
+        return nodes;
+      }
+    }
+    return nodes;
   }
 
   protected Button makeButton(String buttonName, EventHandler<ActionEvent> handler) {
@@ -77,12 +99,16 @@ public abstract class AbstractNodePanel extends Tab {
   }
 
   public ScrollPane makeNodeSelectionPane() {
-    List<Button> buttons = getNodeSelectionButtons();
+    List<Button> buttons = getNodeSelectionButtons("Commands.json");
+//    buttons.addAll(getNodeSelectionButtons("Metablocks.json"));
+    ArrayList<Button> temp = new ArrayList<>(buttons);
+    temp.addAll(getNodeSelectionButtons("Metablocks.json"));
+
     ScrollPane scrollPane = new ScrollPane();
     GridPane pane = new GridPane();
-    pane.setStyle("-fx-background-color: gray");
-    for (Button button : buttons) {
-      pane.add(button, 0, buttons.indexOf(button));
+    pane.setStyle("-fx-background-color: gray"); // @TODO: move to css
+    for (Button button : temp) {
+      pane.add(button, 0, temp.indexOf(button));
     }
     pane.setMinSize(windowWidth / 4, windowHeight);
     scrollPane.setContent(pane);
@@ -125,6 +151,37 @@ public abstract class AbstractNodePanel extends Tab {
     group.getChildren().add(node);
     node.setBoundingBox(workspace.getBoundsInParent());
     return scrollPane;
+  }
+
+  ///////
+
+  public void saveNodesToFile(List<AbstractNode> nodes, String filePath) {
+    NodeConfiguration config = new NodeConfiguration(nodes);
+    String json = config.toJson(CONFIG_JSON_PATH);
+    System.out.println(json);
+
+//    try (FileWriter fileWriter = new FileWriter(filePath)) {
+//      fileWriter.write(json);
+//    } catch (IOException e) {
+//      e.printStackTrace();
+//    }
+  }
+
+  // Load the configuration of nodes from a file
+  public List<AbstractNode> loadNodesFromFile(String filePath) {
+    try (FileReader fileReader = new FileReader(filePath)) {
+      StringBuilder json = new StringBuilder();
+      int i;
+      while ((i = fileReader.read()) != -1) {
+        json.append((char) i);
+      }
+
+      NodeConfiguration config = NodeConfiguration.fromJson(json.toString());
+      return config.getNodes();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    return new ArrayList<>();
   }
 
 }

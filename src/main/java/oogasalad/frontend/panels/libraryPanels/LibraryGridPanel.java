@@ -36,6 +36,10 @@ public class LibraryGridPanel extends GridPane implements Panel {
   private final int IMAGE_WIDTH = 212;
   private final int IMAGE_HEIGHT = 150;
   private final int IMAGE_RADIUS = 20;
+  private final int COLUMN_PERCENT_WIDTH = 25;
+  private final int COLUMN_INDEX = 0;
+  private final int ROW_INDEX = 0;
+  private final int MAX_COLUMN_INDEX = 3;
   PanelController panelController;
   /**
    * Constructor for the environment panel
@@ -53,23 +57,23 @@ public class LibraryGridPanel extends GridPane implements Panel {
    */
   public Panel makePanel() {
     ColumnConstraints column1 = new ColumnConstraints();
-    column1.setPercentWidth(25);
+    column1.setPercentWidth(COLUMN_PERCENT_WIDTH);
     ColumnConstraints column2 = new ColumnConstraints();
-    column2.setPercentWidth(25);
+    column2.setPercentWidth(COLUMN_PERCENT_WIDTH);
     ColumnConstraints column3 = new ColumnConstraints();
-    column3.setPercentWidth(25);
+    column3.setPercentWidth(COLUMN_PERCENT_WIDTH);
     ColumnConstraints column4 = new ColumnConstraints();
-    column4.setPercentWidth(25);
+    column4.setPercentWidth(COLUMN_PERCENT_WIDTH);
     this.getColumnConstraints().addAll(column1, column2, column3, column4);
 
     List<String> games = getNamesOfFilesToLoad();
-    int rowIndex = 0;
-    int columnIndex = 0;
+    int rowIndex = ROW_INDEX;
+    int columnIndex = COLUMN_INDEX;
     for (String game : games) {
       this.add(createGameBox(game), columnIndex, rowIndex);
       columnIndex++;
-      if (columnIndex > 3) {
-        columnIndex = 0;
+      if (columnIndex > MAX_COLUMN_INDEX) {
+        columnIndex = COLUMN_INDEX;
         rowIndex++;
       }
     }

@@ -29,17 +29,17 @@ public class ConvertingStrategyTest extends DukeApplicationTest {
     stage.setScene(scene);
     stage.show();
   }
-//  @Test
-//  public void sendGameObject(){
-//    GameObject c = (GameObject) factory.create("GameObject");
-//    c.setName("Test");
-//    Map<String, String> map = converter.paramsToMap(c);
-//    System.out.println(map);
-//    assertEquals(c.getName(), "Test");
-//    assertEquals(c.getID(), 0);
-//    GameObject cd = (GameObject) factory.create("GameObject");
-//    Map<String, String> map1 = converter.paramsToMap(cd);
-//    assertEquals(cd.getID(), 1);
-//    assertEquals(cd.getName(), null);
-//  }
+  @Test
+  public void sendGameObject(){
+    GameObject c = (GameObject) factory.create("GameObject");
+    c.setName("Test");
+    Map<String, String> map = converter.paramsToMap(c);
+    System.out.println(map);
+    assertEquals(c.getName(), "Test");
+    assertEquals(c.getID(), "0");
+    GameObject cd = (GameObject) factory.create("GameObject");
+    Map<String, String> map1 = converter.paramsToMap(cd);
+    assertEquals(cd.getID(), "1");
+    assertEquals(cd.getName(), null);
+  }
 }

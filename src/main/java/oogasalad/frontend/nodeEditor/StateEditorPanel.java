@@ -10,7 +10,7 @@ public class StateEditorPanel extends AbstractNodePanel {
   }
 
   @Override
-  protected List<Button> getNodeSelectionButtons() {
+  protected List<Button> getNodeSelectionButtons(String fileName) {
     return List.of(
         makeButton("State",
             event -> makeNode(NODES_FOLDER + "StateNode")),

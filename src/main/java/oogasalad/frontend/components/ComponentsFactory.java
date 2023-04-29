@@ -34,12 +34,15 @@ public class ComponentsFactory {
   public Component create(String type){
     String lowercase = type.substring(0, 1).toLowerCase() + type.substring(1);
     try{
-      Class<?> c = Class.forName(bundle.getString("package")+lowercase + "Component." + type);
-      Constructor<?> constructor = c.getConstructor(int.class);
-      component = (Component) constructor.newInstance(ID);
+      Class<?> c = Class.forName(bundle.getString("package") + lowercase + "Component." + type);
+      System.out.println(c);
+      Constructor<?> constructor = c.getConstructor(String.class);
+      System.out.println(constructor);
+      component = (Component) constructor.newInstance(Integer.toString(ID));
       ID++;
     } catch (Exception e) {
-      System.out.println(e.toString());
+      System.out.println(e);
+      e.printStackTrace();
     }
     return component;
   }
@@ -58,7 +61,7 @@ public class ComponentsFactory {
     try {
       Class<?> c = Class.forName(type);
       Constructor<?> constructor = c.getConstructor(map.getClass());
-      component = (Component) constructor.newInstance(map);
+      component = (Component) constructor.newInstance(Integer.toString(ID), map);
       ID++;
     } catch (Exception e){
       System.out.println("Failed");
@@ -69,8 +72,8 @@ public class ComponentsFactory {
     String lowercase = type.substring(0, 1).toLowerCase() + type.substring(1);
     try{
       Class<?> c = Class.forName(bundle.getString("package")+lowercase + "Component." + type);
-      Constructor<?> constructor = c.getConstructor(int.class, Map.class);
-      component = (Component) constructor.newInstance(ID, map);
+      Constructor<?> constructor = c.getConstructor(String.class, Map.class);
+      component = (Component) constructor.newInstance(Integer.toString(ID), map);
       ID++;
     } catch (Exception e){
       e.printStackTrace();

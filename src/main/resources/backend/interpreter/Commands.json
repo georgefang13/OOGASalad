@@ -6,10 +6,10 @@
     "description": "Creates a new variable and sets its value",
     "example": "make :x 1 # make <var_name> <value>",
     "specs": {
-      "innerBlocks": ["value"],
+      "innerBlocks": [],
       "inputs": [{"name": "var_name", "type": ["string"] }],
       "outputs": [],
-      "parse": "make :%s %s"
+      "parse": "make :%s "
     }
   },
   "True": {
@@ -251,7 +251,7 @@
       "innerBlocks": [],
       "inputs": [{ "name": "value", "type": ["any"] }],
       "outputs": [],
-      "parse": "return :%s"
+      "parse": "return %s"
     }
   },
   "ReturnNull": {
@@ -287,7 +287,7 @@
     }
   },
   "CurrentPlayer": {
-    "name": "Add Drop Zone Item",
+    "name": "CurrentPlayer",
     "folder": "game",
     "str": "curplayer",
     "description": "Get the current player in the game",
@@ -358,7 +358,7 @@
         { "name": "path", "type": ["list"] }
       ],
       "outputs": ["dropzone"],
-      "parse": "dzfollow %s %s"
+      "parse": "dzfollow %s %s "
     }
   },
   "FromGame": {
@@ -901,7 +901,7 @@
         { "name": "list", "type": ["list"] }
       ],
       "outputs": [],
-      "parse": "additem %s %s"
+      "parse": "additem %s %s "
     }
   },
   "Equal": {

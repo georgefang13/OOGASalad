@@ -16,7 +16,7 @@ public class StandardThemeManager implements ThemeManager {
   private List<ThemeObserver> observers;
 
   private StandardThemeManager() {
-    this.theme = THEME + "light";
+    this.theme = THEME + "light.css";
     this.observers = new ArrayList<>();
   }
 
@@ -29,7 +29,7 @@ public class StandardThemeManager implements ThemeManager {
 
   @Override
   public String getTheme() {
-    return theme  + ".css";
+    return theme;
   }
 
   @Override

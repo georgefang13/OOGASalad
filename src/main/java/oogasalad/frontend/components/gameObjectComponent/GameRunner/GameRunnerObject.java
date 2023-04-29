@@ -8,12 +8,12 @@ import java.util.Map;
 
 public abstract class GameRunnerObject extends GameObject implements GameRunnerComponent {
     GameRunnerController gameRunnerController;
-    public GameRunnerObject(int ID, GameRunnerController gameRunnerController) {
+    public GameRunnerObject(String ID, GameRunnerController gameRunnerController) {
         super(ID);
         this.gameRunnerController = gameRunnerController;
     }
 
-    public GameRunnerObject(int ID, Map<String, String> map, GameRunnerController gameRunnerController) {
+    public GameRunnerObject(String ID, Map<String, String> map, GameRunnerController gameRunnerController) {
         super(ID);
         this.gameRunnerController = gameRunnerController;
     }
