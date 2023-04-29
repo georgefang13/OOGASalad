@@ -365,7 +365,8 @@ public class Game implements GameToInterpreterAPI{
             GameObject mainObj = (GameObject) ownableIdManager.getObject(s);
             for (String o : ownMap.get(s)) {
                 Ownable obj = ownableIdManager.getObject(o);
-                ownableIdManager.setOwner(obj, mainObj);
+                obj.setOwner(o);
+                 ownableIdManager.setOwner(obj, mainObj);
             }
         }
     }
