@@ -5,10 +5,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import oogasalad.frontend.components.gameObjectComponent.GameRunner.AbstractSelectableVisual;
-import oogasalad.frontend.components.gameObjectComponent.GameRunner.DropZoneFE;
-import oogasalad.frontend.components.gameObjectComponent.GameRunner.GameRunnerObject;
-import oogasalad.frontend.components.gameObjectComponent.GameRunner.Piece;
+import oogasalad.frontend.components.gameObjectComponent.GameRunner.*;
 import oogasalad.gamerunner.backend.Game;
 import oogasalad.gamerunner.backend.GameController;
 
@@ -32,6 +29,7 @@ public class GameRunnerController implements GameController {
     }
     @Override
     public void select(String id) {
+        System.out.println(id);
         if (clickable.contains(id)) {
             game.clickPiece(id);
         }
@@ -106,6 +104,10 @@ public class GameRunnerController implements GameController {
         System.out.println(imagePath);
         GameRunnerObject gameObject = gameObjects.get(id);
         gameObject.setImage(imagePath);
+        SelectableVisual selectableVisual = (SelectableVisual) gameObject.getNode();
+        root.getChildren().remove(selectableVisual);
+        selectableVisual.updateVisual(gameObject.getImage());
+        root.getChildren().add((Node) selectableVisual);
     }
 
     private void clearClickables(){

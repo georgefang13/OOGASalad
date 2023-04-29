@@ -15,5 +15,4 @@ public abstract class GameRunnerObject extends GameObject implements GameRunnerC
     public Node getNode(){
         return selectableVisual;
     }
-    abstract void setSelectableVisual();
 }

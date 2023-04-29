@@ -28,7 +28,7 @@ public class DropZoneFE extends GameRunnerObject{
         setSelectableVisual();
     }
     @Override
-    void setSelectableVisual() {
+    public void setSelectableVisual() {
         selectableVisual = dropZoneVisual;
     }
 

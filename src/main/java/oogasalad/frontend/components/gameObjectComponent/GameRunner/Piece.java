@@ -13,11 +13,12 @@ public class Piece extends GameRunnerObject{
         setImage(imagepath);
         setSize(size);
         setSelectableVisual();
-        followMouse();
-        setDragSelection();
+        getNode().setOnMouseClicked(e -> gameRunnerController.select(ID));
+        //followMouse();
+        //setDragSelection();
     }
     @Override
-    void setSelectableVisual() {
+    public void setSelectableVisual() {
         ImageView img = getImage();
         img.setFitWidth(size);
         img.setFitHeight(size);
