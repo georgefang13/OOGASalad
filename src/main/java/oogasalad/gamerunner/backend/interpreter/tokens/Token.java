@@ -51,6 +51,10 @@ public class Token {
     return link;
   }
 
+  public Token copy(){
+    return new Token(TYPE, SUBTYPE, LINE);
+  }
+
   public boolean equals(Token t, Environment env) {
     return TYPE.equals(t.TYPE) && SUBTYPE.equals(t.SUBTYPE);
   }

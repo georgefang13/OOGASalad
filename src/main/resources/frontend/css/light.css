@@ -207,3 +207,52 @@
   -fx-pref-width: 250;
 }
 
+.json-node{
+  -fx-background-color: #F1F1EF ;
+  -fx-font-size: 17;
+}
+
+.json-node-title{
+  -fx-font-size: 35;
+}
+
+
+.control{
+  -fx-background-color: orange;
+  -fx-pref-width: 300 !important;
+  -fx-pref-height: 50 !important;
+  -fx-font-size: 35;
+  -fx-padding: 5;
+  -fx-font-weight: 300;
+
+}
+
+.main-node{
+  -fx-background-color: #A2EE17;
+  -fx-font-size: 35;
+  -fx-alignment: center;
+  -fx-pref-width: 300 !important;
+
+}
+
+.state-node{
+  -fx-background-color: yellow;
+  -fx-alignment: center;
+
+}
+
+.node {
+  -fx-opacity: 0.8;
+  -fx-border-width: 5;
+  -fx-border-color: black;
+  -fx-font-weight: 700;
+  -fx-padding: 5;
+  -fx-background-radius: 10 ;
+  -fx-pref-height: -1;
+  -fx-pref-width: -1;
+  -fx-min-width: 300;
+}
+
+.tooltip{
+  -fx-font-size: 40;
+}

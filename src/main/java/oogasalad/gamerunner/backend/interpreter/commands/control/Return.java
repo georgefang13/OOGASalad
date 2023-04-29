@@ -12,7 +12,7 @@ public class Return extends OperatorToken {
     }
     public Token evaluate(Environment env) throws IllegalArgumentException{
         Token t = getArg(0);
-        if (t != null) t = t.evaluate(env);
+        if (t != null && !(t instanceof ExpressionToken)) t = t.evaluate(env);
         return new ReturnToken(t);
     }
 }

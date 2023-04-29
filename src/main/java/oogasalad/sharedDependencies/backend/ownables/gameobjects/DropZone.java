@@ -13,6 +13,10 @@ public class DropZone extends GameObject {
   private final HashMap<String, DropZone> edges;
   private final HashMap<String, Object> holding;
 
+  /**
+   * Creates a new DropZone with null owner
+   * For testing purposes only
+   */
   public DropZone() {
     this(null);
   }
@@ -173,7 +177,9 @@ public class DropZone extends GameObject {
     return spots;
   }
 
-
-
+  @Override
+  public String toString() {
+    return "DropZone-" + hashCode();
+  }
 
 }

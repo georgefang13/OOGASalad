@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import oogasalad.gameeditor.backend.id.IdManager;
+import oogasalad.sharedDependencies.backend.id.IdManager;
 import oogasalad.gamerunner.backend.interpreter.Interpreter;
 import oogasalad.gamerunner.backend.interpreter.TestGame;
 import oogasalad.sharedDependencies.backend.ownables.Ownable;

@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import oogasalad.gameeditor.backend.id.IdManager;
+import oogasalad.sharedDependencies.backend.id.IdManager;
 import oogasalad.sharedDependencies.backend.ownables.Ownable;
 import oogasalad.sharedDependencies.backend.ownables.variables.Variable;
 import org.junit.jupiter.api.BeforeEach;

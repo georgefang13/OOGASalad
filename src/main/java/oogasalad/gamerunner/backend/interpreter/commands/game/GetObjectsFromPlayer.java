@@ -3,8 +3,8 @@ package oogasalad.gamerunner.backend.interpreter.commands.game;
 
 import java.util.List;
 
-import oogasalad.gameeditor.backend.id.IdManager;
-import oogasalad.gameeditor.backend.id.OwnableSearchStream;
+import oogasalad.sharedDependencies.backend.id.IdManager;
+import oogasalad.sharedDependencies.backend.id.OwnableSearchStream;
 import oogasalad.gamerunner.backend.interpreter.Environment;
 import oogasalad.gamerunner.backend.interpreter.tokens.OperatorToken;
 import oogasalad.gamerunner.backend.interpreter.tokens.Token;
@@ -35,7 +35,7 @@ public class GetObjectsFromPlayer extends OperatorToken {
         OwnableSearchStream searchStream = new OwnableSearchStream(manager);
 
         List<Ownable> objs = manager.objectStream()
-                .filter(searchStream.isOfOwner(player.VALUE))
+                .filter(searchStream.isOwnedByOwner(player.VALUE))
                 .filter(searchStream.isOfAllClasses(classes)).toList();
 
         Variable<List<Ownable>> var = new Variable<>(objs);
