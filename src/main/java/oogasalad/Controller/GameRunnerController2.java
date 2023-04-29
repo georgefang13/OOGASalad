@@ -13,6 +13,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import oogasalad.Controller.GameRunnerController;
+import oogasalad.frontend.components.gameObjectComponent.GameRunner.AbstractSelectableVisual;
 import oogasalad.frontend.components.gameObjectComponent.GameRunner.DropZoneFE;
 import oogasalad.frontend.components.gameObjectComponent.GameRunner.DropZoneVisual;
 import oogasalad.frontend.components.gameObjectComponent.GameRunner.Piece;
@@ -100,10 +101,10 @@ public class GameRunnerController2 implements GameController {
         //((StackPane) nodes.get(dropZoneID)).getChildren().add(piece);
 
         //dz.addPieceToDropZone(piece);
-        nodes.put(id, p.getPieceBox());
+        nodes.put(id, p.getNode());
         pieces.put(id,p);
         pieceToDropZoneMap.put(id, dropZoneID);
-        root.getChildren().add(p.getPieceBox());
+        root.getChildren().add(p.getNode());
     }
 
     @Override
@@ -114,14 +115,8 @@ public class GameRunnerController2 implements GameController {
 
         clickable.addAll(ids);
         for (String id : ids){
-            Node gameobject = nodes.get(id);
-            if (gameobject instanceof DropZoneVisual){
-                DropZoneVisual dzv = (DropZoneVisual) gameobject;
-                dzv.showClickable();
-            }
-            else {
-                gameobject.setStyle("-fx-border-color: red; -fx-border-width: 1px;");
-            }
+            AbstractSelectableVisual gameObjectVisual = (AbstractSelectableVisual) nodes.get(id);
+            gameObjectVisual.showClickable();
         }
     }
 
@@ -175,14 +170,8 @@ public class GameRunnerController2 implements GameController {
 
     private void clearClickables(){
         for (String id : clickable){
-            Node gameobject = nodes.get(id);
-            if (gameobject instanceof DropZoneVisual){
-                DropZoneVisual dzv = (DropZoneVisual) gameobject;
-                dzv.showUnclickable();
-            }
-            else {
-                gameobject.setStyle("");
-            }
+            AbstractSelectableVisual gameObjectVisual = (AbstractSelectableVisual) nodes.get(id);
+            gameObjectVisual.showUnclickable();
         }
         clickable.clear();
     }

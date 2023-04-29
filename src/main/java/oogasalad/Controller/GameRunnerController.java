@@ -75,7 +75,7 @@ public class GameRunnerController extends Application implements GameController 
             System.out.println("Image " + image + " not found");
             return;
         }
-        VBox pieceBox = (VBox) piece.getPieceBox();
+        VBox pieceBox = (VBox) piece.getNode();
         pieceBox.setPrefHeight(size);
         pieceBox.setPrefWidth(size);
         pieceBox.setMaxHeight(size);

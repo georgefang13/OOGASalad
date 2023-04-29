@@ -2,36 +2,40 @@ package oogasalad.frontend.components.gameObjectComponent.GameRunner;
 
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import oogasalad.gamerunner.backend.GameController;
 
 public class Piece extends GameRunnerObject{
     private double lastTranslateX;
     private double lastTranslateY;
-    private HBox pieceBox;
     public Piece(String ID, GameController gameRunnerController, String imagepath, double size) {
-        super(ID, gameRunnerController, imagepath, size);
-        initializePieceBox();
+        super(ID, gameRunnerController);
+        setImage(imagepath);
+        setSize(size);
+        setSelectableVisual();
+        followMouse();
+        setDragSelection();
+    }
+    @Override
+    void setSelectableVisual() {
+        ImageView img = getImage();
+        img.setFitWidth(size);
+        img.setFitHeight(size);
+        this.selectableVisual = new PieceVisual(img,size,ID);
     }
 
-    private void initializePieceBox() {
-        Node pieceNode = getNode();
-        pieceBox = new HBox(pieceNode);
-        //pieceBox.setAlignment(Pos.CENTER);
-        pieceBox.setPrefHeight(size);
-        pieceBox.setPrefWidth(size);
-        pieceBox.setMaxHeight(size);
-        pieceBox.setMaxHeight(size);
-        pieceBox.setOnDragDetected(e -> gameRunnerController.select(ID));
-        pieceBox.setOnMouseReleased(e -> selectDropZoneBelow());
+    private void setDragSelection() {
+        getNode().setOnDragDetected(e -> gameRunnerController.select(ID));
+        getNode().setOnMouseReleased(e -> selectDropZoneBelow());
     }
     private void selectDropZoneBelow(){
         DropZoneVisual dzv = getIntersectingDropZones();
         gameRunnerController.select(dzv.getObjectID());
     }
     public DropZoneVisual getIntersectingDropZones(){
-        Bounds pieceBounds = pieceBox.localToScene(pieceBox.getBoundsInLocal());
-        for (Node n : pieceBox.getParent().getChildrenUnmodifiable()) {
+        Bounds pieceBounds = getNode().localToScene(getNode().getBoundsInLocal());
+        for (Node n : getNode().getParent().getChildrenUnmodifiable()) {
             if (n instanceof DropZoneVisual){
                 if (n.localToScene(n.getBoundsInLocal()).intersects(pieceBounds)){
                     return (DropZoneVisual) n;
@@ -52,29 +56,15 @@ public class Piece extends GameRunnerObject{
         double shiftX = x - size/2;
         double shiftY = y - size/2;
         //this.resetOffset();
-        pieceBox.setTranslateX(shiftX);
-        pieceBox.setTranslateY(shiftY);
+        getNode().setTranslateX(shiftX);
+        getNode().setTranslateY(shiftY);
     }
-    public Node getPieceBox(){
-        return pieceBox;
-    }
-    @Override
-    public void onDragDropped() {
-    }
-
-    @Override
-    public void onClick() {
-        //gameRunnerController.select(ID);
-    }
-
-    @Override
     public void acceptDrag() {
         Node node = getNode();
         lastTranslateX = node.getTranslateX();
         lastTranslateY = node.getTranslateY();
     }
 
-    @Override
     public void goBack() {
         Node node = getNode();
         node.setTranslateX(lastTranslateX);
