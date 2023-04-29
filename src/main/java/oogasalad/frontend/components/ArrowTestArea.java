@@ -22,8 +22,8 @@ public class ArrowTestArea extends Application {
     Map<String, String> params = new HashMap<>();
     params.put("fill", "Blue");
     params.put("border", "Black");
-    params.put("x", "50");
-    params.put("y", "50");
+    params.put("width", "50");
+    params.put("height", "50");
     factory = new ComponentsFactory();
     Dropzone c = (Dropzone) factory.create("Dropzone", params);
     params.remove("fill");
@@ -31,7 +31,10 @@ public class ArrowTestArea extends Application {
     Dropzone c1 = (Dropzone) factory.create("Dropzone", params);
     root.getChildren().add(c.getNode());
     root.getChildren().add(c1.getNode());
+    c1.getNode().setTranslateX(50);
+    System.out.println(c.getNode().getTranslateX());
+    System.out.println(c1.getNode().getTranslateX());
     Arrow arrow = new Arrow(c, c1);
-    root.getChildren().add(arrow.)
+    root.getChildren().add(arrow.getArrow());
   }
 }

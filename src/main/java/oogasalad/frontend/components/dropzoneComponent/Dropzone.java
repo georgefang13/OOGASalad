@@ -22,8 +22,8 @@ public class Dropzone extends AbstractComponent {
   private Color fill;
   private Color border;
   private Rectangle square;
-  private double x;
-  private double y;
+  private double width;
+  private double height;
   /**
    * Dropzone
    * @param ID the id of the DropZone
@@ -74,8 +74,8 @@ public class Dropzone extends AbstractComponent {
   public void setSquareParams(){
     square.setFill(fill);
     square.setStroke(border);
-    square.setWidth(x);
-    square.setHeight(y);
+    square.setWidth(width);
+    square.setHeight(height);
   }
   /**
    * For GameObject, remove the object
@@ -98,5 +98,21 @@ public class Dropzone extends AbstractComponent {
    */
   public Rectangle getSquare() {
     return square;
+  }
+
+  /**
+   * Return the width of the square
+   * @return width;
+   */
+  public double getWidth(){
+    return width;
+  }
+
+  /**
+   * Return the height of the square
+   * @return height
+   */
+  public double getHeight(){
+    return height;
   }
 }
