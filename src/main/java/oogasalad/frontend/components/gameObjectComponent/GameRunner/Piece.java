@@ -1,5 +1,6 @@
 package oogasalad.frontend.components.gameObjectComponent.GameRunner;
 
+import javafx.geometry.Bounds;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.input.MouseButton;
@@ -35,30 +36,39 @@ public class Piece extends GameRunnerObject{
         pieceBox.setMaxHeight(size);
         pieceBox.setMaxHeight(size);
         pieceBox.setOnDragDetected(e -> gameRunnerController.select(ID));
-        pieceBox.setOnMouseReleased(e -> {
-            PickResult pickResult = e.getPickResult();
-        });
+        pieceBox.setOnMouseReleased(e -> selectDropZoneBelow());
     }
-    private void selectDropZoneBelow(PickResult pickResult){
-        Node[] intersectedNodes = pickResult.getIntersectedNodes();
-        for (Node n : intersectedNodes) {
-            if (n instanceof Circle) {
-                // perform some action for a circle node
-            } else if (n instanceof Rectangle) {
-                // perform some action for a rectangle node
+    private void selectDropZoneBelow(){
+        DropZoneVisual dzv = getIntersectingDropZones();
+        gameRunnerController.select(dzv.getDropID());
+    }
+    public DropZoneVisual getIntersectingDropZones(){
+        Bounds pieceBounds = pieceBox.localToScene(pieceBox.getBoundsInLocal());
+        Node nfinal;
+        nfinal = null;
+        for (Node n : pieceBox.getParent().getChildrenUnmodifiable()) {
+            if (n instanceof DropZoneVisual){
+                nfinal = n;
+                if (n.localToScene(n.getBoundsInLocal()).intersects(pieceBounds)){
+                    return (DropZoneVisual) n;
+                }
             }
-            // add more checks for other node types as needed
         }
+        return (DropZoneVisual) nfinal;
     }
 
     public void moveToDropZoneXY(DropZoneFE.dropZoneCenter DZcenter){
         setCentertoCenter(DZcenter.x(), DZcenter.y());
+        acceptDrag();
     }
     private void setCentertoCenter(double x, double y){
-        pieceBox.setLayoutX(x-size/2);
-        pieceBox.setLayoutY(y-size/2);
-        pieceBox.setTranslateX(0.0);
-        pieceBox.setTranslateY(0.0);
+        //double actualX = pieceBox.getLayoutX() + pieceBox.getTranslateX();
+        //double actualY = pieceBox.getLayoutY() + pieceBox.getTranslateY();
+        double shiftX = x - size/2;
+        double shiftY = y - size/2;
+        this.resetOffset();
+        pieceBox.setTranslateX(shiftX);
+        pieceBox.setTranslateY(shiftY);
     }
     public Node getPieceBox(){
         return pieceBox;

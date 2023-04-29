@@ -6,10 +6,12 @@ import javafx.scene.layout.HBox;
 public class DropZoneVisual extends HBox {
     private Node unselectedVisual;
     private Node selectedVisual;
-    public DropZoneVisual(Node dropZoneImage,Node selectedDropZoneImage, double width, double height, double x, double y) {
+    private String dropID;
+    public DropZoneVisual(Node dropZoneImage,Node selectedDropZoneImage, double width, double height, double x, double y,String id) {
         super(dropZoneImage);
         unselectedVisual = dropZoneImage;
         selectedVisual = selectedDropZoneImage;
+        dropID = id;
         this.setStyle("-fx-border-color: black; -fx-border-width: 1px;");
         this.setPrefWidth(width);
         this.setPrefHeight(height);
@@ -24,5 +26,8 @@ public class DropZoneVisual extends HBox {
     public void deselected(){
         this.getChildren().remove(selectedVisual);
         this.getChildren().add(unselectedVisual);
+    }
+    public String getDropID(){
+        return dropID;
     }
 }

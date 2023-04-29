@@ -1,6 +1,7 @@
 package oogasalad.Controller;
 
 import javafx.application.Application;
+import javafx.geometry.Bounds;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -113,10 +114,12 @@ public class GameRunnerController2 implements GameController {
         clickable.addAll(ids);
         for (String id : ids){
             Node gameobject = nodes.get(id);
-            gameobject.setStyle("-fx-border-color: red; -fx-border-width: 1px;");
             if (gameobject instanceof DropZoneVisual){
                 DropZoneVisual dzv = (DropZoneVisual) gameobject;
                 dzv.selected();
+            }
+            else {
+                gameobject.setStyle("-fx-border-color: red; -fx-border-width: 1px;");
             }
         }
     }
@@ -127,8 +130,8 @@ public class GameRunnerController2 implements GameController {
         DropZoneFE olddz = dropZones.get(dzid);
         DropZoneFE newdz = dropZones.get(dropZoneID);
 
-        Piece p = pieces.get(id);
-        p.moveToDropZoneXY(newdz.getDropZoneCenter());
+        //Piece p = pieces.get(id);
+        //p.moveToDropZoneXY(newdz.getDropZoneCenter());
 
 
         //newdz.addPieceToDropZone(nodes.get(id));
@@ -176,7 +179,9 @@ public class GameRunnerController2 implements GameController {
                 DropZoneVisual dzv = (DropZoneVisual) gameobject;
                 dzv.deselected();
             }
-            gameobject.setStyle("");
+            else {
+                gameobject.setStyle("");
+            }
         }
         clickable.clear();
     }

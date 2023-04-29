@@ -136,4 +136,9 @@ public abstract class AbstractComponent implements Component {
   protected void setEditorPoint(Point ed){
     editor = ed;
   }
+
+  protected void resetOffset(){
+    XOffset = 0;
+    YOffset = 0;
+  }
 }

@@ -32,7 +32,7 @@ public class DropZoneFE implements FloatingDropHolder{
         selectedfill.setStroke(Color.BLACK);
         selectedfill.setFill(Color.YELLOW);
 
-        dropZoneVisual = new DropZoneVisual(unselectedfill,selectedfill,width,height,x,y);
+        dropZoneVisual = new DropZoneVisual(unselectedfill,selectedfill,width,height,x,y,dropID);
         dropZoneVisual.setOnMouseClicked(e -> gameRunnerController.select(dropID));
         dropZoneVisual.setOnMouseReleased(e -> onDrop());
 
