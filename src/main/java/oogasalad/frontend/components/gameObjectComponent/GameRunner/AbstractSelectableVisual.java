@@ -5,6 +5,7 @@ import javafx.scene.layout.HBox;
 
 public abstract class AbstractSelectableVisual extends HBox implements SelectableVisual{
     protected String objectID;
+    protected GameRunnerObject gameRunnerObject;
     public AbstractSelectableVisual(String id) {
         super();
         objectID = id;
@@ -13,6 +14,4 @@ public abstract class AbstractSelectableVisual extends HBox implements Selectabl
     public String getObjectID(){
         return objectID;
     }
-
-    public abstract void updateVisual(Node newVisual);
 }

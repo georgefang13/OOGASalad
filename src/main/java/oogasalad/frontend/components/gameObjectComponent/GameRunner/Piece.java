@@ -3,7 +3,6 @@ package oogasalad.frontend.components.gameObjectComponent.GameRunner;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
 import oogasalad.gamerunner.backend.GameController;
 
 public class Piece extends GameRunnerObject{
@@ -22,7 +21,7 @@ public class Piece extends GameRunnerObject{
         ImageView img = getImage();
         img.setFitWidth(size);
         img.setFitHeight(size);
-        this.selectableVisual = new PieceVisual(img,size,ID);
+        selectableVisual = new PieceVisual(img,size,ID);
     }
 
     private void setDragSelection() {
@@ -46,7 +45,7 @@ public class Piece extends GameRunnerObject{
         return null;
     }
 
-    public void moveToDropZoneXY(DropZoneFE.dropZoneCenter DZcenter){
+    public void moveToDropZoneXY(DropZoneFE.DropZoneCenter DZcenter){
         setCentertoCenter(DZcenter.x(), DZcenter.y());
         //acceptDrag();
     }
