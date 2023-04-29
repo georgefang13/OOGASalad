@@ -29,7 +29,7 @@ public class StandardThemeManager implements ThemeManager {
 
   @Override
   public String getTheme() {
-    return theme  + ".css";
+    return theme;
   }
 
   @Override
