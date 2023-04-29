@@ -21,7 +21,7 @@ public class ColorPickerComponent extends Field {
     @Override
     public HBox createField() {
         colorPicker = new ColorPicker();
-        colorPicker.setValue(javafx.scene.paint.Color.valueOf(propertyValue));
+        colorPicker.setValue(javafx.scene.paint.Color.valueOf("white"));
         return new HBox(new Label(labelText + ": "), colorPicker);
     }
 

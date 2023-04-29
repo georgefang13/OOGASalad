@@ -20,6 +20,7 @@ public class GridObject extends AbstractComponent {
     private GridPane grid;
     private double width;
     private double height;
+    private double rotate;
 
 
     public GridObject(String ID, Map<String, String> map){
