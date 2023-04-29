@@ -25,6 +25,11 @@ public class BracketToken extends Token implements OpenCloseToken {
     return String.format("<%s %s = %s>", TYPE, NAME, VALUE);
   }
 
+  @Override
+  public BracketToken copy(){
+    return new BracketToken(NAME, VALUE);
+  }
+
   /**
    * returns true if the bracket is an open bracket ( [ ) and false if it is a close bracket ( ] )
    *

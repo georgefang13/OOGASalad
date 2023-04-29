@@ -7,25 +7,25 @@
       "to": "make :game_state_output \"SELECTPIECE"
     },
     "SELECTPIECE": {
-      "init": "",
-      "leave": "getAvailablePieces",
+      "init": "getAvailablePieces",
+      "leave": "",
       "setValue": "make :selected_piece fromgame :game_state_input",
       "to": "make :game_state_output \"SELECTZONE"
     },
     "SELECTZONE": {
-      "init": "",
-      "leave": "getAvailable",
-      "setValue": "movepiece :selectedpiece fromgame :game_state_input",
+      "init": "getAvailableSpots",
+      "leave": "",
+      "setValue": "movepiece :selected_piece fromgame :game_state_input",
       "to": "make :game_state_output \"DONE"
     },
     "DONE": {
-      "init": "gotonextplayer",
-      "leave": "",
+      "init": "",
+      "leave": "gotonextplayer",
       "setValue": "",
-      "to": ""
+      "to": "make :game_state_output \"INIT"
     }
   },
   "goals": [
-  "to blocked [ :x ] [ return != curplayer owner dzitem \"obj :x ] foreach [ :dz fromgameclass \"board ] [ if dzempty :dz [ continue ] foreach [ :edge dzpaths :dz ] [ make :dzs dzfollowtoblock :dz [ :edge ] fvar blocked make :curspot dzitem \"obj :dz if and == curplayer owner :curspot == 2 len :dzs [ make :game_state_output curplayer return; ] ] ]"
+  "to blocked [ :x ] [ if dzempty :x [ return true ] return != curplayer owner item 0 dzitems :x ] make :game_log [ ] foreach [ :dz fromgameclass \"board ] [ if dzempty :dz [ continue ] if != curplayer owner item 0 dzitems :dz [ continue ] foreach [ :edge dzpaths :dz ] [ make :dzs dzfollowtoblock :dz [ :edge ] fvar blocked make :curspot item 0 dzitems :dz if == 2 len :dzs [ make :game_state_output curplayer return; ] ] ]"
   ]
 }

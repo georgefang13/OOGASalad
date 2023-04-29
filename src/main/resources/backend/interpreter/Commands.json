@@ -300,7 +300,7 @@
     }
   },
   "DropZoneFollowUntilBlocked": {
-    "name": "Follow a Path Through Dropzones Until That Path is Blocked",
+    "name": "Follow Path Through Dropzones Until Blocked",
     "folder": "game",
     "str": "dzfollowtoblock",
     "description": "Gets all dropzones among a repeated path until the path is blocked or no longer exists",
@@ -432,11 +432,27 @@
       "parse": "dzneighbors %s"
     }
   },
+  "GetObjChildren": {
+    "name": "Get Child of Object",
+    "folder": "game",
+    "str": "objchildren",
+    "description": "Get an object owned by another object by class name",
+    "example": "objchildren :x \"var_name  # objchildren <object> <child name>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        { "name": "object", "type": ["any"] },
+        { "name": "child class", "type": ["string"] }
+      ],
+      "outputs": ["any"],
+      "parse": "objchildren %s %s"
+    }
+  },
   "GetObjDz": {
     "name": "Get Dropzone of Objects",
     "folder": "game",
     "str": "objdz",
-    "description": "Get the dropzone tht a GameObject is in",
+    "description": "Get the dropzone that a GameObject is in",
     "example": "objdz :x  # objdz <obj>",
     "specs": {
       "innerBlocks": [],
@@ -444,7 +460,7 @@
         { "name": "object", "type": ["any"] }
       ],
       "outputs": ["dropzone"],
-      "parse": "gameobjdz %s"
+      "parse": "objdz %s"
     }
   },
   "GetObjectsFromPlayer": {
@@ -476,6 +492,23 @@
       ],
       "outputs": ["player"],
       "parse": "getplayer %s"
+    }
+  },
+  "GetRule": {
+    "name": "Get Rule From Object",
+    "folder": "game",
+    "str": "getrule",
+    "description": "Gets the rule with a specific name from a GameObject",
+    "example": "getrule :game_obj \"rulename [ ] # getrule <GameObject> <rule name> <parameters>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        { "name": "object", "type": ["gameobject"] },
+        { "name": "rule name", "type": ["string"] },
+        { "name": "parameters", "type": ["list"] }
+      ],
+      "outputs": ["any"],
+      "parse": "getrule %s %s %s"
     }
   },
   "GetObjsByClass": {
@@ -621,6 +654,58 @@
       "parse": "movepieceas %s %s %s"
     }
   },
+  "PutClass": {
+    "name": "Add Class to Object",
+    "folder": "game",
+    "str": "putclass",
+    "description": "Adds a class to a gameobject",
+    "example": "putclass :game_piece1 \"some_class # putclass <ownable> <string>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        {
+          "name": "object",
+          "type": [
+            "any"
+          ]
+        },
+        {
+          "name": "class",
+          "type": [
+            "string"
+          ]
+        }
+      ],
+      "outputs": [],
+      "parse": "putclass %s %s"
+    }
+  },
+  "RemoveClass": {
+    "name": "Remove Class from Object",
+    "folder": "game",
+    "str": "removeclass",
+    "description": "removes a class from a gameobject",
+    "example": "removeclass :game_piece1 \"some_class # removeclass <ownable> <string>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        {
+          "name": "object",
+          "type": [
+            "any"
+          ]
+        },
+        {
+          "name": "class",
+          "type": [
+            "string"
+          ]
+        }
+      ],
+      "outputs": [],
+      "parse": "removeclass %s %s"
+    }
+  },
   "RemovePiece": {
     "name": "Get Dropzone of Objects",
     "folder": "game",
@@ -634,6 +719,22 @@
       ],
       "outputs": [],
       "parse": "removepiece %s"
+    }
+  },
+  "SetObjImage": {
+    "name": "Set Object Image",
+    "folder": "game",
+    "str": "setobjimg",
+    "description": "Set the image for a specific gameobject Use URLEncode to encode the image name",
+    "example": "setobjimg :game_obj \"fire.png  # setobjimg <obj> <image name>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        { "name": "object", "type": ["any"] },
+        { "name": "image", "type": ["string"] }
+      ],
+      "outputs": [],
+      "parse": "setobjimg %s %s"
     }
   },
 
@@ -902,6 +1003,21 @@
       ],
       "outputs": [],
       "parse": "additem %s %s "
+    }
+  },
+  "AsList": {
+    "name": "As List",
+    "folder": "operators",
+    "str": "aslist",
+    "description": "Used to use proper values in list when initializing list with variables",
+    "example": "aslist [ :var1 :var2 ] # aslist <list>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        { "name": "list", "type": ["list"] }
+      ],
+      "outputs": [],
+      "parse": "aslist %s"
     }
   },
   "Equal": {

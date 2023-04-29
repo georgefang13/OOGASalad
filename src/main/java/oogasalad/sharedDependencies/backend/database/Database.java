@@ -10,14 +10,11 @@ import com.google.cloud.firestore.SetOptions;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.FirestoreClient;
-import com.google.firebase.database.DatabaseReference;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import com.google.cloud.firestore.Firestore;
 import java.util.HashMap;
 import java.util.Map;
-import com.google.cloud.firestore.QuerySnapshot;
 import java.util.concurrent.ExecutionException;
 
 

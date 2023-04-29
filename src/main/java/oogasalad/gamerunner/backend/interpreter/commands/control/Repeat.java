@@ -30,7 +30,7 @@ public class Repeat extends OperatorToken {
         break;
       }
     }
-    if (ret instanceof Break) ret = null;
+    if (ret instanceof Break || ret instanceof Continue) ret = null;
     return ret;
   }
 }
