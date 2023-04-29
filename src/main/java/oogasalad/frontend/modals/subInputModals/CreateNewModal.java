@@ -101,6 +101,9 @@ public class CreateNewModal extends InputModal {
       if(field.getClass() == TextFieldComponent.class){
         textFields.add((TextFieldComponent) field);
       }
+      if(field.getClass() == ColorPickerComponent.class){
+        colorPickers.add((ColorPickerComponent) field);
+      }
 
       // Add the field to the grid
       grid.add(fieldHBox, 0, rowIndex);
@@ -116,6 +119,7 @@ public class CreateNewModal extends InputModal {
   private void initializeArrayLists() {
     ImagePickers = new ArrayList<>();
     textFields = new ArrayList<>();
+    colorPickers = new ArrayList<>();
   }
   // TODO: styling use the last .NAME in the properties file to get the styling id
 
@@ -131,6 +135,9 @@ public class CreateNewModal extends InputModal {
     }
     for (ImagePickerComponent imageComponent : ImagePickers){
       map.put(imageComponent.getLabelText(), imageComponent.getFile().toString());
+    }
+    for (ColorPickerComponent colorComponent : colorPickers){
+      map.put(colorComponent.getLabelText(), colorComponent.getValue());
     }
     //TODO remove, just for testing purposes
     System.out.println(map);

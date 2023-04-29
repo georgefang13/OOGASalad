@@ -9,10 +9,12 @@ import java.util.Map;
 
 
 public class TextObject extends AbstractComponent implements TextObjectComponent {
+    private String name;
     private Text text;
-    String content;
-    double fontSize;
-    Color color;
+    private String content;
+    private double fontSize;
+    private Color color;
+    private double rotate;
 
     public TextObject(String ID, Map<String, String> map){
         super(ID);
@@ -24,6 +26,7 @@ public class TextObject extends AbstractComponent implements TextObjectComponent
         text = new Text(content);
         text.setFill(color);
         setTextSize(fontSize);
+        text.setRotate(rotate);
         followMouse();
     }
 

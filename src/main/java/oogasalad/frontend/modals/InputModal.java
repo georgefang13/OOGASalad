@@ -4,17 +4,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import javafx.geometry.Insets;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.DialogPane;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 
 
@@ -165,6 +159,13 @@ public class InputModal extends Modal {
     });
 //        ImageButton.setId(MODAL_ID_BUNDLE.getString(IMAGE_PICKER_ID));
     return ImageButton;
+  }
+
+  protected ColorPicker makeColorPicker(String fieldName) {
+    ColorPicker colorPicker = new ColorPicker();
+    colorPicker.setValue(Color.WHITE); // Set default color to white
+
+    return colorPicker;
   }
 
   @Override
