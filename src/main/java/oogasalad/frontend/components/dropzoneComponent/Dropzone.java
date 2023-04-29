@@ -107,6 +107,10 @@ public class Dropzone extends AbstractComponent {
   public double getWidth(){
     return width;
   }
+//  @Override
+//  public void setDefault() {
+//
+//  }
 
   /**
    * Return the height of the square

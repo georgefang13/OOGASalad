@@ -25,6 +25,9 @@ public class GameObject extends AbstractComponent implements GameObjectComponent
   private List<Node> children;
   private boolean playable;
   private ImageView image;
+  private double width;
+  private double height;
+  private double rotate;
 
   public GameObject(String ID) {
     super(ID);
@@ -37,11 +40,14 @@ public class GameObject extends AbstractComponent implements GameObjectComponent
     super(ID);
     children = null;
     setValuesfromMap(map);
+    initialize();
     followMouse();
   }
 
   private void initialize() {
-    setImage(getDEFAULT_BUNDLE().getString(replaceWithFileLoadingByID()));
+    image.setFitWidth(width);
+    image.setFitHeight(height);
+    image.setRotate(rotate);
   }
 
   private String replaceWithFileLoadingByID(){

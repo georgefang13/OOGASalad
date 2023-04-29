@@ -11,12 +11,14 @@ import oogasalad.sharedDependencies.backend.ownables.gameobjects.DropZone;
 import java.util.Map;
 
 public class GridObject extends AbstractComponent {
+    private String name;
     private int rows;
     private int cols;
     private Dropzone[][] nodes;
     private GridPane grid;
     private double width;
     private double height;
+    private double rotate;
 
 
     public GridObject(String ID, Map<String, String> map){

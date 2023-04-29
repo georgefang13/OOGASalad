@@ -21,7 +21,7 @@ public class Item extends OperatorToken {
     Token t1 = getArg(0).evaluate(env);
 
     Token t2 = getArg(1);
-    if (t2 instanceof VariableToken) {
+    if (! (t2 instanceof ExpressionToken)) {
       t2 = t2.evaluate(env);
     }
 
@@ -37,6 +37,12 @@ public class Item extends OperatorToken {
           "Cannot get index " + index + " from list of size " + x2.size());
     }
 
-    return x2.get(index).evaluate(env);
+    Token t = x2.get(index);
+
+    if (!(t instanceof ExpressionToken)) {
+      t = t.evaluate(env);
+    }
+
+    return t;
   }
 }

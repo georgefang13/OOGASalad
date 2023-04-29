@@ -26,6 +26,7 @@ public class NodeScene extends AbstractScene {
     super();
     this.nodeController = nodeController;
     tabs.getTabs().add(makeTab("state editor", false, new StateEditorPanel(nodeController)));
+    setTheme();
   }
 
   @Override

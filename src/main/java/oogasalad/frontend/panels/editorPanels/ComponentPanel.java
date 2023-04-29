@@ -7,6 +7,7 @@ import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TitledPane;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import oogasalad.frontend.modals.ModalController;
@@ -26,7 +27,6 @@ public class ComponentPanel extends VBox implements Panel {
   private ModalController mController;
   private VBox gameComponents;
   private VBox players;
-  private VBox displayable;
   private VBox gameComponentInstances;
 
   private double xOffset;
@@ -42,7 +42,6 @@ public class ComponentPanel extends VBox implements Panel {
     //TODO is there a better way?
     gameComponents = new VBox();
     players = new VBox();
-    displayable = new VBox();
     gameComponentInstances = new VBox();
     this.makePanel();
   }
@@ -79,14 +78,13 @@ public class ComponentPanel extends VBox implements Panel {
   } //TODO: turn these two methods into one method that takes in a string
 
   private Accordion createComponenetLibraryAccordion() {
-    TitledPane t1 = new TitledPane("Game Objects", gameComponents);
+    TitledPane t1 = new TitledPane("Components", gameComponents);
     TitledPane t2 = new TitledPane("Players", players);
-    TitledPane t3 = new TitledPane("Displayable", displayable);
     gameComponents.getChildren().addAll(createComponentTemplate("gameObject"),
             createComponentTemplate("lineObject"), createComponentTemplate("textObject"),
             createComponentTemplate("rectangleObject"), createComponentTemplate("gridObject"));
     Accordion accordion = new Accordion();
-    accordion.getPanes().addAll(t1, t2, t3);
+    accordion.getPanes().addAll(t1, t2);
     return accordion;
   }
 
@@ -98,7 +96,7 @@ public class ComponentPanel extends VBox implements Panel {
 
   private Accordion createActiveComponentsAccordion() {
 
-    TitledPane t1 = new TitledPane("Game Objects",
+    TitledPane t1 = new TitledPane("Objects",
         gameComponentInstances); // TODO: make this dynamic so when you press ok on the modal after adding a compoennet it shows up in this panel
     Accordion accordion = new Accordion();
     accordion.getPanes().addAll(t1);
@@ -120,6 +118,18 @@ public class ComponentPanel extends VBox implements Panel {
     mController.createObjectInstance(name, objectType);
     Button b = new Button(name);
     gameComponentInstances.getChildren().add(b);
+
+//    b.setOnKeyPressed(event -> {
+//      if (event.getCode() == KeyCode.DELETE) {
+//        mController.deleteObjectInstance(name);
+//        gameComponentInstances.getChildren().remove(b);
+//      }
+//      });
+
+    b.setOnAction(event -> {
+        mController.deleteObjectInstance(name);
+        gameComponentInstances.getChildren().remove(b);
+    });
   }
 
   private void createNewComponentTemplate(String title){

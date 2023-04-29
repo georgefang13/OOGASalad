@@ -66,7 +66,6 @@ public abstract class AbstractScene implements PropertiesObserver, ThemeObserver
 
   public final void setTheme() {
     scene.getStylesheets().clear();
-    scene.getStylesheets().addAll(themeManager.getTheme(),
-        getClass().getResource("/frontend/css/tree-node.css").toExternalForm());
+    scene.getStylesheets().addAll(themeManager.getTheme());
   }
 }

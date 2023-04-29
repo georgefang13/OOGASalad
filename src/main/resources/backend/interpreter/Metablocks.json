@@ -1,5 +1,8 @@
 {
   "List": {
+    "name": "List",
+    "folder": "metablocks",
+    "description" : "Create a list of items",
     "specs": {
       "innerBlocks": ["contents"],
       "inputs": [],

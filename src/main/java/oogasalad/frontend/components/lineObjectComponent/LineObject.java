@@ -6,6 +6,7 @@ import oogasalad.frontend.components.AbstractComponent;
 import java.util.Map;
 
 public class LineObject extends AbstractComponent implements LineObjectComponent {
+    private String name;
     private Line myLine;
     private double startX;
     private double startY;

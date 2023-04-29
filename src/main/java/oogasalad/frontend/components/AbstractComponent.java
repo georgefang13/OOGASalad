@@ -5,6 +5,8 @@ import java.lang.reflect.Field;
 import java.util.Map;
 import java.util.Properties;
 import java.util.ResourceBundle;
+import javafx.scene.control.ColorPicker;
+
 
 /**
  * @author Han and Aryan AbstractComponent is the abstraction that all Components are built off of.
@@ -19,11 +21,16 @@ public abstract class AbstractComponent implements Component {
   private double size;
   private double XOffset;
   private double YOffset;
+
   private Point absolute;
   private Point editor;
   private String DEFAULT_FILE_PATH;
   private ResourceBundle DEFAULT_BUNDLE;
+
   private String name;
+  private double width;
+  private double height;
+  private double rotate;
 
   public AbstractComponent(String id) {
     ID = id;
@@ -34,7 +41,6 @@ public abstract class AbstractComponent implements Component {
     setDEFAULT_FILE_PATH(filepath);
     setDEFAULT_BUNDLE(ResourceBundle.getBundle(getDEFAULT_FILE_PATH()));
   }
-
   protected void setValuesfromMap(Map<String, String> map) {
     for(String param: map.keySet()){
       try{
@@ -58,7 +64,6 @@ public abstract class AbstractComponent implements Component {
   public void setNode(Node node) {
     this.node = node;
   }
-
   @Override
   public String getID() {
     return ID;
@@ -74,6 +79,7 @@ public abstract class AbstractComponent implements Component {
   @Override
   public void setActiveSelected(boolean active) {
     this.active = active;
+    node.setScaleY(10);
   }
   @Override
   public void followMouse() {
@@ -87,12 +93,10 @@ public abstract class AbstractComponent implements Component {
       getNode().setTranslateY(e.getSceneY() - YOffset);
     });
   }
-
   @Override
   public void setVisible(boolean visible) {
     this.visible = visible;
   }
-
   @Override
   public void setZIndex(int zIndex) {
     getNode().setTranslateZ(zIndex);
@@ -111,11 +115,11 @@ public abstract class AbstractComponent implements Component {
   public void setName(String newName) {
     name = newName;
   }
-
   @Override
   public String getName(){
     return name;
   }
+
 
   protected String getDEFAULT_FILE_PATH() {
     return DEFAULT_FILE_PATH;
