@@ -29,17 +29,15 @@ public class ObjectFactoryTest {
   void setup() {
     game = new GameInator("testGame");
     world = game.getGameWorld();
-    //set players from unmodifiable list to modifiable list
     game.addPlayer(new Player());
     game.addPlayer(new Player());
     game.addPlayer(new Player());
-    players = new ArrayList<>(game.getPlayers());
     idManager = game.getOwnableIdManager();
     ruleManager = game.getRuleManager();
   }
 
   @Test
-  public void testCreateVariables() {
+  public void testCreteVariables() {
     ObjectType type = ObjectType.OWNABLE;
     Map<ObjectParameter, Object> params = new HashMap<>();
     params.put(ObjectParameter.OWNABLE_TYPE, "Variable");

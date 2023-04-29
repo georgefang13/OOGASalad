@@ -4,14 +4,16 @@ package oogasalad.gameeditor.backend;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
+
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.*;
+import org.apache.commons.io.FileUtils;
 
-import java.util.Map.Entry;
 import oogasalad.gamerunner.backend.interpretables.Goal;
 import oogasalad.sharedDependencies.backend.GameLoader;
 import oogasalad.sharedDependencies.backend.filemanagers.FileManager;
@@ -50,7 +52,7 @@ public class GameInator {
   /**
    * The IdManager of the game for Ownables.
    */
-  private IdManager<Ownable> idManager = new IdManager<>();
+  private final IdManager<Ownable> idManager = new IdManager<>();
 
   /**
    * The rule manager of the game for rules and goals.
@@ -86,6 +88,7 @@ public class GameInator {
     objectFactory = new ObjectFactory(gameWorld, idManager, players);
     this.gameName = gameName;
     initDirectories();
+    buildInitialFiles();
   }
 
   /**
@@ -118,6 +121,45 @@ public class GameInator {
     variablesFile = gameDirectory + "variables.json";
     objectsFile = gameDirectory + "objects.json";
     //TODO throw error or create if not exist
+  }
+
+  private void buildInitialFiles(){
+
+    try {
+      Path path = Paths.get(gameDirectory);
+
+      FileUtils.deleteDirectory(new File(gameDirectory));
+
+
+      Files.createDirectory(path);
+
+      Path path2 = Paths.get(gameDirectory + "/assets");
+      Files.createDirectory(path2);
+
+      Path path3 = Paths.get(gameDirectory + "/frontend");
+      Files.createDirectory(path3);
+
+      buildGeneralInfoFile();
+
+      FileManager fm = new FileManager();
+      fm.saveToFile(layoutFile);
+      fm.saveToFile(variablesFile);
+      fm.saveToFile(objectsFile);
+      fm.saveToFile(gameDirectory + "rules.json");
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+  private void buildGeneralInfoFile(){
+    FileManager fm = new FileManager();
+    fm.addContent(gameName, "name");
+    fm.addContent("", "author");
+    fm.addContent("", "description");
+    fm.addContent("all", "tags");
+    fm.addContent("2", "players", "min");
+    fm.addContent("2", "players", "max");
+    fm.saveToFile(generalInfoFile);
   }
 
 
@@ -155,8 +197,9 @@ public class GameInator {
   private void updateVariableFile() {
     FileManager fm = new FileManager();
 
-    idManager.objectStream().filter(obj -> obj instanceof Variable<?>).forEach(var -> {
+    idManager.objectStream().filter(obj -> obj instanceof Variable<?>).filter(obj -> ((Variable)obj).get() != null).forEach(var -> {
       Variable v = (Variable) var;
+      System.out.println("have a variable");
       String id = idManager.getId(v);
       String owner = String.valueOf(getOwnerType(v.getOwner()));
       String type = v.get().getClass().getName();
@@ -167,7 +210,7 @@ public class GameInator {
 
     });
 
-    fm.saveToFile(gameDirectory + "/variables.json");
+    fm.saveToFile(variablesFile);
   }
 
   private DropZone getLocation(GameObject g){
@@ -176,13 +219,14 @@ public class GameInator {
       return dropZone.getAllObjects().contains(g);
     }).toList();
 
-    return (DropZone) dzs.get(0);
+    return dzs.size() > 0 ? (DropZone) dzs.get(0) : null;
   }
 
   private void updateObjectFile() {
+    System.out.println(idManager.getSimpleIds());
     FileManager fm = new FileManager();
     OwnableSearchStream stream = new OwnableSearchStream(idManager);
-    idManager.objectStream().filter(o -> o instanceof GameObject) .forEach(obj -> {
+    idManager.objectStream().filter(o -> o instanceof GameObject).forEach(obj -> {
       String objId = idManager.getId(obj);
       int owner = -1;
       if (obj.getOwner() != gameWorld) owner = players.indexOf((Player) obj.getOwner());
@@ -192,15 +236,14 @@ public class GameInator {
 
       idManager.objectStream()
               .filter(stream.isDirectlyOwnedByOwnable(obj))
-              .map(o -> idManager.getId(o))
+              .map(idManager::getId)
               .forEach(s -> fm.addContent(s, objId, "owns"));
 
       DropZone location = getLocation((GameObject) obj);
       fm.addContent(idManager.getId(location), objId, "location");
     });
 
-
-    fm.saveToFile(gameDirectory + "/objects.json");
+    fm.saveToFile(objectsFile);
   }
 
   private void updateLayoutFile() {
@@ -217,13 +260,13 @@ public class GameInator {
         // get classes
         dropZone.getClasses().forEach(cls -> fm.addContent(id, "classes"));
     });
-    fm.saveToFile(gameDirectory + "/layout.json");
+    fm.saveToFile(layoutFile);
   }
 
   private void idManagerFileUpdate() {
-    updateVariableFile();
-    updateObjectFile();
     updateLayoutFile();
+    updateObjectFile();
+    updateVariableFile();
   }
 
   //endregion
@@ -269,7 +312,6 @@ public class GameInator {
   public GameWorld getGameWorld() {
     return gameWorld;
   }
-
 
   //region sendObject API
 
@@ -463,7 +505,7 @@ public class GameInator {
    *
    * @param targetObject the ownable to update
    * @param params the parameters of the ownable
-   * @throws IllegalArgumentException
+   * @throws IllegalArgumentException if the owner is not valid
    */
   private void updateOwner(String targetObject, Map<ObjectParameter, Object> params) throws IllegalArgumentException {
     String newOwnerNum = params.get(ObjectParameter.OWNER) != null ? params.get(ObjectParameter.OWNER).toString() : null;
@@ -472,10 +514,9 @@ public class GameInator {
       Owner newOwner = players.get(newOwnerInt-1);
       idManager.getObject(targetObject).setOwner(newOwner);
     }
-    else if(newOwnerNum != null && newOwnerNum.equals("GameWorld")){ //if null it wasnt in there and we dont want to change it
+    else if(newOwnerNum != null && newOwnerNum.equals("GameWorld")){ //if null it wasn't in there and we dont want to change it
       //set to gameworld
-      Owner newOwner = gameWorld;
-      idManager.getObject(targetObject).setOwner(newOwner);
+      idManager.getObject(targetObject).setOwner(gameWorld);
     }
   }
   /**
