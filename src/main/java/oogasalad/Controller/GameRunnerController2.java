@@ -55,6 +55,7 @@ public class GameRunnerController2 implements GameController {
     }
     @Override
     public void select(String id) {
+        System.out.println(id);
         if (clickable.contains(id)) {
             game.clickPiece(id);
         }

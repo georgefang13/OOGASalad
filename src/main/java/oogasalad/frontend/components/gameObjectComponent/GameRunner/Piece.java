@@ -44,29 +44,27 @@ public class Piece extends GameRunnerObject{
     }
     public DropZoneVisual getIntersectingDropZones(){
         Bounds pieceBounds = pieceBox.localToScene(pieceBox.getBoundsInLocal());
-        Node nfinal;
-        nfinal = null;
         for (Node n : pieceBox.getParent().getChildrenUnmodifiable()) {
             if (n instanceof DropZoneVisual){
-                nfinal = n;
                 if (n.localToScene(n.getBoundsInLocal()).intersects(pieceBounds)){
                     return (DropZoneVisual) n;
                 }
             }
         }
-        return (DropZoneVisual) nfinal;
+        //goBack();
+        return null;
     }
 
     public void moveToDropZoneXY(DropZoneFE.dropZoneCenter DZcenter){
         setCentertoCenter(DZcenter.x(), DZcenter.y());
-        acceptDrag();
+        //acceptDrag();
     }
     private void setCentertoCenter(double x, double y){
         //double actualX = pieceBox.getLayoutX() + pieceBox.getTranslateX();
         //double actualY = pieceBox.getLayoutY() + pieceBox.getTranslateY();
         double shiftX = x - size/2;
         double shiftY = y - size/2;
-        this.resetOffset();
+        //this.resetOffset();
         pieceBox.setTranslateX(shiftX);
         pieceBox.setTranslateY(shiftY);
     }
@@ -79,7 +77,7 @@ public class Piece extends GameRunnerObject{
 
     @Override
     public void onClick() {
-        gameRunnerController.select(ID);
+        //gameRunnerController.select(ID);
     }
 
     @Override
