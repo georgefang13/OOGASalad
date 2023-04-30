@@ -39,7 +39,7 @@ public class GamePlayerMainScene extends AbstractScene {
     gameName = panelController.getSceneController().getWindowController().getData().toString();
     System.out.println(gameName);
 
-    gameRunnerController = new GameRunnerController(gameName);
+    gameRunnerController = new GameRunnerController(gameName,root);
 
     Button undoButton = new Button("Undo");
     gameRunnerController.assignUndoButtonAction(undoButton);
@@ -53,6 +53,7 @@ public class GamePlayerMainScene extends AbstractScene {
     setTheme();
     return getScene();
   }
+
   public Point2D getNodeXYOnGrid(Node node){
     return boardPane.sceneToLocal(node.getTranslateX(), node.getTranslateY());
   }
