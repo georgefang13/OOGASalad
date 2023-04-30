@@ -105,7 +105,7 @@ public class Dropzone extends AbstractComponent implements DropZonePublisher {
   }
 
   /**
-   * 
+   *
    */
   private void ClickDelay() {
     long clickTime = System.currentTimeMillis();
