@@ -55,6 +55,7 @@ private static final String DROPDOWN_BOX_ID = "DropdownBoxID";
   private ComboBox<String> themeDropdown;
   private VBox root;
   private UserManager userManager;
+  private Label title;
 
   public SplashMainScene(SceneController sceneController) {
     super(sceneController);
@@ -71,6 +72,7 @@ private static final String DROPDOWN_BOX_ID = "DropdownBoxID";
     makeDropDowns();
     refreshScene();
     setTheme();
+    setText();
     return getScene();
   }
   private void refreshScene() {
@@ -80,7 +82,7 @@ private static final String DROPDOWN_BOX_ID = "DropdownBoxID";
   }
   private HBox makeTitle() {
     HBox titleBox = new HBox();
-    Label title = new Label(ELEMENT_LABELS.getString(TITLE));
+    title = new Label();
     title.getStyleClass().add(ID_BUNDLE.getString(TITLE_ID));
     titleBox.getChildren().add(title);
     return titleBox;
@@ -88,14 +90,14 @@ private static final String DROPDOWN_BOX_ID = "DropdownBoxID";
   private VBox makeInputFields() {
     HBox usernameBox = new HBox();
     usernameBox.getStyleClass().add(ID_BUNDLE.getString(USERNAME_PASSWORD_BOX_ID));
-    usernameLabel = new Label(ELEMENT_LABELS.getString(USERNAME));
+    usernameLabel = new Label();
     usernameLabel.getStyleClass().add(ID_BUNDLE.getString(USERNAME_PASSWORD_LABEL_ID));
     usernameField = new TextField();
     usernameField.getStyleClass().add(ID_BUNDLE.getString(USERNAME_PASSWORD_FIELD_ID));
     usernameBox.getChildren().addAll(usernameLabel, usernameField);
     HBox passwordBox = new HBox();
     passwordBox.getStyleClass().add(ID_BUNDLE.getString(USERNAME_PASSWORD_BOX_ID));
-    passwordLabel = new Label(ELEMENT_LABELS.getString(PASSWORD));
+    passwordLabel = new Label();
     passwordLabel.getStyleClass().add(ID_BUNDLE.getString(USERNAME_PASSWORD_LABEL_ID));
     passwordField = new TextField();
     passwordField.getStyleClass().add(ID_BUNDLE.getString(USERNAME_PASSWORD_FIELD_ID));
@@ -107,7 +109,7 @@ private static final String DROPDOWN_BOX_ID = "DropdownBoxID";
   }
   private HBox makeLoginSignUpButtons() {
     HBox loginSignUpButtons = new HBox();
-    login = new Hyperlink(ELEMENT_LABELS.getString(LOGIN));
+    login = new Hyperlink();
     login.setUnderline(true);
     login.getStyleClass().add(ID_BUNDLE.getString(LOGIN_SIGNUP_ID));
     login.setOnMouseClicked(e -> {
@@ -119,7 +121,7 @@ private static final String DROPDOWN_BOX_ID = "DropdownBoxID";
         error.showAndWait();
       }
     });
-    signUp = new Hyperlink(ELEMENT_LABELS.getString(SIGN_UP));
+    signUp = new Hyperlink();
     signUp.setUnderline(true);
     signUp.getStyleClass().add(ID_BUNDLE.getString(LOGIN_SIGNUP_ID));
     signUp.setOnMouseClicked(e -> {
@@ -179,5 +181,10 @@ private static final String DROPDOWN_BOX_ID = "DropdownBoxID";
 
   @Override
   public void setText() {
+    title.setText(getPropertyManager().getText(TITLE));
+    usernameLabel.setText(getPropertyManager().getText(USERNAME));
+    passwordLabel.setText(getPropertyManager().getText(PASSWORD));
+    login.setText(getPropertyManager().getText(LOGIN));
+    signUp.setText(getPropertyManager().getText(SIGN_UP));
   }
 }
