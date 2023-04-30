@@ -45,15 +45,6 @@ public class GameRunnerController implements GameController {
             e.printStackTrace();
         }
 
-
-
-        try {
-            game = new Game(this,directory,numPlayers,false);
-            loadGame(directory);
-            game.startGame();
-        } catch (FileNotFoundException e){
-            System.out.println("FAIL"); //TODO: error handle
-        }
     }
     public void assignUndoButtonAction(Button undoButton){
         undoButton.setOnAction(e -> game.undoClickPiece());
