@@ -1,3 +1,361 @@
+/* Overall */
 .root {
-  -fx-background-color: black;
+  -fx-background-color: white;
+}
+
+/* LOGIN/Splash Window */
+.splash-root {
+  -fx-background-color: #24252D;
+  -fx-spacing: 20;
+  -fx-alignment: center;
+  -fx-text-alignment: center;
+  -fx-vgrow: always;
+}
+.splash-root > * {
+  -fx-min-width: 100%;
+  -fx-text-alignment: center;
+  -fx-alignment: center;
+}
+
+.the-title {
+  -fx-font-size: 80;
+  -fx-effect: dropshadow(gaussian, rgba(245, 237, 237, 0.6), 12, 0, 0, 6);
+  -fx-text-fill: white;
+}
+.username-password-box {
+  -fx-spacing: 10;
+  -fx-alignment: center;
+}
+.input-fields {
+  -fx-spacing: 10;
+}
+.username-label {
+  -fx-text-fill: white;
+  -fx-font-size: 20;
+}
+.username-field {
+  -fx-background-color: #54576F;
+  -fx-text-fill: white;
+  -fx-font-size: 14;
+  -fx-border-radius: 10;
+  -fx-background-radius: 10;
+}
+.login {
+  -fx-text-fill: white;
+  -fx-font-size: 14;
+}
+.dropdown {
+  -fx-background-color: #54576F;
+  -fx-text-fill: white;
+  -fx-font-size: 14px;
+  -fx-padding: 5px;
+  -fx-background-insets: 0;
+  -fx-border-width: 0;
+}
+.dropdown .text {
+  -fx-fill: white;
+}
+.dropdown .arrow {
+  -fx-background-color: white;
+}
+.dropdown .arrow-button {
+  -fx-background-color: #54576F;
+  -fx-background-insets: 0;
+  -fx-padding: 0;
+}
+.dropdown .list-view {
+  -fx-background-color: #54576F;
+  -fx-text-fill: white;
+  -fx-font-size: 12px;
+  -fx-padding: 3px;
+  -fx-background-insets: 0;
+  -fx-border-width: 0;
+}
+.dropdown .list-cell {
+  -fx-background-color: #54576F;
+}
+.dropdown .list-cell:hover {
+  -fx-background-color: #6c709a;
+}
+.dropdown-box {
+  -fx-spacing: 10;
+}
+
+/* HeaderMenuPanel */
+.menu-hbox { /* Specific */
+  -fx-background-color: #4A4F76;
+  -fx-border-width: 2;
+  -fx-border-color: #4A4F76;
+}
+
+.deselected-header-menu-button { /* Specific */
+  -fx-border-radius: 0;
+  -fx-border-width: 0;
+  -fx-background-color: #4A4F76;
+  -fx-text-fill: white;
+}
+
+.selected-header-menu-button { /* Specific */
+  -fx-border-radius: 0;
+  -fx-border-width: 1;
+  -fx-background-color: #4A4F76;
+  -fx-border-color: white;
+  -fx-text-fill: white;
+}
+/* EnvironmentPanel */
+.the-environment {
+  -fx-background-color: #24252e;
+}
+
+/* ComponentPanel */
+.titled-pane > .content { /* this will affect all titled panes */
+  -fx-padding: 10px;
+  -fx-background-color: #312424;
+}
+
+.titled-pane > .title { /* this will affect all titled panes */
+  -fx-background-color: #201616;
+}
+
+.titled-pane { /* this will affect all titled panes */
+  -fx-pref-width: 250;
+  -fx-text-fill: white;
+}
+
+.accordion { /* this will affect all accordions */
+  -fx-background-color: #201616;
+  -fx-pref-height: 700;
+}
+
+.accordion-label {
+  -fx-background-color: #201616;
+  -fx-text-fill: white;
+  -fx-font-size: 16px;
+  -fx-font-weight: bold;
+  -fx-pref-width: 250;
+  -fx-padding: 5, 0, 0, 0;
+}
+
+/* PropertiesPanel */
+.properties-button {
+  -fx-background-color: #585A68;
+  -fx-text-fill: white;
+  -fx-font-size: 10px;
+  -fx-font-weight: bold;
+  -fx-pref-width: 25;
+  -fx-pref-height: 150;
+  -fx-background-radius: 10 0 0 10;
+}
+
+.popout-button-box {
+  -fx-alignment: center;
+  -fx-pref-height: 650;
+  -fx-padding: 0;
+  -fx-spacing: 0;
+  -fx-background-color: #24252e;
+}
+
+.properties-box-open {
+  -fx-padding: 0;
+  -fx-spacing: 0;
+  -fx-background-color: #24252e;
+}
+
+.properties-box-closed {
+  -fx-padding: 0;
+  -fx-spacing: 0;
+  -fx-background-color: #24252e;
+  -fx-translate-x: 225;
+}
+
+.properties-tab-pane {
+  -fx-background-color: #3E404E;
+  -fx-pref-width: 225;
+}
+
+.properties-tab-pane .tab {
+  -fx-background-color: #333B73;
+  -fx-pref-width: 69;
+  -fx-background-radius: 10 10 0 0;
+}
+
+.properties-tab-pane .tab:selected {
+  -fx-background-color: #6570B0;
+}
+
+.properties-tab-pane .tab-label {
+  -fx-text-fill: white;
+  -fx-font-size: 14px;
+  -fx-font-weight: bold;
+}
+
+.properties-tab-pane .tab-header-background {
+  -fx-background-color: #3E404E;
+}
+
+/* LibraryGridPanel */
+.library-grid-pane {
+  -fx-background-color: #24252e;
+  -fx-hgap: 20;
+  -fx-vgap: 20;
+  -fx-padding: 20;
+}
+.game-box {
+  -fx-background-color: #3E404E;
+  -fx-border-radius: 20;
+  -fx-background-radius: 20;
+  -fx-pref-height: 200;
+  -fx-alignment: center;
+}
+.game-box-image {
+  -fx-border-radius: 20 20 0 0;
+  -fx-background-radius: 20 20 0 0;
+  -fx-alignment: center;
+}
+.game-name-label-box {
+  -fx-alignment: center-left;
+  -fx-background-radius: 0 0 0 10;
+  -fx-border-radius: 0 0 0 10;
+  -fx-background-color: #3E404E;
+  -fx-pref-width: 290;
+  -fx-pref-height: 50;
+  -fx-padding: 0 0 0 20;
+}
+.game-name-label {
+  -fx-text-fill: white;
+  -fx-font-size: 16;
+}
+.game-box-edit-icon-box {
+  -fx-alignment: center-right;
+  -fx-background-radius: 0 0 10 0;
+  -fx-border-radius: 0 0 10 0;
+  -fx-background-color: #3E404E;
+  -fx-pref-height: 68;
+  -fx-padding: 0 20 0 0;
+}
+.game-box-edit-icon {
+  -fx-fill: white;
+  -fx-font-size: 16;
+}
+.game-box-tooltip {
+  -fx-background-color: #54576F;
+  -fx-background-radius: 0;
+  -fx-border-radius: 0;
+  -fx-text-fill: white;
+}
+
+
+/* HeaderPanel */
+.right-header-box {
+  -fx-alignment: center-right;
+  -fx-spacing: 15;
+  -fx-padding: 0 15 0 0;
+  -fx-background-color: #3E404E;
+  -fx-pref-height: 80;
+  -fx-pref-width: 950;
+}
+.left-header-box {
+  -fx-alignment: center;
+  -fx-background-color: #54576F;
+  -fx-pref-height: 80;
+  -fx-pref-width: 250;
+}
+.game-library-title {
+  -fx-text-fill: white;
+  -fx-font-size: 30px;
+  -fx-font-weight: bold;
+}
+
+/* ButtonFactory */
+.icon-button {
+  -fx-background-color: #3180F5;
+  -fx-border-radius: 10;
+  -fx-background-radius: 10;
+  -fx-text-fill: white;
+  -fx-padding: 10;
+  -fx-pref-height: 50;
+}
+.icon-button .graphic {
+  -fx-graphic-text-gap: 10px;
+  -fx-alignment: center-left;
+}
+.icon-button .text {
+  -fx-graphic-text-gap: 10px;
+  -fx-font-size: 25;
+}
+.awesome-icon {
+  -fx-fill: white;
+  -fx-font-size: 25;
+}
+
+/* SortedGamesPanel */
+.sorted-games-vbox {
+  -fx-background-color: #3E404E;
+  -fx-pref-height: 620;
+  -fx-pref-width: 250;
+}
+
+.json-node{
+  -fx-background-color: #F1F1EF ;
+  -fx-font-size: 17;
+}
+
+.json-node-title{
+  -fx-font-size: 35;
+}
+
+
+.control{
+  -fx-background-color: orange;
+  -fx-pref-width: 300 !important;
+  -fx-pref-height: 50 !important;
+  -fx-font-size: 35;
+  -fx-padding: 5;
+  -fx-font-weight: 300;
+
+}
+
+.main-node{
+  -fx-background-color: #A2EE17;
+  -fx-font-size: 35;
+  -fx-alignment: center;
+  -fx-pref-width: 300 !important;
+
+}
+
+.state-node{
+  -fx-background-color: yellow;
+  -fx-alignment: center;
+
+}
+
+.node {
+  -fx-opacity: 0.8;
+  -fx-border-width: 5;
+  -fx-border-color: black;
+  -fx-font-weight: 700;
+  -fx-padding: 5;
+  -fx-background-radius: 10 ;
+  -fx-pref-height: -1;
+  -fx-pref-width: -1;
+  -fx-min-width: 300;
+}
+
+/* Simple Game View */
+.dropzone {
+  -fx-background-color: rgba(200, 200, 255, 0.5);
+  -fx-border-color: black;
+  -fx-border-width: 1px;
+  -fx-alignment: center;
+}
+
+.selected {
+  -fx-border-color: red;
+  -fx-border-width: 1px;
+}
+
+/* Modal Styles */
+#imagePickerID {
+  -fx-background-color: #2f0c77;
+  -fx-text-fill: white;
 }

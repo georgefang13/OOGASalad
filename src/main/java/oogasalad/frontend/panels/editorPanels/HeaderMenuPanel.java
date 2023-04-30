@@ -15,6 +15,7 @@ public class HeaderMenuPanel extends HBox implements Panel {
       "frontend/properties/text/english");
   private static final String LOGIC_EDITOR = "LogicEditor";
   private static final String VISUAL_EDITOR = "VisualEditor";
+  private static final String SAVE_EDITOR = "SaveEditor";
   private static final ResourceBundle ID_BUNDLE = ResourceBundle.getBundle(
       "frontend/properties/StylingIDs/CSS_ID");
   private static final String MENU_HBOX_ID = "MenuHboxID";
@@ -45,7 +46,7 @@ public class HeaderMenuPanel extends HBox implements Panel {
     this.getStyleClass().add(ID_BUNDLE.getString(MENU_HBOX_ID));
     Button logicButton = buttonFactory.createDefaultButton(LOGIC_EDITOR);
     Button visualButton = buttonFactory.createDefaultButton(VISUAL_EDITOR);
-    Button compileButton = buttonFactory.createDefaultButton(VISUAL_EDITOR);
+    Button compileButton = buttonFactory.createDefaultButton(SAVE_EDITOR);
 
     selectSceneButtonSettings(logicButton, visualButton);
     logicButton.setOnAction(e -> {
@@ -75,7 +76,6 @@ public class HeaderMenuPanel extends HBox implements Panel {
       default:
         break;
     }
-
   }
 
   public Node asNode() {
