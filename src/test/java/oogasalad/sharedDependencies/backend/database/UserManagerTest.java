@@ -24,22 +24,23 @@ public class UserManagerTest {
 
   @BeforeEach
   void initializeUsers() {
-    db.addData(COLLECTION, ENTRY, "rodrigo", UserManager.encrypt("ilovets13"));
-    db.addData(COLLECTION, ENTRY, "hotrod", UserManager.encrypt("dropaslay"));
-    db.addData(COLLECTION, ENTRY, "ethan", UserManager.encrypt("gormandized"));
+    db.deleteData(COLLECTION, ENTRY, "rodrigo");
+    db.deleteData(COLLECTION, ENTRY, "hotrod");
+    db.deleteData(COLLECTION, ENTRY, "ethan");
     db.deleteData(COLLECTION, ENTRY, "theman");
   }
 
   @Test
   void loginAndRegisterTest() throws InterruptedException {
-    assertTrue(userManager.tryLogin("rodrigo", "ilovets13"));
-    Thread.sleep(100);
-    assertFalse(userManager.tryLogin("rodrigo", "badpassword"));
-    Thread.sleep(100);
-    assertTrue(userManager.tryRegister("theman", "loverrr"));
-    Thread.sleep(100);
-    assertFalse(userManager.tryRegister("rodrigo", "literallyanything"));
-    Thread.sleep(100);
-    assertTrue(userManager.tryLogin("theman", "loverrr"));
+    assertTrue(userManager.tryRegister("rodrigo", "ilovets13")); // register user
+    assertTrue(userManager.tryLogin("rodrigo", "ilovets13")); // correct login
+    assertFalse(userManager.tryLogin("rodrigo", "incorrect")); // incorrect login
+    assertFalse(userManager.tryRegister("rodrigo", "literallyanything")); // register existing user
+    assertFalse(userManager.tryLogin("rodrigo", "literallyanything")); // ensure password didn't change
+    assertTrue(userManager.tryLogin("rodrigo", "ilovets13")); // login again (correct password)
+    assertTrue(userManager.tryRegister("theman", "loverrr")); // register new user
+    assertTrue(userManager.tryLogin("theman", "loverrr")); // correct login
+    assertTrue(userManager.tryLogin("rodrigo", "ilovets13")); // correct login previous user
+    assertFalse(userManager.tryLogin("", "password")); // empty username
   }
 }

@@ -52,6 +52,11 @@ public class Database {
     Map<String, Object> dataMap = new HashMap<>();
     dataMap.put(field, data);
     document.set(dataMap, SetOptions.merge());
+    try {
+      Thread.sleep(100); // Ensure that read-after-write gets most up-to-date information
+    } catch (InterruptedException e) {
+      throw new RuntimeException(e);
+    }
   }
 
   /**
