@@ -1,5 +1,5 @@
 {
   "": {
-    "on enter": "breakfvar ifelse   [  ]   [  ]  "
+    "on enter": "if   [  ]  dotimes [ :  ]  [  ]  ifelse   [  ]   [  ]  "
   }
 }

@@ -101,10 +101,14 @@ AbstractNodePanel extends Tab {
   }
 
   protected void clearNodes() {
+    List<AbstractNode> nodesToRemove = new ArrayList<>();
     for (Node node : group.getChildren()) {
       if (node instanceof AbstractNode) {
-        ((AbstractNode) node).delete();
+        nodesToRemove.add((AbstractNode) node);
       }
+    }
+    for (AbstractNode node : nodesToRemove) {
+      node.delete();
     }
   }
 

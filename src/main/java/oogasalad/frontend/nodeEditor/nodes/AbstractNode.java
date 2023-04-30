@@ -1,5 +1,6 @@
 package oogasalad.frontend.nodeEditor.nodes;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Bounds;
@@ -16,219 +17,236 @@ import oogasalad.frontend.nodeEditor.configuration.NodeData;
 
 public abstract class AbstractNode extends VBox implements DraggableNode {
 
-  protected Bounds boundingBox;
+    protected Bounds boundingBox;
 
-  protected double x, y, xOffset, yOffset, width, height, indent;
-  protected NodeData nodeData;
-
-
-  protected AbstractNode parentNode, childNode;
-  protected PropertyManager propertyManager = StandardPropertyManager.getInstance();
-
-  public AbstractNode() {
-    this.x = propertyManager.getNumeric("AbstractNode.DefaultX");
-    this.y = propertyManager.getNumeric("AbstractNode.DefaultY");
-    this.width = propertyManager.getNumeric("AbstractNode.Width");
-    this.height = propertyManager.getNumeric("AbstractNode.Height");
-    this.indent = propertyManager.getNumeric("AbstractNode.IndentSize");
-    setNodeFormatProperties();
-    setNodeDragProperties();
-    this.getStyleClass().add(propertyManager.getText("AbstractNode.StyleClass"));
-  }
+    protected double x, y, xOffset, yOffset, width, height, indent;
+    protected NodeData nodeData;
 
 
-  public AbstractNode(double x, double y, double width,
-      double height) {
-    this.x = x;
-    this.y = y;
-    this.width = width;
-    this.height = height;
-    setNodeFormatProperties();
-    setNodeDragProperties();
-  }
+    protected AbstractNode parentNode, childNode;
+    protected PropertyManager propertyManager = StandardPropertyManager.getInstance();
 
-  public abstract String getNodeParseString();
-
-  public abstract NodeData getNodeData();
-
-
-  @Override
-  public void snapToNode(AbstractNode node) {
-    while (node.getChildNode() != null && node.getChildNode() != this) {
-      node = node.getChildNode();
+    public AbstractNode() {
+        this.x = propertyManager.getNumeric("AbstractNode.DefaultX");
+        this.y = propertyManager.getNumeric("AbstractNode.DefaultY");
+        this.width = propertyManager.getNumeric("AbstractNode.Width");
+        this.height = propertyManager.getNumeric("AbstractNode.Height");
+        this.indent = propertyManager.getNumeric("AbstractNode.IndentSize");
+        setNodeFormatProperties();
+        setNodeDragProperties();
+        this.getStyleClass().add(propertyManager.getText("AbstractNode.StyleClass"));
     }
-    alignNodes(this, node);
-    AbstractNode temp = this;
-    while (temp.getChildNode() != null) {
-      AbstractNode tempOld = temp;
-      temp = temp.getChildNode();
-      alignNodes(temp, tempOld);
+
+
+    public AbstractNode(double x, double y, double width,
+                        double height) {
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+        setNodeFormatProperties();
+        setNodeDragProperties();
     }
-    if (node.getChildNode() == null) {
-      node.setChildNode(this);
-      this.setParentNode(node);
-    }
-  }
 
-  @Override
-  public void alignNodes(AbstractNode fromNode, AbstractNode toNode) {
-    if (toNode instanceof StartNestNode) {
-      if (fromNode instanceof EndNestNode) {
-        fromNode.move(toNode.getTranslateX(), toNode.getTranslateY() + toNode.getHeight());
-      } else {
-        fromNode.move(toNode.getTranslateX() + indent,
-            toNode.getTranslateY() + toNode.getHeight());
-      }
-    } else if (fromNode instanceof EndNestNode) {
-      fromNode.move(toNode.getTranslateX() - indent,
-          toNode.getTranslateY() + toNode.getHeight());
-    } else {
-      fromNode.move(toNode.getTranslateX(), toNode.getTranslateY() + toNode.getHeight());
-    }
-  }
+    public abstract String getNodeParseString();
 
-  @Override
-  public void onDragDetected() {
-    this.setOnDragDetected(event -> {
-      startFullDrag();
-      event.consume();
-    });
-  }
+    public abstract NodeData getNodeData();
 
-  @Override
-  public void onMousePressed() {
-    this.setOnMousePressed(
-        e -> {
-          e.setDragDetect(false);
-          double scaleFactor = this.getParent().getScaleX();
-          xOffset = (e.getSceneX() - getTranslateX() * scaleFactor) / scaleFactor;
-          yOffset = (e.getSceneY() - getTranslateY() * scaleFactor) / scaleFactor;
-          if (e.isShiftDown()) {
-            this.delete();
-          }
-          e.consume();
-        });
-  }
 
-  @Override
-  public void onMouseDragged() {
-    this.setOnMouseDragged(
-        e -> {
-          e.setDragDetect(false);
-          if (this.getParent() == null) {
-            return;
-          }
-          double scaleFactor = this.getParent().getScaleX();
-          double newX = e.getSceneX() / scaleFactor - xOffset;
-          double newY = e.getSceneY() / scaleFactor - yOffset;
-          this.move(newX, newY);
-          if (this.getChildNode() != null) {
-            this.getChildNode().snapToNode(this);
-          }
-          clearLinks();
-          e.consume();
-        });
-  }
-
-  @Override
-  public void onMouseReleased() {
-    this.setOnMouseReleased(e -> {
-      e.setDragDetect(false);
-      if (this.getParent() == null) {
-        return;
-      }
-      for (Node node : this.getParent().getChildrenUnmodifiable()) {
-        if (node instanceof AbstractNode && node != this) {
-          if (this.getBoundsInParent().intersects(node.getBoundsInParent())
-              && this.getChildNode() != node) {
-            snapToNode((AbstractNode) node);
-            e.consume();
-            return;
-          }
+    @Override
+    public void snapToNode(AbstractNode node) {
+        while (node.getChildNode() != null && node.getChildNode() != this) {
+            node = node.getChildNode();
         }
-      }
-      e.consume();
-    });
-  }
-
-  @Override
-  public void move(double newX, double newY) {
-    if (boundingBox.contains(newX, newY, getWidth(), getHeight())) {
-      setTranslateX(newX);
-      setTranslateY(newY);
-    } else {
-      double clampedX = Math.min(Math.max(newX, boundingBox.getMinX()),
-          boundingBox.getMaxX() - getWidth());
-      double clampedY = Math.min(Math.max(newY, boundingBox.getMinY()),
-          boundingBox.getMaxY() - getHeight());
-      setTranslateX(clampedX);
-      setTranslateY(clampedY);
+        alignNodes(this, node);
+        AbstractNode temp = this;
+        while (temp.getChildNode() != null) {
+            AbstractNode tempOld = temp;
+            temp = temp.getChildNode();
+            alignNodes(temp, tempOld);
+        }
+        if (node.getChildNode() == null) {
+            node.setChildNode(this);
+            this.setParentNode(node);
+        }
     }
-  }
 
-  public void setBoundingBox(Bounds bounds) {
-    boundingBox = bounds;
-  }
+    @Override
+    public void alignNodes(AbstractNode fromNode, AbstractNode toNode) {
+        checkLayoutRendered(toNode);
+        Platform.runLater(() -> {
+            if (toNode instanceof StartNestNode) {
+                if (fromNode instanceof EndNestNode) {
+                    fromNode.move(toNode.getTranslateX(), toNode.getTranslateY() + toNode.getHeight());
+                } else {
+                    fromNode.move(toNode.getTranslateX() + indent,
+                            toNode.getTranslateY() + toNode.getHeight());
+                }
+            } else if (fromNode instanceof EndNestNode) {
+                fromNode.move(toNode.getTranslateX() - indent,
+                        toNode.getTranslateY() + toNode.getHeight());
+            } else {
+                fromNode.move(toNode.getTranslateX(), toNode.getTranslateY() + toNode.getHeight());
+            }
+        });
 
-  public void setParentNode(AbstractNode node) {
-    this.parentNode = node;
-  }
-
-  public AbstractNode getParentNode() {
-    return parentNode;
-  }
-
-  public void setChildNode(AbstractNode node) {
-    this.childNode = node;
-  }
-
-  public AbstractNode getChildNode() {
-    return childNode;
-  }
-
-  protected abstract void setContent();
-
-  public void delete() {
-    clearLinks();
-    Group parentGroup = (Group) getParent();
-    parentGroup.getChildren().remove(this);
-  }
-
-  protected void setToolTips() {
-    Tooltip t = new Tooltip(propertyManager.getText("AbstractNode.ToolTip"));
-    Tooltip.install(this, t);
-  }
-
-  protected void clearLinks() {
-    if (this.getParentNode() != null) {
-      this.parentNode.setChildNode(null);
-      this.setParentNode(null);
     }
-  }
 
-  protected Button makeButton(String label, EventHandler<ActionEvent> handler) {
-    Button button = new Button(label);
-    button.setOnAction(handler);
-    button.setMaxWidth(Double.MAX_VALUE);
-    GridPane.setHgrow(button, Priority.ALWAYS);
-    return button;
-  }
+    private void checkLayoutRendered(AbstractNode toNode) {
+        Bounds layoutBounds = toNode.getLayoutBounds();
+
+        if (Double.isNaN(layoutBounds.getWidth()) || Double.isNaN(layoutBounds.getHeight())) {
+            try {
+                wait(200);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
 
-  private void setNodeFormatProperties() {
-    setTranslateX(this.x);
-    setTranslateY(this.y);
-    setWidth(this.width);
-    setHeight(this.height);
-    setPrefSize(this.width, this.height);
-    setToolTips();
-  }
+    @Override
+    public void onDragDetected() {
+        this.setOnDragDetected(event -> {
+            startFullDrag();
+            event.consume();
+        });
+    }
 
-  private void setNodeDragProperties() {
-    onDragDetected();
-    onMousePressed();
-    onMouseDragged();
-    onMouseReleased();
-  }
+    @Override
+    public void onMousePressed() {
+        this.setOnMousePressed(
+                e -> {
+                    e.setDragDetect(false);
+                    double scaleFactor = this.getParent().getScaleX();
+                    xOffset = (e.getSceneX() - getTranslateX() * scaleFactor) / scaleFactor;
+                    yOffset = (e.getSceneY() - getTranslateY() * scaleFactor) / scaleFactor;
+                    if (e.isShiftDown()) {
+                        this.delete();
+                    }
+                    e.consume();
+                });
+    }
+
+    @Override
+    public void onMouseDragged() {
+        this.setOnMouseDragged(
+                e -> {
+                    e.setDragDetect(false);
+                    if (this.getParent() == null) {
+                        return;
+                    }
+                    double scaleFactor = this.getParent().getScaleX();
+                    double newX = e.getSceneX() / scaleFactor - xOffset;
+                    double newY = e.getSceneY() / scaleFactor - yOffset;
+                    this.move(newX, newY);
+                    if (this.getChildNode() != null) {
+                        this.getChildNode().snapToNode(this);
+                    }
+                    clearLinks();
+                    e.consume();
+                });
+    }
+
+    @Override
+    public void onMouseReleased() {
+        this.setOnMouseReleased(e -> {
+            e.setDragDetect(false);
+            if (this.getParent() == null) {
+                return;
+            }
+            for (Node node : this.getParent().getChildrenUnmodifiable()) {
+                if (node instanceof AbstractNode && node != this) {
+                    if (this.getBoundsInParent().intersects(node.getBoundsInParent())
+                            && this.getChildNode() != node) {
+                        snapToNode((AbstractNode) node);
+                        e.consume();
+                        return;
+                    }
+                }
+            }
+            e.consume();
+        });
+    }
+
+    @Override
+    public void move(double newX, double newY) {
+        if (boundingBox.contains(newX, newY, getWidth(), getHeight())) {
+            setTranslateX(newX);
+            setTranslateY(newY);
+        } else {
+            double clampedX = Math.min(Math.max(newX, boundingBox.getMinX()),
+                    boundingBox.getMaxX() - getWidth());
+            double clampedY = Math.min(Math.max(newY, boundingBox.getMinY()),
+                    boundingBox.getMaxY() - getHeight());
+            setTranslateX(clampedX);
+            setTranslateY(clampedY);
+        }
+    }
+
+    public void setBoundingBox(Bounds bounds) {
+        boundingBox = bounds;
+    }
+
+    public void setParentNode(AbstractNode node) {
+        this.parentNode = node;
+    }
+
+    public AbstractNode getParentNode() {
+        return parentNode;
+    }
+
+    public void setChildNode(AbstractNode node) {
+        this.childNode = node;
+    }
+
+    public AbstractNode getChildNode() {
+        return childNode;
+    }
+
+    protected abstract void setContent();
+
+    public void delete() {
+        clearLinks();
+        Group parentGroup = (Group) getParent();
+        parentGroup.getChildren().remove(this);
+    }
+
+    protected void setToolTips() {
+        Tooltip t = new Tooltip(propertyManager.getText("AbstractNode.ToolTip"));
+        Tooltip.install(this, t);
+    }
+
+    protected void clearLinks() {
+        if (this.getParentNode() != null) {
+            this.parentNode.setChildNode(null);
+            this.setParentNode(null);
+        }
+    }
+
+    protected Button makeButton(String label, EventHandler<ActionEvent> handler) {
+        Button button = new Button(label);
+        button.setOnAction(handler);
+        button.setMaxWidth(Double.MAX_VALUE);
+        GridPane.setHgrow(button, Priority.ALWAYS);
+        return button;
+    }
+
+
+    private void setNodeFormatProperties() {
+        setTranslateX(this.x);
+        setTranslateY(this.y);
+        setWidth(this.width);
+        setHeight(this.height);
+        setPrefSize(this.width, this.height);
+        setToolTips();
+    }
+
+    private void setNodeDragProperties() {
+        onDragDetected();
+        onMousePressed();
+        onMouseDragged();
+        onMouseReleased();
+    }
 
 }
