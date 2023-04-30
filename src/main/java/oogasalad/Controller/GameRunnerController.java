@@ -60,6 +60,18 @@ public class GameRunnerController implements GameController {
         Rectangle defaultDrop = new Rectangle(width, height, fillColor);
         return defaultDrop;
     }
+    private Node loadImgOrDefaultFromFile(String selectType, FileManager fm, String id, String directory, int height, int width){
+        boolean isImage = fm.getObject(Boolean.class, id, selectType, "hasImage");
+        String param = fm.getString(id, selectType, "param");
+        Node visual;
+        if (isImage){
+            String selectedPath = directory.substring(0, directory.lastIndexOf("/")) + "/assets/" + param;
+            visual = loadImage(selectedPath,height,width);
+        } else {
+            visual = loadDefaultDropRectangle(param,height,width);
+        }
+        return visual;
+    }
 
     private void loadDropZones(String directory) throws FileNotFoundException {
         FileManager fm = new FileManager(directory + "/layout.json");
@@ -69,25 +81,8 @@ public class GameRunnerController implements GameController {
             int height = Integer.parseInt(fm.getString(id, "height"));
             int width = Integer.parseInt(fm.getString(id, "width"));
 
-            boolean selectedisimage = fm.getObject(Boolean.class, id, "selected", "hasImage");
-            String selectedparam = fm.getString(id, "selected", "param");
-            Node selected;
-            if (selectedisimage){
-                String selectedPath = directory.substring(0, directory.lastIndexOf("/")) + "/assets/" + selectedparam;
-                selected = loadImage(selectedPath,height,width);
-            } else {
-                selected = loadDefaultDropRectangle(selectedparam,height,width);
-            }
-
-            boolean unselectedisimage = fm.getObject(Boolean.class, id, "unselected", "hasImage");
-            String unselectedparam = fm.getString(id, "unselected", "param");
-            Node unselected;
-            if (unselectedisimage){
-                String selectedPath = directory.substring(0, directory.lastIndexOf("/")) + "/assets/" + unselectedparam;
-                unselected = loadImage(selectedPath,height,width);
-            } else {
-                unselected = loadDefaultDropRectangle(selectedparam,height,width);
-            }
+            Node selected = loadImgOrDefaultFromFile("selected",fm,id,directory,height,width);
+            Node unselected = loadImgOrDefaultFromFile("selected",fm,id,directory,height,width);
 
             addDropZone(new GameController.DropZoneParameters(id, unselected, selected, x, y, height, width));
         }
