@@ -44,7 +44,7 @@ public class GameRunnerController implements GameController {
     public String userResponds(String pieceID, String dropzoneID) {
         GameObject piece = backendPieces.get(pieceID);
         DropZone dropZone = backendDropZones.get(dropzoneID);
-        game.movePiece(piece,dropZone,pieceID);
+        game.movePiece(piece,dropZone);
         return "pass";
     }
 

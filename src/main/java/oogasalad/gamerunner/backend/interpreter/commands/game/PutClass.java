@@ -24,7 +24,7 @@ public class PutClass extends OperatorToken {
                 GameObject.class.getName());
 
         Ownable obj = objVar.VALUE;
-        env.getGame().putClass(obj, name.VALUE);
+        obj.addClass(name.VALUE);
 
         return null;
     }

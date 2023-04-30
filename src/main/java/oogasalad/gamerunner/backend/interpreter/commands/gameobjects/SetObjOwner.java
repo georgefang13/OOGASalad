@@ -1,14 +1,13 @@
-package oogasalad.gamerunner.backend.interpreter.commands.game;
+package oogasalad.gamerunner.backend.interpreter.commands.gameobjects;
 
 import oogasalad.gamerunner.backend.interpreter.Environment;
 import oogasalad.gamerunner.backend.interpreter.tokens.*;
 import oogasalad.sharedDependencies.backend.ownables.Ownable;
-import oogasalad.sharedDependencies.backend.ownables.gameobjects.DropZone;
 
-public class SetObjImage extends OperatorToken {
+public class SetObjOwner extends OperatorToken {
 
-    public SetObjImage(){
-        super(2, "SetObjImage");
+    public SetObjOwner(){
+        super(2, "SetObjOwner");
     }
 
     @Override
@@ -17,9 +16,9 @@ public class SetObjImage extends OperatorToken {
         Token t2 = getArg(1).evaluate(env);
 
         ValueToken<Ownable> obj = checkArgumentWithSubtype(env, t1, ValueToken.class, Ownable.class.getName());
-        ValueToken<String> img = checkArgumentWithSubtype(env, t2, ValueToken.class, String.class.getName());
+        ValueToken<Ownable> owner = checkArgumentWithSubtype(env, t2, ValueToken.class, Ownable.class.getName());
 
-        env.getGame().setObjectImage(obj.VALUE, img.VALUE);
+        env.getIdManager().setObjectOwner(obj.VALUE, owner.VALUE);
         return null;
     }
 }

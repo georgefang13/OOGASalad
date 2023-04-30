@@ -36,7 +36,7 @@ public class SocketRunner implements OnlineRunner {
            }
         });
         socket.on("player", args -> {
-            game.setNumPlayers((int) args[0]);
+            game.setNumOnlinePlayers((int) args[0]);
         });
         socket.on("start", args -> {
             game.startOnlineGame();
@@ -77,7 +77,7 @@ public class SocketRunner implements OnlineRunner {
         socket.once("entered", args -> {
             System.out.println("Entered!");
             playerNum = ((int) args[0]) - 1;
-            game.setNumPlayers(playerNum + 1);
+            game.setNumOnlinePlayers(playerNum + 1);
             this.code = code;
         });
     }

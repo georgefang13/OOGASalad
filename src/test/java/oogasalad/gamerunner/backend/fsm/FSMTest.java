@@ -209,7 +209,7 @@ public class FSMTest {
   @Test
   void testProgrammableState() {
     TestGame game = new TestGame();
-    idManager = game.getOwnableIdManager();
+    idManager = game.getIdManager();
     Interpreter interpreter = game.getInterpreter();
     fsm = new FSM<>(idManager);
 

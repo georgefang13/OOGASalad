@@ -10,7 +10,7 @@ import oogasalad.sharedDependencies.backend.ownables.gameobjects.GameObject;
 public class RemoveClass extends OperatorToken {
 
     public RemoveClass() {
-        super(2, "PutClass");
+        super(2, "RemoveClass");
     }
 
     @Override
@@ -24,7 +24,7 @@ public class RemoveClass extends OperatorToken {
                 GameObject.class.getName());
 
         Ownable obj = objVar.VALUE;
-        env.getGame().removeClass(obj, name.VALUE);
+        obj.removeClass(name.VALUE);
 
         return null;
     }
