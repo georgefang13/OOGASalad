@@ -10,10 +10,10 @@
       "parse": "[ %s ]"
     }
   },
-  "Text": {
-    "name": "Text",
+  "Code": {
+    "name": "Code",
     "folder": "metablocks",
-    "description" : "Write OoglaSalad code",
+    "description" : "Write Valee code",
     "specs": {
       "innerBlocks": [],
       "inputs": ["text"],
