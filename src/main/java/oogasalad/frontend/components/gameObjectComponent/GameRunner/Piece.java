@@ -3,15 +3,22 @@ package oogasalad.frontend.components.gameObjectComponent.GameRunner;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
+import oogasalad.frontend.managers.DisplayManager;
 import oogasalad.gamerunner.backend.GameController;
 
 public class Piece extends GameRunnerObject{
     private double lastTranslateX;
     private double lastTranslateY;
-    public Piece(String ID, GameController gameRunnerController, String imagepath, double size) {
+    private boolean hasSelectImage;
+    private Object param;
+    public Piece(String ID, GameController gameRunnerController, String imagePath, boolean hasSelectImage, Object param, double height, double width) {
         super(ID, gameRunnerController);
-        setImage(imagepath);
-        setSize(size);
+        setImage(imagePath);
+        this.hasSelectImage = hasSelectImage;
+        this.param = param;
+        setHeight(height);
+        setWidth(width);
         setSelectableVisual();
         //getNode().setOnMouseClicked(e -> gameRunnerController.select(ID));
         followMouse();
@@ -20,9 +27,16 @@ public class Piece extends GameRunnerObject{
     @Override
     public void setSelectableVisual() {
         ImageView img = getImage();
-        img.setFitWidth(size);
-        img.setFitHeight(size);
-        selectableVisual = new PieceVisual(img,size,ID);
+        img.setFitWidth(getWidth());
+        img.setFitHeight(getHeight());
+        if (hasSelectImage){
+            String selectImgPath = (String) param;
+            Node selectImage = DisplayManager.loadImage(selectImgPath,(int) getHeight(),(int) getWidth());
+            selectableVisual = new PieceVisualSelectImage(img,selectImage,getHeight(),getWidth(),ID);
+        } else {
+            Color selectBorderColor = (Color) param;
+            selectableVisual = new PieceVisualSelectBorder(img,selectBorderColor,getHeight(),getWidth(),ID);
+        }
     }
 
     private void setDragSelection() {
@@ -69,8 +83,8 @@ public class Piece extends GameRunnerObject{
     private void setCentertoCenter(double x, double y){
         //double actualX = pieceBox.getLayoutX() + pieceBox.getTranslateX();
         //double actualY = pieceBox.getLayoutY() + pieceBox.getTranslateY();
-        double shiftX = x - size/2;
-        double shiftY = y - size/2;
+        double shiftX = x - getWidth()/2;
+        double shiftY = y - getHeight()/2;
         //this.resetOffset();
         getNode().setTranslateX(shiftX);
         getNode().setTranslateY(shiftY);
