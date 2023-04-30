@@ -198,12 +198,17 @@ public class TestGame implements GameToInterpreterAPI {
     }
 
     @Override
-    public void addObject(Ownable obj, DropZone dz, String image, double size) {
-        idManager.addObject(obj);
-        putInDropZone(obj, dz);
-        String imagePath = "assets/" + image;
-        objImages.put(obj, imagePath);
+    public void addObject(Ownable obj, DropZone dz, String image, double width, double height) {
+
     }
+
+//    @Override
+//    public void addObject(Ownable obj, DropZone dz, String image, double width, double height) {
+//        idManager.addObject(obj);
+//        putInDropZone(obj, dz);
+//        String imagePath = "assets/" + image;
+//        objImages.put(obj, imagePath);
+//    }
 
     public String getObjImage(Ownable obj) {
         return objImages.get(obj);
@@ -213,6 +218,11 @@ public class TestGame implements GameToInterpreterAPI {
     public void addDropZone(DropZone dz, DropZone location, String image, String highlight, double width, double height) {
         idManager.addObject(dz);
         putInDropZone(dz, location);
+    }
+
+    @Override
+    public void setPieceHighlight(Ownable piece, String highlight) {
+
     }
 
     @Override
