@@ -36,6 +36,7 @@ public class HeaderMenuPanel extends HBox implements Panel {
    * Constructor for HeaderMenu
    */
   public HeaderMenuPanel(PanelController panelController, String sceneID) {
+    // TODO: fix dependencies
     super();
     this.panelController = panelController;
     this.sceneID = sceneID;
