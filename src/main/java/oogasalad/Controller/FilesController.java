@@ -10,6 +10,7 @@ import java.util.*;
 
 import oogasalad.frontend.components.Component;
 import oogasalad.frontend.components.ComponentsFactory;
+import oogasalad.gameeditor.backend.GameInator;
 import oogasalad.sharedDependencies.backend.filemanagers.FileManager;
 
 /**
@@ -21,7 +22,7 @@ public class FilesController {
   private final String FILES_NAMES = "Controller/FilesConfig.properties";
 
   private List<Component> components = new ArrayList<>();
-
+  private GameInator game;
   /**
    * Sets up the FileController
    *
@@ -29,15 +30,6 @@ public class FilesController {
    */
   public FilesController(String name) {
     gameFolder = GAMES_PATH + name;
-    File directory = new File(gameFolder);
-    boolean valid = directory.mkdir();
-    File frontend = new File(gameFolder + "\\frontend");
-    boolean valid1 = frontend.mkdir();
-    if (valid && valid1) {
-      //TODO log file made successfully
-    } else {
-      //TODO log file not made successfully
-    }
   }
 
   /**
@@ -60,9 +52,10 @@ public class FilesController {
    * Saves components to frontend file
    */
   public void saveToFile(){
+    game = new GameInator(gameFolder);
     ConvertingStrategy strategy = new ConvertingStrategy();
-    FileManager manager = new FileManager();
-
+    FileManager layout = new FileManager();
+    FileManager objects = new FileManager();
     int count = 0;
     for (Component comp : components){
       String className = comp.getClass().getSimpleName();

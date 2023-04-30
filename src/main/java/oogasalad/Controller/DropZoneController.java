@@ -74,12 +74,10 @@ public class DropZoneController implements ControllerSubscriber {
   public void addGridObject(Component c){
     try{
       validatedGridObject.add((GridObject) c);
-      Dropzone[][] zones = ((GridObject) c).getDropZones();
-      for(Dropzone[] row: zones){
-        for(Dropzone dropzone: row){
+      List<Dropzone> zones = ((GridObject) c).getDropzones();
+        for(Dropzone dropzone: zones){
           dropzone.addControllerSubscriber(this);
         }
-      }
     } catch (Exception e){
       //TODO Add Logging Component
     }

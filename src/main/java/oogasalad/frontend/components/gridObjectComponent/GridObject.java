@@ -1,6 +1,10 @@
 package oogasalad.frontend.components.gridObjectComponent;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
@@ -16,12 +20,12 @@ public class GridObject extends AbstractComponent {
     private String name;
     private int rows;
     private int cols;
-    private Dropzone[][] nodes;
+    private Set<String> content;
+    private List<Dropzone> dropzones;
     private GridPane grid;
     private double width;
     private double height;
     private double rotate;
-
     private double rectWidth;
     private double rectHeight;
     public GridObject(String ID, Map<String, String> map){
@@ -32,7 +36,8 @@ public class GridObject extends AbstractComponent {
     }
 
     private void initialize() {
-        nodes = new Dropzone[rows][cols];
+        content = new HashSet<>();
+        dropzones = new ArrayList<>();
         grid = new GridPane();
         grid.setPrefWidth(width);
         grid.setPrefHeight(height);
@@ -51,7 +56,8 @@ public class GridObject extends AbstractComponent {
                 grid.getChildren().add(d.getNode());
                 d.getNode().setLayoutX(rectWidth*j);
                 d.getNode().setLayoutY(rectHeight*i);
-                nodes[i][j] = d;
+                content.add(d.getID());
+                dropzones.add(d);
             }
         }
     }
@@ -66,8 +72,9 @@ public class GridObject extends AbstractComponent {
     public GridPane getGrid(){
         return grid;
     }
-    public Dropzone[][] getDropZones() {
-        return nodes;
+
+    public Set<String> getContent() {
+        return content;
     }
 
     public double getRectHeight() {
@@ -76,5 +83,9 @@ public class GridObject extends AbstractComponent {
 
     public double getRectWidth() {
         return rectWidth;
+    }
+
+    public List<Dropzone> getDropzones() {
+        return dropzones;
     }
 }
