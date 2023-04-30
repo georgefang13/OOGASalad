@@ -28,6 +28,7 @@ public class GameRunnerController implements GameController {
         String directory = "data/games/"+gameName;
         int numPlayers = 2;
         String type = gameTypeData.get(0);
+        System.out.println(type);
 
         try {
             loadGame(directory);
@@ -39,8 +40,10 @@ public class GameRunnerController implements GameController {
                 case "create" -> game.createOnlineGame();
                 case "join" -> {
                     String code = gameTypeData.get(1);
+                    System.out.println(code);
                     game.joinOnlineGame(code);
                 }
+                default -> System.out.println("didn't find that option");
             }
         } catch (Exception e) {
             e.printStackTrace();
