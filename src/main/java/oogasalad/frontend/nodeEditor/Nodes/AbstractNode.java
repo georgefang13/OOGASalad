@@ -157,6 +157,7 @@ public abstract class AbstractNode extends VBox implements Draggable {
 
   @Override
   public void move(double newX, double newY) {
+
     if (boundingBox.contains(newX, newY, getWidth(), getHeight())) {
       setTranslateX(newX);
       setTranslateY(newY);
@@ -192,7 +193,7 @@ public abstract class AbstractNode extends VBox implements Draggable {
 
   protected abstract void setContent();
 
-  protected void delete() {
+  public void delete() {
     clearLinks();
     Group parentGroup = (Group) getParent();
     parentGroup.getChildren().remove(this);

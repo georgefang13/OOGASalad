@@ -59,7 +59,6 @@ public class NodeConfiguration {
         List<Command> commands = parser.readCommands(COMMANDS_RESOURCE_PATH);
 
         for (NodeData data : nodeData) {
-            System.out.println(data.type());
             switch (data.type()) {
                 case "JsonNode":
                     Command tempCommand = null;

@@ -13,10 +13,10 @@
     ]
   },
   "2": {
-    "name": "Sum",
+    "name": "Product",
     "type": "JsonNode",
     "inputs": [
-      "7",
+      "6",
       "2"
     ]
   }
