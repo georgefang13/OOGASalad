@@ -62,8 +62,6 @@ public class GameRunnerController implements GameController {
     }
     private Node loadImgOrDefaultFromFile(String selectType, FileManager fm, String id, String directory, int height, int width){
         boolean isImage = fm.getObject(Boolean.class, id, selectType, "hasImage");
-        System.out.println(id);
-        System.out.println(selectType);
         String param = fm.getString(id, selectType, "param");
         Node visual;
         if (isImage){
@@ -128,7 +126,6 @@ public class GameRunnerController implements GameController {
         clearClickables();
         clickable.addAll(ids);
         for (String id : ids){
-            System.out.println(id);
             gameObjects.get(id).makePlayable();
             //AbstractSelectableVisual gameObjectVisual = (AbstractSelectableVisual) gameObjects.get(id).getNode();
             //gameObjectVisual.showClickable();

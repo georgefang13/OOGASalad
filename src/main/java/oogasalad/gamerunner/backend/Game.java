@@ -226,7 +226,7 @@ public class Game implements GameToInterpreterAPI{
 
         if (!isPieceAvailable(selectedObject)) return;
 
-        System.out.println("clicking " + selectedObject + " with " + send);
+        //System.out.println("clicking " + selectedObject + " with " + send);
 
         interpreter.interpret("make :game_available [ ]");
 
