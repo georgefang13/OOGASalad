@@ -58,7 +58,7 @@ public class FileManager {
    * @param tags arbitrary number of String specifying hierarchical sequence (from highest to lowest)
    */
   public void addContent(Object content, String... tags) {
-    updateHierarchy(myFileInfo, content, tags);
+    updateHierarchy(myFileInfo, content, false, tags);
   }
 
   /**
@@ -66,15 +66,16 @@ public class FileManager {
    *
    * @param object JsonObject to be modified
    * @param content String containing content to be added to file
+   * @param substitute boolean specifying whether new object should be added into array if something else is already there
    * @param tags arbitrary number of String specifying hierarchical sequence (from highest to lowest)
    */
-  private void updateHierarchy(JsonObject object, Object content, String... tags) {
+  private void updateHierarchy(JsonObject object, Object content, boolean substitute, String... tags) {
     if (tags.length == 1) {
-      addLowestContent(object, tags[0], content);
+      addLowestContent(object, tags[0], content, substitute);
     }
     else if (object.has(tags[0])) {
       updateHierarchy(object.getAsJsonObject(tags[0]),
-          content, Arrays.copyOfRange(tags, 1, tags.length));
+          content, substitute, Arrays.copyOfRange(tags, 1, tags.length));
     }
     else {
       object.add(tags[0], makeHierarchy(content, Arrays.copyOfRange(tags, 1, tags.length)));
@@ -104,12 +105,12 @@ public class FileManager {
    * @param tag     key name in JSON file where data should go
    * @param content information to be stored in file
    */
-  protected void addLowestContent(JsonObject object, String tag, Object content) {
+  protected void addLowestContent(JsonObject object, String tag, Object content, boolean substitute) {
     if (!object.isEmpty() && !isValid(tag)) {
       // TODO: maybe make this into a custom exception
       throw new RuntimeException("Invalid tag!");
     }
-    if (object.has(tag)) {
+    if (object.has(tag) && (! substitute)) {
       JsonArray array;
       if (object.get(tag).isJsonArray()) {
         array = object.getAsJsonArray(tag);
@@ -220,7 +221,7 @@ public class FileManager {
    * @param tags variable number of String parameters in order of hierarchy (from high to low)
    */
   public void addEmptyObject(String... tags) {
-    updateHierarchy(myFileInfo, new JsonObject(), tags);
+    updateHierarchy(myFileInfo, new JsonObject(), true, tags);
   }
 
   /**
@@ -228,7 +229,7 @@ public class FileManager {
    * @param tags variable number of String parameters in order of hierarchy (from high to low)
    */
   public void addEmptyArray(String... tags) {
-    updateHierarchy(myFileInfo, new JsonArray(), tags);
+    updateHierarchy(myFileInfo, new JsonArray(), true, tags);
   }
 
   /**
@@ -247,6 +248,10 @@ public class FileManager {
       tagList.add(entry.getKey());
     }
     return tagList;
+  }
+
+  public void addUniqueContent(Object content, String... tags) {
+    updateHierarchy(myFileInfo, content, true, tags);
   }
 
   private JsonElement traverse(String... tags) {
