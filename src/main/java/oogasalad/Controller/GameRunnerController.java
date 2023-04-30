@@ -42,6 +42,38 @@ public class GameRunnerController implements GameController {
         loadDropZones(directory);
         loadPieces(directory);
     }
+    private Node loadImage(String imgPath,int height, int width){ //TODO: A similar function is in game object move it there just send paths
+        Image img;
+        try {
+            img = new Image(new FileInputStream(imgPath));
+        } catch (Exception e) {
+            System.out.println("Image " + imgPath + " not found");
+            return null;
+        }
+        ImageView imageView = new ImageView(img);
+        imageView.setFitHeight(height);
+        imageView.setFitWidth(width);
+        return imageView;
+    }
+    private Node loadDefaultDropRectangle(String hexColor,int height, int width){ //TODO: A similar function is in game object move it there just send paths
+        Color fillColor = Color.web(hexColor);
+        Rectangle defaultDrop = new Rectangle(width, height, fillColor);
+        return defaultDrop;
+    }
+    private Node loadImgOrDefaultFromFile(String selectType, FileManager fm, String id, String directory, int height, int width){
+        boolean isImage = fm.getObject(Boolean.class, id, selectType, "hasImage");
+        System.out.println(id);
+        System.out.println(selectType);
+        String param = fm.getString(id, selectType, "param");
+        Node visual;
+        if (isImage){
+            String selectedPath = directory.substring(0, directory.lastIndexOf("/")) + "/assets/" + param;
+            visual = loadImage(selectedPath,height,width);
+        } else {
+            visual = loadDefaultDropRectangle(param,height,width);
+        }
+        return visual;
+    }
 
     private void loadDropZones(String directory) throws FileNotFoundException {
         FileManager fm = new FileManager(directory + "/layout.json");
@@ -51,54 +83,9 @@ public class GameRunnerController implements GameController {
             int height = Integer.parseInt(fm.getString(id, "height"));
             int width = Integer.parseInt(fm.getString(id, "width"));
 
-            boolean selectedisimage = fm.getObject(Boolean.class, id, "selected", "hasImage");
-            System.out.println(selectedisimage);
-            String selectedpth = fm.getString(id, "selected", "param");
-            System.out.println(selectedpth);
-
-            boolean unselectedisimage = fm.getObject(Boolean.class, id, "unselected", "hasImage");
-            System.out.println(unselectedisimage);
-            String unselectedpth = fm.getString(id, "unselected", "param");
-            System.out.println(unselectedpth);
-
-            String unfullpath = directory.substring(0, directory.lastIndexOf("/")) + "/assets/" + unselectedpth;
-            System.out.println(unfullpath);
-            Image unImage;
-            try {
-                unImage = new Image(new FileInputStream(unfullpath));
-            } catch (Exception e) {
-                System.out.println("Image " + unfullpath + " not found");
-                return;
-            }
-            ImageView unselectedfill = new ImageView(unImage);
-            unselectedfill.setFitHeight(height);
-            unselectedfill.setFitWidth(width);
-
-            String selfullpath = directory.substring(0, directory.lastIndexOf("/")) + "/assets/" + selectedpth;
-            System.out.println(selfullpath);
-            Image selImage;
-            try {
-                selImage = new Image(new FileInputStream(selfullpath));
-            } catch (Exception e) {
-                System.out.println("Image " + selfullpath + " not found");
-                return;
-            }
-            ImageView selectedfill = new ImageView(selImage);
-            selectedfill.setFitHeight(height);
-            selectedfill.setFitWidth(width);
-
-            /*
-            Rectangle unselectedfill = new Rectangle(width, height);
-            unselectedfill.setStroke(Color.BLACK);
-            unselectedfill.setFill(Color.SKYBLUE);
-
-            Rectangle selectedfill = new Rectangle(width, height);
-            selectedfill.setStroke(Color.BLACK);
-            selectedfill.setFill(Color.YELLOW);
-
-             */
-
-            addDropZone(new GameController.DropZoneParameters(id, unselectedfill, selectedfill, x, y, height, width));
+            Node unselected = loadImgOrDefaultFromFile("unselected",fm,id,directory,height,width);
+            Node selected = loadImgOrDefaultFromFile("selected",fm,id,directory,height,width);
+            addDropZone(new GameController.DropZoneParameters(id, unselected, selected, x, y, height, width));
         }
     }
 

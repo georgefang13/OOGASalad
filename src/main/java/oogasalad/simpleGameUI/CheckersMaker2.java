@@ -1,5 +1,6 @@
 package oogasalad.simpleGameUI;
 
+import javafx.scene.paint.Color;
 import oogasalad.sharedDependencies.backend.id.IdManager;
 import oogasalad.gameeditor.backend.ownables.gameobjects.BoardCreator;
 import oogasalad.sharedDependencies.backend.filemanagers.FileManager;
@@ -15,7 +16,7 @@ public class CheckersMaker2 {
 
         IdManager<Ownable> manager = new IdManager<>();
 
-        String folder = "data/games/checkers/";
+        String folder = "data/games/rainbowcheckers/";
 
         saveDropZones(manager, folder);
         saveGameObjects(folder);
@@ -30,8 +31,12 @@ public class CheckersMaker2 {
 
         List<DropZone> nodes = BoardCreator.createGrid(8, 8);
         nodes.forEach(manager::addObject);
+
+        int counter = 0;
+
         // add board DropZones
         for (int i = 0; i < nodes.size(); i++){
+            if (i % 8 == 0) counter++;
             DropZone node = nodes.get(i);
             node.addClass("board");
             int x = i % 8;
@@ -43,17 +48,41 @@ public class CheckersMaker2 {
             fefm.addContent(String.valueOf(50 + y*50), id, "y");
             fefm.addContent(String.valueOf(50), id, "width");
             fefm.addContent(String.valueOf(50), id, "height");
-            if (i % 2 == 0) {
-                fefm.addContent(true, id, "unselected", "hasImage");
-                fefm.addContent("dark.png", id, "unselected", "param");
-                fefm.addContent(true, id, "selected", "hasImage");
-                fefm.addContent("darkselected.png", id, "selected", "param");
-            }
-            else {
-                fefm.addContent(true, id, "unselected", "hasImage");
-                fefm.addContent("light.png", id, "unselected", "param");
-                fefm.addContent(true, id, "selected", "hasImage");
-                fefm.addContent("lightselected.png", id, "selected", "param");
+            fefm.addContent(false, id, "unselected", "hasImage");
+            fefm.addContent(false, id, "selected", "hasImage");
+            switch (counter) {
+                case 1 -> {
+                    fefm.addContent("0xFF0000", id, "unselected", "param");
+                    fefm.addContent("0X8B0000", id, "selected", "param");
+                }
+                case 2 -> {
+                    fefm.addContent("0xFFA500", id, "unselected", "param");
+                    fefm.addContent("0xFF8C00", id, "selected", "param");
+                }
+                case 3 -> {
+                    fefm.addContent("0xFFFF00", id, "unselected", "param");
+                    fefm.addContent("0xFFD700", id, "selected", "param");
+                }
+                case 4 -> {
+                    fefm.addContent("0x32CD32", id, "unselected", "param");
+                    fefm.addContent("0x90EE90", id, "selected", "param");
+                }
+                case 5 -> {
+                    fefm.addContent("0x008000", id, "unselected", "param");
+                    fefm.addContent("0x006400", id, "selected", "param");
+                }
+                case 6 -> {
+                    fefm.addContent("0x00FFFF", id, "unselected", "param");
+                    fefm.addContent("0x008B8B", id, "selected", "param");
+                }
+                case 7 -> {
+                    fefm.addContent("0x0000FF", id, "unselected", "param");
+                    fefm.addContent("0xADD8E6", id, "selected", "param");
+                }
+                case 8 -> {
+                    fefm.addContent("0xEE82EE", id, "unselected", "param");
+                    fefm.addContent("0x9400D3", id, "selected", "param");
+                }
             }
 
             for (Map.Entry<String, DropZone> dzEdge : node.getEdges().entrySet()) {
