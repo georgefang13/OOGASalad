@@ -18,6 +18,11 @@ public class ParenthesisToken extends Token implements OpenCloseToken {
   }
 
   @Override
+  public ParenthesisToken copy(){
+    return new ParenthesisToken(VALUE);
+  }
+
+  @Override
   public String toString() {
     return String.format("<%s %s = %s>", TYPE, VALUE);
   }

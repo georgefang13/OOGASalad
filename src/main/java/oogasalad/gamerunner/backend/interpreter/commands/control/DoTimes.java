@@ -44,7 +44,7 @@ public class DoTimes extends OperatorToken {
     }
     env.endLocalScope();
 
-    if (result instanceof Break) result = null;
+    if (result instanceof Break || result instanceof Continue) result = null;
     return result;
   }
 }
