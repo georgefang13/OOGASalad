@@ -64,9 +64,11 @@ public abstract class AbstractNodePanel extends Tab {
       if (node instanceof MainNode) {
         AbstractNode tempNode = (AbstractNode) node;
         while(tempNode.getChildNode() != null){
+          System.out.println(tempNode);
           nodes.add(tempNode);
           tempNode = tempNode.getChildNode();
         }
+        nodes.add(tempNode);
         return nodes;
       }
     }

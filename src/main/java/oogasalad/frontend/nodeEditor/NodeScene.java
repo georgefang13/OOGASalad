@@ -4,6 +4,7 @@ import static oogasalad.frontend.nodeEditor.AbstractNodePanel.NODES_JSON_PATH;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -92,16 +93,24 @@ public class NodeScene extends AbstractScene {
 
 
   private void makeConfigFile(List<AbstractNode> nodes){
-    System.out.println(nodes);
-    List<NodeData> nodeDataList = new ArrayList<>();
+    Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    JsonObject stateObject = new JsonObject();
     for(AbstractNode node : nodes){
-      nodeDataList.add(node.getNodeData());
+      NodeData data = node.getNodeData();
+      JsonObject stateJson = new JsonObject();
+      JsonArray array = new JsonArray();
+      String name = data.name();
+      String type = data.type();
+      data.inputs().forEach(array::add);
+      stateJson.addProperty("name", name);
+      stateJson.addProperty("type", type);
+      stateJson.add("inputs", array);
+      stateObject.add(name, stateJson);
     }
-    Gson gson = new Gson();
-    String jsonString = gson.toJson(nodeDataList);
+
 
     try (FileWriter fileWriter = new FileWriter(CONFIG_JSON_PATH)) {
-      fileWriter.write(jsonString);
+      gson.toJson(stateObject, fileWriter);
     } catch (IOException e) {
       e.printStackTrace();
     }
