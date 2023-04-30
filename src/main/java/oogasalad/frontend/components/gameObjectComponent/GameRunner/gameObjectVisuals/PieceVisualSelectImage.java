@@ -3,7 +3,7 @@ package oogasalad.frontend.components.gameObjectComponent.GameRunner.gameObjectV
 import javafx.scene.Node;
 
 public class PieceVisualSelectImage extends PieceVisual {
-    private final Node selectImage;
+    private Node selectImage;
     public PieceVisualSelectImage(Node pieceImg, Node selectImage, double height, double width, String id) {
         super(pieceImg, height, width, id);
         this.selectImage = selectImage;
@@ -17,4 +17,17 @@ public class PieceVisualSelectImage extends PieceVisual {
     public void showUnclickable() {
         switchImages(selectImage,pieceImage);
     }
+
+    @Override
+    public void updateUnClickableVisual(Node newVisual) {
+        switchImages(pieceImage,newVisual);
+        pieceImage = newVisual;
+    }
+
+    @Override
+    public void updateClickableVisual(Node newVisual) {
+        switchImages(selectImage,newVisual);
+        selectImage = newVisual;
+    }
+
 }

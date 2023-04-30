@@ -647,7 +647,7 @@
     "folder": "gameobjects",
     "str": "addpiece",
     "description": "Create a new object",
-    "example": "addpiece curplayer [ \"piece ] :dz \"block.png 50 # putdzitem <player> <list classes> <dropzone location> <string img> <double size>",
+    "example": "addpiece curplayer [ \"piece ] :dz \"block.png 50 50 # putdzitem <player> <list classes> <dropzone location> <string img> <double size> <double size>",
     "specs": {
       "innerBlocks": [],
       "inputs": [
@@ -655,11 +655,11 @@
         { "name": "classes", "type": ["list"] },
         { "name": "location", "type": ["dropzone"] },
         { "name": "image", "type": ["string"] },
-        { "name": "size", "type": ["number"] }
-
+        { "name": "width", "type": ["number"] },
+        { "name": "height", "type": ["number"] }
       ],
       "outputs": [],
-      "parse": "addpiece %s %s %s %s %s"
+      "parse": "addpiece %s %s %s %s %s %s"
     }
   },
   "GetObjChildren": {
@@ -823,6 +823,22 @@
       ],
       "outputs": [],
       "parse": "setobjowner %s %s"
+    }
+  },
+  "SetPieceHighlight": {
+    "name": "Set Piece Highlight",
+    "folder": "gameobjects",
+    "str": "sethl",
+    "description": "Set the highlight image or color for a specific gameobject",
+    "example": "sethl :game_obj \"fire.png  # setobjimg <obj> <image or hex color>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        { "name": "object", "type": ["any"] },
+        { "name": "image/color", "type": ["string"] }
+      ],
+      "outputs": [],
+      "parse": "sethl %s %s"
     }
   },
 

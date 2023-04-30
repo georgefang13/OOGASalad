@@ -5,6 +5,7 @@ import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import oogasalad.frontend.components.gameObjectComponent.GameRunner.gameObjectVisuals.*;
 import oogasalad.frontend.managers.DisplayManager;
 import oogasalad.Controller.GameController;
@@ -12,8 +13,8 @@ import oogasalad.Controller.GameController;
 public class Piece extends GameRunnerObject{
     private double lastTranslateX;
     private double lastTranslateY;
-    private final boolean hasSelectImage;
-    private final Object param;
+    private boolean hasSelectImage;
+    private Object param;
     public Piece(String ID, GameController gameRunnerController, String imagePath, boolean hasSelectImage, Object param, double height, double width) {
         super(ID, gameRunnerController);
         setImage(imagePath);
@@ -91,5 +92,36 @@ public class Piece extends GameRunnerObject{
         Node node = getNode();
         node.setTranslateX(lastTranslateX);
         node.setTranslateY(lastTranslateY);
+    }
+
+    @Override
+    public void setHighlight(String img){
+        boolean isImg = !img.startsWith("#");
+        if (hasSelectImage == isImg){
+            if (hasSelectImage){
+                selectableVisual.updateClickableVisual(DisplayManager.loadImage(img, (int) getHeight(), (int) getWidth()));
+            } else {
+                Color c = Color.web(img);
+                Rectangle r = new Rectangle(getWidth(),getHeight(),c);
+                selectableVisual.updateClickableVisual(r);
+            }
+        }
+        else {
+            hasSelectImage = isImg;
+            param = isImg ? img : Color.web(img);
+            if (isImg){
+                Node selectImage = DisplayManager.loadImage(img, (int) getHeight(), (int) getWidth());
+                Node origImg = ((PieceVisualSelectBorder) selectableVisual).getImage();
+                selectableVisual = new PieceVisualSelectImage(origImg,selectImage,getHeight(),getWidth(),ID);
+            }
+            else {
+                Color c = Color.web(img);
+                Node origImg = ((PieceVisualSelectImage) selectableVisual).getImage();
+                selectableVisual = new PieceVisualSelectBorder(origImg,c,getHeight(),getWidth(),ID);
+            }
+        }
+
+
+
     }
 }

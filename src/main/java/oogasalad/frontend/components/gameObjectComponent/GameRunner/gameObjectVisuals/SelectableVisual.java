@@ -6,5 +6,6 @@ public interface SelectableVisual {
     void showClickable();
     void showUnclickable();
     String getObjectID();
-    void updateVisual(Node newVisual);
+    void updateClickableVisual(Node newVisual);
+    void updateUnClickableVisual(Node newVisual);
 }

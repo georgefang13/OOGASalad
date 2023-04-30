@@ -50,7 +50,7 @@ public class SimpleGameView extends Application implements GameController {
         Scene scene = new Scene(root, SCREEN_WIDTH, SCREEN_HEIGHT);
         scene.getStylesheets().add(MODAL_STYLE_SHEET);
 
-        directory = "data/games/tictactoe";
+        directory = "data/games/checkers";
 
         showStartScreen();
 
@@ -77,8 +77,6 @@ public class SimpleGameView extends Application implements GameController {
 
 
     private void startGame(String type) {
-
-        game.startGame();
 
         root.getChildren().retainAll();
         try {
@@ -164,7 +162,7 @@ public class SimpleGameView extends Application implements GameController {
     }
 
     @Override
-    public void addPiece(String id, String image, String dropZoneID, boolean hasSelectImage, Object param, double height, double width) throws FileNotFoundException {
+    public void addPiece(String id, String image, String dropZoneID, boolean hasSelectImage, Object param, double height, double width) {
         double size = height;
         Image img;
         try {
@@ -270,6 +268,11 @@ public class SimpleGameView extends Application implements GameController {
             label.setLayoutY(10);
             root.getChildren().add(label);
         });
+    }
+
+    @Override
+    public void setPieceHighlight(String id, String highlight) {
+
     }
 
     private void clearClickables(){

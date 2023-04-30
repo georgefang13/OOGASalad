@@ -2,6 +2,7 @@ package oogasalad.frontend.components.gameObjectComponent.GameRunner.gameObjectV
 
 import javafx.scene.Node;
 import javafx.scene.layout.HBox;
+import oogasalad.frontend.managers.DisplayManager;
 
 public abstract class AbstractSelectableVisual extends HBox implements SelectableVisual {
     protected String objectID;
@@ -14,7 +15,9 @@ public abstract class AbstractSelectableVisual extends HBox implements Selectabl
         return objectID;
     }
     protected void switchImages(Node oldImage, Node newImage){
-        this.getChildren().remove(oldImage);
-        this.getChildren().add(newImage);
+        if (this.getChildren().contains(oldImage)) {
+            this.getChildren().remove(oldImage);
+            this.getChildren().add(newImage);
+        }
     }
 }

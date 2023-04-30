@@ -26,4 +26,15 @@ public class PieceVisualSelectBorder extends PieceVisual {
     public void showUnclickable() {
         highlightBorder.setStroke(UNSELECTED_BORDER_COLOR);
     }
+
+    @Override
+    public void updateClickableVisual(Node newVisual) {
+        Rectangle r = (Rectangle) newVisual;
+        highlightBorder.setStroke(r.getFill());
+    }
+
+    @Override
+    public void updateUnClickableVisual(Node newVisual) {
+
+    }
 }

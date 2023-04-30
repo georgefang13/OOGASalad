@@ -586,17 +586,24 @@ public class Game implements GameToInterpreterAPI{
     }
 
     @Override
-    public void addObject(Ownable obj, DropZone dz, String image, double size) {
+    public void addObject(Ownable obj, DropZone dz, String image, double width, double height) {
         idManager.addObject(obj);
         putInDropZone(obj, dz);
         String id = idManager.getId(obj);
         String imagePath = this.directory + "/assets/" + image;
-        //controller.addPiece(id, imagePath, idManager.getId(dz),false,null, size,size);
+        controller.addPiece(id, imagePath, idManager.getId(dz), false, "#ff0000", height, width);
     }
 
     @Override
     public void addDropZone(DropZone dz, DropZone location, String image, String highlight, double width, double height) {
 
+    }
+
+    @Override
+    public void setPieceHighlight(Ownable piece, String highlight) {
+        String id = idManager.getId(piece);
+        String imagePath = this.directory + "/assets/" + highlight;
+        controller.setPieceHighlight(id, imagePath);
     }
 
     /**

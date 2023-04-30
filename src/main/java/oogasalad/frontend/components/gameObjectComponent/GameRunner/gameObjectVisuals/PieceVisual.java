@@ -15,8 +15,7 @@ public abstract class PieceVisual extends AbstractSelectableVisual {
         this.setMaxHeight(height);
         this.setMaxWidth(width);
     }
-    @Override
-    public void updateVisual(Node newVisual) {
-        pieceImage = newVisual;
+    public Node getImage(){
+        return pieceImage;
     }
 }

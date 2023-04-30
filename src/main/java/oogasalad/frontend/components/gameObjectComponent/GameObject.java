@@ -57,8 +57,8 @@ public class GameObject extends AbstractComponent implements GameObjectComponent
       return;
     }
     image = new ImageView(newImage);
-    image.setFitWidth(size);
-    image.setFitHeight(size);
+    image.setFitWidth(width);
+    image.setFitHeight(height);
   }
 
   @Override

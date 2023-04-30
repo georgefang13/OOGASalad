@@ -9,11 +9,11 @@ import oogasalad.frontend.components.gameObjectComponent.GameRunner.gameObjectVi
 import oogasalad.frontend.managers.DisplayManager;
 
 public class DropZoneFE extends GameRunnerObject{
-    private final selectableVisualParams unselectedParams;
-    private final selectableVisualParams selectedParams;
+    private final SelectableVisualParams unselectedParams;
+    private SelectableVisualParams selectedParams;
     private final int x;
     private final int y;
-    public DropZoneFE(String ID, selectableVisualParams unselected, selectableVisualParams selected, int width, int height, int x, int y, GameController gameRunnerController) {
+    public DropZoneFE(String ID, SelectableVisualParams unselected, SelectableVisualParams selected, int width, int height, int x, int y, GameController gameRunnerController) {
         super(ID, gameRunnerController);
         setWidth(width);
         setHeight(height);
@@ -30,7 +30,7 @@ public class DropZoneFE extends GameRunnerObject{
         selectableVisual = new DropZoneVisual(unselected,selected,getWidth(),getHeight(),x,y,ID);
     }
 
-    public record selectableVisualParams(boolean hasSelectImage, String param){}
+    public record SelectableVisualParams(boolean hasSelectImage, String param){}
 
     private Node loadDefaultDropRectangle(String hexColor){
         Color fillColor = Color.web(hexColor);
@@ -48,6 +48,13 @@ public class DropZoneFE extends GameRunnerObject{
 
     public Point2D getDropZoneCenter(){
         return getNode().localToScene(getWidth()/2,getHeight()/2);
+    }
+
+    @Override
+    public void setHighlight(String img){
+        boolean hasSelectImage = !img.startsWith("#");
+        selectedParams = new SelectableVisualParams(hasSelectImage, img);
+        setSelectableVisual();
     }
 
 }

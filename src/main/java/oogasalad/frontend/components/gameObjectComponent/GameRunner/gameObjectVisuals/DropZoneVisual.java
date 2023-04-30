@@ -32,7 +32,12 @@ public class DropZoneVisual extends AbstractSelectableVisual {
     }
 
     @Override
-    public void updateVisual(Node newVisual) {
-        unselectedVisual = newVisual;
+    public void updateClickableVisual(Node newVisual) {
+        switchImages(unselectedVisual,newVisual);
+    }
+
+    @Override
+    public void updateUnClickableVisual(Node newVisual) {
+        switchImages(selectedVisual,newVisual);
     }
 }
