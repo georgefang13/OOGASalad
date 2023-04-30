@@ -22,7 +22,7 @@ public class FilesController {
   private final String GAMES_PATH = "data\\games\\";
   private final String gameFolder;
   private final String FILES_NAMES = "Controller/FilesConfig.properties";
-
+  private Map<String, String> generalInfo = new HashMap<>();
   private List<Component> components = new ArrayList<>();
   private List<Component> componentsLater = new ArrayList<>();
   private GameInator game;
@@ -91,6 +91,21 @@ public class FilesController {
     }
     layout.saveToFile(gameFolder + "/frontend/layout.json");
     objects.saveToFile(gameFolder + "/frontend/objects.json");
+
+    FileManager general = new FileManager();
+    for (String tag: generalInfo.keySet()){
+      if(tag.equals("Tags")){
+        String[] tags = generalInfo.get(tag).split(",");
+        for(String individualTag: tags){
+          general.addContent(individualTag, tag);
+        }
+      }
+      else{
+        general.addContent(generalInfo.get(tag), tag);
+        System.out.println(tag);
+      }
+    }
+    general.saveToFile(gameFolder + "/general.json");
   }
 
   /**
@@ -109,5 +124,12 @@ public class FilesController {
     });
 
     return comps;
+  }
+
+  /**
+   * Allows for General Info to be set
+   */
+  public void setGeneral(Map<String, String> map){
+    generalInfo = map;
   }
 }

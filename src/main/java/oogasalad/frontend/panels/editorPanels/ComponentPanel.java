@@ -15,10 +15,11 @@ import javafx.scene.layout.VBox;
 import oogasalad.Controller.FilesController;
 import oogasalad.frontend.modals.ModalController;
 import oogasalad.frontend.modals.subInputModals.CreateNewModal;
+import oogasalad.frontend.panels.ModalPanel;
 import oogasalad.frontend.panels.Panel;
 import oogasalad.sharedDependencies.backend.filemanagers.FileManager;
 
-public class ComponentPanel extends VBox implements Panel {
+public class ComponentPanel extends VBox implements ModalPanel, Panel {
 
   private static final ResourceBundle ELEMENT_LABELS = ResourceBundle.getBundle(
       "frontend/properties/text/english");
