@@ -10,7 +10,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
-import oogasalad.Controller.GameRunnerController;
 import oogasalad.gamerunner.backend.Game;
 import oogasalad.gamerunner.backend.GameController;
 import oogasalad.sharedDependencies.backend.filemanagers.FileManager;
@@ -49,15 +48,15 @@ public class SimpleGameView extends Application implements GameController {
 
         loadGame(directory);
 
-        game = new Game(this, directory, 2, true);
+        game = new Game(this, directory, 2, false);
 
         undoButton.setOnAction(e -> game.undoClickPiece());
         root.getChildren().add(undoButton);
 
-//        game.startGame();
+        game.startGame();
 
 //        game.createOnlineGame();
-        game.joinOnlineGame("525");
+//        game.joinOnlineGame("525");
 
         stage.setScene(scene);
         stage.show();
@@ -81,7 +80,7 @@ public class SimpleGameView extends Application implements GameController {
             int y = Integer.parseInt(fm.getString(id, "y"));
             int height = Integer.parseInt(fm.getString(id, "height"));
             int width = Integer.parseInt(fm.getString(id, "width"));
-            addDropZone(new GameRunnerController.DropZoneParameters(id, x, y, height, width));
+            addDropZone(new GameController.DropZoneParameters(id, x, y, height, width));
         }
     }
 
@@ -95,15 +94,20 @@ public class SimpleGameView extends Application implements GameController {
             addPiece(id, image, dropZoneID, size);
         }
     }
-
-    private void select(String id) {
+    @Override
+    public void select(String id) {
         if (clickable.contains(id)) {
             game.clickPiece(id);
         }
     }
 
     @Override
-    public void addDropZone(GameRunnerController.DropZoneParameters params) {
+    public boolean isObjectPlayable(String id) {
+        return false;
+    }
+
+    @Override
+    public void addDropZone(GameController.DropZoneParameters params) {
         // String id, int x, int y, int height, int width
         HBox dropZone = new HBox();
         dropZone.setPrefWidth(params.width());
@@ -163,7 +167,8 @@ public class SimpleGameView extends Application implements GameController {
         clearClickables();
         clickable.addAll(ids);
         for (String id : ids){
-            nodes.get(id).setStyle("-fx-border-color: red; -fx-border-width: 1px;");
+            Node n = nodes.get(id);
+            n.setStyle("-fx-border-color: red; -fx-border-width: 1px;");
         }
     }
 

@@ -2,8 +2,10 @@ package oogasalad.frontend.components.gameObjectComponent.GameRunner;
 
 import javafx.geometry.Point2D;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
-public class Board {
+public class Board implements FloatingDropHolder{
 
   private int height;
   private int width;
@@ -24,18 +26,33 @@ public class Board {
     for (int row = 0; row < height; row++) {
       for (int col = 0; col < width; col++) {
         BoardCell boardCell = new UnusedCell(blockSize);
-        boardCells[row][col] = boardCell;
-        boardPane.add(boardCell.getDropZoneVisual(), col, row);
+        addBoardCell(boardCell,row,col);
       }
     }
+  }
+
+  public void addBoardCell(BoardCell boardCell, int row, int col){
+    boardCells[row][col] = boardCell;
+    boardPane.add(boardCell.getDropZoneVisual(), col, row);
   }
 
   private int readBlockSize() {
     return 80;
   }
 
-  public GridPane getBoardVisual() {
+  private GridPane getBoardVisual() {
     return boardPane;
+  }
+
+  @Override
+  public HBox getVisual() {
+    HBox boardVisual = new HBox(getBoardVisual());
+    return boardVisual;
+  }
+
+  @Override
+  public String getDropZoneID() {
+    return null;
   }
 
   public record BoardXY(int x, int y) {

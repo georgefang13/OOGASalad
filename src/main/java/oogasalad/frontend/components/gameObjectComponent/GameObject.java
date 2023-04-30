@@ -1,5 +1,6 @@
 package oogasalad.frontend.components.gameObjectComponent;
 
+import java.io.FileInputStream;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.List;
@@ -23,7 +24,7 @@ public class GameObject extends AbstractComponent implements GameObjectComponent
 
   private String name;
   private List<Node> children;
-  private boolean playable;
+
   private ImageView image;
   private double width;
   private double height;
@@ -33,16 +34,20 @@ public class GameObject extends AbstractComponent implements GameObjectComponent
     super(ID);
     children = null;
     instantiatePropFile("frontend.properties.Defaults.GameObject");
-    followMouse();
+    //followMouse();
   }
 
   public GameObject(String ID, Map<String, String> map){
     super(ID);
     children = null;
+    setDraggable(true);
+    instantiatePropFile("frontend.properties.Defaults.GameObject");
+    //setImage(getDEFAULT_BUNDLE().getString(replaceWithFileLoadingByID()));
     setValuesfromMap(map);
     initialize();
     followMouse();
   }
+
 
   private void initialize() {
     image.setFitWidth(width);
@@ -58,11 +63,18 @@ public class GameObject extends AbstractComponent implements GameObjectComponent
       return "X_IMAGE";
     }
   }
-
   @Override
   public void setImage(String imagePath) {
-    Image newImage = new Image(imagePath);
+    Image newImage;
+    try {
+      newImage = new Image(new FileInputStream(imagePath));
+    } catch (Exception e) {
+      System.out.println("Image " + imagePath + " not found");
+      return;
+    }
     image = new ImageView(newImage);
+    image.setFitWidth(size);
+    image.setFitHeight(size);
   }
 
   @Override
@@ -73,11 +85,6 @@ public class GameObject extends AbstractComponent implements GameObjectComponent
   @Override
   public List<Node> getChildren() {
     return children;
-  }
-
-  @Override
-  public void setPlayable(boolean play) {
-    playable = play;
   }
 
   @Override

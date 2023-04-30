@@ -1,166 +1,165 @@
 package oogasalad.Controller;
 
-import javafx.geometry.Point2D;
 import javafx.scene.Node;
-import javafx.scene.layout.GridPane;
-//import oogasalad.frontend.components.gameObjectComponent.GameObject;
-import oogasalad.frontend.components.gameObjectComponent.GameRunner.Board;
+import javafx.scene.layout.BorderPane;
+import oogasalad.frontend.components.gameObjectComponent.GameRunner.DropZoneFE;
 import oogasalad.frontend.components.gameObjectComponent.GameRunner.GameRunnerObject;
 import oogasalad.frontend.components.gameObjectComponent.GameRunner.Piece;
-import oogasalad.frontend.scenes.GamePlayerMainScene;
+import oogasalad.frontend.components.gameObjectComponent.GameRunner.SelectableVisual;
 import oogasalad.gamerunner.backend.Game;
 import oogasalad.gamerunner.backend.GameController;
 import oogasalad.sharedDependencies.backend.filemanagers.FileManager;
-import oogasalad.sharedDependencies.backend.ownables.gameobjects.DropZone;
-import oogasalad.sharedDependencies.backend.ownables.gameobjects.GameObject;
 
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class GameRunnerController implements GameController {
+    private final Map<String, GameRunnerObject> gameObjects = new HashMap<>();
+    private final Map<String, String> pieceToDropZoneMap = new HashMap<>();
+    private BorderPane root;
+    private final HashSet<String> clickable = new HashSet<>();
     private Game game;
-    private GamePlayerMainScene gamePlayerMainScene;
 
-    private String playerTurn;
-    private Board board;
-    private Map<Integer, Piece> pieceMap;
-    private Map<String, GameObject> backendPieces;
-    private Map<String, DropZone> backendDropZones;
-    String directory;
-
-    public GameRunnerController(GamePlayerMainScene gamePlayerMainScene) {
-        this.gamePlayerMainScene = gamePlayerMainScene;
-
-        directory = "data/games/tictactoe";
-        int numPlayers = 2; //hardcoded read from file
-
-        game = new Game(this,directory,numPlayers, false);
-        pieceMap = new HashMap<>();
+    public GameRunnerController(BorderPane root, String gameName) {
+        this.root = root;
+        String directory = "data/games/"+gameName;
+        int numPlayers = 2;
+        try {
+            game = new Game(this,directory,numPlayers,false);
+            loadGame(directory);
+            game.startGame();
+        } catch (FileNotFoundException e){
+            System.out.println("FAIL"); //TODO: error handle
+        }
+    }
+    private void loadGame(String directory) throws FileNotFoundException {
+        directory = directory + "/frontend";
+        loadDropZones(directory);
+        loadPieces(directory);
     }
 
-    public String userResponds(String pieceID, String dropzoneID) {
-        GameObject piece = backendPieces.get(pieceID);
-        DropZone dropZone = backendDropZones.get(dropzoneID);
-        game.movePiece(piece,dropZone,pieceID);
-        return "pass";
+    private void loadDropZones(String directory) throws FileNotFoundException {
+        FileManager fm = new FileManager(directory + "/layout.json");
+        for (String id : fm.getTagsAtLevel()){
+            int x = Integer.parseInt(fm.getString(id, "x"));
+            int y = Integer.parseInt(fm.getString(id, "y"));
+            int height = Integer.parseInt(fm.getString(id, "height"));
+            int width = Integer.parseInt(fm.getString(id, "width"));
+            addDropZone(new GameController.DropZoneParameters(id, x, y, height, width));
+        }
     }
 
-    public String initialInstruction() {
-        //String response = fsmExample.getInstruction();
-        return "pass"; //parseResponse(response);
+    private void loadPieces(String directory) throws FileNotFoundException {
+        FileManager fm = new FileManager(directory + "/objects.json");
+        for (String id : fm.getTagsAtLevel()){
+            String image = fm.getString(id, "image");
+            image = directory.substring(0, directory.lastIndexOf("/")) + "/assets/" + image;
+            String dropZoneID = fm.getString(id, "location");
+            double size = Double.parseDouble(fm.getString(id, "size"));
+            addPiece(id, image, dropZoneID, size);
+        }
     }
-
-    public GridPane initializeBoard() {
-        //Will load these from backend file somehow or when created via modal
-        int height = 3;
-        int width = 3;
-        board = new Board(height, width);
-
-        return board.getBoardVisual();
+    @Override
+    public void select(String id) {
+        if (clickable.contains(id)) {
+            game.clickPiece(id);
+        }
     }
 
     @Override
-    public void addDropZone(DropZoneParameters params){
-
+    public void addDropZone(GameController.DropZoneParameters params) {
+        System.out.println(params.id());
+        DropZoneFE dropZone = new DropZoneFE(params.id(), params.width(), params.height(), params.x(),params.y(),this);
+        gameObjects.put(params.id(),dropZone);
+        root.getChildren().add(dropZone.getNode());
     }
 
     @Override
-    public void addPiece(String id, String image, String DropZoneID, double size){
-//        GameObject piece = new Game
-//        piece.setImage(image);
-//        piece.setSize(size);
+    public void addPiece(String id, String imagePath, String dropZoneID, double size) {
+        System.out.println(id);
+        Piece piece = new Piece(id,this, imagePath, size);
+        DropZoneFE dropZone = (DropZoneFE) gameObjects.get(dropZoneID);
+        piece.moveToDropZoneXY(dropZone.getDropZoneCenter());
+        gameObjects.put(id,piece);
+        pieceToDropZoneMap.put(id, dropZoneID);
+        root.getChildren().add(piece.getNode());
     }
 
     @Override
-    public void setClickable(List<String> ids){
-
+    public void setClickable(List<String> ids) {
+        System.out.println("set clickable");
+        clearClickables();
+        clickable.addAll(ids);
+        for (String id : ids){
+            System.out.println(id);
+            gameObjects.get(id).makePlayable();
+            //AbstractSelectableVisual gameObjectVisual = (AbstractSelectableVisual) gameObjects.get(id).getNode();
+            //gameObjectVisual.showClickable();
+        }
     }
 
     @Override
-    public void movePiece(String id, String dropZoneID) {
-
-
+    public void movePiece(String pieceID, String dropZoneID) {
+        DropZoneFE dropZone = (DropZoneFE) gameObjects.get(dropZoneID);
+        //pieces.get(pieceID).moveToDropZoneXY(dropZone.getDropZoneCenter());
+        pieceToDropZoneMap.put(pieceID, dropZoneID);
     }
 
     @Override
-    public void removePiece(String id) {
-
+    public void removePiece(String pieceID) {
+        pieceToDropZoneMap.remove(pieceID);
+        root.getChildren().remove(gameObjects.get(pieceID).getNode());
+        gameObjects.remove(gameObjects.get(pieceID));
     }
 
     @Override
     public void setObjectImage(String id, String imagePath) {
-
-    }
-
-    public record DropZoneParameters(String id, int x, int y, int height, int width){}
-
-    private void parseDropZoneLayout() throws FileNotFoundException {
-        FileManager DZparser = new FileManager(directory + "/layout.json");
-    }
-
-    private String parseResponse(String response) {
-        String[] splitResponse = response.split("Turn: ");
-        String[] secondSplit = splitResponse[1].split("\n");
-        playerTurn = playerDoubleStringtoName(secondSplit[0]);
-        System.out.print("player turn: ");
-        System.out.println(playerTurn);
-        return "Turn: " + playerTurn + secondSplit[1];
-    }
-
-    private String playerDoubleStringtoName(String doubleString){ //FILE
-        double dub = Double.parseDouble(doubleString);
-        int playeridx = Integer.valueOf((int) dub);
-        String[] players = {"X","O"};
-        return players[playeridx];
-    }
-
-    public ArrayList<Node> initializePieces() {
-        ArrayList<Node> pieceNodes = new ArrayList<>();
-        for (int i = 1; i <= 10; i++) {
-            int pieceID = i;
-            Piece piece = new Piece(Integer.toString(pieceID),this);
-            piece.setSize(0.2);
-            pieceMap.put(pieceID,piece);
-            pieceNodes.add(piece.getNode());
+        /*
+        Image img;
+        try {
+            img = new Image(new FileInputStream(imagePath));
+        } catch (Exception e) {
+            System.out.println("Image " + imagePath + " not found");
+            return;
         }
-        return pieceNodes;
+        ImageView imgv = new ImageView(img);
+        ImageView oldimg = (ImageView) ((HBox) gameObjects.get(id).getNode()).getChildren().get(0);
+        int size = (int) oldimg.getFitWidth();
+
+        imgv.setFitWidth(size);
+        imgv.setFitHeight(size);
+        AbstractSelectableVisual gameObjectVisual = (AbstractSelectableVisual) gameObjects.get(id).getNode();
+        gameObjectVisual.updateVisual(imgv);
+         */
+        System.out.println("updating Visual");
+        System.out.println(imagePath);
+        GameRunnerObject gameObject = gameObjects.get(id);
+        gameObject.setImage(imagePath);
+        SelectableVisual selectableVisual = (SelectableVisual) gameObject.getNode();
+        root.getChildren().remove(selectableVisual);
+        selectableVisual.updateVisual(gameObject.getImage());
+        root.getChildren().add((Node) selectableVisual);
     }
 
-    public void updatePieceMove(int id) {
-        Piece piece = pieceMap.get(id);
-        Board.BoardXY boardXY = getPieceBoardLocation(piece.getNode());
-        int boardX = boardXY.x();
-        int boardY = boardXY.y();
-        if ((boardX != -1) && (boardY != -1)){
-            if (playerTurn == replaceWithFileLoaderThatAssignIDtoPiece(id)) {
-                String userInput = boardY + "," + boardX;
-                System.out.println(userInput);
-                //String fsmReturn = userResponds(userInput);
-                //String newInstruction = parseResponse(fsmReturn);
-                gamePlayerMainScene.refreshInstructions("pass");
-            }
-            else {
-                String newInstruction = "ITS NOT YOUR MOVE!!!";
-                gamePlayerMainScene.refreshInstructions(newInstruction);
-                piece.goBack();
-            }
+    private void clearClickables(){
+        for (String id : clickable){
+            gameObjects.get(id).makeUnplayable();
+            //AbstractSelectableVisual gameObjectVisual = (AbstractSelectableVisual) gameObjects.get(id).getNode();
+            //gameObjectVisual.showUnclickable();
         }
-        piece.acceptDrag();
+        clickable.clear();
     }
-    private String replaceWithFileLoaderThatAssignIDtoPiece(int id){
-        if (id < 6){
-            return "O";
-        }
-        else {
-            return "X";
-        }
+    @Override
+    public boolean isObjectPlayable(String id){
+        return gameObjects.get(id).getPlayable();
     }
-    private Board.BoardXY getPieceBoardLocation(Node node) {
-        Point2D gridPaneXY = gamePlayerMainScene.getNodeXYOnGrid(node);
-        Board.BoardXY boardXY = board.boardXYofNode(gridPaneXY);
-        return boardXY;
+
+    public ArrayList<Node> getNodes(){
+        ArrayList<Node> nodelist = new ArrayList<>();
+        for (GameRunnerObject gameObject : gameObjects.values()) {
+            nodelist.add(gameObject.getNode());
+        }
+        return nodelist;
     }
 }
+
