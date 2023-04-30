@@ -39,7 +39,14 @@ public class Piece extends GameRunnerObject{
             selectableVisual = new PieceVisualSelectBorder(img,selectBorderColor,getHeight(),getWidth(),ID);
         }
     }
-
+    public void moveToDropZoneXY(Point2D dropZoneCenter){
+        Point2D pieceCenter = getNode().localToScene(getWidth()/2,getHeight()/2);
+        double shiftX = dropZoneCenter.getX() - pieceCenter.getX();
+        double shiftY = dropZoneCenter.getY() - pieceCenter.getY();
+        getNode().setTranslateX(getNode().getTranslateX() + shiftX);
+        getNode().setTranslateY(getNode().getTranslateY() + shiftY);
+        acceptDrag();
+    }
     private void setDragSelection() {
         getNode().setOnDragDetected(e -> {
             if (playable){
@@ -63,9 +70,8 @@ public class Piece extends GameRunnerObject{
         } else {
             goBack();
         }
-
     }
-    public DropZoneVisual getIntersectingDropZones(){
+    private DropZoneVisual getIntersectingDropZones(){
         Bounds pieceBounds = getNode().localToScene(getNode().getBoundsInLocal());
         for (Node n : getNode().getParent().getChildrenUnmodifiable()) {
             if (n instanceof DropZoneVisual){
@@ -76,41 +82,12 @@ public class Piece extends GameRunnerObject{
         }
         return null;
     }
-
-    public void moveToDropZoneXY(Point2D dropZoneCenter){
-        setCentertoCenter(dropZoneCenter.getX(), dropZoneCenter.getY());
-        acceptDrag();
-    }
-    private void setCentertoCenter(double x, double y){
-        double currentTranslateX = getNode().getTranslateX();
-        double currentTranslateY = getNode().getTranslateY();
-        System.out.println(currentTranslateX);
-        System.out.println(currentTranslateY);
-        double shiftX = x; //- getWidth()/2;
-        double shiftY = y; //- getHeight()/2;
-        System.out.println(shiftX);
-        System.out.println(shiftY);
-        if (getNode() != null) {
-            Point2D positionInScene = getNode().localToScene(getWidth()/2,getHeight()/2);
-            shiftX -= positionInScene.getX();
-            System.out.println(shiftX);
-            shiftY -= positionInScene.getY();
-            System.out.println(shiftY);
-        } else {
-            currentTranslateX = 0;
-            currentTranslateY = 0;
-
-        }
-        getNode().setTranslateX(currentTranslateX + shiftX);
-        getNode().setTranslateY(currentTranslateY + shiftY);
-    }
-    public void acceptDrag() {
+    private void acceptDrag() {
         Node node = getNode();
         lastTranslateX = node.getTranslateX();
         lastTranslateY = node.getTranslateY();
     }
-
-    public void goBack() {
+    private void goBack() {
         Node node = getNode();
         node.setTranslateX(lastTranslateX);
         node.setTranslateY(lastTranslateY);
