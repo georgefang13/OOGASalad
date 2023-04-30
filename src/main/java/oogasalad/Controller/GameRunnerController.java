@@ -68,7 +68,6 @@ public class GameRunnerController implements GameController {
 
     @Override
     public void addDropZone(GameController.DropZoneParameters params) {
-        System.out.println(params.id());
         DropZoneFE dropZone = new DropZoneFE(params.id(), params.width(), params.height(), params.x(),params.y(),this);
         gameObjects.put(params.id(),dropZone);
         root.getChildren().add(dropZone.getNode());
@@ -76,7 +75,6 @@ public class GameRunnerController implements GameController {
 
     @Override
     public void addPiece(String id, String imagePath, String dropZoneID, double size) {
-        System.out.println(id);
         Piece piece = new Piece(id,this, imagePath, size);
         DropZoneFE dropZone = (DropZoneFE) gameObjects.get(dropZoneID);
         piece.moveToDropZoneXY(dropZone.getDropZoneCenter());
@@ -87,7 +85,6 @@ public class GameRunnerController implements GameController {
 
     @Override
     public void setClickable(List<String> ids) {
-        System.out.println("set clickable");
         clearClickables();
         clickable.addAll(ids);
         for (String id : ids){
