@@ -21,7 +21,7 @@ public class SetPlayerOwner extends OperatorToken {
         ValueToken<Ownable> obj = checkArgumentWithSubtype(env, t1, ValueToken.class, Ownable.class.getName());
         ValueToken<Owner> owner = checkArgumentWithSubtype(env, t2, ValueToken.class, Owner.class.getName());
 
-        env.getGame().setPlayerOwner(obj.VALUE, owner.VALUE);
+        env.getIdManager().setPlayerOwner(obj.VALUE, owner.VALUE);
         return null;
     }
 }

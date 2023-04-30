@@ -29,11 +29,14 @@ public class SocketRunner implements OnlineRunner {
 
         socket.on("change", args -> {
            String obj = (String) args[0];
-            System.out.println("FOUND CLICK " + obj);
-           game.clickPiece(obj, false);
+           if (obj.equals("^undo")){
+               game.undoClickPiece(false);
+           } else {
+               game.clickPiece(obj, false);
+           }
         });
         socket.on("player", args -> {
-            game.setNumPlayers((int) args[0]);
+            game.setNumOnlinePlayers((int) args[0]);
         });
         socket.on("start", args -> {
             game.startOnlineGame();
@@ -60,9 +63,11 @@ public class SocketRunner implements OnlineRunner {
     @Override
     public void create(){
         socket.emit("create");
+        System.out.println("creating room...");
         socket.once("room", args -> {
             playerNum = 0;
             code = (String) args[0];
+            game.sendCode(code);
             System.out.println("CODE: " + code);
         });
     }
@@ -72,7 +77,7 @@ public class SocketRunner implements OnlineRunner {
         socket.once("entered", args -> {
             System.out.println("Entered!");
             playerNum = ((int) args[0]) - 1;
-            game.setNumPlayers(playerNum + 1);
+            game.setNumOnlinePlayers(playerNum + 1);
             this.code = code;
         });
     }

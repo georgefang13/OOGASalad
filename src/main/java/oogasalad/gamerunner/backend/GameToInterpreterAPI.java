@@ -13,30 +13,48 @@ import oogasalad.sharedDependencies.backend.rules.RuleManager;
  */
 public interface GameToInterpreterAPI {
 
-    Player getPlayer(int playerNum);
+    /**
+     * Returns the player with the given number. Returns the GameWorld if -1
+     * @param playerNum the number of the player to return
+     * @return the player with the given number
+     */
+    Owner getPlayer(int playerNum);
 
+    /**
+     * Returns the DropZone that a piece is in
+     * @param piece the piece to find the location of
+     * @return the DropZone that the piece is in
+     */
     DropZone getPieceLocation(Ownable piece);
 
-    void movePiece(GameObject piece, DropZone dz, String name);
+    /**
+     * Moves a GameObject to the selected DropZone
+     * @param piece the piece to move
+     * @param dz the DropZone to move the piece to
+     */
+    void movePiece(GameObject piece, DropZone dz);
 
+    /**
+     * Removes a piece from the game
+     * @param piece the piece to remove
+     */
     void removePiece(GameObject piece);
 
-    void putInDropZone(Ownable element, DropZone dropZone, String name);
+    /**
+     * Adds a piece to the game
+     * @param element
+     * @param dropZone
+     */
+    void putInDropZone(Ownable element, DropZone dropZone);
 
     void increaseTurn();
 
     void setTurn(double turn);
 
-    void putClass(IdManageable obj, String name);
-
-    void removeClass(IdManageable obj, String name);
-
     void setObjectImage(Ownable obj, String image);
 
-    void setObjectOwner(Ownable obj, Ownable owner);
-
-    void setPlayerOwner(Ownable obj, Owner owner);
-
+    void addObject(Ownable obj, DropZone dz, String image, double size);
+    void addDropZone(DropZone dz, DropZone location, String image, String highlight, double width, double height);
     RuleManager getRules();
 
 }

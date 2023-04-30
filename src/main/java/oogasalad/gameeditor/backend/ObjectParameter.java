@@ -48,7 +48,12 @@ public enum ObjectParameter {
    */
   RULE_STR,
   RULE_CLS,
-  RULE_NAME
+  RULE_NAME,
+
+  /**
+   * Destination DropZone ID for a new GameObject
+   */
+  DROPZONE_ID,
 
   //endregion FOR CONSTRUCTOR_ARGS
 

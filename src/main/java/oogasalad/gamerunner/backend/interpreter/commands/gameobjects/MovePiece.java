@@ -1,4 +1,4 @@
-package oogasalad.gamerunner.backend.interpreter.commands.game;
+package oogasalad.gamerunner.backend.interpreter.commands.gameobjects;
 
 import oogasalad.gamerunner.backend.interpreter.Environment;
 import oogasalad.gamerunner.backend.interpreter.tokens.OperatorToken;
@@ -26,14 +26,7 @@ public class MovePiece extends OperatorToken {
         GameObject obj = objVar.VALUE;
         DropZone dz = dzVar.VALUE;
 
-        DropZone oldDz = env.getGame().getPieceLocation(obj);
-        String key = env.getIdManager().getId(obj);
-
-        if (oldDz != null){
-            key = oldDz.getKey(obj);
-        }
-
-        env.getGame().movePiece(obj, dz, key);
+        env.getGame().movePiece(obj, dz);
 
         return null;
     }

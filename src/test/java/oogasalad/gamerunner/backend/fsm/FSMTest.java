@@ -209,7 +209,7 @@ public class FSMTest {
   @Test
   void testProgrammableState() {
     TestGame game = new TestGame();
-    idManager = game.getOwnableIdManager();
+    idManager = game.getIdManager();
     Interpreter interpreter = game.getInterpreter();
     fsm = new FSM<>(idManager);
 
@@ -257,9 +257,9 @@ public class FSMTest {
                 {"init", ""},
                 {"leave", "getAvailable"},
                 {"setValue", "ifelse == :game_turn 0 [ " +
-                    "putdzitem \"obj :game_X fromgame :game_state_input " +
+                    "putdzitem :game_X fromgame :game_state_input " +
                     " ] [ " +
-                    "putdzitem \"obj :game_O fromgame :game_state_input " +
+                    "putdzitem :game_O fromgame :game_state_input " +
                     "] getAvailable"},
             }).collect(Collectors.toMap(data -> ((String[]) data)[0], data -> ((String[]) data)[1]))},
 

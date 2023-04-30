@@ -1,7 +1,6 @@
-package oogasalad.gamerunner.backend.interpreter.commands.game;
+package oogasalad.gamerunner.backend.interpreter.commands.dropzones;
 
 import oogasalad.gamerunner.backend.interpreter.Environment;
-import oogasalad.gamerunner.backend.interpreter.tokens.ExpressionToken;
 import oogasalad.gamerunner.backend.interpreter.tokens.OperatorToken;
 import oogasalad.gamerunner.backend.interpreter.tokens.Token;
 import oogasalad.gamerunner.backend.interpreter.tokens.ValueToken;
@@ -12,9 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class GetDzNeighbors extends OperatorToken {
-    public GetDzNeighbors() {
-        super(1, "GetDzNeighbors");
+public class DropZonePaths extends OperatorToken {
+    public DropZonePaths() {
+        super(1, "DropZonePaths");
     }
     @Override
     public Token evaluate(Environment env) throws IllegalArgumentException {
@@ -22,10 +21,9 @@ public class GetDzNeighbors extends OperatorToken {
 
         ValueToken<DropZone> x = checkArgumentWithSubtype(env, t, ValueToken.class, DropZone.class.getName());
 
-        Map<String, DropZone> edges = x.VALUE.getEdges();
-
-        List<DropZone> names = new ArrayList<>(edges.values());
-        Variable<List<DropZone>> var = new Variable<>(names);
+        Map<String, DropZone> items = x.VALUE.getEdges();
+        List<String> names = new ArrayList<>(items.keySet());
+        Variable<List<String>> var = new Variable<>(names);
         return env.convertVariableToToken(var);
     }
 }
