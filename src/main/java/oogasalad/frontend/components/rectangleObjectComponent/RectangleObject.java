@@ -17,6 +17,13 @@ public class RectangleObject extends AbstractComponent implements RectangleObjec
     private Color color;
     private double rotate;
 
+    public RectangleObject(String ID){
+        super(ID);
+        instantiatePropFile("frontend.properties.Defaults.RectangleObject");
+        //this.setDefault();
+        this.followMouse();
+        this.getNode();
+    }
     public RectangleObject(String ID, Map<String, String> map){
         super(ID);
         setValuesfromMap(map);

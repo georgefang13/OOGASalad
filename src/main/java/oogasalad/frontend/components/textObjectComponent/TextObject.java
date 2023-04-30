@@ -16,6 +16,14 @@ public class TextObject extends AbstractComponent implements TextObjectComponent
     private Color color;
     private double rotate;
 
+    public TextObject(String id) {
+        super(id);
+        instantiatePropFile("frontend.properties.Defaults.TextObject");
+        //this.setDefault();
+        this.followMouse();
+        this.getNode();
+    }
+
     public TextObject(String ID, Map<String, String> map){
         super(ID);
         setValuesfromMap(map);

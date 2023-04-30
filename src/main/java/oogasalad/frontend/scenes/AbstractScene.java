@@ -50,7 +50,7 @@ public abstract class AbstractScene implements PropertiesObserver, ThemeObserver
     modalStage.showAndWait();
   }
 
-  protected Scene getScene() {
+  public Scene getScene() {
     return scene;
   }
 

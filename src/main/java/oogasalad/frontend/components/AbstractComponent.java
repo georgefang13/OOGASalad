@@ -12,21 +12,21 @@ import javafx.scene.control.ColorPicker;
  * @author Han and Aryan AbstractComponent is the abstraction that all Components are built off of.
  */
 public abstract class AbstractComponent implements Component {
-  private String ID;
-  private Node node;
+  protected String ID;
+  protected Node node;
   private boolean draggable;
   private boolean active;
   private boolean visible;
   private int zIndex;
-  private double size;
   private double XOffset;
   private double YOffset;
+
+  protected double size;
 
   private Point absolute;
   private Point editor;
   private String DEFAULT_FILE_PATH;
   private ResourceBundle DEFAULT_BUNDLE;
-
   private String name;
   private double width;
   private double height;
@@ -86,11 +86,12 @@ public abstract class AbstractComponent implements Component {
     getNode().setOnMousePressed(e -> {
       XOffset = e.getSceneX() - (getNode().getTranslateX());
       YOffset = e.getSceneY() - (getNode().getTranslateY());
-
     });
     getNode().setOnMouseDragged(e -> {
-      getNode().setTranslateX(e.getSceneX() - XOffset);
-      getNode().setTranslateY(e.getSceneY() - YOffset);
+      if (draggable) {
+        getNode().setTranslateX(e.getSceneX() - XOffset);
+        getNode().setTranslateY(e.getSceneY() - YOffset);
+      }
     });
   }
   @Override
@@ -107,8 +108,8 @@ public abstract class AbstractComponent implements Component {
   @Override
   public void setSize(double size) {
     this.size = size;
-    getNode().setScaleY(size);
-    getNode().setScaleX(size);
+    //getNode().setScaleY(size);
+    //getNode().setScaleX(size);
   }
 
   @Override
@@ -159,5 +160,10 @@ public abstract class AbstractComponent implements Component {
   }
   protected void setEditorPoint(Point ed){
     editor = ed;
+  }
+
+  protected void resetOffset(){
+    XOffset = 0;
+    YOffset = 0;
   }
 }

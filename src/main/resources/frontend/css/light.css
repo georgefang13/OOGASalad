@@ -155,6 +155,12 @@
   -fx-fill: white;
   -fx-font-size: 16;
 }
+.game-box-tooltip {
+  -fx-background-color: #54576F;
+  -fx-background-radius: 0;
+  -fx-border-radius: 0;
+  -fx-text-fill: white;
+}
 
 
 /* HeaderPanel */
