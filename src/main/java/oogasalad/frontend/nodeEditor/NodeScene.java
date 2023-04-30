@@ -7,6 +7,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +16,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.HBox;
+import oogasalad.frontend.nodeEditor.Config.NodeData;
 import oogasalad.frontend.nodeEditor.Nodes.AbstractNode;
 import oogasalad.frontend.scenes.AbstractScene;
 
@@ -67,7 +69,7 @@ public class NodeScene extends AbstractScene {
       String action = entry.getValue().getAction();
       String content = entry.getValue().getAllNodeContent();
       List<AbstractNode> listOfNodes = entry.getValue().getAllNodes();
-//      entry.getValue().saveNodesToFile(listOfNodes, CONFIG_JSON_PATH);
+      makeConfigFile(listOfNodes);
 
       if (!stateObject.has(state)) {
         JsonObject stateJson = new JsonObject();
@@ -85,6 +87,25 @@ public class NodeScene extends AbstractScene {
     }
   }
 
+  //private void makeInterpreterFile(List<AbstractNode> nodes)
+
+
+
+  private void makeConfigFile(List<AbstractNode> nodes){
+    System.out.println(nodes);
+    List<NodeData> nodeDataList = new ArrayList<>();
+    for(AbstractNode node : nodes){
+      nodeDataList.add(node.getNodeData());
+    }
+    Gson gson = new Gson();
+    String jsonString = gson.toJson(nodeDataList);
+
+    try (FileWriter fileWriter = new FileWriter(CONFIG_JSON_PATH)) {
+      fileWriter.write(jsonString);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
   public Scene getScene() {
     return scene;
   }
