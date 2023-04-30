@@ -26,7 +26,7 @@ public class SplashMainScene extends AbstractScene {
   private static final String LANGUAGE_DIRECTORY_PATH = "src/main/resources/frontend/properties/text";
   private static final String LANGUAGE_PLACEHOLDER = "english";
   private static final String THEME_DIRECTORY_PATH = "src/main/resources/frontend/css";
-  private static final String THEME_PLACEHOLDER = "light";
+  private static final String THEME_PLACEHOLDER = "dark";
   private static final ResourceBundle ELEMENT_LABELS = ResourceBundle.getBundle(
       "frontend/properties/text/english");
   private static final String USERNAME = "Username";
