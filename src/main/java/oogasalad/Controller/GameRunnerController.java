@@ -4,36 +4,27 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import oogasalad.frontend.components.gameObjectComponent.GameRunner.*;
-import oogasalad.frontend.components.gameObjectComponent.GameRunner.DropZoneFE;
-import oogasalad.frontend.components.gameObjectComponent.GameRunner.GameRunnerObject;
-import oogasalad.frontend.components.gameObjectComponent.GameRunner.Piece;
-import oogasalad.frontend.components.gameObjectComponent.GameRunner.SelectableVisual;
 import oogasalad.frontend.managers.DisplayManager;
 import oogasalad.gamerunner.backend.Game;
 import oogasalad.gamerunner.backend.GameController;
 import oogasalad.sharedDependencies.backend.filemanagers.FileManager;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.*;
-import java.util.List;
 
 public class GameRunnerController implements GameController {
     private final Map<String, GameRunnerObject> gameObjects = new HashMap<>();
+    private final ObservableList<Node> gameObjectVisualsList = FXCollections.observableArrayList();
     private final Map<String, String> pieceToDropZoneMap = new HashMap<>();
     private final HashSet<String> clickable = new HashSet<>();
     private Game game;
-    private BorderPane root;
 
-    public GameRunnerController(String gameName, BorderPane root) {
+    public GameRunnerController(String gameName) {
         String directory = "data/games/"+gameName;
-        this.root = root;
         int numPlayers = 2;
         try {
             game = new Game(this,directory,numPlayers,false);
@@ -116,7 +107,7 @@ public class GameRunnerController implements GameController {
     public void addDropZone(GameController.DropZoneParameters params) {
         DropZoneFE dropZone = new DropZoneFE(params.id(), params.unselected(), params.selected(), params.width(), params.height(), params.x(),params.y(),this);
         gameObjects.put(params.id(),dropZone);
-        //root.getChildren().add(dropZone.getNode());
+        addGameObject(params.id(),dropZone);
     }
 
     @Override
@@ -124,9 +115,16 @@ public class GameRunnerController implements GameController {
         Piece piece = new Piece(id,this, imagePath, hasSelectImage, param ,height, width);
         DropZoneFE dropZone = (DropZoneFE) gameObjects.get(dropZoneID);
         piece.moveToDropZoneXY(dropZone.getDropZoneCenter());
-        gameObjects.put(id,piece);
         pieceToDropZoneMap.put(id, dropZoneID);
-        //root.getChildren().add(piece.getNode());
+        addGameObject(id,piece);
+    }
+    private void addGameObject(String id, GameRunnerObject gameObject){
+        gameObjects.put(id,gameObject);
+        gameObjectVisualsList.add(gameObject.getNode());
+    }
+    private void removeGameObject(String id){
+        gameObjectVisualsList.remove(gameObjects.get(id).getNode());
+        gameObjects.remove(id);
     }
 
     @Override
@@ -135,8 +133,6 @@ public class GameRunnerController implements GameController {
         clickable.addAll(ids);
         for (String id : ids){
             gameObjects.get(id).makePlayable();
-            //AbstractSelectableVisual gameObjectVisual = (AbstractSelectableVisual) gameObjects.get(id).getNode();
-            //gameObjectVisual.showClickable();
         }
     }
 
@@ -151,44 +147,20 @@ public class GameRunnerController implements GameController {
     @Override
     public void removePiece(String pieceID) {
         pieceToDropZoneMap.remove(pieceID);
-        //root.getChildren().remove(gameObjects.get(pieceID).getNode());
-        gameObjects.remove(gameObjects.get(pieceID));
+        removeGameObject(pieceID);
     }
 
     @Override
     public void setObjectImage(String id, String imagePath) {
-        /*
-        Image img;
-        try {
-            img = new Image(new FileInputStream(imagePath));
-        } catch (Exception e) {
-            System.out.println("Image " + imagePath + " not found");
-            return;
-        }
-        ImageView imgv = new ImageView(img);
-        ImageView oldimg = (ImageView) ((HBox) gameObjects.get(id).getNode()).getChildren().get(0);
-        int size = (int) oldimg.getFitWidth();
-
-        imgv.setFitWidth(size);
-        imgv.setFitHeight(size);
-        AbstractSelectableVisual gameObjectVisual = (AbstractSelectableVisual) gameObjects.get(id).getNode();
-        gameObjectVisual.updateVisual(imgv);
-         */
-        System.out.println("updating Visual");
-        System.out.println(imagePath);
         GameRunnerObject gameObject = gameObjects.get(id);
         gameObject.setImage(imagePath);
         SelectableVisual selectableVisual = (SelectableVisual) gameObject.getNode();
-        //root.getChildren().remove(selectableVisual);
         selectableVisual.updateVisual(gameObject.getImage());
-        //root.getChildren().add((Node) selectableVisual);
     }
 
     private void clearClickables(){
         for (String id : clickable){
             gameObjects.get(id).makeUnplayable();
-            //AbstractSelectableVisual gameObjectVisual = (AbstractSelectableVisual) gameObjects.get(id).getNode();
-            //gameObjectVisual.showUnclickable();
         }
         clickable.clear();
     }
@@ -197,11 +169,8 @@ public class GameRunnerController implements GameController {
         return gameObjects.get(id).getPlayable();
     }
 
+    @Override
     public ObservableList<Node> getGameObjectVisuals(){
-        ObservableList<Node> ObjectVisualList = FXCollections.observableArrayList();
-        for (GameRunnerObject gameObject : gameObjects.values()) {
-            ObjectVisualList.add(gameObject.getNode());
-        }
         Comparator<Node> nodeComparator = new Comparator<Node>() {
             @Override
             public int compare(Node node1, Node node2) {
@@ -214,8 +183,8 @@ public class GameRunnerController implements GameController {
                 }
             }
         };
-        Collections.sort(ObjectVisualList, nodeComparator);
-        return ObjectVisualList;
+        Collections.sort(gameObjectVisualsList, nodeComparator);
+        return gameObjectVisualsList;
     }
 }
 

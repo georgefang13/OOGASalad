@@ -2,6 +2,7 @@ package oogasalad.simpleGameUI;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -104,6 +105,11 @@ public class SimpleGameView extends Application implements GameController {
     @Override
     public boolean isObjectPlayable(String id) {
         return false;
+    }
+
+    @Override
+    public ObservableList<Node> getGameObjectVisuals() {
+        return null;
     }
 
     @Override
