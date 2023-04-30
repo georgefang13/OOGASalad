@@ -5,8 +5,10 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class UserManager {
-  private final static String COLLECTION = "Login Information";
-  private final static String ENTRY = "Users";
+  private static final String COLLECTION = "Users";
+  private static final String PASSWORD_TAG = "password";
+  private static final String SECURITY_QUESTION_TAG = "question";
+  private static final String SECURITY_ANSWER_TAG = "answer";
 
   private final Database db;
 
@@ -21,10 +23,11 @@ public class UserManager {
    * @return true if login is successful, else false (user doesn't exist or password doesn't match)
    */
   public boolean tryLogin(String username, String password) {
-    if (username == null || username.equals("")) {
+    if (username == null || username.equals("") || (! db.hasEntry(COLLECTION, username))
+    || password == null) {
       return false;
     }
-    Object storedPassword = db.getData(COLLECTION, ENTRY, username);
+    Object storedPassword = db.getData(COLLECTION, username, PASSWORD_TAG);
     return (encrypt(password).equals(storedPassword));
   }
 
@@ -35,11 +38,10 @@ public class UserManager {
    * @return true if register is successful, else false (user already exists)
    */
   public boolean tryRegister(String username, String password) {
-    Object storedPassword = db.getData(COLLECTION, ENTRY, username);
-    if (storedPassword != null) {
+    if (db.hasEntry(COLLECTION, username)) {
       return false;
     }
-    db.addData(COLLECTION, ENTRY, username, encrypt(password));
+    db.addData(COLLECTION, username, PASSWORD_TAG, encrypt(password));
     return true;
   }
 

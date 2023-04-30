@@ -101,6 +101,31 @@ public class Database {
   }
 
   /**
+   * Delete entire entry in database (recursively deleting all associated fields)
+   * @param collection collection to be deleted
+   * @param entry entry within collection
+   */
+  public void deleteEntry(String collection, String entry) {
+    database.collection(collection).document(entry).delete();
+  }
+
+  /**
+   * Checks if a collection in the database contains a certain entry
+   *
+   * @param collection collection in database
+   * @param entry entry in collection
+   * @return boolean, true if collection has entry, else false
+   */
+  public boolean hasEntry(String collection, String entry) {
+    DocumentReference documentReference = database.collection(collection).document(entry);
+    try {
+      return documentReference.get().get().exists();
+    } catch (InterruptedException | ExecutionException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  /**
    * Goes through standard procedure of initializing Firebase
    * @param projectId ID of Firebase project associated with database
    * @param infoPath path to JSON file containing initialization details

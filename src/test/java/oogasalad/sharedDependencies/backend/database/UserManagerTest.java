@@ -10,9 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 public class UserManagerTest {
-  private static final String COLLECTION = "Login Information";
-  private static final String ENTRY = "Users";
-
+  private static final String COLLECTION = "Users";
   private static Database db;
   private static UserManager userManager;
 
@@ -24,10 +22,9 @@ public class UserManagerTest {
 
   @BeforeEach
   void initializeUsers() {
-    db.deleteData(COLLECTION, ENTRY, "rodrigo");
-    db.deleteData(COLLECTION, ENTRY, "hotrod");
-    db.deleteData(COLLECTION, ENTRY, "ethan");
-    db.deleteData(COLLECTION, ENTRY, "theman");
+    db.deleteEntry(COLLECTION, "rodrigo");
+    db.deleteEntry(COLLECTION,"hotrod");
+    db.deleteEntry(COLLECTION, "theman");
   }
 
   @Test
