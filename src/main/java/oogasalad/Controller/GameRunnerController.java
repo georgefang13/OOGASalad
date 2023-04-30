@@ -1,15 +1,13 @@
 package oogasalad.Controller;
 
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import oogasalad.frontend.components.gameObjectComponent.GameRunner.DropZoneFE;
-import oogasalad.frontend.components.gameObjectComponent.GameRunner.GameRunnerObject;
-import oogasalad.frontend.components.gameObjectComponent.GameRunner.Piece;
-import oogasalad.frontend.components.gameObjectComponent.GameRunner.SelectableVisual;
+import oogasalad.frontend.components.gameObjectComponent.GameRunner.*;
 import oogasalad.gamerunner.backend.Game;
 import oogasalad.gamerunner.backend.GameController;
 import oogasalad.sharedDependencies.backend.filemanagers.FileManager;
@@ -17,16 +15,15 @@ import oogasalad.sharedDependencies.backend.filemanagers.FileManager;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.*;
+import java.util.List;
 
 public class GameRunnerController implements GameController {
     private final Map<String, GameRunnerObject> gameObjects = new HashMap<>();
     private final Map<String, String> pieceToDropZoneMap = new HashMap<>();
-    private BorderPane root;
     private final HashSet<String> clickable = new HashSet<>();
     private Game game;
 
-    public GameRunnerController(BorderPane root, String gameName) {
-        this.root = root;
+    public GameRunnerController(String gameName) {
         String directory = "data/games/"+gameName;
         int numPlayers = 2;
         try {
@@ -36,6 +33,9 @@ public class GameRunnerController implements GameController {
         } catch (FileNotFoundException e){
             System.out.println("FAIL"); //TODO: error handle
         }
+    }
+    public void assignUndoButtonAction(Button undoButton){
+        undoButton.setOnAction(e -> game.undoClickPiece());
     }
     private void loadGame(String directory) throws FileNotFoundException {
         directory = directory + "/frontend";
@@ -108,7 +108,7 @@ public class GameRunnerController implements GameController {
     public void addDropZone(GameController.DropZoneParameters params) {
         DropZoneFE dropZone = new DropZoneFE(params.id(), params.unselected(), params.selected(), params.width(), params.height(), params.x(),params.y(),this);
         gameObjects.put(params.id(),dropZone);
-        root.getChildren().add(dropZone.getNode());
+        //root.getChildren().add(dropZone.getNode());
     }
 
     @Override
@@ -118,7 +118,7 @@ public class GameRunnerController implements GameController {
         piece.moveToDropZoneXY(dropZone.getDropZoneCenter());
         gameObjects.put(id,piece);
         pieceToDropZoneMap.put(id, dropZoneID);
-        root.getChildren().add(piece.getNode());
+        //root.getChildren().add(piece.getNode());
     }
 
     @Override
@@ -142,7 +142,7 @@ public class GameRunnerController implements GameController {
     @Override
     public void removePiece(String pieceID) {
         pieceToDropZoneMap.remove(pieceID);
-        root.getChildren().remove(gameObjects.get(pieceID).getNode());
+        //root.getChildren().remove(gameObjects.get(pieceID).getNode());
         gameObjects.remove(gameObjects.get(pieceID));
     }
 
@@ -170,9 +170,9 @@ public class GameRunnerController implements GameController {
         GameRunnerObject gameObject = gameObjects.get(id);
         gameObject.setImage(imagePath);
         SelectableVisual selectableVisual = (SelectableVisual) gameObject.getNode();
-        root.getChildren().remove(selectableVisual);
+        //root.getChildren().remove(selectableVisual);
         selectableVisual.updateVisual(gameObject.getImage());
-        root.getChildren().add((Node) selectableVisual);
+        //root.getChildren().add((Node) selectableVisual);
     }
 
     private void clearClickables(){
@@ -188,12 +188,25 @@ public class GameRunnerController implements GameController {
         return gameObjects.get(id).getPlayable();
     }
 
-    public ArrayList<Node> getNodes(){
-        ArrayList<Node> nodelist = new ArrayList<>();
+    public ArrayList<AbstractSelectableVisual> getGameObjectVisuals(){
+        ArrayList<AbstractSelectableVisual> ObjectVisualList = new ArrayList<>();
         for (GameRunnerObject gameObject : gameObjects.values()) {
-            nodelist.add(gameObject.getNode());
+            ObjectVisualList.add((AbstractSelectableVisual) gameObject.getNode());
         }
-        return nodelist;
+        Comparator<AbstractSelectableVisual> nodeComparator = new Comparator<AbstractSelectableVisual>() {
+            @Override
+            public int compare(AbstractSelectableVisual node1, AbstractSelectableVisual node2) {
+                if (node1 instanceof DropZoneVisual && node2 instanceof PieceVisual) {
+                    return -1;
+                } else if (node2 instanceof DropZoneVisual && node1 instanceof PieceVisual) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            }
+        };
+        Collections.sort(ObjectVisualList, nodeComparator);
+        return ObjectVisualList;
     }
 }
 
