@@ -21,7 +21,7 @@ public class GamePlayerMainScene extends AbstractScene {
   private GridPane boardPane;
   private GameRunnerController gameRunnerController;
   private String gameName;
-  public static final String GAME_STYlE_FILE_PATH = "frontend/css/simpleGameView.css";
+  public static final String GAME_STYlE_FILE_PATH = "frontend/css/light.css";
   private final String MODAL_STYLE_SHEET = Objects
           .requireNonNull(getClass().getClassLoader().getResource(GAME_STYlE_FILE_PATH))
           .toExternalForm();

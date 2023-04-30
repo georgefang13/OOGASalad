@@ -258,3 +258,22 @@
   -fx-pref-width: -1;
   -fx-min-width: 300;
 }
+
+/* Simple Game View */
+.dropzone {
+  -fx-background-color: rgba(200, 200, 255, 0.5);
+  -fx-border-color: black;
+  -fx-border-width: 1px;
+  -fx-alignment: center;
+}
+
+.selected {
+  -fx-border-color: red;
+  -fx-border-width: 1px;
+}
+
+/* Modal Styles */
+#imagePickerID {
+  -fx-background-color: #2f0c77;
+  -fx-text-fill: white;
+}

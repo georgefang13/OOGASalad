@@ -19,9 +19,9 @@ import javafx.scene.layout.VBox;
  */
 
 public class SplashMainScene extends AbstractScene {
-  private static final String LANGUAGE_FILE_PATH = "src/main/resources/frontend/properties/text";
+  private static final String LANGUAGE_DIRECTORY_PATH = "src/main/resources/frontend/properties/text";
   private static final String LANGUAGE_PLACEHOLDER = "English";
-  private static final String THEME_FILE_PATH = "src/main/resources/frontend/css";
+  private static final String THEME_DIRECTORY_PATH = "src/main/resources/frontend/css";
   private static final String THEME_PLACEHOLDER = "Light";
   private static final ResourceBundle ELEMENT_LABELS = ResourceBundle.getBundle(
       "frontend/properties/text/english");
@@ -117,14 +117,14 @@ public class SplashMainScene extends AbstractScene {
   private HBox makeDropDowns() {
     HBox dropDowns = new HBox();
     languageDropdown = new ComboBox<>();
-    languageDropdown.getItems().addAll(getLanguageFileNames());
+    languageDropdown.getItems().addAll(getFileNames(LANGUAGE_DIRECTORY_PATH));
     languageDropdown.getSelectionModel().selectedItemProperty()
         .addListener((observable, oldValue, newValue) -> {
           getPropertyManager().setTextResources(newValue);
         });
     languageDropdown.setValue(LANGUAGE_PLACEHOLDER);
     themeDropdown = new ComboBox<>();
-    themeDropdown.getItems().addAll("light", "dark");
+    themeDropdown.getItems().addAll(getFileNames(THEME_DIRECTORY_PATH));
     themeDropdown.getSelectionModel().selectedItemProperty()
         .addListener((observable, oldValue, newValue) -> {
           getThemeManager().setTheme(newValue);
@@ -133,9 +133,9 @@ public class SplashMainScene extends AbstractScene {
     dropDowns.getChildren().addAll(languageDropdown, themeDropdown);
     return dropDowns;
   }
-  private List<String> getLanguageFileNames() {
+  private List<String> getFileNames(String theDirectory) {
     List<String> propertyFileNames = new ArrayList<>();
-    String directory = LANGUAGE_FILE_PATH;
+    String directory = theDirectory;
     File dir = new File(directory);
     File[] files = dir.listFiles();
     if (files != null) {
@@ -146,8 +146,6 @@ public class SplashMainScene extends AbstractScene {
         }
       }
     }
-    propertyFileNames.remove("ComponentsFactory"); //TODO: put the language in these files into englihs and spansih
-    propertyFileNames.remove("Modals");
     return propertyFileNames;
   }
 
