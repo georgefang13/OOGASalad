@@ -70,6 +70,8 @@ public class CheckersMaker2 {
             fm.addContent("board", id, "classes");
             if (y == 0) fm.addContent("endzone", id, "classes");
             if (y == 7) fm.addContent("endzone", id, "classes");
+
+            counter++;
         }
 
         fm.saveToFile(folder + "layout.json");
