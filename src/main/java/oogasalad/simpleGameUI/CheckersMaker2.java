@@ -51,35 +51,35 @@ public class CheckersMaker2 {
             fefm.addContent(false, id, "unselected", "hasImage");
             fefm.addContent(false, id, "selected", "hasImage");
             switch (counter) {
-                case 0 -> {
+                case 1 -> {
                     fefm.addContent("0xFF0000", id, "unselected", "param");
                     fefm.addContent("0X8B0000", id, "selected", "param");
                 }
-                case 1 -> {
+                case 2 -> {
                     fefm.addContent("0xFFA500", id, "unselected", "param");
                     fefm.addContent("0xFF8C00", id, "selected", "param");
                 }
-                case 2 -> {
+                case 3 -> {
                     fefm.addContent("0xFFFF00", id, "unselected", "param");
                     fefm.addContent("0xFFD700", id, "selected", "param");
                 }
-                case 3 -> {
+                case 4 -> {
                     fefm.addContent("0x32CD32", id, "unselected", "param");
                     fefm.addContent("0x90EE90", id, "selected", "param");
                 }
-                case 4 -> {
+                case 5 -> {
                     fefm.addContent("0x008000", id, "unselected", "param");
                     fefm.addContent("0x006400", id, "selected", "param");
                 }
-                case 5 -> {
+                case 6 -> {
                     fefm.addContent("0x00FFFF", id, "unselected", "param");
                     fefm.addContent("0x008B8B", id, "selected", "param");
                 }
-                case 6 -> {
+                case 7 -> {
                     fefm.addContent("0x0000FF", id, "unselected", "param");
                     fefm.addContent("0xADD8E6", id, "selected", "param");
                 }
-                case 7 -> {
+                case 8 -> {
                     fefm.addContent("0xEE82EE", id, "unselected", "param");
                     fefm.addContent("0x9400D3", id, "selected", "param");
                 }
