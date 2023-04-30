@@ -14,6 +14,7 @@ import oogasalad.gamerunner.backend.interpreter.Interpreter;
 import oogasalad.sharedDependencies.backend.ownables.Ownable;
 import oogasalad.sharedDependencies.backend.ownables.gameobjects.DropZone;
 import oogasalad.sharedDependencies.backend.ownables.gameobjects.GameObject;
+import oogasalad.sharedDependencies.backend.ownables.gameobjects.TextObject;
 import oogasalad.sharedDependencies.backend.ownables.variables.Variable;
 import oogasalad.sharedDependencies.backend.owners.GameWorld;
 import oogasalad.sharedDependencies.backend.owners.Owner;
@@ -604,6 +605,19 @@ public class Game implements GameToInterpreterAPI{
         String id = idManager.getId(piece);
         String imagePath = this.directory + "/assets/" + highlight;
         //controller.setPieceHighlight(id, imagePath);
+    }
+
+    @Override
+    public void updateTextObject(TextObject obj) {
+        controller.updateTextObject(idManager.getId(obj), obj.getText());
+    }
+
+    @Override
+    public void addTextObject(TextObject obj, DropZone dz) {
+        idManager.addObject(obj);
+        putInDropZone(obj, dz);
+        String id = idManager.getId(obj);
+        controller.addTextObject(id, obj.getText(), idManager.getId(dz));
     }
 
     /**

@@ -1,11 +1,10 @@
 package oogasalad.gamerunner.backend;
 
-import oogasalad.sharedDependencies.backend.id.IdManageable;
 import oogasalad.sharedDependencies.backend.ownables.Ownable;
 import oogasalad.sharedDependencies.backend.ownables.gameobjects.DropZone;
 import oogasalad.sharedDependencies.backend.ownables.gameobjects.GameObject;
+import oogasalad.sharedDependencies.backend.ownables.gameobjects.TextObject;
 import oogasalad.sharedDependencies.backend.owners.Owner;
-import oogasalad.sharedDependencies.backend.owners.Player;
 import oogasalad.sharedDependencies.backend.rules.RuleManager;
 
 /**
@@ -92,6 +91,24 @@ public interface GameToInterpreterAPI {
      * @param highlight the highlight to set
      */
     void setPieceHighlight(Ownable piece, String highlight);
+
+    /**
+     * Send the content of a TextObject to the controller
+     * @param obj the TextObject to send
+     */
+    void updateTextObject(TextObject obj);
+
+    /**
+     * Add a TextObject to the game
+     * @param obj the TextObject to add
+     * @param dz the DropZone to add the TextObject to
+     */
+    void addTextObject(TextObject obj, DropZone dz);
+
+    /**
+     * Get the rules of the game
+     * @return the rules of the game
+     */
     RuleManager getRules();
 
 }
