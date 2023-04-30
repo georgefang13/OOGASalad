@@ -2,6 +2,8 @@ package oogasalad.simpleGameUI;
 
 import java.util.List;
 import java.util.Map;
+
+import javafx.scene.paint.Color;
 import oogasalad.gameeditor.backend.ownables.gameobjects.BoardCreator;
 import oogasalad.sharedDependencies.backend.filemanagers.FileManager;
 import oogasalad.sharedDependencies.backend.id.IdManager;
@@ -113,8 +115,8 @@ public class RainbowCheckersMaker {
                 String location = "DropZone";
                 if (num != 1) location += num;
 
-                fefm.addContent(true, id, "selected", "hasSelectedImage");
-                fefm.addContent("redselected.png", id, "selected", "param");
+                fefm.addContent(false, id, "selected", "hasSelectedImage");
+                fefm.addContent("0x000000", id, "selected", "param");
                 fefm.addContent("red.png", id, "defaultImage");
                 fm.addContent("0", id, "owner");
                 fefm.addContent("30", id, "height");
@@ -141,8 +143,8 @@ public class RainbowCheckersMaker {
                 String location = "DropZone";
                 if (num != 1) location += num;
 
-                fefm.addContent(true, id, "selected", "hasSelectedImage");
-                fefm.addContent("blackselected.png", id, "selected", "param");
+                fefm.addContent(false, id, "selected", "hasSelectedImage");
+                fefm.addContent("0x000000", id, "selected", "param");
                 fefm.addContent("black.png", id, "defaultImage");
                 fm.addContent("1", id, "owner");
                 fefm.addContent("30", id, "height");
