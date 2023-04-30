@@ -57,6 +57,27 @@ public class UserManager {
   }
 
   /**
+   * Check database to validate changing user password
+   * @param username username
+   * @param newPassword unencrypted password
+   * @param securityQuestions Map containing security questions as keys and answers as values
+   * @return true if register is successful, else false (user already exists)
+   */
+  public boolean tryChangePassword(String username, String newPassword, Map<String, String> securityQuestions) {
+    for (int i = 1; i <= securityQuestions.size(); i++) {
+      String question = (String) db.getData(COLLECTION, username,
+          SECURITY_QUESTION_TAG + String.valueOf(i));
+      if (! securityQuestions.containsKey(question) ||
+          ! securityQuestions.get(question)
+            .equals(db.getData(COLLECTION, username, SECURITY_ANSWER_TAG + String.valueOf(i)))) {
+        return false;
+      }
+    }
+    db.addData(COLLECTION, username, PASSWORD_TAG, encrypt(newPassword));
+    return true;
+  }
+
+  /**
    * Encrypts a password in a standard format (undisclosed methodology!)
    * @param password password to be encrypted
    * @return encrypted password

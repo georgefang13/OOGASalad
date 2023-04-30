@@ -13,10 +13,14 @@ import com.google.firebase.cloud.FirestoreClient;
 import java.io.FileInputStream;
 import java.io.IOException;
 import com.google.cloud.firestore.Firestore;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ExecutionException;
+import org.apache.maven.plugin.lifecycle.Execution;
 
 
 /**
@@ -123,6 +127,40 @@ public class Database {
     } catch (InterruptedException | ExecutionException e) {
       throw new RuntimeException(e);
     }
+  }
+
+  /**
+   * Get all entries that have been created in a given collection within the database
+   * @param collection name of collection
+   * @return Iterable of Strings containing existing entries in collection
+   */
+  public Iterable<String> getEntries(String collection) {
+    List<String> entries = new LinkedList<>();
+    try {
+      for (DocumentSnapshot document : database.collection(collection).get().get()) {
+        entries.add(document.getId());
+      }
+    } catch (InterruptedException | ExecutionException e) {
+      throw new RuntimeException(e);
+    }
+    return entries;
+  }
+
+  /**
+   * Get all fields that exist in the specified entry
+   * @param collection name of collection
+   * @param entry entry inside collection
+   * @return Iterable of Strings containing existing fields in entry
+   */
+  public Iterable<String> getFields(String collection, String entry) {
+    List<String> entries = new LinkedList<>();
+    Map<String, Object> data;
+    try {
+      data = database.collection(collection).document(entry).get().get().getData();
+    } catch (InterruptedException | ExecutionException e) {
+      throw new RuntimeException(e);
+    }
+    return data.keySet();
   }
 
   /**
