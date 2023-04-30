@@ -9,6 +9,7 @@ import javafx.scene.paint.Color;
 import oogasalad.frontend.components.gameObjectComponent.GameRunner.DropZoneFE;
 import oogasalad.frontend.components.gameObjectComponent.GameRunner.GameRunnerObject;
 import oogasalad.frontend.components.gameObjectComponent.GameRunner.Piece;
+import oogasalad.frontend.components.gameObjectComponent.GameRunner.gameObjectVisuals.AbstractSelectableVisual;
 import oogasalad.frontend.components.gameObjectComponent.GameRunner.gameObjectVisuals.SelectableVisual;
 import oogasalad.frontend.managers.DisplayManager;
 import oogasalad.frontend.managers.GameObjectVisualSorter;
@@ -58,13 +59,13 @@ public class GameRunnerController implements GameController {
         loadPieces(directory);
     }
 
-    private DropZoneFE.SelectableVisualParams loadDropParamsFromFile(String selectType, FileManager fm, String id, String directory){
+    private AbstractSelectableVisual.SelectableVisualParams loadDropParamsFromFile(String selectType, FileManager fm, String id, String directory){
         boolean isImage = fm.getObject(Boolean.class, id, selectType, "hasImage");
         String param = fm.getString(id, selectType, "param");
         if (isImage){
             param = directory.substring(0, directory.lastIndexOf("/")) + "/assets/" + param;
         }
-        return new DropZoneFE.SelectableVisualParams(isImage,param);
+        return new AbstractSelectableVisual.SelectableVisualParams(isImage,param);
     }
     private void loadDropZones(String directory) throws FileNotFoundException {
         FileManager fm = new FileManager(directory + "/layout.json");
@@ -74,8 +75,8 @@ public class GameRunnerController implements GameController {
             int height = Integer.parseInt(fm.getString(id, "height"));
             int width = Integer.parseInt(fm.getString(id, "width"));
 
-            DropZoneFE.SelectableVisualParams unselected = loadDropParamsFromFile("unselected",fm,id,directory);
-            DropZoneFE.SelectableVisualParams selected = loadDropParamsFromFile("selected",fm,id,directory);
+            AbstractSelectableVisual.SelectableVisualParams unselected = loadDropParamsFromFile("unselected",fm,id,directory);
+            AbstractSelectableVisual.SelectableVisualParams selected = loadDropParamsFromFile("selected",fm,id,directory);
             addDropZone(new GameController.DropZoneParameters(id, unselected, selected, x, y, height, width));
         }
     }
@@ -165,15 +166,15 @@ public class GameRunnerController implements GameController {
     }
 
     @Override
-    public void setObjectImage(String id, String imagePath) {
+    public void setObjectImage(String id, String newImagePath) {
         GameRunnerObject gameObject = gameObjects.get(id);
         double width = gameObject.getNode().getBoundsInLocal().getWidth();
         double height =  gameObject.getNode().getBoundsInLocal().getHeight();
-        // set width and height of new image
-        Node newImage = DisplayManager.loadImage(imagePath, (int) width, (int) height);
-        gameObject.setImage(imagePath);
-        SelectableVisual selectableVisual = (SelectableVisual) gameObject.getNode();
-        selectableVisual.updateUnClickableVisual(imagePath);
+
+        AbstractSelectableVisual.SelectableVisualParams unselected = new AbstractSelectableVisual.SelectableVisualParams(true,"redking.pngFIXXX");
+        AbstractSelectableVisual.SelectableVisualParams selected = new AbstractSelectableVisual.SelectableVisualParams(false,"#ff0000");
+        gameObject.updateSelectableVisual(unselected, selected);
+
 
 //        gameObject.setHighlight("/Users/ethanhorowitz/IdeaProjects/oogasalad_team02/data/games/checkers/assets/light.png");
         //gameObject.setHighlight("#ff0000");

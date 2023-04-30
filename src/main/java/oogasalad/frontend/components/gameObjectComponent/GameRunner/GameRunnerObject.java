@@ -37,4 +37,8 @@ public abstract class GameRunnerObject extends GameObject implements GameRunnerC
     public boolean getPlayable(){
         return playable;
     }
+    @Override
+    public void updateSelectableVisual(AbstractSelectableVisual.SelectableVisualParams unselected, AbstractSelectableVisual.SelectableVisualParams selected){
+
+    }
 }

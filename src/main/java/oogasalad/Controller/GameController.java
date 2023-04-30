@@ -3,6 +3,7 @@ package oogasalad.Controller;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import oogasalad.frontend.components.gameObjectComponent.GameRunner.DropZoneFE;
+import oogasalad.frontend.components.gameObjectComponent.GameRunner.gameObjectVisuals.AbstractSelectableVisual;
 
 import java.util.List;
 
@@ -17,7 +18,7 @@ public interface GameController {
     /**
      * Adds a piece to the game
      * @param id the id of the piece
-     * @param image the image of the piece
+     * @param imagePath the string path for the image of the piece
      * @param dropZoneID the id of the drop zone the piece is in
      * @param hasSelectImage if the piece has a selected image
      * @param param the name of the image or color for the selected image
@@ -84,6 +85,6 @@ public interface GameController {
      */
     void setPieceHighlight(String id, String highlight);
 
-    record DropZoneParameters(String id, DropZoneFE.SelectableVisualParams unselected, DropZoneFE.SelectableVisualParams selected, int x, int y, int height, int width){}
+    record DropZoneParameters(String id, AbstractSelectableVisual.SelectableVisualParams unselected, AbstractSelectableVisual.SelectableVisualParams selected, int x, int y, int height, int width){}
 
 }

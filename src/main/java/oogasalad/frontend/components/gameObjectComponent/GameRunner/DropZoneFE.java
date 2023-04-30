@@ -5,15 +5,16 @@ import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import oogasalad.Controller.GameController;
+import oogasalad.frontend.components.gameObjectComponent.GameRunner.gameObjectVisuals.AbstractSelectableVisual;
 import oogasalad.frontend.components.gameObjectComponent.GameRunner.gameObjectVisuals.DropZoneVisual;
 import oogasalad.frontend.managers.DisplayManager;
 
 public class DropZoneFE extends GameRunnerObject{
-    private final SelectableVisualParams unselectedParams;
-    private final SelectableVisualParams selectedParams;
+    private final AbstractSelectableVisual.SelectableVisualParams unselectedParams;
+    private final AbstractSelectableVisual.SelectableVisualParams selectedParams;
     private final int x;
     private final int y;
-    public DropZoneFE(String ID, SelectableVisualParams unselected, SelectableVisualParams selected, int width, int height, int x, int y, GameController gameRunnerController) {
+    public DropZoneFE(String ID, AbstractSelectableVisual.SelectableVisualParams unselected, AbstractSelectableVisual.SelectableVisualParams selected, int width, int height, int x, int y, GameController gameRunnerController) {
         super(ID, gameRunnerController);
         setWidth(width);
         setHeight(height);
@@ -25,13 +26,10 @@ public class DropZoneFE extends GameRunnerObject{
     }
     @Override
     public void setSelectableVisual() {
-        Node unselected = createImage(unselectedParams.hasSelectImage,unselectedParams.param);
-        Node selected = createImage(selectedParams.hasSelectImage,selectedParams.param);
+        Node unselected = createImage(unselectedParams.hasSelectImage(),unselectedParams.param());
+        Node selected = createImage(selectedParams.hasSelectImage(),selectedParams.param());
         selectableVisual = new DropZoneVisual(unselected,selected,(int) getWidth(),(int) getHeight(),x,y,ID);
     }
-
-    public record SelectableVisualParams(boolean hasSelectImage, String param){}
-
     private Node loadDefaultDropRectangle(String hexColor){
         Color fillColor = Color.web(hexColor);
         return new Rectangle(getWidth(), getHeight(), fillColor);

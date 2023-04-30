@@ -20,6 +20,7 @@ public abstract class AbstractSelectableVisual extends HBox implements Selectabl
     public String getObjectID(){
         return objectID;
     }
+    public record SelectableVisualParams(boolean hasSelectImage, String param){}
     protected void switchImages(Node oldImage, Node newImage){
         if (this.getChildren().contains(oldImage)) {
             this.getChildren().remove(oldImage);
