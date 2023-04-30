@@ -115,7 +115,9 @@ public class CheckersMaker2 {
                 String location = "DropZone";
                 if (num != 1) location += num;
 
-                fefm.addContent("red.png", id, "image");
+                fefm.addContent(true, id, "selected", "hasSelectedImage");
+                fefm.addContent("redselected.png", id, "selected", "param");
+                fefm.addContent("red.png", id, "defaultImage");
                 fm.addContent("0", id, "owner");
                 fefm.addContent("30", id, "size");
 
@@ -140,7 +142,9 @@ public class CheckersMaker2 {
                 String location = "DropZone";
                 if (num != 1) location += num;
 
-                fefm.addContent("black.png", id, "image");
+                fefm.addContent(true, id, "selected", "hasSelectedImage");
+                fefm.addContent("blackselected.png", id, "selected", "param");
+                fefm.addContent("black.png", id, "defaultImage");
                 fm.addContent("1", id, "owner");
                 fefm.addContent("30", id, "size");
 
