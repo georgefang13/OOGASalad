@@ -1,6 +1,9 @@
 package oogasalad.frontend.nodeEditor.Nodes;
 
 import javafx.scene.control.Label;
+import oogasalad.frontend.nodeEditor.Config.NodeData;
+
+import java.util.ArrayList;
 
 public class EndNestNode extends AbstractNode {
 
@@ -17,6 +20,11 @@ public class EndNestNode extends AbstractNode {
           .getJSONString();
     }
     return propertyManager.getText("EndNestNode.JsonString");
+  }
+
+  @Override
+  public NodeData getNodeData() {
+    return new NodeData("EndNestNode", "Control", new ArrayList<>());
   }
 
   @Override

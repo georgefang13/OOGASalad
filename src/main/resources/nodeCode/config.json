@@ -1,0 +1,15 @@
+{
+  "MainNode": {
+    "name": "MainNode",
+    "type": "Control",
+    "inputs": []
+  },
+  "Sum": {
+    "name": "Sum",
+    "type": "JsonNode",
+    "inputs": [
+      "5",
+      "2"
+    ]
+  }
+}

@@ -5,12 +5,15 @@ import java.util.List;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
+import oogasalad.frontend.nodeEditor.Config.NodeData;
 
 public class JsonNode extends AbstractNode {
 
   private String name, parseStr;
   private List<String> innerBlocks, inputs;
   private List<TextField> inputFields = new ArrayList<>();
+
+  private List<String> inputValues = new ArrayList<>();
 
   public JsonNode(String name, List<String> innerBlocks, String parseStr,
       List<String> inputs) {
@@ -51,4 +54,20 @@ public class JsonNode extends AbstractNode {
     }
     return (output + propertyManager.getText("SPACE") + this.getChildNode().getJSONString());
   }
+
+  @Override
+  public NodeData getNodeData(){
+    this.nodeData = new NodeData(this.name, this.getClass().getSimpleName(), getInputValues());
+    return this.nodeData;
+  };
+
+
+  private List<String> getInputValues(){
+    inputValues.clear();
+    for (TextField input : inputFields) {
+      inputValues.add(input.getText().toString());
+    }
+    return inputValues;
+  }
+
 }

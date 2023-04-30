@@ -51,6 +51,10 @@ public abstract class AbstractNode extends VBox implements Draggable {
 
   public abstract String getJSONString();
 
+  public abstract NodeData getNodeData();
+
+
+
   @Override
   public void snapTo(AbstractNode node) {
     while (node.getChildNode() != null && node.getChildNode() != this) {

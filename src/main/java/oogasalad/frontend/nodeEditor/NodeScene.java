@@ -4,9 +4,11 @@ import static oogasalad.frontend.nodeEditor.AbstractNodePanel.NODES_JSON_PATH;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +17,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.HBox;
+import oogasalad.frontend.nodeEditor.Config.NodeData;
 import oogasalad.frontend.nodeEditor.Nodes.AbstractNode;
 import oogasalad.frontend.scenes.AbstractScene;
 
@@ -67,7 +70,7 @@ public class NodeScene extends AbstractScene {
       String action = entry.getValue().getAction();
       String content = entry.getValue().getAllNodeContent();
       List<AbstractNode> listOfNodes = entry.getValue().getAllNodes();
-//      entry.getValue().saveNodesToFile(listOfNodes, CONFIG_JSON_PATH);
+      makeConfigFile(listOfNodes);
 
       if (!stateObject.has(state)) {
         JsonObject stateJson = new JsonObject();
@@ -87,6 +90,33 @@ public class NodeScene extends AbstractScene {
 
   }
 
+  //private void makeInterpreterFile(List<AbstractNode> nodes)
+
+
+
+  private void makeConfigFile(List<AbstractNode> nodes){
+    Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    JsonObject stateObject = new JsonObject();
+    for(AbstractNode node : nodes){
+      NodeData data = node.getNodeData();
+      JsonObject stateJson = new JsonObject();
+      JsonArray array = new JsonArray();
+      String name = data.name();
+      String type = data.type();
+      data.inputs().forEach(array::add);
+      stateJson.addProperty("name", name);
+      stateJson.addProperty("type", type);
+      stateJson.add("inputs", array);
+      stateObject.add(name, stateJson);
+    }
+
+
+    try (FileWriter fileWriter = new FileWriter(CONFIG_JSON_PATH)) {
+      gson.toJson(stateObject, fileWriter);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
   public Scene getScene() {
     return scene;
   }
