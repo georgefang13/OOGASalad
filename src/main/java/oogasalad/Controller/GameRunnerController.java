@@ -22,9 +22,11 @@ public class GameRunnerController implements GameController {
     private final Map<String, String> pieceToDropZoneMap = new HashMap<>();
     private final HashSet<String> clickable = new HashSet<>();
     private Game game;
+    private BorderPane root;
 
-    public GameRunnerController(String gameName) {
+    public GameRunnerController(String gameName, BorderPane root) {
         String directory = "data/games/"+gameName;
+        this.root = root;
         int numPlayers = 2;
         try {
             game = new Game(this,directory,numPlayers,false);
@@ -142,7 +144,7 @@ public class GameRunnerController implements GameController {
     @Override
     public void removePiece(String pieceID) {
         pieceToDropZoneMap.remove(pieceID);
-        //root.getChildren().remove(gameObjects.get(pieceID).getNode());
+        root.getChildren().remove(gameObjects.get(pieceID).getNode());
         gameObjects.remove(gameObjects.get(pieceID));
     }
 
