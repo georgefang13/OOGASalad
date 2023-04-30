@@ -11,7 +11,7 @@ import oogasalad.frontend.components.dropzoneComponent.Dropzone;
 /**
  * @author Han
  */
-public class Arrow implements  ArrowSubscriber{
+public class Arrow implements Subscriber {
 
   private Dropzone start;
   private Dropzone end;
@@ -58,7 +58,6 @@ public class Arrow implements  ArrowSubscriber{
     double startY = startSquare.getTranslateY() + start.getHeight()/2;
     double endX = endSquare.getTranslateX() + end.getWidth()/2;
     double endY = endSquare.getTranslateY() + end.getHeight()/2;
-    System.out.println(endX);
     arrow.getChildren().clear();
     line = new Line(startX, startY, endX, endY);
     arrow.getChildren().add(line);
@@ -68,7 +67,6 @@ public class Arrow implements  ArrowSubscriber{
 
   private void createArrowHead(double startX, double startY, double endX, double endY) {
     double angle = Math.atan2(endY - startY, endX - startX);
-    System.out.println(angle);
     head = new ImageView(BUNDLE.getString("Head"));
     head.setVisible(visible);
     double width = Integer.parseInt(BUNDLE.getString("Width"));

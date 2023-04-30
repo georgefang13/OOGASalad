@@ -1,19 +1,12 @@
 package oogasalad.frontend.components.gameObjectComponent;
 
 import java.io.FileInputStream;
-import java.lang.reflect.Field;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.ResourceBundle;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import oogasalad.frontend.components.AbstractComponent;
-import oogasalad.frontend.components.Component;
-import oogasalad.frontend.components.ConversionContext;
-import oogasalad.frontend.components.ParamFactory;
-import oogasalad.frontend.components.Point;
 
 
 /**
@@ -55,14 +48,6 @@ public class GameObject extends AbstractComponent implements GameObjectComponent
     image.setRotate(rotate);
   }
 
-  private String replaceWithFileLoadingByID(){
-    if (Integer.parseInt(this.getID()) < 6){
-      return "DEFAULT_IMAGE";
-    }
-    else {
-      return "X_IMAGE";
-    }
-  }
   @Override
   public void setImage(String imagePath) {
     Image newImage;

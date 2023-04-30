@@ -8,9 +8,9 @@ import java.util.Set;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import oogasalad.Controller.ControllerSubscriber;
 import oogasalad.frontend.components.AbstractComponent;
-import oogasalad.frontend.components.Arrow;
-import oogasalad.frontend.components.ArrowSubscriber;
+import oogasalad.frontend.components.Subscriber;
 import oogasalad.frontend.components.DropZonePublisher;
 import oogasalad.frontend.components.gameObjectComponent.GameObject;
 
@@ -29,7 +29,10 @@ public class Dropzone extends AbstractComponent implements DropZonePublisher {
   private Rectangle square;
   private double width;
   private double height;
-  private List<ArrowSubscriber> subscribers;
+  private List<Subscriber> subscribers;
+  private List<ControllerSubscriber> controllerSubscribers;
+  private boolean doubleClick;
+  private int clicks;
   /**
    * Dropzone
    * @param ID the id of the DropZone
@@ -59,9 +62,12 @@ public class Dropzone extends AbstractComponent implements DropZonePublisher {
     square = new Rectangle();
     node.getChildren().add(square);
     subscribers = new ArrayList<>();
+    controllerSubscribers = new ArrayList<>();
     setNode(node);
     setonUpdate();
     followMouse();
+    doubleClick = false;
+    clicks = 0;
   }
   /**
    * Adds a neighbor to whatever you need
@@ -72,7 +78,7 @@ public class Dropzone extends AbstractComponent implements DropZonePublisher {
   /**
    * Returns the list of Neighbors that the dropzone is adjacent to
    *
-   * @return the list of Neighbors
+   * @return the set of Neighbors
    */
   public Set<String> getEdges(){
     return edges.keySet();
@@ -87,8 +93,19 @@ public class Dropzone extends AbstractComponent implements DropZonePublisher {
     square.setHeight(height);
   }
   private void setonUpdate(){
-    node.setOnMouseReleased(e -> publish());
+    node.setOnMouseClicked(e ->
+        {super.getNode().getOnMouseClicked();
+          clicks++;
+        if(clicks == 2){
+          doubleClick = true;
+          clicks = 0;
+        }
+        System.out.println(clicks);
+        publish();
+        }
+    );
   }
+
   /**
    * For GameObject, remove the object
    */
@@ -138,7 +155,7 @@ public class Dropzone extends AbstractComponent implements DropZonePublisher {
    * @param subscriber
    */
   @Override
-  public void addSubscriber(ArrowSubscriber subscriber) {
+  public void addSubscriber(Subscriber subscriber) {
     subscribers.add(subscriber);
   }
 
@@ -147,7 +164,7 @@ public class Dropzone extends AbstractComponent implements DropZonePublisher {
    * @param subscriber
    */
   @Override
-  public void removeSubscriber(ArrowSubscriber subscriber) {
+  public void removeSubscriber(Subscriber subscriber) {
     subscribers.remove(subscriber);
   }
 
@@ -156,8 +173,18 @@ public class Dropzone extends AbstractComponent implements DropZonePublisher {
    */
   @Override
   public void publish() {
-    for(ArrowSubscriber subscriber : subscribers){
+    for(Subscriber subscriber : subscribers){
       subscriber.update();
     }
+    if(doubleClick){
+      for (ControllerSubscriber controller : controllerSubscribers){
+        controller.setDropZones(this);
+        System.out.println("Double Click");
+        doubleClick = false;
+      }
+    }
+  }
+  public void addControllerSubscriber(ControllerSubscriber subscriber) {
+    controllerSubscribers.add(subscriber);
   }
 }

@@ -1,5 +1,5 @@
 package oogasalad.frontend.components;
 
-public interface ArrowSubscriber {
+public interface Subscriber {
   void update();
 }

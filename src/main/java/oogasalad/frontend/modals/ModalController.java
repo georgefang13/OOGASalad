@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import javafx.scene.layout.Pane;
+import oogasalad.Controller.DropZoneController;
 import oogasalad.Controller.FilesController;
 import oogasalad.frontend.components.Component;
 import oogasalad.frontend.components.ComponentsFactory;
@@ -21,11 +22,13 @@ public class ModalController {
   private Map<String, Component> allComponents;
   private ComponentsFactory factory;
   private FilesController files;
+  private DropZoneController dropZoneController;
   public ModalController(ComponentPanel componentPanel) {
     parentPanel = componentPanel;
     factory = new ComponentsFactory();
     componentMap = new HashMap<>();
     allComponents = new HashMap<>();
+    dropZoneController = new DropZoneController();
   }
 
   public void setFileController(FilesController newController){
@@ -35,6 +38,7 @@ public class ModalController {
     String name = map.get("name");
     componentMap.put(name, map);
     parentPanel.addComponentTemplate(name, objectType);
+    dropZoneController.setRoot(root);
   }
 
   public void createObjectInstance(String name, String objectType){
@@ -44,6 +48,7 @@ public class ModalController {
     Component c = factory.create(objectType, map);
     files.addComponent(c);
     allComponents.put(name, c);
+    dropZoneController.addDropZone(c);
     GraphicHandler handler = new GraphicHandler();
     handler.moveToCenter(c);
     root.getChildren().add(c.getNode());
