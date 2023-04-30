@@ -1,309 +1,410 @@
 {
   "0,0": {
-    "defaultImage" : "DZ.img",
     "x": "100",
     "y": "100",
     "width": "50",
-    "height": "50"
+    "height": "50",
+    "unselected":{"hasImage":true,"param":"DZ.png"},
+    "selected":{"hasImage":true,"param":"DZ_2.png"}
   },
   "0,1": {
     "x": "150",
     "y": "100",
     "width": "50",
-    "height": "50"
+    "height": "50",
+    "unselected":{"hasImage":true,"param":"DZ.png"},
+    "selected":{"hasImage":true,"param":"DZ_2.png"}
   },
   "0,2": {
     "x": "200",
     "y": "100",
     "width": "50",
-    "height": "50"
+    "height": "50",
+    "unselected":{"hasImage":true,"param":"DZ.png"},
+    "selected":{"hasImage":true,"param":"DZ_2.png"}
   },
   "0,3": {
     "x": "250",
     "y": "100",
     "width": "50",
-    "height": "50"
+    "height": "50",
+    "unselected":{"hasImage":true,"param":"DZ.png"},
+    "selected":{"hasImage":true,"param":"DZ_2.png"}
   },
   "0,4": {
     "x": "300",
     "y": "100",
     "width": "50",
-    "height": "50"
+    "height": "50",
+    "unselected":{"hasImage":true,"param":"DZ.png"},
+    "selected":{"hasImage":true,"param":"DZ_2.png"}
   },
   "0,5": {
     "x": "350",
     "y": "100",
     "width": "50",
-    "height": "50"
+    "height": "50",
+    "unselected":{"hasImage":true,"param":"DZ.png"},
+    "selected":{"hasImage":true,"param":"DZ_2.png"}
   },
   "0,6": {
     "x": "400",
     "y": "100",
     "width": "50",
-    "height": "50"
+    "height": "50",
+    "unselected":{"hasImage":true,"param":"DZ.png"},
+    "selected":{"hasImage":true,"param":"DZ_2.png"}
   },
   "1,0": {
     "x": "100",
     "y": "150",
     "width": "50",
-    "height": "50"
+    "height": "50",
+    "unselected":{"hasImage":true,"param":"DZ.png"},
+    "selected":{"hasImage":true,"param":"DZ_2.png"}
   },
   "1,1": {
     "x": "150",
     "y": "150",
     "width": "50",
-    "height": "50"
+    "height": "50",
+    "unselected":{"hasImage":true,"param":"DZ.png"},
+    "selected":{"hasImage":true,"param":"DZ_2.png"}
   },
   "1,2": {
     "x": "200",
     "y": "150",
     "width": "50",
-    "height": "50"
+    "height": "50",
+    "unselected":{"hasImage":true,"param":"DZ.png"},
+    "selected":{"hasImage":true,"param":"DZ_2.png"}
   },
   "1,3": {
     "x": "250",
     "y": "150",
     "width": "50",
-    "height": "50"
+    "height": "50",
+    "unselected":{"hasImage":true,"param":"DZ.png"},
+    "selected":{"hasImage":true,"param":"DZ_2.png"}
   },
   "1,4": {
     "x": "300",
     "y": "150",
     "width": "50",
-    "height": "50"
+    "height": "50",
+    "unselected":{"hasImage":true,"param":"DZ.png"},
+    "selected":{"hasImage":true,"param":"DZ_2.png"}
   },
   "1,5": {
     "x": "350",
     "y": "150",
     "width": "50",
-    "height": "50"
+    "height": "50",
+    "unselected":{"hasImage":true,"param":"DZ.png"},
+    "selected":{"hasImage":true,"param":"DZ_2.png"}
   },
   "1,6": {
     "x": "400",
     "y": "150",
     "width": "50",
-    "height": "50"
+    "height": "50",
+    "unselected":{"hasImage":true,"param":"DZ.png"},
+    "selected":{"hasImage":true,"param":"DZ_2.png"}
   },
   "2,0": {
     "x": "100",
     "y": "200",
     "width": "50",
-    "height": "50"
+    "height": "50",
+    "unselected":{"hasImage":true,"param":"DZ.png"},
+    "selected":{"hasImage":true,"param":"DZ_2.png"}
   },
   "2,1": {
     "x": "150",
     "y": "200",
     "width": "50",
-    "height": "50"
+    "height": "50",
+    "unselected":{"hasImage":true,"param":"DZ.png"},
+    "selected":{"hasImage":true,"param":"DZ_2.png"}
   },
   "2,2": {
     "x": "200",
     "y": "200",
     "width": "50",
-    "height": "50"
+    "height": "50",
+    "unselected":{"hasImage":true,"param":"DZ.png"},
+    "selected":{"hasImage":true,"param":"DZ_2.png"}
   },
   "2,3": {
     "x": "250",
     "y": "200",
     "width": "50",
-    "height": "50"
+    "height": "50",
+    "unselected":{"hasImage":true,"param":"DZ.png"},
+    "selected":{"hasImage":true,"param":"DZ_2.png"}
   },
   "2,4": {
     "x": "300",
     "y": "200",
     "width": "50",
-    "height": "50"
+    "height": "50",
+    "unselected":{"hasImage":true,"param":"DZ.png"},
+    "selected":{"hasImage":true,"param":"DZ_2.png"}
   },
   "2,5": {
     "x": "350",
     "y": "200",
     "width": "50",
-    "height": "50"
+    "height": "50",
+    "unselected":{"hasImage":true,"param":"DZ.png"},
+    "selected":{"hasImage":true,"param":"DZ_2.png"}
   },
   "2,6": {
     "x": "400",
     "y": "200",
     "width": "50",
-    "height": "50"
+    "height": "50",
+    "unselected":{"hasImage":true,"param":"DZ.png"},
+    "selected":{"hasImage":true,"param":"DZ_2.png"}
   },
   "3,0": {
     "x": "100",
     "y": "250",
     "width": "50",
-    "height": "50"
+    "height": "50",
+    "unselected":{"hasImage":true,"param":"DZ.png"},
+    "selected":{"hasImage":true,"param":"DZ_2.png"}
   },
   "3,1": {
     "x": "150",
     "y": "250",
     "width": "50",
-    "height": "50"
+    "height": "50",
+    "unselected":{"hasImage":true,"param":"DZ.png"},
+    "selected":{"hasImage":true,"param":"DZ_2.png"}
   },
   "3,2": {
     "x": "200",
     "y": "250",
     "width": "50",
-    "height": "50"
+    "height": "50",
+    "unselected":{"hasImage":true,"param":"DZ.png"},
+    "selected":{"hasImage":true,"param":"DZ_2.png"}
   },
   "3,3": {
     "x": "250",
     "y": "250",
     "width": "50",
-    "height": "50"
+    "height": "50",
+    "unselected":{"hasImage":true,"param":"DZ.png"},
+    "selected":{"hasImage":true,"param":"DZ_2.png"}
   },
   "3,4": {
     "x": "300",
     "y": "250",
     "width": "50",
-    "height": "50"
+    "height": "50",
+    "unselected":{"hasImage":true,"param":"DZ.png"},
+    "selected":{"hasImage":true,"param":"DZ_2.png"}
   },
   "3,5": {
     "x": "350",
     "y": "250",
     "width": "50",
-    "height": "50"
+    "height": "50",
+    "unselected":{"hasImage":true,"param":"DZ.png"},
+    "selected":{"hasImage":true,"param":"DZ_2.png"}
   },
   "3,6": {
     "x": "400",
     "y": "250",
     "width": "50",
-    "height": "50"
+    "height": "50",
+    "unselected":{"hasImage":true,"param":"DZ.png"},
+    "selected":{"hasImage":true,"param":"DZ_2.png"}
   },
   "4,0": {
     "x": "100",
     "y": "300",
     "width": "50",
-    "height": "50"
+    "height": "50",
+    "unselected":{"hasImage":true,"param":"DZ.png"},
+    "selected":{"hasImage":true,"param":"DZ_2.png"}
   },
   "4,1": {
     "x": "150",
     "y": "300",
     "width": "50",
-    "height": "50"
+    "height": "50",
+    "unselected":{"hasImage":true,"param":"DZ.png"},
+    "selected":{"hasImage":true,"param":"DZ_2.png"}
   },
   "4,2": {
     "x": "200",
     "y": "300",
     "width": "50",
-    "height": "50"
+    "height": "50",
+    "unselected":{"hasImage":true,"param":"DZ.png"},
+    "selected":{"hasImage":true,"param":"DZ_2.png"}
   },
   "4,3": {
     "x": "250",
     "y": "300",
     "width": "50",
-    "height": "50"
+    "height": "50",
+    "unselected":{"hasImage":true,"param":"DZ.png"},
+    "selected":{"hasImage":true,"param":"DZ_2.png"}
   },
   "4,4": {
     "x": "300",
     "y": "300",
     "width": "50",
-    "height": "50"
+    "height": "50",
+    "unselected":{"hasImage":true,"param":"DZ.png"},
+    "selected":{"hasImage":true,"param":"DZ_2.png"}
   },
   "4,5": {
     "x": "350",
     "y": "300",
     "width": "50",
-    "height": "50"
+    "height": "50",
+    "unselected":{"hasImage":true,"param":"DZ.png"},
+    "selected":{"hasImage":true,"param":"DZ_2.png"}
   },
   "4,6": {
     "x": "400",
     "y": "300",
     "width": "50",
-    "height": "50"
+    "height": "50",
+    "unselected":{"hasImage":true,"param":"DZ.png"},
+    "selected":{"hasImage":true,"param":"DZ_2.png"}
   },
   "5,0": {
     "x": "100",
     "y": "350",
     "width": "50",
-    "height": "50"
+    "height": "50",
+    "unselected":{"hasImage":true,"param":"DZ.png"},
+    "selected":{"hasImage":true,"param":"DZ_2.png"}
   },
   "5,1": {
     "x": "150",
     "y": "350",
     "width": "50",
-    "height": "50"
+    "height": "50",
+    "unselected":{"hasImage":true,"param":"DZ.png"},
+    "selected":{"hasImage":true,"param":"DZ_2.png"}
   },
   "5,2": {
     "x": "200",
     "y": "350",
     "width": "50",
-    "height": "50"
+    "height": "50",
+    "unselected":{"hasImage":true,"param":"DZ.png"},
+    "selected":{"hasImage":true,"param":"DZ_2.png"}
   },
   "5,3": {
     "x": "250",
     "y": "350",
     "width": "50",
-    "height": "50"
+    "height": "50",
+    "unselected":{"hasImage":true,"param":"DZ.png"},
+    "selected":{"hasImage":true,"param":"DZ_2.png"}
   },
   "5,4": {
     "x": "300",
     "y": "350",
     "width": "50",
-    "height": "50"
+    "height": "50",
+    "unselected":{"hasImage":true,"param":"DZ.png"},
+    "selected":{"hasImage":true,"param":"DZ_2.png"}
   },
   "5,5": {
     "x": "350",
     "y": "350",
     "width": "50",
-    "height": "50"
+    "height": "50",
+    "unselected":{"hasImage":true,"param":"DZ.png"},
+    "selected":{"hasImage":true,"param":"DZ_2.png"}
   },
   "5,6": {
     "x": "400",
     "y": "350",
     "width": "50",
-    "height": "50"
+    "height": "50",
+    "unselected":{"hasImage":true,"param":"DZ.png"},
+    "selected":{"hasImage":true,"param":"DZ_2.png"}
   },
   "6,0": {
     "x": "100",
     "y": "400",
     "width": "50",
-    "height": "50"
+    "height": "50",
+    "unselected":{"hasImage":true,"param":"DZ.png"},
+    "selected":{"hasImage":true,"param":"DZ_2.png"}
   },
   "6,1": {
     "x": "150",
     "y": "400",
     "width": "50",
-    "height": "50"
+    "height": "50",
+    "unselected":{"hasImage":true,"param":"DZ.png"},
+    "selected":{"hasImage":true,"param":"DZ_2.png"}
   },
   "6,2": {
     "x": "200",
     "y": "400",
     "width": "50",
-    "height": "50"
+    "height": "50",
+    "unselected":{"hasImage":true,"param":"DZ.png"},
+    "selected":{"hasImage":true,"param":"DZ_2.png"}
   },
   "6,3": {
     "x": "250",
     "y": "400",
     "width": "50",
-    "height": "50"
+    "height": "50",
+    "unselected":{"hasImage":true,"param":"DZ.png"},
+    "selected":{"hasImage":true,"param":"DZ_2.png"}
   },
   "6,4": {
     "x": "300",
     "y": "400",
     "width": "50",
-    "height": "50"
+    "height": "50",
+    "unselected":{"hasImage":true,"param":"DZ.png"},
+    "selected":{"hasImage":true,"param":"DZ_2.png"}
   },
   "6,5": {
     "x": "350",
     "y": "400",
     "width": "50",
-    "height": "50"
+    "height": "50",
+    "unselected":{"hasImage":true,"param":"DZ.png"},
+    "selected":{"hasImage":true,"param":"DZ_2.png"}
   },
   "6,6": {
     "x": "400",
     "y": "400",
     "width": "50",
-    "height": "50"
+    "height": "50",
+    "unselected":{"hasImage":true,"param":"DZ.png"},
+    "selected":{"hasImage":true,"param":"DZ_2.png"}
   },
   "RedDropZone": {
-    "x": "100",
+    "x": "225",
     "y": "500",
-    "width": "840",
-    "height": "50"
+    "width": "50",
+    "height": "50",
+    "unselected":{"hasImage":false,"param":"1e49a7"},
+    "selected":{"hasImage":false,"param":"1e49a7"}
   },
   "YellowDropZone": {
-    "x": "100",
-    "y": "550",
-    "width": "840",
-    "height": "50"
+    "x": "275",
+    "y": "500",
+    "width": "50",
+    "height": "50",
+    "unselected":{"hasImage":false,"param":"1e49a7"},
+    "selected":{"hasImage":true,"param":"1e49a7"}
   }
 }
