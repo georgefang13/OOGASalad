@@ -1,19 +1,20 @@
 package oogasalad.frontend.panels;
 
-import java.util.HashMap;
-import java.util.Map;
-import oogasalad.frontend.scenes.SceneController;
+import oogasalad.frontend.scenes.SceneMediator;
 import oogasalad.frontend.scenes.SceneTypes;
 import oogasalad.frontend.windows.AbstractWindow;
 import oogasalad.frontend.windows.WindowTypes.WindowType;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class PanelController {
 
   private Map<String, Panel> panelMap;
-  private SceneController sceneController;
+  private SceneMediator sceneController;
 
 
-  public PanelController(SceneController sceneController) {
+  public PanelController(SceneMediator sceneController) {
     this.sceneController = sceneController;
     panelMap = new HashMap<>();
   }
@@ -35,7 +36,7 @@ public class PanelController {
     sceneController.switchToScene(newSceneID);
   }
 
-  public SceneController getSceneController() {
+  public SceneMediator getSceneController() {
     return sceneController;
   }
 

@@ -23,9 +23,30 @@ public class GameRunnerController implements GameController {
     private final HashSet<String> clickable = new HashSet<>();
     private Game game;
 
-    public GameRunnerController(String gameName) {
+    public GameRunnerController(String gameName, ArrayList<String> gameTypeData) {
         String directory = "data/games/"+gameName;
         int numPlayers = 2;
+        String type = gameTypeData.get(0);
+
+        try {
+            loadGame(directory);
+
+            game = new Game(this, directory, numPlayers,  !type.equals("local"));
+
+            switch (type) {
+                case "local" -> game.startGame();
+                case "create" -> game.createOnlineGame();
+                case "join" -> {
+                    String code = gameTypeData.get(1);
+                    game.joinOnlineGame(code);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+
         try {
             game = new Game(this,directory,numPlayers,false);
             loadGame(directory);

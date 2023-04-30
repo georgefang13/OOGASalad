@@ -18,7 +18,7 @@ public class GameEditorMainScene extends AbstractScene {
 
   private Label gameEditorLabel;
 
-  public GameEditorMainScene(SceneController sceneController) {
+  public GameEditorMainScene(SceneMediator sceneController) {
     super(sceneController);
   }
 

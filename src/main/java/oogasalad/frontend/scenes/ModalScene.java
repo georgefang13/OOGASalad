@@ -17,7 +17,7 @@ public class ModalScene extends AbstractScene {
 
   private Button createGameButton, errorButton;
 
-  public ModalScene(SceneController sceneController) {
+  public ModalScene(SceneMediator sceneController) {
     super(sceneController);
   }
 

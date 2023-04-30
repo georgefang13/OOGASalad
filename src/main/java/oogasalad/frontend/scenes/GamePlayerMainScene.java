@@ -8,13 +8,15 @@ import oogasalad.Controller.GameController;
 import oogasalad.Controller.GameRunnerController;
 import oogasalad.frontend.managers.NodeRemovedListener;
 
+import java.util.ArrayList;
+
 /**
  * @author Connor Wells
  * @author Owen MacKenzie
  */
 
 public class GamePlayerMainScene extends AbstractScene {
-  public GamePlayerMainScene(SceneController sceneController) {
+  public GamePlayerMainScene(SceneMediator sceneController) {
     super(sceneController);
   }
 
@@ -24,8 +26,17 @@ public class GamePlayerMainScene extends AbstractScene {
 
     String gameName = panelController.getSceneController().getWindowController().getData().toString();
     System.out.println(gameName);
+    String gameType = panelController.getSceneController().getData().toString();
+    System.out.println(gameType);
+    ArrayList<String> gameTypeData = new ArrayList<>();
+    gameTypeData.add(gameType);
+    if (gameType.equals("join")) {
+      String code = panelController.getSceneController().getData().toString();
+      System.out.println(code);
+      gameTypeData.add(code);
+    }
 
-    GameController gameRunnerController = new GameRunnerController(gameName);
+    GameController gameRunnerController = new GameRunnerController(gameName,gameTypeData);
 
     ObservableList<Node> gameObjectVisuals = gameRunnerController.getGameObjectVisuals();
     gameObjectVisuals.addListener(new NodeRemovedListener(root));
