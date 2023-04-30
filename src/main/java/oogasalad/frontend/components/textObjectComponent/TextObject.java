@@ -26,8 +26,10 @@ public class TextObject extends AbstractComponent implements TextObjectComponent
 
     public TextObject(String ID, Map<String, String> map){
         super(ID);
+        setDraggable(true);
         setValuesfromMap(map);
         initialize();
+        followMouse();
     }
 
     private void initialize() {
@@ -35,7 +37,6 @@ public class TextObject extends AbstractComponent implements TextObjectComponent
         text.setFill(color);
         setTextSize(fontSize);
         text.setRotate(rotate);
-        followMouse();
     }
 
     @Override

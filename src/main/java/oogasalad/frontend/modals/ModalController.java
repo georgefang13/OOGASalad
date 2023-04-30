@@ -1,9 +1,11 @@
 package oogasalad.frontend.modals;
 
-import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import javafx.scene.layout.Pane;
+import oogasalad.Controller.DropZoneController;
+import oogasalad.Controller.FilesController;
 import oogasalad.frontend.components.Component;
 import oogasalad.frontend.components.ComponentsFactory;
 import oogasalad.frontend.components.GraphicHandler;
@@ -19,17 +21,30 @@ public class ModalController {
   private Map<String, Map<String, String>> componentMap;
   private Map<String, Component> allComponents;
   private ComponentsFactory factory;
+  private FilesController files;
+  private DropZoneController dropZoneController;
   public ModalController(ComponentPanel componentPanel) {
     parentPanel = componentPanel;
     factory = new ComponentsFactory();
     componentMap = new HashMap<>();
     allComponents = new HashMap<>();
+    dropZoneController = new DropZoneController();
   }
 
+  public void setFileController(FilesController newController){
+    files = newController;
+  }
   public void createObjectTemplate(Map<String, String> map, String objectType) {
     String name = map.get("name");
     componentMap.put(name, map);
     parentPanel.addComponentTemplate(name, objectType);
+    dropZoneController.setRoot(root);
+    if(allComponents.containsKey(name)) {
+      editObjectInstance(name, map, objectType);
+    } else {
+      componentMap.put(name, map);
+      parentPanel.addComponentTemplate(name, objectType);
+    }
   }
 
   public void createObjectInstance(String name, String objectType){
@@ -37,14 +52,22 @@ public class ModalController {
     System.out.println(objectType);
     Map<String, String> map = componentMap.get(name);
     Component c = factory.create(objectType, map);
+    files.addComponent(c);
     allComponents.put(name, c);
+    dropZoneController.addDropZone(c);
     GraphicHandler handler = new GraphicHandler();
     handler.moveToCenter(c);
     root.getChildren().add(c.getNode());
   }
 
-  public void editObjectInstance(String name, String objectType) {
-
+  public void editObjectInstance(String name, Map<String, String> map, String objectType) {
+    objectType = objectType.substring(0, 1).toUpperCase() + objectType.substring(1);
+    root.getChildren().remove(allComponents.get(name).getNode());
+    Component c = factory.create(objectType, map);
+    allComponents.put(name, c);
+    GraphicHandler handler = new GraphicHandler();
+    handler.moveToCenter(c);
+    root.getChildren().add(c.getNode());
   }
 
   public void deleteObjectInstance(String name) {
@@ -54,4 +77,5 @@ public class ModalController {
   public void setRoot(Pane rt) {
     root = rt;
   }
+
 }
