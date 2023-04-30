@@ -5,9 +5,7 @@ import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
-import oogasalad.frontend.components.gameObjectComponent.GameRunner.gameObjectVisuals.DropZoneVisual;
-import oogasalad.frontend.components.gameObjectComponent.GameRunner.gameObjectVisuals.PieceVisualSelectBorder;
-import oogasalad.frontend.components.gameObjectComponent.GameRunner.gameObjectVisuals.PieceVisualSelectImage;
+import oogasalad.frontend.components.gameObjectComponent.GameRunner.gameObjectVisuals.*;
 import oogasalad.frontend.managers.DisplayManager;
 import oogasalad.Controller.GameController;
 
@@ -60,12 +58,12 @@ public class Piece extends GameRunnerObject{
         getNode().setOnMouseReleased(e -> selectDropZoneBelow());
     }
     private void selectDropZoneBelow(){
-        DropZoneVisual dropZoneVisual = getIntersectingDropZones();
+        SelectableVisual dropZoneVisual = getIntersectingDropZones();
         if (dropZoneVisual == null){
             goBack();
             return;
         }
-        if (gameRunnerController.isObjectPlayable(dropZoneVisual.objectID)){
+        if (gameRunnerController.isObjectPlayable(dropZoneVisual.getObjectID())){
             gameRunnerController.select(dropZoneVisual.getObjectID());
             acceptDrag();
             active = false;

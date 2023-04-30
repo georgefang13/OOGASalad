@@ -1,7 +1,6 @@
 package oogasalad.frontend.components.gameObjectComponent.GameRunner.gameObjectVisuals;
 
 import javafx.scene.Node;
-import oogasalad.frontend.components.gameObjectComponent.GameRunner.AbstractSelectableVisual;
 
 public class DropZoneVisual extends AbstractSelectableVisual {
     private Node unselectedVisual;

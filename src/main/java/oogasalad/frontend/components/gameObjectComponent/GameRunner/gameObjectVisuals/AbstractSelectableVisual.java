@@ -1,7 +1,6 @@
-package oogasalad.frontend.components.gameObjectComponent.GameRunner;
+package oogasalad.frontend.components.gameObjectComponent.GameRunner.gameObjectVisuals;
 
 import javafx.scene.layout.HBox;
-import oogasalad.frontend.components.gameObjectComponent.GameRunner.gameObjectVisuals.SelectableVisual;
 
 public abstract class AbstractSelectableVisual extends HBox implements SelectableVisual {
     protected String objectID;
