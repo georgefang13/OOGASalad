@@ -36,12 +36,13 @@ public abstract class AbstractComponent implements Component {
     ID = id;
   }
 
-
   protected void instantiatePropFile(String filepath) {
     setDEFAULT_FILE_PATH(filepath);
     setDEFAULT_BUNDLE(ResourceBundle.getBundle(getDEFAULT_FILE_PATH()));
   }
-  protected void setValuesfromMap(Map<String, String> map) {
+
+  @Override
+  public void setValuesfromMap(Map<String, String> map) {
     for(String param: map.keySet()){
       try{
         Field field = this.getClass().getDeclaredField(param);
@@ -108,8 +109,6 @@ public abstract class AbstractComponent implements Component {
   @Override
   public void setSize(double size) {
     this.size = size;
-    //getNode().setScaleY(size);
-    //getNode().setScaleX(size);
   }
 
   @Override

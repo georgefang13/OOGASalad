@@ -25,6 +25,7 @@ public class GridObject extends AbstractComponent {
         super(ID);
         setValuesfromMap(map);
         initialize();
+        followMouse();
     }
 
     private void initialize() {
@@ -43,8 +44,6 @@ public class GridObject extends AbstractComponent {
                 grid.add(rect,i,j);
             }
         }
-
-        followMouse();
     }
 
     @Override

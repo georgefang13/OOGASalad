@@ -16,15 +16,16 @@ public class LineObject extends AbstractComponent implements LineObjectComponent
     private double strokeWidth;
     public LineObject(String ID, Map<String, String> map){
         super(ID);
+        setDraggable(true);
         setValuesfromMap(map);
         initialize();
+        followMouse();
     }
 
     private void initialize() {
         myLine = new Line(startX,startY,endX, endY);
         myLine.setFill(color);
         myLine.setStrokeWidth(strokeWidth);
-        followMouse();
     }
 
     @Override

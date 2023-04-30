@@ -48,7 +48,6 @@ public class GameObject extends AbstractComponent implements GameObjectComponent
     followMouse();
   }
 
-
   private void initialize() {
     image.setFitWidth(width);
     image.setFitHeight(height);
