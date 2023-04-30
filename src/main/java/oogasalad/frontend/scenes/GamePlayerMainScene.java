@@ -3,11 +3,10 @@ package oogasalad.frontend.scenes;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
+import oogasalad.Controller.GameController;
 import oogasalad.Controller.GameRunnerController;
 import oogasalad.frontend.managers.NodeRemovedListener;
-import oogasalad.Controller.GameController;
 
 /**
  * @author Connor Wells
@@ -15,9 +14,6 @@ import oogasalad.Controller.GameController;
  */
 
 public class GamePlayerMainScene extends AbstractScene {
-  private Label textInstructions;
-
-
   public GamePlayerMainScene(SceneController sceneController) {
     super(sceneController);
   }

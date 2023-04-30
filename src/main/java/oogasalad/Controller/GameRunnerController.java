@@ -5,9 +5,10 @@ import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import oogasalad.frontend.components.gameObjectComponent.GameRunner.*;
-import oogasalad.frontend.managers.DisplayManager;
+import oogasalad.frontend.components.gameObjectComponent.GameRunner.DropZoneFE;
+import oogasalad.frontend.components.gameObjectComponent.GameRunner.GameRunnerObject;
+import oogasalad.frontend.components.gameObjectComponent.GameRunner.Piece;
+import oogasalad.frontend.components.gameObjectComponent.GameRunner.SelectableVisual;
 import oogasalad.frontend.managers.GameObjectVisualSorter;
 import oogasalad.gamerunner.backend.Game;
 import oogasalad.sharedDependencies.backend.filemanagers.FileManager;
@@ -42,24 +43,14 @@ public class GameRunnerController implements GameController {
         loadPieces(directory);
     }
 
-    private Node loadDefaultDropRectangle(String hexColor,int height, int width){ //TODO: A similar function is in game object move it there just send paths
-        Color fillColor = Color.web(hexColor);
-        Rectangle defaultDrop = new Rectangle(width, height, fillColor);
-        return defaultDrop;
-    }
-    private Node loadImgOrDefaultFromFile(String selectType, FileManager fm, String id, String directory, int height, int width){
+    private DropZoneFE.selectableVisualParams loadDropParamsFromFile(String selectType, FileManager fm, String id, String directory){
         boolean isImage = fm.getObject(Boolean.class, id, selectType, "hasImage");
         String param = fm.getString(id, selectType, "param");
-        Node visual;
         if (isImage){
-            String selectedPath = directory.substring(0, directory.lastIndexOf("/")) + "/assets/" + param;
-            visual = DisplayManager.loadImage(selectedPath,height,width);
-        } else {
-            visual = loadDefaultDropRectangle(param,height,width);
+            param = directory.substring(0, directory.lastIndexOf("/")) + "/assets/" + param;
         }
-        return visual;
+        return new DropZoneFE.selectableVisualParams(isImage,param);
     }
-
     private void loadDropZones(String directory) throws FileNotFoundException {
         FileManager fm = new FileManager(directory + "/layout.json");
         for (String id : fm.getTagsAtLevel()){
@@ -68,8 +59,8 @@ public class GameRunnerController implements GameController {
             int height = Integer.parseInt(fm.getString(id, "height"));
             int width = Integer.parseInt(fm.getString(id, "width"));
 
-            Node unselected = loadImgOrDefaultFromFile("unselected",fm,id,directory,height,width);
-            Node selected = loadImgOrDefaultFromFile("selected",fm,id,directory,height,width);
+            DropZoneFE.selectableVisualParams unselected = loadDropParamsFromFile("unselected",fm,id,directory);
+            DropZoneFE.selectableVisualParams selected = loadDropParamsFromFile("selected",fm,id,directory);
             addDropZone(new GameController.DropZoneParameters(id, unselected, selected, x, y, height, width));
         }
     }

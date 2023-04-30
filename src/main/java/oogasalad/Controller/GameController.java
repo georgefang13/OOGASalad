@@ -2,6 +2,7 @@ package oogasalad.Controller;
 
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
+import oogasalad.frontend.components.gameObjectComponent.GameRunner.DropZoneFE;
 
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -24,6 +25,6 @@ public interface GameController {
     boolean isObjectPlayable(String id);
     ObservableList<Node> getGameObjectVisuals();
 
-    record DropZoneParameters(String id, Node unselected, Node selected, int x, int y, int height, int width){}
+    record DropZoneParameters(String id, DropZoneFE.selectableVisualParams unselected, DropZoneFE.selectableVisualParams selected, int x, int y, int height, int width){}
 
 }

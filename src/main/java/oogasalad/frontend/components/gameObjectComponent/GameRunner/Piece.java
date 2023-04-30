@@ -11,8 +11,8 @@ import oogasalad.Controller.GameController;
 public class Piece extends GameRunnerObject{
     private double lastTranslateX;
     private double lastTranslateY;
-    private boolean hasSelectImage;
-    private Object param;
+    private final boolean hasSelectImage;
+    private final Object param;
     public Piece(String ID, GameController gameRunnerController, String imagePath, boolean hasSelectImage, Object param, double height, double width) {
         super(ID, gameRunnerController);
         setImage(imagePath);

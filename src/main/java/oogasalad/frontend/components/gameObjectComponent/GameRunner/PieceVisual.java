@@ -1,7 +1,6 @@
 package oogasalad.frontend.components.gameObjectComponent.GameRunner;
 
 import javafx.scene.Node;
-import javafx.scene.paint.Color;
 
 public abstract class PieceVisual extends AbstractSelectableVisual{
     protected Node pieceImage;
