@@ -33,6 +33,9 @@ public class Dropzone extends AbstractComponent implements DropZonePublisher {
   private List<ControllerSubscriber> controllerSubscribers;
   private boolean doubleClick;
   private int clicks;
+
+  private long lastClickTime = 0;
+  private final long DOUBLE_CLICK_DELAY = 200; // 200 milliseconds
   /**
    * Dropzone
    * @param ID the id of the DropZone
@@ -95,15 +98,27 @@ public class Dropzone extends AbstractComponent implements DropZonePublisher {
   private void setonUpdate(){
     node.setOnMouseClicked(e ->
         {super.getNode().getOnMouseClicked();
-          clicks++;
-        if(clicks == 2){
-          doubleClick = true;
-          clicks = 0;
-        }
-        System.out.println(clicks);
-        publish();
+          ClickDelay();
+          publish();
         }
     );
+  }
+
+  /**
+   * 
+   */
+  private void ClickDelay() {
+    long clickTime = System.currentTimeMillis();
+    if (clickTime - lastClickTime < DOUBLE_CLICK_DELAY) {
+      System.out.println(clickTime - lastClickTime);
+      doubleClick = true;
+      lastClickTime = 0; // Reset last click time
+    } else {
+      // Single click action
+      System.out.println("Single click");
+      lastClickTime = clickTime;
+      doubleClick = false;
+    }
   }
 
   /**
