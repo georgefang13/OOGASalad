@@ -16,7 +16,7 @@ import oogasalad.sharedDependencies.backend.filemanagers.FileManager;
  * @author Han This class is made to update any File information from the Front End to the backend
  */
 public class FilesController {
-  private final String GAMES_PATH = "src/main/resources/";
+  private final String GAMES_PATH = "data\\games\\";
   private final String gameFolder;
   private final String FILES_NAMES = "Controller/FilesConfig.properties";
 
@@ -31,7 +31,9 @@ public class FilesController {
     gameFolder = GAMES_PATH + name;
     File directory = new File(gameFolder);
     boolean valid = directory.mkdir();
-    if (valid) {
+    File frontend = new File(gameFolder + "\\frontend");
+    boolean valid1 = frontend.mkdir();
+    if (valid && valid1) {
       //TODO log file made successfully
     } else {
       //TODO log file not made successfully
