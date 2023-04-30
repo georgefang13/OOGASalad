@@ -34,8 +34,8 @@ public class GameSetupPanel extends HBox implements Panel {
         Button btn3 = new Button("Join Online Game");
         btn3.setOnAction(e -> {
             String code = codeField.getText();
-            panelController.getSceneController().passData("join");
             panelController.getSceneController().passData(code);
+            panelController.getSceneController().passData("join");
             panelController.newSceneFromPanel("GAME", GameWindow.WindowScenes.GAME_SCENE);
         });
         this.getChildren().addAll(btn, btn2, codeField, btn3);
