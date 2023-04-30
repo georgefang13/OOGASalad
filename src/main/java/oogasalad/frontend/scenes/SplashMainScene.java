@@ -4,13 +4,21 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import oogasalad.frontend.modals.subDisplayModals.AlertModal;
+import oogasalad.frontend.windows.LibraryWindow;
+import oogasalad.frontend.windows.LibraryWindow.WindowScenes;
+import oogasalad.frontend.windows.WindowTypes.WindowType;
+import oogasalad.sharedDependencies.backend.database.Database;
+import oogasalad.sharedDependencies.backend.database.UserManager;
 
 /**
  * @author Connor Wells
@@ -40,6 +48,7 @@ public class SplashMainScene extends AbstractScene {
   private ComboBox<String> languageDropdown;
   private ComboBox<String> themeDropdown;
   private VBox root;
+  private UserManager userManager;
 
   public SplashMainScene(SceneController sceneController) {
     super(sceneController);
@@ -82,6 +91,7 @@ public class SplashMainScene extends AbstractScene {
 //    setText();
 //    setTheme();
     root = new VBox();
+    userManager = new UserManager(new Database());
     makeInputFields();
     makeLoginSignUpButtons();
     makeDropDowns();
@@ -109,10 +119,33 @@ public class SplashMainScene extends AbstractScene {
   private HBox makeLoginSignUpButtons() {
     HBox loginSignUpButtons = new HBox();
     login = new Hyperlink(ELEMENT_LABELS.getString(LOGIN));
+    login.setOnMouseClicked(e -> {
+      if (userManager.tryLogin(usernameField.getText(), passwordField.getText())) {
+        displayLibrary();
+      }
+      else {
+        AlertModal error = new AlertModal();
+        error.showAndWait();
+      }
+    });
     signUp = new Hyperlink(ELEMENT_LABELS.getString(SIGN_UP));
+    signUp.setOnMouseClicked(e -> {
+      if (userManager.tryRegister(usernameField.getText(), passwordField.getText())) {
+        displayLibrary();
+      }
+      else {
+        AlertModal error = new AlertModal();
+        error.showAndWait();
+      }
+    });
     loginSignUpButtons.getChildren().addAll(login, signUp);
     return loginSignUpButtons;
   }
+
+  private void displayLibrary() {
+    panelController.getSceneController().getWindowController().registerAndShow(WindowType.LIBRARY_WINDOW);
+  }
+
   private HBox makeDropDowns() {
     HBox dropDowns = new HBox();
     languageDropdown = new ComboBox<>();
