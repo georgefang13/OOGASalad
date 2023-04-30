@@ -22,7 +22,6 @@ public class Piece extends GameRunnerObject{
         setHeight(height);
         setWidth(width);
         setSelectableVisual();
-        //getNode().setOnMouseClicked(e -> gameRunnerController.select(ID));
         followMouse();
         setDragSelection();
     }

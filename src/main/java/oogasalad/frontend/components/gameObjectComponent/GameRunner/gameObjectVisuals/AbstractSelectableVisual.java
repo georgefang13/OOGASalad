@@ -1,5 +1,6 @@
 package oogasalad.frontend.components.gameObjectComponent.GameRunner.gameObjectVisuals;
 
+import javafx.scene.Node;
 import javafx.scene.layout.HBox;
 
 public abstract class AbstractSelectableVisual extends HBox implements SelectableVisual {
@@ -11,5 +12,9 @@ public abstract class AbstractSelectableVisual extends HBox implements Selectabl
     @Override
     public String getObjectID(){
         return objectID;
+    }
+    protected void switchImages(Node oldImage, Node newImage){
+        this.getChildren().remove(oldImage);
+        this.getChildren().add(newImage);
     }
 }
