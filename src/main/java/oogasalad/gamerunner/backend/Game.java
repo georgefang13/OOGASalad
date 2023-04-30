@@ -591,7 +591,7 @@ public class Game implements GameToInterpreterAPI{
         putInDropZone(obj, dz);
         String id = idManager.getId(obj);
         String imagePath = this.directory + "/assets/" + image;
-        controller.addPiece(id, imagePath, idManager.getId(dz), false, "#ff0000", height, width);
+        controller.addPiece(id, imagePath, idManager.getId(dz), false, "#ff0000", (int) height, (int) width);
     }
 
     @Override
@@ -603,7 +603,7 @@ public class Game implements GameToInterpreterAPI{
     public void setPieceHighlight(Ownable piece, String highlight) {
         String id = idManager.getId(piece);
         String imagePath = this.directory + "/assets/" + highlight;
-        controller.setPieceHighlight(id, imagePath);
+        //controller.setPieceHighlight(id, imagePath);
     }
 
     /**

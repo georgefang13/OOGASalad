@@ -126,7 +126,7 @@ public class SimpleGameView extends Application implements GameController {
             image = directory.substring(0, directory.lastIndexOf("/")) + "/assets/" + image;
             String dropZoneID = fm.getString(id, "location");
             double size = Double.parseDouble(fm.getString(id, "size"));
-            addPiece(id, image, dropZoneID, false, null, size, 0.0);
+            addPiece(id, image, dropZoneID, false, null, 30, 30);
         }
     }
     @Override
@@ -162,7 +162,7 @@ public class SimpleGameView extends Application implements GameController {
     }
 
     @Override
-    public void addPiece(String id, String image, String dropZoneID, boolean hasSelectImage, Object param, double height, double width) {
+    public void addPiece(String id, String image, String dropZoneID, boolean hasSelectImage, String param, int height, int width) {
         double size = height;
         Image img;
         try {

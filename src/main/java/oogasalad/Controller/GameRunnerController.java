@@ -86,19 +86,16 @@ public class GameRunnerController implements GameController {
             String image = fm.getString(id, "defaultImage");
             image = directory.substring(0, directory.lastIndexOf("/")) + "/assets/" + image;
             String dropZoneID = fm.getString(id, "location");
-            double height = Double.parseDouble(fm.getString(id, "height"));
-            double width = Double.parseDouble(fm.getString(id, "width"));
+            int height = (int) Double.parseDouble(fm.getString(id, "height"));
+            int width = (int) Double.parseDouble(fm.getString(id, "width"));
 
             boolean hasimage = fm.getObject(Boolean.class,id,"selected","hasSelectedImage");
             String paramString = fm.getString(id,"selected","param");
 
-            Object param;
             if (hasimage){
-                param = directory.substring(0, directory.lastIndexOf("/")) + "/assets/" + paramString;
-            } else {
-                param = Color.web(paramString);
+                paramString = directory.substring(0, directory.lastIndexOf("/")) + "/assets/" + paramString;
             }
-            addPiece(id, image, dropZoneID, hasimage, param, height, width);
+            addPiece(id, image, dropZoneID, hasimage, paramString, height, width);
         }
     }
     @Override
@@ -118,7 +115,7 @@ public class GameRunnerController implements GameController {
     }
 
     @Override
-    public void addPiece(String id, String imagePath, String dropZoneID, boolean hasSelectImage, Object param, double height, double width) {
+    public void addPiece(String id, String imagePath, String dropZoneID, boolean hasSelectImage, String param, int height, int width) {
 //        Platform.runLater(() -> {
             Piece piece = new Piece(id,this, imagePath, hasSelectImage, param ,height, width);
             DropZoneFE dropZone = (DropZoneFE) gameObjects.get(dropZoneID);
@@ -176,10 +173,10 @@ public class GameRunnerController implements GameController {
         Node newImage = DisplayManager.loadImage(imagePath, (int) width, (int) height);
         gameObject.setImage(imagePath);
         SelectableVisual selectableVisual = (SelectableVisual) gameObject.getNode();
-        selectableVisual.updateUnClickableVisual(newImage);
+        selectableVisual.updateUnClickableVisual(imagePath);
 
 //        gameObject.setHighlight("/Users/ethanhorowitz/IdeaProjects/oogasalad_team02/data/games/checkers/assets/light.png");
-        gameObject.setHighlight("#ff0000");
+        //gameObject.setHighlight("#ff0000");
 
         gameObjectVisualsList.add(gameObject.getNode());
     }
@@ -214,7 +211,7 @@ public class GameRunnerController implements GameController {
     @Override
     public void setPieceHighlight(String id, String highlight) {
         Piece piece = (Piece) gameObjects.get(id);
-        piece.setHighlight(highlight);
+        //piece.setHighlight(highlight);
     }
 }
 

@@ -24,7 +24,7 @@ public interface GameController {
      * @param height the height of the piece
      * @param width the width of the piece
      */
-    void addPiece(String id, String image, String dropZoneID, boolean hasSelectImage, Object param, double height, double width);
+    void addPiece(String id, String imagePath, String dropZoneID, boolean hasSelectImage, String param, int height, int width);
 
     /**
      * Sets pieces to be clickable

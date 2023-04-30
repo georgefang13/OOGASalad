@@ -7,6 +7,7 @@ import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import oogasalad.frontend.components.AbstractComponent;
+import oogasalad.frontend.managers.DisplayManager;
 
 
 /**
@@ -19,8 +20,6 @@ public class GameObject extends AbstractComponent implements GameObjectComponent
   private List<Node> children;
 
   private ImageView image;
-  private double width;
-  private double height;
   private double rotate;
 
   public GameObject(String ID) {
@@ -49,16 +48,7 @@ public class GameObject extends AbstractComponent implements GameObjectComponent
 
   @Override
   public void setImage(String imagePath) {
-    Image newImage;
-    try {
-      newImage = new Image(new FileInputStream(imagePath));
-    } catch (Exception e) {
-      System.out.println("Image " + imagePath + " not found");
-      return;
-    }
-    image = new ImageView(newImage);
-    image.setFitWidth(width);
-    image.setFitHeight(height);
+    image = (ImageView) DisplayManager.loadImage(imagePath,(int) getHeight(),(int) getWidth());
   }
 
   @Override

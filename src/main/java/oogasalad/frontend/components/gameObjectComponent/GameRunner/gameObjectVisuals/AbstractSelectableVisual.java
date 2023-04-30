@@ -2,13 +2,19 @@ package oogasalad.frontend.components.gameObjectComponent.GameRunner.gameObjectV
 
 import javafx.scene.Node;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 import oogasalad.frontend.managers.DisplayManager;
 
 public abstract class AbstractSelectableVisual extends HBox implements SelectableVisual {
     protected String objectID;
-    public AbstractSelectableVisual(String id) {
+    protected int width;
+    protected int height;
+    public AbstractSelectableVisual(String id, int width, int height) {
         super();
         objectID = id;
+        this.width = width;
+        this.height = height;
+
     }
     @Override
     public String getObjectID(){
@@ -19,5 +25,11 @@ public abstract class AbstractSelectableVisual extends HBox implements Selectabl
             this.getChildren().remove(oldImage);
             this.getChildren().add(newImage);
         }
+    }
+    protected Node loadVisual(String imgPath){
+        return DisplayManager.loadImage(imgPath,width,height);
+    }
+    protected Color loadColorFromHex(String hexColor){
+        return Color.web(hexColor);
     }
 }

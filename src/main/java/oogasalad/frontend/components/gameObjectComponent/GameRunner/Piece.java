@@ -3,21 +3,21 @@ package oogasalad.frontend.components.gameObjectComponent.GameRunner;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
-import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import oogasalad.frontend.components.gameObjectComponent.GameRunner.gameObjectVisuals.*;
-import oogasalad.frontend.managers.DisplayManager;
 import oogasalad.Controller.GameController;
+import oogasalad.frontend.components.gameObjectComponent.GameRunner.gameObjectVisuals.DropZoneVisual;
+import oogasalad.frontend.components.gameObjectComponent.GameRunner.gameObjectVisuals.PieceVisualSelectBorder;
+import oogasalad.frontend.components.gameObjectComponent.GameRunner.gameObjectVisuals.PieceVisualSelectImage;
 
 public class Piece extends GameRunnerObject{
+    private final String imagePath;
+    private final boolean hasSelectImage;
+    private final String param;
     private double lastTranslateX;
     private double lastTranslateY;
-    private boolean hasSelectImage;
-    private Object param;
-    public Piece(String ID, GameController gameRunnerController, String imagePath, boolean hasSelectImage, Object param, double height, double width) {
+    public Piece(String ID, GameController gameRunnerController, String imagePath, boolean hasSelectImage, String param, double height, double width) {
         super(ID, gameRunnerController);
-        setImage(imagePath);
+        setImage(imagePath); //try commenting this out
+        this.imagePath = imagePath;
         this.hasSelectImage = hasSelectImage;
         this.param = param;
         setHeight(height);
@@ -28,16 +28,10 @@ public class Piece extends GameRunnerObject{
     }
     @Override
     public void setSelectableVisual() {
-        ImageView img = getImage();
-        img.setFitWidth(getWidth());
-        img.setFitHeight(getHeight());
         if (hasSelectImage){
-            String selectImgPath = (String) param;
-            Node selectImage = DisplayManager.loadImage(selectImgPath,(int) getHeight(),(int) getWidth());
-            selectableVisual = new PieceVisualSelectImage(img,selectImage,getHeight(),getWidth(),ID);
+            selectableVisual = new PieceVisualSelectImage(imagePath,param,(int) getHeight(),(int) getWidth(),ID);
         } else {
-            Color selectBorderColor = (Color) param;
-            selectableVisual = new PieceVisualSelectBorder(img,selectBorderColor,getHeight(),getWidth(),ID);
+            selectableVisual = new PieceVisualSelectBorder(imagePath,param,(int) getHeight(),(int) getWidth(),ID);
         }
     }
     public void moveToDropZoneXY(Point2D dropZoneCenter){
@@ -58,7 +52,7 @@ public class Piece extends GameRunnerObject{
         getNode().setOnMouseReleased(e -> selectDropZoneBelow());
     }
     private void selectDropZoneBelow(){
-        SelectableVisual dropZoneVisual = getIntersectingDropZones();
+        DropZoneVisual dropZoneVisual = getIntersectingDropZones();
         if (dropZoneVisual == null){
             goBack();
             return;
@@ -92,36 +86,5 @@ public class Piece extends GameRunnerObject{
         Node node = getNode();
         node.setTranslateX(lastTranslateX);
         node.setTranslateY(lastTranslateY);
-    }
-
-    @Override
-    public void setHighlight(String img){
-        boolean isImg = !img.startsWith("#");
-        if (hasSelectImage == isImg){
-            if (hasSelectImage){
-                selectableVisual.updateClickableVisual(DisplayManager.loadImage(img, (int) getHeight(), (int) getWidth()));
-            } else {
-                Color c = Color.web(img);
-                Rectangle r = new Rectangle(getWidth(),getHeight(),c);
-                selectableVisual.updateClickableVisual(r);
-            }
-        }
-        else {
-            hasSelectImage = isImg;
-            param = isImg ? img : Color.web(img);
-            if (isImg){
-                Node selectImage = DisplayManager.loadImage(img, (int) getHeight(), (int) getWidth());
-                Node origImg = ((PieceVisualSelectBorder) selectableVisual).getImage();
-                selectableVisual = new PieceVisualSelectImage(origImg,selectImage,getHeight(),getWidth(),ID);
-            }
-            else {
-                Color c = Color.web(img);
-                Node origImg = ((PieceVisualSelectImage) selectableVisual).getImage();
-                selectableVisual = new PieceVisualSelectBorder(origImg,c,getHeight(),getWidth(),ID);
-            }
-        }
-
-
-
     }
 }

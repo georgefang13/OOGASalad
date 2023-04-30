@@ -4,10 +4,10 @@ import javafx.scene.Node;
 
 public class PieceVisualSelectImage extends PieceVisual {
     private Node selectImage;
-    public PieceVisualSelectImage(Node pieceImg, Node selectImage, double height, double width, String id) {
-        super(pieceImg, height, width, id);
-        this.selectImage = selectImage;
+    public PieceVisualSelectImage(String pieceImg, String selectImage, int width, int height, String id) {
+        super(pieceImg, width, height, id);
         this.getChildren().add(pieceImage);
+        updateClickableVisual(selectImage);
     }
     @Override
     public void showClickable() {
@@ -19,15 +19,12 @@ public class PieceVisualSelectImage extends PieceVisual {
     }
 
     @Override
-    public void updateUnClickableVisual(Node newVisual) {
-        switchImages(pieceImage,newVisual);
-        pieceImage = newVisual;
+    public void updateUnClickableVisual(String imgPath) {
+        updatePieceImage(imgPath);
     }
-
     @Override
-    public void updateClickableVisual(Node newVisual) {
-        switchImages(selectImage,newVisual);
-        selectImage = newVisual;
+    public void updateClickableVisual(String imgPath) {
+        selectImage = loadVisual(imgPath);
     }
 
 }

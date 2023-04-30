@@ -7,7 +7,7 @@ import javafx.scene.image.ImageView;
 import java.io.FileInputStream;
 
 public class DisplayManager {
-    public static Node loadImage(String imgPath, int height, int width){ //TODO: A similar function is in game object move it there just send paths
+    public static Node loadImage(String imgPath, int width, int height){ //TODO: A similar function is in game object move it there just send paths
         Image img;
         try {
             img = new Image(new FileInputStream(imgPath));

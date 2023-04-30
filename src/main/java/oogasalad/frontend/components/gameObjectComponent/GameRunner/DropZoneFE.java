@@ -10,7 +10,7 @@ import oogasalad.frontend.managers.DisplayManager;
 
 public class DropZoneFE extends GameRunnerObject{
     private final SelectableVisualParams unselectedParams;
-    private SelectableVisualParams selectedParams;
+    private final SelectableVisualParams selectedParams;
     private final int x;
     private final int y;
     public DropZoneFE(String ID, SelectableVisualParams unselected, SelectableVisualParams selected, int width, int height, int x, int y, GameController gameRunnerController) {
@@ -27,7 +27,7 @@ public class DropZoneFE extends GameRunnerObject{
     public void setSelectableVisual() {
         Node unselected = createImage(unselectedParams.hasSelectImage,unselectedParams.param);
         Node selected = createImage(selectedParams.hasSelectImage,selectedParams.param);
-        selectableVisual = new DropZoneVisual(unselected,selected,getWidth(),getHeight(),x,y,ID);
+        selectableVisual = new DropZoneVisual(unselected,selected,(int) getWidth(),(int) getHeight(),x,y,ID);
     }
 
     public record SelectableVisualParams(boolean hasSelectImage, String param){}
@@ -45,16 +45,7 @@ public class DropZoneFE extends GameRunnerObject{
         }
         return visual;
     }
-
     public Point2D getDropZoneCenter(){
         return getNode().localToScene(getWidth()/2,getHeight()/2);
     }
-
-    @Override
-    public void setHighlight(String img){
-        boolean hasSelectImage = !img.startsWith("#");
-        selectedParams = new SelectableVisualParams(hasSelectImage, img);
-        setSelectableVisual();
-    }
-
 }
