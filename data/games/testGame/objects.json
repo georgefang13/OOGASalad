@@ -1,1 +1,1 @@
-{"myIdGameObject.myIdGameObject3":{"owner":"-1","location":"DropZone"},"myIdGameObject2":{"owner":"-1","location":""},"GameObject":{"owner":"-1","location":""},"myIdGameObject":{"owner":"-1","location":""}}
+{"myIdGameObject.myIdGameObject3":{"owner":"-1","classes":[],"owns":[],"location":"DropZone"},"myIdGameObject2":{"owner":"-1","classes":[],"owns":[],"location":"DropZone"},"GameObject":{"owner":"-1","classes":[],"owns":[],"location":"DropZone"},"myIdGameObject":{"owner":"-1","classes":[],"owns":"myIdGameObject.myIdGameObject3","location":"DropZone"}}

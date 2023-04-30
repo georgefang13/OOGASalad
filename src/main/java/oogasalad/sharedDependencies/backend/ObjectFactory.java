@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import java.util.UUID;
 import oogasalad.gameeditor.backend.ObjectParameter;
 import oogasalad.sharedDependencies.backend.id.IdManager;
 import oogasalad.gameeditor.backend.ownables.gameobjects.BoardCreator;
@@ -107,7 +108,9 @@ public class ObjectFactory {
       //place g into a dropzone
       String dropzoneId = constructorParams.get(ObjectParameter.DROPZONE_ID).toString();
       DropZone dz = (DropZone) ownableIdManager.getObject(dropzoneId);
-      dz.putObject("", g);
+      String randomStringId = UUID.randomUUID().toString(); //TODO will refactor with new dropzones
+      dz.putObject(randomStringId, g);
+      //get the contents of the dropzone
       return g;
 
     } else if(ownableType.contains("BoardCreator")) {

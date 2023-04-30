@@ -96,6 +96,7 @@ public class GameInator {
    * Creates a new Game with the given file name.
    * Removes all current information and overwrites it with the information from the file.
    * @param directory the directory of the files to load
+   * @param gameName the name of the game
    */
   public GameInator(String directory, String gameName) {
     this.gameName = gameName;
@@ -109,7 +110,7 @@ public class GameInator {
       goals.addAll(loader.loadGoals());
       ruleManager = loader.loadRules();
     } catch (Exception e) {
-      e.printStackTrace();
+      e.printStackTrace(); //TODO throw error or log
     }
 
     objectFactory = new ObjectFactory(gameWorld, idManager, players);
@@ -129,8 +130,7 @@ public class GameInator {
     try {
       Path path = Paths.get(gameDirectory);
 
-      FileUtils.deleteDirectory(new File(gameDirectory));
-
+      FileUtils.deleteDirectory(new File(gameDirectory)); //TODO this could be a problem in integration
 
       Files.createDirectory(path);
 
@@ -147,6 +147,7 @@ public class GameInator {
       fm.saveToFile(variablesFile);
       fm.saveToFile(objectsFile);
       fm.saveToFile(gameDirectory + "rules.json");
+      fm.saveToFile(gameDirectory + "fsm.json");
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -198,11 +199,15 @@ public class GameInator {
   private void updateVariableFile() {
     FileManager fm = new FileManager();
 
-    idManager.objectStream().filter(obj -> obj instanceof Variable<?>).filter(obj -> ((Variable)obj).get() != null).forEach(var -> {
+    idManager.objectStream().filter(obj -> obj instanceof Variable<?>).forEach(var -> {
       Variable v = (Variable) var;
       String id = idManager.getId(v);
       String owner = String.valueOf(getOwnerType(v.getOwner()));
-      String type = v.get().getClass().getName();
+      //if v.get is null, then have type=Null otherwise get the type
+      String type = "null";
+      if(v.get() != null){
+        type = v.get().getClass().getName();
+      }
 
       fm.addContent(owner, id, "owner");
       fm.addContent(type, id, "type");
@@ -232,11 +237,21 @@ public class GameInator {
 
       fm.addContent(String.valueOf(owner), objId, "owner");
       obj.getClasses().forEach(cls -> fm.addContent(objId, "classes"));
+      if(obj.getClasses().size() == 0)
+        fm.addEmptyArray(objId, "classes");
 
+      AtomicBoolean ownsSomething = new AtomicBoolean(false);
       idManager.objectStream()
-              .filter(stream.isDirectlyOwnedByOwnable(obj))
-              .map(idManager::getId)
-              .forEach(s -> fm.addContent(s, objId, "owns"));
+          .filter(stream.isDirectlyOwnedByOwnable(obj))
+          .map(idManager::getId)
+          .forEach(s -> {
+            fm.addContent(s, objId, "owns");
+            ownsSomething.set(true);
+          });
+
+      //if obj does not own anything, add empty string
+      if (!ownsSomething.get())
+        fm.addEmptyArray(objId, "owns");
 
       DropZone location = getLocation((GameObject) obj);
 
@@ -266,6 +281,9 @@ public class GameInator {
       if (!hadConnections.get()) fm.addContent("", id, "connections");
         // get classes
         dropZone.getClasses().forEach(cls -> fm.addContent(id, "classes"));
+        if (dropZone.getClasses().size() == 0){
+          fm.addEmptyArray(id, "classes");
+        }
     });
     fm.saveToFile(layoutFile);
   }
@@ -379,7 +397,6 @@ public class GameInator {
       case GOAL -> createGoal();
       default -> throw new IllegalArgumentException("Invalid type"); //TODO add to properties
     }
-    idManagerFileUpdate();
   }
 
   //endregion sendObject API
@@ -452,8 +469,6 @@ public class GameInator {
       case GOAL -> removeGoal();
       default -> throw new IllegalArgumentException("Invalid type"); //TODO add to properties
     }
-    idManagerFileUpdate();
-
   }
 
   //endregion deleteObject API
@@ -555,7 +570,6 @@ public class GameInator {
       case RULE -> updateRule(targetObject, params);
       default -> throw new IllegalArgumentException("Invalid type"); //TODO add to properties
     }
-    idManagerFileUpdate();
   }
 
   //endregion updateObjectProperties API

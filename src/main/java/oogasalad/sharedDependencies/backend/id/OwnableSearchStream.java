@@ -87,7 +87,7 @@ public class OwnableSearchStream {
     String ownerId = ownableIdManager.getId(owner);
     return ownable -> {
       String ownableId = ownableIdManager.getId(ownable);
-      return ownableId.contains(".") && ownerId.equals(ownableId.substring(ownableId.lastIndexOf(".")));
+      return ownableId.startsWith(ownerId + ".");
     };
   }
 
