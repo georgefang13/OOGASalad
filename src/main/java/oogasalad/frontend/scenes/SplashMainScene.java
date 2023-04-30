@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
@@ -129,7 +128,7 @@ public class SplashMainScene extends AbstractScene {
         .addListener((observable, oldValue, newValue) -> {
           getThemeManager().setTheme(newValue);
         });
-    themeDropdown.setValue("light");
+    themeDropdown.setValue(THEME_PLACEHOLDER);
     dropDowns.getChildren().addAll(languageDropdown, themeDropdown);
     return dropDowns;
   }
