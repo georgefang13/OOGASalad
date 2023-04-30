@@ -17,11 +17,6 @@ public class PieceVisualSelectImage extends PieceVisual {
     public void showUnclickable() {
         switchImages(selectImage,pieceImage);
     }
-
-    @Override
-    public void updateUnClickableVisual(String imgPath) {
-        updatePieceImage(imgPath);
-    }
     @Override
     public void updateClickableVisual(String imgPath) {
         selectImage = loadVisual(imgPath);

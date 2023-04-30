@@ -35,9 +35,4 @@ public class DropZoneVisual extends AbstractSelectableVisual {
     public void updateClickableVisual(String imgPath) {
         selectedVisual = loadVisual(imgPath);
     }
-
-    @Override
-    public void updateUnClickableVisual(String imgPath) {
-        unselectedVisual = loadVisual(imgPath);
-    }
 }

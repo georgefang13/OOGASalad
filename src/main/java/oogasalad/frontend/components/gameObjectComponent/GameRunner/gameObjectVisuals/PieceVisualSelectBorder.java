@@ -28,8 +28,4 @@ public class PieceVisualSelectBorder extends PieceVisual {
     public void updateClickableVisual(String selectedBorderColor) {
         this.selectedBorderColor = loadColorFromHex(selectedBorderColor);
     }
-    @Override
-    public void updateUnClickableVisual(String newImgPath) {
-        updatePieceImage(newImgPath);
-    }
 }

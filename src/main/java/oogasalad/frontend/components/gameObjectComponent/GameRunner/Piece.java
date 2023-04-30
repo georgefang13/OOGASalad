@@ -25,8 +25,6 @@ public class Piece extends GameRunnerObject{
         setHeight(height);
         setWidth(width);
         setSelectableVisual(new AbstractSelectableVisual.SelectableVisualParams(true,imagePath),new AbstractSelectableVisual.SelectableVisualParams(hasSelectImage,param));
-        followMouse();
-        setDragSelection();
     }
     @Override
     public void setSelectableVisual(AbstractSelectableVisual.SelectableVisualParams unselected, AbstractSelectableVisual.SelectableVisualParams selected) {
@@ -35,6 +33,8 @@ public class Piece extends GameRunnerObject{
         } else {
             selectableVisual = new PieceVisualSelectBorder(unselected.param(),selected.param(),(int) getHeight(),(int) getWidth(),ID);
         }
+        followMouse();
+        setDragSelection();
     }
     public void moveToDropZoneXY(Point2D dropZoneCenter){
         Point2D pieceCenter = getNode().localToScene(getWidth()/2,getHeight()/2);

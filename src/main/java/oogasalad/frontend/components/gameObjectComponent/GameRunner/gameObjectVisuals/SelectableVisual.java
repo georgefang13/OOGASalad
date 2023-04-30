@@ -7,5 +7,4 @@ public interface SelectableVisual {
     void showUnclickable();
     String getObjectID();
     void updateClickableVisual(String param);
-    void updateUnClickableVisual(String param);
 }
