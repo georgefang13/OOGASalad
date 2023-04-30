@@ -9,7 +9,7 @@ public interface GameController {
 
     void addDropZone(DropZoneParameters params);
 
-    void addPiece(String id, String image, String dropZoneID, double size) throws FileNotFoundException;
+    void addPiece(String id, String image, String dropZoneID, boolean hasSelectImage, Object param, double height, double width) throws FileNotFoundException;
 
     void setClickable(List<String> ids);
 

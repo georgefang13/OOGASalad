@@ -3,6 +3,7 @@ package oogasalad.frontend.components.gameObjectComponent.GameRunner;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
 import oogasalad.frontend.managers.DisplayManager;
 import oogasalad.gamerunner.backend.GameController;
 
@@ -14,6 +15,8 @@ public class Piece extends GameRunnerObject{
     public Piece(String ID, GameController gameRunnerController, String imagePath, boolean hasSelectImage, Object param, double height, double width) {
         super(ID, gameRunnerController);
         setImage(imagePath);
+        this.hasSelectImage = hasSelectImage;
+        this.param = param;
         setHeight(height);
         setWidth(width);
         setSelectableVisual();
@@ -28,10 +31,12 @@ public class Piece extends GameRunnerObject{
         img.setFitHeight(getHeight());
         if (hasSelectImage){
             String selectImgPath = (String) param;
-            ImageView selectImage = DisplayManager.loadImage()
-            selectableVisual = new PieceVisualSelectImage(img,);
+            Node selectImage = DisplayManager.loadImage(selectImgPath,(int) getHeight(),(int) getWidth());
+            selectableVisual = new PieceVisualSelectImage(img,selectImage,getHeight(),getWidth(),ID);
+        } else {
+            Color selectBorderColor = (Color) param;
+            selectableVisual = new PieceVisualSelectBorder(img,selectBorderColor,getHeight(),getWidth(),ID);
         }
-
     }
 
     private void setDragSelection() {

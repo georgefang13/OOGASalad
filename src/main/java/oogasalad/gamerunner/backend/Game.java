@@ -397,7 +397,7 @@ public class Game implements GameToInterpreterAPI{
             }
 
             ownableIdManager.addObject(obj, id);
-            controller.addPiece(id, image, location, size);
+            //controller.addPiece(id, image, location, null, null, 0, size);
 
             DropZone dz = (DropZone) ownableIdManager.getObject(location);
 

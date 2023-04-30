@@ -51,8 +51,6 @@ public class GameRunnerController implements GameController {
     }
     private Node loadImgOrDefaultFromFile(String selectType, FileManager fm, String id, String directory, int height, int width){
         boolean isImage = fm.getObject(Boolean.class, id, selectType, "hasImage");
-        System.out.println(id);
-        System.out.println(selectType);
         String param = fm.getString(id, selectType, "param");
         Node visual;
         if (isImage){
@@ -84,14 +82,21 @@ public class GameRunnerController implements GameController {
             String image = fm.getString(id, "defaultImage");
             image = directory.substring(0, directory.lastIndexOf("/")) + "/assets/" + image;
             String dropZoneID = fm.getString(id, "location");
-            double size = Double.parseDouble(fm.getString(id, "size"));
+            double height = Double.parseDouble(fm.getString(id, "height"));
+            double width = Double.parseDouble(fm.getString(id, "width"));
 
             boolean hasimage = fm.getObject(Boolean.class,id,"selected","hasSelectedImage");
             System.out.println(hasimage);
-            String param = fm.getString(id,"selected","param");
-            System.out.println(param);
+            String paramString = fm.getString(id,"selected","param");
+            System.out.println(paramString);
 
-            addPiece(id, image, dropZoneID, size);
+            Object param;
+            if (hasimage){
+                param = paramString;
+            } else {
+                param = Color.web(paramString);
+            }
+            addPiece(id, image, dropZoneID, hasimage, param, height, width);
         }
     }
     @Override
@@ -109,8 +114,8 @@ public class GameRunnerController implements GameController {
     }
 
     @Override
-    public void addPiece(String id, String imagePath, String dropZoneID, double size) {
-        Piece piece = new Piece(id,this, imagePath, size);
+    public void addPiece(String id, String imagePath, String dropZoneID, boolean hasSelectImage, Object param, double height, double width) {
+        Piece piece = new Piece(id,this, imagePath, hasSelectImage, param ,height, width);
         DropZoneFE dropZone = (DropZoneFE) gameObjects.get(dropZoneID);
         piece.moveToDropZoneXY(dropZone.getDropZoneCenter());
         gameObjects.put(id,piece);
