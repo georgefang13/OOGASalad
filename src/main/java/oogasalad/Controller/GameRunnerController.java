@@ -1,5 +1,6 @@
 package oogasalad.Controller;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
@@ -131,11 +132,13 @@ public class GameRunnerController implements GameController {
 
     @Override
     public void setClickable(List<String> ids) {
-        clearClickables();
-        clickable.addAll(ids);
-        for (String id : ids){
-            gameObjects.get(id).makePlayable();
-        }
+        Platform.runLater(() -> {
+            clearClickables();
+            clickable.addAll(ids);
+            for (String id : ids){
+                gameObjects.get(id).makePlayable();
+            }
+        });
     }
 
     @Override
