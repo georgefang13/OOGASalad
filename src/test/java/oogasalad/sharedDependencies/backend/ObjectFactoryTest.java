@@ -449,7 +449,7 @@ public class ObjectFactoryTest {
   public void tearDown() throws IOException {
     //delete the test game folder
     File file = new File("data/games/testGame");
-//    deleteDirectory(file);
+    deleteDirectory(file);
   }
 
   @Test
