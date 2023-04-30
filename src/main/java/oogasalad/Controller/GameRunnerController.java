@@ -135,6 +135,9 @@ public class GameRunnerController implements GameController {
             gameObjects.remove(id);
         });
     }
+    private void removeGameVisual(Node gameVisual){
+
+    }
 
     @Override
     public void setClickable(List<String> ids) {
@@ -173,13 +176,14 @@ public class GameRunnerController implements GameController {
 
         AbstractSelectableVisual.SelectableVisualParams unselected = new AbstractSelectableVisual.SelectableVisualParams(true,newImagePath);
         AbstractSelectableVisual.SelectableVisualParams selected = new AbstractSelectableVisual.SelectableVisualParams(false,"#ff0000");
+
+        Node oldObjectVisual = gameObject.getNode();
         gameObject.setSelectableVisual(unselected, selected);
-
-
+        Node newObjectVisual = gameObject.getNode();
+        gameObjectVisualsList.remove(oldObjectVisual);
+        gameObjectVisualsList.add(newObjectVisual);
 //        gameObject.setHighlight("/Users/ethanhorowitz/IdeaProjects/oogasalad_team02/data/games/checkers/assets/light.png");
         //gameObject.setHighlight("#ff0000");
-
-        //gameObjectVisualsList.add(gameObject.getNode());
     }
 
     private void clearClickables(){
