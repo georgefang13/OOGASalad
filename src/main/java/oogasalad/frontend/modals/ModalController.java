@@ -39,6 +39,12 @@ public class ModalController {
     componentMap.put(name, map);
     parentPanel.addComponentTemplate(name, objectType);
     dropZoneController.setRoot(root);
+    if(allComponents.containsKey(name)) {
+      editObjectInstance(name, map, objectType);
+    } else {
+      componentMap.put(name, map);
+      parentPanel.addComponentTemplate(name, objectType);
+    }
   }
 
   public void createObjectInstance(String name, String objectType){
@@ -49,6 +55,16 @@ public class ModalController {
     files.addComponent(c);
     allComponents.put(name, c);
     dropZoneController.addDropZone(c);
+    GraphicHandler handler = new GraphicHandler();
+    handler.moveToCenter(c);
+    root.getChildren().add(c.getNode());
+  }
+
+  public void editObjectInstance(String name, Map<String, String> map, String objectType) {
+    objectType = objectType.substring(0, 1).toUpperCase() + objectType.substring(1);
+    root.getChildren().remove(allComponents.get(name).getNode());
+    Component c = factory.create(objectType, map);
+    allComponents.put(name, c);
     GraphicHandler handler = new GraphicHandler();
     handler.moveToCenter(c);
     root.getChildren().add(c.getNode());

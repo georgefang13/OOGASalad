@@ -1,5 +1,7 @@
 package oogasalad.gamerunner.backend;
 
+import javafx.scene.Node;
+
 import java.io.FileNotFoundException;
 import java.util.List;
 
@@ -20,6 +22,6 @@ public interface GameController {
     void select(String dropID);
     boolean isObjectPlayable(String id);
 
-    record DropZoneParameters(String id, int x, int y, int height, int width){}
+    record DropZoneParameters(String id, Node unselected, Node selected, int x, int y, int height, int width){}
 
 }
