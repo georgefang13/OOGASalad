@@ -1,1 +1,8 @@
-{}
+{
+  "": {
+    "on leave": "",
+    "next": "",
+    "select": "",
+    "on enter": "dotimes [ :  ]  [ fvar if   [ curplayer ]   ]  del :dotimes [ :  ]  [  ]  to   [  ]  "
+  }
+}
