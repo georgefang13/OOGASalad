@@ -2,8 +2,7 @@ package oogasalad.frontend.components.gameObjectComponent.GameRunner;
 
 import javafx.scene.Node;
 import oogasalad.frontend.components.gameObjectComponent.GameObject;
-import oogasalad.gamerunner.backend.GameController;
-import oogasalad.gamerunner.backend.interpreter.commands.False;
+import oogasalad.Controller.GameController;
 
 public abstract class GameRunnerObject extends GameObject implements GameRunnerComponent {
     protected GameController gameRunnerController;

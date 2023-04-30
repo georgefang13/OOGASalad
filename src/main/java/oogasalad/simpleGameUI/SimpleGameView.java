@@ -12,7 +12,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import oogasalad.gamerunner.backend.Game;
-import oogasalad.gamerunner.backend.GameController;
+import oogasalad.Controller.GameController;
 import oogasalad.sharedDependencies.backend.filemanagers.FileManager;
 
 import java.io.FileInputStream;

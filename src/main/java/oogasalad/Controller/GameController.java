@@ -1,4 +1,4 @@
-package oogasalad.gamerunner.backend;
+package oogasalad.Controller;
 
 import javafx.collections.ObservableList;
 import javafx.scene.Node;

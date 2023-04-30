@@ -6,7 +6,7 @@ import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import oogasalad.frontend.managers.DisplayManager;
-import oogasalad.gamerunner.backend.GameController;
+import oogasalad.Controller.GameController;
 
 public class Piece extends GameRunnerObject{
     private double lastTranslateX;

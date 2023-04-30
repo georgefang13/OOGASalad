@@ -2,7 +2,7 @@ package oogasalad.frontend.components.gameObjectComponent.GameRunner;
 
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
-import oogasalad.gamerunner.backend.GameController;
+import oogasalad.Controller.GameController;
 
 public class DropZoneFE extends GameRunnerObject{
     private DropZoneVisual dropZoneVisual;

@@ -4,13 +4,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import oogasalad.frontend.components.gameObjectComponent.GameRunner.*;
 import oogasalad.frontend.managers.DisplayManager;
 import oogasalad.gamerunner.backend.Game;
-import oogasalad.gamerunner.backend.GameController;
 import oogasalad.sharedDependencies.backend.filemanagers.FileManager;
 
 import java.io.FileNotFoundException;
