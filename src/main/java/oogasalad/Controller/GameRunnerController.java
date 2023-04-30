@@ -1,6 +1,8 @@
 package oogasalad.Controller;
 
 import javafx.scene.Node;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -12,6 +14,7 @@ import oogasalad.gamerunner.backend.Game;
 import oogasalad.gamerunner.backend.GameController;
 import oogasalad.sharedDependencies.backend.filemanagers.FileManager;
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.*;
 
@@ -47,7 +50,55 @@ public class GameRunnerController implements GameController {
             int y = Integer.parseInt(fm.getString(id, "y"));
             int height = Integer.parseInt(fm.getString(id, "height"));
             int width = Integer.parseInt(fm.getString(id, "width"));
-            addDropZone(new GameController.DropZoneParameters(id, x, y, height, width));
+
+            boolean selectedisimage = fm.getObject(Boolean.class, id, "selected", "hasImage");
+            System.out.println(selectedisimage);
+            String selectedpth = fm.getString(id, "selected", "param");
+            System.out.println(selectedpth);
+
+            boolean unselectedisimage = fm.getObject(Boolean.class, id, "unselected", "hasImage");
+            System.out.println(unselectedisimage);
+            String unselectedpth = fm.getString(id, "unselected", "param");
+            System.out.println(unselectedpth);
+
+            String unfullpath = directory.substring(0, directory.lastIndexOf("/")) + "/assets/" + unselectedpth;
+            System.out.println(unfullpath);
+            Image unImage;
+            try {
+                unImage = new Image(new FileInputStream(unfullpath));
+            } catch (Exception e) {
+                System.out.println("Image " + unfullpath + " not found");
+                return;
+            }
+            ImageView unselectedfill = new ImageView(unImage);
+            unselectedfill.setFitHeight(height);
+            unselectedfill.setFitWidth(width);
+
+            String selfullpath = directory.substring(0, directory.lastIndexOf("/")) + "/assets/" + selectedpth;
+            System.out.println(selfullpath);
+            Image selImage;
+            try {
+                selImage = new Image(new FileInputStream(selfullpath));
+            } catch (Exception e) {
+                System.out.println("Image " + selfullpath + " not found");
+                return;
+            }
+            ImageView selectedfill = new ImageView(selImage);
+            selectedfill.setFitHeight(height);
+            selectedfill.setFitWidth(width);
+
+            /*
+            Rectangle unselectedfill = new Rectangle(width, height);
+            unselectedfill.setStroke(Color.BLACK);
+            unselectedfill.setFill(Color.SKYBLUE);
+
+            Rectangle selectedfill = new Rectangle(width, height);
+            selectedfill.setStroke(Color.BLACK);
+            selectedfill.setFill(Color.YELLOW);
+
+             */
+
+            addDropZone(new GameController.DropZoneParameters(id, unselectedfill, selectedfill, x, y, height, width));
         }
     }
 
@@ -70,15 +121,7 @@ public class GameRunnerController implements GameController {
 
     @Override
     public void addDropZone(GameController.DropZoneParameters params) {
-        Rectangle unselectedfill = new Rectangle(params.width(), params.height());
-        unselectedfill.setStroke(Color.BLACK);
-        unselectedfill.setFill(Color.SKYBLUE);
-
-        Rectangle selectedfill = new Rectangle(params.width(), params.height());
-        selectedfill.setStroke(Color.BLACK);
-        selectedfill.setFill(Color.YELLOW);
-
-        DropZoneFE dropZone = new DropZoneFE(params.id(), unselectedfill,selectedfill,params.width(), params.height(), params.x(),params.y(),this);
+        DropZoneFE dropZone = new DropZoneFE(params.id(), params.unselected(), params.selected(), params.width(), params.height(), params.x(),params.y(),this);
         gameObjects.put(params.id(),dropZone);
         root.getChildren().add(dropZone.getNode());
     }

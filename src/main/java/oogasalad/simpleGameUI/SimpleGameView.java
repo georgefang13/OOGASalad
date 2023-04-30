@@ -80,7 +80,7 @@ public class SimpleGameView extends Application implements GameController {
             int y = Integer.parseInt(fm.getString(id, "y"));
             int height = Integer.parseInt(fm.getString(id, "height"));
             int width = Integer.parseInt(fm.getString(id, "width"));
-            addDropZone(new GameController.DropZoneParameters(id, x, y, height, width));
+            addDropZone(new GameController.DropZoneParameters(id, null,null,x, y, height, width));
         }
     }
 
