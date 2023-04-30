@@ -171,19 +171,16 @@ public class GameRunnerController implements GameController {
     @Override
     public void setObjectImage(String id, String newImagePath) {
         GameRunnerObject gameObject = gameObjects.get(id);
-        double width = gameObject.getNode().getBoundsInLocal().getWidth();
-        double height =  gameObject.getNode().getBoundsInLocal().getHeight();
-
         AbstractSelectableVisual.SelectableVisualParams unselected = new AbstractSelectableVisual.SelectableVisualParams(true,newImagePath);
         AbstractSelectableVisual.SelectableVisualParams selected = new AbstractSelectableVisual.SelectableVisualParams(false,"#ff0000");
 
         Node oldObjectVisual = gameObject.getNode();
         gameObject.setSelectableVisual(unselected, selected);
         Node newObjectVisual = gameObject.getNode();
+        newObjectVisual.setTranslateX(oldObjectVisual.getTranslateX());
+        newObjectVisual.setTranslateY(oldObjectVisual.getTranslateY());
         gameObjectVisualsList.remove(oldObjectVisual);
         gameObjectVisualsList.add(newObjectVisual);
-//        gameObject.setHighlight("/Users/ethanhorowitz/IdeaProjects/oogasalad_team02/data/games/checkers/assets/light.png");
-        //gameObject.setHighlight("#ff0000");
     }
 
     private void clearClickables(){
