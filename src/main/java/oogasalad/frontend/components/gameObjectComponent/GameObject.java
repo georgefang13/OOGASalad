@@ -27,7 +27,7 @@ public class GameObject extends AbstractComponent implements GameObjectComponent
     super(ID);
     children = null;
     instantiatePropFile("frontend.properties.Defaults.GameObject");
-    followMouse();
+    //followMouse();
   }
 
   public GameObject(String ID, Map<String, String> map){
