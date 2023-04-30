@@ -24,13 +24,13 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import oogasalad.frontend.managers.PropertyManager;
 import oogasalad.frontend.managers.StandardPropertyManager;
-import oogasalad.frontend.nodeEditor.Nodes.AbstractNode;
-import oogasalad.frontend.nodeEditor.Nodes.MainNode;
+import oogasalad.frontend.nodeEditor.nodes.AbstractNode;
+import oogasalad.frontend.nodeEditor.nodes.MainNode;
 
 public abstract class
 AbstractNodePanel extends Tab {
 
-  public static final String NODES_FOLDER = "oogasalad.frontend.nodeEditor.Nodes.";
+  public static final String NODES_FOLDER = "oogasalad.frontend.nodeEditor.nodes.";
   public static final String NODES_JSON_PATH = "src/main/resources/nodeCode/save.json";
   public static final String CONFIG_JSON_PATH = "src/main/resources/nodeCode/config.json";
 
@@ -53,7 +53,7 @@ AbstractNodePanel extends Tab {
     String code = "";
     for (Node node : group.getChildren()) {
       if (node instanceof MainNode) {
-        code += (((AbstractNode) node).getJSONString());
+        code += (((AbstractNode) node).getNodeParseString());
       }
     }
     return code;
@@ -65,7 +65,6 @@ AbstractNodePanel extends Tab {
       if (node instanceof MainNode) {
         AbstractNode tempNode = (AbstractNode) node;
         while (tempNode.getChildNode() != null) {
-          System.out.println(tempNode);
           nodes.add(tempNode);
           tempNode = tempNode.getChildNode();
         }

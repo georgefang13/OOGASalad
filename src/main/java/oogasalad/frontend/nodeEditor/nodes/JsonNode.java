@@ -1,4 +1,4 @@
-package oogasalad.frontend.nodeEditor.Nodes;
+package oogasalad.frontend.nodeEditor.nodes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,7 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import oogasalad.frontend.nodeEditor.Command;
-import oogasalad.frontend.nodeEditor.Config.NodeData;
+import oogasalad.frontend.nodeEditor.configuration.NodeData;
 
 public class JsonNode extends AbstractNode {
 
@@ -54,7 +54,7 @@ public class JsonNode extends AbstractNode {
   }
 
   @Override
-  public String getJSONString() {
+  public String getNodeParseString() {
     List<String> inputsAsStrings = new ArrayList<>();
     for (TextField input : inputFields) {
       inputsAsStrings.add(input.getText().toString());
@@ -64,7 +64,7 @@ public class JsonNode extends AbstractNode {
     if (this.getChildNode() == null) {
       return output;
     }
-    return (output + propertyManager.getText("SPACE") + this.getChildNode().getJSONString());
+    return (output + propertyManager.getText("SPACE") + this.getChildNode().getNodeParseString());
   }
 
   @Override

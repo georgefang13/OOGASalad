@@ -1,4 +1,4 @@
-package oogasalad.frontend.nodeEditor.Nodes;
+package oogasalad.frontend.nodeEditor.nodes;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -12,12 +12,9 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import oogasalad.frontend.managers.PropertyManager;
 import oogasalad.frontend.managers.StandardPropertyManager;
-import oogasalad.frontend.nodeEditor.Config.NodeData;
-import oogasalad.frontend.nodeEditor.Draggable;
+import oogasalad.frontend.nodeEditor.configuration.NodeData;
 
-import java.io.Serializable;
-
-public abstract class AbstractNode extends VBox implements Draggable {
+public abstract class AbstractNode extends VBox implements DraggableNode {
 
   protected Bounds boundingBox;
 
@@ -50,23 +47,22 @@ public abstract class AbstractNode extends VBox implements Draggable {
     setNodeDragProperties();
   }
 
-  public abstract String getJSONString();
+  public abstract String getNodeParseString();
 
   public abstract NodeData getNodeData();
 
 
-
   @Override
-  public void snapTo(AbstractNode node) {
+  public void snapToNode(AbstractNode node) {
     while (node.getChildNode() != null && node.getChildNode() != this) {
       node = node.getChildNode();
     }
-    adjust(this, node);
+    alignNodes(this, node);
     AbstractNode temp = this;
     while (temp.getChildNode() != null) {
       AbstractNode tempOld = temp;
       temp = temp.getChildNode();
-      adjust(temp, tempOld);
+      alignNodes(temp, tempOld);
     }
     if (node.getChildNode() == null) {
       node.setChildNode(this);
@@ -75,7 +71,7 @@ public abstract class AbstractNode extends VBox implements Draggable {
   }
 
   @Override
-  public void adjust(AbstractNode fromNode, AbstractNode toNode) {
+  public void alignNodes(AbstractNode fromNode, AbstractNode toNode) {
     if (toNode instanceof StartNestNode) {
       if (fromNode instanceof EndNestNode) {
         fromNode.move(toNode.getTranslateX(), toNode.getTranslateY() + toNode.getHeight());
@@ -127,7 +123,7 @@ public abstract class AbstractNode extends VBox implements Draggable {
           double newY = e.getSceneY() / scaleFactor - yOffset;
           this.move(newX, newY);
           if (this.getChildNode() != null) {
-            this.getChildNode().snapTo(this);
+            this.getChildNode().snapToNode(this);
           }
           clearLinks();
           e.consume();
@@ -145,7 +141,7 @@ public abstract class AbstractNode extends VBox implements Draggable {
         if (node instanceof AbstractNode && node != this) {
           if (this.getBoundsInParent().intersects(node.getBoundsInParent())
               && this.getChildNode() != node) {
-            snapTo((AbstractNode) node);
+            snapToNode((AbstractNode) node);
             e.consume();
             return;
           }
@@ -157,7 +153,6 @@ public abstract class AbstractNode extends VBox implements Draggable {
 
   @Override
   public void move(double newX, double newY) {
-
     if (boundingBox.contains(newX, newY, getWidth(), getHeight())) {
       setTranslateX(newX);
       setTranslateY(newY);

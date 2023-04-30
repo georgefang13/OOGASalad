@@ -1,4 +1,4 @@
-package oogasalad.frontend.nodeEditor.Config;
+package oogasalad.frontend.nodeEditor.configuration;
 
 import java.io.Serializable;
 import java.util.List;

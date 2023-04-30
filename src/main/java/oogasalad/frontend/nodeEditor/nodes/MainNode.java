@@ -1,11 +1,11 @@
-package oogasalad.frontend.nodeEditor.Nodes;
+package oogasalad.frontend.nodeEditor.nodes;
 
 import javafx.scene.control.Label;
-import oogasalad.frontend.nodeEditor.Config.NodeData;
+import oogasalad.frontend.nodeEditor.configuration.NodeData;
 
 import java.util.ArrayList;
 
-public class MainNode extends AbstractNode {
+public class MainNode extends AbstractNode implements ControlNode {
 
   public MainNode() {
     super();
@@ -20,9 +20,9 @@ public class MainNode extends AbstractNode {
   }
 
   @Override
-  public String getJSONString() {
+  public String getNodeParseString() {
     if (this.getChildNode() != null) {
-      return this.getChildNode().getJSONString();
+      return this.getChildNode().getNodeParseString();
     }
     return propertyManager.getText("EmptyString");
   }
@@ -30,11 +30,12 @@ public class MainNode extends AbstractNode {
 
   @Override
   public NodeData getNodeData() {
-    return new NodeData("MainNode", "Control", new ArrayList<>());
+    return new NodeData(getClass().getSimpleName(), getClass().getInterfaces()[0].getSimpleName(),
+        new ArrayList<>());
   }
 
   @Override
-  public void snapTo(AbstractNode node) {
+  public void snapToNode(AbstractNode node) {
   }
 
   @Override

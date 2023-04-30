@@ -7,10 +7,10 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.util.Duration;
-import oogasalad.frontend.nodeEditor.Nodes.AbstractNode;
-import oogasalad.frontend.nodeEditor.Nodes.EndNestNode;
-import oogasalad.frontend.nodeEditor.Nodes.JsonNode;
-import oogasalad.frontend.nodeEditor.Nodes.StartNestNode;
+import oogasalad.frontend.nodeEditor.nodes.AbstractNode;
+import oogasalad.frontend.nodeEditor.nodes.EndNestNode;
+import oogasalad.frontend.nodeEditor.nodes.JsonNode;
+import oogasalad.frontend.nodeEditor.nodes.StartNestNode;
 
 
 public class CodeEditorPanel extends AbstractNodePanel {
@@ -45,11 +45,11 @@ public class CodeEditorPanel extends AbstractNodePanel {
             AbstractNode start = new StartNestNode();
             group.getChildren().add(start);
             start.setBoundingBox(workspace.getBoundsInParent());
-            start.snapTo(node);
+            start.snapToNode(node);
             AbstractNode end = new EndNestNode();
             group.getChildren().add(end);
             end.setBoundingBox(workspace.getBoundsInParent());
-            end.snapTo(start);
+            end.snapToNode(start);
           }
         } catch (Exception e) {
           e.printStackTrace();

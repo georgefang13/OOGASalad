@@ -1,15 +1,15 @@
-package oogasalad.frontend.nodeEditor.Nodes;
+package oogasalad.frontend.nodeEditor.nodes;
 
 import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-import oogasalad.frontend.nodeEditor.Config.NodeData;
+import oogasalad.frontend.nodeEditor.configuration.NodeData;
 import oogasalad.frontend.nodeEditor.NodeController;
 
 import java.util.ArrayList;
 
-public class StateNode extends AbstractNode {
+public class StateNode extends AbstractNode implements ControlNode {
 
   private TextField stateName;
   private GridPane buttonGrid;
@@ -45,13 +45,14 @@ public class StateNode extends AbstractNode {
   }
 
   @Override
-  public String getJSONString() {
-    return null;
+  public String getNodeParseString() {
+    return "";
   }
 
   @Override
   public NodeData getNodeData() {
-    return new NodeData("StateNode", "Control", new ArrayList<>());
+    return new NodeData(getClass().getSimpleName(), getClass().getInterfaces()[0].getSimpleName(),
+        new ArrayList<>());
   }
 
 

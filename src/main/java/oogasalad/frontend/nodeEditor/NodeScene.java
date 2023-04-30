@@ -10,7 +10,6 @@ import com.google.gson.JsonObject;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,9 +19,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.HBox;
-import oogasalad.frontend.nodeEditor.Config.NodeConfiguration;
-import oogasalad.frontend.nodeEditor.Config.NodeData;
-import oogasalad.frontend.nodeEditor.Nodes.AbstractNode;
+import oogasalad.frontend.nodeEditor.configuration.NodeConfiguration;
+import oogasalad.frontend.nodeEditor.configuration.NodeData;
+import oogasalad.frontend.nodeEditor.nodes.AbstractNode;
 import oogasalad.frontend.scenes.AbstractScene;
 
 public class NodeScene extends AbstractScene {
@@ -143,12 +142,10 @@ public class NodeScene extends AbstractScene {
 
             tempParent = nodes.get(0);
             nodes.remove(0);
-            System.out.println(tempParent);
 
             for (AbstractNode node : nodes) {
                 panel.putNode(node);
-                node.snapTo(tempParent);
-                System.out.println(tempParent.getNodeData().name() + " -> " + node.getNodeData().name());
+                node.snapToNode(tempParent);
                 tempParent = node;
             }
 

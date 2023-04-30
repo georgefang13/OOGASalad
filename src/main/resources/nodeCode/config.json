@@ -1,23 +1,46 @@
 {
   "0": {
     "name": "MainNode",
-    "type": "Control",
+    "type": "ControlNode",
     "inputs": []
   },
   "1": {
-    "name": "Sum",
+    "name": "Break from loop",
     "type": "JsonNode",
-    "inputs": [
-      "12",
-      "3"
-    ]
+    "inputs": []
   },
   "2": {
-    "name": "Product",
+    "name": "Function Variable",
     "type": "JsonNode",
     "inputs": [
-      "6",
-      "2"
+      ""
     ]
+  },
+  "3": {
+    "name": "IfElse",
+    "type": "JsonNode",
+    "inputs": [
+      ""
+    ]
+  },
+  "4": {
+    "name": "StartNestNode",
+    "type": "ControlNode",
+    "inputs": []
+  },
+  "5": {
+    "name": "EndNestNode",
+    "type": "ControlNode",
+    "inputs": []
+  },
+  "6": {
+    "name": "StartNestNode",
+    "type": "ControlNode",
+    "inputs": []
+  },
+  "7": {
+    "name": "EndNestNode",
+    "type": "ControlNode",
+    "inputs": []
   }
 }
