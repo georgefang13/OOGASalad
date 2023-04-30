@@ -9,5 +9,16 @@
       "outputs": [],
       "parse": "[ %s ]"
     }
+  },
+  "Text": {
+    "name": "Text",
+    "folder": "metablocks",
+    "description" : "Write OoglaSalad code",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": ["text"],
+      "outputs": [],
+      "parse": " %s "
+    }
   }
 }
