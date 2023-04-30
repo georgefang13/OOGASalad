@@ -13,6 +13,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.control.Tab;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -32,8 +33,10 @@ public abstract class AbstractNodeEditorTab extends Tab {
   public static final String INTERPRETER_FILES_PATH = NODE_EDITOR_FILES_PATH + "interpreter/";
   public static final String USER_CODE_FILES_PATH = NODE_EDITOR_FILES_PATH + "userCode/";
 
-  protected Group group;
+  protected Group nodeGroup;
   protected Rectangle background;
+  protected StackPane nodeGroupStackPane;
+  protected ScrollPane nodeWorkspace;
   protected double windowWidth, windowHeight;
 
   protected PropertyManager propertyManager = StandardPropertyManager.getInstance();
@@ -59,12 +62,12 @@ public abstract class AbstractNodeEditorTab extends Tab {
 
 
   protected void addNode(AbstractNode node) {
-    group.getChildren().add(node);
+    nodeGroup.getChildren().add(node);
     node.setBoundingBox((background.getBoundsInParent()));
   }
 
   protected void clearAllNodes() {
-    for (Node node : group.getChildren()) {
+    for (Node node : nodeGroup.getChildren()) {
       if (node instanceof AbstractNode) {
         ((AbstractNode) node).delete();
       }
@@ -97,6 +100,7 @@ public abstract class AbstractNodeEditorTab extends Tab {
     BorderPane borderPane = new BorderPane();
     borderPane.setTop(makeMenuBar());
     borderPane.setCenter(makeWorkspace());
+    addNode(new MainNode());
     return borderPane;
   }
 
@@ -118,56 +122,63 @@ public abstract class AbstractNodeEditorTab extends Tab {
   }
 
   private ScrollPane makeWorkspace() {
+    double defaultScale = propertyManager.getNumeric("AbstractNodeEdtiorTab.DefaultScale");
+    double maxScale = propertyManager.getNumeric("AbstractNodeEdtiorTab.MaxScale");
+    double step = propertyManager.getNumeric("AbstractNodeEdtiorTab.ZoomStep");
     background = new Rectangle(0.75 * windowWidth, windowHeight, Color.LIGHTGRAY);
-    group = new Group(background);
-    group.setScaleX(1);
-    group.setScaleY(1);
-    addNode(new MainNode());
-    StackPane content = new StackPane(new Group(group));
-    content.setOnScroll(e -> {
-      if (e.isShortcutDown() && e.getDeltaY() != 0) {
-        if (e.getDeltaY() < 0) {
-          group.setScaleX(Math.max(group.getScaleX() - 0.1, 0.15));
+    nodeGroup = new Group(background);
+    nodeGroup.setScaleX(defaultScale);
+    nodeGroup.setScaleY(nodeGroup.getScaleX());
+    nodeGroupStackPane = new StackPane(new Group(nodeGroup));
+    nodeGroupStackPane.setOnScroll(event -> zoomOnScroll(event, defaultScale, maxScale, step));
+    nodeWorkspace = new ScrollPane(nodeGroupStackPane);
+    nodeWorkspace.setHbarPolicy(ScrollBarPolicy.NEVER);
+    nodeWorkspace.setPannable(true);
+    nodeWorkspace.setMinSize(0.75 * windowWidth, windowHeight);
+    nodeWorkspace.setOnScroll(event -> verticallyExtendNodeWorkspace(event, 50));
+    return nodeWorkspace;
+  }
+
+  private void zoomOnScroll(ScrollEvent event, double defaultScale, double maxScale, double step) {
+    {
+      if (event.isShortcutDown() && event.getDeltaY() != 0) {
+        if (event.getDeltaY() < 0) {
+          nodeGroup.setScaleX(Math.max(nodeGroup.getScaleX() - step, defaultScale));
         } else {
-          group.setScaleX(Math.min(group.getScaleX() + 0.1, 3.0));
+          nodeGroup.setScaleX(Math.min(nodeGroup.getScaleX() + step, maxScale));
         }
-        group.setScaleY(group.getScaleX());
-        e.consume();
+        nodeGroup.setScaleY(nodeGroup.getScaleX());
+        event.consume();
       }
-    });
-    ScrollPane scrollPane = new ScrollPane(content);
-    scrollPane.setHbarPolicy(ScrollBarPolicy.NEVER);
-    scrollPane.setPannable(true);
-    scrollPane.setPrefSize(0.75 * windowWidth, windowHeight);
+    }
+  }
 
-    scrollPane.setOnScroll(event -> {
-      double deltaY = event.getDeltaY();
-      double contentHeight = content.getBoundsInLocal().getHeight();
-      double viewportHeight = scrollPane.getViewportBounds().getHeight();
-      double vvalue = scrollPane.getVvalue();
+  private void verticallyExtendNodeWorkspace(ScrollEvent event, double extendSize) {
+    double deltaY = event.getDeltaY();
+    double contentHeight = nodeGroupStackPane.getBoundsInLocal().getHeight();
+    double viewportHeight = nodeWorkspace.getViewportBounds().getHeight();
+    double vvalue = nodeWorkspace.getVvalue();
+    double newVvalue = vvalue - deltaY / contentHeight * viewportHeight;
+    nodeWorkspace.setVvalue(newVvalue);
+    if (newVvalue >= 1.0 && nodeWorkspace.getPrefHeight() < Double.MAX_VALUE) {
+      nodeWorkspace.setPrefHeight(nodeWorkspace.getPrefHeight() + extendSize);
+      background.setHeight(background.getHeight() + extendSize);
+      updateBoundingBoxAllNodes();
+    }
+    event.consume();
+  }
 
-      // Compute the new vertical scroll position based on the mouse wheel delta and the current scroll position
-      double newVvalue = vvalue - deltaY / contentHeight * viewportHeight;
-      scrollPane.setVvalue(newVvalue);
-
-      // If we have scrolled to the bottom of the scroll pane, add to the height to accommodate additional content
-      if (newVvalue >= 1.0 && scrollPane.getPrefHeight() < Double.MAX_VALUE) {
-        scrollPane.setPrefHeight(scrollPane.getPrefHeight() + 50);
-        background.setHeight(background.getHeight() + 50);
-        for (Node node : group.getChildren()) {
-          if (node instanceof AbstractNode) {
-            AbstractNode abstractNode = (AbstractNode) node;
-            abstractNode.setBoundingBox(background.getBoundsInParent());
-          }
-        }
+  private void updateBoundingBoxAllNodes() {
+    for (Node node : nodeGroup.getChildren()) {
+      if (node instanceof AbstractNode) {
+        AbstractNode abstractNode = (AbstractNode) node;
+        abstractNode.setBoundingBox(background.getBoundsInParent());
       }
-      event.consume();
-    });
-    return scrollPane;
+    }
   }
 
   private AbstractNode getMainNode() {
-    for (Node node : group.getChildren()) {
+    for (Node node : nodeGroup.getChildren()) {
       if (node instanceof MainNode) {
         return (AbstractNode) node;
       }
