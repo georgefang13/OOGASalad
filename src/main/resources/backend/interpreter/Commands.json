@@ -573,6 +573,24 @@
       "parse": "makeavailable %s"
     }
   },
+  "MakeTextObject": {
+    "name": "Make a Text GameObject",
+    "folder": "game",
+    "str": "addtextobj",
+    "description": "Set a value to be an available piece to click on in the game",
+    "example": "addtextobj :x :game_dz [ \"money \"textobj ] to [ :str ] [ return + \"money%20=%20 :str ]  # makeavailable <var> <dropzone> <list[] classes] <function>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        { "name": "variable", "type": ["variable"] },
+        { "name": "location", "type": ["dropzone"] },
+        { "name": "classes", "type": ["string"] },
+        { "name": "item", "type": ["any"] },
+      ],
+      "outputs": [],
+      "parse": "makeavailable %s %s %s %s"
+    }
+  },
   "PutClass": {
     "name": "Add Class to Object",
     "folder": "game",

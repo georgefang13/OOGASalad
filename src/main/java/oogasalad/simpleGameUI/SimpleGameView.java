@@ -275,6 +275,16 @@ public class SimpleGameView extends Application implements GameController {
 
     }
 
+    @Override
+    public void addTextObject(String id, String text, String DropZoneID) {
+
+    }
+
+    @Override
+    public void updateTextObject(String id, String text) {
+
+    }
+
     private void clearClickables(){
         for (String id : clickable){
             nodes.get(id).setStyle("");

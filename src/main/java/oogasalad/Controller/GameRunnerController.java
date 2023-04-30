@@ -216,5 +216,15 @@ public class GameRunnerController implements GameController {
         Piece piece = (Piece) gameObjects.get(id);
         piece.setHighlight(highlight);
     }
+
+    @Override
+    public void addTextObject(String id, String text, String DropZoneID) {
+
+    }
+
+    @Override
+    public void updateTextObject(String id, String text) {
+
+    }
 }
 

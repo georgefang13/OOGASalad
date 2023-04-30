@@ -84,6 +84,10 @@ public interface GameController {
      */
     void setPieceHighlight(String id, String highlight);
 
+    void addTextObject(String id, String text, String DropZoneID);
+
+    void updateTextObject(String id, String text);
+
     record DropZoneParameters(String id, DropZoneFE.SelectableVisualParams unselected, DropZoneFE.SelectableVisualParams selected, int x, int y, int height, int width){}
 
 }
