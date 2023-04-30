@@ -1,11 +1,12 @@
-package oogasalad.frontend.components.gameObjectComponent.GameRunner;
+package oogasalad.frontend.components.gameObjectComponent.GameRunner.gameObjectVisuals;
 
 import javafx.scene.Node;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import oogasalad.frontend.components.gameObjectComponent.GameRunner.gameObjectVisuals.PieceVisual;
 
-public class PieceVisualSelectBorder extends PieceVisual{
+public class PieceVisualSelectBorder extends PieceVisual {
     private static final Color UNSELECTED_FILL_COLOR = Color.TRANSPARENT;
     private static final Color UNSELECTED_BORDER_COLOR = Color.TRANSPARENT;
     private Rectangle highlightBorder;

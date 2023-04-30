@@ -1,8 +1,8 @@
 package oogasalad.frontend.managers;
 
 import javafx.scene.Node;
-import oogasalad.frontend.components.gameObjectComponent.GameRunner.DropZoneVisual;
-import oogasalad.frontend.components.gameObjectComponent.GameRunner.PieceVisual;
+import oogasalad.frontend.components.gameObjectComponent.GameRunner.gameObjectVisuals.DropZoneVisual;
+import oogasalad.frontend.components.gameObjectComponent.GameRunner.gameObjectVisuals.PieceVisual;
 import java.util.Comparator;
 
 public class GameObjectVisualSorter implements Comparator{
