@@ -94,7 +94,7 @@ public class FilesController {
 
     FileManager general = new FileManager();
     for (String tag: generalInfo.keySet()){
-      if(tag.equals("Tags")){
+      if(tag.equals("tags")){
         String[] tags = generalInfo.get(tag).split(",");
         for(String individualTag: tags){
           general.addContent(individualTag, tag);
@@ -102,7 +102,6 @@ public class FilesController {
       }
       else{
         general.addContent(generalInfo.get(tag), tag);
-        System.out.println(tag);
       }
     }
     general.saveToFile(gameFolder + "/general.json");
