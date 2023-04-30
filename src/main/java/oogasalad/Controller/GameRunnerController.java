@@ -2,6 +2,8 @@ package oogasalad.Controller;
 
 import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import oogasalad.frontend.components.gameObjectComponent.GameRunner.DropZoneFE;
 import oogasalad.frontend.components.gameObjectComponent.GameRunner.GameRunnerObject;
 import oogasalad.frontend.components.gameObjectComponent.GameRunner.Piece;
@@ -68,15 +70,21 @@ public class GameRunnerController implements GameController {
 
     @Override
     public void addDropZone(GameController.DropZoneParameters params) {
-        System.out.println(params.id());
-        DropZoneFE dropZone = new DropZoneFE(params.id(), params.width(), params.height(), params.x(),params.y(),this);
+        Rectangle unselectedfill = new Rectangle(params.width(), params.height());
+        unselectedfill.setStroke(Color.BLACK);
+        unselectedfill.setFill(Color.SKYBLUE);
+
+        Rectangle selectedfill = new Rectangle(params.width(), params.height());
+        selectedfill.setStroke(Color.BLACK);
+        selectedfill.setFill(Color.YELLOW);
+
+        DropZoneFE dropZone = new DropZoneFE(params.id(), unselectedfill,selectedfill,params.width(), params.height(), params.x(),params.y(),this);
         gameObjects.put(params.id(),dropZone);
         root.getChildren().add(dropZone.getNode());
     }
 
     @Override
     public void addPiece(String id, String imagePath, String dropZoneID, double size) {
-        System.out.println(id);
         Piece piece = new Piece(id,this, imagePath, size);
         DropZoneFE dropZone = (DropZoneFE) gameObjects.get(dropZoneID);
         piece.moveToDropZoneXY(dropZone.getDropZoneCenter());
@@ -87,7 +95,6 @@ public class GameRunnerController implements GameController {
 
     @Override
     public void setClickable(List<String> ids) {
-        System.out.println("set clickable");
         clearClickables();
         clickable.addAll(ids);
         for (String id : ids){
