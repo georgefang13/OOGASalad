@@ -1,22 +1,20 @@
 package oogasalad.simpleGameUI;
 
-import javafx.scene.paint.Color;
-import oogasalad.sharedDependencies.backend.id.IdManager;
+import java.util.List;
+import java.util.Map;
 import oogasalad.gameeditor.backend.ownables.gameobjects.BoardCreator;
 import oogasalad.sharedDependencies.backend.filemanagers.FileManager;
+import oogasalad.sharedDependencies.backend.id.IdManager;
 import oogasalad.sharedDependencies.backend.ownables.Ownable;
 import oogasalad.sharedDependencies.backend.ownables.gameobjects.DropZone;
 
-import java.util.List;
-import java.util.Map;
-
-public class CheckersMaker2 {
+public class RainbowCheckersMaker {
 
     public static void main(String[] args) {
 
         IdManager<Ownable> manager = new IdManager<>();
 
-        String folder = "data/games/checkers/";
+        String folder = "data/games/rainbowcheckers/";
 
         saveDropZones(manager, folder);
         saveGameObjects(folder);
@@ -121,7 +119,6 @@ public class CheckersMaker2 {
                 fm.addContent("0", id, "owner");
                 fefm.addContent("30", id, "height");
                 fefm.addContent("30", id, "width");
-
 
                 fm.addContent(location, id, "location");
                 fefm.addContent(location, id, "location");
