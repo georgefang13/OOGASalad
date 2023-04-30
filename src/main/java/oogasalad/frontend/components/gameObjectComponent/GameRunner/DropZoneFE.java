@@ -1,5 +1,6 @@
 package oogasalad.frontend.components.gameObjectComponent.GameRunner;
 
+import javafx.geometry.Point2D;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
@@ -12,6 +13,8 @@ public class DropZoneFE extends GameRunnerObject{
     private DropZoneCenter dropZoneCenter;
     public DropZoneFE(String ID, Node unselected, Node selected, int width, int height, int x, int y, GameController gameRunnerController) {
         super(ID, gameRunnerController);
+        setWidth(width);
+        setHeight(height);
 
         double centerX = toCenter(x,width);
         double centerY = toCenter(y,height);
@@ -32,8 +35,9 @@ public class DropZoneFE extends GameRunnerObject{
         return start + ((double) length)/2;
     }
 
-    public DropZoneCenter getDropZoneCenter(){
-        return dropZoneCenter;
+    public Point2D getDropZoneCenter(){
+        Point2D positionInScene = getNode().localToScene(getWidth()/2,getHeight()/2);
+        return positionInScene;
     }
 
 }

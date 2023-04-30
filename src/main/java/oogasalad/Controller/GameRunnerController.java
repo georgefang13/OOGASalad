@@ -141,7 +141,8 @@ public class GameRunnerController implements GameController {
     @Override
     public void movePiece(String pieceID, String dropZoneID) {
         DropZoneFE dropZone = (DropZoneFE) gameObjects.get(dropZoneID);
-        //pieces.get(pieceID).moveToDropZoneXY(dropZone.getDropZoneCenter());
+        Piece piece = (Piece) gameObjects.get(pieceID);
+        piece.moveToDropZoneXY(dropZone.getDropZoneCenter());
         pieceToDropZoneMap.put(pieceID, dropZoneID);
     }
 

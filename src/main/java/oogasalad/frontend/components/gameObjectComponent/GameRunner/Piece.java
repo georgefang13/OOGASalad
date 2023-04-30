@@ -1,6 +1,7 @@
 package oogasalad.frontend.components.gameObjectComponent.GameRunner;
 
 import javafx.geometry.Bounds;
+import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
@@ -76,18 +77,32 @@ public class Piece extends GameRunnerObject{
         return null;
     }
 
-    public void moveToDropZoneXY(DropZoneFE.DropZoneCenter DZcenter){
-        setCentertoCenter(DZcenter.x(), DZcenter.y());
+    public void moveToDropZoneXY(Point2D dropZoneCenter){
+        setCentertoCenter(dropZoneCenter.getX(), dropZoneCenter.getY());
         acceptDrag();
     }
     private void setCentertoCenter(double x, double y){
-        //double actualX = pieceBox.getLayoutX() + pieceBox.getTranslateX();
-        //double actualY = pieceBox.getLayoutY() + pieceBox.getTranslateY();
-        double shiftX = x - getWidth()/2;
-        double shiftY = y - getHeight()/2;
-        //this.resetOffset();
-        getNode().setTranslateX(shiftX);
-        getNode().setTranslateY(shiftY);
+        double currentTranslateX = getNode().getTranslateX();
+        double currentTranslateY = getNode().getTranslateY();
+        System.out.println(currentTranslateX);
+        System.out.println(currentTranslateY);
+        double shiftX = x; //- getWidth()/2;
+        double shiftY = y; //- getHeight()/2;
+        System.out.println(shiftX);
+        System.out.println(shiftY);
+        if (getNode() != null) {
+            Point2D positionInScene = getNode().localToScene(getWidth()/2,getHeight()/2);
+            shiftX -= positionInScene.getX();
+            System.out.println(shiftX);
+            shiftY -= positionInScene.getY();
+            System.out.println(shiftY);
+        } else {
+            currentTranslateX = 0;
+            currentTranslateY = 0;
+
+        }
+        getNode().setTranslateX(currentTranslateX + shiftX);
+        getNode().setTranslateY(currentTranslateY + shiftY);
     }
     public void acceptDrag() {
         Node node = getNode();
