@@ -24,7 +24,7 @@ public class LineObject extends AbstractComponent implements LineObjectComponent
 
     private void initialize() {
         myLine = new Line(startX,startY,endX, endY);
-        myLine.setFill(color);
+        myLine.setStroke(color);
         myLine.setStrokeWidth(strokeWidth);
     }
 
