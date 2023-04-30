@@ -38,7 +38,7 @@ public abstract class GameRunnerObject extends GameObject implements GameRunnerC
         return playable;
     }
     @Override
-    public void updateSelectableVisual(AbstractSelectableVisual.SelectableVisualParams unselected, AbstractSelectableVisual.SelectableVisualParams selected){
+    public void setSelectableVisual(AbstractSelectableVisual.SelectableVisualParams unselected, AbstractSelectableVisual.SelectableVisualParams selected){
 
     }
 }

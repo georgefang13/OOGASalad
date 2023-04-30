@@ -171,15 +171,15 @@ public class GameRunnerController implements GameController {
         double width = gameObject.getNode().getBoundsInLocal().getWidth();
         double height =  gameObject.getNode().getBoundsInLocal().getHeight();
 
-        AbstractSelectableVisual.SelectableVisualParams unselected = new AbstractSelectableVisual.SelectableVisualParams(true,"redking.pngFIXXX");
+        AbstractSelectableVisual.SelectableVisualParams unselected = new AbstractSelectableVisual.SelectableVisualParams(true,newImagePath);
         AbstractSelectableVisual.SelectableVisualParams selected = new AbstractSelectableVisual.SelectableVisualParams(false,"#ff0000");
-        gameObject.updateSelectableVisual(unselected, selected);
+        gameObject.setSelectableVisual(unselected, selected);
 
 
 //        gameObject.setHighlight("/Users/ethanhorowitz/IdeaProjects/oogasalad_team02/data/games/checkers/assets/light.png");
         //gameObject.setHighlight("#ff0000");
 
-        gameObjectVisualsList.add(gameObject.getNode());
+        //gameObjectVisualsList.add(gameObject.getNode());
     }
 
     private void clearClickables(){

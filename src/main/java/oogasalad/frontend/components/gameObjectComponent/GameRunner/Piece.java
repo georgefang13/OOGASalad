@@ -4,6 +4,8 @@ import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import oogasalad.Controller.GameController;
+import oogasalad.frontend.components.AbstractComponent;
+import oogasalad.frontend.components.gameObjectComponent.GameRunner.gameObjectVisuals.AbstractSelectableVisual;
 import oogasalad.frontend.components.gameObjectComponent.GameRunner.gameObjectVisuals.DropZoneVisual;
 import oogasalad.frontend.components.gameObjectComponent.GameRunner.gameObjectVisuals.PieceVisualSelectBorder;
 import oogasalad.frontend.components.gameObjectComponent.GameRunner.gameObjectVisuals.PieceVisualSelectImage;
@@ -22,12 +24,12 @@ public class Piece extends GameRunnerObject{
         this.param = param;
         setHeight(height);
         setWidth(width);
-        setSelectableVisual();
+        setSelectableVisual(new AbstractSelectableVisual.SelectableVisualParams(true,imagePath),new AbstractSelectableVisual.SelectableVisualParams(hasSelectImage,param));
         followMouse();
         setDragSelection();
     }
     @Override
-    public void setSelectableVisual() {
+    public void setSelectableVisual(AbstractSelectableVisual.SelectableVisualParams unselected, AbstractSelectableVisual.SelectableVisualParams selected) {
         if (hasSelectImage){
             selectableVisual = new PieceVisualSelectImage(imagePath,param,(int) getHeight(),(int) getWidth(),ID);
         } else {
