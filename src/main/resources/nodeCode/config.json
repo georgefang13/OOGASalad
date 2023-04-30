@@ -11,5 +11,13 @@
       "5",
       "2"
     ]
+  },
+  "Sum" : {
+    "name": "Sum",
+    "type": "JsonNode",
+    "inputs": [
+      "10",
+      "5"
+    ]
   }
 }

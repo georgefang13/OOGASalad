@@ -1,47 +1,31 @@
 package oogasalad.frontend.nodeEditor.Config;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import javafx.geometry.Bounds;
 import oogasalad.frontend.nodeEditor.Nodes.AbstractNode;
 import oogasalad.sharedDependencies.backend.filemanagers.FileManager;
 
-import java.io.*;
-import java.lang.reflect.Modifier;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 import java.io.IOException;
-import java.util.List;
 
 public class NodeConfiguration {
-    private List<AbstractNode> nodes;
 
-    public NodeConfiguration(List<AbstractNode> nodes) {
-        this.nodes = nodes;
+    Gson gson = new Gson();
+    private String filePath;
+
+
+    public NodeConfiguration(String filePath) throws FileNotFoundException {
+        this.filePath = filePath;
     }
 
-    public List<AbstractNode> getNodes() {
-        return nodes;
-    }
-
-    public void setNodes(List<AbstractNode> nodes) {
-        this.nodes = nodes;
-    }
-
-    public String toJson(String filePath) {
-        try {
-            SerializationUtil.serialize(this, filePath);
-            return "worked";
-        } catch (IOException e) {
-            e.printStackTrace();
-            return "failed";
+    public List<AbstractNode> getNodes() throws IOException, ClassNotFoundException {
+        List<AbstractNode> nodes = new ArrayList<>();
+        Iterable<String> jsonNodes= fileManager.getTagsAtLevel();
+        for (String jsonNode : jsonNodes) {
+            String type = fileManager.ge
         }
+
+
     }
 
-    public static NodeConfiguration fromJson(String filePath) {
-        try {
-            return SerializationUtil.deserialize(filePath, NodeConfiguration.class);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
 }
