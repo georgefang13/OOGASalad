@@ -2,6 +2,7 @@ package oogasalad.frontend.scenes;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.EventHandler;
@@ -130,7 +131,7 @@ public class SplashMainScene extends AbstractScene {
     });
     signUp = new Hyperlink(ELEMENT_LABELS.getString(SIGN_UP));
     signUp.setOnMouseClicked(e -> {
-      if (userManager.tryRegister(usernameField.getText(), passwordField.getText())) {
+      if (userManager.tryRegister(usernameField.getText(), passwordField.getText(), new HashMap<>())) {
         displayLibrary();
       }
       else {

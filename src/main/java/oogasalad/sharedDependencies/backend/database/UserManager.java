@@ -3,6 +3,8 @@ package oogasalad.sharedDependencies.backend.database;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Map;
+import java.util.Map.Entry;
 
 public class UserManager {
   private static final String COLLECTION = "Users";
@@ -35,13 +37,22 @@ public class UserManager {
    * Check database to validate register action
    * @param username username
    * @param password unencrypted password
+   * @param securityQuestions Map containing security questions as keys and answers as values
    * @return true if register is successful, else false (user already exists)
    */
-  public boolean tryRegister(String username, String password) {
+  public boolean tryRegister(String username, String password, Map<String, String> securityQuestions) {
     if (db.hasEntry(COLLECTION, username)) {
       return false;
     }
     db.addData(COLLECTION, username, PASSWORD_TAG, encrypt(password));
+    int counter = 1;
+    for (String question : securityQuestions.keySet()) {
+      db.addData(COLLECTION, username,
+          SECURITY_QUESTION_TAG + String.valueOf(counter), question);
+      db.addData(COLLECTION, username,
+          SECURITY_ANSWER_TAG + String.valueOf(counter), securityQuestions.get(question));
+      counter++;
+    }
     return true;
   }
 
