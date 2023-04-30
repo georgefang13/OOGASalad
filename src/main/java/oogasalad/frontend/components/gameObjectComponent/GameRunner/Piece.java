@@ -30,10 +30,10 @@ public class Piece extends GameRunnerObject{
     }
     @Override
     public void setSelectableVisual(AbstractSelectableVisual.SelectableVisualParams unselected, AbstractSelectableVisual.SelectableVisualParams selected) {
-        if (hasSelectImage){
-            selectableVisual = new PieceVisualSelectImage(imagePath,param,(int) getHeight(),(int) getWidth(),ID);
+        if (selected.hasSelectImage()){
+            selectableVisual = new PieceVisualSelectImage(unselected.param(),selected.param(),(int) getHeight(),(int) getWidth(),ID);
         } else {
-            selectableVisual = new PieceVisualSelectBorder(imagePath,param,(int) getHeight(),(int) getWidth(),ID);
+            selectableVisual = new PieceVisualSelectBorder(unselected.param(),selected.param(),(int) getHeight(),(int) getWidth(),ID);
         }
     }
     public void moveToDropZoneXY(Point2D dropZoneCenter){

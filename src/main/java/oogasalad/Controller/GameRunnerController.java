@@ -170,6 +170,7 @@ public class GameRunnerController implements GameController {
 
     @Override
     public void setObjectImage(String id, String newImagePath) {
+        System.out.println(newImagePath);
         GameRunnerObject gameObject = gameObjects.get(id);
         AbstractSelectableVisual.SelectableVisualParams unselected = new AbstractSelectableVisual.SelectableVisualParams(true,newImagePath);
         AbstractSelectableVisual.SelectableVisualParams selected = new AbstractSelectableVisual.SelectableVisualParams(false,"#ff0000");
