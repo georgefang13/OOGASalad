@@ -43,6 +43,18 @@ public class CheckersMaker2 {
             fefm.addContent(String.valueOf(50 + y*50), id, "y");
             fefm.addContent(String.valueOf(50), id, "width");
             fefm.addContent(String.valueOf(50), id, "height");
+            if (i % 2 == 0) {
+                fefm.addContent(true, id, "unselected", "hasImage");
+                fefm.addContent("dark.png", id, "unselected", "param");
+                fefm.addContent(true, id, "selected", "hasImage");
+                fefm.addContent("darkselected.png", id, "selected", "param");
+            }
+            else {
+                fefm.addContent(true, id, "unselected", "hasImage");
+                fefm.addContent("light.png", id, "unselected", "param");
+                fefm.addContent(true, id, "selected", "hasImage");
+                fefm.addContent("lightselected.png", id, "selected", "param");
+            }
 
             for (Map.Entry<String, DropZone> dzEdge : node.getEdges().entrySet()) {
                 String nodeId = manager.getId(dzEdge.getValue());
