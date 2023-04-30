@@ -8,7 +8,9 @@ import oogasalad.frontend.components.gameObjectComponent.GameRunner.Piece;
 import oogasalad.frontend.components.gameObjectComponent.GameRunner.SelectableVisual;
 import oogasalad.gamerunner.backend.Game;
 import oogasalad.gamerunner.backend.GameController;
+import oogasalad.sharedDependencies.backend.filemanagers.FileManager;
 
+import java.io.FileNotFoundException;
 import java.util.*;
 
 public class GameRunnerController implements GameController {
@@ -22,7 +24,40 @@ public class GameRunnerController implements GameController {
         this.root = root;
         String directory = "data/games/"+gameName;
         int numPlayers = 2;
-        game = new Game(this,directory,numPlayers,false);
+        try {
+            game = new Game(this,directory,numPlayers,false);
+            loadGame(directory);
+            game.startGame();
+        } catch (FileNotFoundException e){
+            System.out.println("FAIL"); //TODO: error handle
+        }
+    }
+    private void loadGame(String directory) throws FileNotFoundException {
+        directory = directory + "/frontend";
+        loadDropZones(directory);
+        loadPieces(directory);
+    }
+
+    private void loadDropZones(String directory) throws FileNotFoundException {
+        FileManager fm = new FileManager(directory + "/layout.json");
+        for (String id : fm.getTagsAtLevel()){
+            int x = Integer.parseInt(fm.getString(id, "x"));
+            int y = Integer.parseInt(fm.getString(id, "y"));
+            int height = Integer.parseInt(fm.getString(id, "height"));
+            int width = Integer.parseInt(fm.getString(id, "width"));
+            addDropZone(new GameController.DropZoneParameters(id, x, y, height, width));
+        }
+    }
+
+    private void loadPieces(String directory) throws FileNotFoundException {
+        FileManager fm = new FileManager(directory + "/objects.json");
+        for (String id : fm.getTagsAtLevel()){
+            String image = fm.getString(id, "image");
+            image = directory.substring(0, directory.lastIndexOf("/")) + "/assets/" + image;
+            String dropZoneID = fm.getString(id, "location");
+            double size = Double.parseDouble(fm.getString(id, "size"));
+            addPiece(id, image, dropZoneID, size);
+        }
     }
     @Override
     public void select(String id) {
@@ -33,6 +68,7 @@ public class GameRunnerController implements GameController {
 
     @Override
     public void addDropZone(GameController.DropZoneParameters params) {
+        System.out.println(params.id());
         DropZoneFE dropZone = new DropZoneFE(params.id(), params.width(), params.height(), params.x(),params.y(),this);
         gameObjects.put(params.id(),dropZone);
         root.getChildren().add(dropZone.getNode());
@@ -40,6 +76,7 @@ public class GameRunnerController implements GameController {
 
     @Override
     public void addPiece(String id, String imagePath, String dropZoneID, double size) {
+        System.out.println(id);
         Piece piece = new Piece(id,this, imagePath, size);
         DropZoneFE dropZone = (DropZoneFE) gameObjects.get(dropZoneID);
         piece.moveToDropZoneXY(dropZone.getDropZoneCenter());
@@ -50,9 +87,11 @@ public class GameRunnerController implements GameController {
 
     @Override
     public void setClickable(List<String> ids) {
+        System.out.println("set clickable");
         clearClickables();
         clickable.addAll(ids);
         for (String id : ids){
+            System.out.println(id);
             gameObjects.get(id).makePlayable();
             //AbstractSelectableVisual gameObjectVisual = (AbstractSelectableVisual) gameObjects.get(id).getNode();
             //gameObjectVisual.showClickable();

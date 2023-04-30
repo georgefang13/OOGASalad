@@ -26,6 +26,7 @@ public class DropZoneFE extends GameRunnerObject{
 
         dropZoneVisual = new DropZoneVisual(unselectedfill,selectedfill,width,height,x,y,ID);
         setSelectableVisual();
+        followMouse();
     }
     @Override
     public void setSelectableVisual() {
