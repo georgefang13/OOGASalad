@@ -2,6 +2,7 @@ package oogasalad.frontend.panels.editorPanels;
 
 import java.awt.*;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.scene.Node;
 import javafx.scene.control.Accordion;
@@ -99,7 +100,7 @@ public class ComponentPanel extends VBox implements Panel {
 
   private Button createComponentTemplate(String objectType) {
     Button b = new Button("Make a " + objectType + " Template");
-    b.setOnAction(e -> openModal(objectType, false));
+    b.setOnAction(e -> createNewComponentTemplate(objectType));
     return b;
   }
 
@@ -133,7 +134,7 @@ public class ComponentPanel extends VBox implements Panel {
     gameComponentInstances.getChildren().add(buttonLine);
 
     b3.setOnMouseClicked(event -> {
-      openModal(objectType, true);
+      editComponent(name,objectType);
     });
 
     b2.setOnMouseClicked(event -> {
@@ -142,11 +143,19 @@ public class ComponentPanel extends VBox implements Panel {
     });
   }
 
-  private void openModal(String title, boolean editMode){
-    CreateNewModal modal = new CreateNewModal(title, editMode);
+  private void createNewComponentTemplate(String title){
+    CreateNewModal modal = new CreateNewModal(title);
     mController.setRoot(root);
     modal.attach(mController);
     modal.showAndWait();
+  }
+
+  private void editComponent(String name, String title){
+    Map<String, String> map = mController.getActiveComponent(name).getParameters();
+    CreateNewModal editModal = new CreateNewModal(title, true, map);
+    mController.setRoot(root);
+    editModal.attach(mController);
+    editModal.showAndWait();
   }
 
   public Node asNode() {

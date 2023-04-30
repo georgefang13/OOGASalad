@@ -34,6 +34,7 @@ public class ModalController {
   public void setFileController(FilesController newController){
     files = newController;
   }
+
   public void createObjectTemplate(Map<String, String> map, String objectType) {
     String name = map.get("name");
     dropZoneController.setRoot(root);
@@ -45,7 +46,18 @@ public class ModalController {
     objectType = objectType.substring(0, 1).toUpperCase() + objectType.substring(1);
     Map<String, String> map = templateMap.get(name);
     Component c = factory.create(objectType, map);
-    activeComponents.put(name, c);
+
+//      for (String key : activeComponents.keySet()) {
+//          if (key.startsWith(name)) {
+//              String append = Integer.toString(activeComponents.keySet().size());
+//              activeComponents.put(name+append, c);
+//          } else {
+//              activeComponents.put(name, c);
+//          }
+//      }
+
+   activeComponents.put(name, c);
+
     files.addComponent(c);
     dropZoneController.addDropZone(c);
     GraphicHandler handler = new GraphicHandler();
@@ -70,6 +82,10 @@ public class ModalController {
 
   public void setRoot(Pane rt) {
     root = rt;
+  }
+
+  public Component getActiveComponent(String name) {
+    return activeComponents.get(name);
   }
 
 }

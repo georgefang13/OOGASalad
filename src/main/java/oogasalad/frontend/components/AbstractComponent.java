@@ -31,9 +31,15 @@ public abstract class AbstractComponent implements Component {
   protected double width;
   protected double height;
   private double rotate;
+  protected Map<String, String> parameters;
 
   public AbstractComponent(String id) {
     ID = id;
+  }
+
+  public AbstractComponent(String id, Map<String, String> map) {
+    ID = id;
+    parameters = map;
   }
 
   protected void instantiatePropFile(String filepath) {
@@ -43,6 +49,7 @@ public abstract class AbstractComponent implements Component {
 
   @Override
   public void setValuesfromMap(Map<String, String> map) {
+    this.parameters = map;
     for(String param: map.keySet()){
       try{
         Field field = this.getClass().getDeclaredField(param);
@@ -119,6 +126,12 @@ public abstract class AbstractComponent implements Component {
   public String getName(){
     return name;
   }
+
+  @Override
+  public Map<String, String> getParameters() {
+    return parameters;
+  }
+
 
 
   protected String getDEFAULT_FILE_PATH() {
