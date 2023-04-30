@@ -35,6 +35,7 @@ public class ComponentPanel extends VBox implements Panel {
   private FilesController files;
   private double xOffset;
   private double yOffset;
+  private int count;
 
   /**
    * Constructor for HeaderMenu
@@ -47,6 +48,7 @@ public class ComponentPanel extends VBox implements Panel {
     players = new VBox();
     gameComponentInstances = new VBox();
     this.makePanel();
+    count = 0;
   }
 
   /**
@@ -97,7 +99,7 @@ public class ComponentPanel extends VBox implements Panel {
 
   private Button createComponentTemplate(String objectType) {
     Button b = new Button("Make a " + objectType + " Template");
-    b.setOnAction(e -> createNewComponentTemplate(objectType));
+    b.setOnAction(e -> openModal(objectType, false));
     return b;
   }
 
@@ -131,7 +133,7 @@ public class ComponentPanel extends VBox implements Panel {
     gameComponentInstances.getChildren().add(buttonLine);
 
     b3.setOnMouseClicked(event -> {
-      createNewComponentTemplate(objectType);
+      openModal(objectType, true);
     });
 
     b2.setOnMouseClicked(event -> {
@@ -140,8 +142,8 @@ public class ComponentPanel extends VBox implements Panel {
     });
   }
 
-  private void createNewComponentTemplate(String title){
-    CreateNewModal modal = new CreateNewModal(title);
+  private void openModal(String title, boolean editMode){
+    CreateNewModal modal = new CreateNewModal(title, editMode);
     mController.setRoot(root);
     modal.attach(mController);
     modal.showAndWait();
