@@ -47,7 +47,16 @@ public class GameRunnerController implements GameController {
             int y = Integer.parseInt(fm.getString(id, "y"));
             int height = Integer.parseInt(fm.getString(id, "height"));
             int width = Integer.parseInt(fm.getString(id, "width"));
-            addDropZone(new GameController.DropZoneParameters(id, x, y, height, width));
+
+            Rectangle unselectedfill = new Rectangle(width, height);
+            unselectedfill.setStroke(Color.BLACK);
+            unselectedfill.setFill(Color.SKYBLUE);
+
+            Rectangle selectedfill = new Rectangle(width, height);
+            selectedfill.setStroke(Color.BLACK);
+            selectedfill.setFill(Color.YELLOW);
+
+            addDropZone(new GameController.DropZoneParameters(id, unselectedfill, selectedfill, x, y, height, width));
         }
     }
 
@@ -70,15 +79,7 @@ public class GameRunnerController implements GameController {
 
     @Override
     public void addDropZone(GameController.DropZoneParameters params) {
-        Rectangle unselectedfill = new Rectangle(params.width(), params.height());
-        unselectedfill.setStroke(Color.BLACK);
-        unselectedfill.setFill(Color.SKYBLUE);
-
-        Rectangle selectedfill = new Rectangle(params.width(), params.height());
-        selectedfill.setStroke(Color.BLACK);
-        selectedfill.setFill(Color.YELLOW);
-
-        DropZoneFE dropZone = new DropZoneFE(params.id(), unselectedfill,selectedfill,params.width(), params.height(), params.x(),params.y(),this);
+        DropZoneFE dropZone = new DropZoneFE(params.id(), params.unselected(), params.selected(), params.width(), params.height(), params.x(),params.y(),this);
         gameObjects.put(params.id(),dropZone);
         root.getChildren().add(dropZone.getNode());
     }

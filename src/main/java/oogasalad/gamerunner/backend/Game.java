@@ -345,7 +345,7 @@ public class Game implements GameToInterpreterAPI{
 
             ownableIdManager.addObject(dz, id);
 
-            controller.addDropZone(new GameController.DropZoneParameters(id, x, y, height, width));
+            controller.addDropZone(new GameController.DropZoneParameters(id, null,null,x, y, height, width));
         }
 
         for (DropZone dz : edgeMap.keySet()){
