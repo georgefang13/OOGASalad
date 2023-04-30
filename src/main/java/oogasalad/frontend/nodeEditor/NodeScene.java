@@ -6,6 +6,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,6 +19,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.HBox;
+import oogasalad.frontend.nodeEditor.Config.NodeConfiguration;
 import oogasalad.frontend.nodeEditor.Config.NodeData;
 import oogasalad.frontend.nodeEditor.Nodes.AbstractNode;
 import oogasalad.frontend.scenes.AbstractScene;
@@ -95,6 +98,7 @@ public class NodeScene extends AbstractScene {
   private void makeConfigFile(List<AbstractNode> nodes){
     Gson gson = new GsonBuilder().setPrettyPrinting().create();
     JsonObject stateObject = new JsonObject();
+    Integer i = 0;
     for(AbstractNode node : nodes){
       NodeData data = node.getNodeData();
       JsonObject stateJson = new JsonObject();
@@ -105,7 +109,8 @@ public class NodeScene extends AbstractScene {
       stateJson.addProperty("name", name);
       stateJson.addProperty("type", type);
       stateJson.add("inputs", array);
-      stateObject.add(name, stateJson);
+      stateObject.add(i.toString(), stateJson);
+      i++;
     }
 
 
@@ -121,5 +126,26 @@ public class NodeScene extends AbstractScene {
 
   @Override
   public void setText() {
+  }
+
+  public void loadAllContent(String filePath) {
+    try {
+      NodeConfiguration config = new NodeConfiguration(filePath);
+
+      List<NodeData> nodeData = config.getNodeData();
+      List<AbstractNode> nodes = config.makeNodes(nodeData);
+      for(AbstractNode node : nodes){
+        CodeEditorPanel panel = tabMap.get(tabs.getSelectionModel().getSelectedItem());
+        panel.putNode(node);
+
+      }
+
+
+
+
+    }catch (FileNotFoundException e){
+      e.printStackTrace();
+    }
+
   }
 }

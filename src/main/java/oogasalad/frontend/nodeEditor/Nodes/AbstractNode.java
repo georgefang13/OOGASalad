@@ -39,6 +39,7 @@ public abstract class AbstractNode extends VBox implements Draggable {
     this.getStyleClass().add(propertyManager.getText("AbstractNode.StyleClass"));
   }
 
+
   public AbstractNode(double x, double y, double width,
       double height) {
     this.x = x;
