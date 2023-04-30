@@ -26,15 +26,16 @@ public class RectangleObject extends AbstractComponent implements RectangleObjec
     }
     public RectangleObject(String ID, Map<String, String> map){
         super(ID);
+        setDraggable(true);
         setValuesfromMap(map);
         initialize();
+        followMouse();
     }
 
     private void initialize() {
         rectangle = new Rectangle(width,height);
         rectangle.setFill(color);
         rectangle.setRotate(rotate);
-        followMouse();
     }
 
     @Override

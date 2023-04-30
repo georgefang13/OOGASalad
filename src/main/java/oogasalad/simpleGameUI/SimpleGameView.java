@@ -80,7 +80,7 @@ public class SimpleGameView extends Application implements GameController {
             int y = Integer.parseInt(fm.getString(id, "y"));
             int height = Integer.parseInt(fm.getString(id, "height"));
             int width = Integer.parseInt(fm.getString(id, "width"));
-            addDropZone(new GameController.DropZoneParameters(id, x, y, height, width));
+            addDropZone(new GameController.DropZoneParameters(id, null,null,x, y, height, width));
         }
     }
 
@@ -91,7 +91,7 @@ public class SimpleGameView extends Application implements GameController {
             image = directory.substring(0, directory.lastIndexOf("/")) + "/assets/" + image;
             String dropZoneID = fm.getString(id, "location");
             double size = Double.parseDouble(fm.getString(id, "size"));
-            addPiece(id, image, dropZoneID, size);
+            addPiece(id, image, dropZoneID, false, null, size, 0.0);
         }
     }
     @Override
@@ -122,7 +122,8 @@ public class SimpleGameView extends Application implements GameController {
     }
 
     @Override
-    public void addPiece(String id, String image, String dropZoneID, double size) {
+    public void addPiece(String id, String image, String dropZoneID, boolean hasSelectImage, Object param, double height, double width) throws FileNotFoundException {
+        double size = height;
         Image img;
         try {
             img = new Image(new FileInputStream(image));
@@ -161,6 +162,7 @@ public class SimpleGameView extends Application implements GameController {
 
         pieceToDropZoneMap.put(id, dropZoneID);
     }
+
 
     @Override
     public void setClickable(List<String> ids) {

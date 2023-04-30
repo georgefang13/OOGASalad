@@ -1,19 +1,24 @@
 package oogasalad.frontend.components.dropzoneComponent;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import oogasalad.Controller.ControllerSubscriber;
 import oogasalad.frontend.components.AbstractComponent;
+import oogasalad.frontend.components.Subscriber;
+import oogasalad.frontend.components.DropZonePublisher;
 import oogasalad.frontend.components.gameObjectComponent.GameObject;
 
 /**
  * @author Han
  * Dropzone is the visual representation of where stuff should be
  */
-public class Dropzone extends AbstractComponent {
+public class Dropzone extends AbstractComponent implements DropZonePublisher {
 
   private final String DEFAULT_PATH = "frontend.properties.Defaults.Dropzone.properties";
   private Map<String, Dropzone> edges;
@@ -24,6 +29,13 @@ public class Dropzone extends AbstractComponent {
   private Rectangle square;
   private double width;
   private double height;
+  private List<Subscriber> subscribers;
+  private List<ControllerSubscriber> controllerSubscribers;
+  private boolean doubleClick;
+  private int clicks;
+
+  private long lastClickTime = 0;
+  private final long DOUBLE_CLICK_DELAY = 200; // 200 milliseconds
   /**
    * Dropzone
    * @param ID the id of the DropZone
@@ -43,6 +55,7 @@ public class Dropzone extends AbstractComponent {
     initializeValues();
     setValuesfromMap(params);
     setSquareParams();
+    setDraggable(true);
   }
 
   private void initializeValues(){
@@ -51,8 +64,13 @@ public class Dropzone extends AbstractComponent {
     content = new HashMap<>();
     square = new Rectangle();
     node.getChildren().add(square);
+    subscribers = new ArrayList<>();
+    controllerSubscribers = new ArrayList<>();
     setNode(node);
+    setonUpdate();
     followMouse();
+    doubleClick = false;
+    clicks = 0;
   }
   /**
    * Adds a neighbor to whatever you need
@@ -63,7 +81,7 @@ public class Dropzone extends AbstractComponent {
   /**
    * Returns the list of Neighbors that the dropzone is adjacent to
    *
-   * @return the list of Neighbors
+   * @return the set of Neighbors
    */
   public Set<String> getEdges(){
     return edges.keySet();
@@ -77,6 +95,32 @@ public class Dropzone extends AbstractComponent {
     square.setWidth(width);
     square.setHeight(height);
   }
+  private void setonUpdate(){
+    node.setOnMouseClicked(e ->
+        {super.getNode().getOnMouseClicked();
+          ClickDelay();
+          publish();
+        }
+    );
+  }
+
+  /**
+   *
+   */
+  private void ClickDelay() {
+    long clickTime = System.currentTimeMillis();
+    if (clickTime - lastClickTime < DOUBLE_CLICK_DELAY) {
+      System.out.println(clickTime - lastClickTime);
+      doubleClick = true;
+      lastClickTime = 0; // Reset last click time
+    } else {
+      // Single click action
+      System.out.println("Single click");
+      lastClickTime = clickTime;
+      doubleClick = false;
+    }
+  }
+
   /**
    * For GameObject, remove the object
    */
@@ -118,5 +162,44 @@ public class Dropzone extends AbstractComponent {
    */
   public double getHeight(){
     return height;
+  }
+
+
+  /**
+   * Adds a subscriber to the subscriber list
+   * @param subscriber
+   */
+  @Override
+  public void addSubscriber(Subscriber subscriber) {
+    subscribers.add(subscriber);
+  }
+
+  /**
+   * Removes a subscriber from the subscriber list
+   * @param subscriber
+   */
+  @Override
+  public void removeSubscriber(Subscriber subscriber) {
+    subscribers.remove(subscriber);
+  }
+
+  /**
+   * Updates all subscribes with info
+   */
+  @Override
+  public void publish() {
+    for(Subscriber subscriber : subscribers){
+      subscriber.update();
+    }
+    if(doubleClick){
+      for (ControllerSubscriber controller : controllerSubscribers){
+        controller.setDropZones(this);
+        System.out.println("Double Click");
+        doubleClick = false;
+      }
+    }
+  }
+  public void addControllerSubscriber(ControllerSubscriber subscriber) {
+    controllerSubscribers.add(subscriber);
   }
 }
