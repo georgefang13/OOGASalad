@@ -17,8 +17,8 @@ import javafx.stage.StageStyle;
 
 public class Modal<T> extends Dialog<T> {
 
-  public static final String MODAL_PROPERTIES_FILE_PATH = "frontend/properties/text/Modals.properties";
-  public static final String MODAL_STYlE_FILE_PATH = "frontend/css/modalStyles.css";
+  public static final String MODAL_PROPERTIES_FILE_PATH = "frontend/properties/permanentText/Modals.properties";
+  public static final String MODAL_STYlE_FILE_PATH = "frontend/css/light.css";
 
 
   private final String MODAL_STYLE_SHEET = Objects

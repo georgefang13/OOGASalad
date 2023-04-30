@@ -1,5 +1,6 @@
 package oogasalad.gamerunner.backend;
 
+import oogasalad.Controller.GameController;
 import oogasalad.gamerunner.backend.fsm.ProgrammableState;
 import oogasalad.gamerunner.backend.online.EmptyOnlineRunner;
 import oogasalad.gamerunner.backend.online.OnlineRunner;
@@ -397,7 +398,7 @@ public class Game implements GameToInterpreterAPI{
             }
 
             ownableIdManager.addObject(obj, id);
-            controller.addPiece(id, image, location, size);
+            //controller.addPiece(id, image, location, null, null, 0, size);
 
             DropZone dz = (DropZone) ownableIdManager.getObject(location);
 

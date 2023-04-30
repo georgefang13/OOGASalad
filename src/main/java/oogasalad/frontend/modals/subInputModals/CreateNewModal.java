@@ -28,6 +28,7 @@ public class CreateNewModal extends InputModal {
   private List<ColorPickerComponent> colorPickers;
   private List<IntegerPickerComponent> integerPickers;
   private String myTitle;
+  private boolean editMode;
 
   /**
    * Constructor for the CreateGameModal dialog
@@ -36,6 +37,12 @@ public class CreateNewModal extends InputModal {
     super(title);
     myTitle = super.getMyTitle();
 //        myPropertiesMap = super.setPropertiesMap(myTitle
+  }
+
+  public CreateNewModal(String title, boolean editMode) {
+    super(title);
+    this.editMode = editMode;
+    myTitle = super.getMyTitle();
   }
 
   /**
@@ -150,7 +157,12 @@ public class CreateNewModal extends InputModal {
     }
     //TODO remove, just for testing purposes
     System.out.println(map);
-    this.getController().createObjectTemplate(map, myTitle);
+    if(editMode) {
+      System.out.println("EDIT MODE");
+      this.getController().editObjectInstance(map, myTitle);
+    } else {
+      this.getController().createObjectTemplate(map, myTitle);
+    }
     this.getDialogPane().getScene().getWindow().hide();
   }
 }

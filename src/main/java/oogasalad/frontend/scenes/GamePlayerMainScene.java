@@ -1,16 +1,12 @@
 package oogasalad.frontend.scenes;
 
-import javafx.geometry.Point2D;
+import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
+import oogasalad.Controller.GameController;
 import oogasalad.Controller.GameRunnerController;
-
-import java.util.Collection;
-import java.util.Objects;
+import oogasalad.frontend.managers.NodeRemovedListener;
 
 /**
  * @author Connor Wells
@@ -18,44 +14,32 @@ import java.util.Objects;
  */
 
 public class GamePlayerMainScene extends AbstractScene {
-  private Label textInstructions;
-  private BorderPane root;
-  private GridPane boardPane;
-  private GameRunnerController gameRunnerController;
-  private String gameName;
-  public static final String GAME_STYlE_FILE_PATH = "frontend/css/simpleGameView.css";
-  private final String MODAL_STYLE_SHEET = Objects
-          .requireNonNull(getClass().getClassLoader().getResource(GAME_STYlE_FILE_PATH))
-          .toExternalForm();
-
   public GamePlayerMainScene(SceneController sceneController) {
     super(sceneController);
   }
 
   @Override
   public Scene makeScene() {
-    root = new BorderPane();
+    BorderPane root = new BorderPane();
 
-    gameName = panelController.getSceneController().getWindowController().getData().toString();
+    String gameName = panelController.getSceneController().getWindowController().getData().toString();
     System.out.println(gameName);
 
-    gameRunnerController = new GameRunnerController(gameName,root);
+    GameController gameRunnerController = new GameRunnerController(gameName);
 
-    Button undoButton = new Button("Undo");
-    gameRunnerController.assignUndoButtonAction(undoButton);
+    ObservableList<Node> gameObjectVisuals = gameRunnerController.getGameObjectVisuals();
+    gameObjectVisuals.addListener(new NodeRemovedListener(root));
+    root.getChildren().addAll(gameObjectVisuals);
 
-    root.getChildren().addAll(gameRunnerController.getGameObjectVisuals());
-    root.getChildren().add(undoButton);
+    //Button undoButton = new Button("Undo");
+    //gameRunnerController.assignUndoButtonAction(undoButton);
+    //root.getChildren().add(undoButton);
 
     Scene scene = new Scene(root);
     setScene(scene);
     setText();
     setTheme();
     return getScene();
-  }
-
-  public Point2D getNodeXYOnGrid(Node node){
-    return boardPane.sceneToLocal(node.getTranslateX(), node.getTranslateY());
   }
 
   @Override

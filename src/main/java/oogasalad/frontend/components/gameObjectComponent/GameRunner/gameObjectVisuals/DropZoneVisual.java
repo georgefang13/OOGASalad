@@ -1,4 +1,4 @@
-package oogasalad.frontend.components.gameObjectComponent.GameRunner;
+package oogasalad.frontend.components.gameObjectComponent.GameRunner.gameObjectVisuals;
 
 import javafx.scene.Node;
 
@@ -23,14 +23,12 @@ public class DropZoneVisual extends AbstractSelectableVisual {
 
     @Override
     public void showClickable() {
-        this.getChildren().add(selectedVisual);
-        this.getChildren().remove(unselectedVisual);
+        switchImages(unselectedVisual,selectedVisual);
     }
 
     @Override
     public void showUnclickable() {
-        this.getChildren().remove(selectedVisual);
-        this.getChildren().add(unselectedVisual);
+        switchImages(selectedVisual,unselectedVisual);
     }
 
     @Override
