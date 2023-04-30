@@ -1,5 +1,6 @@
 package oogasalad.frontend.scenes;
 
+import javafx.collections.ObservableList;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -8,9 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import oogasalad.Controller.GameRunnerController;
-
-import java.util.Collection;
-import java.util.Objects;
+import oogasalad.frontend.managers.NodeRemovedListener;
 
 /**
  * @author Connor Wells
@@ -22,11 +21,6 @@ public class GamePlayerMainScene extends AbstractScene {
   private BorderPane root;
   private GridPane boardPane;
   private GameRunnerController gameRunnerController;
-  private String gameName;
-  public static final String GAME_STYlE_FILE_PATH = "frontend/css/light.css";
-  private final String MODAL_STYLE_SHEET = Objects
-          .requireNonNull(getClass().getClassLoader().getResource(GAME_STYlE_FILE_PATH))
-          .toExternalForm();
 
   public GamePlayerMainScene(SceneController sceneController) {
     super(sceneController);
@@ -36,7 +30,7 @@ public class GamePlayerMainScene extends AbstractScene {
   public Scene makeScene() {
     root = new BorderPane();
 
-    gameName = panelController.getSceneController().getWindowController().getData().toString();
+    String gameName = panelController.getSceneController().getWindowController().getData().toString();
     System.out.println(gameName);
 
     gameRunnerController = new GameRunnerController(gameName,root);
@@ -44,8 +38,11 @@ public class GamePlayerMainScene extends AbstractScene {
     Button undoButton = new Button("Undo");
     gameRunnerController.assignUndoButtonAction(undoButton);
 
-    root.getChildren().addAll(gameRunnerController.getGameObjectVisuals());
-    root.getChildren().add(undoButton); //TODO: with observer listner pattern to remove if deleted
+    ObservableList<Node> gameObjectVisuals = gameRunnerController.getGameObjectVisuals();
+    gameObjectVisuals.addListener(new NodeRemovedListener(root));
+
+    root.getChildren().addAll(gameObjectVisuals);
+    root.getChildren().add(undoButton);
 
     Scene scene = new Scene(root);
     setScene(scene);

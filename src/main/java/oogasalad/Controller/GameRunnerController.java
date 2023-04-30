@@ -1,5 +1,7 @@
 package oogasalad.Controller;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -149,7 +151,7 @@ public class GameRunnerController implements GameController {
     @Override
     public void removePiece(String pieceID) {
         pieceToDropZoneMap.remove(pieceID);
-        root.getChildren().remove(gameObjects.get(pieceID).getNode());
+        //root.getChildren().remove(gameObjects.get(pieceID).getNode());
         gameObjects.remove(gameObjects.get(pieceID));
     }
 
@@ -195,14 +197,14 @@ public class GameRunnerController implements GameController {
         return gameObjects.get(id).getPlayable();
     }
 
-    public ArrayList<AbstractSelectableVisual> getGameObjectVisuals(){
-        ArrayList<AbstractSelectableVisual> ObjectVisualList = new ArrayList<>();
+    public ObservableList<Node> getGameObjectVisuals(){
+        ObservableList<Node> ObjectVisualList = FXCollections.observableArrayList();
         for (GameRunnerObject gameObject : gameObjects.values()) {
-            ObjectVisualList.add((AbstractSelectableVisual) gameObject.getNode());
+            ObjectVisualList.add(gameObject.getNode());
         }
-        Comparator<AbstractSelectableVisual> nodeComparator = new Comparator<AbstractSelectableVisual>() {
+        Comparator<Node> nodeComparator = new Comparator<Node>() {
             @Override
-            public int compare(AbstractSelectableVisual node1, AbstractSelectableVisual node2) {
+            public int compare(Node node1, Node node2) {
                 if (node1 instanceof DropZoneVisual && node2 instanceof PieceVisual) {
                     return -1;
                 } else if (node2 instanceof DropZoneVisual && node1 instanceof PieceVisual) {
