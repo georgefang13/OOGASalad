@@ -173,6 +173,9 @@ public class CreateNewModal extends InputModal {
     if(editMode) {
       this.getController().editObjectInstance(map, myTitle);
     } else {
+      if(myTitle == "save"){
+        this.getController().configGeneral(map);
+      }
       this.getController().createObjectTemplate(map, myTitle);
     }
     this.getDialogPane().getScene().getWindow().hide();

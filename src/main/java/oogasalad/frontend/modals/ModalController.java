@@ -9,6 +9,8 @@ import oogasalad.Controller.FilesController;
 import oogasalad.frontend.components.Component;
 import oogasalad.frontend.components.ComponentsFactory;
 import oogasalad.frontend.components.GraphicHandler;
+import oogasalad.frontend.panels.ModalPanel;
+import oogasalad.frontend.panels.Panel;
 import oogasalad.frontend.panels.editorPanels.ComponentPanel;
 
 /**
@@ -17,13 +19,13 @@ import oogasalad.frontend.panels.editorPanels.ComponentPanel;
 public class ModalController {
 
   private Pane root;
-  private ComponentPanel parentPanel;
+  private ModalPanel parentPanel;
   private Map<String, Map<String, String>> templateMap;
   private Map<String, Component> activeComponents;
   private ComponentsFactory factory;
   private FilesController files;
   private DropZoneController dropZoneController;
-  public ModalController(ComponentPanel componentPanel) {
+  public ModalController(ModalPanel componentPanel) {
     parentPanel = componentPanel;
     factory = new ComponentsFactory();
     templateMap = new HashMap<>();
@@ -60,6 +62,7 @@ public class ModalController {
 
     files.addComponent(c);
     dropZoneController.addDropZone(c);
+    dropZoneController.addGridObject(c);
     GraphicHandler handler = new GraphicHandler();
     handler.moveToCenter(c);
     root.getChildren().add(c.getNode());
@@ -88,4 +91,7 @@ public class ModalController {
     return activeComponents.get(name);
   }
 
+  public void configGeneral(Map<String, String> map) {
+    files.setGeneral(map);
+  }
 }
