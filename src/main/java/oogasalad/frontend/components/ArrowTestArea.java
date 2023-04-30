@@ -32,7 +32,7 @@ public class ArrowTestArea extends Application {
     root.getChildren().add(c.getNode());
     root.getChildren().add(c1.getNode());
 //   c1.getNode().setTranslateX(50);
-    c1.getNode().setTranslateY(50);
+    c1.getNode().setTranslateY(150);
     System.out.println(c.getNode().getTranslateX());
     System.out.println(c1.getNode().getTranslateX());
     Arrow arrow = new Arrow(c, c1);
