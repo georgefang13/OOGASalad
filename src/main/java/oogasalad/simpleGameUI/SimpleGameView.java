@@ -2,6 +2,7 @@ package oogasalad.simpleGameUI;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -13,9 +14,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import oogasalad.Controller.GameRunnerController;
 import oogasalad.gamerunner.backend.Game;
-import oogasalad.gamerunner.backend.GameController;
+import oogasalad.Controller.GameController;
 import oogasalad.sharedDependencies.backend.filemanagers.FileManager;
 
 import java.io.FileInputStream;
@@ -41,7 +41,7 @@ public class SimpleGameView extends Application implements GameController {
     private String directory;
     private String code;
 
-    public static final String GAME_STYlE_FILE_PATH = "frontend/css/simpleGameView.css";
+    public static final String GAME_STYlE_FILE_PATH = "frontend/css/light.css";
     private final String MODAL_STYLE_SHEET = Objects
             .requireNonNull(getClass().getClassLoader().getResource(GAME_STYlE_FILE_PATH))
             .toExternalForm();
@@ -77,6 +77,8 @@ public class SimpleGameView extends Application implements GameController {
 
 
     private void startGame(String type) {
+
+        game.startGame();
 
         root.getChildren().retainAll();
         try {
@@ -115,7 +117,7 @@ public class SimpleGameView extends Application implements GameController {
             int y = Integer.parseInt(fm.getString(id, "y"));
             int height = Integer.parseInt(fm.getString(id, "height"));
             int width = Integer.parseInt(fm.getString(id, "width"));
-            addDropZone(new GameRunnerController.DropZoneParameters(id, x, y, height, width));
+            addDropZone(new GameController.DropZoneParameters(id, null,null,x, y, height, width));
         }
     }
 
@@ -126,18 +128,28 @@ public class SimpleGameView extends Application implements GameController {
             image = directory.substring(0, directory.lastIndexOf("/")) + "/assets/" + image;
             String dropZoneID = fm.getString(id, "location");
             double size = Double.parseDouble(fm.getString(id, "size"));
-            addPiece(id, image, dropZoneID, size);
+            addPiece(id, image, dropZoneID, false, null, size, 0.0);
         }
     }
-
-    private void select(String id) {
+    @Override
+    public void select(String id) {
         if (clickable.contains(id)) {
             game.clickPiece(id);
         }
     }
 
     @Override
-    public void addDropZone(GameRunnerController.DropZoneParameters params) {
+    public boolean isObjectPlayable(String id) {
+        return false;
+    }
+
+    @Override
+    public ObservableList<Node> getGameObjectVisuals() {
+        return null;
+    }
+
+    @Override
+    public void addDropZone(GameController.DropZoneParameters params) {
         // String id, int x, int y, int height, int width
         HBox dropZone = new HBox();
         dropZone.setPrefWidth(params.width());
@@ -152,7 +164,8 @@ public class SimpleGameView extends Application implements GameController {
     }
 
     @Override
-    public void addPiece(String id, String image, String dropZoneID, double size) {
+    public void addPiece(String id, String image, String dropZoneID, boolean hasSelectImage, Object param, double height, double width) throws FileNotFoundException {
+        double size = height;
         Image img;
         try {
             img = new Image(new FileInputStream(image));
@@ -192,12 +205,14 @@ public class SimpleGameView extends Application implements GameController {
         pieceToDropZoneMap.put(id, dropZoneID);
     }
 
+
     @Override
     public void setClickable(List<String> ids) {
         clearClickables();
         clickable.addAll(ids);
         for (String id : ids){
-            nodes.get(id).setStyle("-fx-border-color: red; -fx-border-width: 1px;");
+            Node n = nodes.get(id);
+            n.setStyle("-fx-border-color: red; -fx-border-width: 1px;");
         }
     }
 

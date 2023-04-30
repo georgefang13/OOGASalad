@@ -1,18 +1,12 @@
 package oogasalad.frontend.components.gameObjectComponent;
 
-import java.lang.reflect.Field;
-import java.util.HashMap;
+import java.io.FileInputStream;
 import java.util.List;
 import java.util.Map;
-import java.util.ResourceBundle;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import oogasalad.frontend.components.AbstractComponent;
-import oogasalad.frontend.components.Component;
-import oogasalad.frontend.components.ConversionContext;
-import oogasalad.frontend.components.ParamFactory;
-import oogasalad.frontend.components.Point;
 
 
 /**
@@ -21,41 +15,50 @@ import oogasalad.frontend.components.Point;
  */
 public class GameObject extends AbstractComponent implements GameObjectComponent{
 
+  private String name;
   private List<Node> children;
-  private boolean playable;
+
   private ImageView image;
+  private double width;
+  private double height;
+  private double rotate;
 
   public GameObject(String ID) {
     super(ID);
     children = null;
     instantiatePropFile("frontend.properties.Defaults.GameObject");
-    followMouse();
+    //followMouse();
   }
 
   public GameObject(String ID, Map<String, String> map){
     super(ID);
     children = null;
+    setDraggable(true);
+    instantiatePropFile("frontend.properties.Defaults.GameObject");
+    //setImage(getDEFAULT_BUNDLE().getString(replaceWithFileLoadingByID()));
     setValuesfromMap(map);
+    initialize();
     followMouse();
   }
 
   private void initialize() {
-    setImage(getDEFAULT_BUNDLE().getString(replaceWithFileLoadingByID()));
-  }
-
-  private String replaceWithFileLoadingByID(){
-    if (Integer.parseInt(this.getID()) < 6){
-      return "DEFAULT_IMAGE";
-    }
-    else {
-      return "X_IMAGE";
-    }
+    image.setFitWidth(width);
+    image.setFitHeight(height);
+    image.setRotate(rotate);
   }
 
   @Override
   public void setImage(String imagePath) {
-    Image newImage = new Image(imagePath);
+    Image newImage;
+    try {
+      newImage = new Image(new FileInputStream(imagePath));
+    } catch (Exception e) {
+      System.out.println("Image " + imagePath + " not found");
+      return;
+    }
     image = new ImageView(newImage);
+    image.setFitWidth(size);
+    image.setFitHeight(size);
   }
 
   @Override
@@ -66,11 +69,6 @@ public class GameObject extends AbstractComponent implements GameObjectComponent
   @Override
   public List<Node> getChildren() {
     return children;
-  }
-
-  @Override
-  public void setPlayable(boolean play) {
-    playable = play;
   }
 
   @Override
