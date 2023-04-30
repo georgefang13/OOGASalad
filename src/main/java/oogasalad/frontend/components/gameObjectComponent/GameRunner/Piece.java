@@ -56,6 +56,12 @@ public class Piece extends GameRunnerObject{
             acceptDrag();
             active = false;
             setDraggable(playable);
+            if (playable) {
+                makePlayable();
+            } else {
+                makeUnplayable();
+            }
+
         } else {
             goBack();
         }
