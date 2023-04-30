@@ -16,49 +16,45 @@ public class ModalController {
 
   private Pane root;
   private ComponentPanel parentPanel;
-  private Map<String, Map<String, String>> componentMap;
-  private Map<String, Component> allComponents;
+  private Map<String, Map<String, String>> templateMap;
+  private Map<String, Component> activeComponents;
   private ComponentsFactory factory;
   public ModalController(ComponentPanel componentPanel) {
     parentPanel = componentPanel;
     factory = new ComponentsFactory();
-    componentMap = new HashMap<>();
-    allComponents = new HashMap<>();
+    templateMap = new HashMap<>();
+    activeComponents = new HashMap<>();
   }
 
   public void createObjectTemplate(Map<String, String> map, String objectType) {
     String name = map.get("name");
-    if(allComponents.containsKey(name)) {
-      editObjectInstance(name, map, objectType);
-    } else {
-      componentMap.put(name, map);
-      parentPanel.addComponentTemplate(name, objectType);
-    }
+    templateMap.put(name, map);
+    parentPanel.addComponentTemplate(name, objectType);
   }
 
   public void createObjectInstance(String name, String objectType){
     objectType = objectType.substring(0, 1).toUpperCase() + objectType.substring(1);
-    System.out.println(objectType);
-    Map<String, String> map = componentMap.get(name);
+    Map<String, String> map = templateMap.get(name);
     Component c = factory.create(objectType, map);
-    allComponents.put(name, c);
+    activeComponents.put(name, c);
     GraphicHandler handler = new GraphicHandler();
     handler.moveToCenter(c);
     root.getChildren().add(c.getNode());
   }
 
-  public void editObjectInstance(String name, Map<String, String> map, String objectType) {
+  public void editObjectInstance(Map<String, String> map, String objectType) {
+    String name = map.get("name");
     objectType = objectType.substring(0, 1).toUpperCase() + objectType.substring(1);
-    root.getChildren().remove(allComponents.get(name).getNode());
+    root.getChildren().remove(activeComponents.get(name).getNode());
     Component c = factory.create(objectType, map);
-    allComponents.put(name, c);
+    activeComponents.put(name, c);
     GraphicHandler handler = new GraphicHandler();
     handler.moveToCenter(c);
     root.getChildren().add(c.getNode());
   }
 
   public void deleteObjectInstance(String name) {
-    root.getChildren().remove(allComponents.get(name).getNode());
+    root.getChildren().remove(activeComponents.get(name).getNode());
   }
 
   public void setRoot(Pane rt) {
