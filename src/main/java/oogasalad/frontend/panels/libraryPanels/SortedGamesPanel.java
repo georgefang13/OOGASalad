@@ -2,6 +2,7 @@ package oogasalad.frontend.panels.libraryPanels;
 
 import java.util.ResourceBundle;
 import javafx.scene.Node;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.layout.VBox;
 import oogasalad.frontend.panels.Panel;
 import oogasalad.frontend.panels.PanelController;
@@ -31,10 +32,15 @@ public class SortedGamesPanel extends VBox implements Panel {
     this.getChildren().addAll(createSortedGamesVBox());
     return this;
   }
-
   private VBox createSortedGamesVBox() {
     VBox sortedGamesVBox = new VBox();
     sortedGamesVBox.getStyleClass().add(ID_BUNDLE.getString(SORTED_GAMES_VBOX_ID));
+    Hyperlink allGames = new Hyperlink("Game 1");
+    Hyperlink boardGames = new Hyperlink("Game 2");
+    Hyperlink cardGames = new Hyperlink("Game 3");
+    Hyperlink gridGames = new Hyperlink("Game 4");
+    Hyperlink userGames = new Hyperlink("Game 5");
+    sortedGamesVBox.getChildren().addAll(allGames, boardGames, cardGames, gridGames, userGames);
     return sortedGamesVBox;
   }
   public Node asNode() {

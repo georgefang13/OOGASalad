@@ -7,7 +7,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
@@ -48,7 +47,6 @@ public class LibraryGridPanel extends GridPane implements Panel {
   private final int IMAGE_RADIUS = 20;
   private final int COLUMN_PERCENT_WIDTH = 25;
   private final int COLUMN_INDEX = 0;
-  private final int ROW_INDEX = 0;
   private final int MAX_COLUMN_INDEX = 3;
   PanelController panelController;
   private ButtonFactory buttonFactory = new ButtonFactory();

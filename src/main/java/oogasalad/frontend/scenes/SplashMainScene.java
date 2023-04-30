@@ -54,7 +54,6 @@ private static final String DROPDOWN_BOX_ID = "DropdownBoxID";
   private ComboBox<String> languageDropdown;
   private ComboBox<String> themeDropdown;
   private VBox root;
-  private HBox temp;
   private UserManager userManager;
 
   public SplashMainScene(SceneController sceneController) {

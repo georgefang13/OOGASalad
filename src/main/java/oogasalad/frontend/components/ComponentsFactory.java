@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.stage.Stage;
-import oogasalad.frontend.components.gameObjectComponent.GameObject;
 
 /**
  * @author hanzh This ComponentFactory is meant to provide a Factory to easily instantiate different
