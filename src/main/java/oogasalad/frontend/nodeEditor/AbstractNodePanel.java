@@ -1,7 +1,6 @@
 package oogasalad.frontend.nodeEditor;
 
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -155,35 +154,6 @@ public abstract class AbstractNodePanel extends Tab {
     return scrollPane;
   }
 
-  ///////
 
-  public void saveNodesToFile(List<AbstractNode> nodes, String filePath) {
-    NodeConfiguration config = new NodeConfiguration(nodes);
-    String json = config.toJson(CONFIG_JSON_PATH);
-    System.out.println(json);
-
-//    try (FileWriter fileWriter = new FileWriter(filePath)) {
-//      fileWriter.write(json);
-//    } catch (IOException e) {
-//      e.printStackTrace();
-//    }
-  }
-
-  // Load the configuration of nodes from a file
-  public List<AbstractNode> loadNodesFromFile(String filePath) {
-    try (FileReader fileReader = new FileReader(filePath)) {
-      StringBuilder json = new StringBuilder();
-      int i;
-      while ((i = fileReader.read()) != -1) {
-        json.append((char) i);
-      }
-
-      NodeConfiguration config = NodeConfiguration.fromJson(json.toString());
-      return config.getNodes();
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-    return new ArrayList<>();
-  }
 
 }
