@@ -3,6 +3,84 @@
   -fx-background-color: white;
 }
 
+/* LOGIN/Splash Window */
+.splash-root {
+  -fx-background-color: #24252D;
+  -fx-spacing: 20;
+  -fx-alignment: center;
+  -fx-text-alignment: center;
+  -fx-vgrow: always;
+}
+.splash-root > * {
+  -fx-min-width: 100%;
+  -fx-text-alignment: center;
+  -fx-alignment: center;
+}
+
+.the-title {
+  -fx-font-size: 80;
+  -fx-effect: dropshadow(gaussian, rgba(245, 237, 237, 0.6), 12, 0, 0, 6);
+  -fx-text-fill: white;
+}
+.username-password-box {
+  -fx-spacing: 10;
+  -fx-alignment: center;
+}
+.input-fields {
+  -fx-spacing: 10;
+}
+.username-label {
+  -fx-text-fill: white;
+  -fx-font-size: 20;
+}
+.username-field {
+  -fx-background-color: #54576F;
+  -fx-text-fill: white;
+  -fx-font-size: 14;
+  -fx-border-radius: 10;
+  -fx-background-radius: 10;
+}
+.login {
+  -fx-text-fill: white;
+  -fx-font-size: 14;
+}
+.dropdown {
+  -fx-background-color: #54576F;
+  -fx-text-fill: white;
+  -fx-font-size: 14px;
+  -fx-padding: 5px;
+  -fx-background-insets: 0;
+  -fx-border-width: 0;
+}
+.dropdown .text {
+  -fx-fill: white;
+}
+.dropdown .arrow {
+  -fx-background-color: white;
+}
+.dropdown .arrow-button {
+  -fx-background-color: #54576F;
+  -fx-background-insets: 0;
+  -fx-padding: 0;
+}
+.dropdown .list-view {
+  -fx-background-color: #54576F;
+  -fx-text-fill: white;
+  -fx-font-size: 12px;
+  -fx-padding: 3px;
+  -fx-background-insets: 0;
+  -fx-border-width: 0;
+}
+.dropdown .list-cell {
+  -fx-background-color: #54576F;
+}
+.dropdown .list-cell:hover {
+  -fx-background-color: #6c709a;
+}
+.dropdown-box {
+  -fx-spacing: 10;
+}
+
 /* HeaderMenuPanel */
 .menu-hbox { /* Specific */
   -fx-background-color: #4A4F76;
@@ -155,6 +233,12 @@
   -fx-fill: white;
   -fx-font-size: 16;
 }
+.game-box-tooltip {
+  -fx-background-color: #54576F;
+  -fx-background-radius: 0;
+  -fx-border-radius: 0;
+  -fx-text-fill: white;
+}
 
 
 /* HeaderPanel */
@@ -253,6 +337,21 @@
   -fx-min-width: 300  !important;
 }
 
-.tooltip{
-  -fx-font-size: 40;
+/* Simple Game View */
+.dropzone {
+  -fx-background-color: rgba(200, 200, 255, 0.5);
+  -fx-border-color: black;
+  -fx-border-width: 1px;
+  -fx-alignment: center;
+}
+
+.selected {
+  -fx-border-color: red;
+  -fx-border-width: 1px;
+}
+
+/* Modal Styles */
+#imagePickerID {
+  -fx-background-color: #2f0c77;
+  -fx-text-fill: white;
 }

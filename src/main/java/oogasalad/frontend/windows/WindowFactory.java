@@ -17,10 +17,12 @@ public class WindowFactory {
         return new SplashWindow(windowID, mediator);
       case EDIT_WINDOW:
         return new GameEditorWindow(windowID, mediator);
-      case GAME_WINDOW:
-        return new GamePlayerWindow(windowID, mediator);
+      case LIBRARY_WINDOW:
+        return new LibraryWindow(windowID, mediator);
       case MODAL_WINDOW:
         return new ModalWindow(windowID, mediator);
+      case GAME_WINDOW:
+        return new GameWindow(windowID, mediator);
       default:
         throw new IllegalArgumentException("Invalid window type: " + windowType);
     }

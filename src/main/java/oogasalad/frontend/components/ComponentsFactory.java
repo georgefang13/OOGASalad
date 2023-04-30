@@ -14,11 +14,11 @@ import oogasalad.frontend.components.gameObjectComponent.GameObject;
  */
 public class ComponentsFactory {
 
-  private final String FACTOR_PROPERTIES = "frontend.properties.text.ComponentsFactory";
+  private final String FACTOR_PROPERTIES = "frontend.properties.permanentText.ComponentsFactory";
   private ResourceBundle bundle;
   private int ID;
   private Stage stage;
-  Component component;
+  private Component component;
   public ComponentsFactory(){
     ID = 0;
     bundle = ResourceBundle.getBundle(FACTOR_PROPERTIES);
@@ -80,4 +80,9 @@ public class ComponentsFactory {
     }
     return component;
   }
+
+  public int getID() {
+    return ID;
+  }
+
 }

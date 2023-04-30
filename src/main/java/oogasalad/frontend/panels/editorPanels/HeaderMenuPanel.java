@@ -45,6 +45,8 @@ public class HeaderMenuPanel extends HBox implements Panel {
     this.getStyleClass().add(ID_BUNDLE.getString(MENU_HBOX_ID));
     Button logicButton = buttonFactory.createDefaultButton(LOGIC_EDITOR);
     Button visualButton = buttonFactory.createDefaultButton(VISUAL_EDITOR);
+    Button compileButton = buttonFactory.createDefaultButton(VISUAL_EDITOR);
+
     selectSceneButtonSettings(logicButton, visualButton);
     logicButton.setOnAction(e -> {
       panelController.newSceneFromPanel(logic, WindowScenes.LOGIC_SCENE);
@@ -53,7 +55,10 @@ public class HeaderMenuPanel extends HBox implements Panel {
     visualButton.setOnAction(e -> {
       panelController.newSceneFromPanel(editor, WindowScenes.EDITOR_SCENE);
     });
-    this.getChildren().addAll(visualButton, logicButton);
+    compileButton.setOnAction(e -> {
+      panelController.compile();
+    });
+    this.getChildren().addAll(visualButton, logicButton, compileButton);
     return this;
   }
 

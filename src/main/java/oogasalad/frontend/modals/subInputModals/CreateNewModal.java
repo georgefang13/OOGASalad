@@ -13,7 +13,9 @@ import javafx.scene.control.DialogPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import oogasalad.frontend.modals.InputModal;
+import oogasalad.frontend.modals.fields.ColorPickerComponent;
 import oogasalad.frontend.modals.fields.ImagePickerComponent;
+import oogasalad.frontend.modals.fields.IntegerPickerComponent;
 import oogasalad.frontend.modals.fields.TextFieldComponent;
 
 public class CreateNewModal extends InputModal {
@@ -23,7 +25,10 @@ public class CreateNewModal extends InputModal {
   private Map<String, String> myPropertiesMap;
   private List<ImagePickerComponent> ImagePickers;
   private List<TextFieldComponent> textFields;
+  private List<ColorPickerComponent> colorPickers;
+  private List<IntegerPickerComponent> integerPickers;
   private String myTitle;
+  private boolean editMode;
 
   /**
    * Constructor for the CreateGameModal dialog
@@ -32,6 +37,12 @@ public class CreateNewModal extends InputModal {
     super(title);
     myTitle = super.getMyTitle();
 //        myPropertiesMap = super.setPropertiesMap(myTitle
+  }
+
+  public CreateNewModal(String title, boolean editMode) {
+    super(title);
+    this.editMode = editMode;
+    myTitle = super.getMyTitle();
   }
 
   /**
@@ -99,6 +110,12 @@ public class CreateNewModal extends InputModal {
       if(field.getClass() == TextFieldComponent.class){
         textFields.add((TextFieldComponent) field);
       }
+      if(field.getClass() == ColorPickerComponent.class){
+        colorPickers.add((ColorPickerComponent) field);
+      }
+      if(field.getClass() == IntegerPickerComponent.class){
+        integerPickers.add((IntegerPickerComponent) field);
+      }
 
       // Add the field to the grid
       grid.add(fieldHBox, 0, rowIndex);
@@ -114,6 +131,8 @@ public class CreateNewModal extends InputModal {
   private void initializeArrayLists() {
     ImagePickers = new ArrayList<>();
     textFields = new ArrayList<>();
+    colorPickers = new ArrayList<>();
+    integerPickers = new ArrayList<>();
   }
   // TODO: styling use the last .NAME in the properties file to get the styling id
 
@@ -130,9 +149,20 @@ public class CreateNewModal extends InputModal {
     for (ImagePickerComponent imageComponent : ImagePickers){
       map.put(imageComponent.getLabelText(), imageComponent.getFile().toString());
     }
+    for (ColorPickerComponent colorComponent : colorPickers){
+      map.put(colorComponent.getLabelText(), colorComponent.getValue());
+    }
+    for (IntegerPickerComponent integerComponent : integerPickers){
+      map.put(integerComponent.getLabelText(), Integer.toString(integerComponent.getValue()));
+    }
     //TODO remove, just for testing purposes
     System.out.println(map);
-    this.getController().createObjectTemplate(map, myTitle);
+    if(editMode) {
+      System.out.println("EDIT MODE");
+      this.getController().editObjectInstance(map, myTitle);
+    } else {
+      this.getController().createObjectTemplate(map, myTitle);
+    }
     this.getDialogPane().getScene().getWindow().hide();
   }
 }

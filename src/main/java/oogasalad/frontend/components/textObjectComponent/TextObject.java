@@ -9,22 +9,34 @@ import java.util.Map;
 
 
 public class TextObject extends AbstractComponent implements TextObjectComponent {
+    private String name;
     private Text text;
-    String content;
-    double fontSize;
-    Color color;
+    private String content;
+    private double fontSize;
+    private Color color;
+    private double rotate;
+
+    public TextObject(String id) {
+        super(id);
+        instantiatePropFile("frontend.properties.Defaults.TextObject");
+        //this.setDefault();
+        this.followMouse();
+        this.getNode();
+    }
 
     public TextObject(String ID, Map<String, String> map){
         super(ID);
+        setDraggable(true);
         setValuesfromMap(map);
         initialize();
+        followMouse();
     }
 
     private void initialize() {
         text = new Text(content);
         text.setFill(color);
         setTextSize(fontSize);
-        followMouse();
+        text.setRotate(rotate);
     }
 
     @Override
