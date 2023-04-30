@@ -10,6 +10,7 @@ import oogasalad.frontend.components.gameObjectComponent.GameRunner.DropZoneFE;
 import oogasalad.frontend.components.gameObjectComponent.GameRunner.GameRunnerObject;
 import oogasalad.frontend.components.gameObjectComponent.GameRunner.Piece;
 import oogasalad.frontend.components.gameObjectComponent.GameRunner.SelectableVisual;
+import oogasalad.frontend.managers.DisplayManager;
 import oogasalad.gamerunner.backend.Game;
 import oogasalad.gamerunner.backend.GameController;
 import oogasalad.sharedDependencies.backend.filemanagers.FileManager;
@@ -42,19 +43,7 @@ public class GameRunnerController implements GameController {
         loadDropZones(directory);
         loadPieces(directory);
     }
-    private Node loadImage(String imgPath,int height, int width){ //TODO: A similar function is in game object move it there just send paths
-        Image img;
-        try {
-            img = new Image(new FileInputStream(imgPath));
-        } catch (Exception e) {
-            System.out.println("Image " + imgPath + " not found");
-            return null;
-        }
-        ImageView imageView = new ImageView(img);
-        imageView.setFitHeight(height);
-        imageView.setFitWidth(width);
-        return imageView;
-    }
+
     private Node loadDefaultDropRectangle(String hexColor,int height, int width){ //TODO: A similar function is in game object move it there just send paths
         Color fillColor = Color.web(hexColor);
         Rectangle defaultDrop = new Rectangle(width, height, fillColor);
@@ -68,7 +57,7 @@ public class GameRunnerController implements GameController {
         Node visual;
         if (isImage){
             String selectedPath = directory.substring(0, directory.lastIndexOf("/")) + "/assets/" + param;
-            visual = loadImage(selectedPath,height,width);
+            visual = DisplayManager.loadImage(selectedPath,height,width);
         } else {
             visual = loadDefaultDropRectangle(param,height,width);
         }
@@ -92,10 +81,16 @@ public class GameRunnerController implements GameController {
     private void loadPieces(String directory) throws FileNotFoundException {
         FileManager fm = new FileManager(directory + "/objects.json");
         for (String id : fm.getTagsAtLevel()){
-            String image = fm.getString(id, "image");
+            String image = fm.getString(id, "defaultImage");
             image = directory.substring(0, directory.lastIndexOf("/")) + "/assets/" + image;
             String dropZoneID = fm.getString(id, "location");
             double size = Double.parseDouble(fm.getString(id, "size"));
+
+            boolean hasimage = fm.getObject(Boolean.class,id,"selected","hasSelectedImage");
+            System.out.println(hasimage);
+            String param = fm.getString(id,"selected","param");
+            System.out.println(param);
+
             addPiece(id, image, dropZoneID, size);
         }
     }

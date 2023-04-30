@@ -3,15 +3,19 @@ package oogasalad.frontend.components.gameObjectComponent.GameRunner;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
+import oogasalad.frontend.managers.DisplayManager;
 import oogasalad.gamerunner.backend.GameController;
 
 public class Piece extends GameRunnerObject{
     private double lastTranslateX;
     private double lastTranslateY;
-    public Piece(String ID, GameController gameRunnerController, String imagepath, double size) {
+    private boolean hasSelectImage;
+    private Object param;
+    public Piece(String ID, GameController gameRunnerController, String imagePath, boolean hasSelectImage, Object param, double height, double width) {
         super(ID, gameRunnerController);
-        setImage(imagepath);
-        setSize(size);
+        setImage(imagePath);
+        setHeight(height);
+        setWidth(width);
         setSelectableVisual();
         //getNode().setOnMouseClicked(e -> gameRunnerController.select(ID));
         followMouse();
@@ -20,9 +24,14 @@ public class Piece extends GameRunnerObject{
     @Override
     public void setSelectableVisual() {
         ImageView img = getImage();
-        img.setFitWidth(size);
-        img.setFitHeight(size);
-        selectableVisual = new PieceVisual(img,size,ID);
+        img.setFitWidth(getWidth());
+        img.setFitHeight(getHeight());
+        if (hasSelectImage){
+            String selectImgPath = (String) param;
+            ImageView selectImage = DisplayManager.loadImage()
+            selectableVisual = new PieceVisualSelectImage(img,);
+        }
+
     }
 
     private void setDragSelection() {

@@ -28,8 +28,8 @@ public abstract class AbstractComponent implements Component {
   private String DEFAULT_FILE_PATH;
   private ResourceBundle DEFAULT_BUNDLE;
   private String name;
-  private double width;
-  private double height;
+  protected double width;
+  protected double height;
   private double rotate;
 
   public AbstractComponent(String id) {
@@ -166,4 +166,19 @@ public abstract class AbstractComponent implements Component {
     XOffset = 0;
     YOffset = 0;
   }
+
+  protected void setHeight(double height){
+    this.height = height;
+  }
+  protected void setWidth(double width){
+    this.width = width;
+  }
+  protected double getHeight(){
+    return height;
+  }
+  protected double getWidth(){
+    return width;
+  }
+
 }
+
