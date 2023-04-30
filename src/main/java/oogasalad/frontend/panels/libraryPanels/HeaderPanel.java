@@ -8,6 +8,7 @@ import javafx.scene.layout.HBox;
 import oogasalad.frontend.factories.ButtonFactory;
 import oogasalad.frontend.panels.Panel;
 import oogasalad.frontend.panels.PanelController;
+import oogasalad.frontend.windows.WindowTypes;
 
 public class HeaderPanel extends HBox implements Panel {
   private static final String PUZZLE_ICON = "puzzle_piece";
@@ -58,6 +59,9 @@ public class HeaderPanel extends HBox implements Panel {
   private HBox makeRightBox() {
     HBox rightBox = new HBox();
     newGame = buttonFactory.createIconButton(NEW_GAME, PUZZLE_ICON);
+    newGame.setOnAction(
+        e -> panelController.getSceneController().getWindowController()
+            .registerAndShow(WindowTypes.WindowType.EDIT_WINDOW));
     importGame = buttonFactory.createIconButton(IMPORT_GAME, UPLOAD_ICON);
     rightBox.getChildren().addAll(importGame, newGame);
     rightBox.getStyleClass().add(ID_BUNDLE.getString(RIGHT_HEADER_BOX_ID));

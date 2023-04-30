@@ -1,5 +1,6 @@
 package oogasalad.sharedDependencies.backend.database;
 
+import oogasalad.sharedDependencies.backend.filemanagers.FileManager;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,9 +24,9 @@ public class UserManagerTest {
 
   @BeforeEach
   void initializeUsers() {
-    db.addData(COLLECTION, ENTRY, "rodrigo", "ilovets13");
-    db.addData(COLLECTION, ENTRY, "hotrod", "dropaslay");
-    db.addData(COLLECTION, ENTRY, "ethan", "gormandized");
+    db.addData(COLLECTION, ENTRY, "rodrigo", UserManager.encrypt("ilovets13"));
+    db.addData(COLLECTION, ENTRY, "hotrod", UserManager.encrypt("dropaslay"));
+    db.addData(COLLECTION, ENTRY, "ethan", UserManager.encrypt("gormandized"));
     db.deleteData(COLLECTION, ENTRY, "theman");
   }
 
