@@ -38,7 +38,7 @@ public class MainNode extends AbstractNode {
   }
 
   @Override
-  protected void delete() {
+  public void delete() {
   }
 
 }

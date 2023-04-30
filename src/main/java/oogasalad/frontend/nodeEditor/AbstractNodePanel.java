@@ -27,7 +27,8 @@ import oogasalad.frontend.managers.StandardPropertyManager;
 import oogasalad.frontend.nodeEditor.Nodes.AbstractNode;
 import oogasalad.frontend.nodeEditor.Nodes.MainNode;
 
-public abstract class AbstractNodePanel extends Tab {
+public abstract class
+AbstractNodePanel extends Tab {
 
   public static final String NODES_FOLDER = "oogasalad.frontend.nodeEditor.Nodes.";
   public static final String NODES_JSON_PATH = "src/main/resources/nodeCode/save.json";
@@ -96,8 +97,16 @@ public abstract class AbstractNodePanel extends Tab {
   }
 
   protected void putNode(AbstractNode node) {
-    node.setBoundingBox((workspace.getBoundsInParent()));
     group.getChildren().add(node);
+    node.setBoundingBox((workspace.getBoundsInParent()));
+  }
+
+  protected void clearNodes() {
+    for (Node node : group.getChildren()) {
+      if (node instanceof AbstractNode) {
+        ((AbstractNode) node).delete();
+      }
+    }
   }
 
   public ScrollPane makeNodeSelectionPane() {
