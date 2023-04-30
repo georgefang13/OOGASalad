@@ -36,6 +36,7 @@ public class GridObject extends AbstractComponent {
         grid = new GridPane();
         grid.setPrefWidth(width);
         grid.setPrefHeight(height);
+        grid.setPickOnBounds(false);
         rectWidth = width/cols;
         rectHeight = height/rows;
         ComponentsFactory factory = new ComponentsFactory();
