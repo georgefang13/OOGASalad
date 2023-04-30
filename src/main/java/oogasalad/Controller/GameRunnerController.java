@@ -55,8 +55,8 @@ public class GameRunnerController implements GameController {
         imageView.setFitWidth(width);
         return imageView;
     }
-    private Node loadDefaultDropRectangle(String color,int height, int width){ //TODO: A similar function is in game object move it there just send paths
-        Color fillColor = Color.valueOf(color);
+    private Node loadDefaultDropRectangle(String hexColor,int height, int width){ //TODO: A similar function is in game object move it there just send paths
+        Color fillColor = Color.web(hexColor);
         Rectangle defaultDrop = new Rectangle(width, height, fillColor);
         return defaultDrop;
     }
@@ -81,9 +81,8 @@ public class GameRunnerController implements GameController {
             int height = Integer.parseInt(fm.getString(id, "height"));
             int width = Integer.parseInt(fm.getString(id, "width"));
 
+            Node unselected = loadImgOrDefaultFromFile("unselected",fm,id,directory,height,width);
             Node selected = loadImgOrDefaultFromFile("selected",fm,id,directory,height,width);
-            Node unselected = loadImgOrDefaultFromFile("selected",fm,id,directory,height,width);
-
             addDropZone(new GameController.DropZoneParameters(id, unselected, selected, x, y, height, width));
         }
     }
