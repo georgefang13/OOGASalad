@@ -1,28 +1,32 @@
 package oogasalad.Controller;
 
 import javafx.scene.Node;
+import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
-import oogasalad.frontend.components.gameObjectComponent.GameRunner.DropZoneFE;
-import oogasalad.frontend.components.gameObjectComponent.GameRunner.GameRunnerObject;
-import oogasalad.frontend.components.gameObjectComponent.GameRunner.Piece;
-import oogasalad.frontend.components.gameObjectComponent.GameRunner.SelectableVisual;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import oogasalad.frontend.components.gameObjectComponent.GameRunner.*;
 import oogasalad.gamerunner.backend.Game;
 import oogasalad.gamerunner.backend.GameController;
 import oogasalad.sharedDependencies.backend.filemanagers.FileManager;
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.*;
+import java.util.List;
 
 public class GameRunnerController implements GameController {
     private final Map<String, GameRunnerObject> gameObjects = new HashMap<>();
     private final Map<String, String> pieceToDropZoneMap = new HashMap<>();
-    private BorderPane root;
     private final HashSet<String> clickable = new HashSet<>();
     private Game game;
+    private BorderPane root;
 
-    public GameRunnerController(BorderPane root, String gameName) {
-        this.root = root;
+    public GameRunnerController(String gameName, BorderPane root) {
         String directory = "data/games/"+gameName;
+        this.root = root;
         int numPlayers = 2;
         try {
             game = new Game(this,directory,numPlayers,false);
@@ -32,10 +36,43 @@ public class GameRunnerController implements GameController {
             System.out.println("FAIL"); //TODO: error handle
         }
     }
+    public void assignUndoButtonAction(Button undoButton){
+        undoButton.setOnAction(e -> game.undoClickPiece());
+    }
     private void loadGame(String directory) throws FileNotFoundException {
         directory = directory + "/frontend";
         loadDropZones(directory);
         loadPieces(directory);
+    }
+    private Node loadImage(String imgPath,int height, int width){ //TODO: A similar function is in game object move it there just send paths
+        Image img;
+        try {
+            img = new Image(new FileInputStream(imgPath));
+        } catch (Exception e) {
+            System.out.println("Image " + imgPath + " not found");
+            return null;
+        }
+        ImageView imageView = new ImageView(img);
+        imageView.setFitHeight(height);
+        imageView.setFitWidth(width);
+        return imageView;
+    }
+    private Node loadDefaultDropRectangle(String hexColor,int height, int width){ //TODO: A similar function is in game object move it there just send paths
+        Color fillColor = Color.web(hexColor);
+        Rectangle defaultDrop = new Rectangle(width, height, fillColor);
+        return defaultDrop;
+    }
+    private Node loadImgOrDefaultFromFile(String selectType, FileManager fm, String id, String directory, int height, int width){
+        boolean isImage = fm.getObject(Boolean.class, id, selectType, "hasImage");
+        String param = fm.getString(id, selectType, "param");
+        Node visual;
+        if (isImage){
+            String selectedPath = directory.substring(0, directory.lastIndexOf("/")) + "/assets/" + param;
+            visual = loadImage(selectedPath,height,width);
+        } else {
+            visual = loadDefaultDropRectangle(param,height,width);
+        }
+        return visual;
     }
 
     private void loadDropZones(String directory) throws FileNotFoundException {
@@ -45,7 +82,10 @@ public class GameRunnerController implements GameController {
             int y = Integer.parseInt(fm.getString(id, "y"));
             int height = Integer.parseInt(fm.getString(id, "height"));
             int width = Integer.parseInt(fm.getString(id, "width"));
-            addDropZone(new GameController.DropZoneParameters(id, x, y, height, width));
+
+            Node unselected = loadImgOrDefaultFromFile("unselected",fm,id,directory,height,width);
+            Node selected = loadImgOrDefaultFromFile("selected",fm,id,directory,height,width);
+            addDropZone(new GameController.DropZoneParameters(id, unselected, selected, x, y, height, width));
         }
     }
 
@@ -68,30 +108,26 @@ public class GameRunnerController implements GameController {
 
     @Override
     public void addDropZone(GameController.DropZoneParameters params) {
-        System.out.println(params.id());
-        DropZoneFE dropZone = new DropZoneFE(params.id(), params.width(), params.height(), params.x(),params.y(),this);
+        DropZoneFE dropZone = new DropZoneFE(params.id(), params.unselected(), params.selected(), params.width(), params.height(), params.x(),params.y(),this);
         gameObjects.put(params.id(),dropZone);
-        root.getChildren().add(dropZone.getNode());
+        //root.getChildren().add(dropZone.getNode());
     }
 
     @Override
     public void addPiece(String id, String imagePath, String dropZoneID, double size) {
-        System.out.println(id);
         Piece piece = new Piece(id,this, imagePath, size);
         DropZoneFE dropZone = (DropZoneFE) gameObjects.get(dropZoneID);
         piece.moveToDropZoneXY(dropZone.getDropZoneCenter());
         gameObjects.put(id,piece);
         pieceToDropZoneMap.put(id, dropZoneID);
-        root.getChildren().add(piece.getNode());
+        //root.getChildren().add(piece.getNode());
     }
 
     @Override
     public void setClickable(List<String> ids) {
-        System.out.println("set clickable");
         clearClickables();
         clickable.addAll(ids);
         for (String id : ids){
-            System.out.println(id);
             gameObjects.get(id).makePlayable();
             //AbstractSelectableVisual gameObjectVisual = (AbstractSelectableVisual) gameObjects.get(id).getNode();
             //gameObjectVisual.showClickable();
@@ -136,9 +172,9 @@ public class GameRunnerController implements GameController {
         GameRunnerObject gameObject = gameObjects.get(id);
         gameObject.setImage(imagePath);
         SelectableVisual selectableVisual = (SelectableVisual) gameObject.getNode();
-        root.getChildren().remove(selectableVisual);
+        //root.getChildren().remove(selectableVisual);
         selectableVisual.updateVisual(gameObject.getImage());
-        root.getChildren().add((Node) selectableVisual);
+        //root.getChildren().add((Node) selectableVisual);
     }
 
     private void clearClickables(){
@@ -154,12 +190,25 @@ public class GameRunnerController implements GameController {
         return gameObjects.get(id).getPlayable();
     }
 
-    public ArrayList<Node> getNodes(){
-        ArrayList<Node> nodelist = new ArrayList<>();
+    public ArrayList<AbstractSelectableVisual> getGameObjectVisuals(){
+        ArrayList<AbstractSelectableVisual> ObjectVisualList = new ArrayList<>();
         for (GameRunnerObject gameObject : gameObjects.values()) {
-            nodelist.add(gameObject.getNode());
+            ObjectVisualList.add((AbstractSelectableVisual) gameObject.getNode());
         }
-        return nodelist;
+        Comparator<AbstractSelectableVisual> nodeComparator = new Comparator<AbstractSelectableVisual>() {
+            @Override
+            public int compare(AbstractSelectableVisual node1, AbstractSelectableVisual node2) {
+                if (node1 instanceof DropZoneVisual && node2 instanceof PieceVisual) {
+                    return -1;
+                } else if (node2 instanceof DropZoneVisual && node1 instanceof PieceVisual) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            }
+        };
+        Collections.sort(ObjectVisualList, nodeComparator);
+        return ObjectVisualList;
     }
 }
 
