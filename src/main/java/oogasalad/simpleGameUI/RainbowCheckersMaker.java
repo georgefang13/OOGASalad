@@ -145,7 +145,8 @@ public class RainbowCheckersMaker {
                 fefm.addContent("blackselected.png", id, "selected", "param");
                 fefm.addContent("black.png", id, "defaultImage");
                 fm.addContent("1", id, "owner");
-                fefm.addContent("30", id, "size");
+                fefm.addContent("30", id, "height");
+                fefm.addContent("30", id, "width");
 
                 fm.addContent(location, id, "location");
                 fefm.addContent(location, id, "location");

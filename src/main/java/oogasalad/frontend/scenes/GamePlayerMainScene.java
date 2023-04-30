@@ -45,7 +45,7 @@ public class GamePlayerMainScene extends AbstractScene {
     gameRunnerController.assignUndoButtonAction(undoButton);
 
     root.getChildren().addAll(gameRunnerController.getGameObjectVisuals());
-    root.getChildren().add(undoButton);
+    root.getChildren().add(undoButton); //TODO: with observer listner pattern to remove if deleted
 
     Scene scene = new Scene(root);
     setScene(scene);
