@@ -8,6 +8,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import oogasalad.frontend.components.gameObjectComponent.GameRunner.*;
 import oogasalad.frontend.managers.DisplayManager;
+import oogasalad.frontend.managers.GameObjectVisualSorter;
 import oogasalad.gamerunner.backend.Game;
 import oogasalad.sharedDependencies.backend.filemanagers.FileManager;
 
@@ -169,19 +170,8 @@ public class GameRunnerController implements GameController {
 
     @Override
     public ObservableList<Node> getGameObjectVisuals(){
-        Comparator<Node> nodeComparator = new Comparator<Node>() {
-            @Override
-            public int compare(Node node1, Node node2) {
-                if (node1 instanceof DropZoneVisual && node2 instanceof PieceVisual) {
-                    return -1;
-                } else if (node2 instanceof DropZoneVisual && node1 instanceof PieceVisual) {
-                    return 1;
-                } else {
-                    return 0;
-                }
-            }
-        };
-        Collections.sort(gameObjectVisualsList, nodeComparator);
+        GameObjectVisualSorter gameObjectVisualComparator = new GameObjectVisualSorter();
+        Collections.sort(gameObjectVisualsList, gameObjectVisualComparator);
         return gameObjectVisualsList;
     }
 }
