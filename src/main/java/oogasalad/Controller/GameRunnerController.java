@@ -84,7 +84,6 @@ public class GameRunnerController implements GameController {
 
     private void loadPieces(String directory) throws FileNotFoundException {
         FileManager fm = new FileManager(directory + "/objects.json");
-        System.out.println(directory);
         for (String id : fm.getTagsAtLevel()){
             String image = fm.getString(id, "defaultImage");
             image = directory.substring(0, directory.lastIndexOf("/")) + "/assets/" + image;
@@ -93,9 +92,7 @@ public class GameRunnerController implements GameController {
             double width = Double.parseDouble(fm.getString(id, "width"));
 
             boolean hasimage = fm.getObject(Boolean.class,id,"selected","hasSelectedImage");
-            System.out.println(hasimage);
             String paramString = fm.getString(id,"selected","param");
-            System.out.println(paramString);
 
             Object param;
             if (hasimage){
