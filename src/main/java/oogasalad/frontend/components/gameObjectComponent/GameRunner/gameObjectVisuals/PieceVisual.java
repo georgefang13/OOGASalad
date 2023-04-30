@@ -1,21 +1,23 @@
 package oogasalad.frontend.components.gameObjectComponent.GameRunner.gameObjectVisuals;
 
 import javafx.scene.Node;
+import javafx.scene.shape.Rectangle;
 
 public abstract class PieceVisual extends AbstractSelectableVisual {
     protected Node pieceImage;
-    public PieceVisual(Node pieceImg, double height, double width, String id) {
-        super(id);
-        initHBox(height,width);
-        pieceImage = pieceImg;
+    public PieceVisual(String pieceImgPath, int width, int height, String id) {
+        super(id,width,height);
+        initHBox();
+        updatePieceImage(pieceImgPath);
+        new Rectangle(9,9);
     }
-    private void initHBox(double height, double width) {
+    private void initHBox() {
         this.setPrefHeight(height);
         this.setPrefWidth(width);
         this.setMaxHeight(height);
         this.setMaxWidth(width);
     }
-    public Node getImage(){
-        return pieceImage;
+    protected void updatePieceImage(String imgPath){
+        pieceImage = loadVisual(imgPath);
     }
 }
