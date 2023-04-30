@@ -1,7 +1,5 @@
 package oogasalad.frontend.nodeEditor;
 
-import java.io.FileReader;
-import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -11,18 +9,21 @@ import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.control.Tab;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import oogasalad.frontend.managers.PropertyManager;
 import oogasalad.frontend.managers.StandardPropertyManager;
-import oogasalad.frontend.nodeEditor.Config.NodeConfiguration;
 import oogasalad.frontend.nodeEditor.Nodes.AbstractNode;
 import oogasalad.frontend.nodeEditor.Nodes.MainNode;
 
@@ -57,12 +58,12 @@ public abstract class AbstractNodePanel extends Tab {
     return code;
   }
 
-  public List<AbstractNode> getAllNodes(){
+  public List<AbstractNode> getAllNodes() {
     List<AbstractNode> nodes = new ArrayList<>();
     for (Node node : group.getChildren()) {
       if (node instanceof MainNode) {
         AbstractNode tempNode = (AbstractNode) node;
-        while(tempNode.getChildNode() != null){
+        while (tempNode.getChildNode() != null) {
           System.out.println(tempNode);
           nodes.add(tempNode);
           tempNode = tempNode.getChildNode();
@@ -101,7 +102,6 @@ public abstract class AbstractNodePanel extends Tab {
 
   public ScrollPane makeNodeSelectionPane() {
     List<Button> buttons = getNodeSelectionButtons("Commands.json");
-//    buttons.addAll(getNodeSelectionButtons("Metablocks.json"));
     ArrayList<Button> temp = new ArrayList<>(buttons);
     temp.addAll(getNodeSelectionButtons("Metablocks.json"));
 
@@ -118,7 +118,7 @@ public abstract class AbstractNodePanel extends Tab {
   }
 
 
-  public ScrollPane makeWorkspacePane() {
+  public BorderPane makeWorkspacePane() {
     double defaultXScale = 0.15;
     double defaultYScale = 0.15;
     workspace = new ImageView(
@@ -151,9 +151,20 @@ public abstract class AbstractNodePanel extends Tab {
     MainNode node = new MainNode();
     group.getChildren().add(node);
     node.setBoundingBox(workspace.getBoundsInParent());
-    return scrollPane;
-  }
 
+    BorderPane borderPane = new BorderPane();
+    MenuBar menuBar = new MenuBar();
+    Menu fileMenu = new Menu("File");
+    MenuItem saveMenuItem = new MenuItem("Save");
+    MenuItem loadMenuItem = new MenuItem("Load");
+    fileMenu.getItems().addAll(saveMenuItem, loadMenuItem);
+    menuBar.getMenus().add(fileMenu);
+    borderPane.setCenter(scrollPane);
+    borderPane.setTop(menuBar);
+    saveMenuItem.setOnAction(event -> nodeController.saveAllContent(NODES_JSON_PATH));
+    //loadMenuItem.setOnAction(event -> nodeController.loadAllContent());
+    return borderPane;
+  }
 
 
 }

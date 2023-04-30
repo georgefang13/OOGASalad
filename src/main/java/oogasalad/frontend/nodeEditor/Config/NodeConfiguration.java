@@ -1,12 +1,7 @@
 package oogasalad.frontend.nodeEditor.Config;
-import com.google.gson.Gson;
-import oogasalad.frontend.nodeEditor.Nodes.AbstractNode;
-import oogasalad.sharedDependencies.backend.filemanagers.FileManager;
 
+import com.google.gson.Gson;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
-import java.io.IOException;
 
 public class NodeConfiguration {
 
@@ -18,14 +13,8 @@ public class NodeConfiguration {
         this.filePath = filePath;
     }
 
-    public List<AbstractNode> getNodes() throws IOException, ClassNotFoundException {
-        List<AbstractNode> nodes = new ArrayList<>();
-        Iterable<String> jsonNodes= fileManager.getTagsAtLevel();
-        for (String jsonNode : jsonNodes) {
-            String type = fileManager.ge
-        }
-
-
-    }
+//    public List<AbstractNode> getNodes() throws IOException, ClassNotFoundException {
+//
+//    }
 
 }
