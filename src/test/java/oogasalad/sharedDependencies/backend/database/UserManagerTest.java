@@ -18,7 +18,7 @@ public class UserManagerTest {
 
   @BeforeAll
   static void setup() {
-    db = new MockDatabase();
+    db = MockDatabase.getInstance();
     userManager = new UserManager(db);
   }
 

@@ -91,7 +91,7 @@ public class SplashMainScene extends AbstractScene {
 //    setText();
 //    setTheme();
     root = new VBox();
-    userManager = new UserManager(new Database());
+    userManager = new UserManager(Database.getInstance());
     makeInputFields();
     makeLoginSignUpButtons();
     makeDropDowns();

@@ -10,11 +10,11 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 public class DatabaseTest {
-  static MockDatabase db;
+  static Database db;
 
   @BeforeAll
   static void setup() throws IOException {
-    db = new MockDatabase();
+    db = MockDatabase.getInstance();
   }
 
   @Test

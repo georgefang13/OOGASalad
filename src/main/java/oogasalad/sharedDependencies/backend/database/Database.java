@@ -15,6 +15,7 @@ import java.io.IOException;
 import com.google.cloud.firestore.Firestore;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
 
@@ -29,15 +30,26 @@ public class Database {
   private static final String DATABASE_URL = "https://duvalley-boiz.firebaseio.com/";
   private static final String PROJECT_ID = "duvalley-boiz";
 
-  private final Firestore database;
+  private static Database instance;
+  private static Firestore database;
 
-  public Database() {
-    this(PROJECT_ID, DATABASE_INFO_PATH, DATABASE_URL);
-  }
-
-  protected Database(String projectId, String infoPath, String url) {
+  private Database(String projectId, String infoPath, String url) {
     initializeDatabase(projectId, infoPath, url);
     database = FirestoreClient.getFirestore();
+  }
+
+  public Database() {
+  }
+
+  public static synchronized Database getInstance() {
+    return getInstance(PROJECT_ID, DATABASE_INFO_PATH, DATABASE_URL);
+  }
+
+  protected static synchronized Database getInstance(String projectId, String infoPath, String url) {
+    if (instance == null) {
+      instance = new Database(projectId, infoPath, url);
+    }
+    return instance;
   }
 
   /**
