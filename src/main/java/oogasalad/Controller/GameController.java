@@ -2,6 +2,7 @@ package oogasalad.Controller;
 
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import oogasalad.frontend.components.gameObjectComponent.GameRunner.gameObjectVisuals.AbstractSelectableVisual;
 
 import java.util.List;
@@ -80,6 +81,8 @@ public interface GameController {
     void addTextObject(String id, String text, String DropZoneID);
 
     void updateTextObject(String id, String text);
+
+    void assignUndoButtonAction(Button undoButton);
 
     record DropZoneParameters(String id, AbstractSelectableVisual.SelectableVisualParams unselected, AbstractSelectableVisual.SelectableVisualParams selected, int x, int y, int height, int width){}
 

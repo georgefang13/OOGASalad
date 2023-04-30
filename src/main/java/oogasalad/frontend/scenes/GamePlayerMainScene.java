@@ -3,7 +3,9 @@ package oogasalad.frontend.scenes;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import oogasalad.Controller.GameController;
 import oogasalad.Controller.GameRunnerController;
 import oogasalad.frontend.managers.NodeRemovedListener;
@@ -25,14 +27,11 @@ public class GamePlayerMainScene extends AbstractScene {
     BorderPane root = new BorderPane();
 
     String gameName = panelController.getSceneController().getWindowController().getData().toString();
-    System.out.println(gameName);
     String gameType = panelController.getSceneController().getData().toString();
-    System.out.println(gameType);
     ArrayList<String> gameTypeData = new ArrayList<>();
     gameTypeData.add(gameType);
     if (gameType.equals("join")) {
       String code = panelController.getSceneController().getData().toString();
-      System.out.println(code);
       gameTypeData.add(code);
     }
 
@@ -42,9 +41,9 @@ public class GamePlayerMainScene extends AbstractScene {
     gameObjectVisuals.addListener(new NodeRemovedListener(root));
     root.getChildren().addAll(gameObjectVisuals);
 
-    //Button undoButton = new Button("Undo");
-    //gameRunnerController.assignUndoButtonAction(undoButton);
-    //root.getChildren().add(undoButton);
+    Button undoButton = new Button("Undo");
+    gameRunnerController.assignUndoButtonAction(undoButton);
+    root.setTop(undoButton);
 
     Scene scene = new Scene(root);
     setScene(scene);

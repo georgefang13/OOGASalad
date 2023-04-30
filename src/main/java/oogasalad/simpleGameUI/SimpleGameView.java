@@ -280,6 +280,11 @@ public class SimpleGameView extends Application implements GameController {
 
     }
 
+    @Override
+    public void assignUndoButtonAction(Button undoButton) {
+
+    }
+
     private void clearClickables(){
         for (String id : clickable){
             nodes.get(id).setStyle("");
