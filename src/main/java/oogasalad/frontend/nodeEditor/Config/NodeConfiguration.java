@@ -20,7 +20,7 @@ public class NodeConfiguration {
 
     Gson gson = new Gson();
     private String filePath;
-    private static final String COMMANDS_RESOURCE_PATH = "user.dir/src/main/resources/backend/interpreter/Commands.json";
+    private static final String COMMANDS_RESOURCE_PATH = "src/main/resources/backend/interpreter/Commands.json";
 
 
     public NodeConfiguration(String filePath) throws FileNotFoundException {
@@ -59,8 +59,9 @@ public class NodeConfiguration {
         List<Command> commands = parser.readCommands(COMMANDS_RESOURCE_PATH);
 
         for (NodeData data : nodeData) {
+            System.out.println(data.type());
             switch (data.type()) {
-                case "jsonNode":
+                case "JsonNode":
                     Command tempCommand = null;
                     for (Command command : commands) {
                         if (command.name().equals(data.name())) {
@@ -74,7 +75,7 @@ public class NodeConfiguration {
                     node.setInputFields(data.inputs());
                     nodes.add(node);
                     break;
-                case "control" :
+                case "Control" :
                     try {
                         Class<?> clazz = Class.forName("oogasalad.frontend.nodeEditor.Nodes." + data.name());
                         Constructor<?> constructor = clazz.getConstructor();

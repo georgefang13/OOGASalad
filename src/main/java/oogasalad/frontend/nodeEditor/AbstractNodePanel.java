@@ -162,7 +162,7 @@ public abstract class AbstractNodePanel extends Tab {
     borderPane.setCenter(scrollPane);
     borderPane.setTop(menuBar);
     saveMenuItem.setOnAction(event -> nodeController.saveAllContent(NODES_JSON_PATH));
-    //loadMenuItem.setOnAction(event -> nodeController.loadAllContent());
+    loadMenuItem.setOnAction(event -> nodeController.loadAllContent("src/main/resources/nodeCode/config.json"));
     return borderPane;
   }
 

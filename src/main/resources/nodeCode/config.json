@@ -8,16 +8,16 @@
     "name": "Sum",
     "type": "JsonNode",
     "inputs": [
-      "5",
-      "2"
+      "12",
+      "3"
     ]
   },
-  "2" : {
+  "2": {
     "name": "Sum",
     "type": "JsonNode",
     "inputs": [
-      "10",
-      "5"
+      "7",
+      "2"
     ]
   }
 }

@@ -137,6 +137,8 @@ public class NodeScene extends AbstractScene {
       List<NodeData> nodeData = config.getNodeData();
       List<AbstractNode> nodes = config.makeNodes(nodeData);
       for(AbstractNode node : nodes){
+        System.out.println(tabMap.keySet());
+        System.out.println(tabs.getSelectionModel().getSelectedItem());
         CodeEditorPanel panel = tabMap.get(tabs.getSelectionModel().getSelectedItem());
         panel.putNode(node);
 
