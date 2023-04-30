@@ -1,8 +1,9 @@
-package oogasalad.frontend.components.gameObjectComponent.GameRunner;
+package oogasalad.frontend.components.gameObjectComponent.GameRunner.Board;
 
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import oogasalad.frontend.components.gameObjectComponent.GameRunner.Board.DropCell;
 
 public class DropZoneCell implements DropCell {
 

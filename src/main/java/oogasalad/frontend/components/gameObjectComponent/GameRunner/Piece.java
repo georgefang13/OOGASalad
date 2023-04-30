@@ -1,17 +1,26 @@
 package oogasalad.frontend.components.gameObjectComponent.GameRunner;
 
 import javafx.geometry.Bounds;
+import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
-import oogasalad.gamerunner.backend.GameController;
+import javafx.scene.paint.Color;
+import oogasalad.frontend.components.gameObjectComponent.GameRunner.gameObjectVisuals.*;
+import oogasalad.frontend.managers.DisplayManager;
+import oogasalad.Controller.GameController;
 
 public class Piece extends GameRunnerObject{
     private double lastTranslateX;
     private double lastTranslateY;
-    public Piece(String ID, GameController gameRunnerController, String imagepath, double size) {
+    private final boolean hasSelectImage;
+    private final Object param;
+    public Piece(String ID, GameController gameRunnerController, String imagePath, boolean hasSelectImage, Object param, double height, double width) {
         super(ID, gameRunnerController);
-        setImage(imagepath);
-        setSize(size);
+        setImage(imagePath);
+        this.hasSelectImage = hasSelectImage;
+        this.param = param;
+        setHeight(height);
+        setWidth(width);
         setSelectableVisual();
         //getNode().setOnMouseClicked(e -> gameRunnerController.select(ID));
         followMouse();
@@ -20,11 +29,25 @@ public class Piece extends GameRunnerObject{
     @Override
     public void setSelectableVisual() {
         ImageView img = getImage();
-        img.setFitWidth(size);
-        img.setFitHeight(size);
-        selectableVisual = new PieceVisual(img,size,ID);
+        img.setFitWidth(getWidth());
+        img.setFitHeight(getHeight());
+        if (hasSelectImage){
+            String selectImgPath = (String) param;
+            Node selectImage = DisplayManager.loadImage(selectImgPath,(int) getHeight(),(int) getWidth());
+            selectableVisual = new PieceVisualSelectImage(img,selectImage,getHeight(),getWidth(),ID);
+        } else {
+            Color selectBorderColor = (Color) param;
+            selectableVisual = new PieceVisualSelectBorder(img,selectBorderColor,getHeight(),getWidth(),ID);
+        }
     }
-
+    public void moveToDropZoneXY(Point2D dropZoneCenter){
+        Point2D pieceCenter = getNode().localToScene(getWidth()/2,getHeight()/2);
+        double shiftX = dropZoneCenter.getX() - pieceCenter.getX();
+        double shiftY = dropZoneCenter.getY() - pieceCenter.getY();
+        getNode().setTranslateX(getNode().getTranslateX() + shiftX);
+        getNode().setTranslateY(getNode().getTranslateY() + shiftY);
+        acceptDrag();
+    }
     private void setDragSelection() {
         getNode().setOnDragDetected(e -> {
             if (playable){
@@ -35,12 +58,12 @@ public class Piece extends GameRunnerObject{
         getNode().setOnMouseReleased(e -> selectDropZoneBelow());
     }
     private void selectDropZoneBelow(){
-        DropZoneVisual dropZoneVisual = getIntersectingDropZones();
+        SelectableVisual dropZoneVisual = getIntersectingDropZones();
         if (dropZoneVisual == null){
             goBack();
             return;
         }
-        if (gameRunnerController.isObjectPlayable(dropZoneVisual.objectID)){
+        if (gameRunnerController.isObjectPlayable(dropZoneVisual.getObjectID())){
             gameRunnerController.select(dropZoneVisual.getObjectID());
             acceptDrag();
             active = false;
@@ -48,9 +71,8 @@ public class Piece extends GameRunnerObject{
         } else {
             goBack();
         }
-
     }
-    public DropZoneVisual getIntersectingDropZones(){
+    private DropZoneVisual getIntersectingDropZones(){
         Bounds pieceBounds = getNode().localToScene(getNode().getBoundsInLocal());
         for (Node n : getNode().getParent().getChildrenUnmodifiable()) {
             if (n instanceof DropZoneVisual){
@@ -61,27 +83,12 @@ public class Piece extends GameRunnerObject{
         }
         return null;
     }
-
-    public void moveToDropZoneXY(DropZoneFE.DropZoneCenter DZcenter){
-        setCentertoCenter(DZcenter.x(), DZcenter.y());
-        acceptDrag();
-    }
-    private void setCentertoCenter(double x, double y){
-        //double actualX = pieceBox.getLayoutX() + pieceBox.getTranslateX();
-        //double actualY = pieceBox.getLayoutY() + pieceBox.getTranslateY();
-        double shiftX = x - size/2;
-        double shiftY = y - size/2;
-        //this.resetOffset();
-        getNode().setTranslateX(shiftX);
-        getNode().setTranslateY(shiftY);
-    }
-    public void acceptDrag() {
+    private void acceptDrag() {
         Node node = getNode();
         lastTranslateX = node.getTranslateX();
         lastTranslateY = node.getTranslateY();
     }
-
-    public void goBack() {
+    private void goBack() {
         Node node = getNode();
         node.setTranslateX(lastTranslateX);
         node.setTranslateY(lastTranslateY);

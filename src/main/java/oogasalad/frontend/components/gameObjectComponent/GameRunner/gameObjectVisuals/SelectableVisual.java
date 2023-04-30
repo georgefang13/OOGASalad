@@ -1,7 +1,6 @@
-package oogasalad.frontend.components.gameObjectComponent.GameRunner;
+package oogasalad.frontend.components.gameObjectComponent.GameRunner.gameObjectVisuals;
 
 import javafx.scene.Node;
-import javafx.scene.layout.HBox;
 
 public interface SelectableVisual {
     void showClickable();
