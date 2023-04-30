@@ -1,19 +1,24 @@
 package oogasalad.frontend.components.dropzoneComponent;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import oogasalad.frontend.components.AbstractComponent;
+import oogasalad.frontend.components.Arrow;
+import oogasalad.frontend.components.ArrowSubscriber;
+import oogasalad.frontend.components.DropZonePublisher;
 import oogasalad.frontend.components.gameObjectComponent.GameObject;
 
 /**
  * @author Han
  * Dropzone is the visual representation of where stuff should be
  */
-public class Dropzone extends AbstractComponent {
+public class Dropzone extends AbstractComponent implements DropZonePublisher {
 
   private final String DEFAULT_PATH = "frontend.properties.Defaults.Dropzone.properties";
   private Map<String, Dropzone> edges;
@@ -24,6 +29,7 @@ public class Dropzone extends AbstractComponent {
   private Rectangle square;
   private double width;
   private double height;
+  private List<ArrowSubscriber> subscribers;
   /**
    * Dropzone
    * @param ID the id of the DropZone
@@ -52,7 +58,9 @@ public class Dropzone extends AbstractComponent {
     content = new HashMap<>();
     square = new Rectangle();
     node.getChildren().add(square);
+    subscribers = new ArrayList<>();
     setNode(node);
+    setonUpdate();
     followMouse();
   }
   /**
@@ -77,6 +85,9 @@ public class Dropzone extends AbstractComponent {
     square.setStroke(border);
     square.setWidth(width);
     square.setHeight(height);
+  }
+  private void setonUpdate(){
+    node.setOnMouseReleased(e -> publish());
   }
   /**
    * For GameObject, remove the object
@@ -119,5 +130,34 @@ public class Dropzone extends AbstractComponent {
    */
   public double getHeight(){
     return height;
+  }
+
+
+  /**
+   * Adds a subscriber to the subscriber list
+   * @param subscriber
+   */
+  @Override
+  public void addSubscriber(ArrowSubscriber subscriber) {
+    subscribers.add(subscriber);
+  }
+
+  /**
+   * Removes a subscriber from the subscriber list
+   * @param subscriber
+   */
+  @Override
+  public void removeSubscriber(ArrowSubscriber subscriber) {
+    subscribers.remove(subscriber);
+  }
+
+  /**
+   * Updates all subscribes with info
+   */
+  @Override
+  public void publish() {
+    for(ArrowSubscriber subscriber : subscribers){
+      subscriber.update();
+    }
   }
 }

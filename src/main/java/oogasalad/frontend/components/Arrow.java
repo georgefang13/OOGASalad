@@ -11,7 +11,7 @@ import oogasalad.frontend.components.dropzoneComponent.Dropzone;
 /**
  * @author Han
  */
-public class Arrow {
+public class Arrow implements  ArrowSubscriber{
 
   private Dropzone start;
   private Dropzone end;
@@ -32,9 +32,11 @@ public class Arrow {
     start = s;
     end = e;
     visible = true;
+    arrow = new Group();
     updateArrow();
     start.addEdges(end);
-    arrow = new Group(line, head);
+    start.addSubscriber(this);
+    end.addSubscriber(this);
   }
 
   /**
@@ -56,7 +58,10 @@ public class Arrow {
     double startY = startSquare.getTranslateY() + start.getHeight()/2;
     double endX = endSquare.getTranslateX() + end.getWidth()/2;
     double endY = endSquare.getTranslateY() + end.getHeight()/2;
+    System.out.println(endX);
+    arrow.getChildren().clear();
     line = new Line(startX, startY, endX, endY);
+    arrow.getChildren().add(line);
     line.setVisible(visible);
     createArrowHead(startX, startY, endX, endY);
   }
@@ -73,6 +78,7 @@ public class Arrow {
     head.setTranslateX(endX - width/2);
     head.setTranslateY(endY - height/2);
     head.setRotate(Math.toDegrees(angle));
+    arrow.getChildren().add(head);
   }
 
   /**
@@ -84,4 +90,11 @@ public class Arrow {
   }
 
 
+  /**
+   * updates arrow
+   */
+  @Override
+  public void update() {
+    updateArrow();
+  }
 }
