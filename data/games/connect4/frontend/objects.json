@@ -1,0 +1,212 @@
+{
+  "pieceR0": {
+    "image": "ChipRed.png",
+    "size": "40",
+    "location": "RedDropZone"
+  },
+  "pieceR1": {
+    "image": "ChipRed.png",
+    "size": "40",
+    "location": "RedDropZone"
+  },
+  "pieceR2": {
+    "image": "ChipRed.png",
+    "size": "40",
+    "location": "RedDropZone"
+  },
+  "pieceR3": {
+    "image": "ChipRed.png",
+    "size": "40",
+    "location": "RedDropZone"
+  },
+  "pieceR4": {
+    "image": "ChipRed.png",
+    "size": "40",
+    "location": "RedDropZone"
+  },
+  "pieceR5": {
+    "image": "ChipRed.png",
+    "size": "40",
+    "location": "RedDropZone"
+  },
+  "pieceR6": {
+    "image": "ChipRed.png",
+    "size": "40",
+    "location": "RedDropZone"
+  },
+  "pieceR7": {
+    "image": "ChipRed.png",
+    "size": "40",
+    "location": "RedDropZone"
+  },
+  "pieceR8": {
+    "image": "ChipRed.png",
+    "size": "40",
+    "location": "RedDropZone"
+  },
+  "pieceR9": {
+    "image": "ChipRed.png",
+    "size": "40",
+    "location": "RedDropZone"
+  },
+  "pieceR10": {
+    "image": "ChipRed.png",
+    "size": "40",
+    "location": "RedDropZone"
+  },
+  "pieceR11": {
+    "image": "ChipRed.png",
+    "size": "40",
+    "location": "RedDropZone"
+  },
+  "pieceR12": {
+    "image": "ChipRed.png",
+    "size": "40",
+    "location": "RedDropZone"
+  },
+  "pieceR13": {
+    "image": "ChipRed.png",
+    "size": "40",
+    "location": "RedDropZone"
+  },
+  "pieceR14": {
+    "image": "ChipRed.png",
+    "size": "40",
+    "location": "RedDropZone"
+  },
+  "pieceR15": {
+    "image": "ChipRed.png",
+    "size": "40",
+    "location": "RedDropZone"
+  },
+  "pieceR16": {
+    "image": "ChipRed.png",
+    "size": "40",
+    "location": "RedDropZone"
+  },
+  "pieceR17": {
+    "image": "ChipRed.png",
+    "size": "40",
+    "location": "RedDropZone"
+  },
+  "pieceR18": {
+    "image": "ChipRed.png",
+    "size": "40",
+    "location": "RedDropZone"
+  },
+  "pieceR19": {
+    "image": "ChipRed.png",
+    "size": "40",
+    "location": "RedDropZone"
+  },
+  "pieceR20": {
+    "image": "ChipRed.png",
+    "size": "40",
+    "location": "RedDropZone"
+  },
+  "pieceY0": {
+    "image": "ChipYellow.png",
+    "size": "40",
+    "location": "YellowDropZone"
+  },
+  "pieceY1": {
+    "image": "ChipYellow.png",
+    "size": "40",
+    "location": "YellowDropZone"
+  },
+  "pieceY2": {
+    "image": "ChipYellow.png",
+    "size": "40",
+    "location": "YellowDropZone"
+  },
+  "pieceY3": {
+    "image": "ChipYellow.png",
+    "size": "40",
+    "location": "YellowDropZone"
+  },
+  "pieceY4": {
+    "image": "ChipYellow.png",
+    "size": "40",
+    "location": "YellowDropZone"
+  },
+  "pieceY5": {
+    "image": "ChipYellow.png",
+    "size": "40",
+    "location": "YellowDropZone"
+  },
+  "pieceY6": {
+    "image": "ChipYellow.png",
+    "size": "40",
+    "location": "YellowDropZone"
+  },
+  "pieceY7": {
+    "image": "ChipYellow.png",
+    "size": "40",
+    "location": "YellowDropZone"
+  },
+  "pieceY8": {
+    "image": "ChipYellow.png",
+    "size": "40",
+    "location": "YellowDropZone"
+  },
+  "pieceY9": {
+    "image": "ChipYellow.png",
+    "size": "40",
+    "location": "YellowDropZone"
+  },
+  "pieceY10": {
+    "image": "ChipYellow.png",
+    "size": "40",
+    "location": "YellowDropZone"
+  },
+  "pieceY11": {
+    "image": "ChipYellow.png",
+    "size": "40",
+    "location": "YellowDropZone"
+  },
+  "pieceY12": {
+    "image": "ChipYellow.png",
+    "size": "40",
+    "location": "YellowDropZone"
+  },
+  "pieceY13": {
+    "image": "ChipYellow.png",
+    "size": "40",
+    "location": "YellowDropZone"
+  },
+  "pieceY14": {
+    "image": "ChipYellow.png",
+    "size": "40",
+    "location": "YellowDropZone"
+  },
+  "pieceY15": {
+    "image": "ChipYellow.png",
+    "size": "40",
+    "location": "YellowDropZone"
+  },
+  "pieceY16": {
+    "image": "ChipYellow.png",
+    "size": "40",
+    "location": "YellowDropZone"
+  },
+  "pieceY17": {
+    "image": "ChipYellow.png",
+    "size": "40",
+    "location": "YellowDropZone"
+  },
+  "pieceY18": {
+    "image": "ChipYellow.png",
+    "size": "40",
+    "location": "YellowDropZone"
+  },
+  "pieceY19": {
+    "image": "ChipYellow.png",
+    "size": "40",
+    "location": "YellowDropZone"
+  },
+  "pieceY20": {
+    "image": "ChipYellow.png",
+    "size": "40",
+    "location": "YellowDropZone"
+  }
+}

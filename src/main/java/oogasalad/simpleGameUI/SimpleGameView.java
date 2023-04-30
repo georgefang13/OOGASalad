@@ -50,7 +50,7 @@ public class SimpleGameView extends Application implements GameController {
         Scene scene = new Scene(root, SCREEN_WIDTH, SCREEN_HEIGHT);
         scene.getStylesheets().add(MODAL_STYLE_SHEET);
 
-        directory = "data/games/tictactoe";
+        directory = "data/games/connect4";
 
         showStartScreen();
 
