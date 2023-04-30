@@ -226,7 +226,7 @@ public class Game implements GameToInterpreterAPI{
 
         if (!isPieceAvailable(selectedObject)) return;
 
-        System.out.println("clicking " + selectedObject + " with " + send);
+        //System.out.println("clicking " + selectedObject + " with " + send);
 
         interpreter.interpret("make :game_available [ ]");
 
@@ -345,7 +345,7 @@ public class Game implements GameToInterpreterAPI{
 
             ownableIdManager.addObject(dz, id);
 
-            controller.addDropZone(new GameController.DropZoneParameters(id, x, y, height, width));
+            controller.addDropZone(new GameController.DropZoneParameters(id, null,null,x, y, height, width));
         }
 
         for (DropZone dz : edgeMap.keySet()){
@@ -397,7 +397,7 @@ public class Game implements GameToInterpreterAPI{
             }
 
             ownableIdManager.addObject(obj, id);
-            controller.addPiece(id, image, location, size);
+            //controller.addPiece(id, image, location, null, null, 0, size);
 
             DropZone dz = (DropZone) ownableIdManager.getObject(location);
 

@@ -19,7 +19,7 @@ import oogasalad.frontend.panels.PanelController;
 public abstract class AbstractScene implements PropertiesObserver, ThemeObserver {
 
   protected PanelController panelController;
-
+  protected SceneController sceneController;
   protected Scene scene;
   protected PropertyManager propertyManager = StandardPropertyManager.getInstance();
   protected ThemeManager themeManager = StandardThemeManager.getInstance();
@@ -32,6 +32,7 @@ public abstract class AbstractScene implements PropertiesObserver, ThemeObserver
 
   public AbstractScene(SceneController sceneController) {
     this.panelController = new PanelController(sceneController);
+    this.sceneController = sceneController;
     this.scene = makeScene();
     propertyManager.addObserver(this);
     themeManager.addObserver(this);

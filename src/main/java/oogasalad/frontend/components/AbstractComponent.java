@@ -28,20 +28,21 @@ public abstract class AbstractComponent implements Component {
   private String DEFAULT_FILE_PATH;
   private ResourceBundle DEFAULT_BUNDLE;
   private String name;
-  private double width;
-  private double height;
+  protected double width;
+  protected double height;
   private double rotate;
 
   public AbstractComponent(String id) {
     ID = id;
   }
 
-
   protected void instantiatePropFile(String filepath) {
     setDEFAULT_FILE_PATH(filepath);
     setDEFAULT_BUNDLE(ResourceBundle.getBundle(getDEFAULT_FILE_PATH()));
   }
-  protected void setValuesfromMap(Map<String, String> map) {
+
+  @Override
+  public void setValuesfromMap(Map<String, String> map) {
     for(String param: map.keySet()){
       try{
         Field field = this.getClass().getDeclaredField(param);
@@ -108,8 +109,6 @@ public abstract class AbstractComponent implements Component {
   @Override
   public void setSize(double size) {
     this.size = size;
-    //getNode().setScaleY(size);
-    //getNode().setScaleX(size);
   }
 
   @Override
@@ -166,4 +165,19 @@ public abstract class AbstractComponent implements Component {
     XOffset = 0;
     YOffset = 0;
   }
+
+  protected void setHeight(double height){
+    this.height = height;
+  }
+  protected void setWidth(double width){
+    this.width = width;
+  }
+  protected double getHeight(){
+    return height;
+  }
+  protected double getWidth(){
+    return width;
+  }
+
 }
+

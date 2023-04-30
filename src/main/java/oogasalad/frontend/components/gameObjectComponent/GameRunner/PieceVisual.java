@@ -1,40 +1,21 @@
 package oogasalad.frontend.components.gameObjectComponent.GameRunner;
 
 import javafx.scene.Node;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 
-public class PieceVisual extends AbstractSelectableVisual{
-    private Rectangle highlightBorder;
-    private Node pieceImage;
-
-    public PieceVisual(Node pieceImg, double size, String id) {
+public abstract class PieceVisual extends AbstractSelectableVisual{
+    protected Node pieceImage;
+    public PieceVisual(Node pieceImg, double height, double width, String id) {
         super(id);
-        initHBox(size);
+        initHBox(height,width);
         pieceImage = pieceImg;
-        highlightBorder = new Rectangle(size,size,Color.TRANSPARENT);
-        highlightBorder.setStroke(Color.TRANSPARENT);
-        StackPane stackPane = new StackPane(highlightBorder,pieceImage);
-        this.getChildren().add(stackPane);
     }
-    private void initHBox(double size){
-        this.setPrefHeight(size);
-        this.setPrefWidth(size);
-        this.setMaxHeight(size);
-        this.setMaxWidth(size);
+    private void initHBox(double height, double width) {
+        this.setPrefHeight(height);
+        this.setPrefWidth(width);
+        this.setMaxHeight(height);
+        this.setMaxWidth(width);
     }
-
-    @Override
-    public void showClickable() {
-        highlightBorder.setStroke(Color.YELLOW);
-    }
-
-    @Override
-    public void showUnclickable() {
-        highlightBorder.setStroke(Color.TRANSPARENT);
-    }
-
     @Override
     public void updateVisual(Node newVisual) {
         pieceImage = newVisual;

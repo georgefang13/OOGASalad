@@ -37,12 +37,13 @@ public class Database {
   private static Database instance;
   private static Firestore database;
 
+  protected Database() {
+
+  }
+
   private Database(String projectId, String infoPath, String url) {
     initializeDatabase(projectId, infoPath, url);
     database = FirestoreClient.getFirestore();
-  }
-
-  public Database() {
   }
 
   public static synchronized Database getInstance() {
