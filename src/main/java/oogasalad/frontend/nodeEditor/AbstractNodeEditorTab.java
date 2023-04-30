@@ -43,10 +43,13 @@ public abstract class AbstractNodeEditorTab extends Tab {
 
   protected NodeController nodeController;
 
+  protected double panelSizeRatio;
+
   public AbstractNodeEditorTab(NodeController nodeController) {
     this.nodeController = nodeController;
     windowWidth = propertyManager.getNumeric("WindowWidth");
     windowHeight = propertyManager.getNumeric("WindowHeight");
+    panelSizeRatio = propertyManager.getNumeric("AbstractNodeEditorTab.PanelSizeRatio");
     setContent(new HBox(makeNodeButtonPanel(), makeWorkspacePanel()));
   }
 
@@ -85,12 +88,12 @@ public abstract class AbstractNodeEditorTab extends Tab {
   public ScrollPane makeNodeButtonPanel() {
     ScrollPane scrollPane = new ScrollPane();
     GridPane pane = new GridPane();
-    pane.setMinSize(windowWidth * 0.25, windowHeight);
+    pane.setMinSize(panelSizeRatio * windowWidth, windowHeight);
     List<Button> buttons = getNodeButtons();
     for (Button button : buttons) {
       pane.add(button, 0, buttons.indexOf(button));
     }
-    scrollPane.setMinSize(windowWidth * 0.25, windowHeight);
+    scrollPane.setMinSize(panelSizeRatio * windowWidth, windowHeight);
     scrollPane.setContent(pane);
     return scrollPane;
   }
@@ -125,7 +128,9 @@ public abstract class AbstractNodeEditorTab extends Tab {
     double defaultScale = propertyManager.getNumeric("AbstractNodeEdtiorTab.DefaultScale");
     double maxScale = propertyManager.getNumeric("AbstractNodeEdtiorTab.MaxScale");
     double step = propertyManager.getNumeric("AbstractNodeEdtiorTab.ZoomStep");
-    background = new Rectangle(0.75 * windowWidth, windowHeight, Color.LIGHTGRAY);
+    double zoomRatio = maxScale / defaultScale;
+    background = new Rectangle(zoomRatio * (1 - panelSizeRatio) * windowWidth, zoomRatio * windowHeight,
+        Color.LIGHTGRAY);
     nodeGroup = new Group(background);
     nodeGroup.setScaleX(defaultScale);
     nodeGroup.setScaleY(nodeGroup.getScaleX());
@@ -134,8 +139,8 @@ public abstract class AbstractNodeEditorTab extends Tab {
     nodeWorkspace = new ScrollPane(nodeGroupStackPane);
     nodeWorkspace.setHbarPolicy(ScrollBarPolicy.NEVER);
     nodeWorkspace.setPannable(true);
-    nodeWorkspace.setMinSize(0.75 * windowWidth, windowHeight);
-    nodeWorkspace.setOnScroll(event -> verticallyExtendNodeWorkspace(event, 50));
+    nodeWorkspace.setOnScroll(event -> verticallyExtendNodeWorkspace(event,
+        propertyManager.getNumeric("AbstractNodeEdtiorTab.ExtendSize")));
     return nodeWorkspace;
   }
 

@@ -16,6 +16,8 @@ public class NodeController {
     Stage stage = new Stage();
     stage.setScene(scene.getScene());
     stage.show();
+    stage.setMaxHeight(propertyManager.getNumeric("WindowHeight"));
+    stage.setMaxWidth(propertyManager.getNumeric("WindowWidth"));
     stage.setResizable(false);
     //nodeWindow.showScene(scene);
   }
