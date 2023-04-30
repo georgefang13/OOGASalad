@@ -31,7 +31,7 @@ public class GameEditorEditorScene extends AbstractScene {
    *
    * @param sceneController
    */
-  public GameEditorEditorScene(SceneController sceneController) {
+  public GameEditorEditorScene(SceneMediator sceneController) {
     super(sceneController);
   }
 

@@ -14,7 +14,7 @@ public class GamePlayerLibraryScene extends AbstractScene {
   private SortedGamesPanel sortedGamesPanel;
 
 
-  public GamePlayerLibraryScene(SceneController sceneController) {
+  public GamePlayerLibraryScene(SceneMediator sceneController) {
     super(sceneController);
   }
 
