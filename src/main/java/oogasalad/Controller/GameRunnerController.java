@@ -83,10 +83,8 @@ public class GameRunnerController implements GameController {
             String image = fm.getString(id, "defaultImage");
             image = directory.substring(0, directory.lastIndexOf("/")) + "/assets/" + image;
             String dropZoneID = fm.getString(id, "location");
-            //double height = Double.parseDouble(fm.getString(id, "height"));
+            double height = Double.parseDouble(fm.getString(id, "height"));
             double width = Double.parseDouble(fm.getString(id, "width"));
-            //double size = Double.parseDouble(fm.getString(id, "size"));
-            double size = width;
 
             boolean hasimage = fm.getObject(Boolean.class,id,"selected","hasSelectedImage");
             System.out.println(hasimage);
@@ -95,11 +93,11 @@ public class GameRunnerController implements GameController {
 
             Object param;
             if (hasimage){
-                param = directory.substring(0, directory.lastIndexOf("/")) + "/assets/red.png";
+                param = directory.substring(0, directory.lastIndexOf("/")) + "/assets/" + paramString;
             } else {
                 param = Color.web(paramString);
             }
-            addPiece(id, image, dropZoneID, hasimage, param, size, size);
+            addPiece(id, image, dropZoneID, hasimage, param, height, width);
         }
     }
     @Override

@@ -83,8 +83,8 @@ public class Piece extends GameRunnerObject{
     private void setCentertoCenter(double x, double y){
         //double actualX = pieceBox.getLayoutX() + pieceBox.getTranslateX();
         //double actualY = pieceBox.getLayoutY() + pieceBox.getTranslateY();
-        double shiftX = x - size/2;
-        double shiftY = y - size/2;
+        double shiftX = x - getWidth()/2;
+        double shiftY = y - getHeight()/2;
         //this.resetOffset();
         getNode().setTranslateX(shiftX);
         getNode().setTranslateY(shiftY);
