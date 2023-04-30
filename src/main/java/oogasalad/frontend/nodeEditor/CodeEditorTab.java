@@ -2,8 +2,10 @@ package oogasalad.frontend.nodeEditor;
 
 import java.util.ArrayList;
 import java.util.List;
+import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tooltip;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.util.Duration;
@@ -13,20 +15,24 @@ import oogasalad.frontend.nodeEditor.nodes.JsonNode;
 import oogasalad.frontend.nodeEditor.nodes.StartNestNode;
 
 
-public class CodeEditorPanel extends AbstractNodePanel {
+public class CodeEditorTab extends AbstractNodeEditorTab {
+  protected Group group;
+  protected ImageView workspace;
 
   protected String state, action;
   private static final String COMMANDS_RESOURCE_PATH = "/src/main/resources/backend/interpreter/";
 
 
-  public CodeEditorPanel(NodeController nodeController, String state, String action) {
+  public CodeEditorTab(NodeController nodeController, String state, String action) {
     super(nodeController);
     this.state = state;
     this.action = action;
   }
 
-  protected List<Button> getNodeSelectionButtons(String fileName) {
-    String absoluteFilePath = System.getProperty("user.dir") + COMMANDS_RESOURCE_PATH + fileName;
+  protected List<Button> getNodeButtons() {
+    //"Commands.json"
+    //temp.addAll(getNodeButtons("Metablocks.json"));
+    String absoluteFilePath = System.getProperty("user.dir") + COMMANDS_RESOURCE_PATH + "Commands.json";
     ArrayList<Button> buttons = new ArrayList<>();
     JsonNodeParser parser = new JsonNodeParser();
     List<Command> commands = parser.readCommands(absoluteFilePath);
@@ -70,7 +76,7 @@ public class CodeEditorPanel extends AbstractNodePanel {
     return state;
   }
 
-  public boolean equals(CodeEditorPanel panel) {
+  public boolean equals(CodeEditorTab panel) {
     return panel.getAction().equals(this.action) && panel.getState().equals(this.state);
   }
 }
