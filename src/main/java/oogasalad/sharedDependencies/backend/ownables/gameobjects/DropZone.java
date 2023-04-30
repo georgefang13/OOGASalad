@@ -108,6 +108,27 @@ public class DropZone extends GameObject {
   }
 
   /**
+   * Removes an outgoing connection from this node to another node with a label.
+   * @param label the label of the connection
+   */
+  public void removeOutgoingConnection(String label) {
+    edges.remove(label);
+  }
+  /**
+   * Removes an outgoing connection from this node to another node with a label.
+   * @param dz the connected dropzone to remove
+   */
+  public void removeOutgoingDzConnection(DropZone dz) {
+    if (edges.containsValue(dz)){
+      String label = edges.entrySet()
+              .stream()
+              .filter(entry -> dz.equals(entry.getValue()))
+              .toList().get(0).getKey();
+      removeOutgoingConnection(label);
+    }
+  }
+
+  /**
    * Returns a map of the outgoing edges of this node. [ label : toNodeId ]
    *
    * @return a map of the outgoing edges of this node

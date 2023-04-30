@@ -31,6 +31,9 @@ public enum ObjectParameter {
    */
   PARENT_OWNABLE_ID,
 
+  /**
+   * The value for a Variable
+   */
   VALUE,
 
   /**
@@ -53,7 +56,20 @@ public enum ObjectParameter {
   /**
    * Destination DropZone ID for a new GameObject
    */
-  DROPZONE_ID,
+  DEST_DROPZONE_ID,
+
+  /**
+   * The name of a link between dropzones to create or remove
+   */
+  LINK_NAME,
+
+  /**
+   * The IDs of the dropzones to link to and from
+   */
+  TARGET_DROPZONE_ID_FROM,
+  TARGET_DROPZONE_ID_TO,
+
+
 
   //endregion FOR CONSTRUCTOR_ARGS
 

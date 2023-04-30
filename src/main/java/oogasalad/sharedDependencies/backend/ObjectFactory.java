@@ -106,7 +106,7 @@ public class ObjectFactory {
 
       GameObject g = new GameObject(owner);
       //place g into a dropzone
-      String dropzoneId = constructorParams.get(ObjectParameter.DROPZONE_ID).toString();
+      String dropzoneId = constructorParams.get(ObjectParameter.DEST_DROPZONE_ID).toString();
       DropZone dz = (DropZone) ownableIdManager.getObject(dropzoneId);
       String randomStringId = UUID.randomUUID().toString(); //TODO will refactor with new dropzones
       dz.putObject(randomStringId, g);

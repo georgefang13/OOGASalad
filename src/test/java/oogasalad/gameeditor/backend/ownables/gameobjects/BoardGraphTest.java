@@ -57,6 +57,44 @@ public class BoardGraphTest {
   }
 
   @Test
+  void removeConnections() {
+    DropZone a = new DropZone();
+    DropZone b = new DropZone();
+    DropZone c = new DropZone();
+
+    a.addOutgoingConnection(b, "AB");
+    b.addOutgoingConnection(c, "BC");
+    c.addOutgoingConnection(a, "CA");
+
+    a.removeOutgoingConnection("AB");
+    b.removeOutgoingConnection("BC");
+    c.removeOutgoingConnection("CA");
+
+    assertEquals(0, getSortedEdges(a).size());
+    assertEquals(0, getSortedEdges(b).size());
+    assertEquals(0, getSortedEdges(c).size());
+  }
+
+  @Test
+  void removeConnectionByDropzone() {
+    DropZone a = new DropZone();
+    DropZone b = new DropZone();
+    DropZone c = new DropZone();
+
+    a.addOutgoingConnection(b, "AB");
+    b.addOutgoingConnection(c, "BC");
+    c.addOutgoingConnection(a, "CA");
+
+    a.removeOutgoingDzConnection(b);
+    b.removeOutgoingDzConnection(c);
+    c.removeOutgoingDzConnection(a);
+
+    assertEquals(0, getSortedEdges(a).size());
+    assertEquals(0, getSortedEdges(b).size());
+    assertEquals(0, getSortedEdges(c).size());
+  }
+
+  @Test
   void addNullAndRedundantConnections() {
     DropZone a = new DropZone();
     DropZone b = new DropZone();

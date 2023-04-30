@@ -139,7 +139,7 @@ public class ObjectFactoryTest {
     Map<ObjectParameter, Object> params = new HashMap<>();
     params.put(ObjectParameter.OWNABLE_TYPE, "GameObject");
     Map<Object, Object> constructorParams = new HashMap<>();
-    constructorParams.put(ObjectParameter.DROPZONE_ID, dzid);
+    constructorParams.put(ObjectParameter.DEST_DROPZONE_ID, dzid);
     params.put(ObjectParameter.CONSTRUCTOR_ARGS, constructorParams);
     // GameObject with nothing
     game.sendObject(type, params);
@@ -216,7 +216,7 @@ public class ObjectFactoryTest {
     params.put(ObjectParameter.OWNABLE_TYPE, "Variable");
     Map<Object, Object> constructorParams = new HashMap<>();
     constructorParams.put(ObjectParameter.VALUE, 64);
-    constructorParams.put(ObjectParameter.DROPZONE_ID, dzid);
+    constructorParams.put(ObjectParameter.DEST_DROPZONE_ID, dzid);
     params.put(ObjectParameter.CONSTRUCTOR_ARGS, constructorParams);
     params.put(ObjectParameter.ID, "myId");
     params.put(ObjectParameter.OWNER, "2");
@@ -254,7 +254,7 @@ public class ObjectFactoryTest {
     params.put(ObjectParameter.OWNABLE_TYPE, "Variable");
     Map<Object, Object> constructorParams = new HashMap<>();
     constructorParams.put(ObjectParameter.VALUE, 64);
-    constructorParams.put(ObjectParameter.DROPZONE_ID, dzid);
+    constructorParams.put(ObjectParameter.DEST_DROPZONE_ID, dzid);
     params.put(ObjectParameter.CONSTRUCTOR_ARGS, constructorParams);
     params.put(ObjectParameter.ID, "myId");
     params.put(ObjectParameter.OWNER, "1");
@@ -263,7 +263,7 @@ public class ObjectFactoryTest {
     Map<ObjectParameter, Object> updateParams = new HashMap<>();
     Map<Object, Object> updateConstructorParams = new HashMap<>();
     updateConstructorParams.put(ObjectParameter.VALUE, 30);
-    updateConstructorParams.put(ObjectParameter.DROPZONE_ID, dzid);
+    updateConstructorParams.put(ObjectParameter.DEST_DROPZONE_ID, dzid);
     updateParams.put(ObjectParameter.CONSTRUCTOR_ARGS, updateConstructorParams);
     updateParams.put(ObjectParameter.ID, "updatedId");
     updateParams.put(ObjectParameter.OWNER, "2");
@@ -375,7 +375,7 @@ public class ObjectFactoryTest {
     Map<ObjectParameter, Object> params = new HashMap<>();
     params.put(ObjectParameter.OWNABLE_TYPE, "GameObject");
     Map<Object, Object> constructorParams = new HashMap<>();
-    constructorParams.put(ObjectParameter.DROPZONE_ID, dzid);
+    constructorParams.put(ObjectParameter.DEST_DROPZONE_ID, dzid);
     params.put(ObjectParameter.CONSTRUCTOR_ARGS, constructorParams);
     // GameObject with nothing
     game.sendObject(type, params);
@@ -503,6 +503,46 @@ public class ObjectFactoryTest {
 
     ownable = game.getOwnable("myId2");
     assertEquals(players.get(2), ownable.getOwner());
+  }
+
+  @Test
+  public void testRemoveConnection() {
+    int x = 3;
+    addDropZone(x);
+
+    //check that the dropzones have been created
+    assertEquals(x , idManager.getSimpleIds().size());
+
+    DropZone dz = (DropZone) game.getOwnable("DropZone");
+    DropZone dz2 = (DropZone) game.getOwnable("DropZone2");
+    assertEquals(1, dz.getEdges().size());
+    Map<ObjectParameter, Object> params = new HashMap<>();
+    params.put(ObjectParameter.TARGET_DROPZONE_ID_FROM, idManager.getId(dz));
+    params.put(ObjectParameter.TARGET_DROPZONE_ID_TO, idManager.getId(dz2));
+    ObjectType type = ObjectType.OWNABLE;
+    game.deleteObject(type, params);
+    assertEquals(0, dz.getEdges().size());
+  }
+
+  @Test
+  public void testCreateNewConnection() {
+    int x = 3;
+    addDropZone(x);
+
+    //check that the dropzones have been created
+    assertEquals(x , idManager.getSimpleIds().size());
+
+    DropZone dz = (DropZone) game.getOwnable("DropZone");
+    DropZone dz2 = (DropZone) game.getOwnable("DropZone3");
+    assertEquals(1, dz.getEdges().size());
+    Map<ObjectParameter, Object> params = new HashMap<>();
+    params.put(ObjectParameter.TARGET_DROPZONE_ID_FROM, idManager.getId(dz));
+    params.put(ObjectParameter.TARGET_DROPZONE_ID_TO, idManager.getId(dz2));
+    params.put(ObjectParameter.LINK_NAME, "Jump");
+    ObjectType type = ObjectType.OWNABLE;
+    game.updateObjectProperties(idManager.getId(dz),ObjectType.OWNABLE, params);
+    System.out.println(dz.getEdges());
+    assertEquals(2, dz.getEdges().size());
   }
 }
 

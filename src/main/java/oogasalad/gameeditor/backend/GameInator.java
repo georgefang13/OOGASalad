@@ -409,6 +409,16 @@ public class GameInator {
    * @param params the parameters of the ownable
    */
   public void removeOwnable(Map<ObjectParameter, Object> params) throws IllegalArgumentException {
+    //if params contains LINK_NAME we need to handle link removal
+    if (params.containsKey(ObjectParameter.TARGET_DROPZONE_ID_FROM)) {
+      String fromDropzone = params.get(ObjectParameter.TARGET_DROPZONE_ID_FROM).toString();
+      String toDropzone = params.get(ObjectParameter.TARGET_DROPZONE_ID_TO).toString();
+      DropZone from = (DropZone) idManager.getObject(fromDropzone);
+      DropZone to = (DropZone) idManager.getObject(toDropzone);
+      from.removeOutgoingDzConnection(to);
+      idManagerFileUpdate();
+      return;
+    }
     String id = params.get(ObjectParameter.ID) != null ? params.get(ObjectParameter.ID).toString() : null;
     if (!idManager.isIdInUse(id)) {
       return;
@@ -497,6 +507,17 @@ public class GameInator {
    * @param params the parameters of the ownable
    */
   public void updateOwnable(String targetObject, Map<ObjectParameter, Object> params) throws IllegalArgumentException{
+    //if params contains LINK_NAME we need to handle link removal
+    if (params.containsKey(ObjectParameter.LINK_NAME)) {
+      String linkName = params.get(ObjectParameter.LINK_NAME).toString();
+      String fromDropzone = params.get(ObjectParameter.TARGET_DROPZONE_ID_FROM).toString();
+      String toDropzone = params.get(ObjectParameter.TARGET_DROPZONE_ID_TO).toString();
+      DropZone from = (DropZone) idManager.getObject(fromDropzone);
+      DropZone to = (DropZone) idManager.getObject(toDropzone);
+      from.addOutgoingConnection(to, linkName);
+      idManagerFileUpdate();
+      return;
+    }
     Ownable targetOwnable = idManager.getObject(targetObject);
     //change parent ownable
     String newParentOwnableId = params.get(ObjectParameter.PARENT_OWNABLE_ID) != null ? params.get(ObjectParameter.PARENT_OWNABLE_ID).toString() : null;
