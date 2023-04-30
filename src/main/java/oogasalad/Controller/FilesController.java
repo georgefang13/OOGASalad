@@ -10,6 +10,8 @@ import java.util.*;
 
 import oogasalad.frontend.components.Component;
 import oogasalad.frontend.components.ComponentsFactory;
+import oogasalad.frontend.components.dropzoneComponent.Dropzone;
+import oogasalad.frontend.components.gridObjectComponent.GridObject;
 import oogasalad.gameeditor.backend.GameInator;
 import oogasalad.sharedDependencies.backend.filemanagers.FileManager;
 
@@ -22,6 +24,7 @@ public class FilesController {
   private final String FILES_NAMES = "Controller/FilesConfig.properties";
 
   private List<Component> components = new ArrayList<>();
+  private List<Component> componentsLater = new ArrayList<>();
   private GameInator game;
   /**
    * Sets up the FileController
@@ -68,11 +71,24 @@ public class FilesController {
       currentManager = strat.getFileLocation(comp);
       String className = comp.getClass().getSimpleName();
       Map<String, String> map = strategy.paramsToMap(comp);
+      if(comp.getClass() == GridObject.class){
+        List<Dropzone> newComponents = ((GridObject) comp).getDropzones();
+        componentsLater.addAll(newComponents);
+      }else{
+        currentManager.addContent(map, "components", String.valueOf(count), "map");
+        currentManager.addContent(className, "components", String.valueOf(count), "className");
+        count++;
+      }
+    }
+
+    for (Component comp : componentsLater){
+      currentManager = strat.getFileLocation(comp);
+      String className = comp.getClass().getSimpleName();
+      Map<String, String> map = strategy.paramsToMap(comp);
       currentManager.addContent(map, "components", String.valueOf(count), "map");
       currentManager.addContent(className, "components", String.valueOf(count), "className");
       count++;
     }
-
     layout.saveToFile(gameFolder + "/frontend/layout.json");
     objects.saveToFile(gameFolder + "/frontend/objects.json");
   }
