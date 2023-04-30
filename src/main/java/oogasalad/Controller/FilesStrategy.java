@@ -1,7 +1,24 @@
 package oogasalad.Controller;
 
-public class FilesStrategy {
-  public FilesStrategy(){
+import oogasalad.frontend.components.Component;
+import oogasalad.frontend.components.dropzoneComponent.Dropzone;
+import oogasalad.sharedDependencies.backend.filemanagers.FileManager;
 
+public class FilesStrategy {
+
+  private FileManager layout;
+  private FileManager object;
+  public FilesStrategy(FileManager lay, FileManager obj){
+    layout = lay;
+    object = obj;
+  }
+
+  public FileManager getFileLocation(Component c){
+    if(c.getClass() == Dropzone.class){
+      return layout;
+    }
+    else{
+      return object;
+    }
   }
 }

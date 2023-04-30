@@ -53,19 +53,28 @@ public class FilesController {
    */
   public void saveToFile(){
     game = new GameInator(gameFolder);
+    File directory = new File(gameFolder);
+    boolean valid = directory.mkdir();
+    File frontend = new File(gameFolder + "\\frontend");
+    boolean valid1 = frontend.mkdir();
+
     ConvertingStrategy strategy = new ConvertingStrategy();
     FileManager layout = new FileManager();
     FileManager objects = new FileManager();
+    FilesStrategy strat = new FilesStrategy(layout, objects);
+    FileManager currentManager;
     int count = 0;
     for (Component comp : components){
+      currentManager = strat.getFileLocation(comp);
       String className = comp.getClass().getSimpleName();
       Map<String, String> map = strategy.paramsToMap(comp);
-      manager.addContent(map, "components", String.valueOf(count), "map");
-      manager.addContent(className, "components", String.valueOf(count), "className");
+      currentManager.addContent(map, "components", String.valueOf(count), "map");
+      currentManager.addContent(className, "components", String.valueOf(count), "className");
       count++;
     }
 
-    manager.saveToFile(gameFolder + "/frontend/components.json");
+    layout.saveToFile(gameFolder + "/frontend/layout.json");
+    objects.saveToFile(gameFolder + "/frontend/objects.json");
   }
 
   /**
