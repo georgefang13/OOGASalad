@@ -10,10 +10,10 @@ public class StateEditorPanel extends AbstractNodePanel {
   }
 
   @Override
-  protected List<Button> getNodeSelectionButtons() {
+  protected List<Button> getNodeSelectionButtons(String fileName) {
     return List.of(
         makeButton("State",
-            event -> makeNode(NODES_FOLDER + "DraggableNodes.StateNode")),
+            event -> makeNode(NODES_FOLDER + "StateNode")),
         makeButton("Save",
             event -> nodeController.saveAllContent(NODES_JSON_PATH))
     );

@@ -84,7 +84,7 @@ public class ComponentPanel extends VBox implements Panel {
     TitledPane t3 = new TitledPane("Displayable", displayable);
     gameComponents.getChildren().addAll(createComponentTemplate("gameObject"),
             createComponentTemplate("lineObject"), createComponentTemplate("textObject"),
-            createComponentTemplate("rectangleObject"));
+            createComponentTemplate("rectangleObject"), createComponentTemplate("gridObject"));
     Accordion accordion = new Accordion();
     accordion.getPanes().addAll(t1, t2, t3);
     return accordion;

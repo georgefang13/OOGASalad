@@ -21,9 +21,7 @@ import javafx.scene.layout.StackPane;
 import oogasalad.frontend.managers.PropertyManager;
 import oogasalad.frontend.managers.StandardPropertyManager;
 import oogasalad.frontend.nodeEditor.Nodes.AbstractNode;
-import oogasalad.frontend.nodeEditor.Nodes.DraggableNodes.DraggableAbstractNode;
-import oogasalad.frontend.nodeEditor.Nodes.DraggableNodes.FileBasedNode;
-import oogasalad.frontend.nodeEditor.Nodes.DraggableNodes.MainNode;
+import oogasalad.frontend.nodeEditor.Nodes.MainNode;
 
 public abstract class AbstractNodePanel extends Tab {
 
@@ -42,7 +40,7 @@ public abstract class AbstractNodePanel extends Tab {
     windowHeight = propertyManager.getNumeric("WindowHeight");
   }
 
-  protected abstract List<Button> getNodeSelectionButtons();
+  protected abstract List<Button> getNodeSelectionButtons(String fileName);
 
   public String getAllNodeContent() {
     String code = "";
@@ -66,22 +64,30 @@ public abstract class AbstractNodePanel extends Tab {
     try {
       Class<?> clazz = Class.forName(className);
       Constructor<?> constructor = clazz.getConstructor(NodeController.class);
-      DraggableAbstractNode node = (DraggableAbstractNode) constructor.newInstance(nodeController);
-      group.getChildren().add(node);
-      node.setBoundingBox(workspace.getBoundsInParent());
+      AbstractNode node = (AbstractNode) constructor.newInstance(nodeController);
+      putNode(node);
     } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException |
              IllegalAccessException | InvocationTargetException e) {
       e.printStackTrace();
     }
   }
 
+  protected void putNode(AbstractNode node) {
+    node.setBoundingBox((workspace.getBoundsInParent()));
+    group.getChildren().add(node);
+  }
+
   public ScrollPane makeNodeSelectionPane() {
-    List<Button> buttons = getNodeSelectionButtons();
+    List<Button> buttons = getNodeSelectionButtons("Commands.json");
+//    buttons.addAll(getNodeSelectionButtons("Metablocks.json"));
+    ArrayList<Button> temp = new ArrayList<>(buttons);
+    temp.addAll(getNodeSelectionButtons("Metablocks.json"));
+
     ScrollPane scrollPane = new ScrollPane();
     GridPane pane = new GridPane();
-    pane.setStyle("-fx-background-color: gray");
-    for (Button button : buttons) {
-      pane.add(button, 0, buttons.indexOf(button));
+    pane.setStyle("-fx-background-color: gray"); // @TODO: move to css
+    for (Button button : temp) {
+      pane.add(button, 0, temp.indexOf(button));
     }
     pane.setMinSize(windowWidth / 4, windowHeight);
     scrollPane.setContent(pane);
@@ -120,7 +126,7 @@ public abstract class AbstractNodePanel extends Tab {
     workspace.setFitWidth(5 * windowWidth);
     workspace.setFitHeight(5 * windowHeight);
 
-    MainNode node = new MainNode(nodeController);
+    MainNode node = new MainNode();
     group.getChildren().add(node);
     node.setBoundingBox(workspace.getBoundsInParent());
     return scrollPane;
