@@ -5,13 +5,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.paint.Color;
 import oogasalad.frontend.components.gameObjectComponent.GameRunner.DropZoneFE;
 import oogasalad.frontend.components.gameObjectComponent.GameRunner.GameRunnerObject;
 import oogasalad.frontend.components.gameObjectComponent.GameRunner.Piece;
 import oogasalad.frontend.components.gameObjectComponent.GameRunner.gameObjectVisuals.AbstractSelectableVisual;
-import oogasalad.frontend.components.gameObjectComponent.GameRunner.gameObjectVisuals.SelectableVisual;
-import oogasalad.frontend.managers.DisplayManager;
 import oogasalad.frontend.managers.GameObjectVisualSorter;
 import oogasalad.gamerunner.backend.Game;
 import oogasalad.sharedDependencies.backend.filemanagers.FileManager;
@@ -22,7 +19,6 @@ import java.util.*;
 public class GameRunnerController implements GameController {
     private final Map<String, GameRunnerObject> gameObjects = new HashMap<>();
     private final ObservableList<Node> gameObjectVisualsList = FXCollections.observableArrayList();
-    private final Map<String, String> pieceToDropZoneMap = new HashMap<>();
     private final HashSet<String> clickable = new HashSet<>();
     private Game game;
 
@@ -121,7 +117,6 @@ public class GameRunnerController implements GameController {
             Piece piece = new Piece(id,this, imagePath, hasSelectImage, param ,height, width);
             DropZoneFE dropZone = (DropZoneFE) gameObjects.get(dropZoneID);
             piece.moveToDropZoneXY(dropZone.getDropZoneCenter());
-            pieceToDropZoneMap.put(id, dropZoneID);
             addGameObject(id,piece);
 //        });
     }
@@ -134,9 +129,6 @@ public class GameRunnerController implements GameController {
             gameObjectVisualsList.remove(gameObjects.get(id).getNode());
             gameObjects.remove(id);
         });
-    }
-    private void removeGameVisual(Node gameVisual){
-
     }
 
     @Override
@@ -156,14 +148,12 @@ public class GameRunnerController implements GameController {
             DropZoneFE dropZone = (DropZoneFE) gameObjects.get(dropZoneID);
             Piece piece = (Piece) gameObjects.get(pieceID);
             piece.moveToDropZoneXY(dropZone.getDropZoneCenter());
-            pieceToDropZoneMap.put(pieceID, dropZoneID);
 //        });
     }
 
     @Override
     public void removePiece(String pieceID) {
 //        Platform.runLater(() -> {
-            pieceToDropZoneMap.remove(pieceID);
             removeGameObject(pieceID);
 //        });
     }
@@ -209,12 +199,6 @@ public class GameRunnerController implements GameController {
         Platform.runLater(() -> {
 //            gameCode.setText(code);
         });
-    }
-
-    @Override
-    public void setPieceHighlight(String id, String highlight) {
-        Piece piece = (Piece) gameObjects.get(id);
-        //piece.setHighlight(highlight);
     }
 
     @Override

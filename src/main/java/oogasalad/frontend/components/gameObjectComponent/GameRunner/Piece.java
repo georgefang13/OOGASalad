@@ -4,24 +4,16 @@ import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import oogasalad.Controller.GameController;
-import oogasalad.frontend.components.AbstractComponent;
 import oogasalad.frontend.components.gameObjectComponent.GameRunner.gameObjectVisuals.AbstractSelectableVisual;
 import oogasalad.frontend.components.gameObjectComponent.GameRunner.gameObjectVisuals.DropZoneVisual;
 import oogasalad.frontend.components.gameObjectComponent.GameRunner.gameObjectVisuals.PieceVisualSelectBorder;
 import oogasalad.frontend.components.gameObjectComponent.GameRunner.gameObjectVisuals.PieceVisualSelectImage;
 
 public class Piece extends GameRunnerObject{
-    private final String imagePath;
-    private final boolean hasSelectImage;
-    private final String param;
     private double lastTranslateX;
     private double lastTranslateY;
-    public Piece(String ID, GameController gameRunnerController, String imagePath, boolean hasSelectImage, String param, double height, double width) {
+    public Piece(String ID, GameController gameRunnerController, String imagePath, boolean hasSelectImage, String param, int height, int width) {
         super(ID, gameRunnerController);
-        setImage(imagePath); //try commenting this out
-        this.imagePath = imagePath;
-        this.hasSelectImage = hasSelectImage;
-        this.param = param;
         setHeight(height);
         setWidth(width);
         setSelectableVisual(new AbstractSelectableVisual.SelectableVisualParams(true,imagePath),new AbstractSelectableVisual.SelectableVisualParams(hasSelectImage,param));
@@ -29,15 +21,15 @@ public class Piece extends GameRunnerObject{
     @Override
     public void setSelectableVisual(AbstractSelectableVisual.SelectableVisualParams unselected, AbstractSelectableVisual.SelectableVisualParams selected) {
         if (selected.hasSelectImage()){
-            selectableVisual = new PieceVisualSelectImage(unselected.param(),selected.param(),(int) getHeight(),(int) getWidth(),ID);
+            selectableVisual = new PieceVisualSelectImage(unselected.param(),selected.param(),getHeight(),getWidth(),ID);
         } else {
-            selectableVisual = new PieceVisualSelectBorder(unselected.param(),selected.param(),(int) getHeight(),(int) getWidth(),ID);
+            selectableVisual = new PieceVisualSelectBorder(unselected.param(),selected.param(),getHeight(),getWidth(),ID);
         }
         followMouse();
         setDragSelection();
     }
     public void moveToDropZoneXY(Point2D dropZoneCenter){
-        Point2D pieceCenter = getNode().localToScene(getWidth()/2,getHeight()/2);
+        Point2D pieceCenter = getNode().localToScene(((double) getWidth())/2,((double) getHeight())/2);
         double shiftX = dropZoneCenter.getX() - pieceCenter.getX();
         double shiftY = dropZoneCenter.getY() - pieceCenter.getY();
         getNode().setTranslateX(getNode().getTranslateX() + shiftX);

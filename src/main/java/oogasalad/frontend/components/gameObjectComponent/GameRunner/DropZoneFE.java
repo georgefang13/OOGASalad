@@ -24,7 +24,7 @@ public class DropZoneFE extends GameRunnerObject{
     public void setSelectableVisual(AbstractSelectableVisual.SelectableVisualParams unselected, AbstractSelectableVisual.SelectableVisualParams selected) {
         Node unselectedImage = createImage(unselected.hasSelectImage(),unselected.param());
         Node selectedImage = createImage(selected.hasSelectImage(),selected.param());
-        selectableVisual = new DropZoneVisual(unselectedImage,selectedImage,(int) getWidth(),(int) getHeight(),x,y,ID);
+        selectableVisual = new DropZoneVisual(unselectedImage,selectedImage,getWidth(),getHeight(),x,y,ID);
     }
     private Node loadDefaultDropRectangle(String hexColor){
         Color fillColor = Color.web(hexColor);
@@ -33,13 +33,13 @@ public class DropZoneFE extends GameRunnerObject{
     private Node createImage(boolean isImage, String param){
         Node visual;
         if (isImage){
-            visual = DisplayManager.loadImage(param,(int) getHeight(),(int) getWidth());
+            visual = DisplayManager.loadImage(param,getHeight(),getWidth());
         } else {
             visual = loadDefaultDropRectangle(param);
         }
         return visual;
     }
     public Point2D getDropZoneCenter(){
-        return getNode().localToScene(getWidth()/2,getHeight()/2);
+        return getNode().localToScene(((double) getWidth())/2, ((double) getHeight())/2);
     }
 }

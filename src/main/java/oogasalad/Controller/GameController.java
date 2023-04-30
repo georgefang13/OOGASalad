@@ -2,7 +2,6 @@ package oogasalad.Controller;
 
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
-import oogasalad.frontend.components.gameObjectComponent.GameRunner.DropZoneFE;
 import oogasalad.frontend.components.gameObjectComponent.GameRunner.gameObjectVisuals.AbstractSelectableVisual;
 
 import java.util.List;
@@ -77,13 +76,6 @@ public interface GameController {
      * @param code the game code
      */
     void passGameId(String code);
-
-    /**
-     * Sets the highlight image or color of a piece
-     * @param id the id of the piece
-     * @param highlight the highlight image or color
-     */
-    void setPieceHighlight(String id, String highlight);
 
     void addTextObject(String id, String text, String DropZoneID);
 

@@ -271,11 +271,6 @@ public class SimpleGameView extends Application implements GameController {
     }
 
     @Override
-    public void setPieceHighlight(String id, String highlight) {
-
-    }
-
-    @Override
     public void addTextObject(String id, String text, String DropZoneID) {
 
     }

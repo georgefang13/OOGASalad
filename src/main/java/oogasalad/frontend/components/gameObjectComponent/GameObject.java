@@ -1,13 +1,12 @@
 package oogasalad.frontend.components.gameObjectComponent;
 
-import java.io.FileInputStream;
-import java.util.List;
-import java.util.Map;
 import javafx.scene.Node;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import oogasalad.frontend.components.AbstractComponent;
 import oogasalad.frontend.managers.DisplayManager;
+
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -15,10 +14,7 @@ import oogasalad.frontend.managers.DisplayManager;
  * "GameObject" on the backend
  */
 public class GameObject extends AbstractComponent implements GameObjectComponent{
-
-  private String name;
   private List<Node> children;
-
   private ImageView image;
   private double rotate;
 
@@ -26,7 +22,6 @@ public class GameObject extends AbstractComponent implements GameObjectComponent
     super(ID);
     children = null;
     instantiatePropFile("frontend.properties.Defaults.GameObject");
-    //followMouse();
   }
 
   public GameObject(String ID, Map<String, String> map){
@@ -34,8 +29,8 @@ public class GameObject extends AbstractComponent implements GameObjectComponent
     children = null;
     setDraggable(true);
     instantiatePropFile("frontend.properties.Defaults.GameObject");
-    //setImage(getDEFAULT_BUNDLE().getString(replaceWithFileLoadingByID()));
     setValuesfromMap(map);
+    rotate = 0;
     initialize();
     followMouse();
   }
@@ -48,7 +43,7 @@ public class GameObject extends AbstractComponent implements GameObjectComponent
 
   @Override
   public void setImage(String imagePath) {
-    image = (ImageView) DisplayManager.loadImage(imagePath,(int) getHeight(),(int) getWidth());
+    image = (ImageView) DisplayManager.loadImage(imagePath,getHeight(),getWidth());
   }
 
   @Override

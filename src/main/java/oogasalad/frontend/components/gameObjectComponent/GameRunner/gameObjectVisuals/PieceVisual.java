@@ -1,7 +1,6 @@
 package oogasalad.frontend.components.gameObjectComponent.GameRunner.gameObjectVisuals;
 
 import javafx.scene.Node;
-import javafx.scene.shape.Rectangle;
 
 public abstract class PieceVisual extends AbstractSelectableVisual {
     protected Node pieceImage;
@@ -9,7 +8,6 @@ public abstract class PieceVisual extends AbstractSelectableVisual {
         super(id,width,height);
         initHBox();
         updatePieceImage(pieceImgPath);
-        new Rectangle(9,9);
     }
     private void initHBox() {
         this.setPrefHeight(height);
