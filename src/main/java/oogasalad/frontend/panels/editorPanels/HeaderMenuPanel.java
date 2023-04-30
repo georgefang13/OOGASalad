@@ -4,10 +4,14 @@ import java.util.ResourceBundle;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import oogasalad.frontend.factories.ButtonFactory;
+import oogasalad.frontend.modals.ModalController;
+import oogasalad.frontend.modals.subInputModals.CreateNewModal;
 import oogasalad.frontend.panels.Panel;
 import oogasalad.frontend.panels.PanelController;
 import oogasalad.frontend.windows.GameEditorWindow.WindowScenes;
+import org.checkerframework.checker.units.qual.C;
 
 public class HeaderMenuPanel extends HBox implements Panel {
 
@@ -22,9 +26,11 @@ public class HeaderMenuPanel extends HBox implements Panel {
   private static final String SELECTED_HEADER_MENU_BUTTON_ID = "SelectedHeaderMenuButtonID";
   private static final String logic = "logic";
   private static final String editor = "visual";
-  ButtonFactory buttonFactory = new ButtonFactory();
-  PanelController panelController;
+  private ButtonFactory buttonFactory = new ButtonFactory();
+  private PanelController panelController;
+  private ModalController modalController;
   private static String sceneID;
+  private Pane root;
 
   /**
    * Constructor for HeaderMenu
@@ -33,6 +39,7 @@ public class HeaderMenuPanel extends HBox implements Panel {
     super();
     this.panelController = panelController;
     this.sceneID = sceneID;
+    this.modalController = new ModalController(this);
     this.makePanel();
   }
 
@@ -57,6 +64,10 @@ public class HeaderMenuPanel extends HBox implements Panel {
     });
     compileButton.setOnAction(e -> {
       panelController.compile();
+      CreateNewModal creator = new CreateNewModal("save");
+      modalController.setRoot(root);
+      creator.attach(modalController);
+      creator.showAndWait();
     });
     this.getChildren().addAll(visualButton, logicButton, compileButton);
     return this;
@@ -80,6 +91,10 @@ public class HeaderMenuPanel extends HBox implements Panel {
 
   public Node asNode() {
     return this;
+  }
+
+  public void setReferenceRoot(Pane rt) {
+    root = rt;
   }
 
   @Override
