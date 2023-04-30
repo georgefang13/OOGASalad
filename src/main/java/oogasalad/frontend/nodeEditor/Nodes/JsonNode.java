@@ -5,6 +5,7 @@ import java.util.List;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
+import oogasalad.frontend.nodeEditor.Command;
 import oogasalad.frontend.nodeEditor.Config.NodeData;
 
 public class JsonNode extends AbstractNode {
@@ -24,6 +25,17 @@ public class JsonNode extends AbstractNode {
     this.inputs = inputs;
     setContent();
     this.getStyleClass().add(propertyManager.getText("JsonNode.StyleClass"));
+  }
+
+  public JsonNode(Command command){
+    super();
+    this.name = command.name();
+    this.innerBlocks = command.innerBlocks();
+    this.parseStr = command.parseStr();
+    this.inputs = command.inputs();
+    setContent();
+    this.getStyleClass().add(propertyManager.getText("JsonNode.StyleClass"));
+
   }
 
   @Override
@@ -60,6 +72,12 @@ public class JsonNode extends AbstractNode {
     this.nodeData = new NodeData(this.name, this.getClass().getSimpleName(), getInputValues());
     return this.nodeData;
   };
+
+  public void setInputFields(List<String> values){
+    for(int i = 0; i < inputFields.size(); i++){
+      inputFields.get(i).setText(values.get(i));
+    }
+  }
 
 
   private List<String> getInputValues(){

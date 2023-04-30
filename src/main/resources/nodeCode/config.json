@@ -1,10 +1,10 @@
 {
-  "MainNode": {
+  "0": {
     "name": "MainNode",
     "type": "Control",
     "inputs": []
   },
-  "Sum": {
+  "1": {
     "name": "Sum",
     "type": "JsonNode",
     "inputs": [
@@ -12,7 +12,7 @@
       "2"
     ]
   },
-  "Sum" : {
+  "2" : {
     "name": "Sum",
     "type": "JsonNode",
     "inputs": [
