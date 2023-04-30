@@ -26,14 +26,9 @@ public class ModalController {
   public ModalController(ComponentPanel componentPanel) {
     parentPanel = componentPanel;
     factory = new ComponentsFactory();
-<<<<<<< HEAD
     templateMap = new HashMap<>();
     activeComponents = new HashMap<>();
-=======
-    componentMap = new HashMap<>();
-    allComponents = new HashMap<>();
     dropZoneController = new DropZoneController();
->>>>>>> a4a433687b447f3eeaae2b63f81b44dc73a6a5cc
   }
 
   public void setFileController(FilesController newController){
@@ -41,33 +36,18 @@ public class ModalController {
   }
   public void createObjectTemplate(Map<String, String> map, String objectType) {
     String name = map.get("name");
-<<<<<<< HEAD
+    dropZoneController.setRoot(root);
     templateMap.put(name, map);
     parentPanel.addComponentTemplate(name, objectType);
-=======
-    componentMap.put(name, map);
-    parentPanel.addComponentTemplate(name, objectType);
-    dropZoneController.setRoot(root);
-    if(allComponents.containsKey(name)) {
-      editObjectInstance(name, map, objectType);
-    } else {
-      componentMap.put(name, map);
-      parentPanel.addComponentTemplate(name, objectType);
-    }
->>>>>>> a4a433687b447f3eeaae2b63f81b44dc73a6a5cc
   }
 
   public void createObjectInstance(String name, String objectType){
     objectType = objectType.substring(0, 1).toUpperCase() + objectType.substring(1);
     Map<String, String> map = templateMap.get(name);
     Component c = factory.create(objectType, map);
-<<<<<<< HEAD
     activeComponents.put(name, c);
-=======
     files.addComponent(c);
-    allComponents.put(name, c);
     dropZoneController.addDropZone(c);
->>>>>>> a4a433687b447f3eeaae2b63f81b44dc73a6a5cc
     GraphicHandler handler = new GraphicHandler();
     handler.moveToCenter(c);
     root.getChildren().add(c.getNode());
