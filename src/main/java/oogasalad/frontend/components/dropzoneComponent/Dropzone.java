@@ -43,6 +43,7 @@ public class Dropzone extends AbstractComponent {
     initializeValues();
     setValuesfromMap(params);
     setSquareParams();
+    setDraggable(true);
   }
 
   private void initializeValues(){
