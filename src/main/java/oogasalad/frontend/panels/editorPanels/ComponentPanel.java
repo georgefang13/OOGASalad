@@ -1,5 +1,6 @@
 package oogasalad.frontend.panels.editorPanels;
 
+import java.awt.*;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 import javafx.scene.Node;
@@ -8,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TitledPane;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import oogasalad.frontend.modals.ModalController;
@@ -116,19 +118,20 @@ public class ComponentPanel extends VBox implements Panel {
   }
   private void createNewComponentInstance(String name, String objectType) {
     mController.createObjectInstance(name, objectType);
-    Button b = new Button(name);
-    gameComponentInstances.getChildren().add(b);
+    HBox buttonLine = new HBox();
+    Button b1 = new Button(name);
+    Button b2 = new Button("delete");
+    Button b3 = new Button("edit");
+    buttonLine.getChildren().addAll(b1,b2,b3);
+    gameComponentInstances.getChildren().add(buttonLine);
 
-//    b.setOnKeyPressed(event -> {
-//      if (event.getCode() == KeyCode.DELETE) {
-//        mController.deleteObjectInstance(name);
-//        gameComponentInstances.getChildren().remove(b);
-//      }
-//      });
+    b3.setOnMouseClicked(event -> {
+      createNewComponentTemplate(objectType);
+    });
 
-    b.setOnAction(event -> {
+    b2.setOnMouseClicked(event -> {
         mController.deleteObjectInstance(name);
-        gameComponentInstances.getChildren().remove(b);
+        gameComponentInstances.getChildren().remove(buttonLine);
     });
   }
 

@@ -15,6 +15,7 @@ import javafx.scene.layout.HBox;
 import oogasalad.frontend.modals.InputModal;
 import oogasalad.frontend.modals.fields.ColorPickerComponent;
 import oogasalad.frontend.modals.fields.ImagePickerComponent;
+import oogasalad.frontend.modals.fields.IntegerPickerComponent;
 import oogasalad.frontend.modals.fields.TextFieldComponent;
 
 public class CreateNewModal extends InputModal {
@@ -25,6 +26,7 @@ public class CreateNewModal extends InputModal {
   private List<ImagePickerComponent> ImagePickers;
   private List<TextFieldComponent> textFields;
   private List<ColorPickerComponent> colorPickers;
+  private List<IntegerPickerComponent> integerPickers;
   private String myTitle;
 
   /**
@@ -104,6 +106,9 @@ public class CreateNewModal extends InputModal {
       if(field.getClass() == ColorPickerComponent.class){
         colorPickers.add((ColorPickerComponent) field);
       }
+      if(field.getClass() == IntegerPickerComponent.class){
+        integerPickers.add((IntegerPickerComponent) field);
+      }
 
       // Add the field to the grid
       grid.add(fieldHBox, 0, rowIndex);
@@ -120,6 +125,7 @@ public class CreateNewModal extends InputModal {
     ImagePickers = new ArrayList<>();
     textFields = new ArrayList<>();
     colorPickers = new ArrayList<>();
+    integerPickers = new ArrayList<>();
   }
   // TODO: styling use the last .NAME in the properties file to get the styling id
 
@@ -138,6 +144,9 @@ public class CreateNewModal extends InputModal {
     }
     for (ColorPickerComponent colorComponent : colorPickers){
       map.put(colorComponent.getLabelText(), colorComponent.getValue());
+    }
+    for (IntegerPickerComponent integerComponent : integerPickers){
+      map.put(integerComponent.getLabelText(), Integer.toString(integerComponent.getValue()));
     }
     //TODO remove, just for testing purposes
     System.out.println(map);
