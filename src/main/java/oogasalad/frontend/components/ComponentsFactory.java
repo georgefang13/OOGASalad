@@ -80,4 +80,9 @@ public class ComponentsFactory {
     }
     return component;
   }
+
+  public int getID() {
+    return ID;
+  }
+
 }

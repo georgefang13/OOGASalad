@@ -12,9 +12,11 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import oogasalad.Controller.FilesController;
 import oogasalad.frontend.modals.ModalController;
 import oogasalad.frontend.modals.subInputModals.CreateNewModal;
 import oogasalad.frontend.panels.Panel;
+import oogasalad.sharedDependencies.backend.filemanagers.FileManager;
 
 public class ComponentPanel extends VBox implements Panel {
 
@@ -30,9 +32,10 @@ public class ComponentPanel extends VBox implements Panel {
   private VBox gameComponents;
   private VBox players;
   private VBox gameComponentInstances;
-
+  private FilesController files;
   private double xOffset;
   private double yOffset;
+  private int count;
 
   /**
    * Constructor for HeaderMenu
@@ -40,12 +43,12 @@ public class ComponentPanel extends VBox implements Panel {
   public ComponentPanel() {
     super();
     mController = new ModalController(this);
-
     //TODO is there a better way?
     gameComponents = new VBox();
     players = new VBox();
     gameComponentInstances = new VBox();
     this.makePanel();
+    count = 0;
   }
 
   /**
@@ -60,6 +63,10 @@ public class ComponentPanel extends VBox implements Panel {
     return this;
   }
 
+  public void setFiles(FilesController file){
+    files = file;
+    mController.setFileController(files);
+  }
   public VBox createSingleAccordionVBox() {
     VBox componentPanel = new VBox();
     componentPanel.getChildren()
@@ -84,7 +91,7 @@ public class ComponentPanel extends VBox implements Panel {
     TitledPane t2 = new TitledPane("Players", players);
     gameComponents.getChildren().addAll(createComponentTemplate("gameObject"),
             createComponentTemplate("lineObject"), createComponentTemplate("textObject"),
-            createComponentTemplate("rectangleObject"), createComponentTemplate("gridObject"));
+            createComponentTemplate("rectangleObject"), createComponentTemplate("gridObject"), createComponentTemplate("dropzone"));
     Accordion accordion = new Accordion();
     accordion.getPanes().addAll(t1, t2);
     return accordion;
@@ -92,7 +99,7 @@ public class ComponentPanel extends VBox implements Panel {
 
   private Button createComponentTemplate(String objectType) {
     Button b = new Button("Make a " + objectType + " Template");
-    b.setOnAction(e -> createNewComponentTemplate(objectType));
+    b.setOnAction(e -> openModal(objectType, false));
     return b;
   }
 
@@ -126,7 +133,7 @@ public class ComponentPanel extends VBox implements Panel {
     gameComponentInstances.getChildren().add(buttonLine);
 
     b3.setOnMouseClicked(event -> {
-      createNewComponentTemplate(objectType);
+      openModal(objectType, true);
     });
 
     b2.setOnMouseClicked(event -> {
@@ -135,8 +142,8 @@ public class ComponentPanel extends VBox implements Panel {
     });
   }
 
-  private void createNewComponentTemplate(String title){
-    CreateNewModal modal = new CreateNewModal(title);
+  private void openModal(String title, boolean editMode){
+    CreateNewModal modal = new CreateNewModal(title, editMode);
     mController.setRoot(root);
     modal.attach(mController);
     modal.showAndWait();

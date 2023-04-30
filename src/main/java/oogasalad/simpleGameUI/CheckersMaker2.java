@@ -1,5 +1,6 @@
 package oogasalad.simpleGameUI;
 
+import javafx.scene.paint.Color;
 import oogasalad.sharedDependencies.backend.id.IdManager;
 import oogasalad.gameeditor.backend.ownables.gameobjects.BoardCreator;
 import oogasalad.sharedDependencies.backend.filemanagers.FileManager;
@@ -30,8 +31,12 @@ public class CheckersMaker2 {
 
         List<DropZone> nodes = BoardCreator.createGrid(8, 8);
         nodes.forEach(manager::addObject);
+
+        int counter = 0;
+
         // add board DropZones
         for (int i = 0; i < nodes.size(); i++){
+            if (i % 8 == 0) counter++;
             DropZone node = nodes.get(i);
             node.addClass("board");
             int x = i % 8;
@@ -43,7 +48,7 @@ public class CheckersMaker2 {
             fefm.addContent(String.valueOf(50 + y*50), id, "y");
             fefm.addContent(String.valueOf(50), id, "width");
             fefm.addContent(String.valueOf(50), id, "height");
-            if (i % 2 == 0) {
+            if (counter % 2 == 0) {
                 fefm.addContent(true, id, "unselected", "hasImage");
                 fefm.addContent("dark.png", id, "unselected", "param");
                 fefm.addContent(true, id, "selected", "hasImage");
@@ -56,6 +61,7 @@ public class CheckersMaker2 {
                 fefm.addContent("lightselected.png", id, "selected", "param");
             }
 
+
             for (Map.Entry<String, DropZone> dzEdge : node.getEdges().entrySet()) {
                 String nodeId = manager.getId(dzEdge.getValue());
                 fm.addContent(nodeId, id, "connections", dzEdge.getKey());
@@ -64,6 +70,8 @@ public class CheckersMaker2 {
             fm.addContent("board", id, "classes");
             if (y == 0) fm.addContent("endzone", id, "classes");
             if (y == 7) fm.addContent("endzone", id, "classes");
+
+            counter++;
         }
 
         fm.saveToFile(folder + "layout.json");
@@ -86,9 +94,13 @@ public class CheckersMaker2 {
                 String location = "DropZone";
                 if (num != 1) location += num;
 
-                fefm.addContent("red.png", id, "image");
+                fefm.addContent(true, id, "selected", "hasSelectedImage");
+                fefm.addContent("redselected.png", id, "selected", "param");
+                fefm.addContent("red.png", id, "defaultImage");
                 fm.addContent("0", id, "owner");
-                fefm.addContent("30", id, "size");
+                fefm.addContent("30", id, "height");
+                fefm.addContent("30", id, "width");
+
 
                 fm.addContent(location, id, "location");
                 fefm.addContent(location, id, "location");
@@ -111,9 +123,12 @@ public class CheckersMaker2 {
                 String location = "DropZone";
                 if (num != 1) location += num;
 
-                fefm.addContent("black.png", id, "image");
+                fefm.addContent(true, id, "selected", "hasSelectedImage");
+                fefm.addContent("blackselected.png", id, "selected", "param");
+                fefm.addContent("black.png", id, "defaultImage");
                 fm.addContent("1", id, "owner");
-                fefm.addContent("30", id, "size");
+                fefm.addContent("30", id, "height");
+                fefm.addContent("30", id, "width");
 
                 fm.addContent(location, id, "location");
                 fefm.addContent(location, id, "location");

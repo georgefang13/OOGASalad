@@ -1,25 +1,27 @@
 package oogasalad.frontend.components;
 
+import java.util.ResourceBundle;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.image.ImageView;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
-import javafx.scene.shape.Rectangle;
 import oogasalad.frontend.components.dropzoneComponent.Dropzone;
 
 /**
  * @author Han
  */
-public class Arrow {
+public class Arrow implements Subscriber {
 
   private Dropzone start;
   private Dropzone end;
   private boolean visible;
   private Polygon triangle;
+  private ImageView head;
   private Line line;
   private Group arrow;
 
-  private static final double HEAD_SIZE = 10;
+  private static final ResourceBundle BUNDLE = ResourceBundle.getBundle("\\frontend\\properties\\Defaults\\Arrow");
 
   /**
    * Constructor for arrow that represents connections between dropzones
@@ -30,15 +32,16 @@ public class Arrow {
     start = s;
     end = e;
     visible = true;
-    triangle = new Polygon();
+    arrow = new Group();
     updateArrow();
     start.addEdges(end);
-    arrow = new Group(triangle, line);
+    start.addSubscriber(this);
+    end.addSubscriber(this);
   }
 
   /**
    * Controls visibility of Arrow
-   * @param vis
+   * @param vis is visible
    */
   public void setVisible(boolean vis){
     visible = vis;
@@ -55,26 +58,27 @@ public class Arrow {
     double startY = startSquare.getTranslateY() + start.getHeight()/2;
     double endX = endSquare.getTranslateX() + end.getWidth()/2;
     double endY = endSquare.getTranslateY() + end.getHeight()/2;
+    System.out.println(startX);
+    System.out.println(startY);
+    arrow.getChildren().clear();
     line = new Line(startX, startY, endX, endY);
+    arrow.getChildren().add(line);
+    line.setVisible(visible);
+    createArrowHead(startX, startY, endX, endY);
+  }
 
-    double length = Math.sqrt(Math.pow(endX - startX, 2) + Math.pow(endY - startY, 2));
-    System.out.println(length);
+  private void createArrowHead(double startX, double startY, double endX, double endY) {
     double angle = Math.atan2(endY - startY, endX - startX);
-    double headLength = Math.min(HEAD_SIZE, length / 3);
-    double headWidth = Math.min(HEAD_SIZE, headLength / 2);
-
-    triangle.getPoints().clear();
-    double xPointCalc = endX - headLength * Math.cos(angle);
-    double yPointCalc = endY - headLength * Math.sin(angle);
-    triangle.getPoints().addAll(
-        xPointCalc,
-        yPointCalc,
-        endX - headLength * Math.cos(angle) - headWidth * Math.sin(angle),
-        yPointCalc + headWidth * Math.cos(angle),
-        xPointCalc + headWidth * Math.sin(angle),
-        endY - headLength * Math.sin(angle) - headWidth * Math.cos(angle)
-    );
-    triangle.setRotate(Math.toDegrees(angle));
+    head = new ImageView(BUNDLE.getString("Head"));
+    head.setVisible(visible);
+    double width = Integer.parseInt(BUNDLE.getString("Width"));
+    double height = Integer.parseInt(BUNDLE.getString("Height"));
+    head.setFitWidth(width);
+    head.setFitHeight(height);
+    head.setTranslateX(endX - width/2);
+    head.setTranslateY(endY - height/2);
+    head.setRotate(Math.toDegrees(angle));
+    arrow.getChildren().add(head);
   }
 
   /**
@@ -86,4 +90,11 @@ public class Arrow {
   }
 
 
+  /**
+   * updates arrow
+   */
+  @Override
+  public void update() {
+    updateArrow();
+  }
 }
