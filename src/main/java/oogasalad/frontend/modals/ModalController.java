@@ -43,6 +43,10 @@ public class ModalController {
     root.getChildren().add(c.getNode());
   }
 
+  public void editObjectInstance(String name, String objectType) {
+
+  }
+
   public void deleteObjectInstance(String name) {
     root.getChildren().remove(allComponents.get(name).getNode());
   }
