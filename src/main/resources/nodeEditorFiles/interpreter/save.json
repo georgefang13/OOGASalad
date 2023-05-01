@@ -1,0 +1,11 @@
+{
+  "states": {
+    "asdfasdf": {
+      "on leave": ""
+    }
+  },
+  "goal": [
+    "dotimes [ :  ]  [  ]  break",
+    "ifelse sdf  [  ]   [  ]  continue"
+  ]
+}

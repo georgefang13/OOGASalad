@@ -3,15 +3,11 @@ package oogasalad.frontend.nodeEditor;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import javafx.application.Platform;
-import javafx.scene.Group;
 import java.util.Set;
-
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.Tooltip;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;

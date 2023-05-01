@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import oogasalad.frontend.nodeEditor.CodeEditorTab;
 import oogasalad.frontend.nodeEditor.configuration.NodeData;
 import oogasalad.frontend.nodeEditor.NodeController;
 
@@ -80,7 +81,7 @@ public class StateNode extends AbstractNode implements ControlNode {
    * @return void
    */
   private void onInitialize(ActionEvent event) {
-    nodeController.openAndSwitchToTab(stateName.getText(), "on enter");
+    nodeController.openAndSwitchToTab(new CodeEditorTab(nodeController, stateName.getText(), "on enter"));
   }
 
   /**
@@ -90,7 +91,7 @@ public class StateNode extends AbstractNode implements ControlNode {
    * @return void
    */
   private void onLeave(ActionEvent event) {
-    nodeController.openAndSwitchToTab(stateName.getText(), "on leave");
+    nodeController.openAndSwitchToTab(new CodeEditorTab(nodeController, stateName.getText(), "on leave"));
   }
 
   /**
@@ -100,7 +101,7 @@ public class StateNode extends AbstractNode implements ControlNode {
    * @return void
    */
   private void onSetValue(ActionEvent event) {
-    nodeController.openAndSwitchToTab(stateName.getText(), "select");
+    nodeController.openAndSwitchToTab(new CodeEditorTab(nodeController, stateName.getText(), "select"));
   }
 
   /**
@@ -110,6 +111,6 @@ public class StateNode extends AbstractNode implements ControlNode {
    * @return void
    */
   private void onNext(ActionEvent event) {
-    nodeController.openAndSwitchToTab(stateName.getText(), "next");
+    nodeController.openAndSwitchToTab(new CodeEditorTab(nodeController, stateName.getText(), "next"));
   }
 }

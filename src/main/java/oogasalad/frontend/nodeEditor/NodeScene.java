@@ -1,11 +1,12 @@
 package oogasalad.frontend.nodeEditor;
 
-import static oogasalad.frontend.nodeEditor.AbstractNodeEditorTab.USER_CODE_FILES_PATH;
+import static oogasalad.frontend.nodeEditor.AbstractNodeEditorTab.INTERPRETER_FILES_PATH;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.rpc.Code;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -26,7 +27,6 @@ public class NodeScene extends AbstractScene {
   private TabPane tabs;
   Map<Tab, CodeEditorTab> tabMap;
   private NodeController nodeController;
-  public static final String CONFIG_JSON_PATH = "src/main/resources/nodeCode/config.json";
 
 
   public NodeScene(NodeController nodeController) {
@@ -65,19 +65,16 @@ public class NodeScene extends AbstractScene {
   /**
    * Opens a new tab with the given state and action
    *
-   * @param state
-   * @param action
    * @return void
    */
-  public void openAndSwitchToTab(String state, String action) {
-    CodeEditorTab panel = new CodeEditorTab(nodeController, state, action);
+  public void openAndSwitchToTab(CodeEditorTab panel) {
     for (Tab tab : tabMap.keySet()) {
       if (tabMap.get(tab).equals(panel)) {
         tabs.getSelectionModel().select(tab);
         return;
       }
     }
-    Tab newTab = makeTab(state + ":" + action, true, panel);
+    Tab newTab = makeTab(panel.getState() + ":" + panel.getAction(), true, panel);
     tabs.getTabs().add(newTab);
     tabMap.put(newTab, panel);
   }
@@ -92,28 +89,31 @@ public class NodeScene extends AbstractScene {
     Gson gson = new GsonBuilder().setPrettyPrinting().create();
     JsonObject fullObject = new JsonObject();
     JsonObject stateObject = new JsonObject();
-    JsonObject goalObject = new JsonObject();
+    JsonArray goalArray = new JsonArray();
     for (Entry<Tab, CodeEditorTab> entry : tabMap.entrySet()) {
-      if (entry.getValue() instanceof GoalEditorTab) {
-        //goalObject.addJs();
-      }
-      String state = entry.getValue().getState();
-      String action = entry.getValue().getAction();
-      String content = entry.getValue().getMainNodeParseString();
-      List<AbstractNode> listOfNodes = entry.getValue().getMainNodeChildren();
-      makeConfigFile(listOfNodes);
-
-      if (!stateObject.has(state)) {
-        JsonObject stateJson = new JsonObject();
-        stateJson.addProperty(action, content);
-        stateObject.add(state, stateJson);
+      CodeEditorTab tab = entry.getValue();
+      if (tab instanceof GoalEditorTab) {
+        goalArray.add(tab.getMainNodeParseString());
       } else {
-        JsonObject stateJson = stateObject.get(state).getAsJsonObject();
-        stateJson.addProperty(action, content);
+        String state = entry.getValue().getState();
+        String action = entry.getValue().getAction();
+        String content = entry.getValue().getMainNodeParseString();
+        List<AbstractNode> listOfNodes = entry.getValue().getMainNodeChildren();
+        makeConfigFile(listOfNodes);
+        if (!stateObject.has(state)) {
+          JsonObject stateJson = new JsonObject();
+          stateJson.addProperty(action, content);
+          stateObject.add(state, stateJson);
+        } else {
+          JsonObject stateJson = stateObject.get(state).getAsJsonObject();
+          stateJson.addProperty(action, content);
+        }
       }
     }
-    try (FileWriter fileWriter = new FileWriter(USER_CODE_FILES_PATH)) {
-      gson.toJson(stateObject, fileWriter);
+    fullObject.add("states", stateObject);
+    fullObject.add("goal", goalArray);
+    try (FileWriter fileWriter = new FileWriter(INTERPRETER_FILES_PATH + "save.json")) {
+      gson.toJson(fullObject, fileWriter);
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -146,12 +146,11 @@ public class NodeScene extends AbstractScene {
       stateObject.add(i.toString(), stateJson);
       i++;
     }
-
-    try (FileWriter fileWriter = new FileWriter(CONFIG_JSON_PATH)) {
-      gson.toJson(stateObject, fileWriter);
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+//    try (FileWriter fileWriter = new FileWriter(CONFIG_JSON_PATH)) {
+//      gson.toJson(stateObject, fileWriter);
+//    } catch (IOException e) {
+//      e.printStackTrace();
+//    }
   }
 
   /**

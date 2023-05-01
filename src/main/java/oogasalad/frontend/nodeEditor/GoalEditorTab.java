@@ -4,9 +4,10 @@ import javafx.scene.layout.HBox;
 
 public class GoalEditorTab extends CodeEditorTab {
 
-  public GoalEditorTab(NodeController nodeController) {
+  public GoalEditorTab(NodeController nodeController, String name) {
     super(nodeController);
-    setContent(new HBox(makeNodeButtonPanel(), makeWorkspacePanel()));
+    state = "goals";
+    action = name;
   }
 
 

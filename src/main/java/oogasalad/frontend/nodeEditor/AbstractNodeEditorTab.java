@@ -181,7 +181,7 @@ public abstract class AbstractNodeEditorTab extends Tab {
     MenuItem saveMenuItem = new MenuItem("Save");
     MenuItem loadMenuItem = new MenuItem("Load");
     saveMenuItem.setOnAction(event -> {
-      //nodeController.saveInterpreterFiles();
+      nodeController.saveInterpreterFiles("");
       //nodeController.saveUserCodeFiles();
     });
     loadMenuItem.setOnAction(event -> {

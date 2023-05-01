@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import oogasalad.frontend.nodeEditor.GoalEditorTab;
 import oogasalad.frontend.nodeEditor.configuration.NodeData;
 import oogasalad.frontend.nodeEditor.NodeController;
 
@@ -14,7 +15,6 @@ public class GoalNode extends AbstractNode implements ControlNode {
   private TextField goalName;
   private GridPane buttonGrid;
   private NodeController nodeController;
-
 
 
   public GoalNode(NodeController nodeController) {
@@ -72,7 +72,8 @@ public class GoalNode extends AbstractNode implements ControlNode {
    * @return void
    */
   private void goal(ActionEvent event) {
-    nodeController.openAndSwitchToTab("Goal", goalName.getText());
+    GoalEditorTab goalTab = new GoalEditorTab(nodeController, goalName.getText());
+    nodeController.openAndSwitchToTab(goalTab);
   }
 
 
