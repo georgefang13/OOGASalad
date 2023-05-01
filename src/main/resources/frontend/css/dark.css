@@ -194,6 +194,9 @@
 }
 
 /* LibraryGridPanel */
+.library-scroll-pane {
+  -fx-background-color: #24252e;
+}
 .library-grid-pane {
   -fx-background-color: #24252e;
   -fx-hgap: 20;
