@@ -267,7 +267,7 @@ public class GameRunnerController implements GameController {
 //            sceneController.getWindowController().closeWindow(sceneController.getWindow());
         });
         alertModal.showAlert();
-
+        endGame.setValue(true);
     }
 
     private void clearClickables(){
