@@ -1,0 +1,380 @@
+{
+  "pieceR0": {
+    "owner": "0",
+    "location": "RedDropZone",
+    "classes": [
+      "Red",
+      "piece"
+    ],
+    "owns": []
+  },
+  "pieceR1": {
+    "owner": "0",
+    "location": "RedDropZone",
+    "classes": [
+      "Red",
+      "piece"
+    ],
+    "owns": []
+  },
+  "pieceR2": {
+    "owner": "0",
+    "location": "RedDropZone",
+    "classes": [
+      "Red",
+      "piece"
+    ],
+    "owns": []
+  },
+  "pieceR3": {
+    "owner": "0",
+    "location": "RedDropZone",
+    "classes": [
+      "Red",
+      "piece"
+    ],
+    "owns": []
+  },
+  "pieceR4": {
+    "owner": "0",
+    "location": "RedDropZone",
+    "classes": [
+      "Red",
+      "piece"
+    ],
+    "owns": []
+  },
+  "pieceR5": {
+    "owner": "0",
+    "location": "RedDropZone",
+    "classes": [
+      "Red",
+      "piece"
+    ],
+    "owns": []
+  },
+  "pieceR6": {
+    "owner": "0",
+    "location": "RedDropZone",
+    "classes": [
+      "Red",
+      "piece"
+    ],
+    "owns": []
+  },
+  "pieceR7": {
+    "owner": "0",
+    "location": "RedDropZone",
+    "classes": [
+      "Red",
+      "piece"
+    ],
+    "owns": []
+  },
+  "pieceR8": {
+    "owner": "0",
+    "location": "RedDropZone",
+    "classes": [
+      "Red",
+      "piece"
+    ],
+    "owns": []
+  },
+  "pieceR9": {
+    "owner": "0",
+    "location": "RedDropZone",
+    "classes": [
+      "Red",
+      "piece"
+    ],
+    "owns": []
+  },
+  "pieceR10": {
+    "owner": "0",
+    "location": "RedDropZone",
+    "classes": [
+      "Red",
+      "piece"
+    ],
+    "owns": []
+  },
+  "pieceR11": {
+    "owner": "0",
+    "location": "RedDropZone",
+    "classes": [
+      "Red",
+      "piece"
+    ],
+    "owns": []
+  },
+  "pieceR12": {
+    "owner": "0",
+    "location": "RedDropZone",
+    "classes": [
+      "Red",
+      "piece"
+    ],
+    "owns": []
+  },
+  "pieceR13": {
+    "owner": "0",
+    "location": "RedDropZone",
+    "classes": [
+      "Red",
+      "piece"
+    ],
+    "owns": []
+  },
+  "pieceR14": {
+    "owner": "0",
+    "location": "RedDropZone",
+    "classes": [
+      "Red",
+      "piece"
+    ],
+    "owns": []
+  },
+  "pieceR15": {
+    "owner": "0",
+    "location": "RedDropZone",
+    "classes": [
+      "Red",
+      "piece"
+    ],
+    "owns": []
+  },
+  "pieceR16": {
+    "owner": "0",
+    "location": "RedDropZone",
+    "classes": [
+      "Red",
+      "piece"
+    ],
+    "owns": []
+  },
+  "pieceR17": {
+    "owner": "0",
+    "location": "RedDropZone",
+    "classes": [
+      "Red",
+      "piece"
+    ],
+    "owns": []
+  },
+  "pieceR18": {
+    "owner": "0",
+    "location": "RedDropZone",
+    "classes": [
+      "Red",
+      "piece"
+    ],
+    "owns": []
+  },
+  "pieceR19": {
+    "owner": "0",
+    "location": "RedDropZone",
+    "classes": [
+      "Red",
+      "piece"
+    ],
+    "owns": []
+  },
+  "pieceR20": {
+    "owner": "0",
+    "location": "RedDropZone",
+    "classes": [
+      "Red",
+      "piece"
+    ],
+    "owns": []
+  },
+  "pieceY0": {
+    "owner": "1",
+    "location": "YellowDropZone",
+    "classes": [
+      "Yellow",
+      "piece"
+    ],
+    "owns": []
+  },
+  "pieceY1": {
+    "owner": "1",
+    "location": "YellowDropZone",
+    "classes": [
+      "Yellow",
+      "piece"
+    ],
+    "owns": []
+  },
+  "pieceY2": {
+    "owner": "1",
+    "location": "YellowDropZone",
+    "classes": [
+      "Yellow",
+      "piece"
+    ],
+    "owns": []
+  },
+  "pieceY3": {
+    "owner": "1",
+    "location": "YellowDropZone",
+    "classes": [
+      "Yellow",
+      "piece"
+    ],
+    "owns": []
+  },
+  "pieceY4": {
+    "owner": "1",
+    "location": "YellowDropZone",
+    "classes": [
+      "Yellow",
+      "piece"
+    ],
+    "owns": []
+  },
+  "pieceY5": {
+    "owner": "1",
+    "location": "YellowDropZone",
+    "classes": [
+      "Yellow",
+      "piece"
+    ],
+    "owns": []
+  },
+  "pieceY6": {
+    "owner": "1",
+    "location": "YellowDropZone",
+    "classes": [
+      "Yellow",
+      "piece"
+    ],
+    "owns": []
+  },
+  "pieceY7": {
+    "owner": "1",
+    "location": "YellowDropZone",
+    "classes": [
+      "Yellow",
+      "piece"
+    ],
+    "owns": []
+  },
+  "pieceY8": {
+    "owner": "1",
+    "location": "YellowDropZone",
+    "classes": [
+      "Yellow",
+      "piece"
+    ],
+    "owns": []
+  },
+  "pieceY9": {
+    "owner": "1",
+    "location": "YellowDropZone",
+    "classes": [
+      "Yellow",
+      "piece"
+    ],
+    "owns": []
+  },
+  "pieceY10": {
+    "owner": "1",
+    "location": "YellowDropZone",
+    "classes": [
+      "Yellow",
+      "piece"
+    ],
+    "owns": []
+  },
+  "pieceY11": {
+    "owner": "1",
+    "location": "YellowDropZone",
+    "classes": [
+      "Yellow",
+      "piece"
+    ],
+    "owns": []
+  },
+  "pieceY12": {
+    "owner": "1",
+    "location": "YellowDropZone",
+    "classes": [
+      "Yellow",
+      "piece"
+    ],
+    "owns": []
+  },
+  "pieceY13": {
+    "owner": "1",
+    "location": "YellowDropZone",
+    "classes": [
+      "Yellow",
+      "piece"
+    ],
+    "owns": []
+  },
+  "pieceY14": {
+    "owner": "1",
+    "location": "YellowDropZone",
+    "classes": [
+      "Yellow",
+      "piece"
+    ],
+    "owns": []
+  },
+  "pieceY15": {
+    "owner": "1",
+    "location": "YellowDropZone",
+    "classes": [
+      "Yellow",
+      "piece"
+    ],
+    "owns": []
+  },
+  "pieceY16": {
+    "owner": "1",
+    "location": "YellowDropZone",
+    "classes": [
+      "Yellow",
+      "piece"
+    ],
+    "owns": []
+  },
+  "pieceY17": {
+    "owner": "1",
+    "location": "YellowDropZone",
+    "classes": [
+      "Yellow",
+      "piece"
+    ],
+    "owns": []
+  },
+  "pieceY18": {
+    "owner": "1",
+    "location": "YellowDropZone",
+    "classes": [
+      "Yellow",
+      "piece"
+    ],
+    "owns": []
+  },
+  "pieceY19": {
+    "owner": "1",
+    "location": "YellowDropZone",
+    "classes": [
+      "Yellow",
+      "piece"
+    ],
+    "owns": []
+  },
+  "pieceY20": {
+    "owner": "1",
+    "location": "YellowDropZone",
+    "classes": [
+      "Yellow",
+      "piece"
+    ],
+    "owns": []
+  }
+}
