@@ -12,6 +12,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.DialogPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import oogasalad.frontend.components.dropzoneComponent.Dropzone;
 import oogasalad.frontend.modals.InputModal;
 import oogasalad.frontend.modals.fields.ColorPickerComponent;
 import oogasalad.frontend.modals.fields.ImagePickerComponent;
@@ -29,6 +30,7 @@ public class CreateNewModal extends InputModal {
   private List<IntegerPickerComponent> integerPickers;
   private String myTitle;
   private boolean editMode;
+  private List<String> dropzoneIDs;
 
   /**
    * Constructor for the CreateGameModal dialog
@@ -39,7 +41,7 @@ public class CreateNewModal extends InputModal {
 //        myPropertiesMap = super.setPropertiesMap(myTitle
   }
 
-  public CreateNewModal(String title, boolean editMode) {
+  public CreateNewModal(String title, boolean editMode, List<String> dropzoneIDs) {
     super(title);
     this.editMode = editMode;
     myTitle = super.getMyTitle();
