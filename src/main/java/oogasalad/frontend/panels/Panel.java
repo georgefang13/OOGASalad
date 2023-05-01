@@ -20,7 +20,7 @@ public interface Panel {
     return (Node) this;
   };
 
-  Panel refreshPanel();
+  void refreshPanel();
 
   String getTitle();
 

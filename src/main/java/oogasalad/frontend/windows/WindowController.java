@@ -59,7 +59,7 @@ public class WindowController implements WindowMediator {
 
   @Override
   public Object getData() {
-    return windowData.peek();
+    return windowData.pop();
   }
 
 }

@@ -106,9 +106,7 @@ public class HeaderMenuPanel extends HBox implements Panel, ModalPanel {
   }
 
   @Override
-  public Panel refreshPanel() {
-    return null;
-  }
+  public void refreshPanel() {}
 
   @Override
   public String getTitle() {

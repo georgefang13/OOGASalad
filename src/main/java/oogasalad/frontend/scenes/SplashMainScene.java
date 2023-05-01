@@ -45,7 +45,8 @@ public class SplashMainScene extends AbstractScene {
   private static final String USERNAME_PASSWORD_FIELD_ID = "UsernameFieldID";
   private static final String LOGIN_SIGNUP_ID = "LoginID";
   private static final String DROPDOWN_ID = "DropdownID";
-private static final String DROPDOWN_BOX_ID = "DropdownBoxID";
+  private static final String DROPDOWN_BOX_ID = "DropdownBoxID";
+  private static final String DEFAULT_GAMES = "all";
   private Label usernameLabel;
   private Label passwordLabel;
   private TextField usernameField;
@@ -115,6 +116,7 @@ private static final String DROPDOWN_BOX_ID = "DropdownBoxID";
     login.getStyleClass().add(ID_BUNDLE.getString(LOGIN_SIGNUP_ID));
     login.setOnMouseClicked(e -> {
       if (userManager.tryLogin(usernameField.getText(), passwordField.getText())) {
+        sceneController.getWindowController().passData(DEFAULT_GAMES);
         displayLibrary();
       }
       else {
@@ -127,6 +129,7 @@ private static final String DROPDOWN_BOX_ID = "DropdownBoxID";
     signUp.getStyleClass().add(ID_BUNDLE.getString(LOGIN_SIGNUP_ID));
     signUp.setOnMouseClicked(e -> {
       if (userManager.tryRegister(usernameField.getText(), passwordField.getText())) {
+        sceneController.passData(DEFAULT_GAMES);
         displayLibrary();
       }
       else {

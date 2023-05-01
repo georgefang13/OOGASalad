@@ -80,9 +80,7 @@ public class HeaderPanel extends HBox implements Panel {
   }
 
   @Override
-  public Panel refreshPanel() {
-    return null;
-  }
+  public void refreshPanel() {}
 
   @Override
   public String getTitle() {

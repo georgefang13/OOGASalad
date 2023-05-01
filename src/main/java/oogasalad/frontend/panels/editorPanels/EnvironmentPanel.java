@@ -27,9 +27,7 @@ public class EnvironmentPanel extends Pane implements Panel {
     return (Node) this;
   }
   @Override
-  public Panel refreshPanel() {
-    return null;
-  }
+  public void refreshPanel() {}
 
   @Override
   public String getTitle() {

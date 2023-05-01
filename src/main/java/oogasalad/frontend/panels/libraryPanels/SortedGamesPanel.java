@@ -22,17 +22,21 @@ public class SortedGamesPanel extends VBox implements Panel {
   private static final String SORTED_GAMES_VBOX_ID = "SortedGamesVBoxID";
   private static final String SORTED_GAMES_TEXT_ID = "SortedGamesTextID";
   private static final String SORTED_GAMES_TEXT_ALL_ID = "SortedGamesTextAllID";
+  PanelController panelController;
+
 
   /**
    * Constructor for HeaderMenu
    */
-  public SortedGamesPanel() {
+  public SortedGamesPanel(PanelController panelController) {
     super();
     this.makePanel();
+    this.panelController = panelController;
   }
 
   /**
-   * Calls createSortedGamesVBox to create the VBox for the sorted games. Sets up the panel to do this
+   * Calls createSortedGamesVBox to create the VBox for the sorted games. Sets up the panel to do
+   * this
    *
    * @return
    */
@@ -40,29 +44,50 @@ public class SortedGamesPanel extends VBox implements Panel {
     this.getChildren().addAll(createSortedGamesVBox());
     return this;
   }
+
   private VBox createSortedGamesVBox() {
     VBox sortedGamesVBox = new VBox();
     sortedGamesVBox.getStyleClass().add(ID_BUNDLE.getString(SORTED_GAMES_VBOX_ID));
     Hyperlink allGames = new Hyperlink(ALL_GAMES);
+    allGames.setOnMouseClicked(e -> {
+          panelController.getSceneController().getWindowController().passData("all");
+          panelController.updatePanel("library");
+        });
     allGames.getStyleClass().add(ID_BUNDLE.getString(SORTED_GAMES_TEXT_ALL_ID));
     Hyperlink boardGames = new Hyperlink(BOARD_GAMES);
     boardGames.getStyleClass().add(ID_BUNDLE.getString(SORTED_GAMES_TEXT_ID));
+    boardGames.setOnMouseClicked(e -> {
+      panelController.getSceneController().getWindowController().passData("board game");
+      panelController.updatePanel("library");
+    });
     Hyperlink cardGames = new Hyperlink(CARD_GAMES);
     cardGames.getStyleClass().add(ID_BUNDLE.getString(SORTED_GAMES_TEXT_ID));
+    cardGames.setOnMouseClicked(e -> {
+      panelController.getSceneController().getWindowController().passData("card game");
+      panelController.updatePanel("library");
+    });
     Hyperlink gridGames = new Hyperlink(GRID_GAMES);
     gridGames.getStyleClass().add(ID_BUNDLE.getString(SORTED_GAMES_TEXT_ID));
+    gridGames.setOnMouseClicked(e -> {
+      panelController.getSceneController().getWindowController().passData("grid game");
+      panelController.updatePanel("library");
+    });
     Hyperlink userGames = new Hyperlink(USER_GAMES);
     userGames.getStyleClass().add(ID_BUNDLE.getString(SORTED_GAMES_TEXT_ID));
+    userGames.setOnMouseClicked(e -> {
+      panelController.getSceneController().getWindowController().passData("user"); //TODO: MAKE IT THE USERNAME
+      panelController.updatePanel("library");
+    });
     sortedGamesVBox.getChildren().addAll(allGames, boardGames, cardGames, gridGames, userGames);
     return sortedGamesVBox;
   }
+
   public Node asNode() {
     return this;
   }
 
   @Override
-  public Panel refreshPanel() {
-    return null;
+  public void refreshPanel() {
   }
 
   @Override
