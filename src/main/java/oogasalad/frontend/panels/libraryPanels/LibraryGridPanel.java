@@ -56,7 +56,7 @@ public class LibraryGridPanel extends GridPane implements Panel {
   private static final String JSON_DESCRIPTION = "description";
   private static final String JSON_GENERAL_PATH = "/general.json";
   private static final String GAME_IMAGE_PATH = "/display.png";
-  private static final String DEFAULT_TAG = "board game"; //TODO: CHANGE TO "default" and put that in every general.json
+  private static final String DEFAULT_TAG = "all"; //TODO: CHANGE TO "default" and put that in every general.json
   /**
    * Constructor for the environment panel
    */

@@ -293,6 +293,31 @@
   -fx-pref-height: 620;
   -fx-pref-width: 250;
 }
+.sorted-games-text-all {
+  -fx-text-fill: white;
+  -fx-font-size: 20;
+  -fx-font-weight: bold;
+  -fx-padding: 20 0 0 35;
+}
+.sorted-games-text {
+  -fx-text-fill: white;
+  -fx-font-size: 20;
+  -fx-font-weight: bold;
+  -fx-padding: 20 0 0 60;
+}
+.hyperlink:focused {
+  -fx-border-color: transparent;
+  -fx-border-width: 0;
+  -fx-background-color: transparent;
+  -fx-underline: false;
+  outline: none;
+}
+
+
+
+
+
+
 
 .json-node{
   -fx-background-color: #F1F1EF ;
