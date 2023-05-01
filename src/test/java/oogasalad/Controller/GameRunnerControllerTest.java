@@ -1,28 +1,20 @@
 package oogasalad.Controller;
 
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import oogasalad.frontend.components.gameObjectComponent.GameRunner.GameRunnerObject;
 import oogasalad.frontend.components.gameObjectComponent.GameRunner.gameObjectVisuals.AbstractSelectableVisual;
-import oogasalad.frontend.managers.NodeRemovedListener;
-import oogasalad.gamerunner.backend.Game;
-import org.assertj.core.util.Arrays;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.testng.Assert;
-import org.testng.annotations.BeforeClass;
+import org.testfx.framework.junit5.ApplicationTest;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
-class GameRunnerControllerTest {
+class GameRunnerControllerTest extends ApplicationTest{
     private static GameRunnerController gameRunnerController;
     private final String gameName = "checkers";
     private final String directory = "data/games/checkers/";
@@ -31,8 +23,10 @@ class GameRunnerControllerTest {
     private final String lightTest = "data/games/checkers/".substring(0, "data/games/checkers/".lastIndexOf("/")) + "/assets/light.png";
     @BeforeEach
     void setUp() {
+        JFXPanel jfxPanel = new JFXPanel();
         gameTypeData.add("local");
         gameRunnerController = new GameRunnerController(gameName, gameTypeData);
+
     }
     @Test
     void select() {
@@ -68,91 +62,54 @@ class GameRunnerControllerTest {
 
     @Test
     void movePiece() {
-        //ObservableList<Node> gameObjectVisuals = gameRunnerController.getGameObjectVisuals();
-        //Node lastNode = gameObjectVisuals.get(gameObjectVisuals.size()-1);
-        //System.out.println(lastNode.getTranslateX());
-        //System.out.println(lastNode.getTranslateY());
-        //gameRunnerController.movePiece("blackPiece11", "DropZone36");
-
+        ObservableList<Node> gameObjectVisuals = gameRunnerController.getGameObjectVisuals();
+        Node lastNode = gameObjectVisuals.get(gameObjectVisuals.size()-1);
+        double startX = lastNode.getTranslateX();
+        double startY = lastNode.getTranslateY();
+        gameRunnerController.movePiece("blackPiece11", "DropZone36");
+        double endX = lastNode.getTranslateX();
+        double endY = lastNode.getTranslateY();
+        assertNotEquals(startX,endX);
+        assertNotEquals(startY,endY);
     }
 
     @Test
     void removePiece() {
+        ObservableList<Node> gameObjectVisuals = gameRunnerController.getGameObjectVisuals();
+        Node lastNode = gameObjectVisuals.get(gameObjectVisuals.size()-1);
+        gameRunnerController.removePiece("blackPiece11");
+        assertFalse(gameObjectVisuals.contains(lastNode));
     }
 
     @Test
     void setObjectImage() {
+        ObservableList<Node> gameObjectVisuals = gameRunnerController.getGameObjectVisuals();
+        Node lastNode = gameObjectVisuals.get(gameObjectVisuals.size()-1);
+        gameRunnerController.setObjectImage("blackPiece11",redTest);
+        assertFalse(gameObjectVisuals.contains(lastNode));
     }
 
     @Test
     void isObjectPlayable() {
+        String pieceId = "redPiece10";
+        String nextPossibleDrop = "DropZone36";
+        gameRunnerController.select(pieceId);
+        assertTrue(gameRunnerController.isObjectPlayable(nextPossibleDrop));
     }
 
     @Test
     void getGameObjectVisuals() {
+        ObservableList<Node> gameObjectVisuals = gameRunnerController.getGameObjectVisuals();
+        assertNotNull(gameRunnerController.getGameObjectVisuals());
     }
-
-    @Test
-    void passGameId() {
-    }
-
-    @Test
-    void addTextObject() {
-    }
-
-    @Test
-    void updateTextObject() {
-    }
-
     @Test
     void testAssignUndoButtonAction() {
-    }
-
-    @Test
-    void testSelect() {
-    }
-
-    @Test
-    void testAddDropZone() {
-    }
-
-    @Test
-    void testAddPiece() {
-    }
-
-    @Test
-    void testSetClickable() {
-    }
-
-    @Test
-    void testMovePiece() {
-    }
-
-    @Test
-    void testRemovePiece() {
-    }
-
-    @Test
-    void testSetObjectImage() {
-    }
-
-    @Test
-    void testIsObjectPlayable() {
-    }
-
-    @Test
-    void testGetGameObjectVisuals() {
-    }
-
-    @Test
-    void testPassGameId() {
-    }
-
-    @Test
-    void testAddTextObject() {
-    }
-
-    @Test
-    void testUpdateTextObject() {
+        Button undoButton = new Button("Undo");
+        gameRunnerController.assignUndoButtonAction(undoButton);
+        assertTrue(gameRunnerController.isObjectPlayable("redPiece10"));
+        gameRunnerController.select("redPiece10");
+        assertFalse(gameRunnerController.isObjectPlayable("redPiece10"));
+        undoButton.fire();
+        assertTrue(gameRunnerController.isObjectPlayable("redPiece10"));
     }
 }

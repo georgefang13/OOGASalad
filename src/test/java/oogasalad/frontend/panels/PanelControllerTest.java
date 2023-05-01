@@ -8,6 +8,7 @@ class PanelControllerTest {
 
     @Test
     void newSceneFromPanel() {
+
     }
 
     @Test

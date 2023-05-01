@@ -285,6 +285,11 @@ public class SimpleGameView extends Application implements GameController {
 
     }
 
+    @Override
+    public void setPieceHighlight(String id, String img) {
+
+    }
+
     private void clearClickables(){
         for (String id : clickable){
             nodes.get(id).setStyle("");
