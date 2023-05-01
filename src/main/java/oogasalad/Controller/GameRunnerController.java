@@ -19,11 +19,13 @@ public class GameRunnerController implements GameController {
     private final ObservableList<Node> gameObjectVisualsList = FXCollections.observableArrayList();
     private final HashSet<String> clickable = new HashSet<>();
     private Game game;
+    private boolean endGame;
 
     public GameRunnerController(String gameName, ArrayList<String> gameTypeData) {
         String directory = "data/games/"+gameName;
         int numPlayers = 2;
         String type = gameTypeData.get(0);
+        endGame = false;
 
         try {
             loadGame(directory);
@@ -207,6 +209,10 @@ public class GameRunnerController implements GameController {
         GameObjectVisualSorter gameObjectVisualComparator = new GameObjectVisualSorter();
         Collections.sort(gameObjectVisualsList, gameObjectVisualComparator);
         return gameObjectVisualsList;
+    }
+    @Override
+    public boolean getEndGameStatus(){
+        return endGame;
     }
 
     @Override

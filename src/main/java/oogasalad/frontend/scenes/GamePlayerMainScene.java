@@ -41,6 +41,9 @@ public class GamePlayerMainScene extends AbstractScene {
     gameObjectVisuals.addListener(new NodeRemovedListener(root));
     root.getChildren().addAll(gameObjectVisuals);
 
+    boolean endGameStatus = gameRunnerController.getEndGameStatus();
+
+
     Button undoButton = new Button("Undo");
     gameRunnerController.assignUndoButtonAction(undoButton);
     root.setTop(undoButton);

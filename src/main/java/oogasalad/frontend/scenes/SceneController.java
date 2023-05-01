@@ -40,8 +40,8 @@ public class SceneController implements SceneMediator{
     addAndLinkScene(defaultSceneType, MAIN_ID);
     switchToScene(MAIN_ID);
   }
-
-  private AbstractWindow getWindow() {
+  @Override
+  public AbstractWindow getWindow() {
     return windowController.getWindow(windowID);
   }
 
