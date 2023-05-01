@@ -32,9 +32,8 @@ public class GameRunnerController implements GameController {
     private Game game;
     private ObjectProperty<Boolean> endGame;
 
-    public GameRunnerController(String gameName, ArrayList<String> gameTypeData) {
+    public GameRunnerController(String gameName, ArrayList<String> gameTypeData, int numPlayers) {
         String directory = "data/games/"+gameName;
-        int numPlayers = 2;
         String type = gameTypeData.get(0);
         endGame = new SimpleObjectProperty<>(false);
 

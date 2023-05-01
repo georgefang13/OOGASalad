@@ -27,7 +27,8 @@ public class GamePlayerMainScene extends AbstractScene {
   @Override
   public Scene makeScene() {
     BorderPane root = new BorderPane();
-
+    String numPlayers = panelController.getSceneController().getData().toString();
+    int players = Integer.parseInt(numPlayers);
     String gameName = panelController.getSceneController().getWindowController().getData().toString();
     String gameType = panelController.getSceneController().getData().toString();
     ArrayList<String> gameTypeData = new ArrayList<>();
@@ -37,7 +38,7 @@ public class GamePlayerMainScene extends AbstractScene {
       gameTypeData.add(code);
     }
 
-    GameController gameRunnerController = new GameRunnerController(gameName,gameTypeData);
+    GameController gameRunnerController = new GameRunnerController(gameName,gameTypeData,players);
 
     ObservableList<Node> gameObjectVisuals = gameRunnerController.getGameObjectVisuals();
     gameObjectVisuals.addListener(new NodeRemovedListener(root));
