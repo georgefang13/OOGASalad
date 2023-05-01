@@ -1,4 +1,4 @@
-package oogasalad.gamerunner.backend.interpreter.commands;
+package oogasalad.gamerunner.backend.interpreter.commands.other;
 
 
 import oogasalad.gamerunner.backend.interpreter.Environment;
@@ -8,14 +8,14 @@ import oogasalad.gamerunner.backend.interpreter.tokens.ValueToken;
 /**
  * Creates a new variable with the given name and value
  */
-public class False extends OperatorToken {
+public class True extends OperatorToken {
 
-    public False() {
-        super(0, "False");
+    public True() {
+        super(0, "True");
     }
 
     @Override
     public ValueToken<?> evaluate(Environment env) {
-        return new ValueToken<>(false);
+        return new ValueToken<>(true);
     }
 }
