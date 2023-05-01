@@ -120,6 +120,7 @@ public class SplashMainScene extends AbstractScene {
       if (userManager.tryLogin(usernameField.getText(), passwordField.getText())) {
         sceneController.getWindowController().passData(DEFAULT_GAMES);
         displayLibrary();
+        sceneController.getWindowController().closeWindow(sceneController.getWindow());
       }
       else {
         AlertModal error = new AlertModal("LoginErrorHeader", "LoginErrorBody");
@@ -133,6 +134,7 @@ public class SplashMainScene extends AbstractScene {
       if (userManager.tryRegister(usernameField.getText(), passwordField.getText())) {
         sceneController.passData(DEFAULT_GAMES);
         displayLibrary();
+        sceneController.getWindowController().closeWindow(sceneController.getWindow());
       }
       else {
         AlertModal error = new AlertModal("RegisterErrorHeader", "RegisterErrorBody");

@@ -2,8 +2,11 @@ package oogasalad.frontend.modals.subDisplayModals;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.DialogEvent;
 import oogasalad.frontend.managers.StandardPropertyManager;
 import oogasalad.frontend.modals.DisplayModal;
+
+import java.util.function.Consumer;
 
 
 public class AlertModal extends DisplayModal {
@@ -18,13 +21,18 @@ public class AlertModal extends DisplayModal {
     super("alert");
   }
 
-  public AlertModal(String header, String body) {
+  public AlertModal(String header, String body, Object...bodyArgs) {
     StandardPropertyManager pm = StandardPropertyManager.getInstance();
     alert = new Alert(AlertType.ERROR);
     alert.setTitle(pm.getText("Error"));
     alert.setHeaderText(pm.getText(header));
-    alert.setContentText(pm.getText(body));
+    alert.setContentText(String.format(pm.getText(body), bodyArgs));
     alert.setResizable(true);
+
+  }
+
+  public void setOnClose(Consumer<DialogEvent> onClose){
+    alert.setOnCloseRequest(onClose::accept);
   }
 
   public void showAlert() {

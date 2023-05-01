@@ -260,8 +260,12 @@ public class GameRunnerController implements GameController {
 
     @Override
     public void endGame(int player) {
-        AlertModal alertModal = new AlertModal("GameWinHeader", "GameWinBody");
+        AlertModal alertModal = new AlertModal("GameWinHeader", "GameWinBody", player+1);
+        alertModal.setOnClose(e -> {
+//            sceneController.getWindowController().closeWindow(sceneController.getWindow());
+        });
         alertModal.showAlert();
+
     }
 
     private void clearClickables(){
