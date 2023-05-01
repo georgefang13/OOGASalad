@@ -34,6 +34,12 @@ public class CodeEditorPanel extends AbstractNodePanel {
         this.action = action;
     }
 
+    /**
+     * Returns a list of buttons that can be used to create nodes
+     *
+     * @param fileName
+     * @return List<Button>
+     */
     protected List<Button> getNodeSelectionButtons(String fileName) {
         String absoluteFilePath = System.getProperty("user.dir") + COMMANDS_RESOURCE_PATH + fileName;
         ArrayList<Button> buttons = new ArrayList<>();
@@ -50,6 +56,12 @@ public class CodeEditorPanel extends AbstractNodePanel {
         return buttons;
     }
 
+    /**
+     * Creates an accordion that contains all of the buttons that can be used to create nodes
+     * Acts as a container of folders that contain different types of nodes so that they're easier to find
+     * @param fileName
+     * @return Accordion
+     */
     @Override
     public Accordion getAccordianFinished(String fileName) {
         String absoluteFilePath = System.getProperty("user.dir") + COMMANDS_RESOURCE_PATH + fileName;
@@ -93,10 +105,18 @@ public class CodeEditorPanel extends AbstractNodePanel {
         return accordion;
     }
 
+    /**
+     * Returns the accordion for this panel
+     */
     public Accordion getAccordion() {
         return accordion;
     }
 
+    /**
+     * Creates a button that can be used to create a node
+     * @param command
+     * @return Button
+     */
     private Button makeButton(Command command) {
         Button button = new Button(command.name());
         String folderName = command.folder();
@@ -108,6 +128,12 @@ public class CodeEditorPanel extends AbstractNodePanel {
         return button;
     }
 
+    /**
+     * Sets the action of the button to create a node from a command record
+     * @param command
+     * @param button
+     * @return void
+     */
     private void setButtonActionFromCommand(Command command, Button button) {
         button.setOnAction(event -> {
             try {
@@ -131,14 +157,27 @@ public class CodeEditorPanel extends AbstractNodePanel {
         });
     }
 
+    /**
+     * Returns the fsm action this panel is for
+     * @return String
+     */
     public String getAction() {
         return action;
     }
 
+    /**
+     * Returns the fsm state this panel is for
+     * @return String
+     */
     public String getState() {
         return state;
     }
 
+    /**
+     * Returns whether or not this panel is for the same fsm state and action as the given panel
+     * @param panel
+     * @return boolean
+     */
     public boolean equals(CodeEditorPanel panel) {
         return panel.getAction().equals(this.action) && panel.getState().equals(this.state);
     }
