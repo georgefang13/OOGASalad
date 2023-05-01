@@ -1,6 +1,8 @@
 package oogasalad.Controller;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
 import oogasalad.frontend.components.Component;
@@ -31,6 +33,21 @@ public class BackendObjectStrategy {
     }
     else{
       return bundle.getString("Variable");
+    }
+  }
+
+  public void putParams(Map<String, String> map, HashMap<ObjectParameter, Object> param, String type) {
+    if(type.equals(bundle.getString("GameObject"))){
+      param.put(ObjectParameter.CONSTRUCTOR_ARGS, map);
+      param.put(ObjectParameter.ID, map.get("ID"));
+      param.put(ObjectParameter.OWNER, map.get("Parent"));
+    }
+    if(type.equals(bundle.getString("Grids"))){
+      HashMap<Object, Object> construct = new HashMap<>();
+      construct.put(ObjectParameter.BOARD_TYPE, map.get("BOARD_TYPE"));
+      construct.put(ObjectParameter.BOARD_COLS, map.get("rows"));
+      construct.put(ObjectParameter.BOARD_ROWS, map.get("cols"));
+      param.put(ObjectParameter.CONSTRUCTOR_ARGS, construct);
     }
   }
 }

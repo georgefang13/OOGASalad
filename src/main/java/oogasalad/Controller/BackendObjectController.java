@@ -14,13 +14,15 @@ public class BackendObjectController {
 
   }
   public void sendOwnableObject(Map<String, String> map, Component c){
+    System.out.println(map);
+    ConvertingStrategy e = new ConvertingStrategy();
+    Map<String, String> mp = e.paramsToMap(c);
     BackendObjectStrategy b = new BackendObjectStrategy();
     HashMap<ObjectParameter, Object> param = new HashMap<>();
-    param.put(ObjectParameter.OWNABLE_TYPE, b.getOwnableType(c));
-    param.put(ObjectParameter.CONSTRUCTOR_ARGS, map);
-    param.put(ObjectParameter.ID, map.get("ID"));
-    param.put(ObjectParameter.OWNER, map.get("Parent"));
-    game.sendObject(ObjectType.OWNABLE,param);
+    String type = b.getOwnableType(c);
+    param.put(ObjectParameter.OWNABLE_TYPE, type);
+    b.putParams(mp,param,type);
+    game.sendObject(ObjectType.OWNABLE, param);
     System.out.println("test");
   }
 
