@@ -1,5 +1,6 @@
 package oogasalad.frontend.components;
 
+import javafx.geometry.Point2D;
 import javafx.scene.Node;
 
 import java.lang.reflect.Field;
@@ -130,6 +131,14 @@ public abstract class AbstractComponent implements Component {
   @Override
   public Map<String, String> getParameters() {
     return parameters;
+  }
+
+  public void moveToXY(Point2D dropZoneCenter){
+    Point2D pieceCenter = getNode().localToScene(((double) getWidth())/2,((double) getHeight())/2);
+    double shiftX = dropZoneCenter.getX() - pieceCenter.getX();
+    double shiftY = dropZoneCenter.getY() - pieceCenter.getY();
+    getNode().setTranslateX(getNode().getTranslateX() + shiftX);
+    getNode().setTranslateY(getNode().getTranslateY() + shiftY);
   }
 
 

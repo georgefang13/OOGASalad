@@ -1,6 +1,7 @@
 package oogasalad.frontend.scenes;
 
 import oogasalad.Controller.FilesController;
+import oogasalad.frontend.windows.AbstractWindow;
 import oogasalad.frontend.windows.WindowMediator;
 
 public interface SceneMediator {
@@ -8,6 +9,7 @@ public interface SceneMediator {
     void addAndLinkScene(SceneTypes sceneType, String sceneID);
     void setDefaultScene(SceneTypes defaultSceneType);
     WindowMediator getWindowController();
+    AbstractWindow getWindow();
     void passData(Object data);
     Object getData();
     FilesController getFilesController();

@@ -12,6 +12,7 @@ import oogasalad.frontend.components.gameObjectComponent.GameRunner.gameObjectVi
 public class Piece extends GameRunnerObject{
     private double lastTranslateX;
     private double lastTranslateY;
+    private AbstractSelectableVisual.SelectableVisualParams unselected;
     public Piece(String ID, GameController gameRunnerController, String imagePath, boolean hasSelectImage, String param, int height, int width) {
         super(ID, gameRunnerController);
         setHeight(height);
@@ -20,6 +21,11 @@ public class Piece extends GameRunnerObject{
     }
     @Override
     public void setSelectableVisual(AbstractSelectableVisual.SelectableVisualParams unselected, AbstractSelectableVisual.SelectableVisualParams selected) {
+        this.unselected = unselected;
+        setSelectVisual(selected);
+    }
+    @Override
+    public void setSelectVisual(AbstractSelectableVisual.SelectableVisualParams selected) {
         if (selected.hasSelectImage()){
             selectableVisual = new PieceVisualSelectImage(unselected.param(),selected.param(),getHeight(),getWidth(),ID);
         } else {
@@ -29,11 +35,7 @@ public class Piece extends GameRunnerObject{
         setDragSelection();
     }
     public void moveToDropZoneXY(Point2D dropZoneCenter){
-        Point2D pieceCenter = getNode().localToScene(((double) getWidth())/2,((double) getHeight())/2);
-        double shiftX = dropZoneCenter.getX() - pieceCenter.getX();
-        double shiftY = dropZoneCenter.getY() - pieceCenter.getY();
-        getNode().setTranslateX(getNode().getTranslateX() + shiftX);
-        getNode().setTranslateY(getNode().getTranslateY() + shiftY);
+        moveToXY(dropZoneCenter);
         acceptDrag();
     }
     private void setDragSelection() {

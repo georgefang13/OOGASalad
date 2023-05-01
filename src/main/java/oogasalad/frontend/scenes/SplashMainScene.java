@@ -2,6 +2,7 @@ package oogasalad.frontend.scenes;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.scene.Scene;
@@ -14,6 +15,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import oogasalad.frontend.modals.subDisplayModals.AlertModal;
+import oogasalad.frontend.modals.subInputModals.CreateNewModal;
 import oogasalad.frontend.windows.WindowTypes.WindowType;
 import oogasalad.sharedDependencies.backend.database.Database;
 import oogasalad.sharedDependencies.backend.database.UserManager;
@@ -66,8 +68,8 @@ public class SplashMainScene extends AbstractScene {
   @Override
   public Scene makeScene() {
     root = new VBox();
+    userManager = new UserManager(Database.getInstance());
     root.getStyleClass().add(ID_BUNDLE.getString(SPLASH_ROOT_ID));
-    userManager = new UserManager(new Database());
     makeTitle();
     makeInputFields();
     makeLoginSignUpButtons();
@@ -118,10 +120,11 @@ public class SplashMainScene extends AbstractScene {
       if (userManager.tryLogin(usernameField.getText(), passwordField.getText())) {
         sceneController.getWindowController().passData(DEFAULT_GAMES);
         displayLibrary();
+        sceneController.getWindowController().closeWindow(sceneController.getWindow());
       }
       else {
-        AlertModal error = new AlertModal();
-        error.showAndWait();
+        AlertModal error = new AlertModal("LoginErrorHeader", "LoginErrorBody");
+        error.showAlert();
       }
     });
     signUp = new Hyperlink();
@@ -131,10 +134,11 @@ public class SplashMainScene extends AbstractScene {
       if (userManager.tryRegister(usernameField.getText(), passwordField.getText())) {
         sceneController.passData(DEFAULT_GAMES);
         displayLibrary();
+        sceneController.getWindowController().closeWindow(sceneController.getWindow());
       }
       else {
-        AlertModal error = new AlertModal();
-        error.showAndWait();
+        AlertModal error = new AlertModal("RegisterErrorHeader", "RegisterErrorBody");
+        error.showAlert();
       }
     });
     loginSignUpButtons.getChildren().addAll(login, signUp);

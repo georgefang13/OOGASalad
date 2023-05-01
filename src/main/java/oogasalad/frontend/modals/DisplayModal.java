@@ -2,6 +2,7 @@ package oogasalad.frontend.modals;
 
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.ResourceBundle;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DialogPane;
 
