@@ -585,7 +585,7 @@
         { "name": "variable", "type": ["variable"] },
         { "name": "location", "type": ["dropzone"] },
         { "name": "classes", "type": ["string"] },
-        { "name": "item", "type": ["any"] },
+        { "name": "item", "type": ["any"] }
       ],
       "outputs": [],
       "parse": "makeavailable %s %s %s %s"
