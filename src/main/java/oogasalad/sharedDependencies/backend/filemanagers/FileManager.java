@@ -140,6 +140,21 @@ public class FileManager {
     }
   }
 
+  public boolean hasTag(String tag, String... tags) {
+    try {
+      String[] allTags = new String[tags.length + 1];
+      for (int i = 0; i < tags.length; i++) {
+        allTags[i] = tags[i];
+      }
+      allTags[allTags.length - 1] = tag;
+      traverse(allTags);
+    }
+    catch (IllegalArgumentException e) {
+      return false;
+    }
+    return true;
+  }
+
   /**
    * Define collection of acceptable tags for FileManager instance
    *
@@ -260,9 +275,6 @@ public class FileManager {
     for (String tag : tags) {
       object = element.getAsJsonObject();
       if (! object.has(tag)) {
-        System.out.println("Invalid tag: " + tag);
-        //print out what file is being read
-        System.out.println("File: " + myFileInfo);
         throw new IllegalArgumentException();
       }
       element = object.get(tag);
