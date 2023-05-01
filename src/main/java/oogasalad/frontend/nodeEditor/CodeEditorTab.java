@@ -146,12 +146,18 @@ public class CodeEditorTab extends AbstractNodeEditorTab {
             command.parseStr(), command.inputs());
         addNode(node);
         for (String nestBlock : command.innerBlocks()) {
-          AbstractNode start = new StartNestNode();
-          addNode(start);
-          start.snapToNode(node);
-          AbstractNode end = new EndNestNode();
-          addNode(end);
-          end.snapToNode(start);
+          synchronized (this) {
+
+            AbstractNode start = new StartNestNode();
+            addNode(start);
+//            Thread.sleep(100);
+            start.snapToNode(node);
+            AbstractNode end = new EndNestNode();
+            addNode(end);
+//            Thread.sleep(100);
+
+            end.snapToNode(start);
+          }
         }
       } catch (Exception e) {
         e.printStackTrace();

@@ -95,7 +95,7 @@ public abstract class AbstractNode extends VBox implements DraggableNode {
   @Override
   public void alignNodes(AbstractNode fromNode, AbstractNode toNode) {
     checkLayoutRendered(toNode);
-    Platform.runLater(() -> {
+//    Platform.runLater(() -> {
       Platform.runLater(() -> {
         if (toNode instanceof StartNestNode) {
           if (fromNode instanceof EndNestNode) {
@@ -111,7 +111,7 @@ public abstract class AbstractNode extends VBox implements DraggableNode {
           fromNode.move(toNode.getTranslateX(), toNode.getTranslateY() + toNode.getHeight());
         }
       });
-    });
+//    });
 
   }
 
@@ -124,9 +124,9 @@ public abstract class AbstractNode extends VBox implements DraggableNode {
    */
   private void checkLayoutRendered(AbstractNode toNode) {
     Bounds layoutBounds = toNode.getLayoutBounds();
-    if (Double.isNaN(layoutBounds.getWidth()) || Double.isNaN(layoutBounds.getHeight())) {
+    while (Double.isNaN(layoutBounds.getWidth()) || Double.isNaN(layoutBounds.getHeight())) {
       try {
-        wait(2000);
+        Thread.sleep(1);
       } catch (Exception e) {
         e.printStackTrace();
       }
