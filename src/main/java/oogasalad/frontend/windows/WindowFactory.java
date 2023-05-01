@@ -1,6 +1,5 @@
 package oogasalad.frontend.windows;
 
-
 import oogasalad.frontend.windows.WindowTypes.WindowType;
 import oogasalad.logging.MainLogger;
 import ch.qos.logback.classic.Level;

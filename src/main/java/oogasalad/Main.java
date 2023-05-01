@@ -1,11 +1,11 @@
 package oogasalad;
 
-import ch.qos.logback.classic.Level;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import oogasalad.frontend.windows.WindowController;
 import oogasalad.frontend.windows.WindowMediator;
 import oogasalad.logging.MainLogger;
+import ch.qos.logback.classic.Level;
 
 
 /**

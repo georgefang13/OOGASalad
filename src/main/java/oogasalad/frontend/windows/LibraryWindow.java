@@ -14,7 +14,7 @@ import ch.qos.logback.classic.Level;
 
 public class LibraryWindow extends AbstractWindow {
 
-  private static final MainLogger logger = MainLogger.getInstance(GamePlayerWindow.class);
+  private static final MainLogger logger = MainLogger.getInstance(LibraryWindow.class);
   public enum WindowScenes implements SceneTypes {
     LIBRARY_SCENE,
     PLAY_SCENE
