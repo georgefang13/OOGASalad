@@ -1,4 +1,4 @@
-package oogasalad.gamerunner.backend.interpreter.commands.game;
+package oogasalad.gamerunner.backend.interpreter.commands.dropzones;
 
 import oogasalad.gamerunner.backend.interpreter.Environment;
 import oogasalad.gamerunner.backend.interpreter.tokens.ExpressionToken;
@@ -22,16 +22,23 @@ public class DropZoneFollowUntilBlocked extends OperatorToken {
         Token t2 = getArg(1);               // Expression
         Token t3 = getArg(2).evaluate(env); // blocked function
 
+
         if (! (t2 instanceof ExpressionToken)){
             t2 = t2.evaluate(env);
         }
 
         ValueToken<DropZone> x = checkArgumentWithSubtype(env, t1, ValueToken.class, DropZone.class.getName());
         ExpressionToken expr = checkArgument(env, t2, ExpressionToken.class);
-        ValueToken<OperatorToken> z = checkArgumentWithSubtype(env, t3, ValueToken.class, OperatorToken.class.getName());
 
+        OperatorToken op;
+        if (t3 instanceof OperatorToken o){
+            op = o;
+        }
+        else {
+            ValueToken<OperatorToken> z = checkArgumentWithSubtype(env, t3, ValueToken.class, OperatorToken.class.getName());
+            op = z.VALUE;
+        }
         DropZone d = x.VALUE;
-        OperatorToken op = z.VALUE;
 
         List<String> path = (List<String>) expr.export(env);
 

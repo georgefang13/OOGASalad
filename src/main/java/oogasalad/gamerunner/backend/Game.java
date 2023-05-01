@@ -7,7 +7,6 @@ import oogasalad.gamerunner.backend.online.OnlineRunner;
 import oogasalad.gamerunner.backend.online.SocketRunner;
 import oogasalad.sharedDependencies.backend.GameLoader;
 import oogasalad.sharedDependencies.backend.filemanagers.FileManager;
-import oogasalad.sharedDependencies.backend.id.IdManageable;
 import oogasalad.sharedDependencies.backend.id.IdManager;
 import oogasalad.gamerunner.backend.fsm.FSM;
 import oogasalad.gamerunner.backend.interpretables.Goal;
@@ -15,6 +14,7 @@ import oogasalad.gamerunner.backend.interpreter.Interpreter;
 import oogasalad.sharedDependencies.backend.ownables.Ownable;
 import oogasalad.sharedDependencies.backend.ownables.gameobjects.DropZone;
 import oogasalad.sharedDependencies.backend.ownables.gameobjects.GameObject;
+import oogasalad.sharedDependencies.backend.ownables.gameobjects.TextObject;
 import oogasalad.sharedDependencies.backend.ownables.variables.Variable;
 import oogasalad.sharedDependencies.backend.owners.GameWorld;
 import oogasalad.sharedDependencies.backend.owners.Owner;
@@ -53,7 +53,7 @@ public class Game implements GameToInterpreterAPI{
     /**
      * The IdManager of the game for Ownables.
      */
-    private final IdManager<Ownable> ownableIdManager = new IdManager<>();
+    private final IdManager<Ownable> idManager = new IdManager<>();
 
     /**
      * The GameWorld of the game.
@@ -61,7 +61,7 @@ public class Game implements GameToInterpreterAPI{
      */
     private final GameWorld gameWorld = new GameWorld();
 
-    private final FSM<String> fsm = new FSM<>(ownableIdManager);
+    private final FSM<String> fsm = new FSM<>(idManager);
 
     private final Interpreter interpreter = new Interpreter();
 
@@ -75,9 +75,12 @@ public class Game implements GameToInterpreterAPI{
 
     private final OnlineRunner onlineRunner;
 
-    private int numPlayers;
+    private final int numPlayers;
+    private int numOnlinePlayers;
 
     private boolean startedOnline = false;
+
+    // the position (which turn you are) in the game. -1 if not playing online
     private int onlinePlayerNum = -1;
 
 
@@ -85,6 +88,7 @@ public class Game implements GameToInterpreterAPI{
 
     public Game(GameController controller, String directory, int numPlayers, boolean online) {
         this.numPlayers = numPlayers;
+        numOnlinePlayers = 0;
         this.controller = controller;
         this.directory = directory;
 
@@ -95,9 +99,13 @@ public class Game implements GameToInterpreterAPI{
         }
     }
 
-    public void setNumPlayers(int num){
-        numPlayers = num;
-        if (numPlayers == 2){
+    /**
+     * Sets the number of online players in the game. Starts the game when the desired number of players is reached.
+     * @param num the number of online players
+     */
+    public void setNumOnlinePlayers(int num){
+        numOnlinePlayers = num;
+        if (numOnlinePlayers == numPlayers){
             startOnlineGame();
         }
     }
@@ -119,13 +127,13 @@ public class Game implements GameToInterpreterAPI{
             players.add(new Player());
         }
         
-        interpreter.linkIdManager(ownableIdManager);
+        interpreter.linkIdManager(idManager);
         interpreter.linkGame(this);
 
         gl.loadFSM(interpreter, fsm);
         goals.addAll(gl.loadGoals());
-        gl.loadDropZones(ownableIdManager, gameWorld);
-        pieceLocations.putAll(gl.loadObjectsAndVariables(ownableIdManager, players, gameWorld));
+        gl.loadDropZones(idManager, gameWorld);
+        pieceLocations.putAll(gl.loadObjectsAndVariables(idManager, players, gameWorld));
         rules = gl.loadRules();
 
         initVariables();
@@ -152,6 +160,14 @@ public class Game implements GameToInterpreterAPI{
         }
     }
 
+    /**
+     * sends the online game code to the controller
+     * @param code the code to send
+     */
+    public void sendCode(String code){
+        controller.passGameId(code);
+    }
+
     private void startTurn(){
         try {
             interpreter.interpret("make :game_available [ ]");
@@ -169,36 +185,36 @@ public class Game implements GameToInterpreterAPI{
     
     private void initVariables(){
         turn.setOwner(gameWorld);
-        if (!ownableIdManager.isIdInUse("turn")) {
-            ownableIdManager.addObject(turn, "turn");
+        if (!idManager.isIdInUse("turn")) {
+            idManager.addObject(turn, "turn");
         }
 
         Variable<Double> numPlayersVar = new Variable<>((double) players.size());
         numPlayersVar.setOwner(gameWorld);
-        ownableIdManager.addObject(numPlayersVar, "playerCount");
+        idManager.addObject(numPlayersVar, "playerCount");
 
         Variable<List<GameObject>> available = new Variable<>(new ArrayList<>());
         available.setOwner(gameWorld);
-        ownableIdManager.addObject(available, "available");
+        idManager.addObject(available, "available");
 
         Variable<List<Object>> log = new Variable<>(new ArrayList<>());
         log.setOwner(gameWorld);
-        ownableIdManager.addObject(log, "log");
+        idManager.addObject(log, "log");
     }
 
     private List<Object> getLog(){
-        Variable<List<Object>> v = (Variable<List<Object>>) ownableIdManager.getObject("log");
+        Variable<List<Object>> v = (Variable<List<Object>>) idManager.getObject("log");
         return v.get();
     }
 
     private void sendClickable(){
         if (onlinePlayerNum > -1 && onlinePlayerNum != turn.get().intValue()) return;
 
-        Variable<List<GameObject>> v = (Variable<List<GameObject>>) ownableIdManager.getObject("available");
+        Variable<List<GameObject>> v = (Variable<List<GameObject>>) idManager.getObject("available");
 
         List<String> ids = new ArrayList<>();
         for (GameObject o : v.get()){
-            ids.add(ownableIdManager.getId(o));
+            ids.add(idManager.getId(o));
         }
 
         controller.setClickable(ids);
@@ -212,9 +228,9 @@ public class Game implements GameToInterpreterAPI{
     }
 
     private boolean isPieceAvailable(String id){
-        Variable<List<GameObject>> v = (Variable<List<GameObject>>) ownableIdManager.getObject("available");
+        Variable<List<GameObject>> v = (Variable<List<GameObject>>) idManager.getObject("available");
         for (GameObject o : v.get()){
-            if (ownableIdManager.getId(o).equals(id)) return true;
+            if (idManager.getId(o).equals(id)) return true;
         }
         return false;
     }
@@ -226,16 +242,14 @@ public class Game implements GameToInterpreterAPI{
         if (send) onlineRunner.send(selectedObject);
 
         if (!isPieceAvailable(selectedObject)) return;
-
-        //System.out.println("clicking " + selectedObject + " with " + send);
-
+        
         interpreter.interpret("make :game_available [ ]");
 
         try {
             fsm.setStateInnerValue(selectedObject);
             fsm.transition();
         } catch (Exception e) {
-            System.out.println(getLog());
+//            System.out.println(getLog());
             throw e;
         }
 
@@ -259,14 +273,18 @@ public class Game implements GameToInterpreterAPI{
      * Goes to the previous state. Will break the game if going to the previous state would change turns or modify the board.
      */
     public void undoClickPiece(){
+        undoClickPiece(true);
+    }
+    public void undoClickPiece(boolean send){
         interpreter.interpret("make :game_available [ ]");
         fsm.undo();
+        if (send) onlineRunner.send("^undo");
         sendClickable();
     }
 
     private int checkGoals() {
         for (Goal g : goals){
-            Player player = g.test(interpreter, ownableIdManager);
+            Player player = g.test(interpreter, idManager);
             if (player != null){
                 return players.indexOf(player);
             }
@@ -344,7 +362,7 @@ public class Game implements GameToInterpreterAPI{
             }
             edgeMap.put(dz, edges);
 
-            ownableIdManager.addObject(dz, id);
+            idManager.addObject(dz, id);
 
             controller.addDropZone(new GameController.DropZoneParameters(id, null,null,x, y, height, width));
         }
@@ -352,7 +370,7 @@ public class Game implements GameToInterpreterAPI{
         for (DropZone dz : edgeMap.keySet()){
             // [ [ edgeName, edge ] ]
             for (String[] edge : edgeMap.get(dz)){
-                DropZone other = (DropZone) ownableIdManager.getObject(edge[1]);
+                DropZone other = (DropZone) idManager.getObject(edge[1]);
                 dz.addOutgoingConnection(other, edge[0]);
             }
         }
@@ -363,10 +381,10 @@ public class Game implements GameToInterpreterAPI{
         loadVariables(directory + "/variables.json");
 
         for (String s : ownMap.keySet()) {
-            GameObject mainObj = (GameObject) ownableIdManager.getObject(s);
+            GameObject mainObj = (GameObject) idManager.getObject(s);
             for (String o : ownMap.get(s)) {
-                Ownable obj = ownableIdManager.getObject(o);
-                ownableIdManager.setObjectOwner(obj, mainObj);
+                Ownable obj = idManager.getObject(o);
+                idManager.setObjectOwner(obj, mainObj);
             }
         }
     }
@@ -397,12 +415,12 @@ public class Game implements GameToInterpreterAPI{
                 obj.addClass(cls);
             }
 
-            ownableIdManager.addObject(obj, id);
+            idManager.addObject(obj, id);
             //controller.addPiece(id, image, location, null, null, 0, size);
 
-            DropZone dz = (DropZone) ownableIdManager.getObject(location);
+            DropZone dz = (DropZone) idManager.getObject(location);
 
-            putInDropZone(obj, dz, id);
+            putInDropZone(obj, dz);
 
             ownMap.put(id, owns);
         }
@@ -431,15 +449,15 @@ public class Game implements GameToInterpreterAPI{
 
             } catch (Exception e){
                 var = new Variable<>(obj);
-                Ownable owner = ownableIdManager.getObject(ownerName);
-                ownableIdManager.setObjectOwner(var, owner);
+                Ownable owner = idManager.getObject(ownerName);
+                idManager.setObjectOwner(var, owner);
             }
 
             for (String cls : fm.getArray(id, "classes")){
                 var.addClass(cls);
             }
 
-            ownableIdManager.addObject(var, id);
+            idManager.addObject(var, id);
         }
     }
 
@@ -462,7 +480,7 @@ public class Game implements GameToInterpreterAPI{
      */
     public void addPlayer(Player player) {
         players.add(player);
-        ((Variable) ownableIdManager.getObject("numPlayers")).set((double) players.size());
+        ((Variable) idManager.getObject("numPlayers")).set((double) players.size());
     }
 
     /**
@@ -479,7 +497,7 @@ public class Game implements GameToInterpreterAPI{
      */
     public void removeAllPlayers() {
         players.clear();
-        ownableIdManager.clear();
+        idManager.clear();
         // TODO reconsider
     }
 
@@ -494,8 +512,8 @@ public class Game implements GameToInterpreterAPI{
     //endregion
 
     public Ownable getVariable(String name){
-        if (ownableIdManager.isIdInUse(name)){
-            return ownableIdManager.getObject(name);
+        if (idManager.isIdInUse(name)){
+            return idManager.getObject(name);
         }
         return null;
     }
@@ -505,7 +523,8 @@ public class Game implements GameToInterpreterAPI{
     }
 
     @Override
-    public Player getPlayer(int playerNum) {
+    public Owner getPlayer(int playerNum) {
+        if (playerNum == -1) return gameWorld;
         return players.get(playerNum);
     }
 
@@ -518,14 +537,14 @@ public class Game implements GameToInterpreterAPI{
     }
 
     @Override
-    public void movePiece(GameObject piece, DropZone dz, String name) {
+    public void movePiece(GameObject piece, DropZone dz) {
         DropZone oldDz = pieceLocations.get(piece);
         if (oldDz != null){
             oldDz.removeObject(oldDz.getKey(piece));
         }
-        dz.putObject(name, piece);
+        dz.putObject(idManager.getId(piece), piece);
         pieceLocations.put(piece, dz);
-        controller.movePiece(ownableIdManager.getId(piece), ownableIdManager.getId(dz));
+        controller.movePiece(idManager.getId(piece), idManager.getId(dz));
     }
 
     @Override
@@ -535,18 +554,18 @@ public class Game implements GameToInterpreterAPI{
             dz.removeObject(dz.getKey(piece));
             pieceLocations.remove(piece);
         }
-        controller.removePiece(ownableIdManager.getId(piece));
-        ownableIdManager.removeObject(piece);
+        controller.removePiece(idManager.getId(piece));
+        idManager.removeObject(piece);
     }
 
     @Override
-    public void putInDropZone(Ownable element, DropZone dropZone, String name){
+    public void putInDropZone(Ownable element, DropZone dropZone){
         if (pieceLocations.containsKey(element)){
             DropZone dz = pieceLocations.get(element);
             dz.removeObject(dz.getKey(element));
         }
         pieceLocations.put(element, dropZone);
-        dropZone.putObject(name, element);
+        dropZone.putObject(idManager.getId(element), element);
     }
 
     @Override
@@ -561,31 +580,44 @@ public class Game implements GameToInterpreterAPI{
     }
 
     @Override
-    public void putClass(IdManageable obj, String name) {
-        obj.addClass(name);
-    }
-
-    @Override
-    public void removeClass(IdManageable obj, String name) {
-        obj.removeClass(name);
-    }
-
-    @Override
     public void setObjectImage(Ownable obj, String image) {
-        String id = ownableIdManager.getId(obj);
+        String id = idManager.getId(obj);
         String imagePath = this.directory + "/assets/" + image;
+        controller.setObjectImage(id, imagePath);
     }
 
     @Override
-    public void setObjectOwner(Ownable obj, Ownable owner) {
-        ownableIdManager.setObjectOwner(obj, owner);
+    public void addObject(Ownable obj, DropZone dz, String image, double width, double height) {
+        idManager.addObject(obj);
+        putInDropZone(obj, dz);
+        String id = idManager.getId(obj);
+        String imagePath = this.directory + "/assets/" + image;
+        controller.addPiece(id, imagePath, idManager.getId(dz), false, "#ff0000", (int) height, (int) width);
     }
 
     @Override
-    public void setPlayerOwner(Ownable obj, Owner owner) {
-        ownableIdManager.setPlayerOwner(obj, owner);
-        int ownerNum = -1;
-        if (owner != gameWorld) ownerNum = players.indexOf((Player) owner);
+    public void addDropZone(DropZone dz, DropZone location, String image, String highlight, double width, double height) {
+
+    }
+
+    @Override
+    public void setPieceHighlight(Ownable piece, String highlight) {
+        String id = idManager.getId(piece);
+        String imagePath = this.directory + "/assets/" + highlight;
+        //controller.setPieceHighlight(id, imagePath);
+    }
+
+    @Override
+    public void updateTextObject(TextObject obj) {
+        controller.updateTextObject(idManager.getId(obj), obj.getText());
+    }
+
+    @Override
+    public void addTextObject(TextObject obj, DropZone dz) {
+        idManager.addObject(obj);
+        putInDropZone(obj, dz);
+        String id = idManager.getId(obj);
+        controller.addTextObject(id, obj.getText(), idManager.getId(dz));
     }
 
     /**

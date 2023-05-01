@@ -3,44 +3,33 @@ package oogasalad.frontend.components.gameObjectComponent.GameRunner;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
-import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
-import oogasalad.frontend.components.gameObjectComponent.GameRunner.gameObjectVisuals.*;
-import oogasalad.frontend.managers.DisplayManager;
 import oogasalad.Controller.GameController;
+import oogasalad.frontend.components.gameObjectComponent.GameRunner.gameObjectVisuals.AbstractSelectableVisual;
+import oogasalad.frontend.components.gameObjectComponent.GameRunner.gameObjectVisuals.DropZoneVisual;
+import oogasalad.frontend.components.gameObjectComponent.GameRunner.gameObjectVisuals.PieceVisualSelectBorder;
+import oogasalad.frontend.components.gameObjectComponent.GameRunner.gameObjectVisuals.PieceVisualSelectImage;
 
 public class Piece extends GameRunnerObject{
     private double lastTranslateX;
     private double lastTranslateY;
-    private final boolean hasSelectImage;
-    private final Object param;
-    public Piece(String ID, GameController gameRunnerController, String imagePath, boolean hasSelectImage, Object param, double height, double width) {
+    public Piece(String ID, GameController gameRunnerController, String imagePath, boolean hasSelectImage, String param, int height, int width) {
         super(ID, gameRunnerController);
-        setImage(imagePath);
-        this.hasSelectImage = hasSelectImage;
-        this.param = param;
         setHeight(height);
         setWidth(width);
-        setSelectableVisual();
+        setSelectableVisual(new AbstractSelectableVisual.SelectableVisualParams(true,imagePath),new AbstractSelectableVisual.SelectableVisualParams(hasSelectImage,param));
+    }
+    @Override
+    public void setSelectableVisual(AbstractSelectableVisual.SelectableVisualParams unselected, AbstractSelectableVisual.SelectableVisualParams selected) {
+        if (selected.hasSelectImage()){
+            selectableVisual = new PieceVisualSelectImage(unselected.param(),selected.param(),getHeight(),getWidth(),ID);
+        } else {
+            selectableVisual = new PieceVisualSelectBorder(unselected.param(),selected.param(),getHeight(),getWidth(),ID);
+        }
         followMouse();
         setDragSelection();
     }
-    @Override
-    public void setSelectableVisual() {
-        ImageView img = getImage();
-        img.setFitWidth(getWidth());
-        img.setFitHeight(getHeight());
-        if (hasSelectImage){
-            String selectImgPath = (String) param;
-            Node selectImage = DisplayManager.loadImage(selectImgPath,(int) getHeight(),(int) getWidth());
-            selectableVisual = new PieceVisualSelectImage(img,selectImage,getHeight(),getWidth(),ID);
-        } else {
-            Color selectBorderColor = (Color) param;
-            selectableVisual = new PieceVisualSelectBorder(img,selectBorderColor,getHeight(),getWidth(),ID);
-        }
-    }
     public void moveToDropZoneXY(Point2D dropZoneCenter){
-        Point2D pieceCenter = getNode().localToScene(getWidth()/2,getHeight()/2);
+        Point2D pieceCenter = getNode().localToScene(((double) getWidth())/2,((double) getHeight())/2);
         double shiftX = dropZoneCenter.getX() - pieceCenter.getX();
         double shiftY = dropZoneCenter.getY() - pieceCenter.getY();
         getNode().setTranslateX(getNode().getTranslateX() + shiftX);
@@ -57,7 +46,7 @@ public class Piece extends GameRunnerObject{
         getNode().setOnMouseReleased(e -> selectDropZoneBelow());
     }
     private void selectDropZoneBelow(){
-        SelectableVisual dropZoneVisual = getIntersectingDropZones();
+        DropZoneVisual dropZoneVisual = getIntersectingDropZones();
         if (dropZoneVisual == null){
             goBack();
             return;
@@ -67,6 +56,12 @@ public class Piece extends GameRunnerObject{
             acceptDrag();
             active = false;
             setDraggable(playable);
+            if (playable) {
+                makePlayable();
+            } else {
+                makeUnplayable();
+            }
+
         } else {
             goBack();
         }

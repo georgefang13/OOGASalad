@@ -4,7 +4,10 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import oogasalad.frontend.nodeEditor.Config.NodeData;
 import oogasalad.frontend.nodeEditor.NodeController;
+
+import java.util.ArrayList;
 
 public class StateNode extends AbstractNode {
 
@@ -44,6 +47,11 @@ public class StateNode extends AbstractNode {
   @Override
   public String getJSONString() {
     return null;
+  }
+
+  @Override
+  public NodeData getNodeData() {
+    return new NodeData("StateNode", "Control", new ArrayList<>());
   }
 
 

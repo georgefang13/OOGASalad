@@ -1,11 +1,10 @@
 package oogasalad.frontend.components;
 
 import javafx.scene.Node;
+
 import java.lang.reflect.Field;
 import java.util.Map;
-import java.util.Properties;
 import java.util.ResourceBundle;
-import javafx.scene.control.ColorPicker;
 
 
 /**
@@ -14,22 +13,23 @@ import javafx.scene.control.ColorPicker;
 public abstract class AbstractComponent implements Component {
   protected String ID;
   protected Node node;
+  protected int width;
+  protected int height;
   private boolean draggable;
-  private boolean active;
-  private boolean visible;
-  private int zIndex;
   private double XOffset;
   private double YOffset;
 
-  protected double size;
+  private boolean active;
+  private boolean visible;
+  private int zIndex;
+
+  private double size;
 
   private Point absolute;
   private Point editor;
   private String DEFAULT_FILE_PATH;
   private ResourceBundle DEFAULT_BUNDLE;
   private String name;
-  protected double width;
-  protected double height;
   private double rotate;
   protected Map<String, String> parameters;
 
@@ -134,61 +134,60 @@ public abstract class AbstractComponent implements Component {
 
 
 
-  protected String getDEFAULT_FILE_PATH() {
+  private String getDEFAULT_FILE_PATH() {
     return DEFAULT_FILE_PATH;
   }
-  protected void setDEFAULT_FILE_PATH(String DEFAULT_FILE_PATH) {
+  private void setDEFAULT_FILE_PATH(String DEFAULT_FILE_PATH) {
     this.DEFAULT_FILE_PATH = DEFAULT_FILE_PATH;
   }
-  protected ResourceBundle getDEFAULT_BUNDLE() {
+  private ResourceBundle getDEFAULT_BUNDLE() {
     return DEFAULT_BUNDLE;
   }
-  protected void setDEFAULT_BUNDLE(ResourceBundle DEFAULT_BUNDLE) {
+  private void setDEFAULT_BUNDLE(ResourceBundle DEFAULT_BUNDLE) {
     this.DEFAULT_BUNDLE = DEFAULT_BUNDLE;
   }
 
-  protected double getXOffset() {
+  private double getXOffset() {
     return XOffset;
   }
-  protected void setXOffset(double XOffset) {
+  private void setXOffset(double XOffset) {
     this.XOffset = XOffset;
   }
-  protected double getYOffset() {
+  private double getYOffset() {
     return YOffset;
   }
-  protected void setYOffset(double YOffset) {
+  private void setYOffset(double YOffset) {
     this.YOffset = YOffset;
   }
 
 
-  protected void setVisibleBool(boolean vis){
+  private void setVisibleBool(boolean vis){
     visible = vis;
   }
-  protected void setzIndex(int z){
+  private void setzIndex(int z){
     zIndex = z;
   }
-  protected void setAbsolutePoint(Point abs){
+  private void setAbsolutePoint(Point abs){
     absolute = abs;
   }
-  protected void setEditorPoint(Point ed){
+  private void setEditorPoint(Point ed){
     editor = ed;
   }
-
-  protected void resetOffset(){
+  private void resetOffset(){
     XOffset = 0;
     YOffset = 0;
   }
 
-  protected void setHeight(double height){
+  protected void setHeight(int height){
     this.height = height;
   }
-  protected void setWidth(double width){
+  protected void setWidth(int width){
     this.width = width;
   }
-  protected double getHeight(){
+  protected int getHeight(){
     return height;
   }
-  protected double getWidth(){
+  protected int getWidth(){
     return width;
   }
 

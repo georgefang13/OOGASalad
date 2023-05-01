@@ -1,9 +1,6 @@
 package oogasalad.frontend.windows;
 
-import oogasalad.frontend.scenes.AbstractScene;
-import oogasalad.frontend.scenes.GamePlayerLibraryScene;
-import oogasalad.frontend.scenes.GamePlayerMainScene;
-import oogasalad.frontend.scenes.SceneTypes;
+import oogasalad.frontend.scenes.*;
 
 /**
  * @author Connor Wells
@@ -24,13 +21,13 @@ public class GameWindow extends AbstractWindow {
 
   @Override
   public SceneTypes getDefaultSceneType() {
-    return WindowScenes.GAME_SCENE;
-  } //TODO: OWEN FIX THIS back to library
+    return WindowScenes.PLAYER_SELECT_SCENE;
+  }
 
   @Override
   public AbstractScene addNewScene(SceneTypes sceneType) {
     if (sceneType.equals(WindowScenes.PLAYER_SELECT_SCENE)) {
-      return new GamePlayerMainScene(this.sceneController); //TODO:FIX
+      return new GamePlayerSelectScene(this.sceneController); //TODO:FIX
     } else if (sceneType.equals(WindowScenes.WIN_SCENE)) {
       return new GamePlayerLibraryScene(this.sceneController); //TODO:FIX
     } else if (sceneType.equals(WindowScenes.GAME_SCENE)) {

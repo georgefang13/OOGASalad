@@ -1,4 +1,4 @@
-package oogasalad.gamerunner.backend.interpreter.commands.game;
+package oogasalad.gamerunner.backend.interpreter.commands.gameobjects;
 
 import oogasalad.sharedDependencies.backend.id.IdManager;
 import oogasalad.sharedDependencies.backend.id.OwnableSearchStream;
@@ -14,21 +14,17 @@ import java.util.List;
 public class GetObjChildren extends OperatorToken {
 
     public GetObjChildren() {
-        super(2, "GetObjVar");
+        super(1, "GetObjChildren");
     }
 
     @Override
     public Token evaluate(Environment env) throws IllegalArgumentException {
         Token t1 = getArg(0).evaluate(env);
-        Token t2 = getArg(1).evaluate(env);
 
         ValueToken<Ownable> objvar = checkArgumentWithSubtype(env, t1, ValueToken.class,
                 Ownable.class.getName());
-        ValueToken<String> clsvar = checkArgumentWithSubtype(env, t2, ValueToken.class,
-                String.class.getName());
 
         Ownable obj = objvar.VALUE;
-        String cls = clsvar.VALUE;
 
         IdManager<Ownable> idManager = env.getIdManager();
 

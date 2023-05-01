@@ -22,7 +22,7 @@ public class GameEditorLogicScene extends AbstractScene {
   private NodeController nodeController;
   private static final String LOGIC_EDITOR_SCENE = "logic";
 
-  public GameEditorLogicScene(SceneController sceneController) {
+  public GameEditorLogicScene(SceneMediator sceneController) {
     super(sceneController);
   }
 

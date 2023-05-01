@@ -27,8 +27,6 @@ public class Dropzone extends AbstractComponent implements DropZonePublisher {
   private Color fill;
   private Color border;
   private Rectangle square;
-  private double width;
-  private double height;
   private List<Subscriber> subscribers;
   private List<ControllerSubscriber> controllerSubscribers;
   private boolean doubleClick;
@@ -145,22 +143,6 @@ public class Dropzone extends AbstractComponent implements DropZonePublisher {
    * Return the width of the square
    * @return width;
    */
-  public double getWidth(){
-    return width;
-  }
-//  @Override
-//  public void setDefault() {
-//
-//  }
-
-  /**
-   * Return the height of the square
-   * @return height
-   */
-  public double getHeight(){
-    return height;
-  }
-
 
   /**
    * Adds a subscriber to the subscriber list

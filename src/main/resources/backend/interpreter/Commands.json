@@ -269,39 +269,46 @@
   },
 
 
+  "AddDropZone": {
+    "name": "Create GameObject",
+    "folder": "gameobjects",
+    "str": "adddz",
+    "description": "Create a new object",
+    "example": "adddz [ \"piece ] :dz \"block.png \"blockhighlight.png 50 50 # putdzitem <list classes> <dropzone location> <string img> <string highlight img> <number width>, <number height>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        { "name": "classes", "type": ["list"] },
+        { "name": "location", "type": ["dropzone"] },
+        { "name": "image", "type": ["string"] },
+        { "name": "highlight image", "type": ["string"] },
+        { "name": "width", "type": ["number"] },
+        { "name": "width", "type": ["number"] }
+
+      ],
+      "outputs": [],
+      "parse": "adddz %s %s %s %s %s %s"
+    }
+  },
   "AddDropZoneItem": {
     "name": "Add Drop Zone Item",
-    "folder": "game",
+    "folder": "dropzones",
     "str": "putdzitem",
     "description": "Puts an item with a specific name within in a drop zone",
     "example": "putdzitem \"x 1 :game_y # putdzitem <name> <value> <dropzone>",
     "specs": {
       "innerBlocks": [],
       "inputs": [
-        { "name": "name", "type": ["string"] },
         { "name": "value", "type": ["any"] },
         { "name": "dropzone", "type": ["dropzone"] }
       ],
-      "outputs": [{ "name": "dropzone", "type": ["dropzone"] }],
-      "parse": "putdzitem %s %s %s"
-    }
-  },
-  "CurrentPlayer": {
-    "name": "CurrentPlayer",
-    "folder": "game",
-    "str": "curplayer",
-    "description": "Get the current player in the game",
-    "example": "curplayer # curplayer ",
-    "specs": {
-      "innerBlocks": [],
-      "inputs": [],
-      "outputs": ["player"],
-      "parse": "curplayer"
+      "outputs": ["dropzone"],
+      "parse": "putdzitem %s %s"
     }
   },
   "DropZoneFollowUntilBlocked": {
     "name": "Follow Path Through Dropzones Until Blocked",
-    "folder": "game",
+    "folder": "dropzones",
     "str": "dzfollowtoblock",
     "description": "Gets all dropzones among a repeated path until the path is blocked or no longer exists",
     "example": "dzfollowtoblock :game_zone [ \"Up \"UpRight ] fvar blocked_func # dzpaths <dropzone> <list of edges> <blocked function>",
@@ -318,7 +325,7 @@
   },
   "DropZoneHasId": {
     "name": "DropZone Has Object Id",
-    "folder": "game",
+    "folder": "dropzones",
     "str": "dzhasid",
     "description": "Returns if the dropzone has an object with a specific id",
     "example": "dzhasid \"obj :game_zone # dzhasid <string id> <dropzone>",
@@ -334,7 +341,7 @@
   },
   "DropZonePaths": {
     "name": "Get All Drop Zone Paths",
-    "folder": "game",
+    "folder": "dropzones",
     "str": "dzpaths",
     "description": "Gets a list of all paths a dropzone can take",
     "example": "dzpaths :game_zone # dzpaths <dropzone>",
@@ -347,7 +354,7 @@
   },
   "FollowDropZonePath": {
     "name": "Follow a Path Through Dropzones",
-    "folder": "game",
+    "folder": "dropzones",
     "str": "dzfollow",
     "description": "Gets the next dropzone in a path",
     "example": "dzfollow :game_zone [ \"Up \"Up \"Right ] # dzpaths <dropzone> <list of edges>",
@@ -359,6 +366,76 @@
       ],
       "outputs": ["dropzone"],
       "parse": "dzfollow %s %s "
+    }
+  },
+  "GetDropZoneItem": {
+    "name": "Get Drop Zone Item",
+    "folder": "dropzones",
+    "str": "dzitem",
+    "description": "Retrieves the item with a specific name within in a drop zone",
+    "example": "dzitem \"x :game_y # dzitem <name> <dropzone>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        { "name": "name", "type": ["string"] },
+        { "name": "dropzone", "type": ["dropzone"] }
+      ],
+      "outputs": ["any"],
+      "parse": "dzitem %s %s"
+    }
+  },
+  "GetDropZoneItems": {
+    "name": "Get Drop Zone Items",
+    "folder": "dropzones",
+    "str": "dzitems",
+    "description": "Retrieves all the items in a drop zone",
+    "example": "dzitems :game_y # dzitems <dropzone>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [{ "name": "dropzone", "type": ["dropzone"] }],
+      "outputs": ["list"],
+      "parse": "dzitems %s"
+    }
+  },
+  "GetDzNeighbors": {
+    "name": "Get All Drop Zone Neighbors",
+    "folder": "dropzones",
+    "str": "dzneighbors",
+    "description": "Gets a list of all of the neighbors of a dropzone",
+    "example": "dzneighbors :game_zone # dzpaths <dropzone>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [{ "name": "dropzone", "type": ["dropzone"] }],
+      "outputs": ["list"],
+      "parse": "dzneighbors %s"
+    }
+  },
+  "IsDropZoneEmpty": {
+    "name": "Is Drop Zone Empty",
+    "folder": "dropzones",
+    "str": "dzempty",
+    "description": "Tests if a dropzone is empty",
+    "example": "dzempty :dz # dzempty <dropzone>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [{ "name": "dropzone", "type": ["dropzone"] }],
+      "outputs": ["boolean"],
+      "parse": "dzempty %s"
+    }
+  },
+
+
+  "CurrentPlayer": {
+    "name": "Add Drop Zone Item",
+    "folder": "game",
+    "str": "curplayer",
+    "description": "Get the current player in the game",
+    "example": "curplayer # curplayer ",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [],
+      "outputs": ["player"],
+      "parse": "curplayer"
     }
   },
   "FromGame": {
@@ -390,93 +467,19 @@
       "parse": "attr %s %s"
     }
   },
-  "GetDropZoneItem": {
-    "name": "Get Drop Zone Item",
+  "GetId": {
+    "name": "Get Attribute",
     "folder": "game",
-    "str": "dzitem",
-    "description": "Retrieves the item with a specific name within in a drop zone",
-    "example": "dzitem \"x :game_y # dzitem <name> <dropzone>",
+    "str": "getid",
+    "description": "Gets the id of a GameObject",
+    "example": "attr :game_x \"position # getid <gameobject>",
     "specs": {
       "innerBlocks": [],
       "inputs": [
-        { "name": "name", "type": ["string"] },
-        { "name": "dropzone", "type": ["dropzone"] }
+        { "name": "gameobject", "type": ["any"] }
       ],
-      "outputs": ["any"],
-      "parse": "dzitem %s %s"
-    }
-  },
-  "GetDropZoneItems": {
-    "name": "Get Drop Zone Items",
-    "folder": "game",
-    "str": "dzitems",
-    "description": "Retrieves all the items in a drop zone",
-    "example": "dzitems :game_y # dzitems <dropzone>",
-    "specs": {
-      "innerBlocks": [],
-      "inputs": [{ "name": "dropzone", "type": ["dropzone"] }],
-      "outputs": ["list"],
-      "parse": "dzitems %s"
-    }
-  },
-  "GetDzNeighbors": {
-    "name": "Get All Drop Zone Neighbors",
-    "folder": "game",
-    "str": "dzneighbors",
-    "description": "Gets a list of all of the neighbors of a dropzone",
-    "example": "dzneighbors :game_zone # dzpaths <dropzone>",
-    "specs": {
-      "innerBlocks": [],
-      "inputs": [{ "name": "dropzone", "type": ["dropzone"] }],
-      "outputs": ["list"],
-      "parse": "dzneighbors %s"
-    }
-  },
-  "GetObjChildren": {
-    "name": "Get Child of Object",
-    "folder": "game",
-    "str": "objchildren",
-    "description": "Get an object owned by another object by class name",
-    "example": "objchildren :x \"var_name  # objchildren <object> <child name>",
-    "specs": {
-      "innerBlocks": [],
-      "inputs": [
-        { "name": "object", "type": ["any"] },
-        { "name": "child class", "type": ["string"] }
-      ],
-      "outputs": ["any"],
-      "parse": "objchildren %s %s"
-    }
-  },
-  "GetObjDz": {
-    "name": "Get Dropzone of Objects",
-    "folder": "game",
-    "str": "objdz",
-    "description": "Get the dropzone that a GameObject is in",
-    "example": "objdz :x  # objdz <obj>",
-    "specs": {
-      "innerBlocks": [],
-      "inputs": [
-        { "name": "object", "type": ["any"] }
-      ],
-      "outputs": ["dropzone"],
-      "parse": "objdz %s"
-    }
-  },
-  "GetObjectsFromPlayer": {
-    "name": "Get Objects From Player",
-    "folder": "game",
-    "str": "fromplayer",
-    "description": "Gets all objects owned by a player with a specific class",
-    "example": "fromplayer curplayer \"class1.class2.class3...  # fromplayer <player> <.-delimited strings>",
-    "specs": {
-      "innerBlocks": [],
-      "inputs": [
-        { "name": "player", "type": ["player"] },
-        { "name": "classes", "type": ["string"] }
-      ],
-      "outputs": ["list"],
-      "parse": "fromplayer :%s %s"
+      "outputs": [],
+      "parse": "getid %s"
     }
   },
   "GetPlayer": {
@@ -511,34 +514,6 @@
       "parse": "getrule %s %s %s"
     }
   },
-  "GetObjsByClass": {
-    "name": "Get Objects In The Game By Class",
-    "folder": "game",
-    "str": "fromgameclass",
-    "description": "Gets objects in the id manager that contain one or more classes",
-    "example": "fromgameclass \"class1.class2.class3...  # fromgameclass <.-delimited strings>",
-    "specs": {
-      "innerBlocks": [],
-      "inputs": [
-        { "name": "classes", "type": ["string"] }
-      ],
-      "outputs": ["list"],
-      "parse": "fromgameclass %s"
-    }
-  },
-  "GetOwner": {
-    "name": "Get Game Object Owner",
-    "folder": "game",
-    "str": "owner",
-    "description": "Retrieves the owner of a GameObject",
-    "example": "owner :game_var # owner <var_name>",
-    "specs": {
-      "innerBlocks": [],
-      "inputs": [{ "name": "var_name", "type": ["string"] }],
-      "outputs": ["player"],
-      "parse": "owner :%s"
-    }
-  },
   "GoToNextPlayer": {
     "name": "Go To Next Player's turn",
     "folder": "game",
@@ -566,19 +541,6 @@
       ],
       "outputs": ["boolean"],
       "parse": "hasclass %s %s"
-    }
-  },
-  "IsDropZoneEmpty": {
-    "name": "Is Drop Zone Empty",
-    "folder": "game",
-    "str": "dzempty",
-    "description": "Tests if a dropzone is empty",
-    "example": "dzempty :dz # dzempty <dropzone>",
-    "specs": {
-      "innerBlocks": [],
-      "inputs": [{ "name": "dropzone", "type": ["dropzone"] }],
-      "outputs": ["boolean"],
-      "parse": "dzempty %s"
     }
   },
   "MakeAllAvailable": {
@@ -611,47 +573,22 @@
       "parse": "makeavailable %s"
     }
   },
-  "MovePiece": {
-    "name": "Move Piece",
+  "MakeTextObject": {
+    "name": "Make a Text GameObject",
     "folder": "game",
-    "str": "movepiece",
-    "description": "Moves a piece from one dropzone to another, keeping the same name it had within that dropzone",
-    "example": "movepiece :game_piece1 :game_dz1 # movepiece <GameObject> <dropzone>",
+    "str": "addtextobj",
+    "description": "Set a value to be an available piece to click on in the game",
+    "example": "addtextobj :x :game_dz [ \"money \"textobj ] to [ :str ] [ return + \"money%20=%20 :str ]  # makeavailable <var> <dropzone> <list[] classes] <function>",
     "specs": {
       "innerBlocks": [],
       "inputs": [
-        {
-          "name": "piece",
-          "type": [
-            "any"
-          ]
-        },
-        {
-          "name": "dropzone",
-          "type": [
-            "dropzone"
-          ]
-        }
+        { "name": "variable", "type": ["variable"] },
+        { "name": "location", "type": ["dropzone"] },
+        { "name": "classes", "type": ["string"] },
+        { "name": "item", "type": ["any"] },
       ],
       "outputs": [],
-      "parse": "movepiece %s %s"
-    }
-  },
-  "MovePieceAs": {
-    "name": "Move Piece As",
-    "folder": "game",
-    "str": "movepieceas",
-    "description": "Moves a piece from one dropzone to another, putting in a new name for that piece within the dropzone",
-    "example": "movepieceas :game_piece1 :game_dz1 \"obj# movepiece <GameObject> <dropzone> <string>",
-    "specs": {
-      "innerBlocks": [],
-      "inputs": [
-        { "name": "piece", "type": ["any"] },
-        { "name": "dropzone", "type": ["dropzone"] },
-        { "name": "name", "type": ["string"] }
-      ],
-      "outputs": [],
-      "parse": "movepieceas %s %s %s"
+      "parse": "makeavailable %s %s %s %s"
     }
   },
   "PutClass": {
@@ -659,7 +596,7 @@
     "folder": "game",
     "str": "putclass",
     "description": "Adds a class to a gameobject",
-    "example": "putclass :game_piece1 \"some_class # putclass <ownable> <string>",
+    "example": "putclass \"some_class :game_piece1 # putclass <string> <ownable>",
     "specs": {
       "innerBlocks": [],
       "inputs": [
@@ -706,9 +643,163 @@
       "parse": "removeclass %s %s"
     }
   },
+  "SetPlayerOwner": {
+    "name": "Set Player Owner",
+    "folder": "game",
+    "str": "setplayerowner",
+    "description": "Set the owner for a specific gameobject to be a specific plauer",
+    "example": "setplayerowner :game_obj getplayer 1  # setplayerowner <obj> <player>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        { "name": "object", "type": ["any"] },
+        { "name": "owner", "type": ["player"] }
+      ],
+      "outputs": [],
+      "parse": "setplayerowner %s %s"
+    }
+  },
+
+
+  "AddPiece": {
+    "name": "Create GameObject",
+    "folder": "gameobjects",
+    "str": "addpiece",
+    "description": "Create a new object",
+    "example": "addpiece curplayer [ \"piece ] :dz \"block.png 50 50 # putdzitem <player> <list classes> <dropzone location> <string img> <double size> <double size>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        { "name": "player", "type": ["player"] },
+        { "name": "classes", "type": ["list"] },
+        { "name": "location", "type": ["dropzone"] },
+        { "name": "image", "type": ["string"] },
+        { "name": "width", "type": ["number"] },
+        { "name": "height", "type": ["number"] }
+      ],
+      "outputs": [],
+      "parse": "addpiece %s %s %s %s %s %s"
+    }
+  },
+  "GetObjChildren": {
+    "name": "Get Child of Object",
+    "folder": "gameobjects",
+    "str": "objchildren",
+    "description": "Get an object owned by another object by class name",
+    "example": "objchildren :x  # objchildren <object>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        { "name": "object", "type": ["any"] }
+      ],
+      "outputs": ["any"],
+      "parse": "objchildren %s"
+    }
+  },
+  "GetObjChildrenByClass": {
+    "name": "Get Child of Object",
+    "folder": "gameobjects",
+    "str": "objchildrenofclass",
+    "description": "Get an object owned by another object by class name",
+    "example": "objchildrenofclass :x \"some_class # objchildren <object> <string>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        { "name": "object", "type": ["any"] },
+        { "name": "class", "type": ["string"] }
+      ],
+      "outputs": ["list"],
+      "parse": "objchildrenofclass %s %s"
+    }
+  },
+  "GetObjDz": {
+    "name": "Get Dropzone of Objects",
+    "folder": "gameobjects",
+    "str": "objdz",
+    "description": "Get the dropzone that a GameObject is in",
+    "example": "objdz :x  # objdz <obj>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        { "name": "object", "type": ["any"] }
+      ],
+      "outputs": ["dropzone"],
+      "parse": "objdz %s"
+    }
+  },
+  "GetObjectsFromPlayer": {
+    "name": "Get Objects From Player",
+    "folder": "gameobjects",
+    "str": "fromplayer",
+    "description": "Gets all objects owned by a player with a specific class",
+    "example": "fromplayer curplayer \"class1.class2.class3...  # fromplayer <player> <.-delimited strings>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        { "name": "player", "type": ["player"] },
+        { "name": "classes", "type": ["string"] }
+      ],
+      "outputs": ["list"],
+      "parse": "fromplayer :%s %s"
+    }
+  },
+  "GetObjsByClass": {
+    "name": "Get Objects In The Game By Class",
+    "folder": "gameobjects",
+    "str": "fromgameclass",
+    "description": "Gets objects in the id manager that contain one or more classes",
+    "example": "fromgameclass \"class1.class2.class3...  # fromgameclass <.-delimited strings>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        { "name": "classes", "type": ["string"] }
+      ],
+      "outputs": ["list"],
+      "parse": "fromgameclass %s"
+    }
+  },
+  "GetOwner": {
+    "name": "Get Game Object Owner",
+    "folder": "gameobjects",
+    "str": "owner",
+    "description": "Retrieves the owner of a GameObject",
+    "example": "owner :game_var # owner <var_name>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [{ "name": "var_name", "type": ["string"] }],
+      "outputs": ["player"],
+      "parse": "owner :%s"
+    }
+  },
+  "MovePiece": {
+    "name": "Move Piece",
+    "folder": "gameobjects",
+    "str": "movepiece",
+    "description": "Moves a piece from one dropzone to another, keeping the same name it had within that dropzone",
+    "example": "movepiece :game_piece1 :game_dz1 # movepiece <GameObject> <dropzone>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        {
+          "name": "piece",
+          "type": [
+            "any"
+          ]
+        },
+        {
+          "name": "dropzone",
+          "type": [
+            "dropzone"
+          ]
+        }
+      ],
+      "outputs": [],
+      "parse": "movepiece %s %s"
+    }
+  },
   "RemovePiece": {
     "name": "Get Dropzone of Objects",
-    "folder": "game",
+    "folder": "gameobjects",
     "str": "removepiece",
     "description": "Get the dropzone tht a GameObject is in",
     "example": "removepiece :x  # removepiece <obj>",
@@ -723,7 +814,7 @@
   },
   "SetObjImage": {
     "name": "Set Object Image",
-    "folder": "game",
+    "folder": "gameobjects",
     "str": "setobjimg",
     "description": "Set the image for a specific gameobject Use URLEncode to encode the image name",
     "example": "setobjimg :game_obj \"fire.png  # setobjimg <obj> <image name>",
@@ -735,6 +826,38 @@
       ],
       "outputs": [],
       "parse": "setobjimg %s %s"
+    }
+  },
+  "SetObjOwner": {
+    "name": "Set Object Owner",
+    "folder": "gameobjects",
+    "str": "setobjowner",
+    "description": "Set the owner for a specific gameobject to be another GameObject",
+    "example": "setobjowner :game_obj :game_obj2  # setobjimg <obj> <obj>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        { "name": "object", "type": ["any"] },
+        { "name": "owner", "type": ["any"] }
+      ],
+      "outputs": [],
+      "parse": "setobjowner %s %s"
+    }
+  },
+  "SetPieceHighlight": {
+    "name": "Set Piece Highlight",
+    "folder": "gameobjects",
+    "str": "sethl",
+    "description": "Set the highlight image or color for a specific gameobject",
+    "example": "sethl :game_obj \"fire.png  # setobjimg <obj> <image or hex color>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        { "name": "object", "type": ["any"] },
+        { "name": "image/color", "type": ["string"] }
+      ],
+      "outputs": [],
+      "parse": "sethl %s %s"
     }
   },
 

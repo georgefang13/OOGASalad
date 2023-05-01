@@ -255,6 +255,9 @@ public class FileManager {
     for (String tag : tags) {
       object = element.getAsJsonObject();
       if (! object.has(tag)) {
+        System.out.println("Invalid tag: " + tag);
+        //print out what file is being read
+        System.out.println("File: " + myFileInfo);
         throw new IllegalArgumentException();
       }
       element = object.get(tag);
@@ -269,5 +272,6 @@ public class FileManager {
     }
     return list;
   }
+
 }
 

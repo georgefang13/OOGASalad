@@ -5,12 +5,16 @@ import java.util.List;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
+import oogasalad.frontend.nodeEditor.Command;
+import oogasalad.frontend.nodeEditor.Config.NodeData;
 
 public class JsonNode extends AbstractNode {
 
   private String name, parseStr;
   private List<String> innerBlocks, inputs;
   private List<TextField> inputFields = new ArrayList<>();
+
+  private List<String> inputValues = new ArrayList<>();
 
   public JsonNode(String name, List<String> innerBlocks, String parseStr,
       List<String> inputs) {
@@ -21,6 +25,17 @@ public class JsonNode extends AbstractNode {
     this.inputs = inputs;
     setContent();
     this.getStyleClass().add(propertyManager.getText("JsonNode.StyleClass"));
+  }
+
+  public JsonNode(Command command){
+    super();
+    this.name = command.name();
+    this.innerBlocks = command.innerBlocks();
+    this.parseStr = command.parseStr();
+    this.inputs = command.inputs();
+    setContent();
+    this.getStyleClass().add(propertyManager.getText("JsonNode.StyleClass"));
+
   }
 
   @Override
@@ -51,4 +66,26 @@ public class JsonNode extends AbstractNode {
     }
     return (output + propertyManager.getText("SPACE") + this.getChildNode().getJSONString());
   }
+
+  @Override
+  public NodeData getNodeData(){
+    this.nodeData = new NodeData(this.name, this.getClass().getSimpleName(), getInputValues());
+    return this.nodeData;
+  };
+
+  public void setInputFields(List<String> values){
+    for(int i = 0; i < inputFields.size(); i++){
+      inputFields.get(i).setText(values.get(i));
+    }
+  }
+
+
+  private List<String> getInputValues(){
+    inputValues.clear();
+    for (TextField input : inputFields) {
+      inputValues.add(input.getText().toString());
+    }
+    return inputValues;
+  }
+
 }

@@ -9,5 +9,16 @@
       "outputs": [],
       "parse": "[ %s ]"
     }
+  },
+  "Code": {
+    "name": "Code",
+    "folder": "metablocks",
+    "description" : "Write Valee code",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": ["text"],
+      "outputs": [],
+      "parse": " %s "
+    }
   }
 }
