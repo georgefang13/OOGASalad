@@ -1,10 +1,14 @@
 package oogasalad.frontend.panels.editorPanels;
 
+import java.util.ResourceBundle;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import oogasalad.frontend.panels.Panel;
 
 public class EnvironmentPanel extends Pane implements Panel {
+  private static final ResourceBundle ID_BUNDLE = ResourceBundle.getBundle(
+      "frontend/properties/StylingIDs/CSS_ID");
+  private static final String THE_ENVIRONMENT_ID = "TheEnvironmentID";
 
   /**
    * Constructor for the environment panel
@@ -15,13 +19,7 @@ public class EnvironmentPanel extends Pane implements Panel {
   }
 
   public Panel makePanel() {
-    this.setStyle(
-        "-fx-background-color: #24252e;"); //TODO: delete, here just so we can see the pane
-//    GraphEditorTutorial graphEditorTutorial = new GraphEditorTutorial();
-    //GraphEditorContainer container = graphEditorTutorial.getContainer();
-    //container.prefHeightProperty().bind(environment.heightProperty());
-    //container.prefWidthProperty().bind(environment.widthProperty());
-    //environment.getChildren().add(container);
+    this.getStyleClass().add(ID_BUNDLE.getString(THE_ENVIRONMENT_ID));
     return this;
   }
 
@@ -29,9 +27,7 @@ public class EnvironmentPanel extends Pane implements Panel {
     return (Node) this;
   }
   @Override
-  public Panel refreshPanel() {
-    return null;
-  }
+  public void refreshPanel() {}
 
   @Override
   public String getTitle() {

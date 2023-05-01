@@ -161,9 +161,7 @@ public class ComponentPanel extends VBox implements ModalPanel, Panel {
   }
 
   @Override
-  public Panel refreshPanel() {
-    return null;
-  }
+  public void refreshPanel() {}
 
   @Override
   public String getTitle() {

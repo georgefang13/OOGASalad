@@ -8,7 +8,11 @@ import javafx.scene.layout.HBox;
 import oogasalad.frontend.factories.ButtonFactory;
 import oogasalad.frontend.panels.Panel;
 import oogasalad.frontend.panels.PanelController;
+import oogasalad.frontend.scenes.AbstractScene;
+import oogasalad.frontend.windows.AbstractWindow;
+import oogasalad.frontend.windows.GameEditorWindow;
 import oogasalad.frontend.windows.WindowTypes;
+import oogasalad.frontend.windows.WindowTypes.WindowType;
 
 public class HeaderPanel extends HBox implements Panel {
   private static final String PUZZLE_ICON = "puzzle_piece";
@@ -59,9 +63,12 @@ public class HeaderPanel extends HBox implements Panel {
   private HBox makeRightBox() {
     HBox rightBox = new HBox();
     newGame = buttonFactory.createIconButton(NEW_GAME, PUZZLE_ICON);
-    newGame.setOnAction(
-        e -> panelController.getSceneController().getWindowController()
-            .registerAndShow(WindowTypes.WindowType.EDIT_WINDOW));
+    newGame.setOnMouseClicked(
+        e -> {
+          AbstractWindow newWindow = panelController.newWindowFromPanel(WindowType.EDIT_WINDOW);
+          AbstractScene editScene = newWindow.addNewScene(GameEditorWindow.WindowScenes.EDITOR_SCENE);
+          newWindow.showScene(editScene);
+        });
     importGame = buttonFactory.createIconButton(IMPORT_GAME, UPLOAD_ICON);
     rightBox.getChildren().addAll(importGame, newGame);
     rightBox.getStyleClass().add(ID_BUNDLE.getString(RIGHT_HEADER_BOX_ID));
@@ -73,9 +80,7 @@ public class HeaderPanel extends HBox implements Panel {
   }
 
   @Override
-  public Panel refreshPanel() {
-    return null;
-  }
+  public void refreshPanel() {}
 
   @Override
   public String getTitle() {

@@ -104,21 +104,17 @@ public class GameRunnerController implements GameController {
 
     @Override
     public void addDropZone(GameController.DropZoneParameters params) {
-//        Platform.runLater(() -> {
             DropZoneFE dropZone = new DropZoneFE(params.id(), params.unselected(), params.selected(), params.width(), params.height(), params.x(),params.y(),this);
             gameObjects.put(params.id(),dropZone);
             addGameObject(params.id(),dropZone);
-//        });
     }
 
     @Override
     public void addPiece(String id, String imagePath, String dropZoneID, boolean hasSelectImage, String param, int height, int width) {
-//        Platform.runLater(() -> {
             Piece piece = new Piece(id,this, imagePath, hasSelectImage, param ,height, width);
             DropZoneFE dropZone = (DropZoneFE) gameObjects.get(dropZoneID);
             piece.moveToDropZoneXY(dropZone.getDropZoneCenter());
             addGameObject(id,piece);
-//        });
     }
     private void addGameObject(String id, GameRunnerObject gameObject){
             gameObjects.put(id,gameObject);
@@ -133,29 +129,25 @@ public class GameRunnerController implements GameController {
 
     @Override
     public void setClickable(List<String> ids) {
-//        Platform.runLater(() -> {
+        Platform.runLater(() -> {
             clearClickables();
             clickable.addAll(ids);
             for (String id : ids){
                 gameObjects.get(id).makePlayable();
             }
-//        });
+        });
     }
 
     @Override
     public void movePiece(String pieceID, String dropZoneID) {
-//        Platform.runLater(() -> {
             DropZoneFE dropZone = (DropZoneFE) gameObjects.get(dropZoneID);
             Piece piece = (Piece) gameObjects.get(pieceID);
             piece.moveToDropZoneXY(dropZone.getDropZoneCenter());
-//        });
     }
 
     @Override
     public void removePiece(String pieceID) {
-//        Platform.runLater(() -> {
             removeGameObject(pieceID);
-//        });
     }
 
     @Override
@@ -175,12 +167,10 @@ public class GameRunnerController implements GameController {
     }
 
     private void clearClickables(){
-//        Platform.runLater(() -> {
             for (String id : clickable){
                 gameObjects.get(id).makeUnplayable();
             }
             clickable.clear();
-//        });
     }
     @Override
     public boolean isObjectPlayable(String id){
