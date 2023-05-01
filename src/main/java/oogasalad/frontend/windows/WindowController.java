@@ -5,6 +5,9 @@ import java.util.Map;
 import java.util.Stack;
 import oogasalad.frontend.windows.WindowTypes.WindowType;
 
+import oogasalad.logging.MainLogger;
+import ch.qos.logback.classic.Level;
+
 /**
  * @author Connor Wells
  * @author Owen MacKenzie
@@ -17,14 +20,18 @@ public class WindowController implements WindowMediator {
   private int windowIDCounter;
   private Stack<Object> windowData = new Stack<>();
 
+  private static final MainLogger logger = MainLogger.getInstance(WindowController.class);
+
   public WindowController() {
     windowMap = new HashMap<>();
     registerAndShow(WindowType.SPLASH_WINDOW);
+    //logger.setLogLevel(Level.ALL); // uncomment if you want to add lover level logs specific to this class
   }
 
   @Override
   public void registerAndShow(WindowType windowType) {
     showWindow(registerWindow(windowType));
+    logger.trace(String.format("Registered a new window: Type - %s",  windowType));
   }
 
   @Override
@@ -40,12 +47,14 @@ public class WindowController implements WindowMediator {
   @Override
   public void showWindow(String windowID) {
     getWindow(windowID).show();
+    logger.info(String.format("Show a new window: ID - %s",  windowID));
   }
 
   @Override
   public void closeWindow(String windowID) {
     getWindow(windowID).close();
     windowMap.remove(windowID);
+    logger.info(String.format("Close window: ID - %s",  windowID));
   }
 
   @Override
