@@ -1,7 +1,9 @@
 package oogasalad.gameeditor.backend.filemanager;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.google.gson.JsonSyntaxException;
 import java.io.FileNotFoundException;
@@ -95,6 +97,15 @@ public class FileGetTest {
     HashMap<Integer, String> map2 = fileManager.getObject(HashMap.class,
         "OH HAROLD DO YOU WANT A WIFE THATS NOT A RAGING PUMPKIN");
     assertEquals(map, map2);
+  }
+
+  @Test
+  void hasPathTest() throws FileNotFoundException {
+    fileManager = new FileManager();
+    assertFalse(fileManager.hasTag("rodrigo"));
+    fileManager = new FileManager(getPath("DOUBLE_HIERARCHY"));
+    assertTrue(fileManager.hasTag("person1"));
+    assertTrue(fileManager.hasTag("name", "person1"));
   }
 
   @Test

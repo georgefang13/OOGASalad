@@ -1,7 +1,6 @@
 package oogasalad.sharedDependencies.backend.rules;
 
 import oogasalad.sharedDependencies.backend.ownables.Ownable;
-import oogasalad.sharedDependencies.backend.ownables.gameobjects.GameObject;
 
 import java.util.ArrayList;
 import java.util.HashSet;

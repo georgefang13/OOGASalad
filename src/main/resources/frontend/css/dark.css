@@ -194,6 +194,9 @@
 }
 
 /* LibraryGridPanel */
+.library-scroll-pane {
+  -fx-background-color: #24252e;
+}
 .library-grid-pane {
   -fx-background-color: #24252e;
   -fx-hgap: 20;
@@ -383,4 +386,12 @@
 #imagePickerID {
   -fx-background-color: #2f0c77;
   -fx-text-fill: white;
+}
+
+
+.goal-node {
+  -fx-background-color: #FF00F4;
+  -fx-font-size: 35;
+  -fx-alignment: center;
+  -fx-pref-width: 300 !important;
 }

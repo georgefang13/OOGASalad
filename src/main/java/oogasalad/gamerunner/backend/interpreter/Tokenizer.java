@@ -184,7 +184,7 @@ public class Tokenizer {
   String sanitizeRegex(String str) {
     String specialChars = "[]{}()\\^$.|?*+";
     for (int i = 0; i < specialChars.length(); i++) {
-      str = str.replace(specialChars.charAt(i) + "", "\\" + specialChars.charAt(i));
+      str = str.replace(String.valueOf(specialChars.charAt(i)), "\\" + specialChars.charAt(i));
     }
     return str;
   }

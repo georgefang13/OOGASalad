@@ -49,7 +49,7 @@ public class Interpreter implements Runnable {
   }
 
   /**
-   * loades a parsed list of tokens into the interpreter without running it.
+   * loads a parsed list of tokens into the interpreter without running it.
    *
    * @param tokens the expressions (as OperatorTokens) to load
    */

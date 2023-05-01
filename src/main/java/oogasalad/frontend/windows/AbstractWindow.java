@@ -15,6 +15,7 @@ import ch.qos.logback.classic.Level;
  */
 
 public abstract class AbstractWindow extends Stage {
+  protected String gameName;
 
   protected SceneController sceneController;
   protected String windowID;
@@ -39,5 +40,8 @@ public abstract class AbstractWindow extends Stage {
   public void showScene(AbstractScene scene) {
     logger.trace("Show a new scene ↑");
     setScene(scene.getScene());
+  }
+  public String getGameName(){
+    return gameName;
   }
 }

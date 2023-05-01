@@ -8,22 +8,46 @@ import oogasalad.frontend.components.gameObjectComponent.GameRunner.gameObjectVi
 import oogasalad.frontend.components.gameObjectComponent.GameRunner.gameObjectVisuals.DropZoneVisual;
 import oogasalad.frontend.components.gameObjectComponent.GameRunner.gameObjectVisuals.PieceVisualSelectBorder;
 import oogasalad.frontend.components.gameObjectComponent.GameRunner.gameObjectVisuals.PieceVisualSelectImage;
-
+/**
+ * @author Owen MacKenzie
+ */
 public class Piece extends GameRunnerObject{
     private double lastTranslateX;
     private double lastTranslateY;
     private AbstractSelectableVisual.SelectableVisualParams unselected;
+
+    /**
+     * Constructor for Piece
+     * @param ID
+     * @param gameRunnerController
+     * @param imagePath
+     * @param hasSelectImage
+     * @param param
+     * @param height
+     * @param width
+     */
     public Piece(String ID, GameController gameRunnerController, String imagePath, boolean hasSelectImage, String param, int height, int width) {
         super(ID, gameRunnerController);
         setHeight(height);
         setWidth(width);
         setSelectableVisual(new AbstractSelectableVisual.SelectableVisualParams(true,imagePath),new AbstractSelectableVisual.SelectableVisualParams(hasSelectImage,param));
     }
+
+    /**
+     * Sets the selectable visual
+     * @param unselected
+     * @param selected
+     */
     @Override
     public void setSelectableVisual(AbstractSelectableVisual.SelectableVisualParams unselected, AbstractSelectableVisual.SelectableVisualParams selected) {
         this.unselected = unselected;
         setSelectVisual(selected);
     }
+
+    /**
+     * Sets the select visual
+     * @param selected
+     */
     @Override
     public void setSelectVisual(AbstractSelectableVisual.SelectableVisualParams selected) {
         if (selected.hasSelectImage()){
@@ -34,12 +58,14 @@ public class Piece extends GameRunnerObject{
         followMouse();
         setDragSelection();
     }
+
+    /**
+     * Makes the piece follow the mouse
+     *
+     * @param dropZoneCenter
+     */
     public void moveToDropZoneXY(Point2D dropZoneCenter){
-        Point2D pieceCenter = getNode().localToScene(((double) getWidth())/2,((double) getHeight())/2);
-        double shiftX = dropZoneCenter.getX() - pieceCenter.getX();
-        double shiftY = dropZoneCenter.getY() - pieceCenter.getY();
-        getNode().setTranslateX(getNode().getTranslateX() + shiftX);
-        getNode().setTranslateY(getNode().getTranslateY() + shiftY);
+        moveToXY(dropZoneCenter);
         acceptDrag();
     }
     private void setDragSelection() {

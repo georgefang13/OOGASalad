@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -13,9 +12,7 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
-import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -140,6 +137,21 @@ public class FileManager {
     }
   }
 
+  public boolean hasTag(String tag, String... tags) {
+    try {
+      String[] allTags = new String[tags.length + 1];
+      for (int i = 0; i < tags.length; i++) {
+        allTags[i] = tags[i];
+      }
+      allTags[allTags.length - 1] = tag;
+      traverse(allTags);
+    }
+    catch (IllegalArgumentException e) {
+      return false;
+    }
+    return true;
+  }
+
   /**
    * Define collection of acceptable tags for FileManager instance
    *
@@ -260,9 +272,6 @@ public class FileManager {
     for (String tag : tags) {
       object = element.getAsJsonObject();
       if (! object.has(tag)) {
-        System.out.println("Invalid tag: " + tag);
-        //print out what file is being read
-        System.out.println("File: " + myFileInfo);
         throw new IllegalArgumentException();
       }
       element = object.get(tag);

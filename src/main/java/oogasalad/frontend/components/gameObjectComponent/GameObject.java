@@ -1,5 +1,6 @@
 package oogasalad.frontend.components.gameObjectComponent;
 
+import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import oogasalad.frontend.components.AbstractComponent;
@@ -24,12 +25,21 @@ public class GameObject extends AbstractComponent implements GameObjectComponent
   private double rotate;
   private double dropzoneID;
 
+  /**
+   * Constructor for GameObject
+   * @param ID
+   */
   public GameObject(String ID) {
     super(ID);
     children = null;
     instantiatePropFile("frontend.properties.Defaults.GameObject");
   }
 
+  /**
+   * Constructor for GameObject
+   * @param ID
+   * @param map
+   */
   public GameObject(String ID, Map<String, String> map){
     super(ID);
     children = null;
@@ -40,27 +50,46 @@ public class GameObject extends AbstractComponent implements GameObjectComponent
     followMouse();
   }
 
+  /**
+   * Initializes object
+   */
   private void initialize() {
     image.setFitWidth(width);
     image.setFitHeight(height);
     image.setRotate(rotate);
   }
 
+  /**
+   * sets image of the object
+   * @param imagePath the path where the image is contained to represent the Component
+   */
   @Override
   public void setImage(String imagePath) {
     image = (ImageView) DisplayManager.loadImage(imagePath,getHeight(),getWidth());
   }
 
+  /**
+   * get the image of the object
+   * @return
+   */
   @Override
   public ImageView getImage() {
     return image;
   }
 
+  /**
+   * gets the children of the object
+   * @return
+   */
   @Override
   public List<Node> getChildren() {
     return children;
   }
 
+  /**
+   * gets node of the image
+   * @return
+   */
   @Override
   public Node getNode() {
     return getImage();

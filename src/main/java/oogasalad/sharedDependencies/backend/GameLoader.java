@@ -1,6 +1,5 @@
 package oogasalad.sharedDependencies.backend;
 
-import oogasalad.gamerunner.backend.Game;
 import oogasalad.gamerunner.backend.fsm.FSM;
 import oogasalad.gamerunner.backend.fsm.ProgrammableState;
 import oogasalad.gamerunner.backend.interpretables.Goal;
@@ -158,7 +157,11 @@ public class GameLoader {
 
             Owner own = gameWorld;
             if (!owner.isEmpty() && Integer.parseInt(owner) != -1){
-                own = players.get(Integer.parseInt(owner));
+                int playerNum = Integer.parseInt(owner);
+                if (playerNum >= players.size()){
+                    continue;
+                }
+                own = players.get(playerNum);
             }
 
             GameObject obj = new GameObject(own);
@@ -182,7 +185,14 @@ public class GameLoader {
         FileManager fm = new FileManager(directory + "/variables.json");
 
         for (String id : fm.getTagsAtLevel()){
-            int ownerNum = fm.getObject(Integer.class, id, "owner");
+            String ownerStr = fm.getString(id, "owner");
+            int ownerNum;
+            if (ownerStr.isEmpty()) ownerNum = -1;
+            else ownerNum = Integer.parseInt(ownerStr);
+
+            if (ownerNum >= players.size()){
+                continue;
+            }
 
             String type = fm.getString(id, "type");
             if(type.equals("null")) {
