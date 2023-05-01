@@ -16,6 +16,9 @@ import oogasalad.sharedDependencies.backend.ownables.variables.Variable;
 import oogasalad.sharedDependencies.backend.owners.GameWorld;
 import oogasalad.sharedDependencies.backend.owners.Owner;
 import oogasalad.sharedDependencies.backend.owners.Player;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 
 /**
  * A factory class for ownables. This is used to choose which type of ownable to instantiate in
@@ -52,7 +55,7 @@ public class ObjectFactory {
     String boardLength = params.get(ObjectParameter.BOARD_LENGTH) != null ? params.get(ObjectParameter.BOARD_LENGTH).toString() : null;
     String boardForward = params.get(ObjectParameter.BOARD_FORWARD) != null ? params.get(ObjectParameter.BOARD_FORWARD).toString() : null;
     String boardBackward = params.get(ObjectParameter.BOARD_BACKWARD) != null ? params.get(ObjectParameter.BOARD_BACKWARD).toString() : null;
-
+    LOG.info("{} type of board.", type);
     switch (Objects.requireNonNull(type)) {
       case "createGrid" -> {
         assert boardRows != null;
@@ -168,4 +171,6 @@ public class ObjectFactory {
     }
 
   }
+
+  private static final Logger LOG = LogManager.getLogger(ObjectFactory.class);
 }
