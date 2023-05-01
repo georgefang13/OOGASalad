@@ -148,7 +148,9 @@ public class ComponentPanel extends VBox implements ModalPanel, Panel {
   }
 
   private void editComponent(String name, String title){
+    System.out.println("dis be: "+ name);
     Map<String, String> map = mController.getActiveComponent(name).getParameters();
+    map.replace("name", name);
     CreateNewModal editModal = new CreateNewModal(title, true, map);
     mController.setRoot(root);
     editModal.attach(mController);
