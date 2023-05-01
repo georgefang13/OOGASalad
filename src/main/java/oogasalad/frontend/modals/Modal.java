@@ -43,9 +43,7 @@ public class Modal<T> extends Dialog<T> {
     initModality(Modality.APPLICATION_MODAL);
     initStyle(StageStyle.UNDECORATED);
     setResizable(false);
-    setDialogPane(createDialogPane());
     getDialogPane().getStylesheets().add(MODAL_STYLE_SHEET);
-
     setResultConverter(this::convertResult);
   }
 

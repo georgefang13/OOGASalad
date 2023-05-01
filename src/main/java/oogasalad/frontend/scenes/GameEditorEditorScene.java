@@ -102,6 +102,7 @@ public class GameEditorEditorScene extends AbstractScene {
 
   private void createTopPanel() {
     headerMenu = new HeaderMenuPanel(panelController, VISUAL_EDITOR_SCENE);
+    headerMenu.setFiles(this.sceneController.getFilesController());
   }
 
   @Override
