@@ -132,8 +132,8 @@ private static final String DROPDOWN_BOX_ID = "DropdownBoxID";
         displayLibrary();
       }
       else {
-        AlertModal error = new AlertModal();
-        error.showAndWait();
+        AlertModal error = new AlertModal("RegisterErrorHeader", "RegisterErrorBody");
+        error.showAlert();
       }
     });
     loginSignUpButtons.getChildren().addAll(login, signUp);
