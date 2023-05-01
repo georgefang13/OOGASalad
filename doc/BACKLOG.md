@@ -794,4 +794,21 @@ User creates custom GameObject
 * User is prompted to provide name, decide if class should be created, and a custom image
 * Later on, the user can add Variables associated with it
 
+---
+
+ek210
+
+Implementing Logging
+
+Add MainLogger class to handle logging throughout the project
+* Add logging to different parts of the system, including frontend, backend, and controller.
+* Use better differentiation among log levels: trace, debug, informational (progress), warning, and error messages.
+* Use logger instances to ensure thread safety and prevent resource contention.
+* Use log files to store log data, and rotate logs periodically to prevent data loss.
+* Add contextual information to logs, such as class names and method names, to help with debugging.
+* Use log messages to track user actions and system events, such as adding rules, saving games, and modifying player properties.
+* Use log messages to track errors and exceptions, including stack traces and error codes, to aid in diagnosing and resolving issues.
+* Use log messages to track performance metrics, such as processing times and memory usage, to optimize system performance.
+* Use log analysis tools, such as ELK stack, to visualize and analyze log data, and identify patterns and trends.
+
 
