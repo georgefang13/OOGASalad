@@ -42,6 +42,7 @@ public class ModalController {
 
   public void createObjectTemplate(Map<String, String> map, String objectType) {
     String name = map.get("name");
+    System.out.println(map.get("dropzoneID"));
     dropZoneController.setRoot(root);
     templateMap.put(name, map);
     parentPanel.addComponentTemplate(name, objectType);
@@ -52,7 +53,6 @@ public class ModalController {
 
     int firstDigitIndex = name.replaceAll("\\D", "").length() > 0 ? name.indexOf(name.replaceAll("\\D", "").charAt(0)) : -1;
     String componentTemplate = (firstDigitIndex != -1) ? name.substring(0, firstDigitIndex) : name;
-    System.out.println(componentTemplate);
 
     Map<String, String> map = templateMap.get(componentTemplate);
     Component c = factory.create(objectType, map);

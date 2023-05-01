@@ -14,11 +14,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import oogasalad.frontend.components.dropzoneComponent.Dropzone;
 import oogasalad.frontend.modals.InputModal;
-import oogasalad.frontend.modals.fields.ColorPickerComponent;
-import oogasalad.frontend.modals.fields.Field;
-import oogasalad.frontend.modals.fields.ImagePickerComponent;
-import oogasalad.frontend.modals.fields.IntegerPickerComponent;
-import oogasalad.frontend.modals.fields.TextFieldComponent;
+import oogasalad.frontend.modals.fields.*;
 
 public class CreateNewModal extends InputModal {
 
@@ -29,6 +25,7 @@ public class CreateNewModal extends InputModal {
   private List<TextFieldComponent> textFields;
   private List<ColorPickerComponent> colorPickers;
   private List<IntegerPickerComponent> integerPickers;
+  private List<ChoiceBoxComponent> choiceBoxPickers;
   private String myTitle;
   private boolean editMode;
   private Map<String, String> values;
@@ -139,6 +136,9 @@ public class CreateNewModal extends InputModal {
       if(field.getClass() == IntegerPickerComponent.class){
         integerPickers.add((IntegerPickerComponent) field);
       }
+      if(field.getClass() == ChoiceBoxComponent.class){
+        choiceBoxPickers.add((ChoiceBoxComponent) field);
+      }
 
       // Add the field to the grid
       grid.add(fieldHBox, 0, rowIndex);
@@ -157,6 +157,7 @@ public class CreateNewModal extends InputModal {
     textFields = new ArrayList<>();
     colorPickers = new ArrayList<>();
     integerPickers = new ArrayList<>();
+    choiceBoxPickers = new ArrayList<>();
   }
   // TODO: styling use the last .NAME in the properties file to get the styling id
 
@@ -180,6 +181,10 @@ public class CreateNewModal extends InputModal {
     for (IntegerPickerComponent integerComponent : integerPickers){
       map.put(integerComponent.getId(), Integer.toString(integerComponent.getValue()));
     }
+    for (ChoiceBoxComponent choiceBoxComponent : choiceBoxPickers) {
+      map.put(choiceBoxComponent.getId(), choiceBoxComponent.getValue());
+    }
+
     //TODO remove, just for testing purposes
     if(editMode) {
       this.getController().editObjectInstance(map, myTitle);
