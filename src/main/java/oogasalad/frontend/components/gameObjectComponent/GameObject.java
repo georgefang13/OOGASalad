@@ -1,18 +1,13 @@
 package oogasalad.frontend.components.gameObjectComponent;
 
-import java.lang.reflect.Field;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.ResourceBundle;
 import javafx.scene.Node;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import oogasalad.frontend.components.AbstractComponent;
-import oogasalad.frontend.components.Component;
-import oogasalad.frontend.components.ConversionContext;
-import oogasalad.frontend.components.ParamFactory;
-import oogasalad.frontend.components.Point;
+import oogasalad.frontend.managers.DisplayManager;
+
+import java.util.List;
+import java.util.Map;
+import oogasalad.frontend.components.dropzoneComponent.Dropzone;
 
 
 /**
@@ -20,42 +15,40 @@ import oogasalad.frontend.components.Point;
  * "GameObject" on the backend
  */
 public class GameObject extends AbstractComponent implements GameObjectComponent{
-
   private List<Node> children;
-  private boolean playable;
   private ImageView image;
+  private Dropzone zone;
+  private String name;
+  private int width;
+  private int height;
+  private double rotate;
+  private double dropzoneID;
 
   public GameObject(String ID) {
     super(ID);
     children = null;
     instantiatePropFile("frontend.properties.Defaults.GameObject");
-    followMouse();
   }
 
   public GameObject(String ID, Map<String, String> map){
     super(ID);
     children = null;
+    setDraggable(true);
+    instantiatePropFile("frontend.properties.Defaults.GameObject");
     setValuesfromMap(map);
+    initialize();
     followMouse();
   }
 
   private void initialize() {
-    setImage(getDEFAULT_BUNDLE().getString(replaceWithFileLoadingByID()));
-  }
-
-  private String replaceWithFileLoadingByID(){
-    if (Integer.parseInt(this.getID()) < 6){
-      return "DEFAULT_IMAGE";
-    }
-    else {
-      return "X_IMAGE";
-    }
+    image.setFitWidth(width);
+    image.setFitHeight(height);
+    image.setRotate(rotate);
   }
 
   @Override
   public void setImage(String imagePath) {
-    Image newImage = new Image(imagePath);
-    image = new ImageView(newImage);
+    image = (ImageView) DisplayManager.loadImage(imagePath,getHeight(),getWidth());
   }
 
   @Override
@@ -66,11 +59,6 @@ public class GameObject extends AbstractComponent implements GameObjectComponent
   @Override
   public List<Node> getChildren() {
     return children;
-  }
-
-  @Override
-  public void setPlayable(boolean play) {
-    playable = play;
   }
 
   @Override

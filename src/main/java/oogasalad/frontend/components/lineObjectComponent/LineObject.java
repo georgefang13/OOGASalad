@@ -6,6 +6,7 @@ import oogasalad.frontend.components.AbstractComponent;
 import java.util.Map;
 
 public class LineObject extends AbstractComponent implements LineObjectComponent {
+    private String name;
     private Line myLine;
     private double startX;
     private double startY;
@@ -13,18 +14,18 @@ public class LineObject extends AbstractComponent implements LineObjectComponent
     private double endY;
     private Color color;
     private double strokeWidth;
-
     public LineObject(String ID, Map<String, String> map){
         super(ID);
+        setDraggable(true);
         setValuesfromMap(map);
         initialize();
+        followMouse();
     }
 
     private void initialize() {
         myLine = new Line(startX,startY,endX, endY);
-        myLine.setFill(color);
+        myLine.setStroke(color);
         myLine.setStrokeWidth(strokeWidth);
-        followMouse();
     }
 
     @Override

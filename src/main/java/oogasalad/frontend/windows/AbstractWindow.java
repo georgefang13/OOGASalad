@@ -31,6 +31,6 @@ public abstract class AbstractWindow extends Stage {
   public abstract AbstractScene addNewScene(SceneTypes sceneType);
 
   public void showScene(AbstractScene scene) {
-    setScene(scene.makeScene());
+    setScene(scene.getScene());
   }
 }

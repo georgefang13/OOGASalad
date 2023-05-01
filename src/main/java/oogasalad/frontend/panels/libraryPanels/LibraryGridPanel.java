@@ -1,29 +1,38 @@
 package oogasalad.frontend.panels.libraryPanels;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.io.FileNotFoundException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
+import oogasalad.frontend.factories.ButtonFactory;
+import oogasalad.frontend.panels.AbstractGridPanePanel;
 import oogasalad.frontend.panels.Panel;
 import oogasalad.frontend.panels.PanelController;
 import oogasalad.frontend.scenes.AbstractScene;
 import oogasalad.frontend.windows.AbstractWindow;
 import oogasalad.frontend.windows.GameEditorWindow;
-import oogasalad.frontend.windows.GamePlayerWindow;
+import oogasalad.frontend.windows.LibraryWindow;
+import oogasalad.frontend.windows.WindowTypes;
 import oogasalad.frontend.windows.WindowTypes.WindowType;
+import oogasalad.sharedDependencies.backend.filemanagers.FileManager;
 import org.kordamp.ikonli.fontawesome5.FontAwesomeSolid;
 import org.kordamp.ikonli.javafx.FontIcon;
 
-public class LibraryGridPanel extends GridPane implements Panel {
+public class LibraryGridPanel extends AbstractGridPanePanel implements Panel {
+  private static final String GAMES_FILEPATH = "data/games/";
+  private static final String GAMES_FILEPATH_WITH_FILE = "file:data/games/";
   private static final ResourceBundle ID_BUNDLE = ResourceBundle.getBundle(
       "frontend/properties/StylingIDs/CSS_ID");
   private static final String GAME_BOX_ID = "GameBoxID";
@@ -33,21 +42,28 @@ public class LibraryGridPanel extends GridPane implements Panel {
   private static final String GAME_BOX_EDIT_ICON_BOX_ID = "GameBoxEditIconBoxID";
   private static final String GAME_BOX_EDIT_ICON_ID = "GameBoxEditIconID";
   private static final String LIBRARY_GRID_PANE_ID = "LibraryGridPaneID";
+  private static final String GAME_BOX_TOOLTIP_ID = "GameBoxTooltipID";
   private final int IMAGE_WIDTH = 212;
   private final int IMAGE_HEIGHT = 150;
   private final int IMAGE_RADIUS = 20;
   private final int COLUMN_PERCENT_WIDTH = 25;
   private final int COLUMN_INDEX = 0;
-  private final int ROW_INDEX = 0;
   private final int MAX_COLUMN_INDEX = 3;
   PanelController panelController;
+  private ButtonFactory buttonFactory = new ButtonFactory();
+  private Map<String, String> gameNames;
+  private static final String JSON_NAME = "name";
+  private static final String JSON_TAGS = "tags";
+  private static final String JSON_DESCRIPTION = "description";
+  private static final String JSON_GENERAL_PATH = "/general.json";
+  private static final String GAME_IMAGE_PATH = "/display.png";
   /**
    * Constructor for the environment panel
    */
   public LibraryGridPanel(PanelController panelController) {
-    super();
-    this.makePanel();
+    super(panelController, "library");
     this.panelController = panelController;
+    this.makePanel();
     this.getStyleClass().add(ID_BUNDLE.getString(LIBRARY_GRID_PANE_ID));
   }
   /**
@@ -56,38 +72,18 @@ public class LibraryGridPanel extends GridPane implements Panel {
    * @return Panel
    */
   public Panel makePanel() {
-    ColumnConstraints column1 = new ColumnConstraints();
-    column1.setPercentWidth(COLUMN_PERCENT_WIDTH);
-    ColumnConstraints column2 = new ColumnConstraints();
-    column2.setPercentWidth(COLUMN_PERCENT_WIDTH);
-    ColumnConstraints column3 = new ColumnConstraints();
-    column3.setPercentWidth(COLUMN_PERCENT_WIDTH);
-    ColumnConstraints column4 = new ColumnConstraints();
-    column4.setPercentWidth(COLUMN_PERCENT_WIDTH);
-    this.getColumnConstraints().addAll(column1, column2, column3, column4);
-
-    List<String> games = getNamesOfFilesToLoad();
-    int rowIndex = ROW_INDEX;
-    int columnIndex = COLUMN_INDEX;
-    for (String game : games) {
-      this.add(createGameBox(game), columnIndex, rowIndex);
-      columnIndex++;
-      if (columnIndex > MAX_COLUMN_INDEX) {
-        columnIndex = COLUMN_INDEX;
-        rowIndex++;
-      }
-    }
+    refreshPanel();
     return this;
   }
-  private VBox createGameBox(String gameName) {
+  private VBox createGameBox(String realGameName, String directoryName) {
     VBox gameBox = new VBox();
     gameBox.getStyleClass().add(ID_BUNDLE.getString(GAME_BOX_ID));
-    gameBox.getChildren().addAll(createImageView(gameName), createTextIconHBox(gameName));
+    gameBox.getChildren().addAll(createImageView(directoryName), createTextIconHBox(realGameName));
+    createTooltip(gameBox, directoryName);
     return gameBox;
   }
   private ImageView createImageView(String gameName) {
-    ImageView gameImage = new ImageView("file:src/main/resources/frontend/images/GameLibrary/" + gameName + ".png");
-    //TODO: change to fit Ethan file system
+    ImageView gameImage = new ImageView(GAMES_FILEPATH_WITH_FILE + gameName + GAME_IMAGE_PATH);
     gameImage.setPreserveRatio(false);
     gameImage.setFitHeight(IMAGE_HEIGHT);
     gameImage.setFitWidth(IMAGE_WIDTH);
@@ -98,7 +94,11 @@ public class LibraryGridPanel extends GridPane implements Panel {
     clip.setArcHeight(IMAGE_RADIUS);
     gameImage.setClip(clip);
     gameImage.setOnMouseClicked(
-        e -> panelController.newSceneFromPanel("OWEN FIX THIS", GamePlayerWindow.WindowScenes.PLAY_SCENE));
+        e -> {
+          panelController.getSceneController().getWindowController().passData(gameName);
+          panelController.getSceneController().getWindowController().registerAndShow(
+              WindowTypes.WindowType.GAME_WINDOW);
+        });
     gameImage.getStyleClass().add(ID_BUNDLE.getString(GAME_BOX_IMAGE_ID));
     return gameImage;
   }
@@ -107,7 +107,7 @@ public class LibraryGridPanel extends GridPane implements Panel {
     gameTextBox.getStyleClass().add(ID_BUNDLE.getString(GAME_NAME_LABEL_BOX_ID));
     Label gameNameLabel = new Label(gameName);
     gameNameLabel.setOnMouseClicked(
-        e -> panelController.newSceneFromPanel("OWEN FIX THIS", GamePlayerWindow.WindowScenes.PLAY_SCENE));
+        e -> panelController.newSceneFromPanel("OWEN FIX THIS", LibraryWindow.WindowScenes.PLAY_SCENE));
     gameNameLabel.getStyleClass().add(ID_BUNDLE.getString(GAME_NAME_LABEL_ID));
     gameTextBox.getChildren().add(gameNameLabel);
 
@@ -128,27 +128,70 @@ public class LibraryGridPanel extends GridPane implements Panel {
     return gameNameEditBox;
   }
 
-  private List<String> getNamesOfFilesToLoad() {
-    File folder = new File("src/main/resources/frontend/images/GameLibrary");
-    //TODO: FIX to match Ethan's file system
-    File[] listOfGameImages = folder.listFiles();
+  private Map<String, String> getGameNamesWithTag(String tag) {
+    Map<String, String> gameNamesAndFolderNames = new HashMap<>();
+    File gamesDirectory = new File(GAMES_FILEPATH);
+    File[] gameDirectories = gamesDirectory.listFiles(File::isDirectory);
+    FileManager fm;
 
-    List<String> fileNames = new ArrayList<>();
-    for (int i = 0; i < listOfGameImages.length; i++) {
-      if (listOfGameImages[i].isFile()) {
-        fileNames.add(listOfGameImages[i].getName().substring(0, listOfGameImages[i].getName().indexOf('.')));
+    for (File gameDirectory : Objects.requireNonNull(gameDirectories)) {
+      try {
+        fm = new FileManager(gameDirectory.getPath() + JSON_GENERAL_PATH);
+      } catch (FileNotFoundException e) {
+        continue;
+      }
+      Iterable<String> currentTags = fm.getArray(JSON_TAGS);
+      for (String s : currentTags) {
+        if (s.equals(tag)) {
+          gameNamesAndFolderNames.put(fm.getString(JSON_NAME), gameDirectory.getName());
+        }
       }
     }
-    return fileNames;
+    return gameNamesAndFolderNames;
   }
 
+  private Tooltip createTooltip(VBox box, String gameName) {
+    FileManager fm;
+    try {
+      fm = new FileManager(GAMES_FILEPATH + gameName + JSON_GENERAL_PATH);
+    } catch (FileNotFoundException e) {
+      throw new RuntimeException(e);
+    }
+    Tooltip tooltip = new Tooltip(fm.getString(JSON_DESCRIPTION));
+    Tooltip.install(box, tooltip);
+    tooltip.setShowDelay(Duration.millis(0));
+    tooltip.getStyleClass().add(ID_BUNDLE.getString(GAME_BOX_TOOLTIP_ID));
+    return tooltip;
+  }
 
   public Node asNode(){
     return (Node) this;
   }
   @Override
-  public Panel refreshPanel() {
-    return null;
+  public void refreshPanel() {
+    this.getChildren().clear();
+    this.getColumnConstraints().clear();
+    ColumnConstraints column1 = new ColumnConstraints();
+    column1.setPercentWidth(COLUMN_PERCENT_WIDTH);
+    ColumnConstraints column2 = new ColumnConstraints();
+    column2.setPercentWidth(COLUMN_PERCENT_WIDTH);
+    ColumnConstraints column3 = new ColumnConstraints();
+    column3.setPercentWidth(COLUMN_PERCENT_WIDTH);
+    ColumnConstraints column4 = new ColumnConstraints();
+    column4.setPercentWidth(COLUMN_PERCENT_WIDTH);
+    this.getColumnConstraints().addAll(column1, column2, column3, column4);
+    gameNames = getGameNamesWithTag(panelController.getSceneController().getWindowController().getData().toString());
+
+    int rowIndex = 0;
+    int columnIndex = 0;
+    for (String game : gameNames.keySet()) {
+      this.add(createGameBox(game, gameNames.get(game)), columnIndex, rowIndex);
+      columnIndex++;
+      if (columnIndex > MAX_COLUMN_INDEX) {
+        columnIndex = COLUMN_INDEX;
+        rowIndex++;
+      }
+    }
   }
 
   @Override

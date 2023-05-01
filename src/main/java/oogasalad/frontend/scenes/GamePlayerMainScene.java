@@ -1,14 +1,14 @@
 package oogasalad.frontend.scenes;
 
-import javafx.geometry.Point2D;
-import javafx.geometry.Pos;
+import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
+import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.HBox;
+import oogasalad.Controller.GameController;
 import oogasalad.Controller.GameRunnerController;
+import oogasalad.frontend.managers.NodeRemovedListener;
 
 import java.util.ArrayList;
 
@@ -18,53 +18,38 @@ import java.util.ArrayList;
  */
 
 public class GamePlayerMainScene extends AbstractScene {
-  private Label textInstructions;
-  private BorderPane root;
-  private GridPane boardPane;
-  private GameRunnerController gameRunnerController;
-
-  public GamePlayerMainScene(SceneController sceneController) {
+  public GamePlayerMainScene(SceneMediator sceneController) {
     super(sceneController);
   }
 
   @Override
   public Scene makeScene() {
-    root = new BorderPane();
+    BorderPane root = new BorderPane();
 
-    gameRunnerController = new GameRunnerController(this);
+    String gameName = panelController.getSceneController().getWindowController().getData().toString();
+    String gameType = panelController.getSceneController().getData().toString();
+    ArrayList<String> gameTypeData = new ArrayList<>();
+    gameTypeData.add(gameType);
+    if (gameType.equals("join")) {
+      String code = panelController.getSceneController().getData().toString();
+      gameTypeData.add(code);
+    }
 
-    boardPane = gameRunnerController.initializeBoard();
-    VBox boardVBOX = new VBox(boardPane);
-    boardVBOX.setAlignment(Pos.CENTER);
-    root.setCenter(boardVBOX);
+    GameController gameRunnerController = new GameRunnerController(gameName,gameTypeData);
 
-    ArrayList<Node> pieces = gameRunnerController.initializePieces();
-    System.out.println(pieces);
-    root.getChildren().addAll(pieces);
+    ObservableList<Node> gameObjectVisuals = gameRunnerController.getGameObjectVisuals();
+    gameObjectVisuals.addListener(new NodeRemovedListener(root));
+    root.getChildren().addAll(gameObjectVisuals);
 
-    textInstructions = new Label("START");
-    initializeText();
-    VBox textVBOX = new VBox(textInstructions);
-    root.setBottom(textVBOX);
+    Button undoButton = new Button("Undo");
+    gameRunnerController.assignUndoButtonAction(undoButton);
+    root.setTop(undoButton);
 
-    setScene(new Scene(root));
+    Scene scene = new Scene(root);
+    setScene(scene);
     setText();
     setTheme();
     return getScene();
-  }
-  public Point2D getNodeXYOnGrid(Node node){
-    return boardPane.sceneToLocal(node.getTranslateX(), node.getTranslateY());
-  }
-
-  public void refreshInstructions(String instruction) {
-    System.out.println(instruction);
-    textInstructions.setText(instruction);
-  }
-
-  private void initializeText() {
-    String firstInstruction = gameRunnerController.initialInstruction();
-    System.out.println(firstInstruction);
-    refreshInstructions(firstInstruction);
   }
 
   @Override

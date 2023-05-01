@@ -1,0 +1,112 @@
+{
+  "pieceX0": {
+    "image": "X.png",
+    "owner": "0",
+    "size": "40",
+    "location": "XDropZone",
+    "classes": [
+      "X",
+      "piece"
+    ],
+    "owns": []
+  },
+  "pieceX1": {
+    "image": "X.png",
+    "owner": "0",
+    "size": "40",
+    "location": "XDropZone",
+    "classes": [
+      "X",
+      "piece"
+    ],
+    "owns": []
+  },
+  "pieceX2": {
+    "image": "X.png",
+    "owner": "0",
+    "size": "40",
+    "location": "XDropZone",
+    "classes": [
+      "X",
+      "piece"
+    ],
+    "owns": []
+  },
+  "pieceX3": {
+    "image": "X.png",
+    "owner": "0",
+    "size": "40",
+    "location": "XDropZone",
+    "classes": [
+      "X",
+      "piece"
+    ],
+    "owns": []
+  },
+  "pieceX4": {
+    "image": "X.png",
+    "owner": "0",
+    "size": "40",
+    "location": "XDropZone",
+    "classes": [
+      "X",
+      "piece"
+    ],
+    "owns": []
+  },
+  "pieceO0": {
+    "image": "O.png",
+    "owner": "1",
+    "size": "40",
+    "location": "ODropZone",
+    "classes": [
+      "O",
+      "piece"
+    ],
+    "owns": []
+  },
+  "pieceO1": {
+    "image": "O.png",
+    "owner": "1",
+    "size": "40",
+    "location": "ODropZone",
+    "classes": [
+      "O",
+      "piece"
+    ],
+    "owns": []
+  },
+  "pieceO2": {
+    "image": "O.png",
+    "owner": "1",
+    "size": "40",
+    "location": "ODropZone",
+    "classes": [
+      "O",
+      "piece"
+    ],
+    "owns": []
+  },
+  "pieceO3": {
+    "image": "O.png",
+    "owner": "1",
+    "size": "40",
+    "location": "ODropZone",
+    "classes": [
+      "O",
+      "piece"
+    ],
+    "owns": []
+  },
+  "pieceO4": {
+    "image": "O.png",
+    "owner": "1",
+    "size": "40",
+    "location": "ODropZone",
+    "classes": [
+      "O",
+      "piece"
+    ],
+    "owns": []
+  }
+}

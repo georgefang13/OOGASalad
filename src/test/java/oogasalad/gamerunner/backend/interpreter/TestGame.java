@@ -8,6 +8,7 @@ import oogasalad.gamerunner.backend.interpretables.Goal;
 import oogasalad.sharedDependencies.backend.ownables.Ownable;
 import oogasalad.sharedDependencies.backend.ownables.gameobjects.DropZone;
 import oogasalad.sharedDependencies.backend.ownables.gameobjects.GameObject;
+import oogasalad.sharedDependencies.backend.ownables.gameobjects.TextObject;
 import oogasalad.sharedDependencies.backend.ownables.variables.Variable;
 import oogasalad.sharedDependencies.backend.owners.GameWorld;
 import oogasalad.sharedDependencies.backend.owners.Owner;
@@ -38,6 +39,8 @@ public class TestGame implements GameToInterpreterAPI {
     private final Map<Ownable, DropZone> pieceLocations = new HashMap<>();
 
     private final Map<Ownable, String> objImages = new HashMap<>();
+
+    private List<String> log = new ArrayList<>();
 
 
     /////////////////// PLAY THE GAME ///////////////////
@@ -198,12 +201,17 @@ public class TestGame implements GameToInterpreterAPI {
     }
 
     @Override
-    public void addObject(Ownable obj, DropZone dz, String image, double size) {
-        idManager.addObject(obj);
-        putInDropZone(obj, dz);
-        String imagePath = "assets/" + image;
-        objImages.put(obj, imagePath);
+    public void addObject(Ownable obj, DropZone dz, String image, double width, double height) {
+
     }
+
+//    @Override
+//    public void addObject(Ownable obj, DropZone dz, String image, double width, double height) {
+//        idManager.addObject(obj);
+//        putInDropZone(obj, dz);
+//        String imagePath = "assets/" + image;
+//        objImages.put(obj, imagePath);
+//    }
 
     public String getObjImage(Ownable obj) {
         return objImages.get(obj);
@@ -216,12 +224,35 @@ public class TestGame implements GameToInterpreterAPI {
     }
 
     @Override
+    public void setPieceHighlight(Ownable piece, String highlight) {
+
+    }
+
+    @Override
+    public void updateTextObject(TextObject obj) {
+        String id = idManager.getId(obj);
+        log.add(id + "-" + obj.getText());
+    }
+
+    @Override
+    public void addTextObject(TextObject obj, DropZone dz) {
+        idManager.addObject(obj);
+        putInDropZone(obj, dz);
+        String id = idManager.getId(obj);
+        log.add(id + "-" + obj.getText());
+    }
+
+    @Override
     public RuleManager getRules() {
         return rules;
     }
 
     public void setTurn(int i){
         turn.set((double) i);
+    }
+
+    public List<String> getLog(){
+        return log;
     }
 
 }

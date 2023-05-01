@@ -1,19 +1,26 @@
 package oogasalad.frontend.panels.editorPanels;
 
+import java.awt.*;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.scene.Node;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TitledPane;
+import javafx.scene.input.KeyCode;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import oogasalad.Controller.FilesController;
 import oogasalad.frontend.modals.ModalController;
 import oogasalad.frontend.modals.subInputModals.CreateNewModal;
+import oogasalad.frontend.panels.ModalPanel;
 import oogasalad.frontend.panels.Panel;
+import oogasalad.sharedDependencies.backend.filemanagers.FileManager;
 
-public class ComponentPanel extends VBox implements Panel {
+public class ComponentPanel extends VBox implements ModalPanel, Panel {
 
   private static final ResourceBundle ELEMENT_LABELS = ResourceBundle.getBundle(
       "frontend/properties/text/english");
@@ -26,11 +33,11 @@ public class ComponentPanel extends VBox implements Panel {
   private ModalController mController;
   private VBox gameComponents;
   private VBox players;
-  private VBox displayable;
   private VBox gameComponentInstances;
-
+  private FilesController files;
   private double xOffset;
   private double yOffset;
+  private int count;
 
   /**
    * Constructor for HeaderMenu
@@ -38,13 +45,12 @@ public class ComponentPanel extends VBox implements Panel {
   public ComponentPanel() {
     super();
     mController = new ModalController(this);
-
     //TODO is there a better way?
     gameComponents = new VBox();
     players = new VBox();
-    displayable = new VBox();
     gameComponentInstances = new VBox();
     this.makePanel();
+    count = 0;
   }
 
   /**
@@ -59,6 +65,10 @@ public class ComponentPanel extends VBox implements Panel {
     return this;
   }
 
+  public void setFiles(FilesController file){
+    files = file;
+    mController.setFileController(files);
+  }
   public VBox createSingleAccordionVBox() {
     VBox componentPanel = new VBox();
     componentPanel.getChildren()
@@ -79,14 +89,13 @@ public class ComponentPanel extends VBox implements Panel {
   } //TODO: turn these two methods into one method that takes in a string
 
   private Accordion createComponenetLibraryAccordion() {
-    TitledPane t1 = new TitledPane("Game Objects", gameComponents);
+    TitledPane t1 = new TitledPane("Components", gameComponents);
     TitledPane t2 = new TitledPane("Players", players);
-    TitledPane t3 = new TitledPane("Displayable", displayable);
     gameComponents.getChildren().addAll(createComponentTemplate("gameObject"),
             createComponentTemplate("lineObject"), createComponentTemplate("textObject"),
-            createComponentTemplate("rectangleObject"), createComponentTemplate("gridObject"));
+            createComponentTemplate("rectangleObject"), createComponentTemplate("gridObject"), createComponentTemplate("dropzone"));
     Accordion accordion = new Accordion();
-    accordion.getPanes().addAll(t1, t2, t3);
+    accordion.getPanes().addAll(t1, t2);
     return accordion;
   }
 
@@ -98,7 +107,7 @@ public class ComponentPanel extends VBox implements Panel {
 
   private Accordion createActiveComponentsAccordion() {
 
-    TitledPane t1 = new TitledPane("Game Objects",
+    TitledPane t1 = new TitledPane("Objects",
         gameComponentInstances); // TODO: make this dynamic so when you press ok on the modal after adding a compoennet it shows up in this panel
     Accordion accordion = new Accordion();
     accordion.getPanes().addAll(t1);
@@ -107,26 +116,44 @@ public class ComponentPanel extends VBox implements Panel {
 
 
   public void addComponentTemplate(String name, String objectType){
-
     Button b = new Button(name);
-    b.setOnAction(e -> createNewComponentInstance(name, objectType));
-//    b.setOnMousePressed(e -> {
-//      xOffset = e.getSceneX();
-//      yOffset = e.getSceneY();
-//    });
+    b.setOnAction(e -> createNewComponentInstance(name+Integer.toString(mController.getMap().keySet().size()), objectType));
     gameComponents.getChildren().add(b);
   }
+
   private void createNewComponentInstance(String name, String objectType) {
     mController.createObjectInstance(name, objectType);
-    Button b = new Button(name);
-    gameComponentInstances.getChildren().add(b);
+    HBox buttonLine = new HBox();
+    Button b1 = new Button(name);
+    Button b2 = new Button("delete");
+    Button b3 = new Button("edit");
+    buttonLine.getChildren().addAll(b1,b2,b3);
+    gameComponentInstances.getChildren().add(buttonLine);
+
+    b3.setOnMouseClicked(event -> {
+      editComponent(name,objectType);
+    });
+
+    b2.setOnMouseClicked(event -> {
+        mController.deleteObjectInstance(name);
+        gameComponentInstances.getChildren().remove(buttonLine);
+    });
   }
 
   private void createNewComponentTemplate(String title){
-    CreateNewModal modal = new CreateNewModal(title);
+    CreateNewModal modal = new CreateNewModal(title, mController.dropzoneList());
     mController.setRoot(root);
     modal.attach(mController);
     modal.showAndWait();
+  }
+
+  private void editComponent(String name, String title){
+    Map<String, String> map = mController.getActiveComponent(name).getParameters();
+    map.replace("name", name);
+    CreateNewModal editModal = new CreateNewModal(title, true, map, mController.dropzoneList());
+    mController.setRoot(root);
+    editModal.attach(mController);
+    editModal.showAndWait();
   }
 
   public Node asNode() {
@@ -134,9 +161,7 @@ public class ComponentPanel extends VBox implements Panel {
   }
 
   @Override
-  public Panel refreshPanel() {
-    return null;
-  }
+  public void refreshPanel() {}
 
   @Override
   public String getTitle() {

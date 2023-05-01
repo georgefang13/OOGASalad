@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import oogasalad.Controller.FilesController;
 import oogasalad.frontend.panels.editorPanels.ComponentPanel;
 import oogasalad.frontend.panels.editorPanels.EnvironmentPanel;
 import oogasalad.frontend.panels.editorPanels.HeaderMenuPanel;
@@ -25,15 +26,13 @@ public class GameEditorEditorScene extends AbstractScene {
   private ComponentPanel componentsPanel;
   private EnvironmentPanel environmentPanel;
   private PropertiesPanel propertiesPanel;
-
   /**
    * Constructor for the visual editor scene
    *
    * @param sceneController
    */
-  public GameEditorEditorScene(SceneController sceneController) {
+  public GameEditorEditorScene(SceneMediator sceneController) {
     super(sceneController);
-
   }
 
   private void setButtonVisualPanel(Button button, String title) {
@@ -78,6 +77,7 @@ public class GameEditorEditorScene extends AbstractScene {
   private void createLeftPanel() {
     componentsPanel = new ComponentPanel();
     componentsPanel.setReferenceRoot(root);
+    componentsPanel.setFiles(this.sceneController.getFilesController());
   }
 
   private void createRightPanel() {
@@ -102,6 +102,7 @@ public class GameEditorEditorScene extends AbstractScene {
 
   private void createTopPanel() {
     headerMenu = new HeaderMenuPanel(panelController, VISUAL_EDITOR_SCENE);
+    headerMenu.setFiles(this.sceneController.getFilesController());
   }
 
   @Override

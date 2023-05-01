@@ -73,6 +73,8 @@ public class SocketRunner implements OnlineRunner {
     }
     @Override
     public void join(String code){
+        System.out.println("joining");
+        System.out.println(code);
         socket.emit("join", code);
         socket.once("entered", args -> {
             System.out.println("Entered!");

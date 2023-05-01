@@ -3,6 +3,83 @@
   -fx-background-color: white;
 }
 
+/* LOGIN/Splash Window */
+.splash-root {
+  -fx-background-color: #F7F7F7;
+  -fx-spacing: 20;
+  -fx-alignment: center;
+  -fx-text-alignment: center;
+  -fx-vgrow: always;
+}
+.splash-root > * {
+  -fx-min-width: 100%;
+  -fx-text-alignment: center;
+  -fx-alignment: center;
+}
+
+.the-title {
+  -fx-font-size: 80;
+  -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.6), 12, 0, 0, 6);
+  -fx-text-fill: black;
+}
+.username-password-box {
+  -fx-spacing: 10;
+  -fx-alignment: center;
+}
+.input-fields {
+  -fx-spacing: 10;
+}
+.username-label {
+  -fx-text-fill: black;
+  -fx-font-size: 20;
+}
+.username-field {
+  -fx-background-color: #E8E8E8;
+  -fx-text-fill: black;
+  -fx-font-size: 14;
+  -fx-border-radius: 10;
+  -fx-background-radius: 10;
+}
+.login {
+  -fx-text-fill: black;
+  -fx-font-size: 14;
+}
+.dropdown {
+  -fx-background-color: #E8E8E8;
+  -fx-text-fill: black;
+  -fx-font-size: 14px;
+  -fx-padding: 5px;
+  -fx-background-insets: 0;
+  -fx-border-width: 0;
+}
+.dropdown .text {
+  -fx-fill: black;
+}
+.dropdown .arrow {
+  -fx-background-color: black;
+}
+.dropdown .arrow-button {
+  -fx-background-color: #E8E8E8;
+  -fx-background-insets: 0;
+  -fx-padding: 0;
+}
+.dropdown .list-view {
+  -fx-background-color: #E8E8E8;
+  -fx-text-fill: black;
+  -fx-font-size: 12px;
+  -fx-padding: 3px;
+  -fx-background-insets: 0;
+  -fx-border-width: 0;
+}
+.dropdown .list-cell {
+  -fx-background-color: #E8E8E8;
+}
+.dropdown .list-cell:hover {
+  -fx-background-color: #D1D1D1;
+}
+.dropdown-box {
+  -fx-spacing: 10;
+}
 /* HeaderMenuPanel */
 .menu-hbox { /* Specific */
   -fx-background-color: #4A4F76;
@@ -23,6 +100,10 @@
   -fx-background-color: #4A4F76;
   -fx-border-color: white;
   -fx-text-fill: white;
+}
+/* EnvironmentPanel */
+.the-environment {
+  -fx-background-color: #24252e;
 }
 
 /* ComponentPanel */
@@ -155,6 +236,12 @@
   -fx-fill: white;
   -fx-font-size: 16;
 }
+.game-box-tooltip {
+  -fx-background-color: #54576F;
+  -fx-background-radius: 0;
+  -fx-border-radius: 0;
+  -fx-text-fill: white;
+}
 
 
 /* HeaderPanel */
@@ -206,6 +293,31 @@
   -fx-pref-height: 620;
   -fx-pref-width: 250;
 }
+.sorted-games-text-all {
+  -fx-text-fill: white;
+  -fx-font-size: 20;
+  -fx-font-weight: bold;
+  -fx-padding: 20 0 0 35;
+}
+.sorted-games-text {
+  -fx-text-fill: white;
+  -fx-font-size: 20;
+  -fx-font-weight: bold;
+  -fx-padding: 20 0 0 60;
+}
+.hyperlink:focused {
+  -fx-border-color: transparent;
+  -fx-border-width: 0;
+  -fx-background-color: transparent;
+  -fx-underline: false;
+  outline: none;
+}
+
+
+
+
+
+
 
 .json-node{
   -fx-background-color: #F1F1EF ;
@@ -251,4 +363,23 @@
   -fx-pref-height: -1;
   -fx-pref-width: -1;
   -fx-min-width: 300  !important;
+}
+
+/* Simple Game View */
+.dropzone {
+  -fx-background-color: rgba(200, 200, 255, 0.5);
+  -fx-border-color: black;
+  -fx-border-width: 1px;
+  -fx-alignment: center;
+}
+
+.selected {
+  -fx-border-color: red;
+  -fx-border-width: 1px;
+}
+
+/* Modal Styles */
+#imagePickerID {
+  -fx-background-color: #2f0c77;
+  -fx-text-fill: white;
 }

@@ -3,6 +3,8 @@ package oogasalad.frontend.components;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 
+import java.util.Map;
+
 /**
  * @author Han, Aryan This is the base component interface that all components inherit. A component
  * is a fundamental View building block used to populate Panels
@@ -66,5 +68,6 @@ public interface Component {
 
   void setName(String newName);
   String getName();
-
+  void setValuesfromMap(Map<String, String> map);
+  Map<String, String> getParameters();
 }

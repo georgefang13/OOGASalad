@@ -10,21 +10,32 @@ import java.util.ResourceBundle;
 
 
 public class RectangleObject extends AbstractComponent implements RectangleObjectComponent {
+    private String name;
     private Rectangle rectangle;
-    double width;
-    double height;
-    Color color;
+    private double width;
+    private double height;
+    private Color color;
+    private double rotate;
 
+    public RectangleObject(String ID){
+        super(ID);
+        instantiatePropFile("frontend.properties.Defaults.RectangleObject");
+        //this.setDefault();
+        this.followMouse();
+        this.getNode();
+    }
     public RectangleObject(String ID, Map<String, String> map){
         super(ID);
+        setDraggable(true);
         setValuesfromMap(map);
         initialize();
+        followMouse();
     }
 
     private void initialize() {
         rectangle = new Rectangle(width,height);
         rectangle.setFill(color);
-        followMouse();
+        rectangle.setRotate(rotate);
     }
 
     @Override
