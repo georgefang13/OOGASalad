@@ -1,5 +1,6 @@
 package oogasalad.frontend.nodeEditor;
 
+import static oogasalad.frontend.nodeEditor.AbstractNodeEditorTab.INTERPRETER_FILES_PATH;
 import static oogasalad.frontend.nodeEditor.AbstractNodeEditorTab.USER_CODE_FILES_PATH;
 
 import com.google.gson.Gson;
@@ -26,7 +27,6 @@ public class NodeScene extends AbstractScene {
   private TabPane tabs;
   Map<Tab, CodeEditorTab> tabMap;
   private NodeController nodeController;
-  public static final String CONFIG_JSON_PATH = "src/main/resources/nodeCode/config.json";
 
 
   public NodeScene(NodeController nodeController) {
@@ -65,19 +65,16 @@ public class NodeScene extends AbstractScene {
   /**
    * Opens a new tab with the given state and action
    *
-   * @param state
-   * @param action
    * @return void
    */
-  public void openAndSwitchToTab(String state, String action) {
-    CodeEditorTab panel = new CodeEditorTab(nodeController, state, action);
+  public void openAndSwitchToTab(CodeEditorTab panel) {
     for (Tab tab : tabMap.keySet()) {
       if (tabMap.get(tab).equals(panel)) {
         tabs.getSelectionModel().select(tab);
         return;
       }
     }
-    Tab newTab = makeTab(state + ":" + action, true, panel);
+    Tab newTab = makeTab(panel.getState() + ":" + panel.getAction(), true, panel);
     tabs.getTabs().add(newTab);
     tabMap.put(newTab, panel);
   }
@@ -90,30 +87,37 @@ public class NodeScene extends AbstractScene {
    */
   public void saveAllContent(String filePath) {
     Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    JsonObject fullObject = new JsonObject();
     JsonObject stateObject = new JsonObject();
+    JsonArray goalArray = new JsonArray();
     for (Entry<Tab, CodeEditorTab> entry : tabMap.entrySet()) {
-      String state = entry.getValue().getState();
-      String action = entry.getValue().getAction();
-      String content = entry.getValue().getMainNodeParseString();
-      List<AbstractNode> listOfNodes = entry.getValue().getMainNodeChildren();
-      makeConfigFile(listOfNodes);
-
-      if (!stateObject.has(state)) {
-        JsonObject stateJson = new JsonObject();
-        stateJson.addProperty(action, content);
-        stateObject.add(state, stateJson);
+      CodeEditorTab tab = entry.getValue();
+      if (tab instanceof GoalEditorTab) {
+        goalArray.add(tab.getMainNodeParseString());
       } else {
-        JsonObject stateJson = stateObject.get(state).getAsJsonObject();
-        stateJson.addProperty(action, content);
+        String state = entry.getValue().getState();
+        String action = entry.getValue().getAction();
+        String content = entry.getValue().getMainNodeParseString();
+        List<AbstractNode> listOfNodes = entry.getValue().getMainNodeChildren();
+        String configName = state + action;
+        makeConfigFile(listOfNodes, configName);
+        if (!stateObject.has(state)) {
+          JsonObject stateJson = new JsonObject();
+          stateJson.addProperty(action, content);
+          stateObject.add(state, stateJson);
+        } else {
+          JsonObject stateJson = stateObject.get(state).getAsJsonObject();
+          stateJson.addProperty(action, content);
+        }
       }
     }
-    try (FileWriter fileWriter = new FileWriter(USER_CODE_FILES_PATH)) {
-      gson.toJson(stateObject, fileWriter);
+    fullObject.add("states", stateObject);
+    fullObject.add("goal", goalArray);
+    try (FileWriter fileWriter = new FileWriter(INTERPRETER_FILES_PATH + "save.json")) {
+      gson.toJson(fullObject, fileWriter);
     } catch (IOException e) {
       e.printStackTrace();
     }
-
-
   }
 
 
@@ -122,31 +126,33 @@ public class NodeScene extends AbstractScene {
    * the nodes later
    *
    * @param nodes
+   * @param fileName
    * @return void
    */
-  private void makeConfigFile(List<AbstractNode> nodes) {
+  private void makeConfigFile(List<AbstractNode> nodes, String fileName) {
     Gson gson = new GsonBuilder().setPrettyPrinting().create();
     JsonObject stateObject = new JsonObject();
-    Integer i = 0;
-    for (AbstractNode node : nodes) {
-      NodeData data = node.getNodeData();
-      JsonObject stateJson = new JsonObject();
-      JsonArray array = new JsonArray();
-      String name = data.name();
-      String type = data.type();
-      data.inputs().forEach(array::add);
-      stateJson.addProperty("name", name);
-      stateJson.addProperty("type", type);
-      stateJson.add("inputs", array);
-      stateObject.add(i.toString(), stateJson);
-      i++;
-    }
 
-    try (FileWriter fileWriter = new FileWriter(CONFIG_JSON_PATH)) {
-      gson.toJson(stateObject, fileWriter);
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+      Integer i = 0;
+      for (AbstractNode node : nodes) {
+        NodeData data = node.getNodeData();
+        JsonObject stateJson = new JsonObject();
+        JsonArray array = new JsonArray();
+        String name = data.name();
+        String type = data.type();
+        data.inputs().forEach(array::add);
+        stateJson.addProperty("name", name);
+        stateJson.addProperty("type", type);
+        stateJson.add("inputs", array);
+        stateObject.add(i.toString(), stateJson);
+        i++;
+      }
+      try (FileWriter fileWriter = new FileWriter(USER_CODE_FILES_PATH + fileName + ".json")) {
+        gson.toJson(stateObject, fileWriter);
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+
   }
 
   /**

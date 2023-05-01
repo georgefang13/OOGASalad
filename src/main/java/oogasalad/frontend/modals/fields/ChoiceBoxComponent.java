@@ -10,6 +10,7 @@ public class ChoiceBoxComponent extends Field {
 
   private List<String> options;
   private String labText;
+  private ChoiceBox<String> choiceBox;
 
   public ChoiceBoxComponent(String labelText, String valueText) {
     this.options = Arrays.asList(valueText.split(","));
@@ -18,8 +19,17 @@ public class ChoiceBoxComponent extends Field {
 
   @Override
   public HBox createField() {
-    ChoiceBox<String> choiceBox = new ChoiceBox<>();
+    choiceBox = new ChoiceBox<>();
     choiceBox.getItems().addAll(options);
     return new HBox(new Label(labText + ": "), choiceBox);
   }
+
+  public String getValue() {
+    return choiceBox.getValue();
+  }
+
+  public String getLabelText() {
+    return labText;
+  }
+
 }

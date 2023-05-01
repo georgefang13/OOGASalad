@@ -15,17 +15,39 @@ public class Piece extends GameRunnerObject{
     private double lastTranslateX;
     private double lastTranslateY;
     private AbstractSelectableVisual.SelectableVisualParams unselected;
+
+    /**
+     * Constructor for Piece
+     * @param ID
+     * @param gameRunnerController
+     * @param imagePath
+     * @param hasSelectImage
+     * @param param
+     * @param height
+     * @param width
+     */
     public Piece(String ID, GameController gameRunnerController, String imagePath, boolean hasSelectImage, String param, int height, int width) {
         super(ID, gameRunnerController);
         setHeight(height);
         setWidth(width);
         setSelectableVisual(new AbstractSelectableVisual.SelectableVisualParams(true,imagePath),new AbstractSelectableVisual.SelectableVisualParams(hasSelectImage,param));
     }
+
+    /**
+     * Sets the selectable visual
+     * @param unselected
+     * @param selected
+     */
     @Override
     public void setSelectableVisual(AbstractSelectableVisual.SelectableVisualParams unselected, AbstractSelectableVisual.SelectableVisualParams selected) {
         this.unselected = unselected;
         setSelectVisual(selected);
     }
+
+    /**
+     * Sets the select visual
+     * @param selected
+     */
     @Override
     public void setSelectVisual(AbstractSelectableVisual.SelectableVisualParams selected) {
         if (selected.hasSelectImage()){
@@ -36,6 +58,12 @@ public class Piece extends GameRunnerObject{
         followMouse();
         setDragSelection();
     }
+
+    /**
+     * Makes the piece follow the mouse
+     *
+     * @param dropZoneCenter
+     */
     public void moveToDropZoneXY(Point2D dropZoneCenter){
         moveToXY(dropZoneCenter);
         acceptDrag();

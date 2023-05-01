@@ -1,5 +1,6 @@
 package oogasalad.frontend.nodeEditor;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.application.Platform;
@@ -23,9 +24,12 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import oogasalad.frontend.managers.PropertyManager;
 import oogasalad.frontend.managers.StandardPropertyManager;
 import oogasalad.frontend.nodeEditor.nodes.AbstractNode;
+import oogasalad.frontend.nodeEditor.nodes.GoalNode;
 import oogasalad.frontend.nodeEditor.nodes.MainNode;
 
 public abstract class AbstractNodeEditorTab extends Tab {
@@ -34,6 +38,7 @@ public abstract class AbstractNodeEditorTab extends Tab {
   public static final String NODE_EDITOR_FILES_PATH = "src/main/resources/nodeEditorFiles/";
   public static final String INTERPRETER_FILES_PATH = NODE_EDITOR_FILES_PATH + "interpreter/";
   public static final String USER_CODE_FILES_PATH = NODE_EDITOR_FILES_PATH + "userCode/";
+  public static final List<String> FILENAMES = new ArrayList<>(List.of("Commands", "Metablocks"));
 
   protected Group nodeGroup;
   protected Rectangle background;
@@ -59,7 +64,7 @@ public abstract class AbstractNodeEditorTab extends Tab {
    *
    * @return List<Button>
    */
-  protected abstract List<Button> getNodeButtons();
+  protected abstract List<Button> getNodeButtons(List<String> filenames);
 
   /**
    * Returns the string that will be used to parse the nodes in the interpreter Finds the MainNode
@@ -134,12 +139,12 @@ public abstract class AbstractNodeEditorTab extends Tab {
     ScrollPane scrollPane = new ScrollPane();
     GridPane pane = new GridPane();
     pane.setMinSize(panelSizeRatio * windowWidth, windowHeight);
-    List<Button> buttons = getNodeButtons();
+    List<Button> buttons = getNodeButtons(FILENAMES);
     for (Button button : buttons) {
       pane.add(button, 0, buttons.indexOf(button));
     }
     if (this instanceof CodeEditorTab) {
-      scrollPane.setContent(getAccordianFinished("Commands.json"));
+      scrollPane.setContent(getAccordianFinished(FILENAMES));
     } else {
       scrollPane.setContent(pane);
     }
@@ -161,7 +166,7 @@ public abstract class AbstractNodeEditorTab extends Tab {
    *
    * @return Accordion
    */
-  public Accordion getAccordianFinished(String fileName) {
+  public Accordion getAccordianFinished(List<String> fileNames) {
     return null;
   }
 
@@ -180,11 +185,17 @@ public abstract class AbstractNodeEditorTab extends Tab {
     MenuItem saveMenuItem = new MenuItem("Save");
     MenuItem loadMenuItem = new MenuItem("Load");
     saveMenuItem.setOnAction(event -> {
-      //nodeController.saveInterpreterFiles();
+      nodeController.saveInterpreterFiles("");
       //nodeController.saveUserCodeFiles();
     });
     loadMenuItem.setOnAction(event -> {
-      //nodeController.loadAllContent();
+      FileChooser fileChooser = new FileChooser();
+      fileChooser.setTitle("Open File");
+      File selectedFile = fileChooser.showOpenDialog(new Stage());
+      if (selectedFile != null) {
+        String filePath = selectedFile.getAbsolutePath();
+        nodeController.loadAllContent(filePath);
+      }
     });
     fileMenu.getItems().addAll(saveMenuItem, loadMenuItem);
     menuBar.getMenus().add(fileMenu);
@@ -240,7 +251,7 @@ public abstract class AbstractNodeEditorTab extends Tab {
     updateBoundingBoxAllNodes();
     event.consume();
   }
-  
+
   private void updateBoundingBoxAllNodes() {
     for (Node node : nodeGroup.getChildren()) {
       if (node instanceof AbstractNode) {

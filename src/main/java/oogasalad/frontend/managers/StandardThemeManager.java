@@ -16,7 +16,7 @@ public class StandardThemeManager implements ThemeManager {
   private List<ThemeObserver> observers;
 
   private StandardThemeManager() {
-    this.theme = THEME + "dark";
+    this.theme = THEME + "dark.css";
     this.observers = new ArrayList<>();
   }
 
