@@ -97,6 +97,7 @@ public class GameRunnerController implements GameController {
     }
     @Override
     public void select(String id) {
+        System.out.println(id);
         if (clickable.contains(id)) {
             game.clickPiece(id);
         }
@@ -184,6 +185,7 @@ public class GameRunnerController implements GameController {
     }
     @Override
     public boolean isObjectPlayable(String id){
+
         return gameObjects.get(id).getPlayable();
     }
 
