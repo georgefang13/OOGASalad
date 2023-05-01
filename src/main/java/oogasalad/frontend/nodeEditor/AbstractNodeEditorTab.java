@@ -1,5 +1,6 @@
 package oogasalad.frontend.nodeEditor;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.application.Platform;
@@ -23,6 +24,8 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import oogasalad.frontend.managers.PropertyManager;
 import oogasalad.frontend.managers.StandardPropertyManager;
 import oogasalad.frontend.nodeEditor.nodes.AbstractNode;
@@ -186,7 +189,13 @@ public abstract class AbstractNodeEditorTab extends Tab {
       //nodeController.saveUserCodeFiles();
     });
     loadMenuItem.setOnAction(event -> {
-      nodeController.loadAllContent("");
+      FileChooser fileChooser = new FileChooser();
+      fileChooser.setTitle("Open File");
+      File selectedFile = fileChooser.showOpenDialog(new Stage());
+      if (selectedFile != null) {
+        String filePath = selectedFile.getAbsolutePath();
+        nodeController.loadAllContent(filePath);
+      }
     });
     fileMenu.getItems().addAll(saveMenuItem, loadMenuItem);
     menuBar.getMenus().add(fileMenu);

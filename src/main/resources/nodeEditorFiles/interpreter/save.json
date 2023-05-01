@@ -1,7 +1,8 @@
 {
   "states": {
-    "": {
-      "next": "ifelse dsf  [  ]   [  ]  "
+    "sd": {
+      "on enter": "fromgame ",
+      "on leave": "curplayer"
     }
   },
   "goal": []

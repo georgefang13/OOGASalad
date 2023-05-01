@@ -7,7 +7,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.google.rpc.Code;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -100,7 +99,8 @@ public class NodeScene extends AbstractScene {
         String action = entry.getValue().getAction();
         String content = entry.getValue().getMainNodeParseString();
         List<AbstractNode> listOfNodes = entry.getValue().getMainNodeChildren();
-        makeConfigFile(listOfNodes);
+        String configName = state + action;
+        makeConfigFile(listOfNodes, configName);
         if (!stateObject.has(state)) {
           JsonObject stateJson = new JsonObject();
           stateJson.addProperty(action, content);
@@ -126,30 +126,33 @@ public class NodeScene extends AbstractScene {
    * the nodes later
    *
    * @param nodes
+   * @param fileName
    * @return void
    */
-  private void makeConfigFile(List<AbstractNode> nodes) {
+  private void makeConfigFile(List<AbstractNode> nodes, String fileName) {
     Gson gson = new GsonBuilder().setPrettyPrinting().create();
     JsonObject stateObject = new JsonObject();
-    Integer i = 0;
-    for (AbstractNode node : nodes) {
-      NodeData data = node.getNodeData();
-      JsonObject stateJson = new JsonObject();
-      JsonArray array = new JsonArray();
-      String name = data.name();
-      String type = data.type();
-      data.inputs().forEach(array::add);
-      stateJson.addProperty("name", name);
-      stateJson.addProperty("type", type);
-      stateJson.add("inputs", array);
-      stateObject.add(i.toString(), stateJson);
-      i++;
-    }
-    try (FileWriter fileWriter = new FileWriter(USER_CODE_FILES_PATH + "save.json")) {
-      gson.toJson(stateObject, fileWriter);
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+
+      Integer i = 0;
+      for (AbstractNode node : nodes) {
+        NodeData data = node.getNodeData();
+        JsonObject stateJson = new JsonObject();
+        JsonArray array = new JsonArray();
+        String name = data.name();
+        String type = data.type();
+        data.inputs().forEach(array::add);
+        stateJson.addProperty("name", name);
+        stateJson.addProperty("type", type);
+        stateJson.add("inputs", array);
+        stateObject.add(i.toString(), stateJson);
+        i++;
+      }
+      try (FileWriter fileWriter = new FileWriter(USER_CODE_FILES_PATH + fileName + ".json")) {
+        gson.toJson(stateObject, fileWriter);
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+
   }
 
   /**
@@ -179,7 +182,7 @@ public class NodeScene extends AbstractScene {
     try {
       CodeEditorTab panel = tabMap.get(tabs.getSelectionModel().getSelectedItem());
       panel.clearNodes();
-      NodeConfiguration config = new NodeConfiguration(USER_CODE_FILES_PATH + "save.json");
+      NodeConfiguration config = new NodeConfiguration(filePath);
       List<NodeData> nodeData = config.getNodeData();
       List<AbstractNode> nodes = config.makeNodes(nodeData);
 
