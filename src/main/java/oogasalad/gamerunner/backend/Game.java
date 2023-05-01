@@ -1,12 +1,10 @@
 package oogasalad.gamerunner.backend;
 
 import oogasalad.Controller.GameController;
-import oogasalad.gamerunner.backend.fsm.ProgrammableState;
 import oogasalad.gamerunner.backend.online.EmptyOnlineRunner;
 import oogasalad.gamerunner.backend.online.OnlineRunner;
 import oogasalad.gamerunner.backend.online.SocketRunner;
 import oogasalad.sharedDependencies.backend.GameLoader;
-import oogasalad.sharedDependencies.backend.filemanagers.FileManager;
 import oogasalad.sharedDependencies.backend.id.IdManager;
 import oogasalad.gamerunner.backend.fsm.FSM;
 import oogasalad.gamerunner.backend.interpretables.Goal;
@@ -23,7 +21,6 @@ import oogasalad.sharedDependencies.backend.rules.RuleManager;
 
 import java.io.FileNotFoundException;
 import java.util.*;
-import java.util.stream.StreamSupport;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -179,6 +176,7 @@ public class Game implements GameToInterpreterAPI{
             sendClickable();
         } catch (Exception e) {
             LOG.error("Game log when interpreter error: " + getLog());
+            LOG.error(e.getMessage());
             throw e;
         }
     }
@@ -250,12 +248,15 @@ public class Game implements GameToInterpreterAPI{
             fsm.transition();
         } catch (Exception e) {
             LOG.error("Game Log when interpreter error: " + getLog());
+            LOG.error(e.getMessage());
             throw e;
         }
 
-        LOG.info("Game Log: " + getLog());
+        List<Object> log = getLog();
+        if (log.size() > 0){
+            LOG.info("Game Log: " + getLog());
+        }
         sendClickable();
-
 
         if (fsm.getCurrentState().equals("DONE")){
             int playerWin = checkGoals();
@@ -264,9 +265,12 @@ public class Game implements GameToInterpreterAPI{
             if (playerWin != -1){
                 controller.endGame(playerWin);
             }
+            else {
+                fsm.transition();
+                setTurn(turn.get());
+            }
 
-            fsm.transition();
-            setTurn(turn.get());
+
         }
     }
 
@@ -293,26 +297,6 @@ public class Game implements GameToInterpreterAPI{
         return -1;
     }
 
-    // region PLAYERS
-
-    /**
-     * Removes a Player from the game, if it exists there.
-     * Destroys all Ownables owned by the Player. //TODO throw warning about this
-     * @param player the Player to remove
-     */
-    public void removePlayer(Player player) {
-        players.remove(player);
-    }
-
-    /**
-     * Removes all Players from the game and their Ownables.
-     */
-    public void removeAllPlayers() {
-        players.clear();
-        idManager.clear();
-        // TODO reconsider
-    }
-
     /**
      * Gets the Players of the game.
      * @return unmodifiable List of Players
@@ -320,8 +304,6 @@ public class Game implements GameToInterpreterAPI{
     public List<Player> getPlayers() {
         return Collections.unmodifiableList(players);
     }
-
-    //endregion
 
     public Ownable getVariable(String name){
         if (idManager.isIdInUse(name)){

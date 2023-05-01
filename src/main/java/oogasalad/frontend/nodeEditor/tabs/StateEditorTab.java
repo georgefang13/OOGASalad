@@ -1,4 +1,4 @@
-package oogasalad.frontend.nodeEditor;
+package oogasalad.frontend.nodeEditor.tabs;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -7,8 +7,14 @@ import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import oogasalad.frontend.nodeEditor.NodeController;
 import oogasalad.frontend.nodeEditor.nodes.AbstractNode;
 
+
+/**
+ * @author Joao Carvalho
+ * @author Connor Wells-Weiner
+ */
 public class StateEditorTab extends AbstractNodeEditorTab {
 
   public StateEditorTab(NodeController nodeController) {
@@ -22,7 +28,9 @@ public class StateEditorTab extends AbstractNodeEditorTab {
         makeButton("State",
             event -> makeNode(NODES_FOLDER + "StateNode")),
         makeButton("Goal",
-            event -> makeNode(NODES_FOLDER + "GoalNode"))
+            event -> makeNode(NODES_FOLDER + "GoalNode")),
+        makeButton("GameObject",
+            event -> makeNode(NODES_FOLDER + "GameObjectNode"))
     );
   }
 

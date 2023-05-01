@@ -67,4 +67,8 @@ public class SceneController implements SceneMediator{
   public Object getData() {
     return sceneData.pop();
   }
+  @Override
+  public String getGameName() {
+    return getWindow().getGameName();
+  }
 }

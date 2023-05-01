@@ -10,6 +10,11 @@ import oogasalad.frontend.windows.NodeWindow;
  * https://stackoverflow.com/questions/61195436/javafx-pan-and-zoom-with-draggable-nodes-inside
  */
 
+/**
+ * @author Joao Carvalho
+ * @author Connor Wells-Weiner
+ */
+
 public class NodeExperiment extends Application {
 
   @Override
