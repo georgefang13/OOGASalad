@@ -39,6 +39,10 @@ public class NodeScene extends AbstractScene {
         setTheme();
     }
 
+    /**
+     * Creates the scene that will be displayed in the main window
+     * @return Scene
+     */
     @Override
     public Scene makeScene() {
         tabs = new TabPane();
@@ -46,12 +50,25 @@ public class NodeScene extends AbstractScene {
         return new Scene(tabs);
     }
 
+    /**
+     * Creates a tab with the given name, closable, and panel
+     * @param name
+     * @param closable
+     * @param panel
+     * @return Tab
+     */
     private Tab makeTab(String name, Boolean closable, AbstractNodePanel panel) {
         Tab tab = new Tab(name, new HBox(panel.makeNodeSelectionPane(), panel.makeWorkspacePane()));
         tab.setClosable(closable);
         return tab;
     }
 
+    /**
+     * Opens a new tab with the given state and action
+     * @param state
+     * @param action
+     * @return void
+     */
     public void openAndSwitchToTab(String state, String action) {
         CodeEditorPanel panel = new CodeEditorPanel(nodeController, state, action);
         for (Tab tab : tabMap.keySet()) {
@@ -65,6 +82,11 @@ public class NodeScene extends AbstractScene {
         tabMap.put(newTab, panel);
     }
 
+    /**
+     * Saves all of the content in the current tab to the given file path
+     * @param filePath
+     * @return void
+     */
     public void saveAllContent(String filePath) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         JsonObject stateObject = new JsonObject();
@@ -93,9 +115,13 @@ public class NodeScene extends AbstractScene {
 
     }
 
-    //private void makeInterpreterFile(List<AbstractNode> nodes)
 
 
+    /**
+     * Makes a config file that contains all of the nodes in the current tab that allows us to reload the nodes later
+     * @param nodes
+     * @return void
+     */
     private void makeConfigFile(List<AbstractNode> nodes) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         JsonObject stateObject = new JsonObject();
@@ -122,14 +148,26 @@ public class NodeScene extends AbstractScene {
         }
     }
 
+    /**
+     * Returns the scene that is being used by the NodeController
+     * @return Scene
+     */
     public Scene getScene() {
         return scene;
     }
 
+    /**
+     * sets the text of the scene
+     * @return void
+     */
     @Override
     public void setText() {
     }
 
+    /**
+     * Loads in all of the nodes from the given file path
+     * @param filePath
+     */
     public void loadAllContent(String filePath) {
         try {
             CodeEditorPanel panel = tabMap.get(tabs.getSelectionModel().getSelectedItem());

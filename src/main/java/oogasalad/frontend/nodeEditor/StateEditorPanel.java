@@ -9,6 +9,9 @@ public class StateEditorPanel extends AbstractNodePanel {
     super(nodeController);
   }
 
+  /**
+   * Returns a list of buttons that can be used to create nodes for the state panel
+   */
   @Override
   protected List<Button> getNodeSelectionButtons(String fileName) {
     return List.of(
