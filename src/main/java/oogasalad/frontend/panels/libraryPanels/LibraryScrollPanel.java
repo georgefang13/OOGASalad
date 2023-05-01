@@ -121,6 +121,7 @@ public class LibraryScrollPanel extends AbstractScrollPanePanel implements Panel
     FontIcon editIcon = new FontIcon(FontAwesomeSolid.EDIT);
     editIcon.setOnMouseClicked(
         e -> {
+          panelController.getSceneController().getWindowController().passData(gameName);
           AbstractWindow newWindow = panelController.newWindowFromPanel(WindowType.EDIT_WINDOW);
           AbstractScene editScene = newWindow.addNewScene(GameEditorWindow.WindowScenes.EDITOR_SCENE);
           newWindow.showScene(editScene);

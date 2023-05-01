@@ -13,6 +13,7 @@ import oogasalad.frontend.scenes.SceneTypes;
  */
 
 public abstract class AbstractWindow extends Stage {
+  protected String gameName;
 
   protected SceneController sceneController;
   protected String windowID;
@@ -32,5 +33,8 @@ public abstract class AbstractWindow extends Stage {
 
   public void showScene(AbstractScene scene) {
     setScene(scene.getScene());
+  }
+  public String getGameName(){
+    return gameName;
   }
 }

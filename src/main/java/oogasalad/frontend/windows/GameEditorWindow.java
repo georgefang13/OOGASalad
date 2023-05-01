@@ -12,6 +12,7 @@ import oogasalad.frontend.scenes.SceneTypes;
  */
 
 public class GameEditorWindow extends AbstractWindow {
+  private String gameName;
 
   public enum WindowScenes implements SceneTypes {
     MAIN_SCENE,
@@ -21,6 +22,7 @@ public class GameEditorWindow extends AbstractWindow {
 
   public GameEditorWindow(String windowID, WindowMediator windowController) {
     super(windowID, windowController);
+    gameName = windowController.getData().toString();
   }
 
   @Override
