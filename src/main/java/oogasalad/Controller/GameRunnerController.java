@@ -19,6 +19,11 @@ import oogasalad.sharedDependencies.backend.filemanagers.FileManager;
 import java.io.FileNotFoundException;
 import java.util.*;
 
+/**
+ * @author Owen MacKenzie
+ * @author Ethan Horowitz
+ */
+
 public class GameRunnerController implements GameController {
     private final Map<String, GameRunnerComponent> gameObjects = new HashMap<>();
     private final ObservableList<Node> gameObjectVisualsList = FXCollections.observableArrayList();
@@ -27,6 +32,11 @@ public class GameRunnerController implements GameController {
     private Game game;
     private ObjectProperty<Boolean> endGame;
 
+    /**
+     * Constructor for GameRunnerController
+     * @param gameName
+     * @param gameTypeData
+     */
     public GameRunnerController(String gameName, ArrayList<String> gameTypeData) {
         String directory = "data/games/"+gameName;
         int numPlayers = 2;
@@ -52,10 +62,20 @@ public class GameRunnerController implements GameController {
         }
 
     }
+
+    /**
+     * Sets functionality for the undo button to allow the user to select a different piece
+     *
+     * @param undoButton
+     */
     public void assignUndoButtonAction(Button undoButton){
         undoButton.setOnAction(e -> game.undoClickPiece());
     }
-
+    /**
+     *
+     * @param directory
+     * @throws FileNotFoundException
+     */
     private void loadGame(String directory) throws FileNotFoundException {
         directory = directory + "/frontend";
         loadDropZones(directory);
@@ -111,6 +131,11 @@ public class GameRunnerController implements GameController {
             addPiece(id, image, dropZoneID, hasimage, paramString, height, width);
         }
     }
+
+    /**
+     * Selects a piece
+     * @param id the id of the piece
+     */
     @Override
     public void select(String id) {
         System.out.println(id);
@@ -119,6 +144,10 @@ public class GameRunnerController implements GameController {
         }
     }
 
+    /**
+     * Adds a drop zone to the game
+     * @param params the parameters of the drop zone
+     */
     @Override
     public void addDropZone(GameController.DropZoneParameters params) {
             DropZoneFE dropZone = new DropZoneFE(params.id(), params.unselected(), params.selected(), params.width(), params.height(), params.x(),params.y(),this);
@@ -127,6 +156,16 @@ public class GameRunnerController implements GameController {
             addGameObject(params.id(),dropZone);
     }
 
+    /**
+     * Adds a piece to the game
+     * @param id the id of the piece
+     * @param imagePath the string path for the image of the piece
+     * @param dropZoneID the id of the drop zone the piece is in
+     * @param hasSelectImage if the piece has a selected image
+     * @param param the name of the image or color for the selected image
+     * @param height the height of the piece
+     * @param width the width of the piece
+     */
     @Override
     public void addPiece(String id, String imagePath, String dropZoneID, boolean hasSelectImage, String param, int height, int width) {
             Piece piece = new Piece(id,this, imagePath, hasSelectImage, param ,height, width);
@@ -144,6 +183,10 @@ public class GameRunnerController implements GameController {
         gameObjects.remove(id);
     }
 
+    /**
+     * sets the clickability of piece
+     * @param ids the id of the piece
+     */
     @Override
     public void setClickable(List<String> ids) {
         Platform.runLater(() -> {
@@ -155,6 +198,11 @@ public class GameRunnerController implements GameController {
         });
     }
 
+    /**
+     * function when user moves a piece. Moves the piece to the new drop zone
+     * @param pieceID the id of the piece
+     * @param dropZoneID the id of the drop zone the piece is in
+     */
     @Override
     public void movePiece(String pieceID, String dropZoneID) {
             DropZoneFE dropZone = (DropZoneFE) gameObjects.get(dropZoneID);
@@ -164,7 +212,6 @@ public class GameRunnerController implements GameController {
             putInDropZone(piece, dropZone);
             setPiecesInDropZone(dropZone);
     }
-
     private void setPiecesInDropZone(DropZoneFE dz){
         List<Piece> pieces = dropZonePieces.get(dz);
         DropZoneFE.DropZoneDistribution distribution = dz.getDistribution();
@@ -219,6 +266,10 @@ public class GameRunnerController implements GameController {
         }
     }
 
+    /**
+     * removes a piece from the game
+     * @param pieceID the id of the piece
+     */
     @Override
     public void removePiece(String pieceID) {
         Platform.runLater(() -> {
@@ -227,6 +278,11 @@ public class GameRunnerController implements GameController {
 
     }
 
+    /**
+     * set the objects image
+     * @param id the id of the object
+     * @param newImagePath the path of the image
+     */
     @Override
     public void setObjectImage(String id, String newImagePath) {
         GameRunnerComponent gameObject = gameObjects.get(id);
@@ -249,6 +305,11 @@ public class GameRunnerController implements GameController {
         gameObjectVisualsList.add(newObjectVisual);
     }
 
+    /**
+     * sets the highlight of the piece
+     * @param id
+     * @param param
+     */
     @Override
     public void setPieceHighlight(String id, String param) {
         GameRunnerComponent gameObject = gameObjects.get(id);
@@ -260,6 +321,10 @@ public class GameRunnerController implements GameController {
         updateVisualDisplay(gameObject, oldObjectVisual);
     }
 
+    /**
+     * opens modal when a player wins the game
+     * @param player
+     */
     @Override
     public void endGame(int player) {
         AlertModal alertModal = new AlertModal("GameWinHeader", "GameWinBody", player+1);
@@ -267,7 +332,7 @@ public class GameRunnerController implements GameController {
 //            sceneController.getWindowController().closeWindow(sceneController.getWindow());
         });
         alertModal.showAlert();
-
+        endGame.setValue(true);
     }
 
     private void clearClickables(){
@@ -276,23 +341,41 @@ public class GameRunnerController implements GameController {
             }
             clickable.clear();
     }
+
+    /**
+     * check if object is playabel
+     * @param id the id of the piece
+     * @return true if playable
+     */
     @Override
     public boolean isObjectPlayable(String id){
 
         return gameObjects.get(id).getPlayable();
     }
 
+    /**
+     * get game objects visual
+     * @return
+     */
     @Override
     public ObservableList<Node> getGameObjectVisuals(){
         GameObjectVisualSorter gameObjectVisualComparator = new GameObjectVisualSorter();
         Collections.sort(gameObjectVisualsList, gameObjectVisualComparator);
         return gameObjectVisualsList;
     }
+
+    /**
+     * @return the end game status
+     */
     @Override
     public ObjectProperty<Boolean> getEndGameStatus(){
         return endGame;
     }
 
+    /**
+     * pass the game ID
+     * @param code the game code
+     */
     @Override
     public void passGameId(String code) {
         Platform.runLater(() -> {
@@ -300,6 +383,12 @@ public class GameRunnerController implements GameController {
         });
     }
 
+    /**
+     * adds a text object to the game
+     * @param id
+     * @param text
+     * @param dropZoneID
+     */
     @Override
     public void addTextObject(String id, String text, String dropZoneID) {
         TextGameRunner textGameRunner = new TextGameRunner(id);
@@ -309,6 +398,11 @@ public class GameRunnerController implements GameController {
         addGameObject(id,textGameRunner);
     }
 
+    /**
+     * updates the text object
+     * @param id
+     * @param text
+     */
     @Override
     public void updateTextObject(String id, String text) {
 

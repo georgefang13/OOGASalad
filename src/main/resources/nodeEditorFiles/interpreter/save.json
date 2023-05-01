@@ -1,0 +1,9 @@
+{
+  "states": {
+    "sd": {
+      "on enter": "fromgame ",
+      "on leave": "curplayer"
+    }
+  },
+  "goal": []
+}

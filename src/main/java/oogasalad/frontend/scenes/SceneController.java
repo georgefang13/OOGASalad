@@ -7,7 +7,10 @@ import oogasalad.frontend.windows.WindowMediator;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
-
+/**
+ * @author Owen MacKenzie
+ * @author Connor Wells
+ */
 public class SceneController implements SceneMediator{
 
   private static final String MAIN_ID = "main";

@@ -27,17 +27,16 @@ public class NodeController {
   }
 
   public void saveInterpreterFiles(String userCodeFilesPath) {
+    scene.saveAllContent("");
   }
 
   /**
    * Opens a new tab with the given state and action
    *
-   * @param state
-   * @param action
    * @return void
    */
-  public void openAndSwitchToTab(String state, String action) {
-    scene.openAndSwitchToTab(state, action);
+  public void openAndSwitchToTab(CodeEditorTab panel) {
+    scene.openAndSwitchToTab(panel);
   }
 
   /**

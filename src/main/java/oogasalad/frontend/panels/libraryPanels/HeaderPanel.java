@@ -6,6 +6,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import oogasalad.frontend.factories.ButtonFactory;
+import oogasalad.frontend.modals.ModalController;
+import oogasalad.frontend.modals.subInputModals.CreateNewModal;
+import oogasalad.frontend.panels.ModalPanel;
 import oogasalad.frontend.panels.Panel;
 import oogasalad.frontend.panels.PanelController;
 import oogasalad.frontend.scenes.AbstractScene;
@@ -14,7 +17,7 @@ import oogasalad.frontend.windows.GameEditorWindow;
 import oogasalad.frontend.windows.WindowTypes;
 import oogasalad.frontend.windows.WindowTypes.WindowType;
 
-public class HeaderPanel extends HBox implements Panel {
+public class HeaderPanel extends HBox implements Panel, ModalPanel {
   private static final String PUZZLE_ICON = "puzzle_piece";
   private static final String UPLOAD_ICON = "upload";
   private static final ResourceBundle ELEMENT_LABELS = ResourceBundle.getBundle(
@@ -31,6 +34,7 @@ public class HeaderPanel extends HBox implements Panel {
   private Button newGame;
   ButtonFactory buttonFactory = new ButtonFactory();
   PanelController panelController;
+  private ModalController modalController;
   private static String sceneID;
 
   /**
@@ -39,6 +43,7 @@ public class HeaderPanel extends HBox implements Panel {
   public HeaderPanel(PanelController panelController, String sceneID) {
     super();
     this.panelController = panelController;
+    this.modalController = new ModalController(this);
     this.sceneID = sceneID;
     this.makePanel();
   }
@@ -68,6 +73,9 @@ public class HeaderPanel extends HBox implements Panel {
           AbstractWindow newWindow = panelController.newWindowFromPanel(WindowType.EDIT_WINDOW);
           AbstractScene editScene = newWindow.addNewScene(GameEditorWindow.WindowScenes.EDITOR_SCENE);
           newWindow.showScene(editScene);
+          CreateNewModal creator = new CreateNewModal("save", modalController.dropzoneList());
+          creator.attach(modalController);
+          creator.showAndWait();
         });
     importGame = buttonFactory.createIconButton(IMPORT_GAME, UPLOAD_ICON);
     rightBox.getChildren().addAll(importGame, newGame);
@@ -91,5 +99,14 @@ public class HeaderPanel extends HBox implements Panel {
   public void save() {
   }
 
+  @Override
+  public void addComponentTemplate(String name, String objectType) {
+
+  }
+
+  @Override
+  public Node getStyleableNode() {
+    return super.getStyleableNode();
+  }
 }
 

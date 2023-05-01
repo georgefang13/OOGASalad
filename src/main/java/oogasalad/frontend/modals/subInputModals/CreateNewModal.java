@@ -163,11 +163,11 @@ public class CreateNewModal extends InputModal {
 
   protected Button createOKButton() {
     Button ok = new Button("Ok");
-    ok.setOnAction(e -> sendtoController());
+    ok.setOnAction(e -> sendToController());
     return ok;
   }
 
-  private void sendtoController(){
+  private void sendToController(){
     Map<String, String> map = new HashMap<>();
     for (TextFieldComponent fieldComponent : textFields) {
       map.put(fieldComponent.getId(), fieldComponent.getValue());
@@ -188,8 +188,9 @@ public class CreateNewModal extends InputModal {
     //TODO remove, just for testing purposes
     if(editMode) {
       this.getController().editObjectInstance(map, myTitle);
-    } else {
-      if(myTitle == "save"){
+    }
+    else {
+      if (myTitle.equals("save")) {
         this.getController().configGeneral(map);
       }
       this.getController().createObjectTemplate(map, myTitle);

@@ -48,8 +48,6 @@ public class MainNode extends AbstractNode implements ControlNode {
 
   /**
    * Aligns the nodes. Empty implementation for MainNode because it can't be snapped to another node (Can't be the child of another node)
-   * @param fromNode
-   * @param toNode
    * @return void
    */
   @Override

@@ -4,7 +4,9 @@ import javafx.scene.Node;
 import oogasalad.frontend.components.gameObjectComponent.GameRunner.gameObjectVisuals.DropZoneVisual;
 import oogasalad.frontend.components.gameObjectComponent.GameRunner.gameObjectVisuals.PieceVisual;
 import java.util.Comparator;
-
+/**
+ * @author Owen MacKenzie
+ */
 public class GameObjectVisualSorter implements Comparator{
     @Override
     public int compare(Object obj1, Object obj2) {
