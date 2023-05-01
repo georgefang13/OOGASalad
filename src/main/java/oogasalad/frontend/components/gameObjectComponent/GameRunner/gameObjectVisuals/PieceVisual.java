@@ -6,6 +6,14 @@ import javafx.scene.Node;
  */
 public abstract class PieceVisual extends AbstractSelectableVisual {
     protected Node pieceImage;
+
+    /**
+     * Constructor for PieceVisual
+     * @param pieceImgPath
+     * @param width
+     * @param height
+     * @param id
+     */
     public PieceVisual(String pieceImgPath, int width, int height, String id) {
         super(id,width,height);
         initHBox();

@@ -11,6 +11,13 @@ public abstract class AbstractSelectableVisual extends HBox implements Selectabl
     protected String objectID;
     protected int width;
     protected int height;
+
+    /**
+     * Constructor for AbstractSelectableVisual
+     * @param id
+     * @param width
+     * @param height
+     */
     public AbstractSelectableVisual(String id, int width, int height) {
         super();
         objectID = id;
@@ -18,10 +25,16 @@ public abstract class AbstractSelectableVisual extends HBox implements Selectabl
         this.height = height;
 
     }
+
+    /**
+     * Returns the objectID of the visual
+     * @return String
+     */
     @Override
     public String getObjectID(){
         return objectID;
     }
+
     public record SelectableVisualParams(boolean hasSelectImage, String param){}
     protected void switchImages(Node oldImage, Node newImage){
         if (this.getChildren().contains(oldImage)) {
