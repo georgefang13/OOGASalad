@@ -35,6 +35,7 @@ public abstract class AbstractNodeEditorTab extends Tab {
   public static final String NODE_EDITOR_FILES_PATH = "src/main/resources/nodeEditorFiles/";
   public static final String INTERPRETER_FILES_PATH = NODE_EDITOR_FILES_PATH + "interpreter/";
   public static final String USER_CODE_FILES_PATH = NODE_EDITOR_FILES_PATH + "userCode/";
+  public static final List<String> FILENAMES = new ArrayList<>(List.of("Commands", "Metablocks"));
 
   protected Group nodeGroup;
   protected Rectangle background;
@@ -60,7 +61,7 @@ public abstract class AbstractNodeEditorTab extends Tab {
    *
    * @return List<Button>
    */
-  protected abstract List<Button> getNodeButtons();
+  protected abstract List<Button> getNodeButtons(List<String> filenames);
 
   /**
    * Returns the string that will be used to parse the nodes in the interpreter Finds the MainNode
@@ -135,12 +136,12 @@ public abstract class AbstractNodeEditorTab extends Tab {
     ScrollPane scrollPane = new ScrollPane();
     GridPane pane = new GridPane();
     pane.setMinSize(panelSizeRatio * windowWidth, windowHeight);
-    List<Button> buttons = getNodeButtons();
+    List<Button> buttons = getNodeButtons(FILENAMES);
     for (Button button : buttons) {
       pane.add(button, 0, buttons.indexOf(button));
     }
     if (this instanceof CodeEditorTab) {
-      scrollPane.setContent(getAccordianFinished("Commands.json"));
+      scrollPane.setContent(getAccordianFinished(FILENAMES));
     } else {
       scrollPane.setContent(pane);
     }
@@ -162,7 +163,7 @@ public abstract class AbstractNodeEditorTab extends Tab {
    *
    * @return Accordion
    */
-  public Accordion getAccordianFinished(String fileName) {
+  public Accordion getAccordianFinished(List<String> fileNames) {
     return null;
   }
 
@@ -185,7 +186,7 @@ public abstract class AbstractNodeEditorTab extends Tab {
       //nodeController.saveUserCodeFiles();
     });
     loadMenuItem.setOnAction(event -> {
-      //nodeController.loadAllContent();
+      nodeController.loadAllContent("");
     });
     fileMenu.getItems().addAll(saveMenuItem, loadMenuItem);
     menuBar.getMenus().add(fileMenu);

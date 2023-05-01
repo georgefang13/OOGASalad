@@ -1,0 +1,34 @@
+{
+  "0": {
+    "name": "MainNode",
+    "type": "ControlNode",
+    "inputs": []
+  },
+  "1": {
+    "name": "IfElse",
+    "type": "JsonNode",
+    "inputs": [
+      ""
+    ]
+  },
+  "2": {
+    "name": "StartNestNode",
+    "type": "ControlNode",
+    "inputs": []
+  },
+  "3": {
+    "name": "EndNestNode",
+    "type": "ControlNode",
+    "inputs": []
+  },
+  "4": {
+    "name": "StartNestNode",
+    "type": "ControlNode",
+    "inputs": []
+  },
+  "5": {
+    "name": "EndNestNode",
+    "type": "ControlNode",
+    "inputs": []
+  }
+}

@@ -24,8 +24,8 @@ public class CodeEditorTab extends AbstractNodeEditorTab {
   private static final String COMMANDS_RESOURCE_PATH = "/src/main/resources/backend/interpreter/";
 
   private Accordion accordion = new Accordion();
-  private List<TitledPane> buttonFolders = new ArrayList<>();
-  private Set<String> folderNames = new HashSet<>();
+  private List<TitledPane> buttonFolders;
+  private Set<String> folderNames;
 
   public CodeEditorTab(NodeController nodeController, String state, String action) {
     super(nodeController);
@@ -50,18 +50,22 @@ public class CodeEditorTab extends AbstractNodeEditorTab {
    *
    * @return List<Button>
    */
-  protected List<Button> getNodeButtons() {
-    String absoluteFilePath =
-        System.getProperty("user.dir") + COMMANDS_RESOURCE_PATH + "Commands.json";
+  protected List<Button> getNodeButtons(List<String> filenames) {
     ArrayList<Button> buttons = new ArrayList<>();
-    JsonNodeParser parser = new JsonNodeParser();
-    List<Command> commands = parser.readCommands(absoluteFilePath);
-    for (Command command : commands) {
-      Button button = makeButton(command);
 
-      button.setMaxWidth(Double.MAX_VALUE);
-      GridPane.setHgrow(button, Priority.ALWAYS);
-      buttons.add(button);
+    for (String filename: filenames) {
+
+      String absoluteFilePath =
+          System.getProperty("user.dir") + COMMANDS_RESOURCE_PATH + filename + ".json";
+      JsonNodeParser parser = new JsonNodeParser();
+      List<Command> commands = parser.readCommands(absoluteFilePath);
+      for (Command command : commands) {
+        Button button = makeButton(command);
+
+        button.setMaxWidth(Double.MAX_VALUE);
+        GridPane.setHgrow(button, Priority.ALWAYS);
+        buttons.add(button);
+      }
     }
     return buttons;
   }
@@ -70,45 +74,48 @@ public class CodeEditorTab extends AbstractNodeEditorTab {
    * Creates an accordion that contains all of the buttons that can be used to create nodes Acts as
    * a container of folders that contain different types of nodes so that they're easier to find
    *
-   * @param fileName
+   * @param
    * @return Accordion
    */
   @Override
-  public Accordion getAccordianFinished(String fileName) {
-    String absoluteFilePath =
-        System.getProperty("user.dir") + COMMANDS_RESOURCE_PATH + fileName;
-    ArrayList<Button> buttons = new ArrayList<>();
-    JsonNodeParser parser = new JsonNodeParser();
-    List<Command> commands = parser.readCommands(absoluteFilePath);
-    folderNames.clear();
-    for (Command command : commands) {
-      Button button = makeButton(command);
-      if (!folderNames.contains(command.folder())) {
-        TitledPane folder = new TitledPane(command.folder(), new GridPane());
-        folder.setAnimated(true);
-        folder.setCollapsible(true);
-        folder.setMaxWidth(Double.MAX_VALUE);
-        GridPane.setHgrow(folder, Priority.ALWAYS);
-        buttonFolders.add(folder);
-        accordion.getPanes().add(folder);
-        folderNames.add(command.folder());
-      }
+  public Accordion getAccordianFinished(List<String> fileNames) {
+    for (String fileName: fileNames) {
 
-      button.setMaxWidth(Double.MAX_VALUE);
-      GridPane.setHgrow(button, Priority.ALWAYS);
-
-      for (TitledPane folder : buttonFolders) {
-        if (folder.getText().equals(command.folder())) {
-          ((GridPane) folder.getContent()).add(button, 0,
-              ((GridPane) folder.getContent()).getChildren().size());
+      String absoluteFilePath =
+          System.getProperty("user.dir") + COMMANDS_RESOURCE_PATH + fileName + ".json";
+      ArrayList<Button> buttons = new ArrayList<>();
+      JsonNodeParser parser = new JsonNodeParser();
+      List<Command> commands = parser.readCommands(absoluteFilePath);
+      folderNames.clear();
+      for (Command command : commands) {
+        Button button = makeButton(command);
+        if (!folderNames.contains(command.folder())) {
+          TitledPane folder = new TitledPane(command.folder(), new GridPane());
+          folder.setAnimated(true);
+          folder.setCollapsible(true);
+          folder.setMaxWidth(Double.MAX_VALUE);
+          GridPane.setHgrow(folder, Priority.ALWAYS);
+          buttonFolders.add(folder);
+          accordion.getPanes().add(folder);
+          folderNames.add(command.folder());
         }
+
+        button.setMaxWidth(Double.MAX_VALUE);
+        GridPane.setHgrow(button, Priority.ALWAYS);
+
+        for (TitledPane folder : buttonFolders) {
+          if (folder.getText().equals(command.folder())) {
+            ((GridPane) folder.getContent()).add(button, 0,
+                ((GridPane) folder.getContent()).getChildren().size());
+          }
+        }
+
+
       }
-
-
-    }
-    for (TitledPane folder : buttonFolders) {
-      if (!accordion.getPanes().contains(folder)) {
-        accordion.getPanes().add(folder);
+      for (TitledPane folder : buttonFolders) {
+        if (!accordion.getPanes().contains(folder)) {
+          accordion.getPanes().add(folder);
+        }
       }
     }
 

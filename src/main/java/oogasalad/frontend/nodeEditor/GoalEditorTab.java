@@ -1,7 +1,5 @@
 package oogasalad.frontend.nodeEditor;
 
-import javafx.scene.layout.HBox;
-
 public class GoalEditorTab extends CodeEditorTab {
 
   public GoalEditorTab(NodeController nodeController, String name) {
@@ -9,7 +7,6 @@ public class GoalEditorTab extends CodeEditorTab {
     state = "goals";
     action = name;
   }
-
 
 }
 

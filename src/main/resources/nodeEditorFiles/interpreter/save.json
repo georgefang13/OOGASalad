@@ -1,11 +1,8 @@
 {
   "states": {
-    "asdfasdf": {
-      "on leave": ""
+    "": {
+      "on enter": "ifelse   [  ]   [  ]  "
     }
   },
-  "goal": [
-    "dotimes [ :  ]  [  ]  break",
-    "ifelse sdf  [  ]   [  ]  continue"
-  ]
+  "goal": []
 }

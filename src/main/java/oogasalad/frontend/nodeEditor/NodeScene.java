@@ -1,6 +1,7 @@
 package oogasalad.frontend.nodeEditor;
 
 import static oogasalad.frontend.nodeEditor.AbstractNodeEditorTab.INTERPRETER_FILES_PATH;
+import static oogasalad.frontend.nodeEditor.AbstractNodeEditorTab.USER_CODE_FILES_PATH;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -117,8 +118,6 @@ public class NodeScene extends AbstractScene {
     } catch (IOException e) {
       e.printStackTrace();
     }
-
-
   }
 
 
@@ -146,11 +145,11 @@ public class NodeScene extends AbstractScene {
       stateObject.add(i.toString(), stateJson);
       i++;
     }
-//    try (FileWriter fileWriter = new FileWriter(CONFIG_JSON_PATH)) {
-//      gson.toJson(stateObject, fileWriter);
-//    } catch (IOException e) {
-//      e.printStackTrace();
-//    }
+    try (FileWriter fileWriter = new FileWriter(USER_CODE_FILES_PATH + "save.json")) {
+      gson.toJson(stateObject, fileWriter);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 
   /**

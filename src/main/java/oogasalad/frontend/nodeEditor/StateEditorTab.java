@@ -8,7 +8,6 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import oogasalad.frontend.nodeEditor.nodes.AbstractNode;
-import oogasalad.frontend.nodeEditor.nodes.GoalNode;
 
 public class StateEditorTab extends AbstractNodeEditorTab {
 
@@ -18,7 +17,7 @@ public class StateEditorTab extends AbstractNodeEditorTab {
   }
 
   @Override
-  protected List<Button> getNodeButtons() {
+  protected List<Button> getNodeButtons(List<String> filenames) {
     return List.of(
         makeButton("State",
             event -> makeNode(NODES_FOLDER + "StateNode")),
@@ -34,7 +33,7 @@ public class StateEditorTab extends AbstractNodeEditorTab {
   }
 
   @Override
-  public Accordion getAccordianFinished(String fileName) {
+  public Accordion getAccordianFinished(List<String> filenames) {
     return null;
   }
 
