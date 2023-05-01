@@ -1,6 +1,8 @@
 package oogasalad.frontend.nodeEditor.nodes;
 
-
+/**
+ * This interface is used to mark nodes that are draggable in the NodeEditor.
+ */
 public interface DraggableNode {
 
     void snapToNode(AbstractNode node);

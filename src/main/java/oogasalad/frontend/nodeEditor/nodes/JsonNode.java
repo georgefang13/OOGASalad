@@ -76,6 +76,7 @@ public class JsonNode extends AbstractNode {
     return (output + propertyManager.getText("SPACE") + this.getChildNode().getNodeParseString());
   }
 
+
   /**
    * Returns the record of NodeData for this node
    * @return NodeData
@@ -86,6 +87,11 @@ public class JsonNode extends AbstractNode {
     return this.nodeData;
   };
 
+  
+  /**
+   * Sets the input fields of this node to the given values. Used when loading in an existing node network
+   * @param values
+   */
   public void setInputFields(List<String> values){
     for(int i = 0; i < inputFields.size(); i++){
       inputFields.get(i).setText(values.get(i));
