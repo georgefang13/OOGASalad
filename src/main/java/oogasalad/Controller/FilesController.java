@@ -33,6 +33,7 @@ public class FilesController {
    */
   public FilesController(String name) {
     gameFolder = GAMES_PATH + name;
+    game = new GameInator();
   }
 
   /**
@@ -55,7 +56,6 @@ public class FilesController {
    * Saves components to frontend file
    */
   public void saveToFile(){
-    game = new GameInator(gameFolder);
     File directory = new File(gameFolder);
     boolean valid = directory.mkdir();
     File frontend = new File(gameFolder + "\\frontend");
@@ -130,5 +130,9 @@ public class FilesController {
    */
   public void setGeneral(Map<String, String> map){
     generalInfo = map;
+  }
+
+  public GameInator getGame() {
+    return game;
   }
 }
