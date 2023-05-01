@@ -63,6 +63,8 @@ public class ModalController {
     dropZoneController.addDropZone(c);
     dropZoneController.addGridObject(c);
     backendObjectController.sendOwnableObject(c);
+
+
     GraphicHandler handler = new GraphicHandler();
     handler.moveToCenter(c);
     root.getChildren().add(c.getNode());
