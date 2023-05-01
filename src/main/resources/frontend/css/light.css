@@ -334,7 +334,7 @@
   -fx-background-radius: 10 ;
   -fx-pref-height: -1;
   -fx-pref-width: -1;
-  -fx-min-width: 300;
+  -fx-min-width: 300  !important;
 }
 
 /* Simple Game View */

@@ -2,6 +2,7 @@ package oogasalad.frontend.panels.editorPanels;
 
 import java.awt.*;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.scene.Node;
 import javafx.scene.control.Accordion;
@@ -100,7 +101,7 @@ public class ComponentPanel extends VBox implements ModalPanel, Panel {
 
   private Button createComponentTemplate(String objectType) {
     Button b = new Button("Make a " + objectType + " Template");
-    b.setOnAction(e -> openModal(objectType, false));
+    b.setOnAction(e -> createNewComponentTemplate(objectType));
     return b;
   }
 
@@ -115,15 +116,11 @@ public class ComponentPanel extends VBox implements ModalPanel, Panel {
 
 
   public void addComponentTemplate(String name, String objectType){
-
     Button b = new Button(name);
-    b.setOnAction(e -> createNewComponentInstance(name, objectType));
-//    b.setOnMousePressed(e -> {
-//      xOffset = e.getSceneX();
-//      yOffset = e.getSceneY();
-//    });
+    b.setOnAction(e -> createNewComponentInstance(name+Integer.toString(mController.getMap().keySet().size()), objectType));
     gameComponents.getChildren().add(b);
   }
+
   private void createNewComponentInstance(String name, String objectType) {
     mController.createObjectInstance(name, objectType);
     HBox buttonLine = new HBox();
@@ -134,7 +131,7 @@ public class ComponentPanel extends VBox implements ModalPanel, Panel {
     gameComponentInstances.getChildren().add(buttonLine);
 
     b3.setOnMouseClicked(event -> {
-      openModal(objectType, true);
+      editComponent(name,objectType);
     });
 
     b2.setOnMouseClicked(event -> {
@@ -143,11 +140,21 @@ public class ComponentPanel extends VBox implements ModalPanel, Panel {
     });
   }
 
-  private void openModal(String title, boolean editMode){
-    CreateNewModal modal = new CreateNewModal(title, editMode);
+  private void createNewComponentTemplate(String title){
+    CreateNewModal modal = new CreateNewModal(title);
     mController.setRoot(root);
     modal.attach(mController);
     modal.showAndWait();
+  }
+
+  private void editComponent(String name, String title){
+    System.out.println("dis be: "+ name);
+    Map<String, String> map = mController.getActiveComponent(name).getParameters();
+    map.replace("name", name);
+    CreateNewModal editModal = new CreateNewModal(title, true, map);
+    mController.setRoot(root);
+    editModal.attach(mController);
+    editModal.showAndWait();
   }
 
   public Node asNode() {

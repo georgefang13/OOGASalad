@@ -18,6 +18,13 @@ public class NodeRemovedListener implements ListChangeListener<Node> {
                 List<? extends Node> removedNodes = c.getRemoved();
                 root.getChildren().removeAll(removedNodes);
             }
+            if (c.wasAdded()) {
+                System.out.println("detected node added");
+                List<? extends Node> addedNodes = c.getAddedSubList();
+                System.out.println(root.getChildren().size());
+                root.getChildren().addAll(addedNodes);
+                System.out.println(root.getChildren().size());
+            }
         }
     }
 }

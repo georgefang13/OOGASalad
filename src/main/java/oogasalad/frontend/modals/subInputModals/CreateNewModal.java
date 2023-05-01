@@ -30,6 +30,7 @@ public class CreateNewModal extends InputModal {
   private List<IntegerPickerComponent> integerPickers;
   private String myTitle;
   private boolean editMode;
+  private Map<String, String> values;
   private List<String> dropzoneIDs;
 
   /**
@@ -38,13 +39,18 @@ public class CreateNewModal extends InputModal {
   public CreateNewModal(String title) {
     super(title);
     myTitle = super.getMyTitle();
+    editMode = false;
+    values = null;
+    setDialogPane(createDialogPane());
 //        myPropertiesMap = super.setPropertiesMap(myTitle
   }
 
-  public CreateNewModal(String title, boolean editMode, List<String> dropzoneIDs) {
+  public CreateNewModal(String title, boolean editMode, Map<String, String> values) {
     super(title);
     this.editMode = editMode;
+    this.values = values;
     myTitle = super.getMyTitle();
+    setDialogPane(createDialogPane());
   }
 
   /**
@@ -86,12 +92,18 @@ public class CreateNewModal extends InputModal {
     for (Map.Entry<String, String> entry : map.entrySet()) {
       String propertyName = entry.getKey();
       String fieldType = propertyName.split("\\.")[propertyName.split("\\.").length - 1];
-      String propertyValue = entry.getValue();
+      String propertyValue;
 
       int start = entry.getKey().toString().indexOf("*") + 1;
 
       String labelName = entry.getKey().toString().substring(start);
       labelName = labelName.split("\\.")[0];
+
+      if(editMode) {
+        propertyValue = values.get(labelName);
+      } else {
+        propertyValue = entry.getValue();
+      }
 
       // Get the field class corresponding to the property name using reflection
       Class<?> fieldClass = Class.forName(
@@ -130,6 +142,7 @@ public class CreateNewModal extends InputModal {
     this.getDialogPane().setContent(grid);
   } // TODO: make classes for each of these elements and use java reflection to create them. for
 
+
   private void initializeArrayLists() {
     ImagePickers = new ArrayList<>();
     textFields = new ArrayList<>();
@@ -143,6 +156,7 @@ public class CreateNewModal extends InputModal {
     ok.setOnAction(e -> sendtoController());
     return ok;
   }
+
   private void sendtoController(){
     Map<String, String> map = new HashMap<>();
     for (TextFieldComponent fieldComponent : textFields) {
@@ -158,7 +172,6 @@ public class CreateNewModal extends InputModal {
       map.put(integerComponent.getLabelText(), Integer.toString(integerComponent.getValue()));
     }
     //TODO remove, just for testing purposes
-    System.out.println(map);
     if(editMode) {
       this.getController().editObjectInstance(map, myTitle);
     } else {

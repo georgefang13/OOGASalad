@@ -13,9 +13,7 @@ public class StateEditorPanel extends AbstractNodePanel {
   protected List<Button> getNodeSelectionButtons(String fileName) {
     return List.of(
         makeButton("State",
-            event -> makeNode(NODES_FOLDER + "StateNode")),
-        makeButton("Save",
-            event -> nodeController.saveAllContent(NODES_JSON_PATH))
+            event -> makeNode(NODES_FOLDER + "StateNode"))
     );
   }
 }

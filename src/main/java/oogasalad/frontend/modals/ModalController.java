@@ -37,6 +37,7 @@ public class ModalController {
     backendObjectController = new BackendObjectController();
     backendObjectController.setGame(files.getGame());
   }
+
   public void createObjectTemplate(Map<String, String> map, String objectType) {
     String name = map.get("name");
     dropZoneController.setRoot(root);
@@ -46,9 +47,16 @@ public class ModalController {
 
   public void createObjectInstance(String name, String objectType){
     objectType = objectType.substring(0, 1).toUpperCase() + objectType.substring(1);
-    Map<String, String> map = templateMap.get(name);
+
+    int firstDigitIndex = name.replaceAll("\\D", "").length() > 0 ? name.indexOf(name.replaceAll("\\D", "").charAt(0)) : -1;
+    String componentTemplate = (firstDigitIndex != -1) ? name.substring(0, firstDigitIndex) : name;
+    System.out.println(componentTemplate);
+
+    Map<String, String> map = templateMap.get(componentTemplate);
     Component c = factory.create(objectType, map);
+
     activeComponents.put(name, c);
+
     files.addComponent(c);
     dropZoneController.addDropZone(c);
     dropZoneController.addGridObject(c);
@@ -80,6 +88,13 @@ public class ModalController {
 
   public void setRoot(Pane rt) {
     root = rt;
+  }
+
+  public Component getActiveComponent(String name) {
+    return activeComponents.get(name);
+  }
+  public Map<String, Component> getMap() {
+    return activeComponents;
   }
 
   public void configGeneral(Map<String, String> map) {

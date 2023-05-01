@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 package oogasalad.sharedDependencies.backend.rules;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -211,7 +210,7 @@ public class RuleManagerTest {
   }
 
 }
-=======
+
 //package oogasalad.sharedDependencies.backend.rules;
 //
 //import oogasalad.sharedDependencies.backend.ownables.gameobjects.GameObject;
@@ -421,4 +420,3 @@ public class RuleManagerTest {
 //  }
 //
 //}
->>>>>>> e1021141ae74d6015f9e17ef531f79330e3efe94
