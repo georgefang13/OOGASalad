@@ -15,6 +15,11 @@ public class JsonNodeParser {
   public JsonNodeParser() {
   }
 
+  /**
+   * Returns a list of Command objects that represent the commands in the file
+   * @param absoluteFilePath
+   * @return
+   */
   public List<Command> readCommands(String absoluteFilePath) {
     List<Command> commands = new ArrayList<>();
     String fileContent = "";
