@@ -1,5 +1,6 @@
 package oogasalad.Controller;
 
+import javafx.beans.property.ObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -78,7 +79,7 @@ public interface GameController {
      */
     void passGameId(String code);
 
-    boolean getEndGameStatus();
+    ObjectProperty<Boolean> getEndGameStatus();
 
     void addTextObject(String id, String text, String DropZoneID);
 

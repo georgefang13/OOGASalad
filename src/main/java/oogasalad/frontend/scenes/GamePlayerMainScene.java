@@ -1,5 +1,7 @@
 package oogasalad.frontend.scenes;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -41,8 +43,11 @@ public class GamePlayerMainScene extends AbstractScene {
     gameObjectVisuals.addListener(new NodeRemovedListener(root));
     root.getChildren().addAll(gameObjectVisuals);
 
-    boolean endGameStatus = gameRunnerController.getEndGameStatus();
-
+    ObjectProperty<Boolean> endGameStatus = gameRunnerController.getEndGameStatus();
+    endGameStatus.addListener((obs, oldValue, newValue) -> {
+      System.out.println("Value changed from " + oldValue + " to " + newValue);
+      //PUT YOUR FUNCTION HERE
+    });
 
     Button undoButton = new Button("Undo");
     gameRunnerController.assignUndoButtonAction(undoButton);

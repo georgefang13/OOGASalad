@@ -1,6 +1,8 @@
 package oogasalad.Controller;
 
 import javafx.application.Platform;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
@@ -19,13 +21,13 @@ public class GameRunnerController implements GameController {
     private final ObservableList<Node> gameObjectVisualsList = FXCollections.observableArrayList();
     private final HashSet<String> clickable = new HashSet<>();
     private Game game;
-    private boolean endGame;
+    private ObjectProperty<Boolean> endGame;
 
     public GameRunnerController(String gameName, ArrayList<String> gameTypeData) {
         String directory = "data/games/"+gameName;
         int numPlayers = 2;
         String type = gameTypeData.get(0);
-        endGame = false;
+        endGame = new SimpleObjectProperty<>(false);
 
         try {
             loadGame(directory);
@@ -211,7 +213,7 @@ public class GameRunnerController implements GameController {
         return gameObjectVisualsList;
     }
     @Override
-    public boolean getEndGameStatus(){
+    public ObjectProperty<Boolean> getEndGameStatus(){
         return endGame;
     }
 

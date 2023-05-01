@@ -2,6 +2,7 @@ package oogasalad.simpleGameUI;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.beans.property.ObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -268,6 +269,11 @@ public class SimpleGameView extends Application implements GameController {
             label.setLayoutY(10);
             root.getChildren().add(label);
         });
+    }
+
+    @Override
+    public ObjectProperty<Boolean> getEndGameStatus() {
+        return null;
     }
 
     @Override
