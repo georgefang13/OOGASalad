@@ -14,6 +14,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import oogasalad.frontend.modals.subDisplayModals.AlertModal;
+import oogasalad.frontend.modals.subInputModals.CreateNewModal;
 import oogasalad.frontend.windows.WindowTypes.WindowType;
 import oogasalad.sharedDependencies.backend.database.Database;
 import oogasalad.sharedDependencies.backend.database.UserManager;
@@ -125,13 +126,8 @@ private static final String DROPDOWN_BOX_ID = "DropdownBoxID";
     signUp.setUnderline(true);
     signUp.getStyleClass().add(ID_BUNDLE.getString(LOGIN_SIGNUP_ID));
     signUp.setOnMouseClicked(e -> {
-      if (userManager.tryRegister(usernameField.getText(), passwordField.getText(), new HashMap<>())) {
-        displayLibrary();
-      }
-      else {
-        AlertModal error = new AlertModal();
-        error.showAndWait();
-      }
+      CreateNewModal creator = new CreateNewModal(SIGN_UP);
+      creator.showAndWait();
     });
     loginSignUpButtons.getChildren().addAll(login, signUp);
     return loginSignUpButtons;

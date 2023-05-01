@@ -77,12 +77,14 @@ public class CreateNewModal extends InputModal {
     for (Map.Entry<String, String> entry : map.entrySet()) {
       String propertyName = entry.getKey();
       String fieldType = propertyName.split("\\.")[propertyName.split("\\.").length - 1];
+      System.out.println(fieldType);
       String propertyValue = entry.getValue();
 
       int start = entry.getKey().toString().indexOf("*") + 1;
 
       String labelName = entry.getKey().toString().substring(start);
       labelName = labelName.split("\\.")[0];
+
 
       // Get the field class corresponding to the property name using reflection
       Class<?> fieldClass = Class.forName(
