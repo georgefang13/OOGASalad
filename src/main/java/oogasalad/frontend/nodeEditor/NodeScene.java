@@ -179,7 +179,7 @@ public class NodeScene extends AbstractScene {
     try {
       CodeEditorTab panel = tabMap.get(tabs.getSelectionModel().getSelectedItem());
       panel.clearNodes();
-      NodeConfiguration config = new NodeConfiguration(filePath);
+      NodeConfiguration config = new NodeConfiguration(USER_CODE_FILES_PATH + "save.json");
       List<NodeData> nodeData = config.getNodeData();
       List<AbstractNode> nodes = config.makeNodes(nodeData);
 
