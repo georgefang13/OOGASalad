@@ -324,13 +324,13 @@ public class GameRunnerController implements GameController {
      */
     @Override
     public void endGame(int player) {
-        AlertModal alertModal = new AlertModal("GameWinHeader", "GameWinBody", player+1);
-        alertModal.setModalType(Alert.AlertType.INFORMATION);
-        alertModal.setOnClose(e -> {
-
+        Platform.runLater(() -> {
+            AlertModal alertModal = new AlertModal("GameWinHeader", "GameWinBody", player+1);
+            alertModal.setModalTitle("GameWinTitle");
+            alertModal.setModalType(Alert.AlertType.INFORMATION);
+            alertModal.showAlert();
+            endGame.setValue(true);
         });
-        alertModal.showAlert();
-        endGame.setValue(true);
     }
 
     private void clearClickables(){
