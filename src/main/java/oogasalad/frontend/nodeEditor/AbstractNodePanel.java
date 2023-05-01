@@ -42,8 +42,19 @@ AbstractNodePanel extends Tab {
     windowHeight = propertyManager.getNumeric("WindowHeight");
   }
 
+  /**
+   * Returns a list of buttons that can be used to create nodes
+   * @param fileName
+   * @return List<Button>
+   */
   protected abstract List<Button> getNodeSelectionButtons(String fileName);
 
+
+  /**
+   * Returns the string that will be used to parse the nodes in the interpreter
+   * Finds the MainNode and calls getNodeParseString on it which will recursively call the method on all of its children
+   * @return String
+   */
   public String getAllNodeContent() {
     String code = "";
     for (Node node : group.getChildren()) {
@@ -54,6 +65,10 @@ AbstractNodePanel extends Tab {
     return code;
   }
 
+  /**
+   * Returns a list of all of the nodes that are children of the MainNode
+   * @return List<AbstractNode>
+   */
   public List<AbstractNode> getAllNodes() {
     List<AbstractNode> nodes = new ArrayList<>();
     for (Node node : group.getChildren()) {
@@ -70,6 +85,13 @@ AbstractNodePanel extends Tab {
     return nodes;
   }
 
+
+  /**
+   * Returns a button with the given name and handler
+   * @param buttonName
+   * @param handler
+   * @return Button
+   */
   protected Button makeButton(String buttonName, EventHandler<ActionEvent> handler) {
     Button button = new Button(buttonName);
     button.setOnAction(handler);
@@ -78,6 +100,10 @@ AbstractNodePanel extends Tab {
     return button;
   }
 
+  /**
+   * Uses reflection to create a node with the given class name
+   * @param className
+   */
   protected void makeNode(String className) {
     try {
       Class<?> clazz = Class.forName(className);
@@ -90,11 +116,20 @@ AbstractNodePanel extends Tab {
     }
   }
 
+  /**
+   * Adds the given node to the group
+   * @param node
+   * @return void
+   */
   protected void putNode(AbstractNode node) {
     group.getChildren().add(node);
     node.setBoundingBox((workspace.getBoundsInParent()));
   }
 
+  /**
+   * Removes all of the nodes from the group
+   * @return void
+   */
   protected void clearNodes() {
     List<AbstractNode> nodesToRemove = new ArrayList<>();
     for (Node node : group.getChildren()) {
@@ -107,6 +142,10 @@ AbstractNodePanel extends Tab {
     }
   }
 
+  /**
+   * Returns a scroll pane with all of the buttons that can be used to create nodes
+   * @return ScrollPane
+   */
   public ScrollPane makeNodeSelectionPane() {
     List<Button> buttons = getNodeSelectionButtons("Commands.json");
     ArrayList<Button> temp = new ArrayList<>(buttons);
@@ -128,14 +167,28 @@ AbstractNodePanel extends Tab {
     return scrollPane;
   }
 
+
+  /**
+   * Returns an accordion with all of the buttons that can be used to create nodes
+   * @return Accordion
+   */
   public Accordion getAccordion(){
     return null;
   }
+
+  /**
+   * Returns an accordion with all of the buttons that can be used to create nodes
+   * @return Accordion
+   */
   public Accordion getAccordianFinished(String fileName) {
     return null;
   }
 
 
+  /**
+   * Returns a BorderPane with the nodeEditor workspace
+   * @return BorderPane
+   */
   public BorderPane makeWorkspacePane() {
     double defaultXScale = 0.15;
     double defaultYScale = 0.15;
