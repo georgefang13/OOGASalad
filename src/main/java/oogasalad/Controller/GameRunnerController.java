@@ -5,9 +5,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import oogasalad.frontend.components.gameObjectComponent.GameRunner.DropZoneFE;
-import oogasalad.frontend.components.gameObjectComponent.GameRunner.GameRunnerObject;
-import oogasalad.frontend.components.gameObjectComponent.GameRunner.Piece;
+import oogasalad.frontend.components.gameObjectComponent.GameRunner.*;
 import oogasalad.frontend.components.gameObjectComponent.GameRunner.gameObjectVisuals.AbstractSelectableVisual;
 import oogasalad.frontend.managers.GameObjectVisualSorter;
 import oogasalad.gamerunner.backend.Game;
@@ -17,7 +15,7 @@ import java.io.FileNotFoundException;
 import java.util.*;
 
 public class GameRunnerController implements GameController {
-    private final Map<String, GameRunnerObject> gameObjects = new HashMap<>();
+    private final Map<String, GameRunnerComponent> gameObjects = new HashMap<>();
     private final ObservableList<Node> gameObjectVisualsList = FXCollections.observableArrayList();
     private final HashSet<String> clickable = new HashSet<>();
     private Game game;
@@ -120,7 +118,7 @@ public class GameRunnerController implements GameController {
             piece.moveToDropZoneXY(dropZone.getDropZoneCenter());
             addGameObject(id,piece);
     }
-    private void addGameObject(String id, GameRunnerObject gameObject){
+    private void addGameObject(String id, GameRunnerComponent gameObject){
             gameObjects.put(id,gameObject);
             gameObjectVisualsList.add(gameObject.getNode());
     }
@@ -164,7 +162,7 @@ public class GameRunnerController implements GameController {
 
     @Override
     public void setObjectImage(String id, String newImagePath) {
-        GameRunnerObject gameObject = gameObjects.get(id);
+        GameRunnerComponent gameObject = gameObjects.get(id);
         AbstractSelectableVisual.SelectableVisualParams unselected = new AbstractSelectableVisual.SelectableVisualParams(true,newImagePath);
         AbstractSelectableVisual.SelectableVisualParams selected = new AbstractSelectableVisual.SelectableVisualParams(false,"#ff0000");
 
@@ -173,7 +171,7 @@ public class GameRunnerController implements GameController {
         updateVisualDisplay(gameObject, oldObjectVisual);
     }
 
-    private void updateVisualDisplay(GameRunnerObject gameObject, Node oldObjectVisual) {
+    private void updateVisualDisplay(GameRunnerComponent gameObject, Node oldObjectVisual) {
         Node newObjectVisual = gameObject.getNode();
         newObjectVisual.setTranslateX(oldObjectVisual.getTranslateX());
         newObjectVisual.setTranslateY(oldObjectVisual.getTranslateY());
@@ -183,7 +181,7 @@ public class GameRunnerController implements GameController {
 
     @Override
     public void setPieceHighlight(String id, String param) {
-        GameRunnerObject gameObject = gameObjects.get(id);
+        GameRunnerComponent gameObject = gameObjects.get(id);
         boolean isImg = !param.contains("#");
         AbstractSelectableVisual.SelectableVisualParams selected = new AbstractSelectableVisual.SelectableVisualParams(isImg,param);
 
@@ -219,9 +217,12 @@ public class GameRunnerController implements GameController {
     }
 
     @Override
-    public void addTextObject(String id, String text, String DropZoneID) {
-
-
+    public void addTextObject(String id, String text, String dropZoneID) {
+        TextGameRunner textGameRunner = new TextGameRunner(id);
+        textGameRunner.setText(text);
+        DropZoneFE dropZone = (DropZoneFE) gameObjects.get(dropZoneID);
+        textGameRunner.moveToXY(dropZone.getDropZoneCenter());
+        addGameObject(id,textGameRunner);
     }
 
     @Override

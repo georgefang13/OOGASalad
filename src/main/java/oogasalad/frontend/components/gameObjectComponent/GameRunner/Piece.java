@@ -35,11 +35,7 @@ public class Piece extends GameRunnerObject{
         setDragSelection();
     }
     public void moveToDropZoneXY(Point2D dropZoneCenter){
-        Point2D pieceCenter = getNode().localToScene(((double) getWidth())/2,((double) getHeight())/2);
-        double shiftX = dropZoneCenter.getX() - pieceCenter.getX();
-        double shiftY = dropZoneCenter.getY() - pieceCenter.getY();
-        getNode().setTranslateX(getNode().getTranslateX() + shiftX);
-        getNode().setTranslateY(getNode().getTranslateY() + shiftY);
+        moveToXY(dropZoneCenter);
         acceptDrag();
     }
     private void setDragSelection() {
