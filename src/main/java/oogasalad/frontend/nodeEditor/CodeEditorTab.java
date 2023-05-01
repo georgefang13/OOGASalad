@@ -40,6 +40,14 @@ public class CodeEditorTab extends AbstractNodeEditorTab {
     setContent(new HBox(makeNodeButtonPanel(), makeWorkspacePanel()));
   }
 
+  public CodeEditorTab(NodeController nodeController){
+    super(nodeController);
+    buttonFolders = new ArrayList<>();
+    folderNames = new HashSet<>();
+    setContent(new HBox(makeNodeButtonPanel(), makeWorkspacePanel()));
+
+  }
+
 
   /**
    * Returns a list of buttons that can be used to create nodes

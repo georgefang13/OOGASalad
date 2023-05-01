@@ -33,6 +33,7 @@ public class NodeScene extends AbstractScene {
     super();
     this.nodeController = nodeController;
     tabs.getTabs().add(makeTab("state editor", false, new StateEditorTab(nodeController)));
+    tabs.getTabs().add(makeTab("goal editor", false, new GoalEditorTab(nodeController)));
     setTheme();
   }
 

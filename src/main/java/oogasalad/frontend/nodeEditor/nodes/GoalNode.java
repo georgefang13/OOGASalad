@@ -5,12 +5,13 @@ import oogasalad.frontend.nodeEditor.configuration.NodeData;
 
 import java.util.ArrayList;
 
-public class MainNode extends AbstractNode implements ControlNode {
+public class GoalNode extends AbstractNode implements ControlNode {
 
-  public MainNode() {
+  public GoalNode() {
     super();
+    setTranslateY(propertyManager.getNumeric("GoalNode.StartOffset"));
     setContent();
-    this.getStyleClass().add(propertyManager.getText("MainNode.StyleClass"));
+    this.getStyleClass().add(propertyManager.getText("GoalNode.StyleClass"));
   }
 
   /**
@@ -19,7 +20,7 @@ public class MainNode extends AbstractNode implements ControlNode {
    */
   @Override
   protected void setContent() {
-    Label title = new Label(propertyManager.getText("MainNode.Title"));
+    Label title = new Label(propertyManager.getText("GoalNode.Title"));
     this.getChildren().add(title);
   }
 
@@ -46,13 +47,6 @@ public class MainNode extends AbstractNode implements ControlNode {
         new ArrayList<>());
   }
 
-  /**
-   * Aligns the nodes. Empty implementation for MainNode because it can't be snapped to another node (Can't be the child of another node)
-   * @return void
-   */
-  @Override
-  public void snapToNode(AbstractNode node) {
-  }
 
   /**
    * Deletes the node. Empty implementation for MainNode because it can't be deleted

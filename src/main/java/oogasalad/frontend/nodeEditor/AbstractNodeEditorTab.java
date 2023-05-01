@@ -26,6 +26,7 @@ import javafx.scene.shape.Rectangle;
 import oogasalad.frontend.managers.PropertyManager;
 import oogasalad.frontend.managers.StandardPropertyManager;
 import oogasalad.frontend.nodeEditor.nodes.AbstractNode;
+import oogasalad.frontend.nodeEditor.nodes.GoalNode;
 import oogasalad.frontend.nodeEditor.nodes.MainNode;
 
 public abstract class AbstractNodeEditorTab extends Tab {
@@ -240,7 +241,7 @@ public abstract class AbstractNodeEditorTab extends Tab {
     updateBoundingBoxAllNodes();
     event.consume();
   }
-  
+
   private void updateBoundingBoxAllNodes() {
     for (Node node : nodeGroup.getChildren()) {
       if (node instanceof AbstractNode) {
