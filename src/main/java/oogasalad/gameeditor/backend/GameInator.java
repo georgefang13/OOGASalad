@@ -306,10 +306,11 @@ public class GameInator {
     if (targetOwnable instanceof Variable){
       ((Variable) targetOwnable).set(newValue);
     }
-
+    System.out.println(targetObject);
     // change id of ownable
     String newId = params.get(ObjectParameter.ID) != null ? params.get(ObjectParameter.ID).toString() : null;
     if (newId != null){
+      System.out.println(newId);
       ownableIdManager.changeId(targetObject, newId);
     }
   }

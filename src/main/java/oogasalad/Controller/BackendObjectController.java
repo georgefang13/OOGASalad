@@ -2,6 +2,7 @@ package oogasalad.Controller;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import oogasalad.frontend.components.Component;
 import oogasalad.gameeditor.backend.GameInator;
 import oogasalad.gameeditor.backend.ObjectParameter;
@@ -13,8 +14,13 @@ public class BackendObjectController {
   public BackendObjectController(){
 
   }
-  public void sendOwnableObject(Map<String, String> map, Component c){
-    System.out.println(map);
+  public void sendOwnableObject(Component c){
+    HashMap<ObjectParameter, Object> param = setUpMap(c);
+    System.out.println(param.get(ObjectParameter.ID));
+    game.sendObject(ObjectType.OWNABLE, param);
+  }
+
+  private static HashMap<ObjectParameter, Object> setUpMap (Component c) {
     ConvertingStrategy e = new ConvertingStrategy();
     Map<String, String> mp = e.paramsToMap(c);
     BackendObjectStrategy b = new BackendObjectStrategy();
@@ -22,11 +28,20 @@ public class BackendObjectController {
     String type = b.getOwnableType(c);
     param.put(ObjectParameter.OWNABLE_TYPE, type);
     b.putParams(mp,param,type);
-    game.sendObject(ObjectType.OWNABLE, param);
-    System.out.println("test");
+    return param;
   }
 
+  public void deleteOwnableObject(Component c){
+    HashMap<ObjectParameter, Object> param = setUpMap(c);
+    game.deleteObject(ObjectType.OWNABLE, param);
+  }
   public void setGame(GameInator g) {
     game = g;
+  }
+
+  public void editOwnableObject(Component c) {
+    HashMap<ObjectParameter, Object> param = setUpMap(c);
+    System.out.println(c.getID());
+    game.updateObjectProperties(c.getID(), ObjectType.OWNABLE, param);
   }
 }

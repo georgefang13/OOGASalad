@@ -2,7 +2,6 @@ package oogasalad.frontend.modals;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 import javafx.scene.layout.Pane;
 import oogasalad.Controller.BackendObjectController;
 import oogasalad.Controller.DropZoneController;
@@ -53,7 +52,7 @@ public class ModalController {
     files.addComponent(c);
     dropZoneController.addDropZone(c);
     dropZoneController.addGridObject(c);
-    backendObjectController.sendOwnableObject(map, c);
+    backendObjectController.sendOwnableObject(c);
     GraphicHandler handler = new GraphicHandler();
     handler.moveToCenter(c);
     root.getChildren().add(c.getNode());
@@ -64,13 +63,17 @@ public class ModalController {
     objectType = objectType.substring(0, 1).toUpperCase() + objectType.substring(1);
     root.getChildren().remove(activeComponents.get(name).getNode());
     Component c = factory.create(objectType, map);
+    c.setID(activeComponents.get(name).getID());
     activeComponents.put(name, c);
     GraphicHandler handler = new GraphicHandler();
     handler.moveToCenter(c);
+    backendObjectController.editOwnableObject(c);
     root.getChildren().add(c.getNode());
   }
 
   public void deleteObjectInstance(String name) {
+    Component c = activeComponents.get(name);
+    backendObjectController.deleteOwnableObject(c);
     root.getChildren().remove(activeComponents.get(name).getNode());
   }
 
