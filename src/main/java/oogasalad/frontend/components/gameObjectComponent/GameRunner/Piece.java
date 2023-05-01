@@ -12,6 +12,7 @@ import oogasalad.frontend.components.gameObjectComponent.GameRunner.gameObjectVi
 public class Piece extends GameRunnerObject{
     private double lastTranslateX;
     private double lastTranslateY;
+    private AbstractSelectableVisual.SelectableVisualParams unselected;
     public Piece(String ID, GameController gameRunnerController, String imagePath, boolean hasSelectImage, String param, int height, int width) {
         super(ID, gameRunnerController);
         setHeight(height);
@@ -20,6 +21,11 @@ public class Piece extends GameRunnerObject{
     }
     @Override
     public void setSelectableVisual(AbstractSelectableVisual.SelectableVisualParams unselected, AbstractSelectableVisual.SelectableVisualParams selected) {
+        this.unselected = unselected;
+        setSelectVisual(selected);
+    }
+    @Override
+    public void setSelectVisual(AbstractSelectableVisual.SelectableVisualParams selected) {
         if (selected.hasSelectImage()){
             selectableVisual = new PieceVisualSelectImage(unselected.param(),selected.param(),getHeight(),getWidth(),ID);
         } else {

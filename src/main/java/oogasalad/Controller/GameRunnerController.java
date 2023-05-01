@@ -155,13 +155,16 @@ public class GameRunnerController implements GameController {
 
     @Override
     public void setObjectImage(String id, String newImagePath) {
-        System.out.println(newImagePath);
         GameRunnerObject gameObject = gameObjects.get(id);
         AbstractSelectableVisual.SelectableVisualParams unselected = new AbstractSelectableVisual.SelectableVisualParams(true,newImagePath);
         AbstractSelectableVisual.SelectableVisualParams selected = new AbstractSelectableVisual.SelectableVisualParams(false,"#ff0000");
 
         Node oldObjectVisual = gameObject.getNode();
         gameObject.setSelectableVisual(unselected, selected);
+        updateVisualDisplay(gameObject, oldObjectVisual);
+    }
+
+    private void updateVisualDisplay(GameRunnerObject gameObject, Node oldObjectVisual) {
         Node newObjectVisual = gameObject.getNode();
         newObjectVisual.setTranslateX(oldObjectVisual.getTranslateX());
         newObjectVisual.setTranslateY(oldObjectVisual.getTranslateY());
@@ -170,11 +173,14 @@ public class GameRunnerController implements GameController {
     }
 
     @Override
-    public void setPieceHighlight(String id, String img) {
-        boolean isImg = !img.contains("#");
+    public void setPieceHighlight(String id, String param) {
+        GameRunnerObject gameObject = gameObjects.get(id);
+        boolean isImg = !param.contains("#");
+        AbstractSelectableVisual.SelectableVisualParams selected = new AbstractSelectableVisual.SelectableVisualParams(isImg,param);
 
-
-
+        Node oldObjectVisual = gameObject.getNode();
+        gameObject.setSelectVisual(selected);
+        updateVisualDisplay(gameObject, oldObjectVisual);
     }
 
     private void clearClickables(){
