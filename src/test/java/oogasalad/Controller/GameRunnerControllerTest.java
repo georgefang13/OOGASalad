@@ -12,8 +12,6 @@ import oogasalad.gamerunner.backend.Game;
 import org.assertj.core.util.Arrays;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.testng.Assert;
-import org.testng.annotations.BeforeClass;
 
 import java.util.*;
 
