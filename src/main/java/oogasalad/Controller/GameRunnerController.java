@@ -7,9 +7,7 @@ import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import oogasalad.frontend.components.gameObjectComponent.GameRunner.DropZoneFE;
-import oogasalad.frontend.components.gameObjectComponent.GameRunner.GameRunnerObject;
-import oogasalad.frontend.components.gameObjectComponent.GameRunner.Piece;
+import oogasalad.frontend.components.gameObjectComponent.GameRunner.*;
 import oogasalad.frontend.components.gameObjectComponent.GameRunner.gameObjectVisuals.AbstractSelectableVisual;
 import oogasalad.frontend.managers.GameObjectVisualSorter;
 import oogasalad.frontend.modals.subDisplayModals.AlertModal;
@@ -20,16 +18,18 @@ import java.io.FileNotFoundException;
 import java.util.*;
 
 public class GameRunnerController implements GameController {
-    private final Map<String, GameRunnerObject> gameObjects = new HashMap<>();
+    private final Map<String, GameRunnerComponent> gameObjects = new HashMap<>();
     private final ObservableList<Node> gameObjectVisualsList = FXCollections.observableArrayList();
     private final HashSet<String> clickable = new HashSet<>();
     private final HashMap<DropZoneFE, List<Piece>> dropZonePieces = new HashMap<>();
     private Game game;
+    private boolean endGame;
 
     public GameRunnerController(String gameName, ArrayList<String> gameTypeData) {
         String directory = "data/games/"+gameName;
         int numPlayers = 2;
         String type = gameTypeData.get(0);
+        endGame = false;
 
         try {
             loadGame(directory);
@@ -133,7 +133,7 @@ public class GameRunnerController implements GameController {
             setPiecesInDropZone(dropZone);
             addGameObject(id,piece);
     }
-    private void addGameObject(String id, GameRunnerObject gameObject){
+    private void addGameObject(String id, GameRunnerComponent gameObject){
             gameObjects.put(id,gameObject);
             gameObjectVisualsList.add(gameObject.getNode());
     }
@@ -227,7 +227,7 @@ public class GameRunnerController implements GameController {
 
     @Override
     public void setObjectImage(String id, String newImagePath) {
-        GameRunnerObject gameObject = gameObjects.get(id);
+        GameRunnerComponent gameObject = gameObjects.get(id);
         AbstractSelectableVisual.SelectableVisualParams unselected = new AbstractSelectableVisual.SelectableVisualParams(true,newImagePath);
         AbstractSelectableVisual.SelectableVisualParams selected = new AbstractSelectableVisual.SelectableVisualParams(false,"#ff0000");
 
@@ -239,7 +239,7 @@ public class GameRunnerController implements GameController {
         });
     }
 
-    private void updateVisualDisplay(GameRunnerObject gameObject, Node oldObjectVisual) {
+    private void updateVisualDisplay(GameRunnerComponent gameObject, Node oldObjectVisual) {
         Node newObjectVisual = gameObject.getNode();
         newObjectVisual.setTranslateX(oldObjectVisual.getTranslateX());
         newObjectVisual.setTranslateY(oldObjectVisual.getTranslateY());
@@ -249,7 +249,7 @@ public class GameRunnerController implements GameController {
 
     @Override
     public void setPieceHighlight(String id, String param) {
-        GameRunnerObject gameObject = gameObjects.get(id);
+        GameRunnerComponent gameObject = gameObjects.get(id);
         boolean isImg = !param.contains("#");
         AbstractSelectableVisual.SelectableVisualParams selected = new AbstractSelectableVisual.SelectableVisualParams(isImg,param);
 
@@ -282,6 +282,10 @@ public class GameRunnerController implements GameController {
         Collections.sort(gameObjectVisualsList, gameObjectVisualComparator);
         return gameObjectVisualsList;
     }
+    @Override
+    public boolean getEndGameStatus(){
+        return endGame;
+    }
 
     @Override
     public void passGameId(String code) {
@@ -291,9 +295,12 @@ public class GameRunnerController implements GameController {
     }
 
     @Override
-    public void addTextObject(String id, String text, String DropZoneID) {
-
-
+    public void addTextObject(String id, String text, String dropZoneID) {
+        TextGameRunner textGameRunner = new TextGameRunner(id);
+        textGameRunner.setText(text);
+        DropZoneFE dropZone = (DropZoneFE) gameObjects.get(dropZoneID);
+        textGameRunner.moveToXY(dropZone.getDropZoneCenter());
+        addGameObject(id,textGameRunner);
     }
 
     @Override

@@ -79,6 +79,8 @@ public interface GameController {
      */
     void passGameId(String code);
 
+    boolean getEndGameStatus();
+
     void addTextObject(String id, String text, String DropZoneID);
 
     void updateTextObject(String id, String text);
