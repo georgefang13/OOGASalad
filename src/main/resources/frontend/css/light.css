@@ -193,12 +193,16 @@
 }
 
 /* LibraryGridPanel */
+.library-scroll-pane {
+  -fx-background-color: #24252e;
+}
 .library-grid-pane {
   -fx-background-color: #24252e;
   -fx-hgap: 20;
   -fx-vgap: 20;
   -fx-padding: 20;
 }
+
 .game-box {
   -fx-background-color: #3E404E;
   -fx-border-radius: 20;
@@ -206,11 +210,13 @@
   -fx-pref-height: 200;
   -fx-alignment: center;
 }
+
 .game-box-image {
   -fx-border-radius: 20 20 0 0;
   -fx-background-radius: 20 20 0 0;
   -fx-alignment: center;
 }
+
 .game-name-label-box {
   -fx-alignment: center-left;
   -fx-background-radius: 0 0 0 10;
@@ -220,10 +226,12 @@
   -fx-pref-height: 50;
   -fx-padding: 0 0 0 20;
 }
+
 .game-name-label {
   -fx-text-fill: white;
   -fx-font-size: 16;
 }
+
 .game-box-edit-icon-box {
   -fx-alignment: center-right;
   -fx-background-radius: 0 0 10 0;
@@ -232,6 +240,7 @@
   -fx-pref-height: 68;
   -fx-padding: 0 20 0 0;
 }
+
 .game-box-edit-icon {
   -fx-fill: white;
   -fx-font-size: 16;
@@ -253,12 +262,14 @@
   -fx-pref-height: 80;
   -fx-pref-width: 950;
 }
+
 .left-header-box {
   -fx-alignment: center;
   -fx-background-color: #54576F;
   -fx-pref-height: 80;
   -fx-pref-width: 250;
 }
+
 .game-library-title {
   -fx-text-fill: white;
   -fx-font-size: 30px;
@@ -274,14 +285,17 @@
   -fx-padding: 10;
   -fx-pref-height: 50;
 }
+
 .icon-button .graphic {
   -fx-graphic-text-gap: 10px;
   -fx-alignment: center-left;
 }
+
 .icon-button .text {
   -fx-graphic-text-gap: 10px;
   -fx-font-size: 25;
 }
+
 .awesome-icon {
   -fx-fill: white;
   -fx-font-size: 25;
@@ -319,17 +333,17 @@
 
 
 
-.json-node{
-  -fx-background-color: #F1F1EF ;
+.json-node {
+  -fx-background-color: #F1F1EF;
   -fx-font-size: 17;
 }
 
-.json-node-title{
+.json-node-title {
   -fx-font-size: 35;
 }
 
 
-.control{
+.control {
   -fx-background-color: orange;
   -fx-pref-width: 300 !important;
   -fx-pref-height: 50 !important;
@@ -339,15 +353,21 @@
 
 }
 
-.main-node{
+.main-node {
   -fx-background-color: #A2EE17;
   -fx-font-size: 35;
   -fx-alignment: center;
   -fx-pref-width: 300 !important;
-
 }
 
-.state-node{
+.goal-node {
+  -fx-background-color: #FF00F4;
+  -fx-font-size: 35;
+  -fx-alignment: center;
+  -fx-pref-width: 300 !important;
+}
+
+.state-node {
   -fx-background-color: yellow;
   -fx-alignment: center;
 
@@ -359,10 +379,10 @@
   -fx-border-color: black;
   -fx-font-weight: 700;
   -fx-padding: 5;
-  -fx-background-radius: 10 ;
+  -fx-background-radius: 10;
   -fx-pref-height: -1;
   -fx-pref-width: -1;
-  -fx-min-width: 300  !important;
+  -fx-min-width: 300 !important;
 }
 
 /* Simple Game View */

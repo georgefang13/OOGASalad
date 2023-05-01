@@ -5,7 +5,9 @@ import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 
 import java.util.List;
-
+/**
+ * @author Owen MacKenzie
+ */
 public class NodeRemovedListener implements ListChangeListener<Node> {
     private Pane root;
     public NodeRemovedListener(Pane root) {
