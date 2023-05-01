@@ -68,6 +68,8 @@ public class CodeEditorPanel extends AbstractNodePanel {
         ArrayList<Button> buttons = new ArrayList<>();
         JsonNodeParser parser = new JsonNodeParser();
         List<Command> commands = parser.readCommands(absoluteFilePath);
+        System.out.println(commands);
+        System.out.println(folderNames);
         folderNames.clear();
         for (Command command : commands) {
             Button button = makeButton(command);
