@@ -255,6 +255,8 @@ public class Game implements GameToInterpreterAPI{
 
         sendClickable();
 
+        System.out.println(getLog());
+
         if (fsm.getCurrentState().equals("DONE")){
             int playerWin = checkGoals();
 

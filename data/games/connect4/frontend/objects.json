@@ -1,0 +1,296 @@
+{
+  "pieceR0": {
+    "selected":{"hasSelectedImage":true,"param":"ChipRed.png"},
+    "defaultImage": "ChipRed.png",
+    "height":"43",
+    "width":"43",
+    "location": "RedDropZone"
+  },
+  "pieceR1": {
+    "selected":{"hasSelectedImage":true,"param":"ChipRed.png"},
+    "defaultImage": "ChipRed.png",
+    "height":"43",
+    "width":"43",
+    "location": "RedDropZone"
+  },
+  "pieceR2": {
+    "selected":{"hasSelectedImage":true,"param":"ChipRed.png"},
+    "defaultImage": "ChipRed.png",
+    "height":"43",
+    "width":"43",
+    "location": "RedDropZone"
+  },
+  "pieceR3": {
+    "selected":{"hasSelectedImage":true,"param":"ChipRed.png"},
+    "defaultImage": "ChipRed.png",
+    "height":"43",
+    "width":"43",
+    "location": "RedDropZone"
+  },
+  "pieceR4": {
+    "selected":{"hasSelectedImage":true,"param":"ChipRed.png"},
+    "defaultImage": "ChipRed.png",
+    "height":"43",
+    "width":"43",
+    "location": "RedDropZone"
+  },
+  "pieceR5": {
+    "selected":{"hasSelectedImage":true,"param":"ChipRed.png"},
+    "defaultImage": "ChipRed.png",
+    "height":"43",
+    "width":"43",
+    "location": "RedDropZone"
+  },
+  "pieceR6": {
+    "selected":{"hasSelectedImage":true,"param":"ChipRed.png"},
+    "defaultImage": "ChipRed.png",
+    "height":"43",
+    "width":"43",
+    "location": "RedDropZone"
+  },
+  "pieceR7": {
+    "selected":{"hasSelectedImage":true,"param":"ChipRed.png"},
+    "defaultImage": "ChipRed.png",
+    "height":"43",
+    "width":"43",
+    "location": "RedDropZone"
+  },
+  "pieceR8": {
+    "selected":{"hasSelectedImage":true,"param":"ChipRed.png"},
+    "defaultImage": "ChipRed.png",
+    "height":"43",
+    "width":"43",
+    "location": "RedDropZone"
+  },
+  "pieceR9": {
+    "selected":{"hasSelectedImage":true,"param":"ChipRed.png"},
+    "defaultImage": "ChipRed.png",
+    "height":"43",
+    "width":"43",
+    "location": "RedDropZone"
+  },
+  "pieceR10": {
+    "selected":{"hasSelectedImage":true,"param":"ChipRed.png"},
+    "defaultImage": "ChipRed.png",
+    "height":"43",
+    "width":"43",
+    "location": "RedDropZone"
+  },
+  "pieceR11": {
+    "selected":{"hasSelectedImage":true,"param":"ChipRed.png"},
+    "defaultImage": "ChipRed.png",
+    "height":"43",
+    "width":"43",
+    "location": "RedDropZone"
+  },
+  "pieceR12": {
+    "selected":{"hasSelectedImage":true,"param":"ChipRed.png"},
+    "defaultImage": "ChipRed.png",
+    "height":"43",
+    "width":"43",
+    "location": "RedDropZone"
+  },
+  "pieceR13": {
+    "selected":{"hasSelectedImage":true,"param":"ChipRed.png"},
+    "defaultImage": "ChipRed.png",
+    "height":"43",
+    "width":"43",
+    "location": "RedDropZone"
+  },
+  "pieceR14": {
+    "selected":{"hasSelectedImage":true,"param":"ChipRed.png"},
+    "defaultImage": "ChipRed.png",
+    "height":"43",
+    "width":"43",
+    "location": "RedDropZone"
+  },
+  "pieceR15": {
+    "selected":{"hasSelectedImage":true,"param":"ChipRed.png"},
+    "defaultImage": "ChipRed.png",
+    "height":"43",
+    "width":"43",
+    "location": "RedDropZone"
+  },
+  "pieceR16": {
+    "selected":{"hasSelectedImage":true,"param":"ChipRed.png"},
+    "defaultImage": "ChipRed.png",
+    "height":"43",
+    "width":"43",
+    "location": "RedDropZone"
+  },
+  "pieceR17": {
+    "selected":{"hasSelectedImage":true,"param":"ChipRed.png"},
+    "defaultImage": "ChipRed.png",
+    "height":"43",
+    "width":"43",
+    "location": "RedDropZone"
+  },
+  "pieceR18": {
+    "selected":{"hasSelectedImage":true,"param":"ChipRed.png"},
+    "defaultImage": "ChipRed.png",
+    "height":"43",
+    "width":"43",
+    "location": "RedDropZone"
+  },
+  "pieceR19": {
+    "selected":{"hasSelectedImage":true,"param":"ChipRed.png"},
+    "defaultImage": "ChipRed.png",
+    "height":"43",
+    "width":"43",
+    "location": "RedDropZone"
+  },
+  "pieceR20": {
+    "selected":{"hasSelectedImage":true,"param":"ChipRed.png"},
+    "defaultImage": "ChipRed.png",
+    "height":"43",
+    "width":"43",
+    "location": "RedDropZone"
+  },
+  "pieceY0": {
+    "selected":{"hasSelectedImage":true,"param":"ChipYellow.png"},
+    "defaultImage": "ChipYellow.png",
+    "height":"43",
+    "width":"43",
+    "location": "YellowDropZone"
+  },
+  "pieceY1": {
+    "selected":{"hasSelectedImage":true,"param":"ChipYellow.png"},
+    "defaultImage": "ChipYellow.png",
+    "height":"43",
+    "width":"43",
+    "location": "YellowDropZone"
+  },
+  "pieceY2": {
+    "selected":{"hasSelectedImage":true,"param":"ChipYellow.png"},
+    "defaultImage": "ChipYellow.png",
+    "height":"43",
+    "width":"43",
+    "location": "YellowDropZone"
+  },
+  "pieceY3": {
+    "selected":{"hasSelectedImage":true,"param":"ChipYellow.png"},
+    "defaultImage": "ChipYellow.png",
+    "height":"43",
+    "width":"43",
+    "location": "YellowDropZone"
+  },
+  "pieceY4": {
+    "selected":{"hasSelectedImage":true,"param":"ChipYellow.png"},
+    "defaultImage": "ChipYellow.png",
+    "height":"43",
+    "width":"43",
+    "location": "YellowDropZone"
+  },
+  "pieceY5": {
+    "selected":{"hasSelectedImage":true,"param":"ChipYellow.png"},
+    "defaultImage": "ChipYellow.png",
+    "height":"43",
+    "width":"43",
+    "location": "YellowDropZone"
+  },
+  "pieceY6": {
+    "selected":{"hasSelectedImage":true,"param":"ChipYellow.png"},
+    "defaultImage": "ChipYellow.png",
+    "height":"43",
+    "width":"43",
+    "location": "YellowDropZone"
+  },
+  "pieceY7": {
+    "selected":{"hasSelectedImage":true,"param":"ChipYellow.png"},
+    "defaultImage": "ChipYellow.png",
+    "height":"43",
+    "width":"43",
+    "location": "YellowDropZone"
+  },
+  "pieceY8": {
+    "selected":{"hasSelectedImage":true,"param":"ChipYellow.png"},
+    "defaultImage": "ChipYellow.png",
+    "height":"43",
+    "width":"43",
+    "location": "YellowDropZone"
+  },
+  "pieceY9": {
+    "selected":{"hasSelectedImage":true,"param":"ChipYellow.png"},
+    "defaultImage": "ChipYellow.png",
+    "height":"43",
+    "width":"43",
+    "location": "YellowDropZone"
+  },
+  "pieceY10": {
+    "selected":{"hasSelectedImage":true,"param":"ChipYellow.png"},
+    "defaultImage": "ChipYellow.png",
+    "height":"43",
+    "width":"43",
+    "location": "YellowDropZone"
+  },
+  "pieceY11": {
+    "selected":{"hasSelectedImage":true,"param":"ChipYellow.png"},
+    "defaultImage": "ChipYellow.png",
+    "height":"43",
+    "width":"43",
+    "location": "YellowDropZone"
+  },
+  "pieceY12": {
+    "selected":{"hasSelectedImage":true,"param":"ChipYellow.png"},
+    "defaultImage": "ChipYellow.png",
+    "height":"43",
+    "width":"43",
+    "location": "YellowDropZone"
+  },
+  "pieceY13": {
+    "selected":{"hasSelectedImage":true,"param":"ChipYellow.png"},
+    "defaultImage": "ChipYellow.png",
+    "height":"43",
+    "width":"43",
+    "location": "YellowDropZone"
+  },
+  "pieceY14": {
+    "selected":{"hasSelectedImage":true,"param":"ChipYellow.png"},
+    "defaultImage": "ChipYellow.png",
+    "height":"43",
+    "width":"43",
+    "location": "YellowDropZone"
+  },
+  "pieceY15": {
+    "selected":{"hasSelectedImage":true,"param":"ChipYellow.png"},
+    "defaultImage": "ChipYellow.png",
+    "height":"43",
+    "width":"43",
+    "location": "YellowDropZone"
+  },
+  "pieceY16": {
+    "selected":{"hasSelectedImage":true,"param":"ChipYellow.png"},
+    "defaultImage": "ChipYellow.png",
+    "height":"43",
+    "width":"43",
+    "location": "YellowDropZone"
+  },
+  "pieceY17": {
+    "selected":{"hasSelectedImage":true,"param":"ChipYellow.png"},
+    "defaultImage": "ChipYellow.png",
+    "height":"43",
+    "width":"43",
+    "location": "YellowDropZone"
+  },
+  "pieceY18": {
+    "selected":{"hasSelectedImage":true,"param":"ChipYellow.png"},
+    "defaultImage": "ChipYellow.png",
+    "height":"43",
+    "width":"43",
+    "location": "YellowDropZone"
+  },
+  "pieceY19": {
+    "selected":{"hasSelectedImage":true,"param":"ChipYellow.png"},
+    "defaultImage": "ChipYellow.png",
+    "height":"43",
+    "width":"43",
+    "location": "YellowDropZone"
+  },
+  "pieceY20": {
+    "selected":{"hasSelectedImage":true,"param":"ChipYellow.png"},
+    "defaultImage": "ChipYellow.png",
+    "height":"43",
+    "width":"43",
+    "location": "YellowDropZone"
+  }
+}
