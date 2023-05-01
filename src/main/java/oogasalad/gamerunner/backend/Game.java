@@ -24,6 +24,8 @@ import oogasalad.sharedDependencies.backend.rules.RuleManager;
 import java.io.FileNotFoundException;
 import java.util.*;
 import java.util.stream.StreamSupport;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * The Game class represents the game itself.
@@ -33,6 +35,8 @@ import java.util.stream.StreamSupport;
  * @author Max Meister
  */
 public class Game implements GameToInterpreterAPI{
+
+    private static final Logger LOG = LogManager.getLogger(Game.class);
 
     /**
      * The Rules of the game.
@@ -156,7 +160,6 @@ public class Game implements GameToInterpreterAPI{
             onlineRunner.start();
             onlinePlayerNum = onlineRunner.getPlayerNum();
             startGame();
-            System.out.println("PLAYER " + onlinePlayerNum);
         }
     }
 
@@ -175,11 +178,8 @@ public class Game implements GameToInterpreterAPI{
             fsm.transition();
             sendClickable();
         } catch (Exception e) {
-            System.out.println(getLog());
+            LOG.error("Game log when interpreter error: " + getLog());
             throw e;
-        }
-        for (Object o : getLog()){
-            System.out.println(o);
         }
     }
     
@@ -249,13 +249,13 @@ public class Game implements GameToInterpreterAPI{
             fsm.setStateInnerValue(selectedObject);
             fsm.transition();
         } catch (Exception e) {
-//            System.out.println(getLog());
+            LOG.error("Game Log when interpreter error: " + getLog());
             throw e;
         }
 
+        LOG.info("Game Log: " + getLog());
         sendClickable();
 
-        System.out.println(getLog());
 
         if (fsm.getCurrentState().equals("DONE")){
             int playerWin = checkGoals();
@@ -294,196 +294,7 @@ public class Game implements GameToInterpreterAPI{
         return -1;
     }
 
-    // region LOADING
-
-    /**
-     * Loads a Game from a file.
-     * @param directory the name of the file to load from
-     */
-    public void loadGame(String directory) throws FileNotFoundException, ClassNotFoundException {
-        pieceLocations.clear();
-
-        loadFSM(directory + "/fsm.json");
-        loadDropZones(directory + "/layout.json");
-        loadObjectsAndVariables(directory);
-        loadRules(directory + "/rules.json");
-    }
-
-    private void loadFSM(String file) throws FileNotFoundException {
-
-        FileManager fm = new FileManager(file);
-
-        // states
-        for (String stateName : fm.getTagsAtLevel("states")){
-            String onEnter = fm.getString("states", stateName, "init");
-            String onLeave = fm.getString("states", stateName, "leave");
-            String setValue = fm.getString("states", stateName, "setValue");
-            String to = fm.getString("states", stateName, "to");
-
-            ProgrammableState ps = new ProgrammableState(interpreter, onEnter, onLeave, setValue);
-
-            fsm.putState(stateName, ps, (prevstate, data) -> {
-                interpreter.interpret(to);
-                IdManager idManager = (IdManager) data.get("idManager");
-                Variable<String> output = (Variable<String>) idManager.getObject("state_output");
-                return output.get();
-            });
-        }
-
-        // goals
-        List<String> goals = StreamSupport.stream(fm.getArray("goals").spliterator(), false).toList();
-        for (String g : goals){
-            Goal goal = new Goal();
-            goal.addInstruction(g);
-            this.goals.add(goal);
-        }
-
-    }
-
-    private void loadDropZones(String file) throws FileNotFoundException {
-        FileManager fm = new FileManager(file);
-
-        Map<DropZone, List<String[]>> edgeMap = new HashMap<>();
-
-        for (String id : fm.getTagsAtLevel()){
-
-            int x = Integer.parseInt(fm.getString(id, "position", "x"));
-            int y = Integer.parseInt(fm.getString(id, "position", "y"));
-            int width = Integer.parseInt(fm.getString(id, "position", "width"));
-            int height = Integer.parseInt(fm.getString(id, "position", "height"));
-
-            DropZone dz = new DropZone();
-            for (String cls : fm.getArray(id, "classes")){
-                dz.addClass(cls);
-            }
-
-            List<String[]> edges = new ArrayList<>();
-            for (String edgeName : fm.getTagsAtLevel(id, "connections")){
-                String edge = fm.getString(id, "connections", edgeName);
-                edges.add(new String[]{edgeName, edge});
-            }
-            edgeMap.put(dz, edges);
-
-            idManager.addObject(dz, id);
-
-            controller.addDropZone(new GameController.DropZoneParameters(id, null,null,x, y, height, width));
-        }
-
-        for (DropZone dz : edgeMap.keySet()){
-            // [ [ edgeName, edge ] ]
-            for (String[] edge : edgeMap.get(dz)){
-                DropZone other = (DropZone) idManager.getObject(edge[1]);
-                dz.addOutgoingConnection(other, edge[0]);
-            }
-        }
-    }
-
-    private void loadObjectsAndVariables(String directory) throws FileNotFoundException, ClassNotFoundException {
-        Map<String, List<String>> ownMap = loadGameObjects(directory + "/objects.json");
-        loadVariables(directory + "/variables.json");
-
-        for (String s : ownMap.keySet()) {
-            GameObject mainObj = (GameObject) idManager.getObject(s);
-            for (String o : ownMap.get(s)) {
-                Ownable obj = idManager.getObject(o);
-                idManager.setObjectOwner(obj, mainObj);
-            }
-        }
-    }
-
-    private Map<String, List<String>> loadGameObjects(String file) throws FileNotFoundException {
-
-        FileManager fm = new FileManager(file);
-
-        Map<String, List<String>> ownMap = new HashMap<>();
-
-        for (String id : fm.getTagsAtLevel()){
-            String image = fm.getString(id, "image");
-            double size = Double.parseDouble(fm.getString(id, "size"));
-            String owner = fm.getString(id, "owner");
-            String location = fm.getString(id, "location");
-            List<String> owns = StreamSupport.stream(fm.getArray(id, "owns").spliterator(), false).toList();
-
-            image = System.getProperty("user.dir") + "/" + file.substring(0, file.lastIndexOf("/")) + "/assets/" + image;
-
-            Owner own = null;
-            if (!owner.isEmpty()){
-                own = players.get(Integer.parseInt(owner));
-            }
-
-            GameObject obj = new GameObject(own);
-
-            for (String cls : fm.getArray(id, "classes")){
-                obj.addClass(cls);
-            }
-
-            idManager.addObject(obj, id);
-            //controller.addPiece(id, image, location, null, null, 0, size);
-
-            DropZone dz = (DropZone) idManager.getObject(location);
-
-            putInDropZone(obj, dz);
-
-            ownMap.put(id, owns);
-        }
-
-        return ownMap;
-    }
-
-    private void loadVariables(String file) throws FileNotFoundException, ClassNotFoundException {
-        FileManager fm = new FileManager(file);
-        for (String id : fm.getTagsAtLevel()){
-            String ownerName = fm.getString(id, "owner");
-
-            String type = fm.getString(id, "type");
-            Class<?> clazz = Class.forName(type);
-            Object obj = fm.getObject(clazz, id, "value");
-
-            Variable<Object> var;
-
-            try {
-                int ownerIndex = Integer.parseInt(ownerName);
-                Owner owner = gameWorld;
-                if (ownerIndex != -1){
-                    owner = players.get(ownerIndex);
-                }
-                var = new Variable<>(obj, owner);
-
-            } catch (Exception e){
-                var = new Variable<>(obj);
-                Ownable owner = idManager.getObject(ownerName);
-                idManager.setObjectOwner(var, owner);
-            }
-
-            for (String cls : fm.getArray(id, "classes")){
-                var.addClass(cls);
-            }
-
-            idManager.addObject(var, id);
-        }
-    }
-
-    private void loadRules(String file) throws FileNotFoundException{
-        FileManager fm = new FileManager(file);
-        for (String id : fm.getTagsAtLevel()){
-            for (String ruleName : fm.getTagsAtLevel(id)){
-                String rule = fm.getString(id, ruleName);
-                rules.addRule(id, ruleName, rule);
-            }
-        }
-    }
-
-    //endregion
     // region PLAYERS
-
-    /**
-     * Adds a Player to the game.
-     * @param player the Player to add
-     */
-    public void addPlayer(Player player) {
-        players.add(player);
-        ((Variable) idManager.getObject("numPlayers")).set((double) players.size());
-    }
 
     /**
      * Removes a Player from the game, if it exists there.

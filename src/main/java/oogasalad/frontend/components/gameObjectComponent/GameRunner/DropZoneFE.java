@@ -1,5 +1,6 @@
 package oogasalad.frontend.components.gameObjectComponent.GameRunner;
 
+import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
@@ -48,5 +49,9 @@ public class DropZoneFE extends GameRunnerObject{
     }
     public Point2D getDropZoneCenter(){
         return getNode().localToScene(((double) getWidth())/2, ((double) getHeight())/2);
+    }
+    // get dropzone bounds
+    public Bounds getDropZoneBounds(){
+        return getNode().localToScene(getNode().getBoundsInLocal());
     }
 }

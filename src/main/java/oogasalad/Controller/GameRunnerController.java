@@ -3,6 +3,8 @@ package oogasalad.Controller;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Bounds;
+import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import oogasalad.frontend.components.gameObjectComponent.GameRunner.DropZoneFE;
@@ -20,6 +22,7 @@ public class GameRunnerController implements GameController {
     private final Map<String, GameRunnerObject> gameObjects = new HashMap<>();
     private final ObservableList<Node> gameObjectVisualsList = FXCollections.observableArrayList();
     private final HashSet<String> clickable = new HashSet<>();
+    private final HashMap<DropZoneFE, List<Piece>> dropZonePieces = new HashMap<>();
     private Game game;
 
     public GameRunnerController(String gameName, ArrayList<String> gameTypeData) {
@@ -116,7 +119,8 @@ public class GameRunnerController implements GameController {
     public void addPiece(String id, String imagePath, String dropZoneID, boolean hasSelectImage, String param, int height, int width) {
             Piece piece = new Piece(id,this, imagePath, hasSelectImage, param ,height, width);
             DropZoneFE dropZone = (DropZoneFE) gameObjects.get(dropZoneID);
-            piece.moveToDropZoneXY(dropZone.getDropZoneCenter());
+            putInDropZone(piece, dropZone);
+            setPiecesInDropZone(dropZone);
             addGameObject(id,piece);
     }
     private void addGameObject(String id, GameRunnerObject gameObject){
@@ -145,7 +149,45 @@ public class GameRunnerController implements GameController {
     public void movePiece(String pieceID, String dropZoneID) {
             DropZoneFE dropZone = (DropZoneFE) gameObjects.get(dropZoneID);
             Piece piece = (Piece) gameObjects.get(pieceID);
-            piece.moveToDropZoneXY(dropZone.getDropZoneCenter());
+
+            removeFromDropZone(piece, getPieceLocation(piece));
+            putInDropZone(piece, dropZone);
+
+            setPiecesInDropZone(dropZone);
+    }
+
+    private void setPiecesInDropZone(DropZoneFE dz){
+        List<Piece> pieces = dropZonePieces.get(dz);
+        Bounds bounds = dz.getDropZoneBounds();
+        double x = bounds.getMinX();
+        double width = bounds.getWidth();
+        System.out.println("width: " + width);
+        double height = dz.getDropZoneCenter().getY();
+        for (int i = 0; i < pieces.size(); i++){
+            double px = x + width * ((i+1.) / (pieces.size() + 1));
+            pieces.get(i).moveToDropZoneXY(new Point2D(px, height));
+        }
+    }
+
+    private DropZoneFE getPieceLocation(Piece obj){
+        for (DropZoneFE dz : dropZonePieces.keySet()){
+            if (dropZonePieces.get(dz).contains(obj)){
+                return dz;
+            }
+        }
+        return null;
+    }
+
+    private void putInDropZone(Piece obj, DropZoneFE dz){
+        if (!dropZonePieces.containsKey(dz)){
+            dropZonePieces.put(dz, new ArrayList<>());
+        }
+        dropZonePieces.get(dz).add(obj);
+    }
+    private void removeFromDropZone(Piece obj, DropZoneFE dz){
+        if (dropZonePieces.containsKey(dz)){
+            dropZonePieces.get(dz).remove(obj);
+        }
     }
 
     @Override
