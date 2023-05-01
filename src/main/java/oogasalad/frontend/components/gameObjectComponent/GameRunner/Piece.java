@@ -8,7 +8,9 @@ import oogasalad.frontend.components.gameObjectComponent.GameRunner.gameObjectVi
 import oogasalad.frontend.components.gameObjectComponent.GameRunner.gameObjectVisuals.DropZoneVisual;
 import oogasalad.frontend.components.gameObjectComponent.GameRunner.gameObjectVisuals.PieceVisualSelectBorder;
 import oogasalad.frontend.components.gameObjectComponent.GameRunner.gameObjectVisuals.PieceVisualSelectImage;
-
+/**
+ * @author Owen MacKenzie
+ */
 public class Piece extends GameRunnerObject{
     private double lastTranslateX;
     private double lastTranslateY;

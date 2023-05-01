@@ -4,6 +4,10 @@ import oogasalad.Controller.FilesController;
 import oogasalad.frontend.windows.AbstractWindow;
 import oogasalad.frontend.windows.WindowMediator;
 
+/**
+ * @author Owen MacKenzie
+ */
+
 public interface SceneMediator {
     void switchToScene(String sceneID);
     void addAndLinkScene(SceneTypes sceneType, String sceneID);

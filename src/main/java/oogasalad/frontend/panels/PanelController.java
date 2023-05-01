@@ -7,7 +7,10 @@ import oogasalad.frontend.windows.WindowTypes.WindowType;
 
 import java.util.HashMap;
 import java.util.Map;
-
+/**
+ * @author George Fang
+ * @author Owen MacKenzie
+ */
 public class PanelController {
 
   private Map<String, Panel> panelMap;

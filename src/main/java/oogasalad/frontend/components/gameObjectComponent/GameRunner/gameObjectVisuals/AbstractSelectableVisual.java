@@ -4,7 +4,9 @@ import javafx.scene.Node;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import oogasalad.frontend.managers.DisplayManager;
-
+/**
+ * @author Owen MacKenzie
+ */
 public abstract class AbstractSelectableVisual extends HBox implements SelectableVisual {
     protected String objectID;
     protected int width;

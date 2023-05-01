@@ -3,7 +3,9 @@ package oogasalad.frontend.components.gameObjectComponent.GameRunner.gameObjectV
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-
+/**
+ * @author Owen MacKenzie
+ */
 public class PieceVisualSelectBorder extends PieceVisual {
     private static final Color TRANSPARENT_FILL = Color.TRANSPARENT;
     private static final Color UNSELECTED_BORDER_COLOR = Color.TRANSPARENT;

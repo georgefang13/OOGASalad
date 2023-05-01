@@ -4,7 +4,9 @@ import javafx.scene.Node;
 import oogasalad.frontend.components.gameObjectComponent.GameObject;
 import oogasalad.Controller.GameController;
 import oogasalad.frontend.components.gameObjectComponent.GameRunner.gameObjectVisuals.AbstractSelectableVisual;
-
+/**
+ * @author Owen MacKenzie
+ */
 public abstract class GameRunnerObject extends GameObject implements GameRunnerComponent {
     protected GameController gameRunnerController;
     protected AbstractSelectableVisual selectableVisual;

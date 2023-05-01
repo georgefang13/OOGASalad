@@ -2,7 +2,9 @@ package oogasalad.frontend.components.gameObjectComponent.GameRunner;
 
 import oogasalad.frontend.components.gameObjectComponent.GameRunner.gameObjectVisuals.AbstractSelectableVisual;
 import oogasalad.frontend.components.textObjectComponent.TextObject;
-
+/**
+ * @author Owen MacKenzie
+ */
 public class TextGameRunner extends TextObject implements GameRunnerComponent {
     public TextGameRunner(String id) {
         super(id);

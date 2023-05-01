@@ -16,6 +16,11 @@ import oogasalad.sharedDependencies.backend.filemanagers.FileManager;
 import java.io.FileNotFoundException;
 import java.util.*;
 
+/**
+ * @author Owen MacKenzie
+ * @author Ethan Horowitz
+ */
+
 public class GameRunnerController implements GameController {
     private final Map<String, GameRunnerComponent> gameObjects = new HashMap<>();
     private final ObservableList<Node> gameObjectVisualsList = FXCollections.observableArrayList();
@@ -53,7 +58,11 @@ public class GameRunnerController implements GameController {
     }
 
 
-
+    /**
+     *
+     * @param directory
+     * @throws FileNotFoundException
+     */
     private void loadGame(String directory) throws FileNotFoundException {
         directory = directory + "/frontend";
         loadDropZones(directory);

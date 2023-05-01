@@ -1,7 +1,9 @@
 package oogasalad.frontend.components.gameObjectComponent.GameRunner.gameObjectVisuals;
 
 import javafx.scene.Node;
-
+/**
+ * @author Owen MacKenzie
+ */
 public class PieceVisualSelectImage extends PieceVisual {
     private Node selectImage;
     public PieceVisualSelectImage(String pieceImg, String selectImage, int width, int height, String id) {

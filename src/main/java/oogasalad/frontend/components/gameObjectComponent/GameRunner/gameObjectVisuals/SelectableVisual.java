@@ -1,7 +1,8 @@
 package oogasalad.frontend.components.gameObjectComponent.GameRunner.gameObjectVisuals;
 
-import javafx.scene.Node;
-
+/**
+ * @author Owen MacKenzie
+ */
 public interface SelectableVisual {
     void showClickable();
     void showUnclickable();

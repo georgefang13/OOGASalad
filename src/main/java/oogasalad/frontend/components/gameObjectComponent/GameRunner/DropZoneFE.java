@@ -9,6 +9,10 @@ import oogasalad.frontend.components.gameObjectComponent.GameRunner.gameObjectVi
 import oogasalad.frontend.components.gameObjectComponent.GameRunner.gameObjectVisuals.DropZoneVisual;
 import oogasalad.frontend.managers.DisplayManager;
 
+/**
+ * @author Owen MacKenzie
+ */
+
 public class DropZoneFE extends GameRunnerObject{
     private final int x;
     private final int y;
