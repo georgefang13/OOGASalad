@@ -100,6 +100,7 @@ public class ModalController {
   }
 
   public void configGeneral(Map<String, String> map) {
+    files = new FilesController(map.get("name"));
     files.setGeneral(map);
   }
 
