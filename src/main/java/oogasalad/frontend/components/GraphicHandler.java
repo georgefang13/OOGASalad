@@ -1,6 +1,13 @@
 package oogasalad.frontend.components;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
+import javafx.scene.Node;
+import javafx.scene.layout.GridPane;
+import oogasalad.frontend.components.dropzoneComponent.Dropzone;
+import oogasalad.frontend.components.gridObjectComponent.GridObject;
 
 /**
  * @author Han The purpose of this class is to handle the conversion of inputs from the user into
@@ -71,7 +78,20 @@ public class GraphicHandler {
   }
 
   public void moveToCenter(Component c) {
+    if(c.getClass() == GridObject.class){
+//      ((GridObject) c).getGrid().setTranslateX(500);
+//      ((GridObject) c).getGrid().setTranslateY(250);
+//      System.out.println(c.getNode().getBoundsInLocal().getCenterX());
+      for (Node node : ((GridPane)c.getNode()).getChildren()) {
+        node.setTranslateX(500 + node.getLayoutX());
+        node.setTranslateY(250 + node.getLayoutY());
+      }
+    }
+    else{
     c.getNode().setTranslateX(500);
     c.getNode().setTranslateY(250);
+    System.out.println(c.getNode().getTranslateX());
+    }
+
   }
 }

@@ -86,9 +86,7 @@ public class PropertiesPanel extends HBox implements Panel {
     return this;
   }
   @Override
-  public Panel refreshPanel() {
-    return null;
-  }
+  public void refreshPanel() {}
 
   @Override
   public String getTitle() {

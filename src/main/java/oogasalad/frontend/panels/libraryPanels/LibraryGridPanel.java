@@ -7,7 +7,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
@@ -18,6 +17,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import oogasalad.frontend.factories.ButtonFactory;
+import oogasalad.frontend.panels.AbstractGridPanePanel;
 import oogasalad.frontend.panels.Panel;
 import oogasalad.frontend.panels.PanelController;
 import oogasalad.frontend.scenes.AbstractScene;
@@ -30,7 +30,7 @@ import oogasalad.sharedDependencies.backend.filemanagers.FileManager;
 import org.kordamp.ikonli.fontawesome5.FontAwesomeSolid;
 import org.kordamp.ikonli.javafx.FontIcon;
 
-public class LibraryGridPanel extends GridPane implements Panel {
+public class LibraryGridPanel extends AbstractGridPanePanel implements Panel {
   private static final String GAMES_FILEPATH = "data/games/";
   private static final String GAMES_FILEPATH_WITH_FILE = "file:data/games/";
   private static final ResourceBundle ID_BUNDLE = ResourceBundle.getBundle(
@@ -48,7 +48,6 @@ public class LibraryGridPanel extends GridPane implements Panel {
   private final int IMAGE_RADIUS = 20;
   private final int COLUMN_PERCENT_WIDTH = 25;
   private final int COLUMN_INDEX = 0;
-  private final int ROW_INDEX = 0;
   private final int MAX_COLUMN_INDEX = 3;
   PanelController panelController;
   private ButtonFactory buttonFactory = new ButtonFactory();
@@ -58,14 +57,13 @@ public class LibraryGridPanel extends GridPane implements Panel {
   private static final String JSON_DESCRIPTION = "description";
   private static final String JSON_GENERAL_PATH = "/general.json";
   private static final String GAME_IMAGE_PATH = "/display.png";
-  private static final String DEFAULT_TAG = "board game"; //TODO: CHANGE TO "default" and put that in every general.json
   /**
    * Constructor for the environment panel
    */
   public LibraryGridPanel(PanelController panelController) {
-    super();
-    this.makePanel();
+    super(panelController, "library");
     this.panelController = panelController;
+    this.makePanel();
     this.getStyleClass().add(ID_BUNDLE.getString(LIBRARY_GRID_PANE_ID));
   }
   /**
@@ -74,27 +72,7 @@ public class LibraryGridPanel extends GridPane implements Panel {
    * @return Panel
    */
   public Panel makePanel() {
-    ColumnConstraints column1 = new ColumnConstraints();
-    column1.setPercentWidth(COLUMN_PERCENT_WIDTH);
-    ColumnConstraints column2 = new ColumnConstraints();
-    column2.setPercentWidth(COLUMN_PERCENT_WIDTH);
-    ColumnConstraints column3 = new ColumnConstraints();
-    column3.setPercentWidth(COLUMN_PERCENT_WIDTH);
-    ColumnConstraints column4 = new ColumnConstraints();
-    column4.setPercentWidth(COLUMN_PERCENT_WIDTH);
-    this.getColumnConstraints().addAll(column1, column2, column3, column4);
-
-    gameNames = getGameNamesWithTag(DEFAULT_TAG);
-    int rowIndex = 0;
-    int columnIndex = 0;
-    for (String game : gameNames.keySet()) {
-      this.add(createGameBox(game, gameNames.get(game)), columnIndex, rowIndex);
-      columnIndex++;
-      if (columnIndex > MAX_COLUMN_INDEX) {
-        columnIndex = COLUMN_INDEX;
-        rowIndex++;
-      }
-    }
+    refreshPanel();
     return this;
   }
   private VBox createGameBox(String realGameName, String directoryName) {
@@ -160,7 +138,7 @@ public class LibraryGridPanel extends GridPane implements Panel {
       try {
         fm = new FileManager(gameDirectory.getPath() + JSON_GENERAL_PATH);
       } catch (FileNotFoundException e) {
-        throw new RuntimeException(e);
+        continue;
       }
       Iterable<String> currentTags = fm.getArray(JSON_TAGS);
       for (String s : currentTags) {
@@ -190,8 +168,30 @@ public class LibraryGridPanel extends GridPane implements Panel {
     return (Node) this;
   }
   @Override
-  public Panel refreshPanel() {
-    return null;
+  public void refreshPanel() {
+    this.getChildren().clear();
+    this.getColumnConstraints().clear();
+    ColumnConstraints column1 = new ColumnConstraints();
+    column1.setPercentWidth(COLUMN_PERCENT_WIDTH);
+    ColumnConstraints column2 = new ColumnConstraints();
+    column2.setPercentWidth(COLUMN_PERCENT_WIDTH);
+    ColumnConstraints column3 = new ColumnConstraints();
+    column3.setPercentWidth(COLUMN_PERCENT_WIDTH);
+    ColumnConstraints column4 = new ColumnConstraints();
+    column4.setPercentWidth(COLUMN_PERCENT_WIDTH);
+    this.getColumnConstraints().addAll(column1, column2, column3, column4);
+    gameNames = getGameNamesWithTag(panelController.getSceneController().getWindowController().getData().toString());
+
+    int rowIndex = 0;
+    int columnIndex = 0;
+    for (String game : gameNames.keySet()) {
+      this.add(createGameBox(game, gameNames.get(game)), columnIndex, rowIndex);
+      columnIndex++;
+      if (columnIndex > MAX_COLUMN_INDEX) {
+        columnIndex = COLUMN_INDEX;
+        rowIndex++;
+      }
+    }
   }
 
   @Override

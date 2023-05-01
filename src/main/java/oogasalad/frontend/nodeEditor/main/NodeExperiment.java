@@ -1,4 +1,4 @@
-package oogasalad.frontend.nodeEditor.Runners;
+package oogasalad.frontend.nodeEditor.main;
 
 import javafx.application.Application;
 import javafx.stage.Stage;

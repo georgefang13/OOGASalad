@@ -2,6 +2,7 @@ package oogasalad.frontend.panels.editorPanels;
 
 import java.awt.*;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.scene.Node;
 import javafx.scene.control.Accordion;
@@ -15,10 +16,11 @@ import javafx.scene.layout.VBox;
 import oogasalad.Controller.FilesController;
 import oogasalad.frontend.modals.ModalController;
 import oogasalad.frontend.modals.subInputModals.CreateNewModal;
+import oogasalad.frontend.panels.ModalPanel;
 import oogasalad.frontend.panels.Panel;
 import oogasalad.sharedDependencies.backend.filemanagers.FileManager;
 
-public class ComponentPanel extends VBox implements Panel {
+public class ComponentPanel extends VBox implements ModalPanel, Panel {
 
   private static final ResourceBundle ELEMENT_LABELS = ResourceBundle.getBundle(
       "frontend/properties/text/english");
@@ -99,7 +101,7 @@ public class ComponentPanel extends VBox implements Panel {
 
   private Button createComponentTemplate(String objectType) {
     Button b = new Button("Make a " + objectType + " Template");
-    b.setOnAction(e -> openModal(objectType, false));
+    b.setOnAction(e -> createNewComponentTemplate(objectType));
     return b;
   }
 
@@ -114,15 +116,11 @@ public class ComponentPanel extends VBox implements Panel {
 
 
   public void addComponentTemplate(String name, String objectType){
-
     Button b = new Button(name);
-    b.setOnAction(e -> createNewComponentInstance(name, objectType));
-//    b.setOnMousePressed(e -> {
-//      xOffset = e.getSceneX();
-//      yOffset = e.getSceneY();
-//    });
+    b.setOnAction(e -> createNewComponentInstance(name+Integer.toString(mController.getMap().keySet().size()), objectType));
     gameComponents.getChildren().add(b);
   }
+
   private void createNewComponentInstance(String name, String objectType) {
     mController.createObjectInstance(name, objectType);
     HBox buttonLine = new HBox();
@@ -133,7 +131,7 @@ public class ComponentPanel extends VBox implements Panel {
     gameComponentInstances.getChildren().add(buttonLine);
 
     b3.setOnMouseClicked(event -> {
-      openModal(objectType, true);
+      editComponent(name,objectType);
     });
 
     b2.setOnMouseClicked(event -> {
@@ -142,11 +140,20 @@ public class ComponentPanel extends VBox implements Panel {
     });
   }
 
-  private void openModal(String title, boolean editMode){
-    CreateNewModal modal = new CreateNewModal(title, editMode);
+  private void createNewComponentTemplate(String title){
+    CreateNewModal modal = new CreateNewModal(title, mController.dropzoneList());
     mController.setRoot(root);
     modal.attach(mController);
     modal.showAndWait();
+  }
+
+  private void editComponent(String name, String title){
+    Map<String, String> map = mController.getActiveComponent(name).getParameters();
+    map.replace("name", name);
+    CreateNewModal editModal = new CreateNewModal(title, true, map, mController.dropzoneList());
+    mController.setRoot(root);
+    editModal.attach(mController);
+    editModal.showAndWait();
   }
 
   public Node asNode() {
@@ -154,9 +161,7 @@ public class ComponentPanel extends VBox implements Panel {
   }
 
   @Override
-  public Panel refreshPanel() {
-    return null;
-  }
+  public void refreshPanel() {}
 
   @Override
   public String getTitle() {

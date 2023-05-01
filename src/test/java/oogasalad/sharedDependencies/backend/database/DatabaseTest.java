@@ -10,11 +10,11 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 public class DatabaseTest {
-  static MockDatabase db;
+  static Database db;
 
   @BeforeAll
   static void setup() throws IOException {
-    db = new MockDatabase();
+    db = MockDatabase.getInstance();
   }
 
   @Test
@@ -24,12 +24,10 @@ public class DatabaseTest {
     String field = "Rodrigo";
     String data = "Slay!!!!!";
     db.addData(collection, entry, field, data);
-    Thread.sleep(1000);
     assertEquals("Slay!!!!!", db.getData(collection, entry, field));
 
     Long moreData = 42L;
     db.addData(collection, entry, field, moreData);
-    Thread.sleep(1000);
     assertEquals(42L, db.getData(collection, entry, field));
   }
 

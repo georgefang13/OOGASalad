@@ -21,14 +21,18 @@ import oogasalad.frontend.components.gameObjectComponent.GameObject;
 public class Dropzone extends AbstractComponent implements DropZonePublisher {
 
   private final String DEFAULT_PATH = "frontend.properties.Defaults.Dropzone.properties";
+  private String name;
   private Map<String, Dropzone> edges;
   private Map<String, GameObject> content;
   private HBox node;
+  private int rows = 1;
+  private int cols = 1;
+  private final static String BOARD_TYPE = "createGrid";
+  private double width;
+  private double height;
   private Color fill;
   private Color border;
   private Rectangle square;
-  private double width;
-  private double height;
   private List<Subscriber> subscribers;
   private List<ControllerSubscriber> controllerSubscribers;
   private boolean doubleClick;
@@ -110,12 +114,9 @@ public class Dropzone extends AbstractComponent implements DropZonePublisher {
   private void ClickDelay() {
     long clickTime = System.currentTimeMillis();
     if (clickTime - lastClickTime < DOUBLE_CLICK_DELAY) {
-      System.out.println(clickTime - lastClickTime);
       doubleClick = true;
       lastClickTime = 0; // Reset last click time
     } else {
-      // Single click action
-      System.out.println("Single click");
       lastClickTime = clickTime;
       doubleClick = false;
     }
@@ -148,23 +149,10 @@ public class Dropzone extends AbstractComponent implements DropZonePublisher {
    * Return the width of the square
    * @return width;
    */
-  public double getWidth(){
-    return width;
+
+  public List<Subscriber> getSubscribers(){
+    return subscribers;
   }
-//  @Override
-//  public void setDefault() {
-//
-//  }
-
-  /**
-   * Return the height of the square
-   * @return height
-   */
-  public double getHeight(){
-    return height;
-  }
-
-
   /**
    * Adds a subscriber to the subscriber list
    * @param subscriber

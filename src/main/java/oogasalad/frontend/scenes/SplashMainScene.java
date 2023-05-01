@@ -2,17 +2,20 @@ package oogasalad.frontend.scenes;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import oogasalad.frontend.modals.subDisplayModals.AlertModal;
+import oogasalad.frontend.modals.subInputModals.CreateNewModal;
 import oogasalad.frontend.windows.WindowTypes.WindowType;
 import oogasalad.sharedDependencies.backend.database.Database;
 import oogasalad.sharedDependencies.backend.database.UserManager;
@@ -26,7 +29,7 @@ public class SplashMainScene extends AbstractScene {
   private static final String LANGUAGE_DIRECTORY_PATH = "src/main/resources/frontend/properties/text";
   private static final String LANGUAGE_PLACEHOLDER = "english";
   private static final String THEME_DIRECTORY_PATH = "src/main/resources/frontend/css";
-  private static final String THEME_PLACEHOLDER = "light";
+  private static final String THEME_PLACEHOLDER = "dark";
   private static final ResourceBundle ELEMENT_LABELS = ResourceBundle.getBundle(
       "frontend/properties/text/english");
   private static final String USERNAME = "Username";
@@ -44,34 +47,36 @@ public class SplashMainScene extends AbstractScene {
   private static final String USERNAME_PASSWORD_FIELD_ID = "UsernameFieldID";
   private static final String LOGIN_SIGNUP_ID = "LoginID";
   private static final String DROPDOWN_ID = "DropdownID";
-private static final String DROPDOWN_BOX_ID = "DropdownBoxID";
+  private static final String DROPDOWN_BOX_ID = "DropdownBoxID";
+  private static final String DEFAULT_GAMES = "all";
   private Label usernameLabel;
   private Label passwordLabel;
   private TextField usernameField;
-  private TextField passwordField;
+  private PasswordField passwordField;
   private Hyperlink login;
   private Hyperlink signUp;
   private ComboBox<String> languageDropdown;
   private ComboBox<String> themeDropdown;
   private VBox root;
-  private HBox temp;
   private UserManager userManager;
+  private Label title;
 
-  public SplashMainScene(SceneController sceneController) {
+  public SplashMainScene(SceneMediator sceneController) {
     super(sceneController);
   }
 
   @Override
   public Scene makeScene() {
     root = new VBox();
+    userManager = new UserManager(Database.getInstance());
     root.getStyleClass().add(ID_BUNDLE.getString(SPLASH_ROOT_ID));
-    userManager = new UserManager(new Database());
     makeTitle();
     makeInputFields();
     makeLoginSignUpButtons();
     makeDropDowns();
     refreshScene();
     setTheme();
+    setText();
     return getScene();
   }
   private void refreshScene() {
@@ -81,7 +86,7 @@ private static final String DROPDOWN_BOX_ID = "DropdownBoxID";
   }
   private HBox makeTitle() {
     HBox titleBox = new HBox();
-    Label title = new Label(ELEMENT_LABELS.getString(TITLE));
+    title = new Label();
     title.getStyleClass().add(ID_BUNDLE.getString(TITLE_ID));
     titleBox.getChildren().add(title);
     return titleBox;
@@ -89,16 +94,16 @@ private static final String DROPDOWN_BOX_ID = "DropdownBoxID";
   private VBox makeInputFields() {
     HBox usernameBox = new HBox();
     usernameBox.getStyleClass().add(ID_BUNDLE.getString(USERNAME_PASSWORD_BOX_ID));
-    usernameLabel = new Label(ELEMENT_LABELS.getString(USERNAME));
+    usernameLabel = new Label();
     usernameLabel.getStyleClass().add(ID_BUNDLE.getString(USERNAME_PASSWORD_LABEL_ID));
     usernameField = new TextField();
     usernameField.getStyleClass().add(ID_BUNDLE.getString(USERNAME_PASSWORD_FIELD_ID));
     usernameBox.getChildren().addAll(usernameLabel, usernameField);
     HBox passwordBox = new HBox();
     passwordBox.getStyleClass().add(ID_BUNDLE.getString(USERNAME_PASSWORD_BOX_ID));
-    passwordLabel = new Label(ELEMENT_LABELS.getString(PASSWORD));
+    passwordLabel = new Label();
     passwordLabel.getStyleClass().add(ID_BUNDLE.getString(USERNAME_PASSWORD_LABEL_ID));
-    passwordField = new TextField();
+    passwordField = new PasswordField();
     passwordField.getStyleClass().add(ID_BUNDLE.getString(USERNAME_PASSWORD_FIELD_ID));
     passwordBox.getChildren().addAll(passwordLabel, passwordField);
     VBox inputFields = new VBox();
@@ -108,28 +113,30 @@ private static final String DROPDOWN_BOX_ID = "DropdownBoxID";
   }
   private HBox makeLoginSignUpButtons() {
     HBox loginSignUpButtons = new HBox();
-    login = new Hyperlink(ELEMENT_LABELS.getString(LOGIN));
+    login = new Hyperlink();
     login.setUnderline(true);
     login.getStyleClass().add(ID_BUNDLE.getString(LOGIN_SIGNUP_ID));
     login.setOnMouseClicked(e -> {
       if (userManager.tryLogin(usernameField.getText(), passwordField.getText())) {
+        sceneController.getWindowController().passData(DEFAULT_GAMES);
         displayLibrary();
       }
       else {
-        AlertModal error = new AlertModal();
-        error.showAndWait();
+        AlertModal error = new AlertModal("LoginErrorHeader", "LoginErrorBody");
+        error.showAlert();
       }
     });
-    signUp = new Hyperlink(ELEMENT_LABELS.getString(SIGN_UP));
+    signUp = new Hyperlink();
     signUp.setUnderline(true);
     signUp.getStyleClass().add(ID_BUNDLE.getString(LOGIN_SIGNUP_ID));
     signUp.setOnMouseClicked(e -> {
       if (userManager.tryRegister(usernameField.getText(), passwordField.getText())) {
+        sceneController.passData(DEFAULT_GAMES);
         displayLibrary();
       }
       else {
-        AlertModal error = new AlertModal();
-        error.showAndWait();
+        AlertModal error = new AlertModal("RegisterErrorHeader", "RegisterErrorBody");
+        error.showAlert();
       }
     });
     loginSignUpButtons.getChildren().addAll(login, signUp);
@@ -180,5 +187,10 @@ private static final String DROPDOWN_BOX_ID = "DropdownBoxID";
 
   @Override
   public void setText() {
+    title.setText(getPropertyManager().getText(TITLE));
+    usernameLabel.setText(getPropertyManager().getText(USERNAME));
+    passwordLabel.setText(getPropertyManager().getText(PASSWORD));
+    login.setText(getPropertyManager().getText(LOGIN));
+    signUp.setText(getPropertyManager().getText(SIGN_UP));
   }
 }

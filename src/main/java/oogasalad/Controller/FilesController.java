@@ -10,6 +10,9 @@ import java.util.*;
 
 import oogasalad.frontend.components.Component;
 import oogasalad.frontend.components.ComponentsFactory;
+import oogasalad.frontend.components.dropzoneComponent.Dropzone;
+import oogasalad.frontend.components.gridObjectComponent.GridObject;
+import oogasalad.gameeditor.backend.GameInator;
 import oogasalad.sharedDependencies.backend.filemanagers.FileManager;
 
 /**
@@ -19,9 +22,10 @@ public class FilesController {
   private final String GAMES_PATH = "data\\games\\";
   private final String gameFolder;
   private final String FILES_NAMES = "Controller/FilesConfig.properties";
-
+  private Map<String, String> generalInfo = new HashMap<>();
   private List<Component> components = new ArrayList<>();
-
+  private List<Component> componentsLater = new ArrayList<>();
+  private GameInator game;
   /**
    * Sets up the FileController
    *
@@ -29,15 +33,7 @@ public class FilesController {
    */
   public FilesController(String name) {
     gameFolder = GAMES_PATH + name;
-    File directory = new File(gameFolder);
-    boolean valid = directory.mkdir();
-    File frontend = new File(gameFolder + "\\frontend");
-    boolean valid1 = frontend.mkdir();
-    if (valid && valid1) {
-      //TODO log file made successfully
-    } else {
-      //TODO log file not made successfully
-    }
+    game = new GameInator(name);
   }
 
   /**
@@ -60,19 +56,55 @@ public class FilesController {
    * Saves components to frontend file
    */
   public void saveToFile(){
-    ConvertingStrategy strategy = new ConvertingStrategy();
-    FileManager manager = new FileManager();
+    File directory = new File(gameFolder);
+    boolean valid = directory.mkdir();
+    File frontend = new File(gameFolder + "\\frontend");
+    boolean valid1 = frontend.mkdir();
 
+    ConvertingStrategy strategy = new ConvertingStrategy();
+    FileManager layout = new FileManager();
+    FileManager objects = new FileManager();
+    FilesStrategy strat = new FilesStrategy(layout, objects);
+    FileManager currentManager;
     int count = 0;
     for (Component comp : components){
+      currentManager = strat.getFileLocation(comp);
       String className = comp.getClass().getSimpleName();
       Map<String, String> map = strategy.paramsToMap(comp);
-      manager.addContent(map, "components", String.valueOf(count), "map");
-      manager.addContent(className, "components", String.valueOf(count), "className");
-      count++;
+      if(comp.getClass() == GridObject.class){
+        List<Dropzone> newComponents = ((GridObject) comp).getDropzones();
+        componentsLater.addAll(newComponents);
+      }else{
+        currentManager.addContent(map, "components", String.valueOf(count), "map");
+        currentManager.addContent(className, "components", String.valueOf(count), "className");
+        count++;
+      }
     }
 
-    manager.saveToFile(gameFolder + "/frontend/components.json");
+    for (Component comp : componentsLater){
+      currentManager = strat.getFileLocation(comp);
+      String className = comp.getClass().getSimpleName();
+      Map<String, String> map = strategy.paramsToMap(comp);
+      currentManager.addContent(map, "components", String.valueOf(count), "map");
+      currentManager.addContent(className, "components", String.valueOf(count), "className");
+      count++;
+    }
+    layout.saveToFile(gameFolder + "/frontend/layout.json");
+    objects.saveToFile(gameFolder + "/frontend/objects.json");
+
+    FileManager general = new FileManager();
+    for (String tag: generalInfo.keySet()){
+      if(tag.equals("tags")){
+        String[] tags = generalInfo.get(tag).split(",");
+        for(String individualTag: tags){
+          general.addContent(individualTag, tag);
+        }
+      }
+      else{
+        general.addContent(generalInfo.get(tag), tag);
+      }
+    }
+    general.saveToFile(gameFolder + "/general.json");
   }
 
   /**
@@ -91,5 +123,16 @@ public class FilesController {
     });
 
     return comps;
+  }
+
+  /**
+   * Allows for General Info to be set
+   */
+  public void setGeneral(Map<String, String> map){
+    generalInfo = map;
+  }
+
+  public GameInator getGame() {
+    return game;
   }
 }

@@ -13,9 +13,14 @@ import com.google.firebase.cloud.FirestoreClient;
 import java.io.FileInputStream;
 import java.io.IOException;
 import com.google.cloud.firestore.Firestore;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ExecutionException;
+import org.apache.maven.plugin.lifecycle.Execution;
 
 
 /**
@@ -29,15 +34,27 @@ public class Database {
   private static final String DATABASE_URL = "https://duvalley-boiz.firebaseio.com/";
   private static final String PROJECT_ID = "duvalley-boiz";
 
-  private final Firestore database;
+  private static Database instance;
+  private static Firestore database;
 
-  public Database() {
-    this(PROJECT_ID, DATABASE_INFO_PATH, DATABASE_URL);
+  protected Database() {
+
   }
 
-  protected Database(String projectId, String infoPath, String url) {
+  private Database(String projectId, String infoPath, String url) {
     initializeDatabase(projectId, infoPath, url);
     database = FirestoreClient.getFirestore();
+  }
+
+  public static synchronized Database getInstance() {
+    return getInstance(PROJECT_ID, DATABASE_INFO_PATH, DATABASE_URL);
+  }
+
+  protected static synchronized Database getInstance(String projectId, String infoPath, String url) {
+    if (instance == null) {
+      instance = new Database(projectId, infoPath, url);
+    }
+    return instance;
   }
 
   /**
@@ -52,6 +69,11 @@ public class Database {
     Map<String, Object> dataMap = new HashMap<>();
     dataMap.put(field, data);
     document.set(dataMap, SetOptions.merge());
+    try {
+      Thread.sleep(100); // Ensure that read-after-write gets most up-to-date information
+    } catch (InterruptedException e) {
+      throw new RuntimeException(e);
+    }
   }
 
   /**
@@ -81,6 +103,65 @@ public class Database {
    */
   public void deleteData(String collection, String entry, String field) {
     addData(collection, entry, field, FieldValue.delete());
+  }
+
+  /**
+   * Delete entire entry in database (recursively deleting all associated fields)
+   * @param collection collection to be deleted
+   * @param entry entry within collection
+   */
+  public void deleteEntry(String collection, String entry) {
+    database.collection(collection).document(entry).delete();
+  }
+
+  /**
+   * Checks if a collection in the database contains a certain entry
+   *
+   * @param collection collection in database
+   * @param entry entry in collection
+   * @return boolean, true if collection has entry, else false
+   */
+  public boolean hasEntry(String collection, String entry) {
+    DocumentReference documentReference = database.collection(collection).document(entry);
+    try {
+      return documentReference.get().get().exists();
+    } catch (InterruptedException | ExecutionException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  /**
+   * Get all entries that have been created in a given collection within the database
+   * @param collection name of collection
+   * @return Iterable of Strings containing existing entries in collection
+   */
+  public Iterable<String> getEntries(String collection) {
+    List<String> entries = new LinkedList<>();
+    try {
+      for (DocumentSnapshot document : database.collection(collection).get().get()) {
+        entries.add(document.getId());
+      }
+    } catch (InterruptedException | ExecutionException e) {
+      throw new RuntimeException(e);
+    }
+    return entries;
+  }
+
+  /**
+   * Get all fields that exist in the specified entry
+   * @param collection name of collection
+   * @param entry entry inside collection
+   * @return Iterable of Strings containing existing fields in entry
+   */
+  public Iterable<String> getFields(String collection, String entry) {
+    List<String> entries = new LinkedList<>();
+    Map<String, Object> data;
+    try {
+      data = database.collection(collection).document(entry).get().get().getData();
+    } catch (InterruptedException | ExecutionException e) {
+      throw new RuntimeException(e);
+    }
+    return data.keySet();
   }
 
   /**

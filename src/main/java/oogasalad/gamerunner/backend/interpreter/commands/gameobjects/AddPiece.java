@@ -8,9 +8,9 @@ import oogasalad.sharedDependencies.backend.owners.Owner;
 
 public class AddPiece extends OperatorToken {
 
-    // parent, classes [], location, image, size
+    // parent, classes [], location, image, width, height
     public AddPiece() {
-        super(5, "AddPiece");
+        super(6, "AddPiece");
     }
 
     @Override
@@ -20,12 +20,14 @@ public class AddPiece extends OperatorToken {
         Token t2 = getArg(2).evaluate(env);
         Token t3 = getArg(3).evaluate(env);
         Token t4 = getArg(4).evaluate(env);
+        Token t5 = getArg(5).evaluate(env);
 
         ValueToken<Owner> parent = checkArgumentWithSubtype(env, t0, ValueToken.class, Owner.class.getName());
         ExpressionToken classes = checkArgument(env, t1, ExpressionToken.class);
         ValueToken<DropZone> dz = checkArgumentWithSubtype(env, t2, ValueToken.class, DropZone.class.getName());
         ValueToken<String> img = checkArgumentWithSubtype(env, t3, ValueToken.class, String.class.getName());
-        ValueToken<Double> size = checkArgumentWithSubtype(env, t4, ValueToken.class, Double.class.getName());
+        ValueToken<Double> wid = checkArgumentWithSubtype(env, t4, ValueToken.class, Double.class.getName());
+        ValueToken<Double> hi = checkArgumentWithSubtype(env, t4, ValueToken.class, Double.class.getName());
 
 
         GameObject go = new GameObject(parent.VALUE);
@@ -35,7 +37,7 @@ public class AddPiece extends OperatorToken {
             go.addClass(cls);
         }
 
-        env.getGame().addObject(go, dz.VALUE, img.VALUE, size.VALUE);
+        env.getGame().addObject(go, dz.VALUE, img.VALUE, wid.VALUE, hi.VALUE);
         return null;
     }
 }

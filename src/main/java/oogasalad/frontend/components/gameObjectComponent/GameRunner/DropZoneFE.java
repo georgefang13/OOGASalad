@@ -5,32 +5,33 @@ import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import oogasalad.Controller.GameController;
+import oogasalad.frontend.components.gameObjectComponent.GameRunner.gameObjectVisuals.AbstractSelectableVisual;
 import oogasalad.frontend.components.gameObjectComponent.GameRunner.gameObjectVisuals.DropZoneVisual;
 import oogasalad.frontend.managers.DisplayManager;
 
 public class DropZoneFE extends GameRunnerObject{
-    private final selectableVisualParams unselectedParams;
-    private final selectableVisualParams selectedParams;
     private final int x;
     private final int y;
-    public DropZoneFE(String ID, selectableVisualParams unselected, selectableVisualParams selected, int width, int height, int x, int y, GameController gameRunnerController) {
+    private Node unselectedImage;
+    public DropZoneFE(String ID, AbstractSelectableVisual.SelectableVisualParams unselected, AbstractSelectableVisual.SelectableVisualParams selected, int width, int height, int x, int y, GameController gameRunnerController) {
         super(ID, gameRunnerController);
         setWidth(width);
         setHeight(height);
-        this.unselectedParams = unselected;
-        this.selectedParams = selected;
         this.x = x;
         this.y = y;
-        setSelectableVisual();
+        setSelectableVisual(unselected,selected);
     }
     @Override
-    public void setSelectableVisual() {
-        Node unselected = createImage(unselectedParams.hasSelectImage,unselectedParams.param);
-        Node selected = createImage(selectedParams.hasSelectImage,selectedParams.param);
-        selectableVisual = new DropZoneVisual(unselected,selected,getWidth(),getHeight(),x,y,ID);
+    public void setSelectableVisual(AbstractSelectableVisual.SelectableVisualParams unselected, AbstractSelectableVisual.SelectableVisualParams selected) {
+        this.unselectedImage = createImage(unselected.hasSelectImage(),unselected.param());
+        setSelectVisual(selected);
     }
 
-    public record selectableVisualParams(boolean hasSelectImage, String param){}
+    @Override
+    public void setSelectVisual(AbstractSelectableVisual.SelectableVisualParams selected) {
+        Node selectedImage = createImage(selected.hasSelectImage(),selected.param());
+        selectableVisual = new DropZoneVisual(unselectedImage,selectedImage,getWidth(),getHeight(),x,y,ID);
+    }
 
     private Node loadDefaultDropRectangle(String hexColor){
         Color fillColor = Color.web(hexColor);
@@ -39,15 +40,13 @@ public class DropZoneFE extends GameRunnerObject{
     private Node createImage(boolean isImage, String param){
         Node visual;
         if (isImage){
-            visual = DisplayManager.loadImage(param,(int) getHeight(),(int) getWidth());
+            visual = DisplayManager.loadImage(param,getHeight(),getWidth());
         } else {
             visual = loadDefaultDropRectangle(param);
         }
         return visual;
     }
-
     public Point2D getDropZoneCenter(){
-        return getNode().localToScene(getWidth()/2,getHeight()/2);
+        return getNode().localToScene(((double) getWidth())/2, ((double) getHeight())/2);
     }
-
 }

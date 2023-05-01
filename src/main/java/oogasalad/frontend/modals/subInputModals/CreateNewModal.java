@@ -12,8 +12,10 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.DialogPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import oogasalad.frontend.components.dropzoneComponent.Dropzone;
 import oogasalad.frontend.modals.InputModal;
 import oogasalad.frontend.modals.fields.ColorPickerComponent;
+import oogasalad.frontend.modals.fields.Field;
 import oogasalad.frontend.modals.fields.ImagePickerComponent;
 import oogasalad.frontend.modals.fields.IntegerPickerComponent;
 import oogasalad.frontend.modals.fields.TextFieldComponent;
@@ -29,20 +31,30 @@ public class CreateNewModal extends InputModal {
   private List<IntegerPickerComponent> integerPickers;
   private String myTitle;
   private boolean editMode;
+  private Map<String, String> values;
+  private List<String> dropzoneIDs;
 
   /**
    * Constructor for the CreateGameModal dialog
    */
-  public CreateNewModal(String title) {
+  public CreateNewModal(String title, List<String> dropzoneIDs) {
     super(title);
     myTitle = super.getMyTitle();
+    editMode = false;
+    values = null;
+    this.dropzoneIDs = dropzoneIDs;
+    System.out.println("number of dropzones: " + dropzoneIDs);
+    setDialogPane(createDialogPane());
 //        myPropertiesMap = super.setPropertiesMap(myTitle
   }
 
-  public CreateNewModal(String title, boolean editMode) {
+  public CreateNewModal(String title, boolean editMode, Map<String, String> values, List<String> dropzoneIDs) {
     super(title);
     this.editMode = editMode;
+    this.values = values;
+    this.dropzoneIDs = dropzoneIDs;
     myTitle = super.getMyTitle();
+    setDialogPane(createDialogPane());
   }
 
   /**
@@ -84,12 +96,19 @@ public class CreateNewModal extends InputModal {
     for (Map.Entry<String, String> entry : map.entrySet()) {
       String propertyName = entry.getKey();
       String fieldType = propertyName.split("\\.")[propertyName.split("\\.").length - 1];
-      String propertyValue = entry.getValue();
+      String propertyValue;
 
       int start = entry.getKey().toString().indexOf("*") + 1;
 
       String labelName = entry.getKey().toString().substring(start);
       labelName = labelName.split("\\.")[0];
+
+      if(editMode) {
+        propertyValue = values.get(labelName);
+      } else {
+        propertyValue = entry.getValue();
+        System.out.println(entry.getValue());
+      }
 
       // Get the field class corresponding to the property name using reflection
       Class<?> fieldClass = Class.forName(
@@ -97,7 +116,8 @@ public class CreateNewModal extends InputModal {
 
       // Create a new instance of the field class using reflection
       Constructor<?> constructor = fieldClass.getDeclaredConstructor(String.class, String.class);
-      Object field = constructor.newInstance(labelName, propertyValue);
+      Field field = (Field) constructor.newInstance(labelName, propertyValue);
+      field.setId(labelName);
 
       // Invoke the createField() method on the field instance using reflection
       Method createFieldMethod = fieldClass.getDeclaredMethod("createField");
@@ -128,6 +148,7 @@ public class CreateNewModal extends InputModal {
     this.getDialogPane().setContent(grid);
   } // TODO: make classes for each of these elements and use java reflection to create them. for
 
+
   private void initializeArrayLists() {
     ImagePickers = new ArrayList<>();
     textFields = new ArrayList<>();
@@ -141,26 +162,28 @@ public class CreateNewModal extends InputModal {
     ok.setOnAction(e -> sendtoController());
     return ok;
   }
+
   private void sendtoController(){
     Map<String, String> map = new HashMap<>();
     for (TextFieldComponent fieldComponent : textFields) {
-      map.put(fieldComponent.getLabelText(), fieldComponent.getValue());
+      map.put(fieldComponent.getId(), fieldComponent.getValue());
     }
     for (ImagePickerComponent imageComponent : ImagePickers){
-      map.put(imageComponent.getLabelText(), imageComponent.getFile().toString());
+      map.put(imageComponent.getId(), imageComponent.getFile().toString());
     }
     for (ColorPickerComponent colorComponent : colorPickers){
-      map.put(colorComponent.getLabelText(), colorComponent.getValue());
+      map.put(colorComponent.getId(), colorComponent.getValue());
     }
     for (IntegerPickerComponent integerComponent : integerPickers){
-      map.put(integerComponent.getLabelText(), Integer.toString(integerComponent.getValue()));
+      map.put(integerComponent.getId(), Integer.toString(integerComponent.getValue()));
     }
     //TODO remove, just for testing purposes
-    System.out.println(map);
     if(editMode) {
-      System.out.println("EDIT MODE");
       this.getController().editObjectInstance(map, myTitle);
     } else {
+      if(myTitle == "save"){
+        this.getController().configGeneral(map);
+      }
       this.getController().createObjectTemplate(map, myTitle);
     }
     this.getDialogPane().getScene().getWindow().hide();
