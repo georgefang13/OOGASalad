@@ -21,9 +21,13 @@ import oogasalad.frontend.components.gameObjectComponent.GameObject;
 public class Dropzone extends AbstractComponent implements DropZonePublisher {
 
   private final String DEFAULT_PATH = "frontend.properties.Defaults.Dropzone.properties";
+  private String name;
   private Map<String, Dropzone> edges;
   private Map<String, GameObject> content;
   private HBox node;
+  private int rows = 1;
+  private int cols = 1;
+  private final static String BOARD_TYPE = "createGrid";
   private Color fill;
   private Color border;
   private Rectangle square;
