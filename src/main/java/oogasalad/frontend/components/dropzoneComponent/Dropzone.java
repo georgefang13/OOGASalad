@@ -166,6 +166,9 @@ public class Dropzone extends AbstractComponent implements DropZonePublisher {
   }
 
 
+  public List<Subscriber> getSubscribers(){
+    return subscribers;
+  }
   /**
    * Adds a subscriber to the subscriber list
    * @param subscriber

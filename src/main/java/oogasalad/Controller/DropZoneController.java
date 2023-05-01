@@ -7,6 +7,7 @@ import java.util.Map;
 import javafx.scene.layout.Pane;
 import oogasalad.frontend.components.Arrow;
 import oogasalad.frontend.components.Component;
+import oogasalad.frontend.components.Subscriber;
 import oogasalad.frontend.components.dropzoneComponent.Dropzone;
 import oogasalad.frontend.components.gridObjectComponent.GridObject;
 
@@ -18,15 +19,20 @@ public class DropZoneController implements ControllerSubscriber {
   private List<Dropzone> validatedDropzone;
   private List<GridObject> validatedGridObject;
   private Map<Dropzone, Dropzone> arrowConnections;
+  private Map<Dropzone, List<Arrow>> arrowMap;
 
   public DropZoneController(){
     arrowConnections = new HashMap<>();
+    arrowMap = new HashMap<>();
     validatedDropzone = new ArrayList<>();
     validatedGridObject = new ArrayList<>();
   }
 
   public void createArrow(){
     Arrow connection = new Arrow(previous, current);
+    arrowConnections.put(previous, current);
+    arrowMap.putIfAbsent(previous, new ArrayList<>());
+    arrowMap.get(previous).add(connection);
     root.getChildren().add(connection.getArrow());
   }
 
@@ -84,5 +90,16 @@ public class DropZoneController implements ControllerSubscriber {
   }
   public void setRoot(Pane rt){
     root = rt;
+  }
+
+  public void deleteArrows(Component c, Pane root) {
+    try{
+      List<Arrow> arrows = arrowMap.get(c);
+      for(Arrow arrow: arrows){
+        root.getChildren().remove(arrow.getArrow());
+      }
+    } catch (Exception e ){
+      //TODO Logging
+    }
   }
 }

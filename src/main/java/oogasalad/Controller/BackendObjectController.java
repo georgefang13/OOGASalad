@@ -41,6 +41,7 @@ public class BackendObjectController {
 
   public void editOwnableObject(Component c) {
     HashMap<ObjectParameter, Object> param = setUpMap(c);
+    param.remove(ObjectParameter.ID);
     System.out.println(c.getID());
     game.updateObjectProperties(c.getID(), ObjectType.OWNABLE, param);
   }
