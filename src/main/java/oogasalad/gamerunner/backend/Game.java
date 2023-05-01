@@ -1,6 +1,7 @@
 package oogasalad.gamerunner.backend;
 
 import oogasalad.Controller.GameController;
+import oogasalad.frontend.scenes.SceneController;
 import oogasalad.gamerunner.backend.fsm.ProgrammableState;
 import oogasalad.gamerunner.backend.online.EmptyOnlineRunner;
 import oogasalad.gamerunner.backend.online.OnlineRunner;
@@ -25,6 +26,9 @@ import java.io.FileNotFoundException;
 import java.util.*;
 import java.util.stream.StreamSupport;
 
+import oogasalad.logging.MainLogger;
+import ch.qos.logback.classic.Level;
+
 /**
  * The Game class represents the game itself.
  * It contains Owners such as the GameWorld and Players.
@@ -33,6 +37,8 @@ import java.util.stream.StreamSupport;
  * @author Max Meister
  */
 public class Game implements GameToInterpreterAPI{
+
+    private static final MainLogger logger = MainLogger.getInstance(Game.class);
 
     /**
      * The Rules of the game.
@@ -105,6 +111,8 @@ public class Game implements GameToInterpreterAPI{
      */
     public void setNumOnlinePlayers(int num){
         numOnlinePlayers = num;
+        logger.debug(String.format("setNumOnlinePlayers: num - %x", num));
+
         if (numOnlinePlayers == numPlayers){
             startOnlineGame();
         }
@@ -112,8 +120,10 @@ public class Game implements GameToInterpreterAPI{
 
     public void startGame(){
         try {
+            logger.info("tryed initiating a game");
             initGame(directory);
         } catch (Exception e) {
+            logger.error("failed to initiate a game");
             e.printStackTrace();
         }
     }
@@ -203,6 +213,7 @@ public class Game implements GameToInterpreterAPI{
     }
 
     private List<Object> getLog(){
+        logger.warn("requested a game log");
         Variable<List<Object>> v = (Variable<List<Object>>) idManager.getObject("log");
         return v.get();
     }

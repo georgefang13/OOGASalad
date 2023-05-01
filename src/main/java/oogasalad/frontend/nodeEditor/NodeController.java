@@ -4,12 +4,17 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import oogasalad.frontend.managers.PropertyManager;
 import oogasalad.frontend.managers.StandardPropertyManager;
+import oogasalad.frontend.scenes.SceneController;
 import oogasalad.frontend.windows.NodeWindow;
+
+import oogasalad.logging.MainLogger;
+import ch.qos.logback.classic.Level;
 
 public class NodeController {
 
   private NodeScene scene;
   protected PropertyManager propertyManager = StandardPropertyManager.getInstance();
+  private static final MainLogger logger = MainLogger.getInstance(NodeController.class);
 
   public NodeController(NodeWindow nodeWindow) {
     scene = new NodeScene(this);
@@ -65,6 +70,7 @@ public class NodeController {
    * @return
    */
   public Scene getScene() {
+    logger.debug("retrieved the scence");
     return scene.getScene();
   }
 }

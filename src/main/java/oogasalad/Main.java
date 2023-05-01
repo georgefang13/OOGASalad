@@ -19,7 +19,7 @@ public class Main extends Application {
 
   @Override
   public void start(Stage primaryStage) throws Exception {
-    logger.setLogLevel(Level.INFO);
+    logger.setLogLevel(Level.TRACE);
     logger.info("Initiated a Session -----");
 
     WindowMediator mediator = new WindowController();

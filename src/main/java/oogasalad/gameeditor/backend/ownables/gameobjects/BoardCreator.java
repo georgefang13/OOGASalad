@@ -4,9 +4,16 @@ package oogasalad.gameeditor.backend.ownables.gameobjects;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import oogasalad.frontend.scenes.SceneController;
 import oogasalad.sharedDependencies.backend.ownables.gameobjects.DropZone;
 
+import oogasalad.logging.MainLogger;
+import ch.qos.logback.classic.Level;
+
 public class BoardCreator {
+
+  private static final MainLogger logger = MainLogger.getInstance(BoardCreator.class);
 
   // TODO: put text in properties file
 
@@ -114,6 +121,8 @@ public class BoardCreator {
     String pathBackward = "Clockwise";
 
     int perimeter = 2 * (rows + cols) - 4;
+
+    logger.trace(String.format("Created a new square loop: rows - %d, cols - %d", rows, cols));
 
     return create1DLoop(perimeter, pathForward, pathBackward);
   }
