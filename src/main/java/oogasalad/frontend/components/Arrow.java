@@ -58,6 +58,8 @@ public class Arrow implements Subscriber {
     double startY = startSquare.getTranslateY() + start.getHeight()/2;
     double endX = endSquare.getTranslateX() + end.getWidth()/2;
     double endY = endSquare.getTranslateY() + end.getHeight()/2;
+    System.out.println(startX);
+    System.out.println(startY);
     arrow.getChildren().clear();
     line = new Line(startX, startY, endX, endY);
     arrow.getChildren().add(line);

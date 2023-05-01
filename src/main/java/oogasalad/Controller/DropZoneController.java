@@ -4,12 +4,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javafx.scene.Group;
 import javafx.scene.layout.Pane;
 import oogasalad.frontend.components.Arrow;
 import oogasalad.frontend.components.Component;
-import oogasalad.frontend.components.Subscriber;
 import oogasalad.frontend.components.dropzoneComponent.Dropzone;
+import oogasalad.frontend.components.gridObjectComponent.GridObject;
 
 public class DropZoneController implements ControllerSubscriber {
 
@@ -17,11 +16,13 @@ public class DropZoneController implements ControllerSubscriber {
   private Dropzone current;
   private Pane root;
   private List<Dropzone> validatedDropzone;
+  private List<GridObject> validatedGridObject;
   private Map<Dropzone, Dropzone> arrowConnections;
 
   public DropZoneController(){
     arrowConnections = new HashMap<>();
     validatedDropzone = new ArrayList<>();
+    validatedGridObject = new ArrayList<>();
   }
 
   public void createArrow(){
@@ -65,6 +66,18 @@ public class DropZoneController implements ControllerSubscriber {
     try{
       validatedDropzone.add((Dropzone) c);
       ((Dropzone) c).addControllerSubscriber(this);
+    } catch (Exception e){
+      //TODO Add Logging Component
+
+    }
+  }
+  public void addGridObject(Component c){
+    try{
+      validatedGridObject.add((GridObject) c);
+      List<Dropzone> zones = ((GridObject) c).getDropzones();
+        for(Dropzone dropzone: zones){
+          dropzone.addControllerSubscriber(this);
+        }
     } catch (Exception e){
       //TODO Add Logging Component
     }

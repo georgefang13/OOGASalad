@@ -1,6 +1,9 @@
 package oogasalad.frontend.nodeEditor.Nodes;
 
 import javafx.scene.control.Label;
+import oogasalad.frontend.nodeEditor.Config.NodeData;
+
+import java.util.ArrayList;
 
 public class MainNode extends AbstractNode {
 
@@ -24,12 +27,18 @@ public class MainNode extends AbstractNode {
     return propertyManager.getText("EmptyString");
   }
 
+
+  @Override
+  public NodeData getNodeData() {
+    return new NodeData("MainNode", "Control", new ArrayList<>());
+  }
+
   @Override
   public void snapTo(AbstractNode node) {
   }
 
   @Override
-  protected void delete() {
+  public void delete() {
   }
 
 }

@@ -50,7 +50,7 @@ public class SimpleGameView extends Application implements GameController {
         Scene scene = new Scene(root, SCREEN_WIDTH, SCREEN_HEIGHT);
         scene.getStylesheets().add(MODAL_STYLE_SHEET);
 
-        directory = "data/games/tictactoe";
+        directory = "data/games/checkers";
 
         showStartScreen();
 
@@ -77,8 +77,6 @@ public class SimpleGameView extends Application implements GameController {
 
 
     private void startGame(String type) {
-
-        game.startGame();
 
         root.getChildren().retainAll();
         try {
@@ -128,7 +126,7 @@ public class SimpleGameView extends Application implements GameController {
             image = directory.substring(0, directory.lastIndexOf("/")) + "/assets/" + image;
             String dropZoneID = fm.getString(id, "location");
             double size = Double.parseDouble(fm.getString(id, "size"));
-            addPiece(id, image, dropZoneID, false, null, size, 0.0);
+            addPiece(id, image, dropZoneID, false, null, 30, 30);
         }
     }
     @Override
@@ -164,7 +162,7 @@ public class SimpleGameView extends Application implements GameController {
     }
 
     @Override
-    public void addPiece(String id, String image, String dropZoneID, boolean hasSelectImage, Object param, double height, double width) throws FileNotFoundException {
+    public void addPiece(String id, String image, String dropZoneID, boolean hasSelectImage, String param, int height, int width) {
         double size = height;
         Image img;
         try {
@@ -270,6 +268,21 @@ public class SimpleGameView extends Application implements GameController {
             label.setLayoutY(10);
             root.getChildren().add(label);
         });
+    }
+
+    @Override
+    public void addTextObject(String id, String text, String DropZoneID) {
+
+    }
+
+    @Override
+    public void updateTextObject(String id, String text) {
+
+    }
+
+    @Override
+    public void assignUndoButtonAction(Button undoButton) {
+
     }
 
     private void clearClickables(){

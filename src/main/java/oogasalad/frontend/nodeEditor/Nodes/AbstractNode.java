@@ -12,13 +12,19 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import oogasalad.frontend.managers.PropertyManager;
 import oogasalad.frontend.managers.StandardPropertyManager;
+import oogasalad.frontend.nodeEditor.Config.NodeData;
 import oogasalad.frontend.nodeEditor.Draggable;
+
+import java.io.Serializable;
 
 public abstract class AbstractNode extends VBox implements Draggable {
 
   protected Bounds boundingBox;
 
   protected double x, y, xOffset, yOffset, width, height, indent;
+  protected NodeData nodeData;
+
+
   protected AbstractNode parentNode, childNode;
   protected PropertyManager propertyManager = StandardPropertyManager.getInstance();
 
@@ -33,6 +39,7 @@ public abstract class AbstractNode extends VBox implements Draggable {
     this.getStyleClass().add(propertyManager.getText("AbstractNode.StyleClass"));
   }
 
+
   public AbstractNode(double x, double y, double width,
       double height) {
     this.x = x;
@@ -44,6 +51,10 @@ public abstract class AbstractNode extends VBox implements Draggable {
   }
 
   public abstract String getJSONString();
+
+  public abstract NodeData getNodeData();
+
+
 
   @Override
   public void snapTo(AbstractNode node) {
@@ -146,6 +157,7 @@ public abstract class AbstractNode extends VBox implements Draggable {
 
   @Override
   public void move(double newX, double newY) {
+
     if (boundingBox.contains(newX, newY, getWidth(), getHeight())) {
       setTranslateX(newX);
       setTranslateY(newY);
@@ -181,7 +193,7 @@ public abstract class AbstractNode extends VBox implements Draggable {
 
   protected abstract void setContent();
 
-  protected void delete() {
+  public void delete() {
     clearLinks();
     Group parentGroup = (Group) getParent();
     parentGroup.getChildren().remove(this);

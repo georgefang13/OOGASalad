@@ -69,4 +69,5 @@ public interface Component {
   void setName(String newName);
   String getName();
   void setValuesfromMap(Map<String, String> map);
+  Map<String, String> getParameters();
 }

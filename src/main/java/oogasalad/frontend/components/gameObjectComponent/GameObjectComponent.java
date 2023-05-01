@@ -1,10 +1,10 @@
 package oogasalad.frontend.components.gameObjectComponent;
 
-import java.util.List;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
-import oogasalad.frontend.components.AbstractComponent;
 import oogasalad.frontend.components.Component;
+
+import java.util.List;
 
 /**
  * @author Han, Aryan These are the components of the View that are playable objects in Gameplay

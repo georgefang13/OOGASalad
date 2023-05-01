@@ -58,7 +58,7 @@ private static final String DROPDOWN_BOX_ID = "DropdownBoxID";
   private UserManager userManager;
   private Label title;
 
-  public SplashMainScene(SceneController sceneController) {
+  public SplashMainScene(SceneMediator sceneController) {
     super(sceneController);
   }
 

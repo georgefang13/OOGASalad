@@ -9,6 +9,8 @@ import oogasalad.Controller.FilesController;
 import oogasalad.frontend.components.Component;
 import oogasalad.frontend.components.ComponentsFactory;
 import oogasalad.frontend.components.GraphicHandler;
+import oogasalad.frontend.panels.ModalPanel;
+import oogasalad.frontend.panels.Panel;
 import oogasalad.frontend.panels.editorPanels.ComponentPanel;
 
 /**
@@ -17,13 +19,13 @@ import oogasalad.frontend.panels.editorPanels.ComponentPanel;
 public class ModalController {
 
   private Pane root;
-  private ComponentPanel parentPanel;
+  private ModalPanel parentPanel;
   private Map<String, Map<String, String>> templateMap;
   private Map<String, Component> activeComponents;
   private ComponentsFactory factory;
   private FilesController files;
   private DropZoneController dropZoneController;
-  public ModalController(ComponentPanel componentPanel) {
+  public ModalController(ModalPanel componentPanel) {
     parentPanel = componentPanel;
     factory = new ComponentsFactory();
     templateMap = new HashMap<>();
@@ -34,6 +36,7 @@ public class ModalController {
   public void setFileController(FilesController newController){
     files = newController;
   }
+
   public void createObjectTemplate(Map<String, String> map, String objectType) {
     String name = map.get("name");
     dropZoneController.setRoot(root);
@@ -43,11 +46,19 @@ public class ModalController {
 
   public void createObjectInstance(String name, String objectType){
     objectType = objectType.substring(0, 1).toUpperCase() + objectType.substring(1);
-    Map<String, String> map = templateMap.get(name);
+
+    int firstDigitIndex = name.replaceAll("\\D", "").length() > 0 ? name.indexOf(name.replaceAll("\\D", "").charAt(0)) : -1;
+    String componentTemplate = (firstDigitIndex != -1) ? name.substring(0, firstDigitIndex) : name;
+    System.out.println(componentTemplate);
+
+    Map<String, String> map = templateMap.get(componentTemplate);
     Component c = factory.create(objectType, map);
+
     activeComponents.put(name, c);
+
     files.addComponent(c);
     dropZoneController.addDropZone(c);
+    dropZoneController.addGridObject(c);
     GraphicHandler handler = new GraphicHandler();
     handler.moveToCenter(c);
     root.getChildren().add(c.getNode());
@@ -72,4 +83,14 @@ public class ModalController {
     root = rt;
   }
 
+  public Component getActiveComponent(String name) {
+    return activeComponents.get(name);
+  }
+  public Map<String, Component> getMap() {
+    return activeComponents;
+  }
+
+  public void configGeneral(Map<String, String> map) {
+    files.setGeneral(map);
+  }
 }

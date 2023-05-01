@@ -1,14 +1,14 @@
 package oogasalad.frontend.scenes;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import oogasalad.Controller.FilesController;
-import oogasalad.frontend.components.Component;
 import oogasalad.frontend.windows.AbstractWindow;
 import oogasalad.frontend.windows.WindowMediator;
 
-public class SceneController {
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Stack;
+
+public class SceneController implements SceneMediator{
 
   private static final String MAIN_ID = "main";
   private AbstractScene currentScene;
@@ -16,6 +16,7 @@ public class SceneController {
   private String windowID;
   private WindowMediator windowController;
   private FilesController filesController;
+  private Stack<Object> sceneData = new Stack<>();
   public SceneController(String windowID, WindowMediator windowController) {
     this.windowID = windowID;
     this.windowController = windowController;
@@ -52,5 +53,15 @@ public class SceneController {
   }
   public void compile(){
     filesController.saveToFile();
+  }
+
+  @Override
+  public void passData(Object data) {
+    sceneData.push(data);
+  }
+
+  @Override
+  public Object getData() {
+    return sceneData.pop();
   }
 }

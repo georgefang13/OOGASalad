@@ -14,6 +14,7 @@ import oogasalad.gamerunner.backend.interpreter.Interpreter;
 import oogasalad.sharedDependencies.backend.ownables.Ownable;
 import oogasalad.sharedDependencies.backend.ownables.gameobjects.DropZone;
 import oogasalad.sharedDependencies.backend.ownables.gameobjects.GameObject;
+import oogasalad.sharedDependencies.backend.ownables.gameobjects.TextObject;
 import oogasalad.sharedDependencies.backend.ownables.variables.Variable;
 import oogasalad.sharedDependencies.backend.owners.GameWorld;
 import oogasalad.sharedDependencies.backend.owners.Owner;
@@ -586,17 +587,37 @@ public class Game implements GameToInterpreterAPI{
     }
 
     @Override
-    public void addObject(Ownable obj, DropZone dz, String image, double size) {
+    public void addObject(Ownable obj, DropZone dz, String image, double width, double height) {
         idManager.addObject(obj);
         putInDropZone(obj, dz);
         String id = idManager.getId(obj);
         String imagePath = this.directory + "/assets/" + image;
-        //controller.addPiece(id, imagePath, idManager.getId(dz),false,null, size,size);
+        controller.addPiece(id, imagePath, idManager.getId(dz), false, "#ff0000", (int) height, (int) width);
     }
 
     @Override
     public void addDropZone(DropZone dz, DropZone location, String image, String highlight, double width, double height) {
 
+    }
+
+    @Override
+    public void setPieceHighlight(Ownable piece, String highlight) {
+        String id = idManager.getId(piece);
+        String imagePath = this.directory + "/assets/" + highlight;
+        //controller.setPieceHighlight(id, imagePath);
+    }
+
+    @Override
+    public void updateTextObject(TextObject obj) {
+        controller.updateTextObject(idManager.getId(obj), obj.getText());
+    }
+
+    @Override
+    public void addTextObject(TextObject obj, DropZone dz) {
+        idManager.addObject(obj);
+        putInDropZone(obj, dz);
+        String id = idManager.getId(obj);
+        controller.addTextObject(id, obj.getText(), idManager.getId(dz));
     }
 
     /**

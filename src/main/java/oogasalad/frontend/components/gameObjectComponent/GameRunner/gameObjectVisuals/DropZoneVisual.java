@@ -5,8 +5,8 @@ import javafx.scene.Node;
 public class DropZoneVisual extends AbstractSelectableVisual {
     private Node unselectedVisual;
     private Node selectedVisual;
-    public DropZoneVisual(Node dropZoneImage,Node selectedDropZoneImage, double width, double height, double x, double y,String id) {
-        super(id);
+    public DropZoneVisual(Node dropZoneImage,Node selectedDropZoneImage, int width, int height, double x, double y,String id) {
+        super(id,width,height);
         unselectedVisual = dropZoneImage;
         selectedVisual = selectedDropZoneImage;
         initHBox(width,height,x,y);
@@ -32,7 +32,7 @@ public class DropZoneVisual extends AbstractSelectableVisual {
     }
 
     @Override
-    public void updateVisual(Node newVisual) {
-        unselectedVisual = newVisual;
+    public void updateClickableVisual(String imgPath) {
+        selectedVisual = loadVisual(imgPath);
     }
 }
