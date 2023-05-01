@@ -94,45 +94,20 @@ public abstract class AbstractNode extends VBox implements DraggableNode {
    */
   @Override
   public void alignNodes(AbstractNode fromNode, AbstractNode toNode) {
-    checkLayoutRendered(toNode);
-    Platform.runLater(() -> {
-      Platform.runLater(() -> {
-        if (toNode instanceof StartNestNode) {
-          if (fromNode instanceof EndNestNode) {
-            fromNode.move(toNode.getTranslateX(), toNode.getTranslateY() + toNode.getHeight());
-          } else {
-            fromNode.move(toNode.getTranslateX() + indent,
-                toNode.getTranslateY() + toNode.getHeight());
-          }
-        } else if (fromNode instanceof EndNestNode) {
-          fromNode.move(toNode.getTranslateX() - indent,
-              toNode.getTranslateY() + toNode.getHeight());
-        } else {
-          fromNode.move(toNode.getTranslateX(), toNode.getTranslateY() + toNode.getHeight());
-        }
-      });
-    });
-
-  }
-
-  /**
-   * Checks if the layout has been rendered for the given node and if not it waits 200ms Though not
-   * ideal, this was how we were able to get the snapTo method to work for all nodes
-   *
-   * @param toNode the node to check
-   * @return void
-   */
-  private void checkLayoutRendered(AbstractNode toNode) {
-    Bounds layoutBounds = toNode.getLayoutBounds();
-    if (Double.isNaN(layoutBounds.getWidth()) || Double.isNaN(layoutBounds.getHeight())) {
-      try {
-        wait(2000);
-      } catch (Exception e) {
-        e.printStackTrace();
+    if (toNode instanceof StartNestNode) {
+      if (fromNode instanceof EndNestNode) {
+        fromNode.move(toNode.getTranslateX(), toNode.getTranslateY() + toNode.getHeight());
+      } else {
+        fromNode.move(toNode.getTranslateX() + indent,
+            toNode.getTranslateY() + toNode.getHeight());
       }
+    } else if (fromNode instanceof EndNestNode) {
+      fromNode.move(toNode.getTranslateX() - indent,
+          toNode.getTranslateY() + toNode.getHeight());
+    } else {
+      fromNode.move(toNode.getTranslateX(), toNode.getTranslateY() + toNode.getHeight());
     }
   }
-
 
   /**
    * Sets the onDragDetected event for this node This is used to start the full drag

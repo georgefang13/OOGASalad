@@ -3,6 +3,7 @@ package oogasalad.frontend.nodeEditor;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import javafx.application.Platform;
 import javafx.scene.Group;
 import java.util.Set;
 
@@ -148,7 +149,6 @@ public class CodeEditorTab extends AbstractNodeEditorTab {
         for (String nestBlock : command.innerBlocks()) {
           AbstractNode start = new StartNestNode();
           addNode(start);
-          start.snapToNode(node);
           AbstractNode end = new EndNestNode();
           addNode(end);
           end.snapToNode(start);
