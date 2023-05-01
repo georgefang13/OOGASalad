@@ -118,8 +118,8 @@ private static final String DROPDOWN_BOX_ID = "DropdownBoxID";
         displayLibrary();
       }
       else {
-        AlertModal error = new AlertModal();
-        error.showAndWait();
+        AlertModal error = new AlertModal("LoginErrorHeader", "LoginErrorBody");
+        error.showAlert();
       }
     });
     signUp = new Hyperlink(ELEMENT_LABELS.getString(SIGN_UP));
