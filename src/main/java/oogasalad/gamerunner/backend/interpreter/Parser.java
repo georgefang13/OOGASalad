@@ -1,6 +1,7 @@
 package oogasalad.gamerunner.backend.interpreter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import oogasalad.gamerunner.backend.interpreter.commands.control.FVar;
@@ -83,6 +84,7 @@ public class Parser {
     }
 
     private Token parseCommandToken(CommandToken c, Environment env){
+
         if (lastToken instanceof MakeUserInstruction){
             lastToken = c;
             return c;
@@ -113,11 +115,13 @@ public class Parser {
     }
 
     private OperatorToken parseOperator(Environment env, OperatorToken m) {
+//        System.out.println("PARSING OPERATOR " + m);
         Token[] args = new Token[m.getNumArgs()];
         for (int i = 0; i < args.length; i++) {
             if (!hasNext()) throw new InvalidSyntaxException("Not enough arguments for operator " + m.SUBTYPE);
             args[i] = parseExpression(env);
         }
+//        System.out.println("ARGS TO " + m + ": " + Arrays.toString(args));
         m.passArguments(args);
         return m;
     }

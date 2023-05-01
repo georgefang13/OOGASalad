@@ -23,4 +23,15 @@ public class TempFunctionToken extends OperatorToken {
     instruction.passArguments(args);
     return instruction.evaluate(env);
   }
+
+  @Override
+  public TempFunctionToken copy(){
+    TempFunctionToken t = new TempFunctionToken(getNumArgs(), NAME);
+    Token[] args = new Token[getNumArgs()];
+    for (int i = 0; i < getNumArgs(); i++) {
+      args[i] = getArg(i).copy();
+    }
+    t.passArguments(args);
+    return t;
+  }
 }

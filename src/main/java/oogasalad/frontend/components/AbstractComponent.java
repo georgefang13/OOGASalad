@@ -1,45 +1,48 @@
 package oogasalad.frontend.components;
 
 import javafx.scene.Node;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-
-import java.io.IOException;
-import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.util.Map;
 import java.util.Properties;
 import java.util.ResourceBundle;
+import javafx.scene.control.ColorPicker;
+
 
 /**
  * @author Han and Aryan AbstractComponent is the abstraction that all Components are built off of.
  */
 public abstract class AbstractComponent implements Component {
-  protected int ID;
+  protected String ID;
   protected Node node;
   private boolean draggable;
   private boolean active;
   private boolean visible;
   private int zIndex;
-  private double size;
-  protected double XOffset;
-  protected double YOffset;
+  private double XOffset;
+  private double YOffset;
+
+  protected double size;
+
   private Point absolute;
   private Point editor;
   private String DEFAULT_FILE_PATH;
   private ResourceBundle DEFAULT_BUNDLE;
+  private String name;
+  protected double width;
+  protected double height;
+  private double rotate;
 
-  public AbstractComponent(int id) {
+  public AbstractComponent(String id) {
     ID = id;
   }
-
 
   protected void instantiatePropFile(String filepath) {
     setDEFAULT_FILE_PATH(filepath);
     setDEFAULT_BUNDLE(ResourceBundle.getBundle(getDEFAULT_FILE_PATH()));
   }
 
-  protected void setValuesfromMap(Map<String, String> map) {
+  @Override
+  public void setValuesfromMap(Map<String, String> map) {
     for(String param: map.keySet()){
       try{
         Field field = this.getClass().getDeclaredField(param);
@@ -62,13 +65,12 @@ public abstract class AbstractComponent implements Component {
   public void setNode(Node node) {
     this.node = node;
   }
-
   @Override
-  public int getID() {
+  public String getID() {
     return ID;
   }
   @Override
-  public void setID(int id) {
+  public void setID(String id) {
     ID = id;
   }
   @Override
@@ -78,25 +80,25 @@ public abstract class AbstractComponent implements Component {
   @Override
   public void setActiveSelected(boolean active) {
     this.active = active;
+    node.setScaleY(10);
   }
   @Override
   public void followMouse() {
     getNode().setOnMousePressed(e -> {
       XOffset = e.getSceneX() - (getNode().getTranslateX());
       YOffset = e.getSceneY() - (getNode().getTranslateY());
-
     });
     getNode().setOnMouseDragged(e -> {
-      getNode().setTranslateX(e.getSceneX() - XOffset);
-      getNode().setTranslateY(e.getSceneY() - YOffset);
+      if (draggable) {
+        getNode().setTranslateX(e.getSceneX() - XOffset);
+        getNode().setTranslateY(e.getSceneY() - YOffset);
+      }
     });
   }
-
   @Override
   public void setVisible(boolean visible) {
     this.visible = visible;
   }
-
   @Override
   public void setZIndex(int zIndex) {
     getNode().setTranslateZ(zIndex);
@@ -107,9 +109,17 @@ public abstract class AbstractComponent implements Component {
   @Override
   public void setSize(double size) {
     this.size = size;
-    getNode().setScaleY(size);
-    getNode().setScaleX(size);
   }
+
+  @Override
+  public void setName(String newName) {
+    name = newName;
+  }
+  @Override
+  public String getName(){
+    return name;
+  }
+
 
   protected String getDEFAULT_FILE_PATH() {
     return DEFAULT_FILE_PATH;
@@ -124,6 +134,20 @@ public abstract class AbstractComponent implements Component {
     this.DEFAULT_BUNDLE = DEFAULT_BUNDLE;
   }
 
+  protected double getXOffset() {
+    return XOffset;
+  }
+  protected void setXOffset(double XOffset) {
+    this.XOffset = XOffset;
+  }
+  protected double getYOffset() {
+    return YOffset;
+  }
+  protected void setYOffset(double YOffset) {
+    this.YOffset = YOffset;
+  }
+
+
   protected void setVisibleBool(boolean vis){
     visible = vis;
   }
@@ -136,4 +160,24 @@ public abstract class AbstractComponent implements Component {
   protected void setEditorPoint(Point ed){
     editor = ed;
   }
+
+  protected void resetOffset(){
+    XOffset = 0;
+    YOffset = 0;
+  }
+
+  protected void setHeight(double height){
+    this.height = height;
+  }
+  protected void setWidth(double width){
+    this.width = width;
+  }
+  protected double getHeight(){
+    return height;
+  }
+  protected double getWidth(){
+    return width;
+  }
+
 }
+

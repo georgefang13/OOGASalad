@@ -1,13 +1,16 @@
 package oogasalad.gamerunner.backend;
 
-import oogasalad.Controller.GameRunnerController;
-import oogasalad.gameeditor.backend.id.IdManager;
-import oogasalad.gameeditor.backend.rules.Rule;
-import oogasalad.gamerunner.backend.fsm.FSM;
+import oogasalad.Controller.GameController;
 import oogasalad.gamerunner.backend.fsm.ProgrammableState;
+import oogasalad.gamerunner.backend.online.EmptyOnlineRunner;
+import oogasalad.gamerunner.backend.online.OnlineRunner;
+import oogasalad.gamerunner.backend.online.SocketRunner;
+import oogasalad.sharedDependencies.backend.GameLoader;
+import oogasalad.sharedDependencies.backend.filemanagers.FileManager;
+import oogasalad.sharedDependencies.backend.id.IdManager;
+import oogasalad.gamerunner.backend.fsm.FSM;
 import oogasalad.gamerunner.backend.interpretables.Goal;
 import oogasalad.gamerunner.backend.interpreter.Interpreter;
-import oogasalad.sharedDependencies.backend.filemanagers.FileManager;
 import oogasalad.sharedDependencies.backend.ownables.Ownable;
 import oogasalad.sharedDependencies.backend.ownables.gameobjects.DropZone;
 import oogasalad.sharedDependencies.backend.ownables.gameobjects.GameObject;
@@ -15,6 +18,7 @@ import oogasalad.sharedDependencies.backend.ownables.variables.Variable;
 import oogasalad.sharedDependencies.backend.owners.GameWorld;
 import oogasalad.sharedDependencies.backend.owners.Owner;
 import oogasalad.sharedDependencies.backend.owners.Player;
+import oogasalad.sharedDependencies.backend.rules.RuleManager;
 
 import java.io.FileNotFoundException;
 import java.util.*;
@@ -32,7 +36,7 @@ public class Game implements GameToInterpreterAPI{
     /**
      * The Rules of the game.
      */
-    private final IdManager<Rule> rules = new IdManager<>();
+    private RuleManager rules = new RuleManager();
 
     /**
      * The Goals of the game.
@@ -43,12 +47,12 @@ public class Game implements GameToInterpreterAPI{
      * The Players of the game.
      * Players own Ownables.
      */
-    private final ArrayList<Player> players = new ArrayList<>();
+    private final List<Player> players = new ArrayList<>();
 
     /**
      * The IdManager of the game for Ownables.
      */
-    private final IdManager<Ownable> ownableIdManager = new IdManager<>();
+    private final IdManager<Ownable> idManager = new IdManager<>();
 
     /**
      * The GameWorld of the game.
@@ -56,7 +60,7 @@ public class Game implements GameToInterpreterAPI{
      */
     private final GameWorld gameWorld = new GameWorld();
 
-    private final FSM<String> fsm = new FSM<>(ownableIdManager);
+    private final FSM<String> fsm = new FSM<>(idManager);
 
     private final Interpreter interpreter = new Interpreter();
 
@@ -64,82 +68,226 @@ public class Game implements GameToInterpreterAPI{
 
     private final Map<Ownable, DropZone> pieceLocations = new HashMap<>();
 
-    private final GameRunnerController controller;
+    private final GameController controller;
+
+    private final String directory;
+
+    private final OnlineRunner onlineRunner;
+
+    private final int numPlayers;
+    private int numOnlinePlayers;
+
+    private boolean startedOnline = false;
+
+    // the position (which turn you are) in the game. -1 if not playing online
+    private int onlinePlayerNum = -1;
 
 
     /////////////////// PLAY THE GAME ///////////////////
 
-
-    public Game(GameRunnerController controller, String directory, int numPlayers) {
+    public Game(GameController controller, String directory, int numPlayers, boolean online) {
+        this.numPlayers = numPlayers;
+        numOnlinePlayers = 0;
         this.controller = controller;
+        this.directory = directory;
 
-        initGame(numPlayers, directory);
+        if (online) {
+            onlineRunner = new SocketRunner(this);
+        } else {
+            onlineRunner = new EmptyOnlineRunner();
+        }
     }
-    private void initGame(int numPlayers, String directory){
 
-        for (int i = 0; i < numPlayers; i++){
+    /**
+     * Sets the number of online players in the game. Starts the game when the desired number of players is reached.
+     * @param num the number of online players
+     */
+    public void setNumOnlinePlayers(int num){
+        numOnlinePlayers = num;
+        if (numOnlinePlayers == numPlayers){
+            startOnlineGame();
+        }
+    }
+
+    public void startGame(){
+        try {
+            initGame(directory);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void initGame(String directory) throws FileNotFoundException, ClassNotFoundException {
+
+        GameLoader gl = new GameLoader(directory);
+
+        // players are added by the SocketRunner if online
+        for (int i = 0; i < numPlayers; i++) {
             players.add(new Player());
         }
         
-        interpreter.linkIdManager(ownableIdManager);
+        interpreter.linkIdManager(idManager);
         interpreter.linkGame(this);
 
-        try {
-            loadGame(directory);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        gl.loadFSM(interpreter, fsm);
+        goals.addAll(gl.loadGoals());
+        gl.loadDropZones(idManager, gameWorld);
+        pieceLocations.putAll(gl.loadObjectsAndVariables(idManager, players, gameWorld));
+        rules = gl.loadRules();
 
         initVariables();
 
-        fsm.setState("INIT");
-        fsm.transition();
+        startTurn();
+    }
+
+    public void createOnlineGame(){
+        onlineRunner.create();
+    }
+    public void joinOnlineGame(String code){
+        onlineRunner.join(code);
+    }
+    public String getOnlineGameCode(){
+        return onlineRunner.getCode();
+    }
+    public void startOnlineGame(){
+        if (!startedOnline) {
+            startedOnline = true;
+            onlineRunner.start();
+            onlinePlayerNum = onlineRunner.getPlayerNum();
+            startGame();
+            System.out.println("PLAYER " + onlinePlayerNum);
+        }
+    }
+
+    /**
+     * sends the online game code to the controller
+     * @param code the code to send
+     */
+    public void sendCode(String code){
+        controller.passGameId(code);
+    }
+
+    private void startTurn(){
+        try {
+            interpreter.interpret("make :game_available [ ]");
+            fsm.setState("INIT");
+            fsm.transition();
+            sendClickable();
+        } catch (Exception e) {
+            System.out.println(getLog());
+            throw e;
+        }
+        for (Object o : getLog()){
+            System.out.println(o);
+        }
     }
     
     private void initVariables(){
         turn.setOwner(gameWorld);
-        if (!ownableIdManager.isIdInUse("turn")) {
-            ownableIdManager.addObject(turn, "turn");
+        if (!idManager.isIdInUse("turn")) {
+            idManager.addObject(turn, "turn");
         }
 
         Variable<Double> numPlayersVar = new Variable<>((double) players.size());
         numPlayersVar.setOwner(gameWorld);
-        ownableIdManager.addObject(numPlayersVar, "playerCount");
+        idManager.addObject(numPlayersVar, "playerCount");
 
         Variable<List<GameObject>> available = new Variable<>(new ArrayList<>());
         available.setOwner(gameWorld);
-        ownableIdManager.addObject(available, "available");
+        idManager.addObject(available, "available");
+
+        Variable<List<Object>> log = new Variable<>(new ArrayList<>());
+        log.setOwner(gameWorld);
+        idManager.addObject(log, "log");
+    }
+
+    private List<Object> getLog(){
+        Variable<List<Object>> v = (Variable<List<Object>>) idManager.getObject("log");
+        return v.get();
+    }
+
+    private void sendClickable(){
+        if (onlinePlayerNum > -1 && onlinePlayerNum != turn.get().intValue()) return;
+
+        Variable<List<GameObject>> v = (Variable<List<GameObject>>) idManager.getObject("available");
+
+        List<String> ids = new ArrayList<>();
+        for (GameObject o : v.get()){
+            ids.add(idManager.getId(o));
+        }
+
+        controller.setClickable(ids);
     }
     
     /**
      * reacts to clicking a piece
      */
     public void clickPiece(String selectedObject) {
-        fsm.setStateInnerValue(selectedObject);
-        fsm.transition();
+        clickPiece(selectedObject, true);
+    }
+
+    private boolean isPieceAvailable(String id){
+        Variable<List<GameObject>> v = (Variable<List<GameObject>>) idManager.getObject("available");
+        for (GameObject o : v.get()){
+            if (idManager.getId(o).equals(id)) return true;
+        }
+        return false;
+    }
+
+    /**
+     * reacts to clicking a piece
+     */
+    public void clickPiece(String selectedObject, boolean send) {
+        if (send) onlineRunner.send(selectedObject);
+
+        if (!isPieceAvailable(selectedObject)) return;
+        
+        interpreter.interpret("make :game_available [ ]");
+
+        try {
+            fsm.setStateInnerValue(selectedObject);
+            fsm.transition();
+        } catch (Exception e) {
+//            System.out.println(getLog());
+            throw e;
+        }
+
+        sendClickable();
+
+        System.out.println(getLog());
 
         if (fsm.getCurrentState().equals("DONE")){
-            fsm.setState("INIT");
+            int playerWin = checkGoals();
+
             // check goals
-            if (checkGoals() != -1){
+            if (playerWin != -1){
                 // TODO end game
+                System.out.println("Player " + playerWin + " wins!");
             }
+
+            fsm.transition();
+            setTurn(turn.get());
         }
     }
 
-    public void keyDown(String key) {
-
+    /**
+     * Goes to the previous state. Will break the game if going to the previous state would change turns or modify the board.
+     */
+    public void undoClickPiece(){
+        undoClickPiece(true);
     }
-
-    public void keyUp(String key) {
-
+    public void undoClickPiece(boolean send){
+        interpreter.interpret("make :game_available [ ]");
+        fsm.undo();
+        if (send) onlineRunner.send("^undo");
+        sendClickable();
     }
 
     private int checkGoals() {
         for (Goal g : goals){
-            int player = g.test(interpreter, ownableIdManager);
-            if (player != -1){
-                return player;
+            Player player = g.test(interpreter, idManager);
+            if (player != null){
+                return players.indexOf(player);
             }
         }
         return -1;
@@ -151,13 +299,13 @@ public class Game implements GameToInterpreterAPI{
      * Loads a Game from a file.
      * @param directory the name of the file to load from
      */
-    public void loadGame(String directory) throws FileNotFoundException {
+    public void loadGame(String directory) throws FileNotFoundException, ClassNotFoundException {
         pieceLocations.clear();
 
         loadFSM(directory + "/fsm.json");
         loadDropZones(directory + "/layout.json");
-        loadGameObjects(directory + "/objects.json");
-        loadVariables(directory + "/variables.json");
+        loadObjectsAndVariables(directory);
+        loadRules(directory + "/rules.json");
     }
 
     private void loadFSM(String file) throws FileNotFoundException {
@@ -194,7 +342,7 @@ public class Game implements GameToInterpreterAPI{
     private void loadDropZones(String file) throws FileNotFoundException {
         FileManager fm = new FileManager(file);
 
-        Map<DropZone, String[]> edgeMap = new HashMap<>();
+        Map<DropZone, List<String[]>> edgeMap = new HashMap<>();
 
         for (String id : fm.getTagsAtLevel()){
 
@@ -208,25 +356,41 @@ public class Game implements GameToInterpreterAPI{
                 dz.addClass(cls);
             }
 
+            List<String[]> edges = new ArrayList<>();
             for (String edgeName : fm.getTagsAtLevel(id, "connections")){
                 String edge = fm.getString(id, "connections", edgeName);
-                edgeMap.put(dz, new String[]{edgeName, edge});
+                edges.add(new String[]{edgeName, edge});
             }
+            edgeMap.put(dz, edges);
 
-            ownableIdManager.addObject(dz, id);
+            idManager.addObject(dz, id);
 
-            controller.initializeDropZone(new GameRunnerController.DropZoneParameters(id, x, y, height, width));
+            controller.addDropZone(new GameController.DropZoneParameters(id, null,null,x, y, height, width));
         }
 
         for (DropZone dz : edgeMap.keySet()){
-            // [ edgeName, edge ]
-            String[] edge = edgeMap.get(dz);
-            DropZone other = (DropZone) ownableIdManager.getObject(edge[1]);
-            dz.addOutgoingConnection(other, edge[0]);
+            // [ [ edgeName, edge ] ]
+            for (String[] edge : edgeMap.get(dz)){
+                DropZone other = (DropZone) idManager.getObject(edge[1]);
+                dz.addOutgoingConnection(other, edge[0]);
+            }
         }
     }
 
-    private void loadGameObjects(String file) throws FileNotFoundException {
+    private void loadObjectsAndVariables(String directory) throws FileNotFoundException, ClassNotFoundException {
+        Map<String, List<String>> ownMap = loadGameObjects(directory + "/objects.json");
+        loadVariables(directory + "/variables.json");
+
+        for (String s : ownMap.keySet()) {
+            GameObject mainObj = (GameObject) idManager.getObject(s);
+            for (String o : ownMap.get(s)) {
+                Ownable obj = idManager.getObject(o);
+                idManager.setObjectOwner(obj, mainObj);
+            }
+        }
+    }
+
+    private Map<String, List<String>> loadGameObjects(String file) throws FileNotFoundException {
 
         FileManager fm = new FileManager(file);
 
@@ -239,6 +403,8 @@ public class Game implements GameToInterpreterAPI{
             String location = fm.getString(id, "location");
             List<String> owns = StreamSupport.stream(fm.getArray(id, "owns").spliterator(), false).toList();
 
+            image = System.getProperty("user.dir") + "/" + file.substring(0, file.lastIndexOf("/")) + "/assets/" + image;
+
             Owner own = null;
             if (!owner.isEmpty()){
                 own = players.get(Integer.parseInt(owner));
@@ -250,40 +416,63 @@ public class Game implements GameToInterpreterAPI{
                 obj.addClass(cls);
             }
 
-            ownableIdManager.addObject(obj, id);
+            idManager.addObject(obj, id);
+            //controller.addPiece(id, image, location, null, null, 0, size);
 
-            ((DropZone) ownableIdManager.getObject(location)).putObject(id, obj);
+            DropZone dz = (DropZone) idManager.getObject(location);
 
-            // TODO: communicate to controller
+            putInDropZone(obj, dz);
 
             ownMap.put(id, owns);
         }
 
-        for (String s : ownMap.keySet()){
-            GameObject mainObj = (GameObject) ownableIdManager.getObject(s);
-            for (String o : ownMap.get(s)){
-                GameObject obj = (GameObject) ownableIdManager.getObject(o);
-                ownableIdManager.setOwner(obj, mainObj);
+        return ownMap;
+    }
+
+    private void loadVariables(String file) throws FileNotFoundException, ClassNotFoundException {
+        FileManager fm = new FileManager(file);
+        for (String id : fm.getTagsAtLevel()){
+            String ownerName = fm.getString(id, "owner");
+
+            String type = fm.getString(id, "type");
+            Class<?> clazz = Class.forName(type);
+            Object obj = fm.getObject(clazz, id, "value");
+
+            Variable<Object> var;
+
+            try {
+                int ownerIndex = Integer.parseInt(ownerName);
+                Owner owner = gameWorld;
+                if (ownerIndex != -1){
+                    owner = players.get(ownerIndex);
+                }
+                var = new Variable<>(obj, owner);
+
+            } catch (Exception e){
+                var = new Variable<>(obj);
+                Ownable owner = idManager.getObject(ownerName);
+                idManager.setObjectOwner(var, owner);
+            }
+
+            for (String cls : fm.getArray(id, "classes")){
+                var.addClass(cls);
+            }
+
+            idManager.addObject(var, id);
+        }
+    }
+
+    private void loadRules(String file) throws FileNotFoundException{
+        FileManager fm = new FileManager(file);
+        for (String id : fm.getTagsAtLevel()){
+            for (String ruleName : fm.getTagsAtLevel(id)){
+                String rule = fm.getString(id, ruleName);
+                rules.addRule(id, ruleName, rule);
             }
         }
     }
 
-    private void loadVariables(String file) throws FileNotFoundException {
-        FileManager fm = new FileManager(file);
-        for (String id : fm.getTagsAtLevel()){
-            String owner = fm.getString(id, "owner");
-            String value = fm.getString(id, "value");
-            String type = fm.getString(id, "type");
-            // TODO: replace with GSON thing
-        }
-    }
-
-    private void loadRules(){
-
-    }
-
     //endregion
-
     // region PLAYERS
 
     /**
@@ -292,6 +481,7 @@ public class Game implements GameToInterpreterAPI{
      */
     public void addPlayer(Player player) {
         players.add(player);
+        ((Variable) idManager.getObject("numPlayers")).set((double) players.size());
     }
 
     /**
@@ -308,7 +498,7 @@ public class Game implements GameToInterpreterAPI{
      */
     public void removeAllPlayers() {
         players.clear();
-        ownableIdManager.clear();
+        idManager.clear();
         // TODO reconsider
     }
 
@@ -320,8 +510,22 @@ public class Game implements GameToInterpreterAPI{
         return Collections.unmodifiableList(players);
     }
 
+    //endregion
+
+    public Ownable getVariable(String name){
+        if (idManager.isIdInUse(name)){
+            return idManager.getObject(name);
+        }
+        return null;
+    }
+    public Owner getOwner(int num){
+        if (num == -1) return gameWorld;
+        return players.get(num);
+    }
+
     @Override
-    public Player getPlayer(int playerNum) {
+    public Owner getPlayer(int playerNum) {
+        if (playerNum == -1) return gameWorld;
         return players.get(playerNum);
     }
 
@@ -334,12 +538,14 @@ public class Game implements GameToInterpreterAPI{
     }
 
     @Override
-    public void movePiece(GameObject piece, DropZone dz, String name) {
+    public void movePiece(GameObject piece, DropZone dz) {
         DropZone oldDz = pieceLocations.get(piece);
         if (oldDz != null){
             oldDz.removeObject(oldDz.getKey(piece));
         }
-        dz.putObject(name, piece);
+        dz.putObject(idManager.getId(piece), piece);
+        pieceLocations.put(piece, dz);
+        controller.movePiece(idManager.getId(piece), idManager.getId(dz));
     }
 
     @Override
@@ -349,13 +555,18 @@ public class Game implements GameToInterpreterAPI{
             dz.removeObject(dz.getKey(piece));
             pieceLocations.remove(piece);
         }
-        ownableIdManager.removeObject(piece);
+        controller.removePiece(idManager.getId(piece));
+        idManager.removeObject(piece);
     }
 
     @Override
-    public void putInDropZone(Ownable element, DropZone dropZone, String name){
+    public void putInDropZone(Ownable element, DropZone dropZone){
+        if (pieceLocations.containsKey(element)){
+            DropZone dz = pieceLocations.get(element);
+            dz.removeObject(dz.getKey(element));
+        }
         pieceLocations.put(element, dropZone);
-        dropZone.putObject(name, element);
+        dropZone.putObject(idManager.getId(element), element);
     }
 
     @Override
@@ -363,84 +574,40 @@ public class Game implements GameToInterpreterAPI{
         turn.set((turn.get() + 1) % players.size());
     }
 
-    //endregion
+    @Override
+    public void setTurn(double turn) {
+        this.turn.set(turn);
+        startTurn();
+    }
 
-    // region RULES AND GOALS
+    @Override
+    public void setObjectImage(Ownable obj, String image) {
+        String id = idManager.getId(obj);
+        String imagePath = this.directory + "/assets/" + image;
+        controller.setObjectImage(id, imagePath);
+    }
+
+    @Override
+    public void addObject(Ownable obj, DropZone dz, String image, double size) {
+        idManager.addObject(obj);
+        putInDropZone(obj, dz);
+        String id = idManager.getId(obj);
+        String imagePath = this.directory + "/assets/" + image;
+        //controller.addPiece(id, imagePath, idManager.getId(dz),false,null, size,size);
+    }
+
+    @Override
+    public void addDropZone(DropZone dz, DropZone location, String image, String highlight, double width, double height) {
+
+    }
 
     /**
      * Gets the Rules of the game.
      * @return unmodifiable List of Rules
      */
-    public List<Rule> getRules() {
-        ArrayList<Rule> listRules= new ArrayList<>();
-        for(Map.Entry<String, Rule> entry : rules) {
-            listRules.add(entry.getValue());
-        }
-        return Collections.unmodifiableList(listRules);
+    @Override
+    public RuleManager getRules() {
+        return rules;
     }
-
-    /**
-     * Adds a Goal to the game.
-     * @param goal the Goal to add
-     */
-    public void addGoal(Goal goal) {
-        goals.add(goal);
-    }
-
-    /**
-     * Removes a Goal from the game, if it exists there.
-     * @param goal the Goal to remove
-     */
-    public void removeGoal(Goal goal) {
-        goals.remove(goal);
-    }
-
-    /**
-     * Gets the GameWorld of the game.
-     * @return the GameWorld
-     */
-    public GameWorld getGameWorld() {
-        return gameWorld;
-    }
-
-    // endregion
-
-    // region OWNABLES
-
-    /**
-     * Adds an Ownable to the IdManager and Owner.
-     * @param owner the Owner of the Ownable
-     * @param ownable the Ownable being added to owner
-     */
-    public void changeOwner(Owner owner, Ownable ownable) {
-        ownable.setOwner(owner);
-    }
-
-    /**
-     * Gets the Owner of an Ownable with id.
-     * @param id the id of the Ownable
-     * @return the Owner of the Ownable, null if the id is not in use
-     */
-    public Owner getOwner(String id) {
-        if (!ownableIdManager.isIdInUse(id)) {
-            return null;
-        }
-        return ownableIdManager.getObject(id).getOwner();
-    }
-
-    /**
-     * Sets the Owner of an Ownable with id.
-     * @param id the id of the Ownable
-     * @param owner the new owner of the Ownable
-     * @throws IllegalArgumentException if owner is null, the Ownable is owned by the GameWorld
-     */
-    public void setOwner(String id, Owner owner) throws IllegalArgumentException{
-        ownableIdManager.getObject(id).setOwner(owner);
-    }
-
-    public void init(int i) {
-    }
-
-    // endregion
 
 }

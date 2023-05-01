@@ -1,9 +1,9 @@
 package oogasalad.frontend.windows;
 
-import ch.qos.logback.classic.Level;
-import oogasalad.Main;
+
 import oogasalad.frontend.windows.WindowTypes.WindowType;
 import oogasalad.logging.MainLogger;
+import ch.qos.logback.classic.Level;
 
 /**
  * @author Connor Wells
@@ -25,12 +25,15 @@ public class WindowFactory {
       case EDIT_WINDOW:
         logger.debug(String.format("Created a window: ID - %s", windowID));
         return new GameEditorWindow(windowID, mediator);
-      case GAME_WINDOW:
-        logger.debug(String.format("Created a window: ID - %s", windowID));
-        return new GamePlayerWindow(windowID, mediator);
+      case LIBRARY_WINDOW:
+        logger.debug(String.format("Created a window ID - %s", windowID));
+        return new LibraryWindow(windowID, mediator);
       case MODAL_WINDOW:
         logger.debug(String.format("Created a window ID - %s", windowID));
         return new ModalWindow(windowID, mediator);
+      case GAME_WINDOW:
+        logger.debug(String.format("Created a window: ID - %s", windowID));
+        return new GameWindow(windowID, mediator);
       default:
         logger.error(String.format("Failed to create a new window because of the wrong windowType - %s",  windowType));
         throw new IllegalArgumentException("Invalid window type: " + windowType);

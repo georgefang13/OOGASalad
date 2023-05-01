@@ -7,8 +7,8 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.*;
 
-import oogasalad.gameeditor.backend.id.IdManageable;
-import oogasalad.gameeditor.backend.id.IdManager;
+import oogasalad.sharedDependencies.backend.id.IdManageable;
+import oogasalad.sharedDependencies.backend.id.IdManager;
 import oogasalad.gameeditor.backend.ownables.gameobjects.BoardCreator;
 import oogasalad.gamerunner.backend.interpreter.commands.math.Sum;
 import oogasalad.gamerunner.backend.interpreter.tokens.ExpressionToken;
@@ -16,11 +16,14 @@ import oogasalad.gamerunner.backend.interpreter.tokens.OperatorToken;
 import oogasalad.gamerunner.backend.interpreter.tokens.Token;
 import oogasalad.gamerunner.backend.interpreter.tokens.ValueToken;
 import oogasalad.gamerunner.backend.interpreter.tokens.VariableToken;
+import oogasalad.sharedDependencies.backend.id.OwnableSearchStream;
 import oogasalad.sharedDependencies.backend.ownables.Ownable;
 import oogasalad.sharedDependencies.backend.ownables.gameobjects.DropZone;
 import oogasalad.sharedDependencies.backend.ownables.gameobjects.GameObject;
 import oogasalad.sharedDependencies.backend.ownables.variables.Variable;
+import oogasalad.sharedDependencies.backend.owners.Owner;
 import oogasalad.sharedDependencies.backend.owners.Player;
+import oogasalad.sharedDependencies.backend.rules.RuleManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -77,7 +80,7 @@ public class CommandsTest {
 
   private void useGameVars(){
     interpreter = game.getInterpreter();
-    idManager = game.getOwnableIdManager();
+    idManager = game.getIdManager();
   }
 
   @Test
@@ -90,26 +93,53 @@ public class CommandsTest {
   }
 
   @Test
+  public void testAddDropZone(){
+    game.noFSMInit(2);
+    useGameVars();
+    DropZone dz = new DropZone();
+    game.addElement(dz, "dz");
+    String input = "adddz [ \"board \"thing ] :game_dz \"block.png \"blockHighlight.png 50 50";
+    interpreter.interpret(input);
+    DropZone dz2 = getVar("DropZone");
+    assertTrue(dz2.usesClass("board"));
+    assertTrue(dz2.usesClass("thing"));
+    assertTrue(dz.hasObject(idManager.getId(dz2)));
+
+    // test with non-string
+    input = "adddz [ 1 ] :game_dz \"block.png \"blockHighlight.png 50 50";
+    try {
+      interpreter.interpret(input);
+      fail();
+    } catch (Exception e) {
+      Token t = new ValueToken<>(1.);
+      assertEquals(checkSubtypeErrorMsg(t, "AddDropZone", ValueToken.class, String.class), e.getMessage());
+    }
+  }
+
+  @Test
   public void testAddDropZoneItem() {
+    game.noFSMInit(2);
+    useGameVars();
+
     DropZone dz = new DropZone();
     idManager.addObject(dz, "dz");
     GameObject obj = new GameObject(null);
     idManager.addObject(obj, "obj");
 
     // add item to dropzone
-    String input = "putdzitem \"obj :game_obj :game_dz";
+    String input = "putdzitem :game_obj :game_dz";
     interpreter.interpret(input);
     List<GameObject> expected = List.of(obj);
     assertEquals(expected, dz.getAllObjects());
 
     // add item to dropzone with non-string
-    input = "putdzitem 1 1 :game_dz";
+    input = "putdzitem 1 :game_dz";
     try {
       interpreter.interpret(input);
       fail();
     } catch (Exception e) {
       Token t = new ValueToken<>(1.);
-      assertEquals(checkSubtypeErrorMsg(t, "PutDropZoneItem", ValueToken.class, String.class),
+      assertEquals(checkSubtypeErrorMsg(t, "PutDropZoneItem", ValueToken.class, Ownable.class),
           e.getMessage());
     }
   }
@@ -145,6 +175,35 @@ public class CommandsTest {
     interpreter.interpret(input);
     a = getVar("interpreter-:x");
     assertEquals(expected, a.get());
+  }
+
+  @Test
+  public void testAddPiece(){
+    game.noFSMInit(2);
+    useGameVars();
+
+    DropZone dz = new DropZone();
+    game.addElement(dz, "dz");
+
+    // add piece to game
+    String input = "addpiece curplayer [ \"test \"yes ] :game_dz \"img1 50";
+    interpreter.interpret(input);
+    GameObject go = getVar("GameObject");
+    assertTrue(go.usesClass("test"));
+    assertTrue(go.usesClass("yes"));
+    assertEquals(dz, game.getPieceLocation(go));
+    assertEquals("assets/img1", game.getObjImage(go));
+
+    // add piece to game with non-string
+    input = "addpiece 1 1 1 1 1";
+    try {
+      interpreter.interpret(input);
+      fail();
+    } catch (Exception e) {
+      Token t = new ValueToken<>(1.);
+      assertEquals(checkSubtypeErrorMsg(t, "AddPiece", ValueToken.class, Owner.class),
+          e.getMessage());
+    }
   }
 
   @Test
@@ -190,6 +249,15 @@ public class CommandsTest {
       assertEquals(checkSubtypeErrorMsg(t, "ArcTangent", ValueToken.class, Double.class),
           e.getMessage());
     }
+  }
+
+  @Test
+  public void testAsList(){
+    String input = "make :x 1 make :y 2 make :z aslist [ :x :y ]";
+    interpreter.interpret(input);
+    Variable<List> z = getVar("interpreter-:z");
+    List<Double> expected = new ArrayList<>(List.of(1., 2.));
+    assertEquals(expected, z.get());
   }
 
   @Test
@@ -640,11 +708,15 @@ public class CommandsTest {
 
   @Test
   public void testGetDropZoneItem() {
+    game.noFSMInit(2);
+    useGameVars();
+
     DropZone dropZone = new DropZone();
     GameObject obj = new GameObject(null);
     idManager.addObject(dropZone, "dz");
     idManager.addObject(obj, "obj");
-    String input = "putdzitem \"obj :game_obj :game_dz make :x dzitem \"obj :game_dz";
+    String input = "putdzitem :game_obj :game_dz make :x item 0 dzitems :game_dz";
+    System.out.println(obj.getDefaultId());
     interpreter.interpret(input);
     Variable<Ownable> x = getVar("interpreter-:x");
     assertEquals(obj, x.get());
@@ -652,7 +724,7 @@ public class CommandsTest {
     GameObject obj2 = new GameObject(null);
     idManager.addObject(obj2, "obj2");
 
-    input = "putdzitem \"obj :game_obj2 :game_dz make :x dzitem \"obj :game_dz";
+    input = "putdzitem :game_obj2 :game_dz make :x item 1 dzitems :game_dz";
     interpreter.interpret(input);
     x = getVar("interpreter-:x");
     assertEquals(obj2, x.get());
@@ -672,13 +744,16 @@ public class CommandsTest {
 
   @Test
   public void testGetDropZoneItems() {
+    game.noFSMInit(2);
+    useGameVars();
+
     DropZone dropZone = new DropZone();
     idManager.addObject(dropZone, "dz");
     GameObject obj = new GameObject(null);
     idManager.addObject(obj, "obj");
     GameObject obj2 = new GameObject(null);
     idManager.addObject(obj2, "obj2");
-    String input = "putdzitem \"obj1 :game_obj :game_dz putdzitem \"obj2 :game_obj2 :game_dz make :x dzitems :game_dz";
+    String input = "putdzitem :game_obj :game_dz putdzitem :game_obj2 :game_dz make :x dzitems :game_dz";
     interpreter.interpret(input);
     Variable<List<Object>> x = getVar("interpreter-:x");
     assertEquals(2, x.get().size());
@@ -699,6 +774,19 @@ public class CommandsTest {
   }
 
   @Test
+  public void testGetId() {
+    game.noFSMInit(2);
+    useGameVars();
+
+    GameObject obj = new GameObject(null);
+    idManager.addObject(obj, "obj");
+    String input = "make :x getid :game_obj \"available [ ]";
+    interpreter.interpret(input);
+    Variable<String> x = getVar("interpreter-:x");
+    assertEquals("obj", x.get());;
+  }
+
+  @Test
   public void testGetObjDz(){
     game.noFSMInit(2);
     useGameVars();
@@ -712,13 +800,13 @@ public class CommandsTest {
     GameObject p3 = new GameObject(game.getPlayer(1));
     GameObject p4 = new GameObject(game.getPlayer(1));
     game.addElement(p1, "p1");
-    game.putInDropZone(p1, board.get(0), "piece");
+    game.putInDropZone(p1, board.get(0));
     game.addElement(p2, "p2");
-    game.putInDropZone(p2, board.get(1), "piece");
+    game.putInDropZone(p2, board.get(1));
     game.addElement(p3, "p3");
-    game.putInDropZone(p3, board.get(2), "piece");
+    game.putInDropZone(p3, board.get(2));
     game.addElement(p4, "p4");
-    game.putInDropZone(p4, board.get(3), "piece");
+    game.putInDropZone(p4, board.get(3));
 
     String input = "make :x objdz :game_p1";
     interpreter.interpret(input);
@@ -839,6 +927,88 @@ public class CommandsTest {
       assertEquals("Invalid syntax: Not enough arguments for operator FromGame", e.getMessage());
     }
 
+  }
+
+  @Test
+  public void testGetObjectChildren(){
+    game.noFSMInit(2);
+    useGameVars();
+
+    GameObject obj1 = new GameObject(null);
+    Variable<String> var = new Variable<>("test", null);
+    idManager.addObject(obj1, "obj1");
+    idManager.addObject(var, "obj2", "obj1");
+    String input = "make :x objchildren :game_obj1";
+    interpreter.interpret(input);
+    Variable<List<Object>> x = getVar("interpreter-:x");
+    assertEquals(1, x.get().size());
+    assertTrue(x.get().contains(var.get()));
+
+
+    // with wrong number of parameters
+    input = "make :x objchildren";
+    try {
+      interpreter.interpret(input);
+      fail();
+    } catch (Exception e) {
+      assertEquals("Invalid syntax: Not enough arguments for operator GetObjChildren", e.getMessage());
+    }
+
+    // with incorrect types
+    input = "make :x objchildren 1";
+    try{
+      interpreter.interpret(input);
+      fail();
+    } catch (Exception e) {
+      assertEquals(checkSubtypeErrorMsg(new ValueToken<>(1.), "GetObjChildren", ValueToken.class, Ownable.class),
+              e.getMessage());
+    }
+  }
+
+
+  @Test
+  public void testGetObjectChildrenByClass(){
+    game.noFSMInit(2);
+    useGameVars();
+
+    GameObject obj1 = new GameObject(null);
+    Variable<String> var1 = new Variable<>("test1", null);
+    Variable<String> var2 = new Variable<>("test2", null);
+    var1.addClass("class1");
+    var2.addClass("class2");
+    idManager.addObject(obj1, "obj1");
+    idManager.addObject(var1, "var1", "obj1");
+    idManager.addObject(var2, "var2", "obj1");
+    String input = "make :x objchildrenofclass :game_obj1 \"class1";
+    interpreter.interpret(input);
+    Variable<List<Object>> x = getVar("interpreter-:x");
+    assertEquals(1, x.get().size());
+    assertTrue(x.get().contains(var1.get()));
+
+    input = "make :x objchildrenofclass :game_obj1 \"class2";
+    interpreter.interpret(input);
+    x = getVar("interpreter-:x");
+    assertEquals(1, x.get().size());
+    assertTrue(x.get().contains(var2.get()));
+
+    // with wrong number of parameters
+    input = "make :x objchildrenofclass :game_obj1";
+    try {
+      interpreter.interpret(input);
+      fail();
+    } catch (Exception e) {
+      assertEquals("Invalid syntax: Not enough arguments for operator GetObjChildrenByClass", e.getMessage());
+    }
+
+    // with incorrect types
+    input = "make :x objchildrenofclass 1 \"class1";
+    try{
+      interpreter.interpret(input);
+      fail();
+    } catch (Exception e) {
+      assertEquals(checkSubtypeErrorMsg(new ValueToken<>(1.), "GetObjChildrenByClass", ValueToken.class, Ownable.class),
+          e.getMessage());
+    }
 
   }
 
@@ -910,6 +1080,26 @@ public class CommandsTest {
       assertEquals("Invalid syntax: Not enough arguments for operator GetObjectsFromPlayer", e.getMessage());
     }
 
+  }
+
+  @Test
+  public void testGetRule(){
+    game.noFSMInit(2);
+    useGameVars();
+    RuleManager rm = game.getRules();
+    String func = """
+            to available [ ] [
+              return 1
+            ]
+            """;
+    rm.addRule("piece", "available", func);
+    GameObject obj1 = new GameObject(game.getPlayer(0));
+    obj1.addClass("piece");
+    game.addElement(obj1, "obj");
+    String input = "make :x getrule :game_obj \"available [ ]";
+    interpreter.interpret(input);
+    Variable<Double> x = getVar("interpreter-:x");
+    assertEquals(1., x.get());
   }
 
   @Test
@@ -1482,44 +1672,23 @@ public class CommandsTest {
   public void testMovePiece(){
     game.noFSMInit(2);
     useGameVars();
+
     List<DropZone> dropZones = BoardCreator.createGrid(2, 2);
     for (DropZone dz : dropZones) {
       game.addElement(dz);
     }
     GameObject p1 = new GameObject(game.getPlayer(0));
     game.addElement(p1, "p1");
-    game.putInDropZone(p1, dropZones.get(0), "piece");
+    game.putInDropZone(p1, dropZones.get(0));
 
-    assertTrue(dropZones.get(0).hasObject("piece"));
+    assertTrue(dropZones.get(0).hasObject("p1"));
 
     String input = "make :x :game_p1 make :next_dz fromgame \"DropZone2 movepiece :x :next_dz";
     interpreter.interpret(input);
     assertTrue(dropZones.get(1).getAllObjects().contains(p1));
-    assertTrue(dropZones.get(1).hasObject("piece"));
+    assertTrue(dropZones.get(1).hasObject("p1"));
     assertFalse(dropZones.get(0).getAllObjects().contains(p1));
-    assertFalse(dropZones.get(0).hasObject("piece"));
-  }
-
-  @Test
-  public void testMovePieceAs(){
-    game.noFSMInit(2);
-    useGameVars();
-    List<DropZone> dropZones = BoardCreator.createGrid(2, 2);
-    for (DropZone dz : dropZones) {
-      game.addElement(dz);
-    }
-    GameObject p1 = new GameObject(game.getPlayer(0));
-    game.addElement(p1, "p1");
-    game.putInDropZone(p1, dropZones.get(0), "piece");
-
-    assertTrue(dropZones.get(0).hasObject("piece"));
-
-    String input = "make :x :game_p1 make :next_dz fromgame \"DropZone2 movepieceas :x :next_dz \"thing";
-    interpreter.interpret(input);
-    assertTrue(dropZones.get(1).hasObject("thing"));
-    assertFalse(dropZones.get(1).hasObject("piece"));
-    assertFalse(dropZones.get(0).hasObject("thing"));
-    assertFalse(dropZones.get(0).hasObject("piece"));
+    assertFalse(dropZones.get(0).hasObject("p1"));
   }
 
   @Test
@@ -1756,6 +1925,33 @@ public class CommandsTest {
   }
 
   @Test
+  public void testPutClass(){
+    game.noFSMInit(2);
+    useGameVars();
+
+    GameObject obj = new GameObject(null);
+    idManager.addObject(obj, "obj");
+    String input = "putclass \"test :game_obj";
+    interpreter.interpret(input);
+    assertTrue(obj.usesClass("test"));
+
+    input = "putclass \"test2 :game_obj";
+    interpreter.interpret(input);
+    assertTrue(obj.usesClass("test2"));
+
+    // test with non-string
+    input = "putclass 1 :game_obj";
+    try {
+      interpreter.interpret(input);
+      fail();
+    } catch (Exception e) {
+      ValueToken<?> t = new ValueToken<>(1.0);
+      assertEquals(checkSubtypeErrorMsg(t, "PutClass", ValueToken.class, String.class),
+          e.getMessage());
+    }
+  }
+
+  @Test
   public void testQuotient() {
     // quotient
     String input = "make :x 2 make :y 3 make :z / :x :y";
@@ -1895,6 +2091,32 @@ public class CommandsTest {
   }
 
   @Test
+  public void testRemoveClass(){
+    game.noFSMInit(2);
+    useGameVars();
+
+    GameObject obj = new GameObject(null);
+    obj.addClass("test");
+    idManager.addObject(obj, "obj");
+    assertTrue(obj.usesClass("test"));
+
+    String input = "removeclass \"test :game_obj";
+    interpreter.interpret(input);
+    assertFalse(obj.usesClass("test"));
+
+    // test with non-string
+    input = "removeclass 1 :game_obj";
+    try {
+      interpreter.interpret(input);
+      fail();
+    } catch (Exception e) {
+      ValueToken<?> t = new ValueToken<>(1.0);
+      assertEquals(checkSubtypeErrorMsg(t, "RemoveClass", ValueToken.class, String.class),
+              e.getMessage());
+    }
+  }
+
+  @Test
   public void testRemoveItem() {
     // remove item
     String input = "make :x [ 1 2 3 ] delitem 1 :x";
@@ -1939,7 +2161,7 @@ public class CommandsTest {
     for (DropZone dz : board) {
       game.addElement(dz);
     }
-    game.putInDropZone(obj1, board.get(0), "obj");
+    game.putInDropZone(obj1, board.get(0));
 
     // remove piece
     String input = "removepiece :game_obj1";
@@ -2062,6 +2284,72 @@ public class CommandsTest {
   }
 
   @Test
+  public void setObjectImage(){
+    game.noFSMInit(2);
+    useGameVars();
+
+    GameObject obj = new GameObject(game.getPlayer(0));
+    game.addElement(obj, "obj");
+    String input = "setobjimg :game_obj \"test_image.png";
+    interpreter.interpret(input);
+    assertEquals("assets/test_image.png", game.getObjImage(obj));
+  }
+
+  @Test
+  public void testSetPlayerOwner(){
+    game.noFSMInit(2);
+    useGameVars();
+
+    GameObject obj = new GameObject(game.getPlayer(0));
+    game.addElement(obj, "obj");
+
+    String input = "setplayerowner :game_obj getplayer 1";
+    interpreter.interpret(input);
+    System.out.println("Player 0: " + game.getPlayer(0) + ", Player 1: " + game.getPlayer(1));
+    assertEquals(game.getPlayer(1), obj.getOwner());
+
+    // test with non-player
+    input = "setplayerowner :game_obj 1";
+    try {
+        interpreter.interpret(input);
+        fail();
+    } catch (Exception e) {
+        ValueToken<?> t = new ValueToken<>(1.);
+        assertEquals(checkSubtypeErrorMsg(t, "SetPlayerOwner", ValueToken.class, Owner.class), e.getMessage());
+    }
+
+  }
+
+  @Test
+  public void setObjectOwner(){
+    game.noFSMInit(2);
+    useGameVars();
+
+    GameObject obj = new GameObject(game.getPlayer(0));
+    game.addElement(obj, "obj");
+    GameObject obj2 = new GameObject(game.getPlayer(0));
+    game.addElement(obj2, "obj2");
+
+    String input = "setobjowner :game_obj :game_obj2";
+    interpreter.interpret(input);
+    OwnableSearchStream sstream = new OwnableSearchStream(idManager);
+    List<Ownable> owned = idManager.objectStream().filter(sstream.isOwnedByOwnable(obj2)).toList();
+    assertEquals(1, owned.size());
+    assertEquals(obj, owned.get(0));
+
+    // test with non-player
+    input = "setobjowner :game_obj 1";
+    try {
+      interpreter.interpret(input);
+      fail();
+    } catch (Exception e) {
+      ValueToken<?> t = new ValueToken<>(1.);
+      assertEquals(checkSubtypeErrorMsg(t, "SetObjOwner", ValueToken.class, Ownable.class), e.getMessage());
+    }
+
+  }
+
+  @Test
   public void testSine() {
     // sine
     String input = "make :x 0 make :y sin :x";
@@ -2122,7 +2410,7 @@ public class CommandsTest {
       fail();
     } catch (Exception e) {
       assertEquals(
-          "Invalid syntax: Set called with operator <Operator SquareRoot[1]> that takes less than 2 arguments",
+          "Invalid syntax: Set called with operator <Operator SquareRoot SquareRoot[1]> that takes less than 2 arguments",
           e.getMessage());
     }
 

@@ -2,6 +2,7 @@ package oogasalad.frontend.windows;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Stack;
 import oogasalad.frontend.windows.WindowTypes.WindowType;
 
 import oogasalad.logging.MainLogger;
@@ -16,6 +17,7 @@ public class WindowController implements WindowMediator {
 
   private Map<String, AbstractWindow> windowMap;
   private int windowIDCounter;
+  private Stack<Object> windowData = new Stack<>();
 
   private static final MainLogger logger = MainLogger.getInstance(WindowController.class);
 
@@ -57,6 +59,16 @@ public class WindowController implements WindowMediator {
   @Override
   public AbstractWindow getWindow(String windowID) {
     return windowMap.get(windowID);
+  }
+
+  @Override
+  public void passData(Object data) {
+    windowData.push(data);
+  }
+
+  @Override
+  public Object getData() {
+    return windowData.peek();
   }
 
 }

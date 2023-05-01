@@ -6,25 +6,38 @@ import javafx.scene.text.Text;
 import oogasalad.frontend.components.AbstractComponent;
 
 import java.util.Map;
-import java.util.ResourceBundle;
 
 
 public class TextObject extends AbstractComponent implements TextObjectComponent {
+    private String name;
     private Text text;
+    private String content;
+    private double fontSize;
+    private Color color;
+    private double rotate;
 
-    public TextObject(int id) {
+    public TextObject(String id) {
         super(id);
         instantiatePropFile("frontend.properties.Defaults.TextObject");
-        this.setDefault();
+        //this.setDefault();
         this.followMouse();
         this.getNode();
     }
 
-    public TextObject(int ID, Map<String, String> map){
+    public TextObject(String ID, Map<String, String> map){
         super(ID);
+        setDraggable(true);
         setValuesfromMap(map);
+        initialize();
+        followMouse();
     }
 
+    private void initialize() {
+        text = new Text(content);
+        text.setFill(color);
+        setTextSize(fontSize);
+        text.setRotate(rotate);
+    }
 
     @Override
     public void setText(String content) {
@@ -52,17 +65,4 @@ public class TextObject extends AbstractComponent implements TextObjectComponent
         return text;
     }
 
-    @Override
-    public void setDefault() {
-        String content = getDEFAULT_BUNDLE().getString("text.content");
-        double x = Double.parseDouble(getDEFAULT_BUNDLE().getString("text.x"));
-        double y = Double.parseDouble(getDEFAULT_BUNDLE().getString("text.y"));
-        String colorString = getDEFAULT_BUNDLE().getString("text.color");
-        double fontSize = Double.parseDouble(getDEFAULT_BUNDLE().getString("text.fontSize"));
-        Color color = Color.web(colorString);
-
-        text = new Text(x, y, content);
-        text.setFont(Font.font(fontSize));
-        text.setFill(Color.BLACK);
-    }
 }

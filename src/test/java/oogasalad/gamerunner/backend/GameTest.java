@@ -12,12 +12,11 @@
 //import oogasalad.gameeditor.backend.ObjectParameter;
 //import oogasalad.gameeditor.backend.ObjectType;
 //import oogasalad.gameeditor.backend.id.IdManager;
-//import oogasalad.gameeditor.backend.rules.EmptyRule;
-//import oogasalad.gameeditor.backend.rules.Rule;
 //import oogasalad.gamerunner.backend.interpretables.Goal;
 //import oogasalad.sharedDependencies.backend.ownables.Ownable;
 //import oogasalad.sharedDependencies.backend.owners.GameWorld;
 //import oogasalad.sharedDependencies.backend.owners.Player;
+//import oogasalad.sharedDependencies.backend.rules.RuleManager;
 //import org.junit.jupiter.api.BeforeEach;
 //import org.junit.jupiter.api.Test;
 //
@@ -25,7 +24,7 @@
 //
 //  public GameInator game;
 //  public IdManager<Ownable> ownableIdManager;
-//  public IdManager<Rule> ruleIdManager;
+//  public RuleManager ruleIdManager;
 //  public IdManager<Goal> goalIdManager;
 //  public IdManager<Player> playerIdManager;
 //  public GameWorld gameworld;
@@ -34,7 +33,7 @@
 //  public void setUp() {
 //    game = new GameInator();
 //    ownableIdManager = new IdManager<>();
-//    ruleIdManager = new IdManager<>();
+//    ruleIdManager = new RuleManager();
 //    goalIdManager = new IdManager<>();
 //    playerIdManager = new IdManager<>();
 //    gameworld = new GameWorld();
@@ -235,8 +234,5 @@
 //    assertEquals(player, game.getOwnable("test").getOwner());
 //    game.deleteObject(ObjectType.OWNABLE, params2);
 //    assertNull(game.getOwnable("test"));
-//
-////    game.addGoal();
-////    game.addRule();
 //  }
 //}

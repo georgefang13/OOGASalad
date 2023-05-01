@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
-import oogasalad.gameeditor.backend.id.IdManager;
+import oogasalad.sharedDependencies.backend.id.IdManager;
 import oogasalad.gamerunner.backend.GameToInterpreterAPI;
 import oogasalad.gamerunner.backend.interpreter.tokens.ExpressionToken;
 import oogasalad.gamerunner.backend.interpreter.tokens.Token;
@@ -131,6 +131,7 @@ public class Environment {
         }
       }
     }
+
     scope.get(scope.size() - 1).put(name, val);
   }
 

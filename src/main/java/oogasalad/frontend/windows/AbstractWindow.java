@@ -1,6 +1,5 @@
 package oogasalad.frontend.windows;
 
-import ch.qos.logback.classic.Level;
 import javafx.stage.Stage;
 import oogasalad.frontend.managers.PropertyManager;
 import oogasalad.frontend.managers.StandardPropertyManager;
@@ -39,6 +38,6 @@ public abstract class AbstractWindow extends Stage {
 
   public void showScene(AbstractScene scene) {
     logger.trace("Show a new scene ↑");
-    setScene(scene.makeScene());
+    setScene(scene.getScene());
   }
 }

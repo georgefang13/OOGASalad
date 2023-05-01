@@ -1,9 +1,7 @@
 package oogasalad.gamerunner.backend.interpreter;
 
-import com.google.gson.JsonObject;
-import oogasalad.gameeditor.backend.id.IdManageable;
-import oogasalad.gameeditor.backend.id.IdManager;
-import oogasalad.gameeditor.backend.rules.Rule;
+import oogasalad.sharedDependencies.backend.id.IdManageable;
+import oogasalad.sharedDependencies.backend.id.IdManager;
 import oogasalad.gamerunner.backend.GameToInterpreterAPI;
 import oogasalad.gamerunner.backend.fsm.FSM;
 import oogasalad.gamerunner.backend.interpretables.Goal;
@@ -12,7 +10,9 @@ import oogasalad.sharedDependencies.backend.ownables.gameobjects.DropZone;
 import oogasalad.sharedDependencies.backend.ownables.gameobjects.GameObject;
 import oogasalad.sharedDependencies.backend.ownables.variables.Variable;
 import oogasalad.sharedDependencies.backend.owners.GameWorld;
+import oogasalad.sharedDependencies.backend.owners.Owner;
 import oogasalad.sharedDependencies.backend.owners.Player;
+import oogasalad.sharedDependencies.backend.rules.RuleManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,21 +21,23 @@ import java.util.Map;
 
 public class TestGame implements GameToInterpreterAPI {
 
-    private final IdManager<Rule> rules = new IdManager<>();
-    private final IdManager<Goal> goals = new IdManager<>();
+    private final RuleManager rules = new RuleManager();
+    private final List<Goal> goals = new ArrayList<>();
     private final ArrayList<Player> players = new ArrayList<>();
 
-    private final IdManager<Ownable> ownableIdManager = new IdManager<>();
+    private final IdManager<Ownable> idManager = new IdManager<>();
 
     private final GameWorld gameWorld = new GameWorld();
 
-    private final FSM<String> fsm = new FSM<>(ownableIdManager);
+    private final FSM<String> fsm = new FSM<>(idManager);
 
     private final Interpreter interpreter = new Interpreter();
 
     private final Variable<Double> turn = new Variable<>(0.);
 
     private final Map<Ownable, DropZone> pieceLocations = new HashMap<>();
+
+    private final Map<Ownable, String> objImages = new HashMap<>();
 
 
     /////////////////// PLAY THE GAME ///////////////////
@@ -46,7 +48,7 @@ public class TestGame implements GameToInterpreterAPI {
             players.add(new Player());
         }
 
-        interpreter.linkIdManager(ownableIdManager);
+        interpreter.linkIdManager(idManager);
         interpreter.linkGame(this);
 
         initVariables();
@@ -57,17 +59,17 @@ public class TestGame implements GameToInterpreterAPI {
 
     private void initVariables(){
         turn.setOwner(gameWorld);
-        if (!ownableIdManager.isIdInUse("turn")) {
-            ownableIdManager.addObject(turn, "turn");
+        if (!idManager.isIdInUse("turn")) {
+            idManager.addObject(turn, "turn");
         }
 
         Variable<Double> numPlayersVar = new Variable<>((double) players.size());
         numPlayersVar.setOwner(gameWorld);
-        ownableIdManager.addObject(numPlayersVar, "playerCount");
+        idManager.addObject(numPlayersVar, "playerCount");
 
         Variable<List<GameObject>> available = new Variable<>(new ArrayList<>());
         available.setOwner(gameWorld);
-        ownableIdManager.addObject(available, "available");
+        idManager.addObject(available, "available");
     }
 
     /**
@@ -87,12 +89,12 @@ public class TestGame implements GameToInterpreterAPI {
     }
 
     private int checkGoals() {
-        for (Map.Entry<String, Goal> goal : goals){
-            Goal g = goal.getValue();
-            int player = g.test(interpreter, ownableIdManager);
-            if (player != -1){
-                return player;
+        for (Goal g : goals){
+            Player player = g.test(interpreter, idManager);
+            if (player != null){
+                return players.indexOf(player);
             }
+
         }
         return -1;
     }
@@ -129,12 +131,12 @@ public class TestGame implements GameToInterpreterAPI {
     }
 
     @Override
-    public void movePiece(GameObject piece, DropZone dz, String name) {
+    public void movePiece(GameObject piece, DropZone dz) {
         DropZone oldDz = pieceLocations.get(piece);
         if (oldDz != null){
             oldDz.removeObject(oldDz.getKey(piece));
         }
-        dz.putObject(name, piece);
+        dz.putObject(idManager.getId(piece), piece);
     }
 
     @Override
@@ -144,7 +146,7 @@ public class TestGame implements GameToInterpreterAPI {
             dz.removeObject(dz.getKey(piece));
             pieceLocations.remove(piece);
         }
-        ownableIdManager.removeObject(piece);
+        idManager.removeObject(piece);
     }
 
     public void noFSMInit(int numPlayers){
@@ -152,7 +154,7 @@ public class TestGame implements GameToInterpreterAPI {
             players.add(new Player());
         }
 
-        interpreter.linkIdManager(ownableIdManager);
+        interpreter.linkIdManager(idManager);
         interpreter.linkGame(this);
 
         initVariables();
@@ -162,26 +164,60 @@ public class TestGame implements GameToInterpreterAPI {
         return interpreter;
     }
 
-    public IdManager<Ownable> getOwnableIdManager(){
-        return ownableIdManager;
+    public IdManager<Ownable> getIdManager(){
+        return idManager;
     }
 
     public void addElement(Ownable element, String id){
-        ownableIdManager.addObject(element, id);
+        idManager.addObject(element, id);
     }
 
     public void addElement(Ownable element) {
-        ownableIdManager.addObject(element);
+        idManager.addObject(element);
     }
     @Override
-    public void putInDropZone(Ownable element, DropZone dropZone, String name){
+    public void putInDropZone(Ownable element, DropZone dropZone){
         pieceLocations.put(element, dropZone);
-        dropZone.putObject(name, element);
+        System.out.println(element + " " + idManager.objectStream().toList());
+        dropZone.putObject(idManager.getId(element), element);
     }
 
     @Override
     public void increaseTurn() {
         turn.set((turn.get() + 1) % players.size());
+    }
+
+    @Override
+    public void setTurn(double turn) {
+        this.turn.set(turn);
+    }
+
+    @Override
+    public void setObjectImage(Ownable obj, String image) {
+        objImages.put(obj, "assets/" + image);
+    }
+
+    @Override
+    public void addObject(Ownable obj, DropZone dz, String image, double size) {
+        idManager.addObject(obj);
+        putInDropZone(obj, dz);
+        String imagePath = "assets/" + image;
+        objImages.put(obj, imagePath);
+    }
+
+    public String getObjImage(Ownable obj) {
+        return objImages.get(obj);
+    }
+
+    @Override
+    public void addDropZone(DropZone dz, DropZone location, String image, String highlight, double width, double height) {
+        idManager.addObject(dz);
+        putInDropZone(dz, location);
+    }
+
+    @Override
+    public RuleManager getRules() {
+        return rules;
     }
 
     public void setTurn(int i){

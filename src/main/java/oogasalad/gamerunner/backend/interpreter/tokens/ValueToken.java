@@ -21,6 +21,11 @@ public class ValueToken<T> extends Token {
     return VALUE;
   }
 
+  @Override
+  public ValueToken<T> copy(){
+    return new ValueToken<>(VALUE);
+  }
+
     @Override
     public boolean equals(Token t, Environment env){
         if (t instanceof OperatorToken o) {

@@ -3,6 +3,8 @@ package oogasalad.frontend.components;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 
+import java.util.Map;
+
 /**
  * @author Han, Aryan This is the base component interface that all components inherit. A component
  * is a fundamental View building block used to populate Panels
@@ -22,14 +24,14 @@ public interface Component {
    *
    * @return the Int to represent the ID
    */
-  int getID();
+  String getID();
 
   /**
    * a method to set the ID of the Component
    *
    * @param id the Int to represent the ID
    */
-  void setID(int id);
+  void setID(String id);
 
   /**
    * This is the method that allows us to lock and unlock if the component can be dragged.
@@ -64,6 +66,7 @@ public interface Component {
 
   void followMouse();
 
-  void setDefault();
-
+  void setName(String newName);
+  String getName();
+  void setValuesfromMap(Map<String, String> map);
 }

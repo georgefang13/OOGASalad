@@ -41,7 +41,19 @@ public enum ObjectParameter {
   BOARD_COLS,
   BOARD_LENGTH,
   BOARD_FORWARD,
-  BOARD_BACKWARD
+  BOARD_BACKWARD,
+
+  /**
+   * Rules
+   */
+  RULE_STR,
+  RULE_CLS,
+  RULE_NAME,
+
+  /**
+   * Destination DropZone ID for a new GameObject
+   */
+  DROPZONE_ID,
 
   //endregion FOR CONSTRUCTOR_ARGS
 
