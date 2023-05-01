@@ -73,10 +73,6 @@ public class HeaderMenuPanel extends HBox implements Panel, ModalPanel {
 //      panelController.newSceneFromPanel()//TODO: JOAO LIKE ABOVE
 //    });
     compileButton.setOnAction(e -> {
-      CreateNewModal creator = new CreateNewModal("save", modalController.dropzoneList());
-      modalController.setRoot(root);
-      creator.attach(modalController);
-      creator.showAndWait();
       panelController.compile();
     });
     this.getChildren().addAll(visualButton, logicButton, compileButton);
@@ -104,10 +100,6 @@ public class HeaderMenuPanel extends HBox implements Panel, ModalPanel {
 
   public Node asNode() {
     return this;
-  }
-
-  public void setReferenceRoot(Pane rt) {
-    root = rt;
   }
 
   @Override

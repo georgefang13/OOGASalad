@@ -460,7 +460,7 @@ public class IdManager<T extends IdManageable> implements Iterable<Map.Entry<Str
 
   /**
    * Returns a Steam of all objects in the IdManager.
-   * @return
+   * @return a Stream of all objects in the IdManager
    */
   public Stream<T> objectStream() {
     return simpleIds.values().stream();
@@ -479,7 +479,7 @@ public class IdManager<T extends IdManageable> implements Iterable<Map.Entry<Str
 
   /**
    * Removes all objects owned by the given owner.
-   * @param owner
+   * @param owner the owner to remove all objects of
    */
   public void removeObjectsOwnedByOwner(Owner owner) {
     //if T is Ownable, remove all objects with owner as owner avoiding ConcurrentModificationException

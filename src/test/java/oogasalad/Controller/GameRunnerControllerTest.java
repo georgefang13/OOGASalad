@@ -4,6 +4,7 @@ import javafx.collections.ObservableList;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import oogasalad.frontend.components.gameObjectComponent.GameRunner.DropZoneFE;
 import oogasalad.frontend.components.gameObjectComponent.GameRunner.gameObjectVisuals.AbstractSelectableVisual;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,7 +26,7 @@ class GameRunnerControllerTest extends ApplicationTest{
     void setUp() {
         JFXPanel jfxPanel = new JFXPanel();
         gameTypeData.add("local");
-        gameRunnerController = new GameRunnerController(gameName, gameTypeData);
+        gameRunnerController = new GameRunnerController(gameName, gameTypeData,2);
 
     }
     @Test
@@ -40,7 +41,7 @@ class GameRunnerControllerTest extends ApplicationTest{
     void addDropZone() {
         AbstractSelectableVisual.SelectableVisualParams u = new AbstractSelectableVisual.SelectableVisualParams(true,lightTest);
         AbstractSelectableVisual.SelectableVisualParams s = new AbstractSelectableVisual.SelectableVisualParams(true,lightTest);
-        GameController.DropZoneParameters params = new GameController.DropZoneParameters("test",u,s,500,500,10,10);
+        GameController.DropZoneParameters params = new GameController.DropZoneParameters("test",u,s,500,500,10,10,DropZoneFE.DropZoneDistribution.HORIZONTAL);
         gameRunnerController.addDropZone(params);
         assertFalse(gameRunnerController.isObjectPlayable("test"));
     }

@@ -19,6 +19,5 @@ public interface SceneMediator {
     Object getData();
     FilesController getFilesController();
     void compile();
-
-
+    String getGameName();
 }

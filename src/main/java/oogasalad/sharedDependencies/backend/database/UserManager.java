@@ -5,7 +5,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 
 public class UserManager {
   private static final String COLLECTION = "Users";
@@ -53,9 +52,9 @@ public class UserManager {
     int counter = 1;
     for (String question : securityQuestions.keySet()) {
       db.addData(COLLECTION, username,
-          SECURITY_QUESTION_TAG + String.valueOf(counter), question);
+          SECURITY_QUESTION_TAG + counter, question);
       db.addData(COLLECTION, username,
-          SECURITY_ANSWER_TAG + String.valueOf(counter), securityQuestions.get(question));
+          SECURITY_ANSWER_TAG + counter, securityQuestions.get(question));
       counter++;
     }
     return true;
@@ -71,10 +70,10 @@ public class UserManager {
   public boolean tryChangePassword(String username, String newPassword, Map<String, String> securityQuestions) {
     for (int i = 1; i <= securityQuestions.size(); i++) {
       String question = (String) db.getData(COLLECTION, username,
-          SECURITY_QUESTION_TAG + String.valueOf(i));
+          SECURITY_QUESTION_TAG + i);
       if (! securityQuestions.containsKey(question) ||
           ! securityQuestions.get(question)
-            .equals(db.getData(COLLECTION, username, SECURITY_ANSWER_TAG + String.valueOf(i)))) {
+            .equals(db.getData(COLLECTION, username, SECURITY_ANSWER_TAG + i))) {
         return false;
       }
     }

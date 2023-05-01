@@ -3,12 +3,12 @@ package oogasalad.frontend.panels.gamePanels;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import oogasalad.frontend.panels.Panel;
 import oogasalad.frontend.panels.PanelController;
-import oogasalad.frontend.scenes.GamePlayerMainScene;
 import oogasalad.frontend.windows.GameWindow;
-
+/**
+ * @author Owen MacKenzie
+ */
 public class GameSetupPanel extends HBox implements Panel {
     PanelController panelController;
     public GameSetupPanel(PanelController panelController) {
@@ -19,14 +19,20 @@ public class GameSetupPanel extends HBox implements Panel {
 
     @Override
     public Panel makePanel() {
+        TextField playerEntry = new TextField();
+        playerEntry.setPromptText("Number of Players:");
         Button btn = new Button("Start Local Game");
         btn.setOnAction(e -> {
             panelController.getSceneController().passData("local");
+            String players = playerEntry.getText();
+            panelController.getSceneController().passData(players);
             panelController.newSceneFromPanel("GAME", GameWindow.WindowScenes.GAME_SCENE);
         });
         Button btn2 = new Button("Create Online Game");
         btn2.setOnAction(e -> {
             panelController.getSceneController().passData("create");
+            String players = playerEntry.getText();
+            panelController.getSceneController().passData(players);
             panelController.newSceneFromPanel("GAME", GameWindow.WindowScenes.GAME_SCENE);
         });
         TextField codeField = new TextField();
@@ -36,9 +42,11 @@ public class GameSetupPanel extends HBox implements Panel {
             String code = codeField.getText();
             panelController.getSceneController().passData(code);
             panelController.getSceneController().passData("join");
+            String players = playerEntry.getText();
+            panelController.getSceneController().passData(players);
             panelController.newSceneFromPanel("GAME", GameWindow.WindowScenes.GAME_SCENE);
         });
-        this.getChildren().addAll(btn, btn2, codeField, btn3);
+        this.getChildren().addAll(btn, btn2, codeField, btn3,playerEntry);
         return this;
     }
 
