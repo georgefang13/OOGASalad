@@ -48,6 +48,20 @@ public class WindowController implements WindowMediator {
     windowMap.remove(windowID);
   }
 
+  public void closeWindow(AbstractWindow window){
+    // find key from map
+    String key = null;
+    for (Map.Entry<String, AbstractWindow> entry : windowMap.entrySet()) {
+      if (entry.getValue().equals(window)) {
+        key = entry.getKey();
+        break;
+      }
+    }
+    if (key != null) {
+      closeWindow(key);
+    }
+  }
+
   @Override
   public AbstractWindow getWindow(String windowID) {
     return windowMap.get(windowID);

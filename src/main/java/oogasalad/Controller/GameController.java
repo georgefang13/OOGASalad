@@ -4,6 +4,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import oogasalad.frontend.components.gameObjectComponent.GameRunner.DropZoneFE;
 import oogasalad.frontend.components.gameObjectComponent.GameRunner.gameObjectVisuals.AbstractSelectableVisual;
 
 import java.util.List;
@@ -89,6 +90,8 @@ public interface GameController {
 
     void setPieceHighlight(String id, String img);
 
-    record DropZoneParameters(String id, AbstractSelectableVisual.SelectableVisualParams unselected, AbstractSelectableVisual.SelectableVisualParams selected, int x, int y, int height, int width){}
+    void endGame(int player);
+
+    record DropZoneParameters(String id, AbstractSelectableVisual.SelectableVisualParams unselected, AbstractSelectableVisual.SelectableVisualParams selected, int x, int y, int height, int width, DropZoneFE.DropZoneDistribution distribution){}
 
 }

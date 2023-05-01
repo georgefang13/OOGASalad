@@ -1,5 +1,6 @@
 package oogasalad.frontend.components.gameObjectComponent.GameRunner;
 
+import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
@@ -14,9 +15,13 @@ import oogasalad.frontend.managers.DisplayManager;
  */
 
 public class DropZoneFE extends GameRunnerObject{
+    public enum DropZoneDistribution{
+        COLLAPSE, HORIZONTAL, VERTICAL
+    }
     private final int x;
     private final int y;
     private Node unselectedImage;
+    private DropZoneDistribution distribution = DropZoneDistribution.COLLAPSE;
     public DropZoneFE(String ID, AbstractSelectableVisual.SelectableVisualParams unselected, AbstractSelectableVisual.SelectableVisualParams selected, int width, int height, int x, int y, GameController gameRunnerController) {
         super(ID, gameRunnerController);
         setWidth(width);
@@ -52,5 +57,15 @@ public class DropZoneFE extends GameRunnerObject{
     }
     public Point2D getDropZoneCenter(){
         return getNode().localToScene(((double) getWidth())/2, ((double) getHeight())/2);
+    }
+    public DropZoneDistribution getDistribution() {
+        return distribution;
+    }
+    public void setDistribution(DropZoneDistribution distribution) {
+        this.distribution = distribution;
+    }
+    // get dropzone bounds
+    public Bounds getDropZoneBounds(){
+        return getNode().localToScene(getNode().getBoundsInLocal());
     }
 }

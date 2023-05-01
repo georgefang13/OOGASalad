@@ -17,6 +17,8 @@ public interface WindowMediator {
 
   void closeWindow(String windowID);
 
+  void closeWindow(AbstractWindow window);
+
   AbstractWindow getWindow(String windowID);
 
   void passData(Object data);
