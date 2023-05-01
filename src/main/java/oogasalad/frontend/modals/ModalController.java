@@ -59,10 +59,10 @@ public class ModalController {
 
     activeComponents.put(name, c);
 
-    files.addComponent(c);
-    dropZoneController.addDropZone(c);
-    dropZoneController.addGridObject(c);
-    backendObjectController.sendOwnableObject(c);
+//    files.addComponent(c);
+//    dropZoneController.addDropZone(c);
+//    dropZoneController.addGridObject(c);
+//    backendObjectController.sendOwnableObject(c);
 
 
     GraphicHandler handler = new GraphicHandler();
@@ -79,14 +79,14 @@ public class ModalController {
     activeComponents.put(name, c);
     GraphicHandler handler = new GraphicHandler();
     handler.moveToCenter(c);
-    backendObjectController.editOwnableObject(c);
+//    backendObjectController.editOwnableObject(c);
     root.getChildren().add(c.getNode());
   }
 
   public void deleteObjectInstance(String name) {
     Component c = activeComponents.get(name);
-    backendObjectController.deleteOwnableObject(c);
-    dropZoneController.deleteArrows(c, root);
+//    backendObjectController.deleteOwnableObject(c);
+//    dropZoneController.deleteArrows(c, root);
     root.getChildren().remove(activeComponents.get(name).getNode());
   }
 
@@ -107,6 +107,11 @@ public class ModalController {
   }
 
   public List<String> dropzoneList(){
-    return dropZoneController.getValidatedDropzone();
+    List<String> list = dropZoneController.getValidatedDropzone();
+    if(list.size() != 0) {
+      list.replaceAll(value -> "DropZone" + value);
+      list.set(0, "DropZone");
+    }
+    return list;
   }
 }
