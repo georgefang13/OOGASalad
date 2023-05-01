@@ -9,7 +9,7 @@ import oogasalad.sharedDependencies.backend.owners.Owner;
 
 public class OwnableSearchStream {
 
-  private IdManager<Ownable> ownableIdManager;
+  private final IdManager<Ownable> ownableIdManager;
 
   //NOTE: encapsulation over inheritance
   public OwnableSearchStream(IdManager<Ownable> ownableIdManager) {

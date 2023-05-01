@@ -13,7 +13,7 @@ public class FSM<T> {
   private State currentState;
   private T currentStateName;
 
-  private List<T> history = new ArrayList<>();
+  private final List<T> history = new ArrayList<>();
   private final StateData data = new StateData();
 
   public FSM(IdManager<?> idManager) {

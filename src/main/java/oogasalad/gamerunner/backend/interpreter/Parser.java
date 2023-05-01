@@ -1,12 +1,10 @@
 package oogasalad.gamerunner.backend.interpreter;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import oogasalad.gamerunner.backend.interpreter.commands.control.FVar;
 import oogasalad.gamerunner.backend.interpreter.commands.control.MakeUserInstruction;
-import oogasalad.gamerunner.backend.interpreter.commands.control.Return;
 import oogasalad.gamerunner.backend.interpreter.commands.control.UserInstruction;
 import oogasalad.gamerunner.backend.interpreter.exceptions.InvalidSyntaxException;
 import oogasalad.gamerunner.backend.interpreter.tokens.BracketToken;

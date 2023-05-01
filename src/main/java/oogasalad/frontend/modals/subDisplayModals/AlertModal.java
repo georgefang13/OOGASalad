@@ -28,7 +28,14 @@ public class AlertModal extends DisplayModal {
     alert.setHeaderText(pm.getText(header));
     alert.setContentText(String.format(pm.getText(body), bodyArgs));
     alert.setResizable(true);
+  }
 
+  public void setModalTitle(String title){
+    StandardPropertyManager pm = StandardPropertyManager.getInstance();
+    alert.setTitle(pm.getText(title));
+  }
+  public void setModalType(AlertType type){
+    alert.setAlertType(type);
   }
 
   public void setOnClose(Consumer<DialogEvent> onClose){

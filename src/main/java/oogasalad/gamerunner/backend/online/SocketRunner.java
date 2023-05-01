@@ -43,6 +43,11 @@ public class SocketRunner implements OnlineRunner {
         });
     }
 
+    /**
+     * Send data to the server
+     * @param type the main content
+     * @param args anything else
+     */
     public void send(String type, Object... args){
         if (!runMap.containsKey(type)) runMap.put(type, false);
         if (!runMap.get(type)){
@@ -51,15 +56,25 @@ public class SocketRunner implements OnlineRunner {
         runMap.put(type, false);
     }
 
+    /**
+     * Get the number of players
+     * @return the number of players
+     */
     @Override
     public int getPlayerNum() {
         return playerNum;
     }
 
+    /**
+     * Start the game
+     */
     public void start(){
         socket.emit("start");
     }
 
+    /**
+     * Create a room
+     */
     @Override
     public void create(){
         socket.emit("create");
@@ -71,6 +86,11 @@ public class SocketRunner implements OnlineRunner {
             System.out.println("CODE: " + code);
         });
     }
+
+    /**
+     * Join a room
+     * @param code the room code
+     */
     @Override
     public void join(String code){
         System.out.println("joining");
@@ -83,6 +103,11 @@ public class SocketRunner implements OnlineRunner {
             this.code = code;
         });
     }
+
+    /**
+     * Get the code
+     * @return the code
+     */
     @Override
     public String getCode(){
         return code;
