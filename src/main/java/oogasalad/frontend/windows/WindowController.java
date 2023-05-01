@@ -8,6 +8,7 @@ import oogasalad.frontend.windows.WindowTypes.WindowType;
 /**
  * @author Connor Wells
  * @author Owen MacKenzie
+ * @author George Fang
  */
 
 public class WindowController implements WindowMediator {
