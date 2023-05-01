@@ -1,0 +1,12 @@
+{
+  "0": {
+    "name": "MainNode",
+    "type": "ControlNode",
+    "inputs": []
+  },
+  "1": {
+    "name": "Add Drop Zone Item",
+    "type": "JsonNode",
+    "inputs": []
+  }
+}
