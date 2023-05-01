@@ -9,10 +9,19 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 // ...
 
-class Field {
+public class Field {
+  private String id;
 
-  HBox createField() {
+  protected HBox createField() {
     return null;
+  }
+
+  public void setId(String id) {
+    this.id = id;
+  }
+
+  public String getId() {
+    return this.id;
   }
 
   public class ChoiceBoxComponent extends Field {

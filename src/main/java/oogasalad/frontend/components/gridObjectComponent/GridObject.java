@@ -28,6 +28,7 @@ public class GridObject extends AbstractComponent {
     private double rotate;
     private double rectWidth;
     private double rectHeight;
+    private final static String BOARD_TYPE = "createGrid";
     public GridObject(String ID, Map<String, String> map){
         super(ID);
         setValuesfromMap(map);

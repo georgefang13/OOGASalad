@@ -49,6 +49,9 @@ public class GameRunnerController implements GameController {
     public void assignUndoButtonAction(Button undoButton){
         undoButton.setOnAction(e -> game.undoClickPiece());
     }
+
+
+
     private void loadGame(String directory) throws FileNotFoundException {
         directory = directory + "/frontend";
         loadDropZones(directory);
@@ -97,6 +100,7 @@ public class GameRunnerController implements GameController {
     }
     @Override
     public void select(String id) {
+        System.out.println(id);
         if (clickable.contains(id)) {
             game.clickPiece(id);
         }
@@ -152,18 +156,32 @@ public class GameRunnerController implements GameController {
 
     @Override
     public void setObjectImage(String id, String newImagePath) {
-        System.out.println(newImagePath);
         GameRunnerObject gameObject = gameObjects.get(id);
         AbstractSelectableVisual.SelectableVisualParams unselected = new AbstractSelectableVisual.SelectableVisualParams(true,newImagePath);
         AbstractSelectableVisual.SelectableVisualParams selected = new AbstractSelectableVisual.SelectableVisualParams(false,"#ff0000");
 
         Node oldObjectVisual = gameObject.getNode();
         gameObject.setSelectableVisual(unselected, selected);
+        updateVisualDisplay(gameObject, oldObjectVisual);
+    }
+
+    private void updateVisualDisplay(GameRunnerObject gameObject, Node oldObjectVisual) {
         Node newObjectVisual = gameObject.getNode();
         newObjectVisual.setTranslateX(oldObjectVisual.getTranslateX());
         newObjectVisual.setTranslateY(oldObjectVisual.getTranslateY());
         gameObjectVisualsList.remove(oldObjectVisual);
         gameObjectVisualsList.add(newObjectVisual);
+    }
+
+    @Override
+    public void setPieceHighlight(String id, String param) {
+        GameRunnerObject gameObject = gameObjects.get(id);
+        boolean isImg = !param.contains("#");
+        AbstractSelectableVisual.SelectableVisualParams selected = new AbstractSelectableVisual.SelectableVisualParams(isImg,param);
+
+        Node oldObjectVisual = gameObject.getNode();
+        gameObject.setSelectVisual(selected);
+        updateVisualDisplay(gameObject, oldObjectVisual);
     }
 
     private void clearClickables(){
@@ -174,6 +192,7 @@ public class GameRunnerController implements GameController {
     }
     @Override
     public boolean isObjectPlayable(String id){
+
         return gameObjects.get(id).getPlayable();
     }
 

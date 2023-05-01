@@ -7,6 +7,7 @@ import oogasalad.frontend.managers.DisplayManager;
 
 import java.util.List;
 import java.util.Map;
+import oogasalad.frontend.components.dropzoneComponent.Dropzone;
 
 
 /**
@@ -16,7 +17,12 @@ import java.util.Map;
 public class GameObject extends AbstractComponent implements GameObjectComponent{
   private List<Node> children;
   private ImageView image;
+  private Dropzone zone;
+  private String name;
+  private int width;
+  private int height;
   private double rotate;
+  private double dropzoneID;
 
   public GameObject(String ID) {
     super(ID);
@@ -30,7 +36,6 @@ public class GameObject extends AbstractComponent implements GameObjectComponent
     setDraggable(true);
     instantiatePropFile("frontend.properties.Defaults.GameObject");
     setValuesfromMap(map);
-    rotate = 0;
     initialize();
     followMouse();
   }

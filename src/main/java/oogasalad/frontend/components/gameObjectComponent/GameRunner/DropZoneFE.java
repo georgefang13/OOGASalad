@@ -12,6 +12,7 @@ import oogasalad.frontend.managers.DisplayManager;
 public class DropZoneFE extends GameRunnerObject{
     private final int x;
     private final int y;
+    private Node unselectedImage;
     public DropZoneFE(String ID, AbstractSelectableVisual.SelectableVisualParams unselected, AbstractSelectableVisual.SelectableVisualParams selected, int width, int height, int x, int y, GameController gameRunnerController) {
         super(ID, gameRunnerController);
         setWidth(width);
@@ -22,10 +23,16 @@ public class DropZoneFE extends GameRunnerObject{
     }
     @Override
     public void setSelectableVisual(AbstractSelectableVisual.SelectableVisualParams unselected, AbstractSelectableVisual.SelectableVisualParams selected) {
-        Node unselectedImage = createImage(unselected.hasSelectImage(),unselected.param());
+        this.unselectedImage = createImage(unselected.hasSelectImage(),unselected.param());
+        setSelectVisual(selected);
+    }
+
+    @Override
+    public void setSelectVisual(AbstractSelectableVisual.SelectableVisualParams selected) {
         Node selectedImage = createImage(selected.hasSelectImage(),selected.param());
         selectableVisual = new DropZoneVisual(unselectedImage,selectedImage,getWidth(),getHeight(),x,y,ID);
     }
+
     private Node loadDefaultDropRectangle(String hexColor){
         Color fillColor = Color.web(hexColor);
         return new Rectangle(getWidth(), getHeight(), fillColor);

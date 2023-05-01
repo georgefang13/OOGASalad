@@ -8,4 +8,5 @@ public interface GameRunnerComponent extends Component {
     void makeUnplayable();
     boolean getPlayable();
     void setSelectableVisual(AbstractSelectableVisual.SelectableVisualParams unselected, AbstractSelectableVisual.SelectableVisualParams selected);
+    void setSelectVisual(AbstractSelectableVisual.SelectableVisualParams selected);
 }

@@ -1,0 +1,579 @@
+{
+  "0,0": {
+    "connections": {
+      "Right": "0,1",
+      "Down": "1,0",
+      "DownRight": "1,1"
+    },
+    "classes": "board"
+  },
+  "0,1": {
+    "connections": {
+      "Right": "0,2",
+      "Down": "1,1",
+      "Left": "0,0",
+      "DownRight": "1,2",
+      "DownLeft": "1,0"
+    },
+    "classes": "board"
+  },
+  "0,2": {
+    "connections": {
+      "Right": "0,3",
+      "Down": "1,2",
+      "Left": "0,1",
+      "DownRight": "1,3",
+      "DownLeft": "1,1"
+    },
+    "classes": "board"
+  },
+  "0,3": {
+    "connections": {
+      "Right": "0,4",
+      "Down": "1,3",
+      "Left": "0,2",
+      "DownRight": "1,4",
+      "DownLeft": "1,2"
+    },
+    "classes": "board"
+  },
+  "0,4": {
+    "connections": {
+      "Right": "0,5",
+      "Down": "1,4",
+      "Left": "0,3",
+      "DownRight": "1,5",
+      "DownLeft": "1,3"
+    },
+    "classes": "board"
+  },
+  "0,5": {
+    "connections": {
+      "Right": "0,6",
+      "Down": "1,5",
+      "Left": "0,4",
+      "DownRight": "1,6",
+      "DownLeft": "1,4"
+    },
+    "classes": "board"
+  },
+  "0,6": {
+    "connections": {
+      "Down": "1,6",
+      "Left": "0,5",
+      "DownLeft": "1,5"
+    },
+    "classes": "board"
+  },
+  "1,0": {
+    "connections": {
+      "Up": "0,0",
+      "Right": "1,1",
+      "Down": "2,0",
+      "UpRight": "0,1",
+      "DownRight": "2,1"
+    },
+    "classes": "board"
+  },
+  "1,1": {
+    "connections": {
+      "Up": "0,1",
+      "Right": "1,2",
+      "Down": "2,1",
+      "Left": "1,0",
+      "UpRight": "0,2",
+      "UpLeft": "0,0",
+      "DownRight": "2,2",
+      "DownLeft": "2,0"
+    },
+    "classes": "board"
+  },
+  "1,2": {
+    "connections": {
+      "Up": "0,2",
+      "Right": "1,3",
+      "Down": "2,2",
+      "Left": "1,1",
+      "UpRight": "0,3",
+      "UpLeft": "0,1",
+      "DownRight": "2,3",
+      "DownLeft": "2,1"
+    },
+    "classes": "board"
+  },
+  "1,3": {
+    "connections": {
+      "Up": "0,3",
+      "Right": "1,4",
+      "Down": "2,3",
+      "Left": "1,2",
+      "UpRight": "0,4",
+      "UpLeft": "0,2",
+      "DownRight": "2,4",
+      "DownLeft": "2,2"
+    },
+    "classes": "board"
+  },
+  "1,4": {
+    "connections": {
+      "Up": "0,4",
+      "Right": "1,5",
+      "Down": "2,4",
+      "Left": "1,3",
+      "UpRight": "0,5",
+      "UpLeft": "0,3",
+      "DownRight": "2,5",
+      "DownLeft": "2,3"
+    },
+    "classes": "board"
+  },
+  "1,5": {
+    "connections": {
+      "Up": "0,5",
+      "Right": "1,6",
+      "Down": "2,5",
+      "Left": "1,4",
+      "UpRight": "0,6",
+      "UpLeft": "0,4",
+      "DownRight": "2,6",
+      "DownLeft": "2,4"
+    },
+    "classes": "board"
+  },
+  "1,6": {
+    "connections": {
+      "Up": "0,6",
+      "Down": "2,6",
+      "Left": "1,5",
+      "UpLeft": "0,5",
+      "DownLeft": "2,5"
+    },
+    "classes": "board"
+  },
+  "2,0": {
+    "connections": {
+      "Up": "1,0",
+      "Right": "2,1",
+      "Down": "3,0",
+      "UpRight": "1,1",
+      "DownRight": "3,1"
+    },
+    "classes": "board"
+  },
+  "2,1": {
+    "connections": {
+      "Up": "1,1",
+      "Right": "2,2",
+      "Down": "3,1",
+      "Left": "2,0",
+      "UpRight": "1,2",
+      "UpLeft": "1,0",
+      "DownRight": "3,2",
+      "DownLeft": "3,0"
+    },
+    "classes": "board"
+  },
+  "2,2": {
+    "connections": {
+      "Up": "1,2",
+      "Right": "2,3",
+      "Down": "3,2",
+      "Left": "2,1",
+      "UpRight": "1,3",
+      "UpLeft": "1,1",
+      "DownRight": "3,3",
+      "DownLeft": "3,1"
+    },
+    "classes": "board"
+  },
+  "2,3": {
+    "connections": {
+      "Up": "1,3",
+      "Right": "2,4",
+      "Down": "3,3",
+      "Left": "2,2",
+      "UpRight": "1,4",
+      "UpLeft": "1,2",
+      "DownRight": "3,4",
+      "DownLeft": "3,2"
+    },
+    "classes": "board"
+  },
+  "2,4": {
+    "connections": {
+      "Up": "1,4",
+      "Right": "2,5",
+      "Down": "3,4",
+      "Left": "2,3",
+      "UpRight": "1,5",
+      "UpLeft": "1,3",
+      "DownRight": "3,5",
+      "DownLeft": "3,3"
+    },
+    "classes": "board"
+  },
+  "2,5": {
+    "connections": {
+      "Up": "1,5",
+      "Right": "2,6",
+      "Down": "3,5",
+      "Left": "2,4",
+      "UpRight": "1,6",
+      "UpLeft": "1,4",
+      "DownRight": "3,6",
+      "DownLeft": "3,4"
+    },
+    "classes": "board"
+  },
+  "2,6": {
+    "connections": {
+      "Up": "1,6",
+      "Down": "3,6",
+      "Left": "2,5",
+      "UpLeft": "1,5",
+      "DownLeft": "3,5"
+    },
+    "classes": "board"
+  },
+  "3,0": {
+    "connections": {
+      "Up": "2,0",
+      "Right": "3,1",
+      "Down": "4,0",
+      "UpRight": "2,1",
+      "DownRight": "4,1"
+    },
+    "classes": "board"
+  },
+  "3,1": {
+    "connections": {
+      "Up": "2,1",
+      "Right": "3,2",
+      "Down": "4,1",
+      "Left": "3,0",
+      "UpRight": "2,2",
+      "UpLeft": "2,0",
+      "DownRight": "4,2",
+      "DownLeft": "4,0"
+    },
+    "classes": "board"
+  },
+  "3,2": {
+    "connections": {
+      "Up": "2,2",
+      "Right": "3,3",
+      "Down": "4,2",
+      "Left": "3,1",
+      "UpRight": "2,3",
+      "UpLeft": "2,1",
+      "DownRight": "4,3",
+      "DownLeft": "4,1"
+    },
+    "classes": "board"
+  },
+  "3,3": {
+    "connections": {
+      "Up": "2,3",
+      "Right": "3,4",
+      "Down": "4,3",
+      "Left": "3,2",
+      "UpRight": "2,4",
+      "UpLeft": "2,2",
+      "DownRight": "4,4",
+      "DownLeft": "4,2"
+    },
+    "classes": "board"
+  },
+  "3,4": {
+    "connections": {
+      "Up": "2,4",
+      "Right": "3,5",
+      "Down": "4,4",
+      "Left": "3,3",
+      "UpRight": "2,5",
+      "UpLeft": "2,3",
+      "DownRight": "4,5",
+      "DownLeft": "4,3"
+    },
+    "classes": "board"
+  },
+  "3,5": {
+    "connections": {
+      "Up": "2,5",
+      "Right": "3,6",
+      "Down": "4,5",
+      "Left": "3,4",
+      "UpRight": "2,6",
+      "UpLeft": "2,4",
+      "DownRight": "4,6",
+      "DownLeft": "4,4"
+    },
+    "classes": "board"
+  },
+  "3,6": {
+    "connections": {
+      "Up": "2,6",
+      "Down": "4,6",
+      "Left": "3,5",
+      "UpLeft": "2,5",
+      "DownLeft": "4,5"
+    },
+    "classes": "board"
+  },
+  "4,0": {
+    "connections": {
+      "Up": "3,0",
+      "Right": "4,1",
+      "Down": "5,0",
+      "UpRight": "3,1",
+      "DownRight": "5,1"
+    },
+    "classes": "board"
+  },
+  "4,1": {
+    "connections": {
+      "Up": "3,1",
+      "Right": "4,2",
+      "Down": "5,1",
+      "Left": "4,0",
+      "UpRight": "3,2",
+      "UpLeft": "3,0",
+      "DownRight": "5,2",
+      "DownLeft": "5,0"
+    },
+    "classes": "board"
+  },
+  "4,2": {
+    "connections": {
+      "Up": "3,2",
+      "Right": "4,3",
+      "Down": "5,2",
+      "Left": "4,1",
+      "UpRight": "3,3",
+      "UpLeft": "3,1",
+      "DownRight": "5,3",
+      "DownLeft": "5,1"
+    },
+    "classes": "board"
+  },
+  "4,3": {
+    "connections": {
+      "Up": "3,3",
+      "Right": "4,4",
+      "Down": "5,3",
+      "Left": "4,2",
+      "UpRight": "3,4",
+      "UpLeft": "3,2",
+      "DownRight": "5,4",
+      "DownLeft": "5,2"
+    },
+    "classes": "board"
+  },
+  "4,4": {
+    "connections": {
+      "Up": "3,4",
+      "Right": "4,5",
+      "Down": "5,4",
+      "Left": "4,3",
+      "UpRight": "3,5",
+      "UpLeft": "3,3",
+      "DownRight": "5,5",
+      "DownLeft": "5,3"
+    },
+    "classes": "board"
+  },
+  "4,5": {
+    "connections": {
+      "Up": "3,5",
+      "Right": "4,6",
+      "Down": "5,5",
+      "Left": "4,4",
+      "UpRight": "3,6",
+      "UpLeft": "3,4",
+      "DownRight": "5,6",
+      "DownLeft": "5,4"
+    },
+    "classes": "board"
+  },
+  "4,6": {
+    "connections": {
+      "Up": "3,6",
+      "Down": "5,6",
+      "Left": "4,5",
+      "UpLeft": "3,5",
+      "DownLeft": "5,5"
+    },
+    "classes": "board"
+  },
+  "5,0": {
+    "connections": {
+      "Up": "4,0",
+      "Right": "5,1",
+      "Down": "6,0",
+      "UpRight": "4,1",
+      "DownRight": "6,1"
+    },
+    "classes": "board"
+  },
+  "5,1": {
+    "connections": {
+      "Up": "4,1",
+      "Right": "5,2",
+      "Down": "6,1",
+      "Left": "5,0",
+      "UpRight": "4,2",
+      "UpLeft": "4,0",
+      "DownRight": "4,2",
+      "DownLeft": "4,0"
+    },
+    "classes": "board"
+  },
+  "5,2": {
+    "connections": {
+      "Up": "4,2",
+      "Right": "5,3",
+      "Down": "6,2",
+      "Left": "5,1",
+      "UpRight": "4,3",
+      "UpLeft": "4,1",
+      "DownRight": "4,3",
+      "DownLeft": "4,1"
+    },
+    "classes": "board"
+  },
+  "5,3": {
+    "connections": {
+      "Up": "4,3",
+      "Right": "5,4",
+      "Down": "6,3",
+      "Left": "5,2",
+      "UpRight": "4,4",
+      "UpLeft": "4,2",
+      "DownRight": "4,4",
+      "DownLeft": "4,2"
+    },
+    "classes": "board"
+  },
+  "5,4": {
+    "connections": {
+      "Up": "4,4",
+      "Right": "5,5",
+      "Down": "6,4",
+      "Left": "5,3",
+      "UpRight": "4,5",
+      "UpLeft": "4,3",
+      "DownRight": "4,5",
+      "DownLeft": "4,3"
+    },
+    "classes": "board"
+  },
+  "5,5": {
+    "connections": {
+      "Up": "4,5",
+      "Right": "5,6",
+      "Down": "6,5",
+      "Left": "5,4",
+      "UpRight": "4,6",
+      "UpLeft": "4,4",
+      "DownRight": "4,6",
+      "DownLeft": "4,4"
+    },
+    "classes": "board"
+  },
+  "5,6": {
+    "connections": {
+      "Up": "4,6",
+      "Down": "6,6",
+      "Left": "5,5",
+      "UpLeft": "4,5",
+      "DownLeft": "4,5"
+    },
+    "classes": "board"
+  },
+  "6,0": {
+    "connections": {
+      "Up": "5,0",
+      "Right": "6,1",
+      "UpRight": "5,1"
+    },
+    "classes": ["board", "bottom"]
+  },
+  "6,1": {
+    "connections": {
+      "Up": "5,1",
+      "Right": "6,2",
+      "Left": "6,0",
+      "UpRight": "5,2",
+      "UpLeft": "5,0"
+    },
+    "classes": ["board", "bottom"]
+  },
+  "6,2": {
+    "connections": {
+      "Up": "5,2",
+      "Right": "6,3",
+      "Left": "6,1",
+      "UpRight": "5,3",
+      "UpLeft": "5,1"
+    },
+    "classes": ["board", "bottom"]
+  },
+  "6,3": {
+    "connections": {
+      "Up": "5,3",
+      "Right": "6,4",
+      "Left": "6,2",
+      "UpRight": "5,4",
+      "UpLeft": "5,2"
+    },
+    "classes": ["board", "bottom"]
+  },
+  "6,4": {
+    "connections": {
+      "Up": "5,4",
+      "Right": "6,5",
+      "Left": "6,3",
+      "UpRight": "5,5",
+      "UpLeft": "5,3"
+    },
+    "classes": ["board", "bottom"]
+  },
+  "6,5": {
+    "connections": {
+      "Up": "5,5",
+      "Right": "6,6",
+      "Left": "6,4",
+      "UpRight": "5,6",
+      "UpLeft": "5,4"
+    },
+    "classes": ["board", "bottom"]
+  },
+  "6,6": {
+    "connections": {
+      "Up": "5,6",
+      "Left": "6,5",
+      "UpLeft": "5,5"
+    },
+    "classes": ["board", "bottom"]
+  },
+  "RedDropZone": {
+    "position": {
+      "x": "100",
+      "y": "500",
+      "width": "840",
+      "height": "50"
+    },
+    "connections": {},
+    "classes": []
+  },
+  "YellowDropZone": {
+    "position": {
+      "x": "100",
+      "y": "550",
+      "width": "840",
+      "height": "50"
+    },
+    "connections": {},
+    "classes": []
+  }
+}

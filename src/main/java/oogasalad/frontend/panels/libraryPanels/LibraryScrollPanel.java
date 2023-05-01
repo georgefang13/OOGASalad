@@ -143,7 +143,7 @@ public class LibraryScrollPanel extends AbstractScrollPanePanel implements Panel
       try {
         fm = new FileManager(gameDirectory.getPath() + JSON_GENERAL_PATH);
       } catch (FileNotFoundException e) {
-        throw new RuntimeException(e);
+        continue;
       }
       Iterable<String> currentTags = fm.getArray(JSON_TAGS);
       for (String s : currentTags) {
