@@ -28,6 +28,8 @@ public class Dropzone extends AbstractComponent implements DropZonePublisher {
   private int rows = 1;
   private int cols = 1;
   private final static String BOARD_TYPE = "createGrid";
+  private double width;
+  private double height;
   private Color fill;
   private Color border;
   private Rectangle square;

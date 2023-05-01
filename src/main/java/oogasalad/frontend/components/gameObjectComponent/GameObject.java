@@ -18,10 +18,10 @@ public class GameObject extends AbstractComponent implements GameObjectComponent
   private List<Node> children;
   private ImageView image;
   private Dropzone zone;
-  private double width;
-  private double height;
+  private String name;
+  private int width;
+  private int height;
   private double rotate;
-  private Dropzone dropzone;
   private double dropzoneID;
 
   public GameObject(String ID) {
@@ -36,7 +36,6 @@ public class GameObject extends AbstractComponent implements GameObjectComponent
     setDraggable(true);
     instantiatePropFile("frontend.properties.Defaults.GameObject");
     setValuesfromMap(map);
-    rotate = 0;
     initialize();
     followMouse();
   }

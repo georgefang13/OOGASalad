@@ -1,6 +1,7 @@
 package oogasalad.frontend.modals;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javafx.scene.layout.Pane;
 import oogasalad.Controller.BackendObjectController;
@@ -9,6 +10,7 @@ import oogasalad.Controller.FilesController;
 import oogasalad.frontend.components.Component;
 import oogasalad.frontend.components.ComponentsFactory;
 import oogasalad.frontend.components.GraphicHandler;
+import oogasalad.frontend.components.dropzoneComponent.Dropzone;
 import oogasalad.frontend.panels.ModalPanel;
 
 /**
@@ -101,4 +103,7 @@ public class ModalController {
     files.setGeneral(map);
   }
 
+  public List<String> dropzoneList(){
+    return dropZoneController.getValidatedDropzone();
+  }
 }

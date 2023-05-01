@@ -36,19 +36,22 @@ public class CreateNewModal extends InputModal {
   /**
    * Constructor for the CreateGameModal dialog
    */
-  public CreateNewModal(String title) {
+  public CreateNewModal(String title, List<String> dropzoneIDs) {
     super(title);
     myTitle = super.getMyTitle();
     editMode = false;
     values = null;
+    this.dropzoneIDs = dropzoneIDs;
+    System.out.println("number of dropzones: " + dropzoneIDs);
     setDialogPane(createDialogPane());
 //        myPropertiesMap = super.setPropertiesMap(myTitle
   }
 
-  public CreateNewModal(String title, boolean editMode, Map<String, String> values) {
+  public CreateNewModal(String title, boolean editMode, Map<String, String> values, List<String> dropzoneIDs) {
     super(title);
     this.editMode = editMode;
     this.values = values;
+    this.dropzoneIDs = dropzoneIDs;
     myTitle = super.getMyTitle();
     setDialogPane(createDialogPane());
   }
@@ -103,6 +106,7 @@ public class CreateNewModal extends InputModal {
         propertyValue = values.get(labelName);
       } else {
         propertyValue = entry.getValue();
+        System.out.println(entry.getValue());
       }
 
       // Get the field class corresponding to the property name using reflection
