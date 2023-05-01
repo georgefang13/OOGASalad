@@ -2,6 +2,11 @@ package oogasalad.frontend.nodeEditor;
 
 import java.util.List;
 
+
+/**
+ * @author Joao Carvalho
+ * @author Connor Wells-Weiner
+ */
 /**
  * This class represents a command that can be used to create a node as a record
  */

@@ -1,7 +1,7 @@
-package oogasalad.frontend.nodeEditor;
+package oogasalad.frontend.nodeEditor.tabs;
 
-import static oogasalad.frontend.nodeEditor.AbstractNodeEditorTab.INTERPRETER_FILES_PATH;
-import static oogasalad.frontend.nodeEditor.AbstractNodeEditorTab.USER_CODE_FILES_PATH;
+import static oogasalad.frontend.nodeEditor.tabs.AbstractNodeEditorTab.INTERPRETER_FILES_PATH;
+import static oogasalad.frontend.nodeEditor.tabs.AbstractNodeEditorTab.USER_CODE_FILES_PATH;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -17,14 +17,20 @@ import java.util.Map.Entry;
 import javafx.scene.Scene;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import oogasalad.frontend.nodeEditor.NodeController;
 import oogasalad.frontend.nodeEditor.configuration.NodeConfiguration;
 import oogasalad.frontend.nodeEditor.configuration.NodeData;
 import oogasalad.frontend.nodeEditor.nodes.AbstractNode;
 import oogasalad.frontend.scenes.AbstractScene;
 
-public class NodeScene extends AbstractScene {
-  private String gameName;
+/**
+ * @author Joao Carvalho
+ * @author Connor Wells-Weiner
+ */
 
+public class NodeScene extends AbstractScene {
+
+  private String gameName;
   private TabPane tabs;
   Map<Tab, CodeEditorTab> tabMap;
   private NodeController nodeController;
@@ -35,8 +41,7 @@ public class NodeScene extends AbstractScene {
     this.nodeController = nodeController;
     tabs.getTabs().add(makeTab("state editor", false, new StateEditorTab(nodeController)));
     setTheme();
-    gameName = sceneController.getGameName();
-    System.out.println(gameName);
+//    gameName = sceneController.getGameName(); //todo
   }
 
   /**
@@ -95,7 +100,7 @@ public class NodeScene extends AbstractScene {
     JsonArray goalArray = new JsonArray();
     for (Entry<Tab, CodeEditorTab> entry : tabMap.entrySet()) {
       CodeEditorTab tab = entry.getValue();
-      if (tab instanceof GoalEditorTab) {
+      if (tab instanceof GoalTab) {
         goalArray.add(tab.getMainNodeParseString());
       } else {
         String state = entry.getValue().getState();

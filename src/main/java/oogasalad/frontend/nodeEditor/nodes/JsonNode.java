@@ -7,7 +7,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import oogasalad.frontend.nodeEditor.Command;
 import oogasalad.frontend.nodeEditor.configuration.NodeData;
-
+/**
+ * @author Joao Carvalho
+ * @author Connor Wells-Weiner
+ */
 public class JsonNode extends AbstractNode {
 
   private String name, parseStr;

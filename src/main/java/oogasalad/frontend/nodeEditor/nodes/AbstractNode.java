@@ -17,6 +17,11 @@ import oogasalad.frontend.managers.PropertyManager;
 import oogasalad.frontend.managers.StandardPropertyManager;
 import oogasalad.frontend.nodeEditor.configuration.NodeData;
 
+/**
+ * @author Joao Carvalho
+ * @author Connor Wells-Weiner
+ */
+
 public abstract class AbstractNode extends VBox implements DraggableNode {
 
   protected Bounds boundingBox;

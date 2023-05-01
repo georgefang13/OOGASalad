@@ -1,9 +1,8 @@
-package oogasalad.frontend.nodeEditor;
+package oogasalad.frontend.nodeEditor.tabs;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
@@ -19,7 +18,6 @@ import javafx.scene.control.Tab;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -28,9 +26,14 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import oogasalad.frontend.managers.PropertyManager;
 import oogasalad.frontend.managers.StandardPropertyManager;
+import oogasalad.frontend.nodeEditor.NodeController;
 import oogasalad.frontend.nodeEditor.nodes.AbstractNode;
-import oogasalad.frontend.nodeEditor.nodes.GoalNode;
 import oogasalad.frontend.nodeEditor.nodes.MainNode;
+
+/**
+ * @author Joao Carvalho
+ * @author Connor Wells-Weiner
+ */
 
 public abstract class AbstractNodeEditorTab extends Tab {
 
@@ -103,7 +106,7 @@ public abstract class AbstractNodeEditorTab extends Tab {
    *
    * @return void
    */
-  protected void clearNodes() {
+  public void clearNodes() {
     List<AbstractNode> nodesToRemove = new ArrayList<>();
     for (Node node : nodeGroup.getChildren()) {
       if (node instanceof AbstractNode) {

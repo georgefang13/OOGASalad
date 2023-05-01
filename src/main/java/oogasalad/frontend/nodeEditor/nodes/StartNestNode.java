@@ -5,6 +5,11 @@ import oogasalad.frontend.nodeEditor.configuration.NodeData;
 
 import java.util.ArrayList;
 
+/**
+ * @author Joao Carvalho
+ * @author Connor Wells-Weiner
+ */
+
 public class StartNestNode extends AbstractNode implements ControlNode {
 
   public StartNestNode() {

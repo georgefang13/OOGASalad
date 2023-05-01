@@ -4,9 +4,14 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import oogasalad.frontend.managers.PropertyManager;
 import oogasalad.frontend.managers.StandardPropertyManager;
-import oogasalad.frontend.scenes.SceneController;
+import oogasalad.frontend.nodeEditor.tabs.CodeEditorTab;
+import oogasalad.frontend.nodeEditor.tabs.NodeScene;
 import oogasalad.frontend.windows.NodeWindow;
 
+/**
+ * @author Joao Carvalho
+ * @author Connor Wells-Weiner
+ */
 public class NodeController {
 
   private NodeScene scene;

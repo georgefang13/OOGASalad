@@ -3,10 +3,8 @@ package oogasalad.frontend.scenes;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import oogasalad.frontend.nodeEditor.NodeController;
-import oogasalad.frontend.nodeEditor.NodeScene;
 import oogasalad.frontend.panels.editorPanels.ComponentPanel;
 import oogasalad.frontend.panels.editorPanels.HeaderMenuPanel;
-import oogasalad.frontend.panels.editorPanels.NodeLogicPanel;
 
 /**
  * @author George Fang

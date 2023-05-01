@@ -16,6 +16,11 @@ import oogasalad.frontend.nodeEditor.JsonNodeParser;
 import oogasalad.frontend.nodeEditor.nodes.AbstractNode;
 import oogasalad.frontend.nodeEditor.nodes.JsonNode;
 
+/**
+ * @author Joao Carvalho
+ * @author Connor Wells-Weiner
+ */
+
 public class NodeConfiguration {
 
   private Gson gson = new Gson();

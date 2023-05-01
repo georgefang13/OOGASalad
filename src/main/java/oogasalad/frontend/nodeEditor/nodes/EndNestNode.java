@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import javafx.scene.control.Label;
 import oogasalad.frontend.nodeEditor.configuration.NodeData;
 
+/**
+ * @author Joao Carvalho
+ * @author Connor Wells-Weiner
+ */
 public class EndNestNode extends AbstractNode implements ControlNode {
 
   public EndNestNode() {
