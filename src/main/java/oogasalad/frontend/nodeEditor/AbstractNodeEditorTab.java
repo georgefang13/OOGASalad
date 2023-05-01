@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -50,33 +51,64 @@ public abstract class AbstractNodeEditorTab extends Tab {
     windowWidth = propertyManager.getNumeric("WindowWidth");
     windowHeight = propertyManager.getNumeric("WindowHeight");
     panelSizeRatio = propertyManager.getNumeric("AbstractNodeEditorTab.PanelSizeRatio");
-    setContent(new HBox(makeNodeButtonPanel(), makeWorkspacePanel()));
   }
 
+  /**
+   * Returns a list of buttons that can be used to create nodes
+   * @return List<Button>
+   */
   protected abstract List<Button> getNodeButtons();
 
+  /**
+   * Returns the string that will be used to parse the nodes in the interpreter
+   * Finds the MainNode and calls getNodeParseString on it which will recursively call the method on all of its children
+   * @return String
+   */
   public String getMainNodeParseString() {
     return getMainNode().getNodeParseString();
   }
 
+  /**
+   * Returns a list of all of the nodes that are children of the MainNode
+   * @return List<AbstractNode>
+   */
   public List<AbstractNode> getMainNodeChildren() {
     return getChildrenNodes(getMainNode());
   }
 
 
+  /**
+   * Adds the given node to the group
+   * @param node
+   * @return void
+   */
   protected void addNode(AbstractNode node) {
     nodeGroup.getChildren().add(node);
     node.setBoundingBox((background.getBoundsInParent()));
   }
 
-  protected void clearAllNodes() {
+  /**
+   * Removes all of the nodes from the group
+   * @return void
+   */
+  protected void clearNodes() {
+    List<AbstractNode> nodesToRemove = new ArrayList<>();
     for (Node node : nodeGroup.getChildren()) {
       if (node instanceof AbstractNode) {
-        ((AbstractNode) node).delete();
+        nodesToRemove.add((AbstractNode) node);
       }
+    }
+    for (AbstractNode node : nodesToRemove) {
+      node.delete();
     }
   }
 
+  /**
+   * Returns a button with the given name and handler
+   * @param buttonName
+   * @param handler
+   * @return Button
+   */
   protected Button makeButton(String buttonName, EventHandler<ActionEvent> handler) {
     Button button = new Button(buttonName);
     button.setOnAction(handler);
@@ -85,6 +117,10 @@ public abstract class AbstractNodeEditorTab extends Tab {
     return button;
   }
 
+  /**
+   * Returns a scroll pane with all of the buttons that can be used to create nodes
+   * @return ScrollPane
+   */
   public ScrollPane makeNodeButtonPanel() {
     ScrollPane scrollPane = new ScrollPane();
     GridPane pane = new GridPane();
@@ -93,10 +129,32 @@ public abstract class AbstractNodeEditorTab extends Tab {
     for (Button button : buttons) {
       pane.add(button, 0, buttons.indexOf(button));
     }
+    if (this instanceof CodeEditorTab){
+      scrollPane.setContent(getAccordianFinished("Commands.json"));
+    }else {
+      scrollPane.setContent(pane);
+    }
     scrollPane.setMinSize(panelSizeRatio * windowWidth, windowHeight);
-    scrollPane.setContent(pane);
     return scrollPane;
   }
+
+  /**
+   * Returns an accordion with all of the buttons that can be used to create nodes
+   * @return Accordion
+   */
+  public Accordion getAccordion(){
+    return null;
+  }
+
+  /**
+   * Returns an accordion with all of the buttons that can be used to create nodes
+   * @return Accordion
+   */
+  public Accordion getAccordianFinished(String fileName) {
+    return null;
+  }
+
+
 
 
   public BorderPane makeWorkspacePanel() {
@@ -200,6 +258,4 @@ public abstract class AbstractNodeEditorTab extends Tab {
     }
     return nodes;
   }
-
-
 }

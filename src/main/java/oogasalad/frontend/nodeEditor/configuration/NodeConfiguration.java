@@ -18,15 +18,19 @@ import oogasalad.frontend.nodeEditor.nodes.JsonNode;
 
 public class NodeConfiguration {
 
-  Gson gson = new Gson();
+  private Gson gson = new Gson();
   private String filePath;
   private static final String COMMANDS_RESOURCE_PATH = "src/main/resources/backend/interpreter/Commands.json";
-
 
   public NodeConfiguration(String filePath) throws FileNotFoundException {
     this.filePath = filePath;
   }
 
+  /**
+   * Returns a list of NodeData objects that represent the nodes in the file
+   * 
+   * @return List<NodeData>
+   */
   public List<NodeData> getNodeData() {
     List<NodeData> nodeData = new ArrayList<>();
     try (FileReader reader = new FileReader(this.filePath)) {
@@ -53,6 +57,11 @@ public class NodeConfiguration {
     return nodeData;
   }
 
+  /**
+   * Returns a list of AbstractNode objects that represent the nodes in a load file
+   * @param nodeData
+   * @return
+   */
   public List<AbstractNode> makeNodes(List<NodeData> nodeData) {
     List<AbstractNode> nodes = new ArrayList<>();
     JsonNodeParser parser = new JsonNodeParser();

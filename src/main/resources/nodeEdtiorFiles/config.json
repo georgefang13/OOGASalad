@@ -5,40 +5,63 @@
     "inputs": []
   },
   "1": {
-    "name": "Break from loop",
-    "type": "JsonNode",
-    "inputs": []
-  },
-  "2": {
-    "name": "Function Variable",
+    "name": "If",
     "type": "JsonNode",
     "inputs": [
       ""
     ]
   },
+  "2": {
+    "name": "StartNestNode",
+    "type": "ControlNode",
+    "inputs": []
+  },
   "3": {
+    "name": "EndNestNode",
+    "type": "ControlNode",
+    "inputs": []
+  },
+  "4": {
+    "name": "DoTimes",
+    "type": "JsonNode",
+    "inputs": [
+      "",
+      ""
+    ]
+  },
+  "5": {
+    "name": "StartNestNode",
+    "type": "ControlNode",
+    "inputs": []
+  },
+  "6": {
+    "name": "EndNestNode",
+    "type": "ControlNode",
+    "inputs": []
+  },
+  "7": {
     "name": "IfElse",
     "type": "JsonNode",
     "inputs": [
       ""
     ]
   },
-  "4": {
+  "8": {
     "name": "StartNestNode",
     "type": "ControlNode",
     "inputs": []
   },
-  "5": {
+  "9": {
     "name": "EndNestNode",
     "type": "ControlNode",
     "inputs": []
   },
-  "6": {
+  "10": {
     "name": "StartNestNode",
     "type": "ControlNode",
     "inputs": []
   },
-  "7": {
+  "11": {
     "name": "EndNestNode",
     "type": "ControlNode",
     "inputs": []

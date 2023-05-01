@@ -252,7 +252,3 @@
   -fx-pref-width: -1;
   -fx-min-width: 300  !important;
 }
-
-.tooltip{
-  -fx-font-size: 40;
-}

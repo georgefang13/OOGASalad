@@ -38,6 +38,10 @@ public class JsonNode extends AbstractNode {
 
   }
 
+  /**
+   * Sets the content of the node, including the title and the input fields
+   * @return void
+   */
   @Override
   protected void setContent() {
     Label title = new Label(name);
@@ -53,6 +57,11 @@ public class JsonNode extends AbstractNode {
     });
   }
 
+
+  /**
+   * Returns the string that will be used to parse the node in the interpreter
+   * @return String
+   */
   @Override
   public String getNodeParseString() {
     List<String> inputsAsStrings = new ArrayList<>();
@@ -67,12 +76,22 @@ public class JsonNode extends AbstractNode {
     return (output + propertyManager.getText("SPACE") + this.getChildNode().getNodeParseString());
   }
 
+
+  /**
+   * Returns the record of NodeData for this node
+   * @return NodeData
+   */
   @Override
   public NodeData getNodeData(){
     this.nodeData = new NodeData(this.name, this.getClass().getSimpleName(), getInputValues());
     return this.nodeData;
   };
 
+  
+  /**
+   * Sets the input fields of this node to the given values. Used when loading in an existing node network
+   * @param values
+   */
   public void setInputFields(List<String> values){
     for(int i = 0; i < inputFields.size(); i++){
       inputFields.get(i).setText(values.get(i));
@@ -80,6 +99,10 @@ public class JsonNode extends AbstractNode {
   }
 
 
+  /**
+   * Returns the list of input values for this node
+   * @return List of input values
+   */
   private List<String> getInputValues(){
     inputValues.clear();
     for (TextField input : inputFields) {
