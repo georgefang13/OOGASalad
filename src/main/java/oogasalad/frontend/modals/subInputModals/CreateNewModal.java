@@ -14,6 +14,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import oogasalad.frontend.modals.InputModal;
 import oogasalad.frontend.modals.fields.ColorPickerComponent;
+import oogasalad.frontend.modals.fields.Field;
 import oogasalad.frontend.modals.fields.ImagePickerComponent;
 import oogasalad.frontend.modals.fields.IntegerPickerComponent;
 import oogasalad.frontend.modals.fields.TextFieldComponent;
@@ -77,7 +78,6 @@ public class CreateNewModal extends InputModal {
     for (Map.Entry<String, String> entry : map.entrySet()) {
       String propertyName = entry.getKey();
       String fieldType = propertyName.split("\\.")[propertyName.split("\\.").length - 1];
-      System.out.println(fieldType);
       String propertyValue = entry.getValue();
 
       int start = entry.getKey().toString().indexOf("*") + 1;
@@ -92,7 +92,8 @@ public class CreateNewModal extends InputModal {
 
       // Create a new instance of the field class using reflection
       Constructor<?> constructor = fieldClass.getDeclaredConstructor(String.class, String.class);
-      Object field = constructor.newInstance(labelName, propertyValue);
+      Field field = (Field) constructor.newInstance(labelName, propertyValue);
+      field.setId(labelName);
 
       // Invoke the createField() method on the field instance using reflection
       Method createFieldMethod = fieldClass.getDeclaredMethod("createField");
@@ -139,16 +140,16 @@ public class CreateNewModal extends InputModal {
   private void sendtoController(){
     Map<String, String> map = new HashMap<>();
     for (TextFieldComponent fieldComponent : textFields) {
-      map.put(fieldComponent.getLabelText(), fieldComponent.getValue());
+      map.put(fieldComponent.getId(), fieldComponent.getValue());
     }
     for (ImagePickerComponent imageComponent : ImagePickers){
-      map.put(imageComponent.getLabelText(), imageComponent.getFile().toString());
+      map.put(imageComponent.getId(), imageComponent.getFile().toString());
     }
     for (ColorPickerComponent colorComponent : colorPickers){
-      map.put(colorComponent.getLabelText(), colorComponent.getValue());
+      map.put(colorComponent.getId(), colorComponent.getValue());
     }
     for (IntegerPickerComponent integerComponent : integerPickers){
-      map.put(integerComponent.getLabelText(), Integer.toString(integerComponent.getValue()));
+      map.put(integerComponent.getId(), Integer.toString(integerComponent.getValue()));
     }
     //TODO remove, just for testing purposes
     System.out.println(map);

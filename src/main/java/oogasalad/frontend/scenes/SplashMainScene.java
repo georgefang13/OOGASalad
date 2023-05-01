@@ -126,8 +126,15 @@ private static final String DROPDOWN_BOX_ID = "DropdownBoxID";
     signUp.setUnderline(true);
     signUp.getStyleClass().add(ID_BUNDLE.getString(LOGIN_SIGNUP_ID));
     signUp.setOnMouseClicked(e -> {
-      CreateNewModal creator = new CreateNewModal(SIGN_UP);
-      creator.showAndWait();
+//      CreateNewModal creator = new CreateNewModal(SIGN_UP);
+//      creator.showAndWait();
+      if (userManager.tryRegister(usernameField.getText(), passwordField.getText(), new HashMap<>())) {
+        displayLibrary();
+      }
+      else {
+        AlertModal error = new AlertModal();
+        error.showAndWait();
+      }
     });
     loginSignUpButtons.getChildren().addAll(login, signUp);
     return loginSignUpButtons;
