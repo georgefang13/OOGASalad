@@ -1,4 +1,4 @@
-package oogasalad.gamerunner.backend.interpreter.commands;
+package oogasalad.gamerunner.backend.interpreter.commands.other;
 
 
 import oogasalad.gamerunner.backend.interpreter.Environment;
