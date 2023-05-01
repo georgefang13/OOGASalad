@@ -116,15 +116,11 @@ public class ComponentPanel extends VBox implements ModalPanel, Panel {
 
 
   public void addComponentTemplate(String name, String objectType){
-
     Button b = new Button(name);
-    b.setOnAction(e -> createNewComponentInstance(name, objectType));
-//    b.setOnMousePressed(e -> {
-//      xOffset = e.getSceneX();
-//      yOffset = e.getSceneY();
-//    });
+    b.setOnAction(e -> createNewComponentInstance(name+Integer.toString(mController.getMap().keySet().size()), objectType));
     gameComponents.getChildren().add(b);
   }
+
   private void createNewComponentInstance(String name, String objectType) {
     mController.createObjectInstance(name, objectType);
     HBox buttonLine = new HBox();
