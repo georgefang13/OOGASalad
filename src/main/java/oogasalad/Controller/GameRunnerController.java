@@ -12,6 +12,7 @@ import oogasalad.frontend.components.gameObjectComponent.GameRunner.GameRunnerOb
 import oogasalad.frontend.components.gameObjectComponent.GameRunner.Piece;
 import oogasalad.frontend.components.gameObjectComponent.GameRunner.gameObjectVisuals.AbstractSelectableVisual;
 import oogasalad.frontend.managers.GameObjectVisualSorter;
+import oogasalad.frontend.modals.subDisplayModals.AlertModal;
 import oogasalad.gamerunner.backend.Game;
 import oogasalad.sharedDependencies.backend.filemanagers.FileManager;
 
@@ -53,8 +54,6 @@ public class GameRunnerController implements GameController {
         undoButton.setOnAction(e -> game.undoClickPiece());
     }
 
-
-
     private void loadGame(String directory) throws FileNotFoundException {
         directory = directory + "/frontend";
         loadDropZones(directory);
@@ -76,10 +75,19 @@ public class GameRunnerController implements GameController {
             int y = Integer.parseInt(fm.getString(id, "y"));
             int height = Integer.parseInt(fm.getString(id, "height"));
             int width = Integer.parseInt(fm.getString(id, "width"));
+            DropZoneFE.DropZoneDistribution distrubution = DropZoneFE.DropZoneDistribution.HORIZONTAL;
+            try {
+                String s = fm.getString(id, "distribution");
+                switch (s) {
+                    case "horizontal" -> distrubution = DropZoneFE.DropZoneDistribution.HORIZONTAL;
+                    case "vertical" -> distrubution = DropZoneFE.DropZoneDistribution.VERTICAL;
+                    case "collapse" -> distrubution = DropZoneFE.DropZoneDistribution.COLLAPSE;
+                }
+            } catch (Exception ignored) { }
 
             AbstractSelectableVisual.SelectableVisualParams unselected = loadDropParamsFromFile("unselected",fm,id,directory);
             AbstractSelectableVisual.SelectableVisualParams selected = loadDropParamsFromFile("selected",fm,id,directory);
-            addDropZone(new GameController.DropZoneParameters(id, unselected, selected, x, y, height, width));
+            addDropZone(new GameController.DropZoneParameters(id, unselected, selected, x, y, height, width, distrubution));
         }
     }
 
@@ -112,6 +120,7 @@ public class GameRunnerController implements GameController {
     @Override
     public void addDropZone(GameController.DropZoneParameters params) {
             DropZoneFE dropZone = new DropZoneFE(params.id(), params.unselected(), params.selected(), params.width(), params.height(), params.x(),params.y(),this);
+            dropZone.setDistribution(params.distribution());
             gameObjects.put(params.id(),dropZone);
             addGameObject(params.id(),dropZone);
     }
@@ -131,27 +140,17 @@ public class GameRunnerController implements GameController {
     private void removeGameObject(String id){
         gameObjectVisualsList.remove(gameObjects.get(id).getNode());
         gameObjects.remove(id);
-        /*
-        Platform.runLater(() -> {
-
-        });
-
-         */
     }
 
     @Override
     public void setClickable(List<String> ids) {
-        clearClickables();
-        clickable.addAll(ids);
-        for (String id : ids){
-            gameObjects.get(id).makePlayable();
-        }
-        /*
         Platform.runLater(() -> {
-
+            clearClickables();
+            clickable.addAll(ids);
+            for (String id : ids){
+                gameObjects.get(id).makePlayable();
+            }
         });
-
-         */
     }
 
     @Override
@@ -161,21 +160,40 @@ public class GameRunnerController implements GameController {
 
             removeFromDropZone(piece, getPieceLocation(piece));
             putInDropZone(piece, dropZone);
-
             setPiecesInDropZone(dropZone);
     }
 
     private void setPiecesInDropZone(DropZoneFE dz){
         List<Piece> pieces = dropZonePieces.get(dz);
-        Bounds bounds = dz.getDropZoneBounds();
-        double x = bounds.getMinX();
-        double width = bounds.getWidth();
-        System.out.println("width: " + width);
-        double height = dz.getDropZoneCenter().getY();
-        for (int i = 0; i < pieces.size(); i++){
-            double px = x + width * ((i+1.) / (pieces.size() + 1));
-            pieces.get(i).moveToDropZoneXY(new Point2D(px, height));
+        DropZoneFE.DropZoneDistribution distribution = dz.getDistribution();
+
+        if (distribution == DropZoneFE.DropZoneDistribution.COLLAPSE){
+            for (Piece piece : pieces){
+                piece.moveToDropZoneXY(dz.getDropZoneCenter());
+            }
         }
+        else if (distribution == DropZoneFE.DropZoneDistribution.HORIZONTAL){
+            Bounds bounds = dz.getDropZoneBounds();
+            double x = bounds.getMinX();
+            double width = bounds.getWidth();
+            double height = dz.getDropZoneCenter().getY();
+            for (int i = 0; i < pieces.size(); i++){
+                double px = x + width * ((i+1.) / (pieces.size() + 1));
+                pieces.get(i).moveToDropZoneXY(new Point2D(px, height));
+            }
+        }
+        else if (distribution == DropZoneFE.DropZoneDistribution.VERTICAL) {
+            Bounds bounds = dz.getDropZoneBounds();
+            double y = bounds.getMinY();
+            double height = bounds.getHeight();
+            double width = dz.getDropZoneCenter().getX();
+            for (int i = 0; i < pieces.size(); i++) {
+                double py = y + height * ((i + 1.) / (pieces.size() + 1));
+                pieces.get(i).moveToDropZoneXY(new Point2D(width, py));
+            }
+        }
+
+
     }
 
     private DropZoneFE getPieceLocation(Piece obj){
@@ -201,7 +219,10 @@ public class GameRunnerController implements GameController {
 
     @Override
     public void removePiece(String pieceID) {
+        Platform.runLater(() -> {
             removeGameObject(pieceID);
+        });
+
     }
 
     @Override
@@ -212,7 +233,10 @@ public class GameRunnerController implements GameController {
 
         Node oldObjectVisual = gameObject.getNode();
         gameObject.setSelectableVisual(unselected, selected);
-        updateVisualDisplay(gameObject, oldObjectVisual);
+
+        Platform.runLater(() -> {
+            updateVisualDisplay(gameObject, oldObjectVisual);
+        });
     }
 
     private void updateVisualDisplay(GameRunnerObject gameObject, Node oldObjectVisual) {
@@ -232,6 +256,12 @@ public class GameRunnerController implements GameController {
         Node oldObjectVisual = gameObject.getNode();
         gameObject.setSelectVisual(selected);
         updateVisualDisplay(gameObject, oldObjectVisual);
+    }
+
+    @Override
+    public void endGame(int player) {
+        AlertModal alertModal = new AlertModal("GameWinHeader", "GameWinBody");
+        alertModal.showAlert();
     }
 
     private void clearClickables(){

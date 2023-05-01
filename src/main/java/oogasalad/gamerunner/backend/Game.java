@@ -262,8 +262,7 @@ public class Game implements GameToInterpreterAPI{
 
             // check goals
             if (playerWin != -1){
-                // TODO end game
-                System.out.println("Player " + playerWin + " wins!");
+                controller.endGame(playerWin);
             }
 
             fsm.transition();
@@ -415,8 +414,13 @@ public class Game implements GameToInterpreterAPI{
 
     @Override
     public void setPieceHighlight(Ownable piece, String highlight) {
+
         String id = idManager.getId(piece);
-        String imagePath = this.directory + "/assets/" + highlight;
+        System.out.println("Setting highlight to " + id + " " + highlight);
+        String imagePath = highlight;
+        if (!imagePath.startsWith("#")){
+            imagePath = this.directory + "/assets/" + imagePath;
+        }
         controller.setPieceHighlight(id, imagePath);
     }
 
