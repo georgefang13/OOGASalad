@@ -7,6 +7,7 @@ import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import oogasalad.frontend.components.AbstractComponent;
+import oogasalad.frontend.components.dropzoneComponent.Dropzone;
 
 
 /**
@@ -19,9 +20,12 @@ public class GameObject extends AbstractComponent implements GameObjectComponent
   private List<Node> children;
 
   private ImageView image;
+  private Dropzone zone;
   private double width;
   private double height;
   private double rotate;
+  private Dropzone dropzone;
+  private double dropzoneID;
 
   public GameObject(String ID) {
     super(ID);

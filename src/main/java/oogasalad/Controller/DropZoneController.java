@@ -77,6 +77,9 @@ public class DropZoneController implements ControllerSubscriber {
 
     }
   }
+  public List<Dropzone> getValidatedDropzone(){
+    return validatedDropzone;
+  }
   public void addGridObject(Component c){
     try{
       validatedGridObject.add((GridObject) c);

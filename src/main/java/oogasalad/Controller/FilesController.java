@@ -33,7 +33,7 @@ public class FilesController {
    */
   public FilesController(String name) {
     gameFolder = GAMES_PATH + name;
-    game = new GameInator();
+    game = new GameInator(name);
   }
 
   /**
