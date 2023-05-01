@@ -46,9 +46,7 @@ public class NodeLogicPanel extends Pane implements Panel {
   }
 
   @Override
-  public Panel refreshPanel() {
-    return null;
-  }
+  public void refreshPanel() {}
 
   @Override
   public String getTitle() {

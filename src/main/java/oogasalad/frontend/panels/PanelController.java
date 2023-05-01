@@ -18,6 +18,12 @@ public class PanelController {
     this.sceneController = sceneController;
     panelMap = new HashMap<>();
   }
+  public void updatePanel(String panelID){
+    panelMap.get(panelID).makePanel();
+  }
+  public void registerPanel(String panelID,Panel panel){
+    panelMap.put(panelID,panel);
+  }
 
   public void newSceneFromPanel(String newSceneID, SceneTypes sceneType) {
     sceneController.addAndLinkScene(sceneType, newSceneID);

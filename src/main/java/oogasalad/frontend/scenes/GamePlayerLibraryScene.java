@@ -22,7 +22,7 @@ public class GamePlayerLibraryScene extends AbstractScene {
   public Scene makeScene() {
     root = new BorderPane();
     root.setTop(gameLibraryHeader = new HeaderPanel(panelController, "library"));
-    root.setLeft(sortedGamesPanel = new SortedGamesPanel());
+    root.setLeft(sortedGamesPanel = new SortedGamesPanel(panelController));
     root.setCenter(libraryGridPanel = new LibraryGridPanel(panelController));
     setScene(new Scene(root));
     setText();
