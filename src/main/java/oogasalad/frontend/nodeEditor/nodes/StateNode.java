@@ -4,18 +4,21 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-import oogasalad.frontend.nodeEditor.CodeEditorTab;
+import oogasalad.frontend.nodeEditor.tabs.CodeEditorTab;
 import oogasalad.frontend.nodeEditor.configuration.NodeData;
 import oogasalad.frontend.nodeEditor.NodeController;
 
 import java.util.ArrayList;
 
+/**
+ * @author Joao Carvalho
+ * @author Connor Wells-Weiner
+ */
 public class StateNode extends AbstractNode implements ControlNode {
 
   private TextField stateName;
   private GridPane buttonGrid;
   private NodeController nodeController;
-
 
 
   public StateNode(NodeController nodeController) {
@@ -81,7 +84,8 @@ public class StateNode extends AbstractNode implements ControlNode {
    * @return void
    */
   private void onInitialize(ActionEvent event) {
-    nodeController.openAndSwitchToTab(new CodeEditorTab(nodeController, stateName.getText(), "on enter"));
+    nodeController.openAndSwitchToTab(
+        new CodeEditorTab(nodeController, stateName.getText(), "on enter"));
   }
 
   /**
@@ -91,7 +95,8 @@ public class StateNode extends AbstractNode implements ControlNode {
    * @return void
    */
   private void onLeave(ActionEvent event) {
-    nodeController.openAndSwitchToTab(new CodeEditorTab(nodeController, stateName.getText(), "on leave"));
+    nodeController.openAndSwitchToTab(
+        new CodeEditorTab(nodeController, stateName.getText(), "on leave"));
   }
 
   /**
@@ -101,7 +106,8 @@ public class StateNode extends AbstractNode implements ControlNode {
    * @return void
    */
   private void onSetValue(ActionEvent event) {
-    nodeController.openAndSwitchToTab(new CodeEditorTab(nodeController, stateName.getText(), "select"));
+    nodeController.openAndSwitchToTab(
+        new CodeEditorTab(nodeController, stateName.getText(), "select"));
   }
 
   /**
@@ -111,6 +117,7 @@ public class StateNode extends AbstractNode implements ControlNode {
    * @return void
    */
   private void onNext(ActionEvent event) {
-    nodeController.openAndSwitchToTab(new CodeEditorTab(nodeController, stateName.getText(), "next"));
+    nodeController.openAndSwitchToTab(
+        new CodeEditorTab(nodeController, stateName.getText(), "next"));
   }
 }

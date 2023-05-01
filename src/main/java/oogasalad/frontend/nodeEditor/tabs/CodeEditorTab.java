@@ -1,4 +1,4 @@
-package oogasalad.frontend.nodeEditor;
+package oogasalad.frontend.nodeEditor.tabs;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -12,12 +12,18 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.util.Duration;
+import oogasalad.frontend.nodeEditor.Command;
+import oogasalad.frontend.nodeEditor.JsonNodeParser;
+import oogasalad.frontend.nodeEditor.NodeController;
 import oogasalad.frontend.nodeEditor.nodes.AbstractNode;
 import oogasalad.frontend.nodeEditor.nodes.EndNestNode;
 import oogasalad.frontend.nodeEditor.nodes.JsonNode;
 import oogasalad.frontend.nodeEditor.nodes.StartNestNode;
 
-
+/**
+ * @author Joao Carvalho
+ * @author Connor Wells-Weiner
+ */
 public class CodeEditorTab extends AbstractNodeEditorTab {
 
   protected String state, action;

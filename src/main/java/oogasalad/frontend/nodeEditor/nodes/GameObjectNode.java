@@ -4,27 +4,29 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import oogasalad.frontend.nodeEditor.tabs.GameObjectTab;
 import oogasalad.frontend.nodeEditor.tabs.GoalTab;
 import oogasalad.frontend.nodeEditor.configuration.NodeData;
 import oogasalad.frontend.nodeEditor.NodeController;
 
 import java.util.ArrayList;
+
 /**
  * @author Joao Carvalho
  * @author Connor Wells-Weiner
  */
-public class GoalNode extends AbstractNode implements ControlNode {
+public class GameObjectNode extends AbstractNode implements ControlNode {
 
-  private TextField goalName;
+  private TextField gameObjectName;
   private GridPane buttonGrid;
   private NodeController nodeController;
 
 
-  public GoalNode(NodeController nodeController) {
+  public GameObjectNode(NodeController nodeController) {
     super();
     this.nodeController = nodeController;
     setContent();
-    this.getStyleClass().add(propertyManager.getText("GoalNode.StyleClass"));
+    this.getStyleClass().add(propertyManager.getText("GameObjectNode.StyleClass"));
   }
 
   /**
@@ -34,16 +36,16 @@ public class GoalNode extends AbstractNode implements ControlNode {
    */
   @Override
   protected void setContent() {
-    Label title = new Label(propertyManager.getText("GoalNode.Title"));
-    title.getStyleClass().add(propertyManager.getText("GoalNode.TitleClass"));
+    Label title = new Label(propertyManager.getText("GameObjectNode.Title"));
+    title.getStyleClass().add(propertyManager.getText("GameObjectNode.TitleClass"));
     buttonGrid = new GridPane();
     this.getChildren().addAll(title, buttonGrid);
-    goalName = new TextField();
-    goalName.setPromptText(propertyManager.getText("GoalNode.NameLabel"));
+    gameObjectName = new TextField();
+    gameObjectName.setPromptText(propertyManager.getText("GameObjectNode.NameLabel"));
     buttonGrid.add(
-        goalName, 0, 0);
+        gameObjectName, 0, 0);
     buttonGrid.add(
-        makeButton(propertyManager.getText("GoalNode.GoalLabel"), this::goal), 0, 1);
+        makeButton(propertyManager.getText("GameObjectNode.GoalLabel"), this::goal), 0, 1);
   }
 
   /**
@@ -75,8 +77,8 @@ public class GoalNode extends AbstractNode implements ControlNode {
    * @return void
    */
   private void goal(ActionEvent event) {
-    GoalTab goalTab = new GoalTab(nodeController, goalName.getText());
-    nodeController.openAndSwitchToTab(goalTab);
+    GameObjectTab tab = new GameObjectTab(nodeController, gameObjectName.getText());
+    nodeController.openAndSwitchToTab(tab);
   }
 
 

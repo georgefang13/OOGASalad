@@ -21,6 +21,7 @@ public class HeaderMenuPanel extends HBox implements Panel, ModalPanel {
       "frontend/properties/text/english");
   private static final String LOGIC_EDITOR = "LogicEditor";
   private static final String VISUAL_EDITOR = "VisualEditor";
+  private static final String RULE_EDITOR = "RuleEditor";
   private static final String SAVE_EDITOR = "SaveEditor";
   private static final ResourceBundle ID_BUNDLE = ResourceBundle.getBundle(
       "frontend/properties/StylingIDs/CSS_ID");
@@ -57,6 +58,7 @@ public class HeaderMenuPanel extends HBox implements Panel, ModalPanel {
     this.getStyleClass().add(ID_BUNDLE.getString(MENU_HBOX_ID));
     Button logicButton = buttonFactory.createDefaultButton(LOGIC_EDITOR);
     Button visualButton = buttonFactory.createDefaultButton(VISUAL_EDITOR);
+//    Button ruleButton = buttonFactory.createDefaultButton(RULE_EDITOR);
     Button compileButton = buttonFactory.createDefaultButton(SAVE_EDITOR);
 
     selectSceneButtonSettings(logicButton, visualButton);
@@ -67,6 +69,9 @@ public class HeaderMenuPanel extends HBox implements Panel, ModalPanel {
     visualButton.setOnAction(e -> {
       panelController.newSceneFromPanel(editor, WindowScenes.EDITOR_SCENE);
     });
+//    ruleButton.setOnAction(e -> {
+//      panelController.newSceneFromPanel()//TODO: JOAO LIKE ABOVE
+//    });
     compileButton.setOnAction(e -> {
       CreateNewModal creator = new CreateNewModal("save", modalController.dropzoneList());
       modalController.setRoot(root);

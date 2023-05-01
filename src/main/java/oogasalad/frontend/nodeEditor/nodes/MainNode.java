@@ -5,6 +5,10 @@ import oogasalad.frontend.nodeEditor.configuration.NodeData;
 
 import java.util.ArrayList;
 
+/**
+ * @author Joao Carvalho
+ * @author Connor Wells-Weiner
+ */
 public class MainNode extends AbstractNode implements ControlNode {
 
   public MainNode() {

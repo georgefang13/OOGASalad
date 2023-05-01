@@ -1,7 +1,5 @@
 package oogasalad.frontend.panels.editorPanels;
 
-import java.awt.*;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.scene.Node;
@@ -9,7 +7,6 @@ import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TitledPane;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -18,7 +15,7 @@ import oogasalad.frontend.modals.ModalController;
 import oogasalad.frontend.modals.subInputModals.CreateNewModal;
 import oogasalad.frontend.panels.ModalPanel;
 import oogasalad.frontend.panels.Panel;
-import oogasalad.sharedDependencies.backend.filemanagers.FileManager;
+import oogasalad.frontend.windows.NodeWindow;
 
 public class ComponentPanel extends VBox implements ModalPanel, Panel {
 
@@ -121,7 +118,6 @@ public class ComponentPanel extends VBox implements ModalPanel, Panel {
     Button b2 = new Button("Define Rules");
     templateLine.getChildren().addAll(b1,b2);
     b1.setOnAction(e -> createNewComponentInstance(name+Integer.toString(mController.getMap().keySet().size()), objectType));
-    //b2.setOnAction(e -> ());
     gameComponents.getChildren().add(templateLine);
   }
 
