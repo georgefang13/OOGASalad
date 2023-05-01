@@ -19,7 +19,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import oogasalad.frontend.factories.ButtonFactory;
-import oogasalad.frontend.panels.AbstractGridPanePanel;
+import oogasalad.frontend.panels.AbstractScrollPanePanel;
 import oogasalad.frontend.panels.Panel;
 import oogasalad.frontend.panels.PanelController;
 import oogasalad.frontend.scenes.AbstractScene;
@@ -32,7 +32,7 @@ import oogasalad.sharedDependencies.backend.filemanagers.FileManager;
 import org.kordamp.ikonli.fontawesome5.FontAwesomeSolid;
 import org.kordamp.ikonli.javafx.FontIcon;
 
-public class LibraryGridPanel extends AbstractGridPanePanel implements Panel {
+public class LibraryScrollPanel extends AbstractScrollPanePanel implements Panel {
   private static final String GAMES_FILEPATH = "data/games/";
   private static final String GAMES_FILEPATH_WITH_FILE = "file:data/games/";
   private static final ResourceBundle ID_BUNDLE = ResourceBundle.getBundle(
@@ -65,7 +65,7 @@ public class LibraryGridPanel extends AbstractGridPanePanel implements Panel {
   /**
    * Constructor for the environment panel
    */
-  public LibraryGridPanel(PanelController panelController) {
+  public LibraryScrollPanel(PanelController panelController) {
     super(panelController, "library");
     this.panelController = panelController;
     this.makePanel();
