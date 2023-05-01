@@ -6,14 +6,22 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.layout.VBox;
 import oogasalad.frontend.panels.Panel;
 import oogasalad.frontend.panels.PanelController;
+import org.checkerframework.checker.units.qual.C;
 
 public class SortedGamesPanel extends VBox implements Panel {
 
   private static final ResourceBundle ELEMENT_LABELS = ResourceBundle.getBundle(
       "frontend/properties/text/english");
+  private static final String ALL_GAMES = ELEMENT_LABELS.getString("AllGames");
+  private static final String BOARD_GAMES = ELEMENT_LABELS.getString("BoardGames");
+  private static final String CARD_GAMES = ELEMENT_LABELS.getString("CardGames");
+  private static final String GRID_GAMES = ELEMENT_LABELS.getString("GridGames");
+  private static final String USER_GAMES = ELEMENT_LABELS.getString("UserGames");
   private static final ResourceBundle ID_BUNDLE = ResourceBundle.getBundle(
       "frontend/properties/StylingIDs/CSS_ID");
   private static final String SORTED_GAMES_VBOX_ID = "SortedGamesVBoxID";
+  private static final String SORTED_GAMES_TEXT_ID = "SortedGamesTextID";
+  private static final String SORTED_GAMES_TEXT_ALL_ID = "SortedGamesTextAllID";
 
   /**
    * Constructor for HeaderMenu
@@ -35,11 +43,16 @@ public class SortedGamesPanel extends VBox implements Panel {
   private VBox createSortedGamesVBox() {
     VBox sortedGamesVBox = new VBox();
     sortedGamesVBox.getStyleClass().add(ID_BUNDLE.getString(SORTED_GAMES_VBOX_ID));
-    Hyperlink allGames = new Hyperlink("Game 1");
-    Hyperlink boardGames = new Hyperlink("Game 2");
-    Hyperlink cardGames = new Hyperlink("Game 3");
-    Hyperlink gridGames = new Hyperlink("Game 4");
-    Hyperlink userGames = new Hyperlink("Game 5");
+    Hyperlink allGames = new Hyperlink(ALL_GAMES);
+    allGames.getStyleClass().add(ID_BUNDLE.getString(SORTED_GAMES_TEXT_ALL_ID));
+    Hyperlink boardGames = new Hyperlink(BOARD_GAMES);
+    boardGames.getStyleClass().add(ID_BUNDLE.getString(SORTED_GAMES_TEXT_ID));
+    Hyperlink cardGames = new Hyperlink(CARD_GAMES);
+    cardGames.getStyleClass().add(ID_BUNDLE.getString(SORTED_GAMES_TEXT_ID));
+    Hyperlink gridGames = new Hyperlink(GRID_GAMES);
+    gridGames.getStyleClass().add(ID_BUNDLE.getString(SORTED_GAMES_TEXT_ID));
+    Hyperlink userGames = new Hyperlink(USER_GAMES);
+    userGames.getStyleClass().add(ID_BUNDLE.getString(SORTED_GAMES_TEXT_ID));
     sortedGamesVBox.getChildren().addAll(allGames, boardGames, cardGames, gridGames, userGames);
     return sortedGamesVBox;
   }
