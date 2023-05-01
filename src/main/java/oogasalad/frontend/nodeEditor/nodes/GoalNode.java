@@ -1,44 +1,61 @@
 package oogasalad.frontend.nodeEditor.nodes;
 
+import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
 import oogasalad.frontend.nodeEditor.configuration.NodeData;
+import oogasalad.frontend.nodeEditor.NodeController;
 
 import java.util.ArrayList;
 
 public class GoalNode extends AbstractNode implements ControlNode {
 
-  public GoalNode() {
+  private TextField goalName;
+  private GridPane buttonGrid;
+  private NodeController nodeController;
+
+
+
+  public GoalNode(NodeController nodeController) {
     super();
-    setTranslateY(propertyManager.getNumeric("GoalNode.StartOffset"));
+    this.nodeController = nodeController;
     setContent();
     this.getStyleClass().add(propertyManager.getText("GoalNode.StyleClass"));
   }
 
   /**
    * sets the content for the node
+   *
    * @return void
    */
   @Override
   protected void setContent() {
     Label title = new Label(propertyManager.getText("GoalNode.Title"));
-    this.getChildren().add(title);
+    title.getStyleClass().add(propertyManager.getText("GoalNode.TitleClass"));
+    buttonGrid = new GridPane();
+    this.getChildren().addAll(title, buttonGrid);
+    goalName = new TextField();
+    goalName.setPromptText(propertyManager.getText("GoalNode.NameLabel"));
+    buttonGrid.add(
+        goalName, 0, 0);
+    buttonGrid.add(
+        makeButton(propertyManager.getText("GoalNode.GoalLabel"), this::goal), 0, 1);
   }
 
   /**
    * gets the string that will be used to parse the node in the interpreter
+   *
    * @return String
    */
   @Override
   public String getNodeParseString() {
-    if (this.getChildNode() != null) {
-      return this.getChildNode().getNodeParseString();
-    }
-    return propertyManager.getText("EmptyString");
+    return "";
   }
-
 
   /**
    * Returns the record of NodeData for this node
+   *
    * @return NodeData
    */
   @Override
@@ -49,11 +66,14 @@ public class GoalNode extends AbstractNode implements ControlNode {
 
 
   /**
-   * Deletes the node. Empty implementation for MainNode because it can't be deleted
+   * initializes a tab and switches to it for the on enter event
+   *
+   * @param event
    * @return void
    */
-  @Override
-  public void delete() {
+  private void goal(ActionEvent event) {
+    nodeController.openAndSwitchToTab("Goal", goalName.getText());
   }
+
 
 }

@@ -21,13 +21,15 @@ public class StateEditorTab extends AbstractNodeEditorTab {
   protected List<Button> getNodeButtons() {
     return List.of(
         makeButton("State",
-            event -> makeNode(NODES_FOLDER + "StateNode"))
+            event -> makeNode(NODES_FOLDER + "StateNode")),
+        makeButton("Goal",
+            event -> makeNode(NODES_FOLDER + "GoalNode"))
     );
   }
 
   public BorderPane makeWorkspacePanel() {
     BorderPane borderPane = super.makeWorkspacePanel();
-    addNode(new GoalNode());
+//    addNode(new GoalNode(nodeController));
     return borderPane;
   }
 

@@ -33,7 +33,6 @@ public class NodeScene extends AbstractScene {
     super();
     this.nodeController = nodeController;
     tabs.getTabs().add(makeTab("state editor", false, new StateEditorTab(nodeController)));
-    tabs.getTabs().add(makeTab("goal editor", false, new GoalEditorTab(nodeController)));
     setTheme();
   }
 
@@ -91,8 +90,13 @@ public class NodeScene extends AbstractScene {
    */
   public void saveAllContent(String filePath) {
     Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    JsonObject fullObject = new JsonObject();
     JsonObject stateObject = new JsonObject();
+    JsonObject goalObject = new JsonObject();
     for (Entry<Tab, CodeEditorTab> entry : tabMap.entrySet()) {
+      if (entry.getValue() instanceof GoalEditorTab) {
+        //goalObject.addJs();
+      }
       String state = entry.getValue().getState();
       String action = entry.getValue().getAction();
       String content = entry.getValue().getMainNodeParseString();
