@@ -121,5 +121,9 @@ public class Variable<T> extends Ownable {
   public String toString(){
     return "Var<" + value + ">";
   }
+
+  public String getType() {
+    return value.getClass().getSimpleName();
+  }
 }
 

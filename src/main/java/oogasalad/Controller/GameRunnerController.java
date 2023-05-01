@@ -165,5 +165,9 @@ public class GameRunnerController implements GameController {
         Collections.sort(gameObjectVisualsList, gameObjectVisualComparator);
         return gameObjectVisualsList;
     }
+
+    @Override
+    public void passGameId(String code) {
+    }
 }
 

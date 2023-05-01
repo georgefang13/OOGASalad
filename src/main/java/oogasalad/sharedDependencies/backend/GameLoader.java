@@ -157,12 +157,17 @@ public class GameLoader {
             List<String> owns = StreamSupport.stream(fm.getArray(id, "owns").spliterator(), false).toList();
 
             Owner own = gameWorld;
-            if (!owner.isEmpty()){
+            if (!owner.isEmpty() && Integer.parseInt(owner) != -1){
                 own = players.get(Integer.parseInt(owner));
             }
 
             GameObject obj = new GameObject(own);
             fm.getArray(id, "classes").forEach(obj::addClass);
+
+            //reassign id to everything after the "." if it has one
+            if (id.contains(".")){
+                id = id.substring(id.indexOf(".") + 1);
+            }
 
             idManager.addObject(obj, id);
             DropZone dz = (DropZone) idManager.getObject(location);
@@ -180,6 +185,9 @@ public class GameLoader {
             int ownerNum = fm.getObject(Integer.class, id, "owner");
 
             String type = fm.getString(id, "type");
+            if(type.equals("null")) {
+                type = "java.lang.Object";
+            }
             Class<?> clazz = Class.forName(type);
             Object obj = fm.getObject(clazz, id, "value");
 
@@ -188,7 +196,10 @@ public class GameLoader {
             Owner owner = ownerNum != -1 ? players.get(ownerNum) : gameWorld;
             var = new Variable<>(obj, owner);
 
-            fm.getArray(id, "classes").forEach(var::addClass);
+            //reassign id to everything after the "." if it has one
+            if (id.contains(".")){
+                id = id.substring(id.indexOf(".") + 1);
+            }
 
             idManager.addObject(var, id);
         }

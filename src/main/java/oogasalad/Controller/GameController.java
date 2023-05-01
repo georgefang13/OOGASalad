@@ -9,6 +9,7 @@ import java.util.List;
 
 public interface GameController {
 
+
     void addDropZone(DropZoneParameters params);
 
     void addPiece(String id, String image, String dropZoneID, boolean hasSelectImage, Object param, double height, double width) throws FileNotFoundException;
@@ -24,6 +25,7 @@ public interface GameController {
     void select(String dropID);
     boolean isObjectPlayable(String id);
     ObservableList<Node> getGameObjectVisuals();
+    void passGameId(String code);
 
     record DropZoneParameters(String id, DropZoneFE.selectableVisualParams unselected, DropZoneFE.selectableVisualParams selected, int x, int y, int height, int width){}
 

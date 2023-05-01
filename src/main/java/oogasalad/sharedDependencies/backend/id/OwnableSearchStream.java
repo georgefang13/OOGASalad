@@ -69,8 +69,26 @@ public class OwnableSearchStream {
     };
   }
 
+  /**
+   * Checks if an object is owned by another ownable. Checks for any ownership, not direct.
+   * @param owner the owner ownable
+   * @return a Predicate that returns if an object is owned by an ownable
+   */
   public Predicate<Ownable> isOwnedByOwnable(Ownable owner) {
     return ownable -> ownableIdManager.getId(ownable).startsWith(ownableIdManager.getId(owner) + ".");
+  }
+
+  /**
+   * Checks if an ownable is directly owned by another ownable
+   * @param owner the owner ownable
+   * @return a Predicate that returns if the object is directly owned by an ownable
+   */
+  public Predicate<Ownable> isDirectlyOwnedByOwnable(Ownable owner) {
+    String ownerId = ownableIdManager.getId(owner);
+    return ownable -> {
+      String ownableId = ownableIdManager.getId(ownable);
+      return ownableId.startsWith(ownerId + ".");
+    };
   }
 
 }

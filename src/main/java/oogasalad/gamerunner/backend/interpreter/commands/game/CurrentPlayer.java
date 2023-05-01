@@ -17,7 +17,7 @@ public class CurrentPlayer extends OperatorToken {
         Token t = env.getLocalVariable(":game_turn").evaluate(env);
 
         ValueToken<Double> turn = checkArgumentWithSubtype(env, t, ValueToken.class, Double.class.getName());
-        Player p = env.getGame().getPlayer(turn.VALUE.intValue());
+        Player p = (Player) env.getGame().getPlayer(turn.VALUE.intValue());
 
         return new ValueToken<>(p);
     }

@@ -1,4 +1,4 @@
-package oogasalad.gamerunner.backend.interpreter.commands.game;
+package oogasalad.gamerunner.backend.interpreter.commands.dropzones;
 
 import java.util.List;
 import oogasalad.gamerunner.backend.interpreter.Environment;
