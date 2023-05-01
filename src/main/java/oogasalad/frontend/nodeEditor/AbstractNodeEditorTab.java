@@ -55,13 +55,16 @@ public abstract class AbstractNodeEditorTab extends Tab {
 
   /**
    * Returns a list of buttons that can be used to create nodes
+   *
    * @return List<Button>
    */
   protected abstract List<Button> getNodeButtons();
 
   /**
-   * Returns the string that will be used to parse the nodes in the interpreter
-   * Finds the MainNode and calls getNodeParseString on it which will recursively call the method on all of its children
+   * Returns the string that will be used to parse the nodes in the interpreter Finds the MainNode
+   * and calls getNodeParseString on it which will recursively call the method on all of its
+   * children
+   *
    * @return String
    */
   public String getMainNodeParseString() {
@@ -70,6 +73,7 @@ public abstract class AbstractNodeEditorTab extends Tab {
 
   /**
    * Returns a list of all of the nodes that are children of the MainNode
+   *
    * @return List<AbstractNode>
    */
   public List<AbstractNode> getMainNodeChildren() {
@@ -79,16 +83,18 @@ public abstract class AbstractNodeEditorTab extends Tab {
 
   /**
    * Adds the given node to the group
+   *
    * @param node
    * @return void
    */
   protected void addNode(AbstractNode node) {
     nodeGroup.getChildren().add(node);
-    node.setBoundingBox((background.getBoundsInParent()));
+    node.setBoundingBox(background.getBoundsInParent());
   }
 
   /**
    * Removes all of the nodes from the group
+   *
    * @return void
    */
   protected void clearNodes() {
@@ -105,6 +111,7 @@ public abstract class AbstractNodeEditorTab extends Tab {
 
   /**
    * Returns a button with the given name and handler
+   *
    * @param buttonName
    * @param handler
    * @return Button
@@ -119,6 +126,7 @@ public abstract class AbstractNodeEditorTab extends Tab {
 
   /**
    * Returns a scroll pane with all of the buttons that can be used to create nodes
+   *
    * @return ScrollPane
    */
   public ScrollPane makeNodeButtonPanel() {
@@ -129,9 +137,9 @@ public abstract class AbstractNodeEditorTab extends Tab {
     for (Button button : buttons) {
       pane.add(button, 0, buttons.indexOf(button));
     }
-    if (this instanceof CodeEditorTab){
+    if (this instanceof CodeEditorTab) {
       scrollPane.setContent(getAccordianFinished("Commands.json"));
-    }else {
+    } else {
       scrollPane.setContent(pane);
     }
     scrollPane.setMinSize(panelSizeRatio * windowWidth, windowHeight);
@@ -140,21 +148,21 @@ public abstract class AbstractNodeEditorTab extends Tab {
 
   /**
    * Returns an accordion with all of the buttons that can be used to create nodes
+   *
    * @return Accordion
    */
-  public Accordion getAccordion(){
+  public Accordion getAccordion() {
     return null;
   }
 
   /**
    * Returns an accordion with all of the buttons that can be used to create nodes
+   *
    * @return Accordion
    */
   public Accordion getAccordianFinished(String fileName) {
     return null;
   }
-
-
 
 
   public BorderPane makeWorkspacePanel() {
@@ -187,7 +195,8 @@ public abstract class AbstractNodeEditorTab extends Tab {
     double maxScale = propertyManager.getNumeric("AbstractNodeEdtiorTab.MaxScale");
     double step = propertyManager.getNumeric("AbstractNodeEdtiorTab.ZoomStep");
     double zoomRatio = maxScale / defaultScale;
-    background = new Rectangle(zoomRatio * (1 - panelSizeRatio) * windowWidth, zoomRatio * windowHeight,
+    background = new Rectangle(zoomRatio * (1 - panelSizeRatio) * windowWidth,
+        zoomRatio * windowHeight,
         Color.LIGHTGRAY);
     nodeGroup = new Group(background);
     nodeGroup.setScaleX(defaultScale);
@@ -226,8 +235,8 @@ public abstract class AbstractNodeEditorTab extends Tab {
     if (newVvalue >= 1.0 && nodeWorkspace.getPrefHeight() < Double.MAX_VALUE) {
       nodeWorkspace.setPrefHeight(nodeWorkspace.getPrefHeight() + extendSize);
       background.setHeight(background.getHeight() + extendSize);
-      updateBoundingBoxAllNodes();
     }
+    updateBoundingBoxAllNodes();
     event.consume();
   }
 

@@ -125,10 +125,8 @@ public class CodeEditorTab extends AbstractNodeEditorTab {
    */
   private Button makeButton(Command command) {
     Button button = new Button(command.name());
-    String folderName = command.folder();
-//        folderNames.add(folderName);
     Tooltip tip = new Tooltip(command.description());
-    tip.setShowDelay(Duration.millis(0));
+    tip.setShowDelay(Duration.millis(50));
     Tooltip.install(button, tip);
     setButtonActionFromCommand(command, button);
     return button;
@@ -146,16 +144,13 @@ public class CodeEditorTab extends AbstractNodeEditorTab {
       try {
         AbstractNode node = new JsonNode(command.name(), command.innerBlocks(),
             command.parseStr(), command.inputs());
-        nodeGroup.getChildren().add(node);
-        node.setBoundingBox(nodeWorkspace.getBoundsInParent());
+        addNode(node);
         for (String nestBlock : command.innerBlocks()) {
           AbstractNode start = new StartNestNode();
-          nodeGroup.getChildren().add(start);
-          start.setBoundingBox(nodeWorkspace.getBoundsInParent());
+          addNode(start);
           start.snapToNode(node);
           AbstractNode end = new EndNestNode();
-          nodeGroup.getChildren().add(end);
-          end.setBoundingBox(nodeWorkspace.getBoundsInParent());
+          addNode(end);
           end.snapToNode(start);
         }
       } catch (Exception e) {
