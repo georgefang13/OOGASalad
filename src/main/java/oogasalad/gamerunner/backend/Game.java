@@ -606,7 +606,7 @@ public class Game implements GameToInterpreterAPI{
     public void setPieceHighlight(Ownable piece, String highlight) {
         String id = idManager.getId(piece);
         String imagePath = this.directory + "/assets/" + highlight;
-        //controller.setPieceHighlight(id, imagePath);
+        controller.setPieceHighlight(id, imagePath);
     }
 
     @Override
