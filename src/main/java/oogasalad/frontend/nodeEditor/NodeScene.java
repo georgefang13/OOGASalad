@@ -23,6 +23,7 @@ import oogasalad.frontend.nodeEditor.nodes.AbstractNode;
 import oogasalad.frontend.scenes.AbstractScene;
 
 public class NodeScene extends AbstractScene {
+  private String gameName;
 
   private TabPane tabs;
   Map<Tab, CodeEditorTab> tabMap;
@@ -34,6 +35,8 @@ public class NodeScene extends AbstractScene {
     this.nodeController = nodeController;
     tabs.getTabs().add(makeTab("state editor", false, new StateEditorTab(nodeController)));
     setTheme();
+    gameName = sceneController.getGameName();
+    System.out.println(gameName);
   }
 
   /**
