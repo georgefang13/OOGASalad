@@ -107,7 +107,10 @@ public class CreateNewModal extends InputModal {
         propertyValue = values.get(labelName);
       } else {
         propertyValue = entry.getValue();
-        System.out.println(entry.getValue());
+      }
+
+      if(labelName.equals("dropzoneID")) {
+        propertyValue = String.join(",", dropzoneIDs);
       }
 
       // Get the field class corresponding to the property name using reflection

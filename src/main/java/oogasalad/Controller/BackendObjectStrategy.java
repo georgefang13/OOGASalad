@@ -41,6 +41,7 @@ public class BackendObjectStrategy {
       param.put(ObjectParameter.CONSTRUCTOR_ARGS, map);
       param.put(ObjectParameter.ID, map.get("ID"));
       param.put(ObjectParameter.OWNER, map.get("Parent"));
+      param.put(ObjectParameter.DROPZONE_ID, map.get("dropzoneID"));
     }
     if(type.equals(bundle.getString("Grids"))){
       HashMap<Object, Object> construct = new HashMap<>();
