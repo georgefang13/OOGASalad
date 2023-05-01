@@ -28,6 +28,7 @@ public class JsonNodeParser {
     for (String key : obj.keySet()) {
       JsonObject value = (JsonObject) obj.get(key);
       String name = value.get("name").getAsString();
+      String foler = value.get("folder").getAsString();
       JsonObject specs = value.get("specs").getAsJsonObject();
       String description = value.get("description").getAsString();
       JsonArray innerBlocksArray = specs.get("innerBlocks").getAsJsonArray();
@@ -43,7 +44,7 @@ public class JsonNodeParser {
         String inpName = inpObj.get("name").getAsString();
         inputList.add(inpName);
       }
-      commands.add(new Command(name, description, innerBlocks, parseStr, inputList));
+      commands.add(new Command(name, foler, description, innerBlocks, parseStr, inputList));
     }
     return commands;
   }

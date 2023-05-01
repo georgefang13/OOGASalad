@@ -8,13 +8,8 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
-import javafx.scene.control.Tab;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -124,9 +119,20 @@ AbstractNodePanel extends Tab {
       pane.add(button, 0, temp.indexOf(button));
     }
     pane.setMinSize(windowWidth / 4, windowHeight);
-    scrollPane.setContent(pane);
+    if (this instanceof CodeEditorPanel){
+      scrollPane.setContent(getAccordianFinished("Commands.json"));
+    }else {
+      scrollPane.setContent(pane);
+    }
     scrollPane.setMinSize(windowWidth / 4, windowHeight);
     return scrollPane;
+  }
+
+  public Accordion getAccordion(){
+    return null;
+  }
+  public Accordion getAccordianFinished(String fileName) {
+    return null;
   }
 
 

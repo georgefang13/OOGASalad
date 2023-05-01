@@ -1,7 +1,7 @@
 {
   "MakeVariable": {
     "name": "Make Variable",
-    "folder": "",
+    "folder": "Other",
     "str": "make",
     "description": "Creates a new variable and sets its value",
     "example": "make :x 1 # make <var_name> <value>",
@@ -14,7 +14,7 @@
   },
   "True": {
     "name": "True",
-    "folder": "",
+    "folder": "Other",
     "str": "true",
     "description": "true",
     "example": "true # true",
@@ -27,7 +27,7 @@
   },
   "False": {
     "name": "False",
-    "folder": "",
+    "folder": "Other",
     "str": "false",
     "description": "false",
     "example": "false # false",
@@ -40,7 +40,7 @@
   },
   "Null": {
     "name": "Null",
-    "folder": "",
+    "folder": "Other",
     "str": "null",
     "description": "null",
     "example": "null # null",
