@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 package oogasalad.sharedDependencies.backend.rules;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

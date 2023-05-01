@@ -49,6 +49,9 @@ public class GameRunnerController implements GameController {
     public void assignUndoButtonAction(Button undoButton){
         undoButton.setOnAction(e -> game.undoClickPiece());
     }
+
+
+
     private void loadGame(String directory) throws FileNotFoundException {
         directory = directory + "/frontend";
         loadDropZones(directory);
@@ -164,6 +167,14 @@ public class GameRunnerController implements GameController {
         newObjectVisual.setTranslateY(oldObjectVisual.getTranslateY());
         gameObjectVisualsList.remove(oldObjectVisual);
         gameObjectVisualsList.add(newObjectVisual);
+    }
+
+    @Override
+    public void setPieceHighlight(String id, String img) {
+        boolean isImg = !img.contains("#");
+
+
+
     }
 
     private void clearClickables(){

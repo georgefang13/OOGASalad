@@ -84,6 +84,8 @@ public interface GameController {
 
     void assignUndoButtonAction(Button undoButton);
 
+    void setPieceHighlight(String id, String img);
+
     record DropZoneParameters(String id, AbstractSelectableVisual.SelectableVisualParams unselected, AbstractSelectableVisual.SelectableVisualParams selected, int x, int y, int height, int width){}
 
 }
