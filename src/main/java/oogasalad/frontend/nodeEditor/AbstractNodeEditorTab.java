@@ -2,6 +2,7 @@ package oogasalad.frontend.nodeEditor;
 
 import java.util.ArrayList;
 import java.util.List;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
@@ -239,7 +240,7 @@ public abstract class AbstractNodeEditorTab extends Tab {
     updateBoundingBoxAllNodes();
     event.consume();
   }
-
+  
   private void updateBoundingBoxAllNodes() {
     for (Node node : nodeGroup.getChildren()) {
       if (node instanceof AbstractNode) {

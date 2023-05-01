@@ -149,6 +149,7 @@ public class CodeEditorTab extends AbstractNodeEditorTab {
         for (String nestBlock : command.innerBlocks()) {
           AbstractNode start = new StartNestNode();
           addNode(start);
+          start.snapToNode(node);
           AbstractNode end = new EndNestNode();
           addNode(end);
           end.snapToNode(start);

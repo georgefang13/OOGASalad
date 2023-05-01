@@ -27,7 +27,7 @@ public class JsonNode extends AbstractNode {
     this.getStyleClass().add(propertyManager.getText("JsonNode.StyleClass"));
   }
 
-  public JsonNode(Command command){
+  public JsonNode(Command command) {
     super();
     this.name = command.name();
     this.innerBlocks = command.innerBlocks();
@@ -40,6 +40,7 @@ public class JsonNode extends AbstractNode {
 
   /**
    * Sets the content of the node, including the title and the input fields
+   *
    * @return void
    */
   @Override
@@ -60,6 +61,7 @@ public class JsonNode extends AbstractNode {
 
   /**
    * Returns the string that will be used to parse the node in the interpreter
+   *
    * @return String
    */
   @Override
@@ -79,21 +81,26 @@ public class JsonNode extends AbstractNode {
 
   /**
    * Returns the record of NodeData for this node
+   *
    * @return NodeData
    */
   @Override
-  public NodeData getNodeData(){
+  public NodeData getNodeData() {
     this.nodeData = new NodeData(this.name, this.getClass().getSimpleName(), getInputValues());
     return this.nodeData;
-  };
+  }
 
-  
+  ;
+
+
   /**
-   * Sets the input fields of this node to the given values. Used when loading in an existing node network
+   * Sets the input fields of this node to the given values. Used when loading in an existing node
+   * network
+   *
    * @param values
    */
-  public void setInputFields(List<String> values){
-    for(int i = 0; i < inputFields.size(); i++){
+  public void setInputFields(List<String> values) {
+    for (int i = 0; i < inputFields.size(); i++) {
       inputFields.get(i).setText(values.get(i));
     }
   }
@@ -101,9 +108,10 @@ public class JsonNode extends AbstractNode {
 
   /**
    * Returns the list of input values for this node
+   *
    * @return List of input values
    */
-  private List<String> getInputValues(){
+  private List<String> getInputValues() {
     inputValues.clear();
     for (TextField input : inputFields) {
       inputValues.add(input.getText().toString());

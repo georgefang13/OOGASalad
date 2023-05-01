@@ -1,6 +1,8 @@
 package oogasalad.frontend.nodeEditor.nodes;
 
-import javafx.application.Platform;
+import javafx.util.Duration;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Bounds;
@@ -80,6 +82,7 @@ public abstract class AbstractNode extends VBox implements DraggableNode {
       node.setChildNode(this);
       this.setParentNode(node);
     }
+
   }
 
 
@@ -94,19 +97,23 @@ public abstract class AbstractNode extends VBox implements DraggableNode {
    */
   @Override
   public void alignNodes(AbstractNode fromNode, AbstractNode toNode) {
-    if (toNode instanceof StartNestNode) {
-      if (fromNode instanceof EndNestNode) {
-        fromNode.move(toNode.getTranslateX(), toNode.getTranslateY() + toNode.getHeight());
-      } else {
-        fromNode.move(toNode.getTranslateX() + indent,
+    Timeline timeline = new Timeline(new KeyFrame(Duration.millis(25), event -> {
+      if (toNode instanceof StartNestNode) {
+        if (fromNode instanceof EndNestNode) {
+          fromNode.move(toNode.getTranslateX(), toNode.getTranslateY() + toNode.getHeight());
+        } else {
+          fromNode.move(toNode.getTranslateX() + indent,
+              toNode.getTranslateY() + toNode.getHeight());
+        }
+      } else if (fromNode instanceof EndNestNode) {
+        fromNode.move(toNode.getTranslateX() - indent,
             toNode.getTranslateY() + toNode.getHeight());
+      } else {
+        fromNode.move(toNode.getTranslateX(), toNode.getTranslateY() + toNode.getHeight());
       }
-    } else if (fromNode instanceof EndNestNode) {
-      fromNode.move(toNode.getTranslateX() - indent,
-          toNode.getTranslateY() + toNode.getHeight());
-    } else {
-      fromNode.move(toNode.getTranslateX(), toNode.getTranslateY() + toNode.getHeight());
-    }
+
+    }));
+    timeline.play();
   }
 
   /**
