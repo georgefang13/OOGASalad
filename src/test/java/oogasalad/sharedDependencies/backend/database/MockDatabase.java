@@ -9,11 +9,16 @@ public class MockDatabase extends Database {
 
   private static final String PROJECT_ID = "duvalley-boiz-test";
 
-  public MockDatabase() {
-    this(PROJECT_ID, INFO_PATH, URL);
+  private static Database instance = null;
+
+  private MockDatabase() {
+    instance = getInstance(PROJECT_ID, INFO_PATH, URL);
   }
 
-  public MockDatabase(String projectId, String infoPath, String url) {
-    super(projectId, infoPath, url);
+  public static synchronized Database getInstance() {
+    if (instance == null) {
+      instance = new MockDatabase();
+    }
+    return instance;
   }
 }

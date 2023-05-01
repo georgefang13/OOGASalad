@@ -26,12 +26,12 @@ public class ModalScene extends AbstractScene {
     VBox root = new VBox();
     createGameButton = new Button("Create New Game");
     createGameButton.setOnAction(e -> {
-      CreateNewModal modal = new CreateNewModal("Create_Game_Modal");
+      CreateNewModal modal = new CreateNewModal("Create_Game_Modal", null);
       modal.showAndWait();
     });
     Button playerButton = new Button("Create New Player");
     playerButton.setOnAction(e -> {
-      CreateNewModal modal = new CreateNewModal("Create_Player_Modal");
+      CreateNewModal modal = new CreateNewModal("Create_Player_Modal", null);
       modal.showAndWait();
     });
     root.getChildren().add(playerButton);

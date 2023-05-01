@@ -103,6 +103,7 @@ public class GameRunnerController implements GameController {
     }
     @Override
     public void select(String id) {
+        System.out.println(id);
         if (clickable.contains(id)) {
             game.clickPiece(id);
         }
@@ -128,21 +129,29 @@ public class GameRunnerController implements GameController {
             gameObjectVisualsList.add(gameObject.getNode());
     }
     private void removeGameObject(String id){
+        gameObjectVisualsList.remove(gameObjects.get(id).getNode());
+        gameObjects.remove(id);
+        /*
         Platform.runLater(() -> {
-            gameObjectVisualsList.remove(gameObjects.get(id).getNode());
-            gameObjects.remove(id);
+
         });
+
+         */
     }
 
     @Override
     public void setClickable(List<String> ids) {
+        clearClickables();
+        clickable.addAll(ids);
+        for (String id : ids){
+            gameObjects.get(id).makePlayable();
+        }
+        /*
         Platform.runLater(() -> {
-            clearClickables();
-            clickable.addAll(ids);
-            for (String id : ids){
-                gameObjects.get(id).makePlayable();
-            }
+
         });
+
+         */
     }
 
     @Override
@@ -233,6 +242,7 @@ public class GameRunnerController implements GameController {
     }
     @Override
     public boolean isObjectPlayable(String id){
+
         return gameObjects.get(id).getPlayable();
     }
 
@@ -252,6 +262,7 @@ public class GameRunnerController implements GameController {
 
     @Override
     public void addTextObject(String id, String text, String DropZoneID) {
+
 
     }
 

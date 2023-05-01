@@ -1,17 +1,17 @@
 package oogasalad.frontend.modals;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import javafx.scene.layout.Pane;
+import oogasalad.Controller.BackendObjectController;
 import oogasalad.Controller.DropZoneController;
 import oogasalad.Controller.FilesController;
 import oogasalad.frontend.components.Component;
 import oogasalad.frontend.components.ComponentsFactory;
 import oogasalad.frontend.components.GraphicHandler;
+import oogasalad.frontend.components.dropzoneComponent.Dropzone;
 import oogasalad.frontend.panels.ModalPanel;
-import oogasalad.frontend.panels.Panel;
-import oogasalad.frontend.panels.editorPanels.ComponentPanel;
 
 /**
  * @author Han Allows the Modal to Communicate inputs and actions back with the rest of frontend
@@ -25,6 +25,7 @@ public class ModalController {
   private ComponentsFactory factory;
   private FilesController files;
   private DropZoneController dropZoneController;
+  private BackendObjectController backendObjectController;
   public ModalController(ModalPanel componentPanel) {
     parentPanel = componentPanel;
     factory = new ComponentsFactory();
@@ -35,6 +36,8 @@ public class ModalController {
 
   public void setFileController(FilesController newController){
     files = newController;
+    backendObjectController = new BackendObjectController();
+    backendObjectController.setGame(files.getGame());
   }
 
   public void createObjectTemplate(Map<String, String> map, String objectType) {
@@ -59,6 +62,7 @@ public class ModalController {
     files.addComponent(c);
     dropZoneController.addDropZone(c);
     dropZoneController.addGridObject(c);
+    backendObjectController.sendOwnableObject(c);
     GraphicHandler handler = new GraphicHandler();
     handler.moveToCenter(c);
     root.getChildren().add(c.getNode());
@@ -69,13 +73,18 @@ public class ModalController {
     objectType = objectType.substring(0, 1).toUpperCase() + objectType.substring(1);
     root.getChildren().remove(activeComponents.get(name).getNode());
     Component c = factory.create(objectType, map);
+    c.setID(activeComponents.get(name).getID());
     activeComponents.put(name, c);
     GraphicHandler handler = new GraphicHandler();
     handler.moveToCenter(c);
+    backendObjectController.editOwnableObject(c);
     root.getChildren().add(c.getNode());
   }
 
   public void deleteObjectInstance(String name) {
+    Component c = activeComponents.get(name);
+    backendObjectController.deleteOwnableObject(c);
+    dropZoneController.deleteArrows(c, root);
     root.getChildren().remove(activeComponents.get(name).getNode());
   }
 
@@ -92,5 +101,9 @@ public class ModalController {
 
   public void configGeneral(Map<String, String> map) {
     files.setGeneral(map);
+  }
+
+  public List<String> dropzoneList(){
+    return dropZoneController.getValidatedDropzone();
   }
 }

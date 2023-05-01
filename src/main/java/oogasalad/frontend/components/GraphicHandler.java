@@ -85,9 +85,6 @@ public class GraphicHandler {
       for (Node node : ((GridPane)c.getNode()).getChildren()) {
         node.setTranslateX(500 + node.getLayoutX());
         node.setTranslateY(250 + node.getLayoutY());
-        System.out.println("X Translate: " + node.getTranslateX());
-        System.out.println("Y Translate: " + node.getTranslateY());
-        System.out.println(node.getLayoutX());
       }
     }
     else{

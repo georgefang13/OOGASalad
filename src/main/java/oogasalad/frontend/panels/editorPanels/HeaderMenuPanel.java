@@ -68,7 +68,7 @@ public class HeaderMenuPanel extends HBox implements Panel, ModalPanel {
       panelController.newSceneFromPanel(editor, WindowScenes.EDITOR_SCENE);
     });
     compileButton.setOnAction(e -> {
-      CreateNewModal creator = new CreateNewModal("save");
+      CreateNewModal creator = new CreateNewModal("save", modalController.dropzoneList());
       modalController.setRoot(root);
       creator.attach(modalController);
       creator.showAndWait();

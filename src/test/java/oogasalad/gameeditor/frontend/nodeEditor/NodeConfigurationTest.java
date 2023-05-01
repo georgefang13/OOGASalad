@@ -1,7 +1,7 @@
 package oogasalad.gameeditor.frontend.nodeEditor;
 
-import oogasalad.frontend.nodeEditor.Config.NodeConfiguration;
-import oogasalad.frontend.nodeEditor.Config.NodeData;
+import oogasalad.frontend.nodeEditor.configuration.NodeConfiguration;
+import oogasalad.frontend.nodeEditor.configuration.NodeData;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import util.DukeApplicationTest;

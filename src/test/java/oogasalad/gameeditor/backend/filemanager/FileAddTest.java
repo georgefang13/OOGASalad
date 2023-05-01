@@ -110,6 +110,15 @@ public class FileAddTest {
     saveAndCompare("DIFFERENT_TYPES");
   }
 
+  @Test
+  void substituteTest() {
+    fileManager.addUniqueContent("Rodrigo", "person1", "name");
+    fileManager.addUniqueContent("Hot Rod", "person2", "name");
+    fileManager.addUniqueContent("NOT RODRIGO!", "person1", "name");
+    assertEquals("Hot Rod", fileManager.getString("person2", "name"));
+    assertEquals("NOT RODRIGO!", fileManager.getString("person1", "name"));
+  }
+
   private void saveAndCompare(String key) {
     fileManager.saveToFile(FILE_FOLDER + "/" + resources.getString("TEST"));
     JsonElement singleTag = getJsonFromFile(FILE_FOLDER + "/" + resources.getString(key));
