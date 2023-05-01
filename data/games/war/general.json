@@ -3,7 +3,7 @@
   "author": "DuVALLEY Boiz",
   "image": "assets/Default.png",
   "description": "A nice, usual game of tic-tac-toe. Your goal is to get 3 in a row!",
-  "tags": ["all", "board game", "grid game", "card game"],
+  "tags": ["all", "card game"],
   "players": {
     "min": 2,
     "max": 2

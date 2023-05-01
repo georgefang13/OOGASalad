@@ -33,9 +33,7 @@ public abstract class IdManageable {
    * @param className the name of the class to remove
    */
   public void removeClass(String className) {
-    if (classes.contains(className)) {
-      classes.remove(className);
-    }
+    classes.remove(className);
   }
 
   /**

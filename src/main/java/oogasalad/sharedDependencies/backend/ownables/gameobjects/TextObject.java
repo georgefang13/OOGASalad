@@ -11,7 +11,7 @@ import java.util.function.Consumer;
 public class TextObject extends GameObject{
     private String text = "";
     private Consumer<String> reaction;
-    private Map<Variable, VariableListener> listeners = new HashMap<>();
+    private final Map<Variable, VariableListener> listeners = new HashMap<>();
     public TextObject(Owner owner) {
         super(owner);
         reaction = (s) -> {};
