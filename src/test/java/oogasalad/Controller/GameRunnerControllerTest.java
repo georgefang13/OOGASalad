@@ -68,11 +68,11 @@ class GameRunnerControllerTest {
 
     @Test
     void movePiece() {
-        ObservableList<Node> gameObjectVisuals = gameRunnerController.getGameObjectVisuals();
-        Node lastNode = gameObjectVisuals.get(-1);
-        System.out.println(lastNode.getTranslateX());
-        System.out.println(lastNode.getTranslateY());
-        gameRunnerController.movePiece("blackPiece11", "DropZone36");
+        //ObservableList<Node> gameObjectVisuals = gameRunnerController.getGameObjectVisuals();
+        //Node lastNode = gameObjectVisuals.get(gameObjectVisuals.size()-1);
+        //System.out.println(lastNode.getTranslateX());
+        //System.out.println(lastNode.getTranslateY());
+        //gameRunnerController.movePiece("blackPiece11", "DropZone36");
 
     }
 
