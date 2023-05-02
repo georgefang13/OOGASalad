@@ -22,6 +22,8 @@ import oogasalad.frontend.nodeEditor.configuration.NodeConfiguration;
 import oogasalad.frontend.nodeEditor.configuration.NodeData;
 import oogasalad.frontend.nodeEditor.nodes.AbstractNode;
 import oogasalad.frontend.scenes.AbstractScene;
+import oogasalad.frontend.scenes.SceneController;
+import oogasalad.frontend.scenes.SceneMediator;
 
 /**
  * @author Joao Carvalho
@@ -35,13 +37,18 @@ public class NodeScene extends AbstractScene {
   Map<Tab, CodeEditorTab> tabMap;
   private NodeController nodeController;
 
+  private final String GAME_FILEPATH = "data/games/";
 
-  public NodeScene(NodeController nodeController) {
+  private SceneMediator mySceneController;
+
+
+  public NodeScene(NodeController nodeController, SceneMediator sceneController){
     super();
     this.nodeController = nodeController;
     tabs.getTabs().add(makeTab("state editor", false, new StateEditorTab(nodeController)));
     setTheme();
-//    gameName = sceneController.getGameName(); //todo
+    this.mySceneController = sceneController;
+    gameName = mySceneController.getGameName(); //todo
   }
 
   /**
@@ -121,7 +128,7 @@ public class NodeScene extends AbstractScene {
     }
     fullObject.add("states", stateObject);
     fullObject.add("goal", goalArray);
-    try (FileWriter fileWriter = new FileWriter(INTERPRETER_FILES_PATH + "save.json")) {
+    try (FileWriter fileWriter = new FileWriter(GAME_FILEPATH + gameName + "/save.json")) {
       gson.toJson(fullObject, fileWriter);
     } catch (IOException e) {
       e.printStackTrace();

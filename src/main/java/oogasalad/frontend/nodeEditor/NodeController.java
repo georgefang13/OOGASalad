@@ -6,6 +6,8 @@ import oogasalad.frontend.managers.PropertyManager;
 import oogasalad.frontend.managers.StandardPropertyManager;
 import oogasalad.frontend.nodeEditor.tabs.CodeEditorTab;
 import oogasalad.frontend.nodeEditor.tabs.NodeScene;
+import oogasalad.frontend.scenes.SceneController;
+import oogasalad.frontend.scenes.SceneMediator;
 import oogasalad.frontend.windows.NodeWindow;
 
 /**
@@ -18,7 +20,7 @@ public class NodeController {
   protected PropertyManager propertyManager = StandardPropertyManager.getInstance();
 
   public NodeController(NodeWindow nodeWindow) {
-    scene = new NodeScene(this);
+    scene = new NodeScene(this, null);
     Stage stage = new Stage();
     stage.setScene(scene.getScene());
     stage.show();
@@ -28,8 +30,12 @@ public class NodeController {
     //nodeWindow.showScene(scene);
   }
 
-  public NodeController() {
-    scene = new NodeScene(this);
+//  public NodeController() {
+//    scene = new NodeScene(this);
+//  }
+
+  public NodeController(SceneMediator sceneController) {
+    scene = new NodeScene(this, sceneController);
   }
 
   public void saveInterpreterFiles(String userCodeFilesPath) {

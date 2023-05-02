@@ -69,6 +69,7 @@ public class SceneController implements SceneMediator{
   }
   @Override
   public String getGameName() {
-    return getWindow().getGameName();
+    return "Joao";
+//    return getWindow().getGameName();
   }
 }

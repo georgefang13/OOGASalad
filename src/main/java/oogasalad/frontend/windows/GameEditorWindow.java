@@ -43,6 +43,7 @@ public class GameEditorWindow extends AbstractWindow {
       return new GameEditorEditorScene(this.sceneController);
     } else if (sceneType.equals(WindowScenes.LOGIC_SCENE)) {
       logger.trace("Added new GameEditorLogicScene ↑");
+      System.out.println("I made with this: " + this.sceneController);
       return new GameEditorLogicScene(this.sceneController);
     }
     logger.warn("Invalid scene type: "); // TODO add a sceneType string

@@ -1,0 +1,32 @@
+{
+  "0": {
+    "name": "MainNode",
+    "type": "ControlNode",
+    "inputs": []
+  },
+  "1": {
+    "name": "If",
+    "type": "JsonNode",
+    "inputs": [
+      "this works"
+    ]
+  },
+  "2": {
+    "name": "StartNestNode",
+    "type": "ControlNode",
+    "inputs": []
+  },
+  "3": {
+    "name": "EndNestNode",
+    "type": "ControlNode",
+    "inputs": []
+  },
+  "4": {
+    "name": "And",
+    "type": "JsonNode",
+    "inputs": [
+      "i will ",
+      "cry"
+    ]
+  }
+}

@@ -18,6 +18,7 @@ public class GameEditorLogicScene extends AbstractScene {
   private HeaderMenuPanel headerMenu;
   private ComponentPanel componentPanel;
   private NodeController nodeController;
+//  private SceneMediator sceneController;
   private static final String LOGIC_EDITOR_SCENE = "logic";
 
   public GameEditorLogicScene(SceneMediator sceneController) {
@@ -43,7 +44,8 @@ public class GameEditorLogicScene extends AbstractScene {
   }
 
   private void createCenterPanel() {
-    nodeController = new NodeController();
+    System.out.println(this.sceneController);
+    nodeController = new NodeController(this.sceneController);
   }
 
   private void createTopPanel() {
