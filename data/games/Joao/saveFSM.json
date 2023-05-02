@@ -3,11 +3,12 @@
     "state1": {
       "on enter": "",
       "on leave": "",
-      "select": "",
-      "next": ""
+      "next": "",
+      "select": ""
     }
   },
   "goal": [
+    "",
     ""
   ]
 }

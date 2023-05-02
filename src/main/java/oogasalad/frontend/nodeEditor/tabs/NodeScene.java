@@ -38,6 +38,7 @@ public class NodeScene extends AbstractScene {
   private NodeController nodeController;
 
   private final String GAME_FILEPATH = "data/games/";
+  private final String GAME_NODE_SAVE_PATH = "data/games/Joao/NodeConfig/";
 
   private SceneMediator mySceneController;
 
@@ -188,7 +189,7 @@ public class NodeScene extends AbstractScene {
         stateObject.add(i.toString(), stateJson);
         i++;
       }
-      try (FileWriter fileWriter = new FileWriter(USER_CODE_FILES_PATH + fileName + ".json")) {
+      try (FileWriter fileWriter = new FileWriter(GAME_NODE_SAVE_PATH + fileName + ".json")) {
         gson.toJson(stateObject, fileWriter);
       } catch (IOException e) {
         e.printStackTrace();
