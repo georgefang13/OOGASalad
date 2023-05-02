@@ -105,11 +105,14 @@ public class NodeScene extends AbstractScene {
     JsonObject fullObject = new JsonObject();
     JsonObject stateObject = new JsonObject();
     JsonArray goalArray = new JsonArray();
+    JsonArray gameObjectsArray = new JsonArray();
     for (Entry<Tab, CodeEditorTab> entry : tabMap.entrySet()) {
       CodeEditorTab tab = entry.getValue();
       if (tab instanceof GoalTab) {
         goalArray.add(tab.getMainNodeParseString());
-      } else {
+      } else if(tab instanceof GameObjectTab) {
+        gameObjectsArray.add(tab.getMainNodeParseString());
+      }else {
         String state = entry.getValue().getState();
         String action = entry.getValue().getAction();
         String content = entry.getValue().getMainNodeParseString();
@@ -128,11 +131,19 @@ public class NodeScene extends AbstractScene {
     }
     fullObject.add("states", stateObject);
     fullObject.add("goal", goalArray);
-    try (FileWriter fileWriter = new FileWriter(GAME_FILEPATH + gameName + "/save.json")) {
+    try (FileWriter fileWriter = new FileWriter(GAME_FILEPATH + gameName + "/saveFSM.json")) {
       gson.toJson(fullObject, fileWriter);
     } catch (IOException e) {
       e.printStackTrace();
     }
+    try (FileWriter fileWriter = new FileWriter(GAME_FILEPATH + gameName + "/saveRules.json")) {
+      JsonObject rulesObject = new JsonObject();
+      rulesObject.add("Rules", gameObjectsArray);
+      gson.toJson(rulesObject, fileWriter);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
   }
 
 
