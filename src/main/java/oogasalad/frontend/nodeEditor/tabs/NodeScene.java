@@ -104,6 +104,7 @@ public class NodeScene extends AbstractScene {
     Gson gson = new GsonBuilder().setPrettyPrinting().create();
     JsonObject fullObject = new JsonObject();
     JsonObject stateObject = new JsonObject();
+    JsonObject rulesObjectArr = new JsonObject();
     JsonArray goalArray = new JsonArray();
     JsonArray gameObjectsArray = new JsonArray();
     for (Entry<Tab, CodeEditorTab> entry : tabMap.entrySet()) {
@@ -111,7 +112,21 @@ public class NodeScene extends AbstractScene {
       if (tab instanceof GoalTab) {
         goalArray.add(tab.getMainNodeParseString());
       } else if(tab instanceof GameObjectTab) {
-        gameObjectsArray.add(tab.getMainNodeParseString());
+        String state = entry.getValue().getState();
+        String action = entry.getValue().getAction();
+        String content = entry.getValue().getMainNodeParseString();
+        List<AbstractNode> listOfNodes = entry.getValue().getMainNodeChildren();
+        String configName = state + action;
+        makeConfigFile(listOfNodes, configName);
+        if (!rulesObjectArr.has(state)) {
+          JsonObject ruleJson = new JsonObject();
+          ruleJson.addProperty(action, content);
+          rulesObjectArr.add(state, ruleJson);
+        } else {
+          JsonObject ruleJson = rulesObjectArr.get(state).getAsJsonObject();
+          ruleJson.addProperty(action, content);
+        }
+//        gameObjectsArray.add(tab.getMainNodeParseString());
       }else {
         String state = entry.getValue().getState();
         String action = entry.getValue().getAction();
@@ -138,8 +153,8 @@ public class NodeScene extends AbstractScene {
     }
     try (FileWriter fileWriter = new FileWriter(GAME_FILEPATH + gameName + "/saveRules.json")) {
       JsonObject rulesObject = new JsonObject();
-      rulesObject.add("Rules", gameObjectsArray);
-      gson.toJson(rulesObject, fileWriter);
+      rulesObject.add("Rules", rulesObjectArr);
+      gson.toJson(rulesObjectArr, fileWriter);
     } catch (IOException e) {
       e.printStackTrace();
     }

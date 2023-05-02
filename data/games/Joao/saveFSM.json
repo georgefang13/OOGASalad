@@ -1,13 +1,13 @@
 {
   "states": {
-    "Init": {
-      "on enter": "dotimes [ :  ]  [  ]  "
-    },
-    "exit": {
-      "select": "putdzitem  "
+    "state1": {
+      "on enter": "",
+      "on leave": "",
+      "select": "",
+      "next": ""
     }
   },
   "goal": [
-    "putdzitem  "
+    ""
   ]
 }

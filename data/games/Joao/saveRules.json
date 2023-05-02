@@ -1,5 +1,7 @@
 {
-  "Rules": [
-    "objchildrenofclass  dotimes [ :  ]  [  ]  "
-  ]
+  "gameObject": {
+    "": "",
+    "rule 2": "",
+    "rule 1": ""
+  }
 }
