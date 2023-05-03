@@ -1,0 +1,632 @@
+{
+    "dice": {
+        "width": 40,
+        "height": 60,
+        "location": "dicedz",
+        "selected": {
+            "hasSelectedImage": false,
+            "param": "#ff0000"
+        },
+        "defaultImage": "dice.png"
+    },
+    "piece0": {
+        "width": 30,
+        "height": 30,
+        "location": "go",
+        "selected": {
+            "hasSelectedImage": true,
+            "param": "ironselected.png"
+        },
+        "defaultImage": "iron.png"
+    },
+    "piece1": {
+        "width": 30,
+        "height": 30,
+        "location": "go",
+        "selected": {
+            "hasSelectedImage": true,
+            "param": "thimbleselected.png"
+        },
+        "defaultImage": "thimble.png"
+    },
+    "piece2": {
+        "width": 30,
+        "height": 30,
+        "location": "go",
+        "selected": {
+            "hasSelectedImage": true,
+            "param": "carselected.png"
+        },
+        "defaultImage": "car.png"
+    },
+    "piece3": {
+        "width": 30,
+        "height": 30,
+        "location": "go",
+        "selected": {
+            "hasSelectedImage": true,
+            "param": "hatselected.png"
+        },
+        "defaultImage": "hat.png"
+    },
+    "chance1": {
+        "width": 120,
+        "height": 90,
+        "location": "chancedz",
+        "selected": {
+            "hasSelectedImage": true,
+            "param": "Chance1.png"
+        },
+        "defaultImage": "Chance1.png"
+    },
+    "chance2": {
+        "width": 120,
+        "height": 90,
+        "location": "chancedz",
+        "selected": {
+            "hasSelectedImage": true,
+            "param": "Chance2.png"
+        },
+        "defaultImage": "Chance2.png"
+    },
+    "chance3": {
+        "width": 120,
+        "height": 90,
+        "location": "chancedz",
+        "selected": {
+            "hasSelectedImage": true,
+            "param": "Chance3.png"
+        },
+        "defaultImage": "Chance3.png"
+    },
+    "chance4": {
+        "width": 120,
+        "height": 90,
+        "location": "chancedz",
+        "selected": {
+            "hasSelectedImage": true,
+            "param": "Chance4.png"
+        },
+        "defaultImage": "Chance4.png"
+    },
+    "chance5": {
+        "width": 120,
+        "height": 90,
+        "location": "chancedz",
+        "selected": {
+            "hasSelectedImage": true,
+            "param": "Chance5.png"
+        },
+        "defaultImage": "Chance5.png"
+    },
+    "chance6": {
+        "width": 120,
+        "height": 90,
+        "location": "chancedz",
+        "selected": {
+            "hasSelectedImage": true,
+            "param": "Chance6.png"
+        },
+        "defaultImage": "Chance6.png"
+    },
+    "chance7": {
+        "width": 120,
+        "height": 90,
+        "location": "chancedz",
+        "selected": {
+            "hasSelectedImage": true,
+            "param": "Chance7.png"
+        },
+        "defaultImage": "Chance7.png"
+    },
+    "chance8": {
+        "width": 120,
+        "height": 90,
+        "location": "chancedz",
+        "selected": {
+            "hasSelectedImage": true,
+            "param": "Chance8.png"
+        },
+        "defaultImage": "Chance8.png"
+    },
+    "chance9": {
+        "width": 120,
+        "height": 90,
+        "location": "chancedz",
+        "selected": {
+            "hasSelectedImage": true,
+            "param": "Chance9.png"
+        },
+        "defaultImage": "Chance9.png"
+    },
+    "chance10": {
+        "width": 120,
+        "height": 90,
+        "location": "chancedz",
+        "selected": {
+            "hasSelectedImage": true,
+            "param": "Chance10.png"
+        },
+        "defaultImage": "Chance10.png"
+    },
+    "chance11": {
+        "width": 120,
+        "height": 90,
+        "location": "chancedz",
+        "selected": {
+            "hasSelectedImage": true,
+            "param": "Chance11.png"
+        },
+        "defaultImage": "Chance11.png"
+    },
+    "chance12": {
+        "width": 120,
+        "height": 90,
+        "location": "chancedz",
+        "selected": {
+            "hasSelectedImage": true,
+            "param": "Chance12.png"
+        },
+        "defaultImage": "Chance12.png"
+    },
+    "chance13": {
+        "width": 120,
+        "height": 90,
+        "location": "chancedz",
+        "selected": {
+            "hasSelectedImage": true,
+            "param": "Chance13.png"
+        },
+        "defaultImage": "Chance13.png"
+    },
+    "chance14": {
+        "width": 120,
+        "height": 90,
+        "location": "chancedz",
+        "selected": {
+            "hasSelectedImage": true,
+            "param": "Chance14.png"
+        },
+        "defaultImage": "Chance14.png"
+    },
+    "chance15": {
+        "width": 120,
+        "height": 90,
+        "location": "chancedz",
+        "selected": {
+            "hasSelectedImage": true,
+            "param": "Chance15.png"
+        },
+        "defaultImage": "Chance15.png"
+    },
+    "Chance": {
+        "width": 120,
+        "height": 90,
+        "location": "chancedz",
+        "selected": {
+            "hasSelectedImage": true,
+            "param": "Chance.png"
+        },
+        "defaultImage": "Chance.png"
+    },
+    "cc1": {
+        "width": 120,
+        "height": 90,
+        "location": "ccdz",
+        "selected": {
+            "hasSelectedImage": true,
+            "param": "CC1.png"
+        },
+        "defaultImage": "CC1.png"
+    },
+    "cc2": {
+        "width": 120,
+        "height": 90,
+        "location": "ccdz",
+        "selected": {
+            "hasSelectedImage": true,
+            "param": "CC2.png"
+        },
+        "defaultImage": "CC2.png"
+    },
+    "cc3": {
+        "width": 120,
+        "height": 90,
+        "location": "ccdz",
+        "selected": {
+            "hasSelectedImage": true,
+            "param": "CC3.png"
+        },
+        "defaultImage": "CC3.png"
+    },
+    "cc4": {
+        "width": 120,
+        "height": 90,
+        "location": "ccdz",
+        "selected": {
+            "hasSelectedImage": true,
+            "param": "CC4.png"
+        },
+        "defaultImage": "CC4.png"
+    },
+    "cc5": {
+        "width": 120,
+        "height": 90,
+        "location": "ccdz",
+        "selected": {
+            "hasSelectedImage": true,
+            "param": "CC5.png"
+        },
+        "defaultImage": "CC5.png"
+    },
+    "cc6": {
+        "width": 120,
+        "height": 90,
+        "location": "ccdz",
+        "selected": {
+            "hasSelectedImage": true,
+            "param": "CC6.png"
+        },
+        "defaultImage": "CC6.png"
+    },
+    "cc7": {
+        "width": 120,
+        "height": 90,
+        "location": "ccdz",
+        "selected": {
+            "hasSelectedImage": true,
+            "param": "CC7.png"
+        },
+        "defaultImage": "CC7.png"
+    },
+    "cc8": {
+        "width": 120,
+        "height": 90,
+        "location": "ccdz",
+        "selected": {
+            "hasSelectedImage": true,
+            "param": "CC8.png"
+        },
+        "defaultImage": "CC8.png"
+    },
+    "cc9": {
+        "width": 120,
+        "height": 90,
+        "location": "ccdz",
+        "selected": {
+            "hasSelectedImage": true,
+            "param": "CC9.png"
+        },
+        "defaultImage": "CC9.png"
+    },
+    "cc10": {
+        "width": 120,
+        "height": 90,
+        "location": "ccdz",
+        "selected": {
+            "hasSelectedImage": true,
+            "param": "CC10.png"
+        },
+        "defaultImage": "CC10.png"
+    },
+    "cc11": {
+        "width": 120,
+        "height": 90,
+        "location": "ccdz",
+        "selected": {
+            "hasSelectedImage": true,
+            "param": "CC11.png"
+        },
+        "defaultImage": "CC11.png"
+    },
+    "cc12": {
+        "width": 120,
+        "height": 90,
+        "location": "ccdz",
+        "selected": {
+            "hasSelectedImage": true,
+            "param": "CC12.png"
+        },
+        "defaultImage": "CC12.png"
+    },
+    "cc13": {
+        "width": 120,
+        "height": 90,
+        "location": "ccdz",
+        "selected": {
+            "hasSelectedImage": true,
+            "param": "CC13.png"
+        },
+        "defaultImage": "CC13.png"
+    },
+    "cc14": {
+        "width": 120,
+        "height": 90,
+        "location": "ccdz",
+        "selected": {
+            "hasSelectedImage": true,
+            "param": "CC14.png"
+        },
+        "defaultImage": "CC14.png"
+    },
+    "cc15": {
+        "width": 120,
+        "height": 90,
+        "location": "ccdz",
+        "selected": {
+            "hasSelectedImage": true,
+            "param": "CC15.png"
+        },
+        "defaultImage": "CC15.png"
+    },
+    "cc16": {
+        "width": 120,
+        "height": 90,
+        "location": "ccdz",
+        "selected": {
+            "hasSelectedImage": true,
+            "param": "CC16.png"
+        },
+        "defaultImage": "CC16.png"
+    },
+    "CC": {
+        "width": 120,
+        "height": 90,
+        "location": "ccdz",
+        "selected": {
+            "hasSelectedImage": true,
+            "param": "CC.png"
+        },
+        "defaultImage": "CC.png"
+    },
+    "atlanticcard": {
+        "width": 120,
+        "height": 100,
+        "location": "cards",
+        "selected": {
+            "hasSelectedImage": false,
+            "param": "#ff0000"
+        },
+        "defaultImage": "atlantic.png"
+    },
+    "balticcard": {
+        "width": 120,
+        "height": 100,
+        "location": "cards",
+        "selected": {
+            "hasSelectedImage": false,
+            "param": "#ff0000"
+        },
+        "defaultImage": "baltic.png"
+    },
+    "boardwalkcard": {
+        "width": 120,
+        "height": 100,
+        "location": "cards",
+        "selected": {
+            "hasSelectedImage": false,
+            "param": "#ff0000"
+        },
+        "defaultImage": "boardwalk.png"
+    },
+    "bnoRRcard": {
+        "width": 120,
+        "height": 100,
+        "location": "cards",
+        "selected": {
+            "hasSelectedImage": false,
+            "param": "#ff0000"
+        },
+        "defaultImage": "bnorr.png"
+    },
+    "connecticutcard": {
+        "width": 120,
+        "height": 100,
+        "location": "cards",
+        "selected": {
+            "hasSelectedImage": false,
+            "param": "#ff0000"
+        },
+        "defaultImage": "connecticut.png"
+    },
+    "electriccard": {
+        "width": 120,
+        "height": 100,
+        "location": "cards",
+        "selected": {
+            "hasSelectedImage": false,
+            "param": "#ff0000"
+        },
+        "defaultImage": "ec.png"
+    },
+    "illinoiscard": {
+        "width": 120,
+        "height": 100,
+        "location": "cards",
+        "selected": {
+            "hasSelectedImage": false,
+            "param": "#ff0000"
+        },
+        "defaultImage": "illinois.png"
+    },
+    "indianacard": {
+        "width": 120,
+        "height": 100,
+        "location": "cards",
+        "selected": {
+            "hasSelectedImage": false,
+            "param": "#ff0000"
+        },
+        "defaultImage": "indiana.png"
+    },
+    "kentuckycard": {
+        "width": 120,
+        "height": 100,
+        "location": "cards",
+        "selected": {
+            "hasSelectedImage": false,
+            "param": "#ff0000"
+        },
+        "defaultImage": "kentucky.png"
+    },
+    "marvincard": {
+        "width": 120,
+        "height": 100,
+        "location": "cards",
+        "selected": {
+            "hasSelectedImage": false,
+            "param": "#ff0000"
+        },
+        "defaultImage": "marvin.png"
+    },
+    "mediterraneancard": {
+        "width": 120,
+        "height": 100,
+        "location": "cards",
+        "selected": {
+            "hasSelectedImage": false,
+            "param": "#ff0000"
+        },
+        "defaultImage": "med.png"
+    },
+    "newyorkcard": {
+        "width": 120,
+        "height": 100,
+        "location": "cards",
+        "selected": {
+            "hasSelectedImage": false,
+            "param": "#ff0000"
+        },
+        "defaultImage": "ny.png"
+    },
+    "northcarolinacard": {
+        "width": 120,
+        "height": 100,
+        "location": "cards",
+        "selected": {
+            "hasSelectedImage": false,
+            "param": "#ff0000"
+        },
+        "defaultImage": "nc.png"
+    },
+    "orientalcard": {
+        "width": 120,
+        "height": 100,
+        "location": "cards",
+        "selected": {
+            "hasSelectedImage": false,
+            "param": "#ff0000"
+        },
+        "defaultImage": "oriental.png"
+    },
+    "pacificcard": {
+        "width": 120,
+        "height": 100,
+        "location": "cards",
+        "selected": {
+            "hasSelectedImage": false,
+            "param": "#ff0000"
+        },
+        "defaultImage": "pacific.png"
+    },
+    "pennsylvaniacard": {
+        "width": 120,
+        "height": 100,
+        "location": "cards",
+        "selected": {
+            "hasSelectedImage": false,
+            "param": "#ff0000"
+        },
+        "defaultImage": "pennsylvania.png"
+    },
+    "pennRRcard": {
+        "width": 120,
+        "height": 100,
+        "location": "cards",
+        "selected": {
+            "hasSelectedImage": false,
+            "param": "#ff0000"
+        },
+        "defaultImage": "pennrr.png"
+    },
+    "readingRRcard": {
+        "width": 120,
+        "height": 100,
+        "location": "cards",
+        "selected": {
+            "hasSelectedImage": false,
+            "param": "#ff0000"
+        },
+        "defaultImage": "readingrr.png"
+    },
+    "shortRRcard": {
+        "width": 120,
+        "height": 100,
+        "location": "cards",
+        "selected": {
+            "hasSelectedImage": false,
+            "param": "#ff0000"
+        },
+        "defaultImage": "shortrr.png"
+    },
+    "stcharlescard": {
+        "width": 120,
+        "height": 100,
+        "location": "cards",
+        "selected": {
+            "hasSelectedImage": false,
+            "param": "#ff0000"
+        },
+        "defaultImage": "charles.png"
+    },
+    "statescard": {
+        "width": 120,
+        "height": 100,
+        "location": "cards",
+        "selected": {
+            "hasSelectedImage": false,
+            "param": "#ff0000"
+        },
+        "defaultImage": "states.png"
+    },
+    "tennesseecard": {
+        "width": 120,
+        "height": 100,
+        "location": "cards",
+        "selected": {
+            "hasSelectedImage": false,
+            "param": "#ff0000"
+        },
+        "defaultImage": "tennessee.png"
+    },
+    "vermontcard": {
+        "width": 120,
+        "height": 100,
+        "location": "cards",
+        "selected": {
+            "hasSelectedImage": false,
+            "param": "#ff0000"
+        },
+        "defaultImage": "vermont.png"
+    },
+    "virginiacard": {
+        "width": 120,
+        "height": 100,
+        "location": "cards",
+        "selected": {
+            "hasSelectedImage": false,
+            "param": "#ff0000"
+        },
+        "defaultImage": "virginia.png"
+    },
+    "watercard": {
+        "width": 120,
+        "height": 100,
+        "location": "cards",
+        "selected": {
+            "hasSelectedImage": false,
+            "param": "#ff0000"
+        },
+        "defaultImage": "ww.png"
+    }
+}

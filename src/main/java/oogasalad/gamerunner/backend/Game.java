@@ -350,6 +350,9 @@ public class Game implements GameToInterpreterAPI{
         }
         controller.removePiece(idManager.getId(piece));
         idManager.removeObject(piece);
+        if (piece instanceof TextObject textPiece){
+            textPiece.unLink();
+        }
     }
 
     @Override
