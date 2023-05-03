@@ -71,4 +71,8 @@ public class SceneController implements SceneMediator{
   public String getGameName() {
     return getWindow().getGameName();
   }
+
+  public void setFilesController(FilesController files){
+    filesController = files;
+  }
 }

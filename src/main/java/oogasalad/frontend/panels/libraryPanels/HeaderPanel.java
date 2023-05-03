@@ -73,9 +73,6 @@ public class HeaderPanel extends HBox implements Panel, ModalPanel {
           AbstractWindow newWindow = panelController.newWindowFromPanel(WindowType.EDIT_WINDOW);
           AbstractScene editScene = newWindow.addNewScene(GameEditorWindow.WindowScenes.EDITOR_SCENE);
           newWindow.showScene(editScene);
-          CreateNewModal creator = new CreateNewModal("save", modalController.dropzoneList());
-          creator.attach(modalController);
-          creator.showAndWait();
         });
     importGame = buttonFactory.createIconButton(IMPORT_GAME, UPLOAD_ICON);
     rightBox.getChildren().addAll(importGame, newGame);
