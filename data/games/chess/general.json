@@ -1,7 +1,7 @@
 {
-  "name": "Checkers",
+  "name": "Chess",
   "author": "DuVALLEY Boiz",
-  "description": "Checkers. Improved checkers. You know how to play :)",
+  "description": "Standard Chess",
   "tags": ["all", "board game", "grid game"],
   "players": {
     "min": 2,
