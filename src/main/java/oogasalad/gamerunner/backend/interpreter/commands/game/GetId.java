@@ -17,9 +17,13 @@ public class GetId extends OperatorToken {
     public Token evaluate(Environment env) throws IllegalArgumentException {
         Token t = getArg(0).evaluate(env);
 
-        ValueToken<GameObject> obj = checkArgumentWithSubtype(env, t, ValueToken.class,
-                GameObject.class.getName());
-
-        return new ValueToken<>(env.getIdManager().getId(obj.VALUE));
+        ValueToken<?> value = checkArgument(env, t, ValueToken.class);
+        if (value.VALUE instanceof GameObject obj){
+            return new ValueToken<>(env.getIdManager().getId(obj));
+        }
+        else if (t.getLink() != null){
+            return new ValueToken<>(env.getIdManager().getId(t.getLink()));
+        }
+        return null;
     }
 }

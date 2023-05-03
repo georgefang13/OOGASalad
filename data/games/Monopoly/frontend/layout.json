@@ -1,0 +1,872 @@
+{
+    "boardimg": {
+        "x": 150,
+        "y": 150,
+        "width": 600,
+        "height": 600,
+        "distribution": "collapse",
+        "unselected": {
+            "hasImage": true,
+            "param": "board.png"
+        },
+        "selected": {
+            "hasImage": true,
+            "param": "board.png"
+        }
+    },
+    "playerdz1": {
+        "x": 150,
+        "y": 775,
+        "width": 600,
+        "height": 100,
+        "distribution": "collapse",
+        "unselected": {
+            "hasImage": false,
+            "param": "e04c41"
+        },
+        "selected": {
+            "hasImage": false,
+            "param": "e04c41"
+        }
+    },
+    "playerdz2": {
+        "x": 775,
+        "y": 150,
+        "width": 100,
+        "height": 600,
+        "distribution": "collapse",
+        "unselected": {
+            "hasImage": false,
+            "param": "2db023"
+        },
+        "selected": {
+            "hasImage": false,
+            "param": "2db023"
+        }
+    },
+    "playerdz3": {
+        "x": 150,
+        "y": 25,
+        "width": 600,
+        "height": 100,
+        "distribution": "collapse",
+        "unselected": {
+            "hasImage": false,
+            "param": "ddc235"
+        },
+        "selected": {
+            "hasImage": false,
+            "param": "ddc235"
+        }
+    },
+    "playerdz4": {
+        "x": 25,
+        "y": 150,
+        "width": 100,
+        "height": 600,
+        "distribution": "collapse",
+        "unselected": {
+            "hasImage": false,
+            "param": "356cdb"
+        },
+        "selected": {
+            "hasImage": false,
+            "param": "356cdb"
+        }
+    },
+    "playermoneydz1": {
+        "x": 775,
+        "y": 775,
+        "width": 100,
+        "height": 100,
+        "distribution": "collapse",
+        "unselected": {
+            "hasImage": false,
+            "param": "e04c41"
+        },
+        "selected": {
+            "hasImage": false,
+            "param": "e04c41"
+        }
+    },
+    "playermoneydz2": {
+        "x": 775,
+        "y": 25,
+        "width": 100,
+        "height": 100,
+        "distribution": "collapse",
+        "unselected": {
+            "hasImage": false,
+            "param": "2db023"
+        },
+        "selected": {
+            "hasImage": false,
+            "param": "2db023"
+        }
+    },
+    "playermoneydz3": {
+        "x": 25,
+        "y": 25,
+        "width": 100,
+        "height": 100,
+        "distribution": "collapse",
+        "unselected": {
+            "hasImage": false,
+            "param": "ddc235"
+        },
+        "selected": {
+            "hasImage": false,
+            "param": "ddc235"
+        }
+    },
+    "playermoneydz4": {
+        "x": 25,
+        "y": 775,
+        "width": 100,
+        "height": 100,
+        "distribution": "collapse",
+        "unselected": {
+            "hasImage": false,
+            "param": "356cdb"
+        },
+        "selected": {
+            "hasImage": false,
+            "param": "356cdb"
+        }
+    },
+    "cards": {
+        "x": 519,
+        "y": 300,
+        "width": 130,
+        "height": 140,
+        "distribution": "collapse",
+        "unselected": {
+            "hasImage": false,
+            "param": "#00000000"
+        },
+        "selected": {
+            "hasImage": false,
+            "param": "#00000000"
+        }
+    },
+    "dicedz": {
+        "x": 300,
+        "y": 450,
+        "width": 60,
+        "height": 40,
+        "distribution": "collapse",
+        "unselected": {
+            "hasImage": false,
+            "param": "#00000000"
+        },
+        "selected": {
+            "hasImage": false,
+            "param": "#00000000"
+        }
+    },
+    "dicerolldz": {
+        "x": 300,
+        "y": 400,
+        "width": 60,
+        "height": 40,
+        "distribution": "collapse",
+        "unselected": {
+            "hasImage": false,
+            "param": "#ffffff"
+        },
+        "selected": {
+            "hasImage": false,
+            "param": "#ffffff"
+        }
+    },
+    "promptdz1": {
+        "x": 250,
+        "y": 550,
+        "width": 80,
+        "height": 40,
+        "distribution": "collapse",
+        "unselected": {
+            "hasImage": false,
+            "param": "#ffffff"
+        },
+        "selected": {
+            "hasImage": false,
+            "param": "#ffffff"
+        }
+    },
+    "promptdz2": {
+        "x": 250,
+        "y": 600,
+        "width": 80,
+        "height": 40,
+        "distribution": "collapse",
+        "unselected": {
+            "hasImage": false,
+            "param": "#ffffff"
+        },
+        "selected": {
+            "hasImage": false,
+            "param": "#ffffff"
+        }
+    },
+    "ccdz": {
+        "x": 265,
+        "y": 235,
+        "width": 100,
+        "height": 120,
+        "distribution": "collapse",
+        "unselected": {
+            "hasImage": false,
+            "param": "#00000000"
+        },
+        "selected": {
+            "hasImage": false,
+            "param": "#00000000"
+        }
+    },
+    "ccdiscarddz": {
+        "x": 385,
+        "y": 235,
+        "width": 100,
+        "height": 120,
+        "distribution": "collapse",
+        "unselected": {
+            "hasImage": false,
+            "param": "#00000000"
+        },
+        "selected": {
+            "hasImage": false,
+            "param": "#00000000"
+        }
+    },
+    "chancedz": {
+        "x": 575,
+        "y": 515,
+        "width": 100,
+        "height": 120,
+        "distribution": "collapse",
+        "unselected": {
+            "hasImage": false,
+            "param": "#00000000"
+        },
+        "selected": {
+            "hasImage": false,
+            "param": "#00000000"
+        }
+    },
+    "chancediscarddz": {
+        "x": 455,
+        "y": 515,
+        "width": 100,
+        "height": 120,
+        "distribution": "collapse",
+        "unselected": {
+            "hasImage": false,
+            "param": "#00000000"
+        },
+        "selected": {
+            "hasImage": false,
+            "param": "#00000000"
+        }
+    },
+    "go": {
+        "x": 669,
+        "y": 669,
+        "width": 81,
+        "height": 81,
+        "distribution": "horizontal",
+        "unselected": {
+            "hasImage": false,
+            "param": "#00000000"
+        },
+        "selected": {
+            "hasImage": false,
+            "param": "#00000000"
+        }
+    },
+    "mediterranean": {
+        "x": 620,
+        "y": 688,
+        "width": 49,
+        "height": 62,
+        "distribution": "vertical",
+        "unselected": {
+            "hasImage": false,
+            "param": "#00000000"
+        },
+        "selected": {
+            "hasImage": false,
+            "param": "#00000000"
+        }
+    },
+    "cc1_spot": {
+        "x": 571,
+        "y": 669,
+        "width": 49,
+        "height": 81,
+        "distribution": "vertical",
+        "unselected": {
+            "hasImage": false,
+            "param": "#00000000"
+        },
+        "selected": {
+            "hasImage": false,
+            "param": "#00000000"
+        }
+    },
+    "baltic": {
+        "x": 522,
+        "y": 688,
+        "width": 49,
+        "height": 62,
+        "distribution": "vertical",
+        "unselected": {
+            "hasImage": false,
+            "param": "#00000000"
+        },
+        "selected": {
+            "hasImage": false,
+            "param": "#00000000"
+        }
+    },
+    "incomeTax": {
+        "x": 473,
+        "y": 669,
+        "width": 49,
+        "height": 81,
+        "distribution": "vertical",
+        "unselected": {
+            "hasImage": false,
+            "param": "#00000000"
+        },
+        "selected": {
+            "hasImage": false,
+            "param": "#00000000"
+        }
+    },
+    "readingRR": {
+        "x": 424,
+        "y": 669,
+        "width": 49,
+        "height": 81,
+        "distribution": "vertical",
+        "unselected": {
+            "hasImage": false,
+            "param": "#00000000"
+        },
+        "selected": {
+            "hasImage": false,
+            "param": "#00000000"
+        }
+    },
+    "oriental": {
+        "x": 375,
+        "y": 688,
+        "width": 49,
+        "height": 62,
+        "distribution": "vertical",
+        "unselected": {
+            "hasImage": false,
+            "param": "#00000000"
+        },
+        "selected": {
+            "hasImage": false,
+            "param": "#00000000"
+        }
+    },
+    "chance1_spot": {
+        "x": 326,
+        "y": 669,
+        "width": 49,
+        "height": 81,
+        "distribution": "vertical",
+        "unselected": {
+            "hasImage": false,
+            "param": "#00000000"
+        },
+        "selected": {
+            "hasImage": false,
+            "param": "#00000000"
+        }
+    },
+    "vermont": {
+        "x": 278,
+        "y": 688,
+        "width": 49,
+        "height": 62,
+        "distribution": "vertical",
+        "unselected": {
+            "hasImage": false,
+            "param": "#00000000"
+        },
+        "selected": {
+            "hasImage": false,
+            "param": "#00000000"
+        }
+    },
+    "connecticut": {
+        "x": 229,
+        "y": 688,
+        "width": 49,
+        "height": 62,
+        "distribution": "vertical",
+        "unselected": {
+            "hasImage": false,
+            "param": "#00000000"
+        },
+        "selected": {
+            "hasImage": false,
+            "param": "#00000000"
+        }
+    },
+    "visiting": {
+        "x": 147,
+        "y": 728,
+        "width": 81,
+        "height": 22,
+        "distribution": "horizontal",
+        "unselected": {
+            "hasImage": false,
+            "param": "#00000000"
+        },
+        "selected": {
+            "hasImage": false,
+            "param": "#00000000"
+        }
+    },
+    "stcharles": {
+        "x": 150,
+        "y": 620,
+        "width": 62,
+        "height": 49,
+        "distribution": "horizontal",
+        "unselected": {
+            "hasImage": false,
+            "param": "#00000000"
+        },
+        "selected": {
+            "hasImage": false,
+            "param": "#00000000"
+        }
+    },
+    "electric": {
+        "x": 150,
+        "y": 571,
+        "width": 81,
+        "height": 49,
+        "distribution": "horizontal",
+        "unselected": {
+            "hasImage": false,
+            "param": "#00000000"
+        },
+        "selected": {
+            "hasImage": false,
+            "param": "#00000000"
+        }
+    },
+    "states": {
+        "x": 150,
+        "y": 522,
+        "width": 62,
+        "height": 49,
+        "distribution": "horizontal",
+        "unselected": {
+            "hasImage": false,
+            "param": "#00000000"
+        },
+        "selected": {
+            "hasImage": false,
+            "param": "#00000000"
+        }
+    },
+    "virginia": {
+        "x": 150,
+        "y": 473,
+        "width": 62,
+        "height": 49,
+        "distribution": "horizontal",
+        "unselected": {
+            "hasImage": false,
+            "param": "#00000000"
+        },
+        "selected": {
+            "hasImage": false,
+            "param": "#00000000"
+        }
+    },
+    "pennRR": {
+        "x": 150,
+        "y": 424,
+        "width": 81,
+        "height": 49,
+        "distribution": "horizontal",
+        "unselected": {
+            "hasImage": false,
+            "param": "#00000000"
+        },
+        "selected": {
+            "hasImage": false,
+            "param": "#00000000"
+        }
+    },
+    "stJames": {
+        "x": 150,
+        "y": 375,
+        "width": 62,
+        "height": 49,
+        "distribution": "horizontal",
+        "unselected": {
+            "hasImage": false,
+            "param": "#00000000"
+        },
+        "selected": {
+            "hasImage": false,
+            "param": "#00000000"
+        }
+    },
+    "cc2_spot": {
+        "x": 150,
+        "y": 326,
+        "width": 81,
+        "height": 49,
+        "distribution": "horizontal",
+        "unselected": {
+            "hasImage": false,
+            "param": "#00000000"
+        },
+        "selected": {
+            "hasImage": false,
+            "param": "#00000000"
+        }
+    },
+    "tennessee": {
+        "x": 150,
+        "y": 278,
+        "width": 62,
+        "height": 49,
+        "distribution": "horizontal",
+        "unselected": {
+            "hasImage": false,
+            "param": "#00000000"
+        },
+        "selected": {
+            "hasImage": false,
+            "param": "#00000000"
+        }
+    },
+    "newyork": {
+        "x": 150,
+        "y": 229,
+        "width": 62,
+        "height": 49,
+        "distribution": "horizontal",
+        "unselected": {
+            "hasImage": false,
+            "param": "#00000000"
+        },
+        "selected": {
+            "hasImage": false,
+            "param": "#00000000"
+        }
+    },
+    "freeParking": {
+        "x": 150,
+        "y": 147,
+        "width": 81,
+        "height": 81,
+        "distribution": "horizontal",
+        "unselected": {
+            "hasImage": false,
+            "param": "#00000000"
+        },
+        "selected": {
+            "hasImage": false,
+            "param": "#00000000"
+        }
+    },
+    "kentucky": {
+        "x": 231,
+        "y": 150,
+        "width": 49,
+        "height": 62,
+        "distribution": "vertical",
+        "unselected": {
+            "hasImage": false,
+            "param": "#00000000"
+        },
+        "selected": {
+            "hasImage": false,
+            "param": "#00000000"
+        }
+    },
+    "chance2_spot": {
+        "x": 280,
+        "y": 150,
+        "width": 49,
+        "height": 81,
+        "distribution": "vertical",
+        "unselected": {
+            "hasImage": false,
+            "param": "#00000000"
+        },
+        "selected": {
+            "hasImage": false,
+            "param": "#00000000"
+        }
+    },
+    "indiana": {
+        "x": 329,
+        "y": 150,
+        "width": 49,
+        "height": 62,
+        "distribution": "vertical",
+        "unselected": {
+            "hasImage": false,
+            "param": "#00000000"
+        },
+        "selected": {
+            "hasImage": false,
+            "param": "#00000000"
+        }
+    },
+    "illinois": {
+        "x": 378,
+        "y": 150,
+        "width": 49,
+        "height": 62,
+        "distribution": "vertical",
+        "unselected": {
+            "hasImage": false,
+            "param": "#00000000"
+        },
+        "selected": {
+            "hasImage": false,
+            "param": "#00000000"
+        }
+    },
+    "bnoRR": {
+        "x": 427,
+        "y": 150,
+        "width": 49,
+        "height": 81,
+        "distribution": "vertical",
+        "unselected": {
+            "hasImage": false,
+            "param": "#00000000"
+        },
+        "selected": {
+            "hasImage": false,
+            "param": "#00000000"
+        }
+    },
+    "atlantic": {
+        "x": 476,
+        "y": 150,
+        "width": 49,
+        "height": 62,
+        "distribution": "vertical",
+        "unselected": {
+            "hasImage": false,
+            "param": "#00000000"
+        },
+        "selected": {
+            "hasImage": false,
+            "param": "#00000000"
+        }
+    },
+    "ventnor": {
+        "x": 525,
+        "y": 150,
+        "width": 49,
+        "height": 62,
+        "distribution": "vertical",
+        "unselected": {
+            "hasImage": false,
+            "param": "#00000000"
+        },
+        "selected": {
+            "hasImage": false,
+            "param": "#00000000"
+        }
+    },
+    "water": {
+        "x": 574,
+        "y": 150,
+        "width": 49,
+        "height": 81,
+        "distribution": "vertical",
+        "unselected": {
+            "hasImage": false,
+            "param": "#00000000"
+        },
+        "selected": {
+            "hasImage": false,
+            "param": "#00000000"
+        }
+    },
+    "marvin": {
+        "x": 622,
+        "y": 150,
+        "width": 49,
+        "height": 62,
+        "distribution": "vertical",
+        "unselected": {
+            "hasImage": false,
+            "param": "#00000000"
+        },
+        "selected": {
+            "hasImage": false,
+            "param": "#00000000"
+        }
+    },
+    "goToJail": {
+        "x": 671,
+        "y": 150,
+        "width": 81,
+        "height": 81,
+        "distribution": "horizontal",
+        "unselected": {
+            "hasImage": false,
+            "param": "#00000000"
+        },
+        "selected": {
+            "hasImage": false,
+            "param": "#00000000"
+        }
+    },
+    "pacific": {
+        "x": 688,
+        "y": 231,
+        "width": 62,
+        "height": 49,
+        "distribution": "horizontal",
+        "unselected": {
+            "hasImage": false,
+            "param": "#00000000"
+        },
+        "selected": {
+            "hasImage": false,
+            "param": "#00000000"
+        }
+    },
+    "northcarolina": {
+        "x": 688,
+        "y": 280,
+        "width": 62,
+        "height": 49,
+        "distribution": "horizontal",
+        "unselected": {
+            "hasImage": false,
+            "param": "#00000000"
+        },
+        "selected": {
+            "hasImage": false,
+            "param": "#00000000"
+        }
+    },
+    "cc3_spot": {
+        "x": 669,
+        "y": 329,
+        "width": 81,
+        "height": 49,
+        "distribution": "horizontal",
+        "unselected": {
+            "hasImage": false,
+            "param": "#00000000"
+        },
+        "selected": {
+            "hasImage": false,
+            "param": "#00000000"
+        }
+    },
+    "pennsylvania": {
+        "x": 688,
+        "y": 378,
+        "width": 62,
+        "height": 49,
+        "distribution": "horizontal",
+        "unselected": {
+            "hasImage": false,
+            "param": "#00000000"
+        },
+        "selected": {
+            "hasImage": false,
+            "param": "#00000000"
+        }
+    },
+    "shortRR": {
+        "x": 669,
+        "y": 427,
+        "width": 81,
+        "height": 49,
+        "distribution": "horizontal",
+        "unselected": {
+            "hasImage": false,
+            "param": "#00000000"
+        },
+        "selected": {
+            "hasImage": false,
+            "param": "#00000000"
+        }
+    },
+    "chance3_spot": {
+        "x": 669,
+        "y": 476,
+        "width": 81,
+        "height": 49,
+        "distribution": "horizontal",
+        "unselected": {
+            "hasImage": false,
+            "param": "#00000000"
+        },
+        "selected": {
+            "hasImage": false,
+            "param": "#00000000"
+        }
+    },
+    "parkPlace": {
+        "x": 688,
+        "y": 525,
+        "width": 62,
+        "height": 49,
+        "distribution": "horizontal",
+        "unselected": {
+            "hasImage": false,
+            "param": "#00000000"
+        },
+        "selected": {
+            "hasImage": false,
+            "param": "#00000000"
+        }
+    },
+    "luxuryTax": {
+        "x": 669,
+        "y": 574,
+        "width": 81,
+        "height": 49,
+        "distribution": "horizontal",
+        "unselected": {
+            "hasImage": false,
+            "param": "#00000000"
+        },
+        "selected": {
+            "hasImage": false,
+            "param": "#00000000"
+        }
+    },
+    "boardwalk": {
+        "x": 688,
+        "y": 622,
+        "width": 62,
+        "height": 49,
+        "distribution": "horizontal",
+        "unselected": {
+            "hasImage": false,
+            "param": "#00000000"
+        },
+        "selected": {
+            "hasImage": false,
+            "param": "#00000000"
+        }
+    }
+}
