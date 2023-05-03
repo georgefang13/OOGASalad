@@ -142,14 +142,15 @@ public class LibraryScrollPanel extends AbstractScrollPanePanel implements Panel
     File gamesDirectory = new File(GAMES_FILEPATH);
     File[] gameDirectories = gamesDirectory.listFiles(File::isDirectory);
     FileManager fm;
+    Iterable<String> currentTags;
 
     for (File gameDirectory : Objects.requireNonNull(gameDirectories)) {
       try {
         fm = new FileManager(gameDirectory.getPath() + JSON_GENERAL_PATH);
-      } catch (FileNotFoundException e) {
+        currentTags = fm.getArray(JSON_TAGS);
+      } catch (FileNotFoundException | IllegalArgumentException e) {
         continue;
       }
-      Iterable<String> currentTags = fm.getArray(JSON_TAGS);
       for (String s : currentTags) {
         if (s.equals(tag)) {
           gameNamesAndFolderNames.put(fm.getString(JSON_NAME), gameDirectory.getName());

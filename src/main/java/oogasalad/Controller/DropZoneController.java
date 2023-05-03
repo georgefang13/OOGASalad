@@ -110,4 +110,8 @@ public class DropZoneController implements ControllerSubscriber {
       //TODO Logging
     }
   }
+  public List<List<Arrow>> getArrow() {
+    return arrowMap.values().stream().toList();
+  }
+
 }

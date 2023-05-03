@@ -578,7 +578,7 @@
     "folder": "game",
     "str": "addtextobj",
     "description": "Set a value to be an available piece to click on in the game",
-    "example": "addtextobj :x :game_dz money.textobj to [ :str ] [ return + \"money%20=%20 :str ]  # makeavailable <var> <dropzone> <list[] classes] <function>",
+    "example": "addtextobj :x :game_dz money.textobj to [ :str ] [ return + \"money%20=%20 :str ]  # makeavailable <var> <dropzone> <list[] classes> <function>",
     "specs": {
       "innerBlocks": [],
       "inputs": [
@@ -1159,6 +1159,7 @@
       "parse": "aslist %s"
     }
   },
+
   "Equal": {
     "name": "Equal",
     "folder": "operators",
@@ -1428,5 +1429,6 @@
       "outputs": ["list"],
       "parse": "setitem %s %s %s"
     }
+
   }
 }

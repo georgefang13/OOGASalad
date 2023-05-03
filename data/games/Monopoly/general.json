@@ -1,1 +1,10 @@
-{"name":"Monopoly","author":"","description":"","tags":"all","players":{"min":"2","max":"2"}}
+{
+  "name": "Monopoly",
+  "author": "",
+  "description": "",
+  "tags": ["all", "board game"],
+  "players": {
+    "min": "2",
+    "max": "2"
+  }
+}

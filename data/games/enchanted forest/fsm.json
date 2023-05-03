@@ -1,0 +1,35 @@
+{
+  "goals": [],
+  "states": {
+    "INIT": {
+      "init": "to pieceAvailable [ :dz :moveset ] [      make :available [ ]     make :available_paths [ ]      foreach [ :path :moveset ] [         make :dz1 dzfollow :dz :path         if == null :dz1 [ continue ]          ifelse dzempty :dz1 [             additem :dz1 :available             additem aslist [ :path ] :available_paths         ] [             make :dz2 dzfollow :dz1 :path             if or == null :dz2 not dzempty :dz2 [ continue ]             if  != curplayer owner item 0 dzitems :dz1 [                 additem :dz2 :available                 additem aslist [ :path :path ] :available_paths             ]         ]      ]      make :ret aslist [ :available :available_paths ]      return :ret ] ",
+      "leave": "make :game_movestaken 0 make :game_totalmoves 3",
+      "setValue": "",
+      "to": "make :game_state_output \"CHOOSE_PIECE"
+    },
+    "CHOOSE_PIECE": {
+      "init": "foreach [ :p fromplayer curplayer \"piece  ] [     make :possible getrule :p \"available [ objdz :p ]     if != 0 len item 0 :possible [         makeavailable :p     ] ] ",
+      "leave": "",
+      "setValue": "make :piece_selected fromgame :game_state_input make :old_dz objdz :piece_selected",
+      "to": "make :game_state_output \"CHOOSE_SQUARE"
+    },
+    "CHOOSE_SQUARE": {
+      "init": "make :available_items getrule :piece_selected \"available [ :old_dz ] make :available item 0 :available_items  if >= len :available 0 [     make :available_paths item 1 :available_items     makeallavailable :available ] ",
+      "leave": "",
+      "setValue": "make :dz fromgame :game_state_input make :choice_num index :dz :available make :chosen_path item :choice_num :available_paths movepiece :piece_selected :dz  if == 2 len :chosen_path [     make :dir item 0 :chosen_path     make :dz_cross dzfollow :old_dz :dir     make :piece item 0 dzitems :dz_cross     ] make :game_movestaken + :game_movestaken 1",
+      "to": "ifelse < :game_movestaken  :game_totalmoves [ make :game_state_output \"CHOOSE_PIECE ] [ ifelse hasclass :dz \"tree [ make :game_state_output \"SHOW_TREE ] [ make :game_state_output \"DONE ] ]"
+    },
+    "SHOW_TREE": {
+      "init": "foreach [ :p fromplayer curplayer \"piece  ] [     make :possible getrule :p \"available [ objdz :p ]     if != 0 len item 0 :possible [         makeavailable :p     ] ]    ifelse hasclass :dz \"goldcoins [ sethl :piece_selected \"goldcoins.png ] [ ifelse hasclass :dz \"bear [ sethl :piece_selected \"bear.png ] [ ifelse hasclass :dz \"wolf [ sethl :piece_selected \"wolf.png ] [ ifelse hasclass :dz \"goblin [ sethl :piece_selected \"goblin.png ] [ sethl :piece_selected \"horse.png ] ] ] ]",
+      "leave": "getrule :piece_selected \"setBack [ :piece_selected ]",
+      "setValue": "make :piece_selected fromgame :game_state_input make :old_dz objdz :piece_selected",
+      "to": "make :game_state_output \"DONE"
+    },
+    "DONE": {
+      "init": "",
+      "leave": "gotonextplayer",
+      "setValue": "",
+      "to": "make :game_state_output \"INIT"
+    }
+  }
+}

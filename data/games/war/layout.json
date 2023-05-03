@@ -3,21 +3,49 @@
     "connections": {
     },
     "classes": [
-      "zone"
+      "dz"
     ]
   },
   "GrayDropZone": {
     "connections": {
     },
     "classes": [
-      "zone"
+      "dz"
     ]
   },
   "StartDeck": {
     "connections": {
     },
     "classes": [
-      "zone"
+      "dz"
+    ]
+  },
+  "GreenWarDropZone": {
+    "connections": {
+    },
+    "classes": [
+      "dz"
+    ]
+  },
+  "GrayWarDropZone": {
+    "connections": {
+    },
+    "classes": [
+      "dz"
+    ]
+  },
+  "GreenWinDropZone": {
+    "connections": {
+    },
+    "classes": [
+      "dz"
+    ]
+  },
+  "GrayWinDropZone": {
+    "connections": {
+    },
+    "classes": [
+      "dz"
     ]
   }
 }

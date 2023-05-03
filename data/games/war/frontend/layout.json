@@ -1,10 +1,10 @@
 {
   "GreenDropZone": {
     "x": "200",
-    "y": "50",
-    "width": "200",
-    "height": "120",
-    "distribution": "collapsed",
+    "y": "5",
+    "width": "220",
+    "height": "140",
+    "distribution": "collapse",
     "unselected": {
       "hasImage": true,
       "param": "dz_green.jpg"
@@ -16,10 +16,10 @@
   },
   "GrayDropZone": {
     "x": "200",
-    "y": "400",
-    "width": "200",
-    "height": "120",
-    "distribution": "collapsed",
+    "y": "445",
+    "width": "220",
+    "height": "140",
+    "distribution": "collapse",
     "unselected": {
       "hasImage": true,
       "param": "dz_gray.jpg"
@@ -30,10 +30,10 @@
     }
   },
   "StartDeck": {
-    "x": "50",
+    "x": "650",
     "y": "225",
-    "width": "200",
-    "height": "120",
+    "width": "220",
+    "height": "140",
     "distribution": "vertical",
     "unselected": {
       "hasImage": true,
@@ -42,6 +42,66 @@
     "selected": {
       "hasImage": true,
       "param": "dz_deck.jpg"
+    }
+  },
+  "GrayWarDropZone": {
+    "x": "50",
+    "y": "225",
+    "width": "220",
+    "height": "140",
+    "distribution": "collapse",
+    "unselected": {
+      "hasImage": true,
+      "param": "dz_gray.jpg"
+    },
+    "selected": {
+      "hasImage": true,
+      "param": "dz_gray.jpg"
+    }
+  },
+  "GreenWarDropZone": {
+    "x": "350",
+    "y": "225",
+    "width": "220",
+    "height": "140",
+    "distribution": "collapse",
+    "unselected": {
+      "hasImage": true,
+      "param": "dz_green.jpg"
+    },
+    "selected": {
+      "hasImage": true,
+      "param": "dz_green.jpg"
+    }
+  },
+  "GrayWinDropZone": {
+    "x": "650",
+    "y": "445",
+    "width": "220",
+    "height": "140",
+    "distribution": "horizontal",
+    "unselected": {
+      "hasImage": true,
+      "param": "dz_gray.jpg"
+    },
+    "selected": {
+      "hasImage": true,
+      "param": "dz_gray.jpg"
+    }
+  },
+  "GreenWinDropZone": {
+    "x": "650",
+    "y": "5",
+    "width": "220",
+    "height": "140",
+    "distribution": "horizontal",
+    "unselected": {
+      "hasImage": true,
+      "param": "dz_green.jpg"
+    },
+    "selected": {
+      "hasImage": true,
+      "param": "dz_green.jpg"
     }
   }
 }

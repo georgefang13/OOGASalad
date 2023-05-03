@@ -59,9 +59,9 @@ public class ModalController {
 
     activeComponents.put(name, c);
 
-//    files.addComponent(c);
-//    dropZoneController.addDropZone(c);
-//    dropZoneController.addGridObject(c);
+    files.addComponent(c);
+    dropZoneController.addDropZone(c);
+    dropZoneController.addGridObject(c);
 //    backendObjectController.sendOwnableObject(c);
 
 
@@ -86,7 +86,7 @@ public class ModalController {
   public void deleteObjectInstance(String name) {
     Component c = activeComponents.get(name);
 //    backendObjectController.deleteOwnableObject(c);
-//    dropZoneController.deleteArrows(c, root);
+    dropZoneController.deleteArrows(c, root);
     root.getChildren().remove(activeComponents.get(name).getNode());
   }
 
@@ -102,8 +102,10 @@ public class ModalController {
   }
 
   public void configGeneral(Map<String, String> map) {
-    files = new FilesController(map.get("name"));
+    files = new FilesController();
     files.setGeneral(map);
+    System.out.println(map.get("name"));
+    files.setGameName(map.get("name"));
   }
 
   public List<String> dropzoneList(){
@@ -113,5 +115,9 @@ public class ModalController {
       list.set(0, "DropZone");
     }
     return list;
+  }
+
+  public FilesController getFilecontroller() {
+    return files;
   }
 }
