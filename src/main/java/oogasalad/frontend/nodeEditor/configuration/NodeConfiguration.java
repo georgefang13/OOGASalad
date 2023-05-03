@@ -26,6 +26,8 @@ public class NodeConfiguration {
   private Gson gson = new Gson();
   private String filePath;
   private static final String COMMANDS_RESOURCE_PATH = "src/main/resources/backend/interpreter/Commands.json";
+  private static final String METABLOCKS_RESOURCE_PATH = "src/main/resources/backend/interpreter/Metablocks.json";
+
 
   public NodeConfiguration(String filePath) throws FileNotFoundException {
     this.filePath = filePath;
@@ -71,6 +73,7 @@ public class NodeConfiguration {
     List<AbstractNode> nodes = new ArrayList<>();
     JsonNodeParser parser = new JsonNodeParser();
     List<Command> commands = parser.readCommands(COMMANDS_RESOURCE_PATH);
+    commands.addAll(parser.readCommands(METABLOCKS_RESOURCE_PATH));
 
     for (NodeData data : nodeData) {
       switch (data.type()) {
