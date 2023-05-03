@@ -1,0 +1,130 @@
+  "ace_of_diamonds": {
+    "selected": {
+      "hasSelectedImage": true,
+      "param": "ace_of_diamonds.png"
+    },
+    "defaultImage": "cardback.png",
+    "height": "110",
+    "width": "190",
+    "location": "StartDeck"
+  },
+  "2_of_diamonds": {
+    "selected": {
+      "hasSelectedImage": true,
+      "param": "2_of_diamonds.png"
+    },
+    "defaultImage": "cardback.png",
+    "height": "110",
+    "width": "190",
+    "location": "StartDeck"
+  },
+  "3_of_diamonds": {
+    "selected": {
+      "hasSelectedImage": true,
+      "param": "3_of_diamonds.png"
+    },
+    "defaultImage": "cardback.png",
+    "height": "110",
+    "width": "190",
+    "location": "StartDeck"
+  },
+  "4_of_diamonds": {
+    "selected": {
+      "hasSelectedImage": true,
+      "param": "4_of_diamonds.png"
+    },
+    "defaultImage": "cardback.png",
+    "height": "110",
+    "width": "190",
+    "location": "StartDeck"
+  },
+  "5_of_diamonds": {
+    "selected": {
+      "hasSelectedImage": true,
+      "param": "5_of_diamonds.png"
+    },
+    "defaultImage": "cardback.png",
+    "height": "110",
+    "width": "190",
+    "location": "StartDeck"
+  },
+  "6_of_diamonds": {
+    "selected": {
+      "hasSelectedImage": true,
+      "param": "6_of_diamonds.png"
+    },
+    "defaultImage": "cardback.png",
+    "height": "110",
+    "width": "190",
+    "location": "StartDeck"
+  },
+  "7_of_diamonds": {
+    "selected": {
+      "hasSelectedImage": true,
+      "param": "7_of_diamonds.png"
+    },
+    "defaultImage": "cardback.png",
+    "height": "110",
+    "width": "190",
+    "location": "StartDeck"
+  },
+  "8_of_diamonds": {
+    "selected": {
+      "hasSelectedImage": true,
+      "param": "8_of_diamonds.png"
+    },
+    "defaultImage": "cardback.png",
+    "height": "110",
+    "width": "190",
+    "location": "StartDeck"
+  },
+  "9_of_diamonds": {
+    "selected": {
+      "hasSelectedImage": true,
+      "param": "9_of_diamonds.png"
+    },
+    "defaultImage": "cardback.png",
+    "height": "110",
+    "width": "190",
+    "location": "StartDeck"
+  },
+  "10_of_diamonds": {
+    "selected": {
+      "hasSelectedImage": true,
+      "param": "10_of_diamonds.png"
+    },
+    "defaultImage": "cardback.png",
+    "height": "110",
+    "width": "190",
+    "location": "StartDeck"
+  },
+  "jack_of_diamonds": {
+    "selected": {
+      "hasSelectedImage": true,
+      "param": "jack_of_diamonds.png"
+    },
+    "defaultImage": "cardback.png",
+    "height": "110",
+    "width": "190",
+    "location": "StartDeck"
+  },
+  "queen_of_diamonds": {
+    "selected": {
+      "hasSelectedImage": true,
+      "param": "queen_of_diamonds.png"
+    },
+    "defaultImage": "cardback.png",
+    "height": "110",
+    "width": "190",
+    "location": "StartDeck"
+  },
+  "king_of_diamonds": {
+    "selected": {
+      "hasSelectedImage": true,
+      "param": "king_of_diamonds.png"
+    },
+    "defaultImage": "cardback.png",
+    "height": "110",
+    "width": "190",
+    "location": "StartDeck"
+  }
