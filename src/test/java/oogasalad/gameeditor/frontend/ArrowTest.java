@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
 import util.DukeApplicationTest;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class ArrowTests extends DukeApplicationTest {
+public class ArrowTest extends DukeApplicationTest {
 
   private ComponentsFactory factory;
   private Pane root;
