@@ -924,8 +924,8 @@
     "selected":{"hasImage":false,"param":"#D3D3D3"}
   },
   "dicedz": {
-    "x": 600,
-    "y": 500,
+    "x": 650,
+    "y": 550,
     "width": 60,
     "height": 40,
     "distribution": "collapse",
@@ -946,11 +946,11 @@
     "distribution": "collapse",
     "unselected": {
       "hasImage": false,
-      "param": "#ffffff"
+      "param": "#D3D3D3"
     },
     "selected": {
       "hasImage": false,
-      "param": "#ffffff"
+      "param": "#D3D3D3"
     }
   }
 }
