@@ -28,7 +28,8 @@ public class ObjectSavingTest extends DukeApplicationTest {
   @BeforeEach
   public void start(Stage stage){
     System.out.println(PATH);
-    filesController = new FilesController("Files");
+    filesController = new FilesController();
+    filesController.setGameName("Test");
     Component c = makeComponent();
     filesController.addComponent(c);
   }
