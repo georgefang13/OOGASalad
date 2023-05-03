@@ -41,7 +41,7 @@ public class FilesController {
    */
   public void setGameName(String name){
     gameFolder = GAMES_PATH + name;
-    game = new GameInator(name);
+//    game = new GameInator(name);
   }
 
   /**
@@ -64,10 +64,10 @@ public class FilesController {
    * Saves components to frontend file
    */
   public void saveToFile(){
-    File directory = new File(gameFolder);
-    boolean valid = directory.mkdir();
-    File frontend = new File(gameFolder + "\\frontend");
-    boolean valid1 = frontend.mkdir();
+//    File directory = new File(gameFolder);
+//    boolean valid = directory.mkdir();
+//    File frontend = new File(gameFolder + "\\frontend");
+//    boolean valid1 = frontend.mkdir();
 
     ConvertingStrategy strategy = new ConvertingStrategy();
     FileManager layout = new FileManager();
