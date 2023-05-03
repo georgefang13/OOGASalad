@@ -1,0 +1,432 @@
+{
+  "ace_of_clubs": {
+    "owner": "0",
+    "location": "StartDeck",
+    "classes": [
+      "card"
+    ],
+    "owns": []
+  },
+  "2_of_clubs": {
+    "owner": "0",
+    "location": "StartDeck",
+    "classes": [
+      "card"
+    ],
+    "owns": []
+  },
+  "3_of_clubs": {
+    "owner": "0",
+    "location": "StartDeck",
+    "classes": [
+      "card"
+    ],
+    "owns": []
+  },
+  "4_of_clubs": {
+    "owner": "0",
+    "location": "StartDeck",
+    "classes": [
+      "card"
+    ],
+    "owns": []
+  },
+  "5_of_clubs": {
+    "owner": "0",
+    "location": "StartDeck",
+    "classes": [
+      "card"
+    ],
+    "owns": []
+  },
+  "6_of_clubs": {
+    "owner": "0",
+    "location": "StartDeck",
+    "classes": [
+      "card"
+    ],
+    "owns": []
+  },
+  "7_of_clubs": {
+    "owner": "0",
+    "location": "StartDeck",
+    "classes": [
+      "card"
+    ],
+    "owns": []
+  },
+  "8_of_clubs": {
+    "owner": "0",
+    "location": "StartDeck",
+    "classes": [
+      "card"
+    ],
+    "owns": []
+  },
+  "9_of_clubs": {
+    "owner": "0",
+    "location": "StartDeck",
+    "classes": [
+      "card"
+    ],
+    "owns": []
+  },
+  "10_of_clubs": {
+    "owner": "0",
+    "location": "StartDeck",
+    "classes": [
+      "card"
+    ],
+    "owns": []
+  },
+  "jack_of_clubs": {
+    "owner": "0",
+    "location": "StartDeck",
+    "classes": [
+      "card",
+      "facecard"
+    ],
+    "owns": []
+  },
+  "queen_of_clubs": {
+    "owner": "0",
+    "location": "StartDeck",
+    "classes": [
+      "card",
+      "facecard"
+    ],
+    "owns": []
+  },
+  "king_of_clubs": {
+    "owner": "0",
+    "location": "StartDeck",
+    "classes": [
+      "card",
+      "facecard"
+    ],
+    "owns": []
+  },
+  "ace_of_diamonds": {
+    "owner": "0",
+    "location": "StartDeck",
+    "classes": [
+      "card"
+    ],
+    "owns": []
+  },
+  "2_of_diamonds": {
+    "owner": "0",
+    "location": "StartDeck",
+    "classes": [
+      "card"
+    ],
+    "owns": []
+  },
+  "3_of_diamonds": {
+    "owner": "0",
+    "location": "StartDeck",
+    "classes": [
+      "card"
+    ],
+    "owns": []
+  },
+  "4_of_diamonds": {
+    "owner": "0",
+    "location": "StartDeck",
+    "classes": [
+      "card"
+    ],
+    "owns": []
+  },
+  "5_of_diamonds": {
+    "owner": "0",
+    "location": "StartDeck",
+    "classes": [
+      "card"
+    ],
+    "owns": []
+  },
+  "6_of_diamonds": {
+    "owner": "0",
+    "location": "StartDeck",
+    "classes": [
+      "card"
+    ],
+    "owns": []
+  },
+  "7_of_diamonds": {
+    "owner": "0",
+    "location": "StartDeck",
+    "classes": [
+      "card"
+    ],
+    "owns": []
+  },
+  "8_of_diamonds": {
+    "owner": "0",
+    "location": "StartDeck",
+    "classes": [
+      "card"
+    ],
+    "owns": []
+  },
+  "9_of_diamonds": {
+    "owner": "0",
+    "location": "StartDeck",
+    "classes": [
+      "card"
+    ],
+    "owns": []
+  },
+  "10_of_diamonds": {
+    "owner": "0",
+    "location": "StartDeck",
+    "classes": [
+      "card"
+    ],
+    "owns": []
+  },
+  "jack_of_diamonds": {
+    "owner": "0",
+    "location": "StartDeck",
+    "classes": [
+      "card",
+      "facecard"
+    ],
+    "owns": []
+  },
+  "queen_of_diamonds": {
+    "owner": "0",
+    "location": "StartDeck",
+    "classes": [
+      "card",
+      "facecard"
+    ],
+    "owns": []
+  },
+  "king_of_diamonds": {
+    "owner": "0",
+    "location": "StartDeck",
+    "classes": [
+      "card",
+      "facecard"
+    ],
+    "owns": []
+  },
+  "ace_of_hearts": {
+    "owner": "0",
+    "location": "StartDeck",
+    "classes": [
+      "card"
+    ],
+    "owns": []
+  },
+  "2_of_hearts": {
+    "owner": "0",
+    "location": "StartDeck",
+    "classes": [
+      "card"
+    ],
+    "owns": []
+  },
+  "3_of_hearts": {
+    "owner": "0",
+    "location": "StartDeck",
+    "classes": [
+      "card"
+    ],
+    "owns": []
+  },
+  "4_of_hearts": {
+    "owner": "0",
+    "location": "StartDeck",
+    "classes": [
+      "card"
+    ],
+    "owns": []
+  },
+  "5_of_hearts": {
+    "owner": "0",
+    "location": "StartDeck",
+    "classes": [
+      "card"
+    ],
+    "owns": []
+  },
+  "6_of_hearts": {
+    "owner": "0",
+    "location": "StartDeck",
+    "classes": [
+      "card"
+    ],
+    "owns": []
+  },
+  "7_of_hearts": {
+    "owner": "0",
+    "location": "StartDeck",
+    "classes": [
+      "card"
+    ],
+    "owns": []
+  },
+  "8_of_hearts": {
+    "owner": "0",
+    "location": "StartDeck",
+    "classes": [
+      "card"
+    ],
+    "owns": []
+  },
+  "9_of_hearts": {
+    "owner": "0",
+    "location": "StartDeck",
+    "classes": [
+      "card"
+    ],
+    "owns": []
+  },
+  "10_of_hearts": {
+    "owner": "0",
+    "location": "StartDeck",
+    "classes": [
+      "card"
+    ],
+    "owns": []
+  },
+  "jack_of_hearts": {
+    "owner": "0",
+    "location": "StartDeck",
+    "classes": [
+      "card",
+      "facecard"
+    ],
+    "owns": []
+  },
+  "queen_of_hearts": {
+    "owner": "0",
+    "location": "StartDeck",
+    "classes": [
+      "card",
+      "facecard"
+    ],
+    "owns": []
+  },
+  "king_of_hearts": {
+    "owner": "0",
+    "location": "StartDeck",
+    "classes": [
+      "card",
+      "facecard"
+    ],
+    "owns": []
+  },
+  "ace_of_spades": {
+    "owner": "0",
+    "location": "StartDeck",
+    "classes": [
+      "card"
+    ],
+    "owns": []
+  },
+  "2_of_spades": {
+    "owner": "0",
+    "location": "StartDeck",
+    "classes": [
+      "card"
+    ],
+    "owns": []
+  },
+  "3_of_spades": {
+    "owner": "0",
+    "location": "StartDeck",
+    "classes": [
+      "card"
+    ],
+    "owns": []
+  },
+  "4_of_spades": {
+    "owner": "0",
+    "location": "StartDeck",
+    "classes": [
+      "card"
+    ],
+    "owns": []
+  },
+  "5_of_spades": {
+    "owner": "0",
+    "location": "StartDeck",
+    "classes": [
+      "card"
+    ],
+    "owns": []
+  },
+  "6_of_spades": {
+    "owner": "0",
+    "location": "StartDeck",
+    "classes": [
+      "card"
+    ],
+    "owns": []
+  },
+  "7_of_spades": {
+    "owner": "0",
+    "location": "StartDeck",
+    "classes": [
+      "card"
+    ],
+    "owns": []
+  },
+  "8_of_spades": {
+    "owner": "0",
+    "location": "StartDeck",
+    "classes": [
+      "card"
+    ],
+    "owns": []
+  },
+  "9_of_spades": {
+    "owner": "0",
+    "location": "StartDeck",
+    "classes": [
+      "card"
+    ],
+    "owns": []
+  },
+  "10_of_spades": {
+    "owner": "0",
+    "location": "StartDeck",
+    "classes": [
+      "card"
+    ],
+    "owns": []
+  },
+  "jack_of_spades": {
+    "owner": "0",
+    "location": "StartDeck",
+    "classes": [
+      "card",
+      "facecard"
+    ],
+    "owns": []
+  },
+  "queen_of_spades": {
+    "owner": "0",
+    "location": "StartDeck",
+    "classes": [
+      "card",
+      "facecard"
+    ],
+    "owns": []
+  },
+  "king_of_spades": {
+    "owner": "0",
+    "location": "StartDeck",
+    "classes": [
+      "card",
+      "facecard"
+    ],
+    "owns": []
+  }
+}
+
+

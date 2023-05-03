@@ -1,12 +1,12 @@
 {
-  "DealerDropZone": {
+  "HighButton": {
     "connections": {
     },
     "classes": [
       "zone"
     ]
   },
-  "PlayerDropZone": {
+  "LowButton": {
     "connections": {
     },
     "classes": [
@@ -20,7 +20,7 @@
       "zone"
     ]
   },
-  "PlayerChips": {
+  "DropZone": {
     "connections": {
     },
     "classes": [
