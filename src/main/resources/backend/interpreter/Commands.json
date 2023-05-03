@@ -528,11 +528,11 @@
     }
   },
   "HasClass": {
-    "name": "Check if Object has Class",
+    "name": "Get Objects From Player",
     "folder": "game",
     "str": "hasclass",
-    "description": "Tests if an object uses a specific class",
-    "example": "hasclass :game_obj \"red  # hasclass <player> <string class>",
+    "description": "Gets the nth player in the game",
+    "example": "hasclass curplayer \"red  # hasclass <player> <string class>",
     "specs": {
       "innerBlocks": [],
       "inputs": [

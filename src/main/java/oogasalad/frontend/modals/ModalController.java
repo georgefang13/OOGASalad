@@ -86,7 +86,7 @@ public class ModalController {
   public void deleteObjectInstance(String name) {
     Component c = activeComponents.get(name);
 //    backendObjectController.deleteOwnableObject(c);
-//    dropZoneController.deleteArrows(c, root);
+    dropZoneController.deleteArrows(c, root);
     root.getChildren().remove(activeComponents.get(name).getNode());
   }
 

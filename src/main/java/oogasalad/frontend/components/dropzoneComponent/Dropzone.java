@@ -145,11 +145,12 @@ public class Dropzone extends AbstractComponent implements DropZonePublisher {
     return square;
   }
 
-  /**
-   * Return the width of the square
-   * @return width;
-   */
-
+  public double getSquareWidth(){
+    return this.width;
+  }
+  public double getSquareHeight(){
+    return height;
+  }
   public List<Subscriber> getSubscribers(){
     return subscribers;
   }
@@ -191,3 +192,4 @@ public class Dropzone extends AbstractComponent implements DropZonePublisher {
     controllerSubscribers.add(subscriber);
   }
 }
+

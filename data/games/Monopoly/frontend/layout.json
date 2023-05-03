@@ -232,11 +232,11 @@
         "distribution": "collapse",
         "unselected": {
             "hasImage": false,
-            "param": "#000000"
+            "param": "#00000000"
         },
         "selected": {
             "hasImage": false,
-            "param": "#000000"
+            "param": "#00000000"
         }
     },
     "chancedz": {
@@ -259,6 +259,21 @@
         "y": 515,
         "width": 100,
         "height": 120,
+        "distribution": "collapse",
+        "unselected": {
+            "hasImage": false,
+            "param": "#00000000"
+        },
+        "selected": {
+            "hasImage": false,
+            "param": "#00000000"
+        }
+    },
+    "jail": {
+        "x": 172,
+        "y": 670,
+        "width": 60,
+        "height": 60,
         "distribution": "collapse",
         "unselected": {
             "hasImage": false,
