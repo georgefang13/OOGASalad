@@ -120,6 +120,13 @@ public class ObjectFactoryTest {
     constructorParams.put(ObjectParameter.BOARD_ROWS, "1");
     constructorParams.put(ObjectParameter.BOARD_COLS, ""+num);
     params.put(ObjectParameter.CONSTRUCTOR_ARGS, constructorParams);
+    ArrayList<String> desiredDropZoneIds = new ArrayList<>();
+    //add "DropZone", "DropZone2", "DropZone3" to desiredDropZoneIds (for each x)
+    desiredDropZoneIds.add("DropZone");
+    for (int i = 1; i < num; i++) {
+      desiredDropZoneIds.add("DropZone" + (i + 1));
+    }
+    params.put(ObjectParameter.DESIRED_DROPZONE_IDS, desiredDropZoneIds);
     game.sendObject(type, params);
   }
 
@@ -303,6 +310,16 @@ public class ObjectFactoryTest {
     constructorParams.put(ObjectParameter.BOARD_ROWS, "3");
     constructorParams.put(ObjectParameter.BOARD_COLS, "3");
     params.put(ObjectParameter.CONSTRUCTOR_ARGS, constructorParams);
+    ArrayList<String> desiredIds = new ArrayList<>();
+    desiredIds.add("DropZone");
+    desiredIds.add("DropZone2");
+    desiredIds.add("DropZone3");
+    desiredIds.add("DropZone4");
+    desiredIds.add("DropZone5");
+    desiredIds.add("DropZone6");
+    desiredIds.add("DropZone7");
+    desiredIds.add("DropZone8");
+    constructorParams.put(ObjectParameter.DESIRED_DROPZONE_IDS, desiredIds);
     game.sendObject(type, params);
 //    checkFileContents(layoutFile, "{\"DropZone7\":{\"connections\":{\"Clockwise\":\"DropZone6\",\"Counterclockwise\":\"DropZone8\"}},\"DropZone8\":{\"connections\":{\"Clockwise\":\"DropZone7\",\"Counterclockwise\":\"DropZone\"}},\"DropZone5\":{\"connections\":{\"Clockwise\":\"DropZone4\",\"Counterclockwise\":\"DropZone6\"}},\"DropZone6\":{\"connections\":{\"Clockwise\":\"DropZone5\",\"Counterclockwise\":\"DropZone7\"}},\"DropZone3\":{\"connections\":{\"Clockwise\":\"DropZone2\",\"Counterclockwise\":\"DropZone4\"}},\"DropZone4\":{\"connections\":{\"Clockwise\":\"DropZone3\",\"Counterclockwise\":\"DropZone5\"}},\"DropZone2\":{\"connections\":{\"Clockwise\":\"DropZone\",\"Counterclockwise\":\"DropZone3\"}},\"DropZone\":{\"connections\":{\"Clockwise\":\"DropZone8\",\"Counterclockwise\":\"DropZone2\"}}}");
 //    checkFileContents(objectsFile, "{}");
@@ -329,6 +346,16 @@ public class ObjectFactoryTest {
     constructorParams.put(ObjectParameter.BOARD_ROWS, "3");
     constructorParams.put(ObjectParameter.BOARD_COLS, "3");
     params.put(ObjectParameter.CONSTRUCTOR_ARGS, constructorParams);
+    ArrayList<String> desiredIds = new ArrayList<>();
+    desiredIds.add("DropZone");
+    desiredIds.add("DropZone2");
+    desiredIds.add("DropZone3");
+    desiredIds.add("DropZone4");
+    desiredIds.add("DropZone5");
+    desiredIds.add("DropZone6");
+    desiredIds.add("DropZone7");
+    desiredIds.add("DropZone8");
+    constructorParams.put(ObjectParameter.DESIRED_DROPZONE_IDS, desiredIds);
     //params.put(ObjectParameter.ID, "myIdBoard");
     game.sendObject(type, params);
     game.sendObject(type, params);

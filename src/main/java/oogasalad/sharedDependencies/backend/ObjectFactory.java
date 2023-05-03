@@ -55,7 +55,9 @@ public class ObjectFactory {
     String boardLength = params.get(ObjectParameter.BOARD_LENGTH) != null ? params.get(ObjectParameter.BOARD_LENGTH).toString() : null;
     String boardForward = params.get(ObjectParameter.BOARD_FORWARD) != null ? params.get(ObjectParameter.BOARD_FORWARD).toString() : null;
     String boardBackward = params.get(ObjectParameter.BOARD_BACKWARD) != null ? params.get(ObjectParameter.BOARD_BACKWARD).toString() : null;
+    ArrayList<String> desiredIds = params.get(ObjectParameter.DESIRED_DROPZONE_IDS) != null ? (ArrayList<String>) params.get(ObjectParameter.DESIRED_DROPZONE_IDS) : null;
     LOG.info("{} type of board.", type);
+    System.out.println("desiredIds: " + desiredIds);
     switch (Objects.requireNonNull(type)) {
       case "createGrid" -> {
         assert boardRows != null;
@@ -79,9 +81,20 @@ public class ObjectFactory {
     }
 
     //we have all the dropzones, now we need to add them to game manager (with owner as game world)
+
     for (DropZone dropZone : dropZones) {
+
+    }
+    boolean hasDesiredIds = desiredIds != null && desiredIds.size() == dropZones.size();
+    for(int i = 0; i < dropZones.size(); i++) {
+      DropZone dropZone = dropZones.get(i);
       dropZone.setOwner(gameWorld);
-      ownableIdManager.addObject(dropZone);
+      if(hasDesiredIds) {
+        ownableIdManager.addObject(dropZone, desiredIds.get(i));
+      }
+      else {
+        ownableIdManager.addObject(dropZone);
+      }
     }
   }
 

@@ -55,6 +55,11 @@ public enum ObjectParameter {
    */
   DROPZONE_ID,
 
+  /**
+   * The desired DropZone IDs (ArrayList<String>)
+   */
+  DESIRED_DROPZONE_IDS
+
   //endregion FOR CONSTRUCTOR_ARGS
 
 }
