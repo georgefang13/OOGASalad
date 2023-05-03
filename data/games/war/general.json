@@ -1,0 +1,10 @@
+{
+  "name": "War Card Game",
+  "author": "DuVALLEY Boiz: Connor Wells-Weiner (cjw84)",
+  "description": "War is a two-player card game where the objective is to win all the cards by playing rounds and resolving ties with \"wars\".",
+  "tags": ["all", "card game"],
+  "players": {
+    "min": 2,
+    "max": 2
+  }
+}
