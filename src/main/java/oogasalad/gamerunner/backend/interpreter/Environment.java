@@ -240,6 +240,9 @@ public class Environment {
       Token var = getLocalVariable(key);
       if (var != null) {
         Variable<?> v = convertTokenToVariable(var);
+        if (idManager.isObjectInUse(v)) {
+          v = new Variable<>(v.get());
+        }
         idManager.addObject(v, key);
       }
     }
