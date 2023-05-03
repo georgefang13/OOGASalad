@@ -9,7 +9,6 @@ import javafx.stage.Stage;
 import oogasalad.Controller.DropZoneController;
 import oogasalad.frontend.components.dropzoneComponent.Dropzone;
 
-
 public class ArrowTestArea extends Application {
 
   private ComponentsFactory factory;
@@ -39,10 +38,8 @@ public class ArrowTestArea extends Application {
     c1.getNode().setTranslateY(150);
     System.out.println(c.getNode().getTranslateX());
     System.out.println(c1.getNode().getTranslateX());
-    System.out.println(c.getWidth());
     dropZoneController.addDropZone(c);
     dropZoneController.addDropZone(c1);
     dropZoneController.setRoot(root);
-
   }
 }
