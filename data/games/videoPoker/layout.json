@@ -1,0 +1,38 @@
+{
+  "Background": {
+    "connections": {},
+    "classes": "background"
+  },
+  "Card 1": {
+    "connections": {},
+    "classes": "card"
+  },
+  "Card 2 ": {
+    "connections": {},
+    "classes": "card"
+  },
+  "Card 3": {
+    "connections": {},
+    "classes": "card"
+  },
+  "Card 4": {
+    "connections": {},
+    "classes": "card"
+  },
+  "Card 5": {
+    "connections": {},
+    "classes": "card"
+  },
+  "Deal": {
+    "connections": {},
+    "classes": "button"
+  },
+  "Plus": {
+    "connections": {},
+    "classes": "bet-button"
+  },
+  "Minus": {
+    "connections": {},
+    "classes": "bet-button"
+  }
+}

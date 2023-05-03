@@ -1,0 +1,128 @@
+{
+  "Background": {
+    "x": "100",
+    "y": "100",
+    "width": "456",
+    "height": "700",
+    "unselected": {
+      "hasImage": true,
+      "param": "videoPokerScreen.png"
+    },
+    "selected": {
+      "hasImage": true,
+      "param": "videoPokerScreen.png"
+    }
+  },
+  "Card 1": {
+    "x": "150",
+    "y": "350",
+    "width": "140",
+    "height": "90",
+    "unselected": {
+      "hasImage": true,
+      "param": "cardback.png"
+    },
+    "selected": {
+      "hasImage": true,
+      "param": "flippedOver.png"
+    }
+  },
+  "Card 2": {
+    "x": "275",
+    "y": "350",
+    "width": "140",
+    "height": "90",
+    "unselected": {
+      "hasImage": true,
+      "param": "cardback.png"
+    },
+    "selected": {
+      "hasImage": true,
+      "param": "flippedOver.png"
+    }
+  },
+  "Card 3": {
+    "x": "400",
+    "y": "350",
+    "width": "140",
+    "height": "90",
+    "unselected": {
+      "hasImage": true,
+      "param": "cardback.png"
+    },
+    "selected": {
+      "hasImage": true,
+      "param": "flippedOver.png"
+    }
+  },
+  "Card 4": {
+    "x": "525",
+    "y": "350",
+    "width": "140",
+    "height": "90",
+    "unselected": {
+      "hasImage": true,
+      "param": "cardback.png"
+    },
+    "selected": {
+      "hasImage": true,
+      "param": "flippedOver.png"
+    }
+  },
+  "Card 5": {
+    "x": "650",
+    "y": "350",
+    "width": "140",
+    "height": "90",
+    "unselected": {
+      "hasImage": true,
+      "param": "cardback.png"
+    },
+    "selected": {
+      "hasImage": true,
+      "param": "flippedOver.png"
+    }
+  },
+  "Deal": {
+    "x": "400",
+    "y": "280",
+    "width": "50",
+    "height": "90",
+    "unselected": {
+      "hasImage": true,
+      "param": "2_of_clubs.png"
+    },
+    "selected": {
+      "hasImage": true,
+      "param": "2_of_clubs.png"
+    }
+  },
+  "Plus" : {
+    "x": "500",
+    "y": "500",
+    "width": "50",
+    "height": "90",
+    "unselected": {
+      "hasImage": true,
+      "param": "3_of_clubs.png"
+    },
+    "selected": {
+      "hasImage": true,
+      "param": "3_of_clubs.png"
+    }
+  },
+  "Minus" : {
+    "x": "300",
+    "y": "500",
+    "width": "50",
+    "height": "90",
+    "unselected": {
+      "hasImage": true,
+      "param": "4_of_clubs.png"
+    },
+    "selected": {
+      "hasImage": true,
+      "param": "4_of_clubs.png"
+    }
+  }
+}
