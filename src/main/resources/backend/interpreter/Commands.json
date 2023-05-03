@@ -528,11 +528,11 @@
     }
   },
   "HasClass": {
-    "name": "Get Objects From Player",
+    "name": "Check if Object has Class",
     "folder": "game",
     "str": "hasclass",
-    "description": "Gets the nth player in the game",
-    "example": "hasclass curplayer \"red  # hasclass <player> <string class>",
+    "description": "Tests if an object uses a specific class",
+    "example": "hasclass :game_obj \"red  # hasclass <player> <string class>",
     "specs": {
       "innerBlocks": [],
       "inputs": [
@@ -578,7 +578,7 @@
     "folder": "game",
     "str": "addtextobj",
     "description": "Set a value to be an available piece to click on in the game",
-    "example": "addtextobj :x :game_dz money.textobj to [ :str ] [ return + \"money%20=%20 :str ]  # makeavailable <var> <dropzone> <list[] classes] <function>",
+    "example": "addtextobj :x :game_dz money.textobj to [ :str ] [ return + \"money%20=%20 :str ]  # makeavailable <var> <dropzone> <list[] classes> <function>",
     "specs": {
       "innerBlocks": [],
       "inputs": [
