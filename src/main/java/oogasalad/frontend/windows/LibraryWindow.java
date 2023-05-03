@@ -29,7 +29,7 @@ public class LibraryWindow extends AbstractWindow {
   @Override
   public SceneTypes getDefaultSceneType() {
     return WindowScenes.LIBRARY_SCENE;
-  } //TODO: OWEN FIX THIS back to library
+  }
 
   @Override
   public AbstractScene addNewScene(SceneTypes sceneType) {

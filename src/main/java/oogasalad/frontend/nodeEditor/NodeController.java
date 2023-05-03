@@ -37,6 +37,9 @@ public class NodeController {
   public NodeController(SceneMediator sceneController) {
     scene = new NodeScene(this, sceneController);
   }
+  public NodeController(SceneMediator sceneController,String gameName) {
+    scene = new NodeScene(this, sceneController);
+  }
 
   public void saveInterpreterFiles(String userCodeFilesPath) {
     scene.saveAllContent("");

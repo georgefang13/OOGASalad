@@ -28,6 +28,7 @@ public abstract class AbstractWindow extends Stage {
         windowController); //maybe add just window controller and then the window id to get window from the window controller
     setWidth(propertyManager.getNumeric("WindowWidth"));
     setHeight(propertyManager.getNumeric("WindowHeight"));
+    gameName = "not a game window";
 
     //logger.setLogLevel(Level.ALL); // uncomment if you want to add lover level logs specific to this class
     logger.trace("Created a new scene ↑");
@@ -42,6 +43,8 @@ public abstract class AbstractWindow extends Stage {
     setScene(scene.getScene());
   }
   public String getGameName(){
+    System.out.println("inside abstract window");
+    System.out.println(gameName);
     return gameName;
   }
 }
