@@ -5,7 +5,7 @@ import oogasalad.frontend.managers.PropertyManager;
 import oogasalad.frontend.managers.StandardPropertyManager;
 import oogasalad.frontend.scenes.AbstractScene;
 import oogasalad.logging.MainLogger;
-import ch.qos.logback.classic.Level;
+//import ch.qos.logback.classic.Level;
 
 
 public class NodeWindow extends Stage {
