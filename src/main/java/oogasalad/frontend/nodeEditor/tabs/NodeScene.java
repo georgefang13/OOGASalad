@@ -38,7 +38,7 @@ public class NodeScene extends AbstractScene {
   private NodeController nodeController;
 
   private final String GAME_FILEPATH = "data/games/";
-  private final String GAME_NODE_SAVE_PATH = "data/games/Joao/NodeConfig/";
+  private final String GAME_NODE_SAVE_PATH = "data/games/%s/NodeConfig/";
 
   private SceneMediator mySceneController;
 
@@ -49,7 +49,7 @@ public class NodeScene extends AbstractScene {
     tabs.getTabs().add(makeTab("state editor", false, new StateEditorTab(nodeController)));
     setTheme();
     this.mySceneController = sceneController;
-    gameName = mySceneController.getGameName(); //todo
+    gameName = mySceneController.getGameName().toLowerCase(); //todo
     System.out.println("succesfully added gamename to node scene:");
     System.out.println(gameName);
   }
@@ -191,7 +191,7 @@ public class NodeScene extends AbstractScene {
         stateObject.add(i.toString(), stateJson);
         i++;
       }
-      try (FileWriter fileWriter = new FileWriter(GAME_NODE_SAVE_PATH + fileName + ".json")) {
+      try (FileWriter fileWriter = new FileWriter(String.format(GAME_NODE_SAVE_PATH,gameName) + fileName + ".json")) {
         gson.toJson(stateObject, fileWriter);
       } catch (IOException e) {
         e.printStackTrace();
