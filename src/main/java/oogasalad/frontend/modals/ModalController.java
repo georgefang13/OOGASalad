@@ -59,9 +59,9 @@ public class ModalController {
 
     activeComponents.put(name, c);
 
-//    files.addComponent(c);
-//    dropZoneController.addDropZone(c);
-//    dropZoneController.addGridObject(c);
+    files.addComponent(c);
+    dropZoneController.addDropZone(c);
+    dropZoneController.addGridObject(c);
 //    backendObjectController.sendOwnableObject(c);
 
 
@@ -85,9 +85,11 @@ public class ModalController {
 
   public void deleteObjectInstance(String name) {
     Component c = activeComponents.get(name);
+    files.removeComponent(c);
 //    backendObjectController.deleteOwnableObject(c);
-//    dropZoneController.deleteArrows(c, root);
+    dropZoneController.deleteArrows(c, root);
     root.getChildren().remove(activeComponents.get(name).getNode());
+    activeComponents.remove(name);
   }
 
   public void setRoot(Pane rt) {

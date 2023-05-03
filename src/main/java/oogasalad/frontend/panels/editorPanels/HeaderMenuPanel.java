@@ -23,6 +23,7 @@ public class HeaderMenuPanel extends HBox implements Panel, ModalPanel {
   private static final String VISUAL_EDITOR = "VisualEditor";
   private static final String RULE_EDITOR = "RuleEditor";
   private static final String SAVE_EDITOR = "SaveEditor";
+  private static final String LOAD_EDITOR = "LoadEditor";
   private static final ResourceBundle ID_BUNDLE = ResourceBundle.getBundle(
       "frontend/properties/StylingIDs/CSS_ID");
   private static final String MENU_HBOX_ID = "MenuHboxID";
@@ -60,6 +61,7 @@ public class HeaderMenuPanel extends HBox implements Panel, ModalPanel {
     Button visualButton = buttonFactory.createDefaultButton(VISUAL_EDITOR);
 //    Button ruleButton = buttonFactory.createDefaultButton(RULE_EDITOR);
     Button compileButton = buttonFactory.createDefaultButton(SAVE_EDITOR);
+    Button loadButton = buttonFactory.createDefaultButton(LOAD_EDITOR);
 
     selectSceneButtonSettings(logicButton, visualButton);
     logicButton.setOnAction(e -> {
@@ -75,7 +77,11 @@ public class HeaderMenuPanel extends HBox implements Panel, ModalPanel {
     compileButton.setOnAction(e -> {
       panelController.compile();
     });
-    this.getChildren().addAll(visualButton, logicButton, compileButton);
+
+    loadButton.setOnAction(e -> {
+    });
+
+    this.getChildren().addAll(visualButton, logicButton, compileButton, loadButton);
     return this;
   }
 

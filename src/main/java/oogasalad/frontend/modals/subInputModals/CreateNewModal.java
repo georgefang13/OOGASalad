@@ -26,6 +26,7 @@ public class CreateNewModal extends InputModal {
   private List<ColorPickerComponent> colorPickers;
   private List<IntegerPickerComponent> integerPickers;
   private List<ChoiceBoxComponent> choiceBoxPickers;
+  private List<BooleanComponent> booleanPickers;
   private String myTitle;
   private boolean editMode;
   private Map<String, String> values;
@@ -139,6 +140,9 @@ public class CreateNewModal extends InputModal {
       if(field.getClass() == ChoiceBoxComponent.class){
         choiceBoxPickers.add((ChoiceBoxComponent) field);
       }
+      if(field.getClass() == BooleanComponent.class) {
+        booleanPickers.add((BooleanComponent) field);
+      }
 
       // Add the field to the grid
       grid.add(fieldHBox, 0, rowIndex);
@@ -158,6 +162,7 @@ public class CreateNewModal extends InputModal {
     colorPickers = new ArrayList<>();
     integerPickers = new ArrayList<>();
     choiceBoxPickers = new ArrayList<>();
+    booleanPickers = new ArrayList<>();
   }
   // TODO: styling use the last .NAME in the properties file to get the styling id
 
@@ -183,6 +188,9 @@ public class CreateNewModal extends InputModal {
     }
     for (ChoiceBoxComponent choiceBoxComponent : choiceBoxPickers) {
       map.put(choiceBoxComponent.getId(), choiceBoxComponent.getValue());
+    }
+    for (BooleanComponent booleanComponent : booleanPickers) {
+      map.put(booleanComponent.getId(), Boolean.toString(booleanComponent.getValue()));
     }
 
     //TODO remove, just for testing purposes

@@ -24,6 +24,9 @@ public class GameObject extends AbstractComponent implements GameObjectComponent
   private int height;
   private double rotate;
   private String dropzoneID;
+  private String selectedImagePath;
+  private boolean hasSelectedImage;
+
 
   /**
    * Constructor for GameObject

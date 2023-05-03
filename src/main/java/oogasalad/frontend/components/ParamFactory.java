@@ -6,7 +6,7 @@ import oogasalad.frontend.components.ParameterStrategies.*;
 
 public class ParamFactory {
   public static ConversionContext<?> createConversionContext(Class<?> outputClass) {
-    if (outputClass == Boolean.class) {
+    if (outputClass == boolean.class) {
       return new ConversionContext<>(new BooleanParameterStrategy());
     } else if (outputClass == ImageView.class) {
       return new ConversionContext<>(new ImageViewParameterStrategy());

@@ -1,0 +1,10 @@
+{
+  "name": "Blackjack",
+  "author": "Aryan Kothari",
+  "description": "The classic casino game",
+  "tags": ["all"],
+  "players": {
+    "min": 2,
+    "max": 2
+  }
+}
