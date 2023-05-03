@@ -9,8 +9,20 @@
     "ROLL": {
       "init": "\nmake :dice fromgame \"dice\nmakeavailable :dice\n",
       "leave": "",
-      "setValue": "make :num1 + 1 floor rand 6\nmake :piece item 0 fromplayer curplayer",
+      "setValue": "make :roll + 1 floor rand 6\nmake :piece item 0 fromplayer curplayer \"piece \n repeat :roll [\n    make :dz objdz :piece\n    make :next dzfollow :dz [ \"Next ]\n   ] \n if hasclass :next \"special :next dzfollow :dz [ \"Jump ] \n ",
+      "to": "make :game_state_output \"SELECTPIECE"
+    },
+    "SELECTPIECE": {
+      "init": "getAvailablePieces",
+      "leave": "",
+      "setValue": "make :selected_piece fromgame :game_state_input",
       "to": "make :game_state_output \"SELECTZONE"
+    },
+    "SELECTZONE": {
+      "init": "getAvailableSpots",
+      "leave": "",
+      "setValue": "movepiece :selected_piece fromgame :game_state_input",
+      "to": "make :game_state_output \"DONE"
     },
     "DONE": {
       "init": "",
@@ -20,6 +32,6 @@
     }
   },
   "goals": [
-  "to blocked [ :x ] [ if dzempty :x [ return true ] return != curplayer owner item 0 dzitems :x ] make :game_log [ ] foreach [ :dz fromgameclass \"board ] [ if dzempty :dz [ continue ] if != curplayer owner item 0 dzitems :dz [ continue ] foreach [ :edge dzpaths :dz ] [ make :dzs dzfollowtoblock :dz [ :edge ] fvar blocked make :curspot item 0 dzitems :dz if == 3 len :dzs [ make :game_state_output curplayer return; ] ] ]"
+
   ]
 }
