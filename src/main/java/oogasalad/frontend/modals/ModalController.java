@@ -60,8 +60,8 @@ public class ModalController {
     activeComponents.put(name, c);
 
     files.addComponent(c);
-//    dropZoneController.addDropZone(c);
-//    dropZoneController.addGridObject(c);
+    dropZoneController.addDropZone(c);
+    dropZoneController.addGridObject(c);
 //    backendObjectController.sendOwnableObject(c);
 
 
@@ -115,5 +115,9 @@ public class ModalController {
       list.set(0, "DropZone");
     }
     return list;
+  }
+
+  public FilesController getFilecontroller() {
+    return files;
   }
 }

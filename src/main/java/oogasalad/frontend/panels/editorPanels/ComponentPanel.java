@@ -64,7 +64,7 @@ public class ComponentPanel extends VBox implements ModalPanel, Panel {
 
   public void setFiles(FilesController file){
     files = file;
-    mController.setFileController(files);
+    mController.setFileController(file);
   }
   public VBox createSingleAccordionVBox() {
     VBox componentPanel = new VBox();

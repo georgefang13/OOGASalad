@@ -3,13 +3,20 @@ package oogasalad.Controller;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import oogasalad.frontend.components.Component;
 
 public class ConvertingStrategy {
 
+  private Map<String, String> specialCases;
   public ConvertingStrategy(){
-
+    specialCases = new HashMap();
+    specialCases.put("unselectedHasImage", "unselected,hasImage");
+    specialCases.put("selectedHasImage", "selected,hasImage");
+    specialCases.put("unselectedparam", "unselected,param");
+    specialCases.put("selectedparam", "selected,param");
   }
   /**
    * Returns the parameters of the Component to be converted into a String of params. Used
@@ -47,14 +54,18 @@ public class ConvertingStrategy {
     Field[] fieldsParent = componentClass.getSuperclass().getDeclaredFields();
 
 
-    Field[] combinedFields = Arrays.copyOf(fieldsChild, fieldsChild.length + fieldsParent.length);
-    System.arraycopy(fieldsParent, 0, combinedFields, fieldsChild.length, fieldsParent.length);
+    Field[] combinedFields = Arrays.copyOf(fieldsParent, fieldsChild.length + fieldsParent.length);
+    System.arraycopy(fieldsChild, 0, combinedFields, fieldsParent.length, fieldsChild.length);
 
     for(Field field:combinedFields) {
       field.setAccessible(true);
       try {
         String value = field.get(component).toString();
-        map.put(field.getName(), value);
+        if(specialCases.keySet().contains(field.getName())){
+          map.put(specialCases.get(field.getName()), value);
+        }else{
+          map.put(field.getName(), value);
+        }
       } catch (Exception e) {
         map.put(field.getName(), null);
       }

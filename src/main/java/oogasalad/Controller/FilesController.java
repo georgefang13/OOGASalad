@@ -19,6 +19,7 @@ import oogasalad.sharedDependencies.backend.filemanagers.FileManager;
  * @author Han This class is made to update any File information from the Front End to the backend
  */
 public class FilesController {
+  private final String SEPARATOR = ",";
   private final String GAMES_PATH = "data\\games\\";
   private String gameFolder;
   private final String FILES_NAMES = "Controller/FilesConfig.properties";
@@ -82,9 +83,15 @@ public class FilesController {
         List<Dropzone> newComponents = ((GridObject) comp).getDropzones();
         componentsLater.addAll(newComponents);
       }else{
+        String id = map.get("ID");
+        for(String key : map.keySet()){
+          String remove = "unselected,hasImage";
+
+          currentManager.addContent(map.get(key), makeTagsArray(id, key));
+        }
         currentManager.addContent(map, "components", String.valueOf(count), "map");
-        currentManager.addContent(className, "components", String.valueOf(count), "className");
-        count++;
+//        currentManager.addContent(className, "components", String.valueOf(count), "className");
+//        count++;
       }
     }
 
@@ -141,5 +148,13 @@ public class FilesController {
 
   public GameInator getGame() {
     return game;
+  }
+
+  private String[] makeTagsArray(String id, String tags) {
+    String[] inputTags = tags.split(SEPARATOR);
+    String[] allTags = new String[inputTags.length + 1];
+    allTags[0] = id;
+    System.arraycopy(inputTags, 0, allTags, 1, inputTags.length);
+    return allTags;
   }
 }
