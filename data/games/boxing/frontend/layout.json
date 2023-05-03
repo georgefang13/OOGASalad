@@ -762,7 +762,7 @@
     "height": "50",
     "unselected": {
       "hasImage": true,
-      "param": "tree.png"
+      "param": "light.png"
     },
     "selected": {
       "hasImage": true,
@@ -790,7 +790,7 @@
     "height": "50",
     "unselected": {
       "hasImage": true,
-      "param": "tree.png"
+      "param": "dark.png"
     },
     "selected": {
       "hasImage": true,
@@ -804,7 +804,7 @@
     "height": "50",
     "unselected": {
       "hasImage": true,
-      "param": "tree.png"
+      "param": "light.png"
     },
     "selected": {
       "hasImage": true,
@@ -884,20 +884,6 @@
   "DropZone64": {
     "x": "400",
     "y": "400",
-    "width": "50",
-    "height": "50",
-    "unselected": {
-      "hasImage": true,
-      "param": "light.png"
-    },
-    "selected": {
-      "hasImage": true,
-      "param": "lightselected.png"
-    }
-  },
-  "DropZoneShowTree": {
-    "x": "500",
-    "y": "200",
     "width": "50",
     "height": "50",
     "unselected": {

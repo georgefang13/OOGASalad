@@ -10,8 +10,5 @@
   },
   "red": {
     "available": "to available [ :dz ] [\n    make :moveset [ [ \"Right ] [ \"Left ] [ \"Down ] [ \"Up ] ]\n    make :ret pieceAvailable :dz :moveset\n    return :ret\n]\n"
-  },
-  "tree": {
-    "showTree": "to showTree [ :piece ] [\n    setobjimg :piece \"redKing.png\n      ]\n"
   }
 }

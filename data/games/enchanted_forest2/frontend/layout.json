@@ -1,0 +1,352 @@
+{
+  "DropZone1": {
+    "x": "80",
+    "y": "80",
+    "width": "80",
+    "height": "80",
+    "unselected": {
+      "hasImage": true,
+      "param": "dz1.png"
+    },
+    "selected": {
+      "hasImage": true,
+      "param": "dzh1.png"
+    }
+  },
+  "DropZone2": {
+    "x": "160",
+    "y": "80",
+    "width": "80",
+    "height": "80",
+    "unselected": {
+      "hasImage": true,
+      "param": "dz2.png"
+    },
+    "selected": {
+      "hasImage": true,
+      "param": "dzh2.png"
+    }
+  },
+  "DropZone3": {
+    "x": "240",
+    "y": "80",
+    "width": "80",
+    "height": "80",
+    "unselected": {
+      "hasImage": true,
+      "param": "dz3.png"
+    },
+    "selected": {
+      "hasImage": true,
+      "param": "dzh3.png"
+    }
+  },
+  "DropZone4": {
+    "x": "320",
+    "y": "80",
+    "width": "80",
+    "height": "80",
+    "unselected": {
+      "hasImage": true,
+      "param": "dz4.png"
+    },
+    "selected": {
+      "hasImage": true,
+      "param": "dzh4.png"
+    }
+  },
+  "DropZone5": {
+    "x": "400",
+    "y": "80",
+    "width": "80",
+    "height": "80",
+    "unselected": {
+      "hasImage": true,
+      "param": "dz5.png"
+    },
+    "selected": {
+      "hasImage": true,
+      "param": "dzh5.png"
+    }
+  },
+  "DropZone6": {
+    "x": "80",
+    "y": "160",
+    "width": "80",
+    "height": "80",
+    "unselected": {
+      "hasImage": true,
+      "param": "dz1.png"
+    },
+    "selected": {
+      "hasImage": true,
+      "param": "dzh1.png"
+    }
+  },
+  "DropZone7": {
+    "x": "160",
+    "y": "160",
+    "width": "80",
+    "height": "80",
+    "unselected": {
+      "hasImage": true,
+      "param": "dz1.png"
+    },
+    "selected": {
+      "hasImage": true,
+      "param": "dzh1.png"
+    }
+  },
+  "DropZone8": {
+    "x": "240",
+    "y": "160",
+    "width": "80",
+    "height": "80",
+    "unselected": {
+      "hasImage": true,
+      "param": "dz1.png"
+    },
+    "selected": {
+      "hasImage": true,
+      "param": "dzh1.png"
+    }
+  },
+  "DropZone9": {
+    "x": "320",
+    "y": "160",
+    "width": "80",
+    "height": "80",
+    "unselected": {
+      "hasImage": true,
+      "param": "dz1.png"
+    },
+    "selected": {
+      "hasImage": true,
+      "param": "dzh1.png"
+    }
+  },
+  "DropZone10": {
+    "x": "400",
+    "y": "160",
+    "width": "80",
+    "height": "80",
+    "unselected": {
+      "hasImage": true,
+      "param": "dz1.png"
+    },
+    "selected": {
+      "hasImage": true,
+      "param": "dzh1.png"
+    }
+  },
+  "DropZone11": {
+    "x": "80",
+    "y": "240",
+    "width": "80",
+    "height": "80",
+    "unselected": {
+      "hasImage": true,
+      "param": "dz1.png"
+    },
+    "selected": {
+      "hasImage": true,
+      "param": "dzh1.png"
+    }
+  },
+  "DropZone12": {
+    "x": "160",
+    "y": "240",
+    "width": "80",
+    "height": "80",
+    "unselected": {
+      "hasImage": true,
+      "param": "dz1.png"
+    },
+    "selected": {
+      "hasImage": true,
+      "param": "dzh1.png"
+    }
+  },
+  "DropZone13": {
+    "x": "240",
+    "y": "240",
+    "width": "80",
+    "height": "80",
+    "unselected": {
+      "hasImage": true,
+      "param": "dz1.png"
+    },
+    "selected": {
+      "hasImage": true,
+      "param": "dzh1.png"
+    }
+  },
+  "DropZone14": {
+    "x": "320",
+    "y": "240",
+    "width": "80",
+    "height": "80",
+    "unselected": {
+      "hasImage": true,
+      "param": "dz1.png"
+    },
+    "selected": {
+      "hasImage": true,
+      "param": "dzh1.png"
+    }
+  },
+  "DropZone15": {
+    "x": "400",
+    "y": "240",
+    "width": "80",
+    "height": "80",
+    "unselected": {
+      "hasImage": true,
+      "param": "dz1.png"
+    },
+    "selected": {
+      "hasImage": true,
+      "param": "dzh1.png"
+    }
+  },
+  "DropZone16": {
+    "x": "80",
+    "y": "320",
+    "width": "80",
+    "height": "80",
+    "unselected": {
+      "hasImage": true,
+      "param": "dz1.png"
+    },
+    "selected": {
+      "hasImage": true,
+      "param": "dzh1.png"
+    }
+  },
+  "DropZone17": {
+    "x": "160",
+    "y": "320",
+    "width": "80",
+    "height": "80",
+    "unselected": {
+      "hasImage": true,
+      "param": "dz1.png"
+    },
+    "selected": {
+      "hasImage": true,
+      "param": "dzh1.png"
+    }
+  },
+  "DropZone18": {
+    "x": "240",
+    "y": "320",
+    "width": "80",
+    "height": "80",
+    "unselected": {
+      "hasImage": true,
+      "param": "dz1.png"
+    },
+    "selected": {
+      "hasImage": true,
+      "param": "dzh1.png"
+    }
+  },
+  "DropZone19": {
+    "x": "320",
+    "y": "320",
+    "width": "80",
+    "height": "80",
+    "unselected": {
+      "hasImage": true,
+      "param": "dz1.png"
+    },
+    "selected": {
+      "hasImage": true,
+      "param": "dzh1.png"
+    }
+  },
+  "DropZone20": {
+    "x": "400",
+    "y": "320",
+    "width": "80",
+    "height": "80",
+    "unselected": {
+      "hasImage": true,
+      "param": "dz1.png"
+    },
+    "selected": {
+      "hasImage": true,
+      "param": "dzh1.png"
+    }
+  },
+  "DropZone21": {
+    "x": "80",
+    "y": "400",
+    "width": "80",
+    "height": "80",
+    "unselected": {
+      "hasImage": true,
+      "param": "dz1.png"
+    },
+    "selected": {
+      "hasImage": true,
+      "param": "dzh1.png"
+    }
+  },
+  "DropZone22": {
+    "x": "160",
+    "y": "400",
+    "width": "80",
+    "height": "80",
+    "unselected": {
+      "hasImage": true,
+      "param": "dz1.png"
+    },
+    "selected": {
+      "hasImage": true,
+      "param": "dzh1.png"
+    }
+  },
+  "DropZone23": {
+    "x": "240",
+    "y": "400",
+    "width": "80",
+    "height": "80",
+    "unselected": {
+      "hasImage": true,
+      "param": "dz1.png"
+    },
+    "selected": {
+      "hasImage": true,
+      "param": "dzh1.png"
+    }
+  },
+  "DropZone24": {
+    "x": "320",
+    "y": "400",
+    "width": "80",
+    "height": "80",
+    "unselected": {
+      "hasImage": true,
+      "param": "dz1.png"
+    },
+    "selected": {
+      "hasImage": true,
+      "param": "dzh1.png"
+    }
+  },
+  "DropZone25": {
+    "x": "400",
+    "y": "400",
+    "width": "80",
+    "height": "80",
+    "unselected": {
+      "hasImage": true,
+      "param": "dz1.png"
+    },
+    "selected": {
+      "hasImage": true,
+      "param": "dzh1.png"
+    }
+  }
+}

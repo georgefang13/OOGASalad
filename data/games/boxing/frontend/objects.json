@@ -18,15 +18,5 @@
     "height": "30",
     "width": "30",
     "location": "DropZone24"
-  },
-  "showTree": {
-    "selected": {
-      "hasSelectedImage": true,
-      "param": "blackselected.png"
-    },
-    "defaultImage": "black.png",
-    "height": "30",
-    "width": "30",
-    "location": "DropZoneShowTree"
   }
 }

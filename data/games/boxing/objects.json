@@ -16,13 +16,5 @@
       "piece"
     ],
     "owns": []
-  },
-  "showTree": {
-    "owner": "-1",
-    "location": "DropZoneShowTree",
-    "classes": [
-      "showtree"
-    ],
-    "owns": []
   }
 }

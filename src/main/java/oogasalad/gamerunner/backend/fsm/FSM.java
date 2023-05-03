@@ -56,6 +56,7 @@ public class FSM<T> {
 
     currentState = states.get(name);
     currentStateName = name;
+    System.out.println(currentStateName);
     currentState.onEnter(data);
   }
 
