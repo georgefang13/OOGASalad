@@ -1,9 +1,9 @@
 {
   "GreenDropZone": {
     "x": "200",
-    "y": "50",
-    "width": "200",
-    "height": "120",
+    "y": "5",
+    "width": "220",
+    "height": "140",
     "distribution": "collapse",
     "unselected": {
       "hasImage": true,
@@ -16,9 +16,9 @@
   },
   "GrayDropZone": {
     "x": "200",
-    "y": "400",
-    "width": "200",
-    "height": "120",
+    "y": "445",
+    "width": "220",
+    "height": "140",
     "distribution": "collapse",
     "unselected": {
       "hasImage": true,
@@ -30,10 +30,10 @@
     }
   },
   "StartDeck": {
-    "x": "50",
+    "x": "650",
     "y": "225",
-    "width": "200",
-    "height": "120",
+    "width": "220",
+    "height": "140",
     "distribution": "vertical",
     "unselected": {
       "hasImage": true,
@@ -42,6 +42,36 @@
     "selected": {
       "hasImage": true,
       "param": "dz_deck.jpg"
+    }
+  },
+  "WarDropZone1": {
+    "x": "50",
+    "y": "225",
+    "width": "220",
+    "height": "140",
+    "distribution": "vertical",
+    "unselected": {
+      "hasImage": true,
+      "param": "dz_gray.jpg"
+    },
+    "selected": {
+      "hasImage": true,
+      "param": "dz_gray.jpg"
+    }
+  },
+  "WarDropZone2": {
+    "x": "350",
+    "y": "225",
+    "width": "220",
+    "height": "140",
+    "distribution": "vertical",
+    "unselected": {
+      "hasImage": true,
+      "param": "dz_green.jpg"
+    },
+    "selected": {
+      "hasImage": true,
+      "param": "dz_green.jpg"
     }
   }
 }
