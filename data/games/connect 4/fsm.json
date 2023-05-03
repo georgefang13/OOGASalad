@@ -26,6 +26,6 @@
     }
   },
   "goals": [
-  "to blocked [ :x ] [ if dzempty :x [ return true ] return != curplayer owner item 0 dzitems :x ] make :game_log [ ] foreach [ :dz fromgameclass \"board ] [ if dzempty :dz [ continue ] if != curplayer owner item 0 dzitems :dz [ continue ] foreach [ :edge dzpaths :dz ] [ make :dzs dzfollowtoblock :dz [ :edge ] fvar blocked make :curspot item 0 dzitems :dz if == 3 len :dzs [ make :game_state_output curplayer return; ] ] ]"
+    "to blocked  [  :x   ]   [ if dzempty :x   [ return true  ]  return !\u003d curplayer owner item 0  dzitems :x  ]  make :game_log   [  ]  foreach [ :dz fromgameclass \"board  ]  [ if dzempty :dz   [ continue ]  if !\u003d curplayer owner item 0  dzitems :dz   [ continue ]  foreach [ :edge dzpaths :dz  ]  [ make :dzs dzfollowtoblock :dz [ :edge ] fvar blocked make :curspot  item 0 dzitems :dz if \u003d\u003d 3 len :dzs   [ make :game_state_output  curplayer return;   ]   ]   ]  "
   ]
 }

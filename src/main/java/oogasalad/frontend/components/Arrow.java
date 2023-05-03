@@ -25,7 +25,7 @@ public class Arrow implements Subscriber {
   private double endX;
   private double endY;
 
-  private static final ResourceBundle BUNDLE = ResourceBundle.getBundle("\\frontend\\properties\\Defaults\\Arrow");
+  private static final ResourceBundle BUNDLE = ResourceBundle.getBundle("frontend.properties.Defaults.Arrow");
 
   /**
    * Constructor for arrow that represents connections between dropzones
