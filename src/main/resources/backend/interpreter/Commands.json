@@ -1143,6 +1143,24 @@
       "parse": "aslist %s"
     }
   },
+  "MaxBlock": {
+    "name": "MaxBlock",
+    "folder": "metablocks",
+    "description": "Create a custom text block that just adds the text you add",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        {
+          "name": "String",
+          "type": [
+            "number"
+          ]
+        }
+      ],
+      "outputs": [],
+      "parse": " %s "
+    }
+  },
   "Equal": {
     "name": "Equal",
     "folder": "operators",
@@ -1412,5 +1430,6 @@
       "outputs": ["list"],
       "parse": "setitem %s %s %s"
     }
+
   }
 }

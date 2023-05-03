@@ -113,6 +113,11 @@ public class NodeScene extends AbstractScene {
     for (Entry<Tab, CodeEditorTab> entry : tabMap.entrySet()) {
       CodeEditorTab tab = entry.getValue();
       if (tab instanceof GoalTab) {
+        String state = entry.getValue().getState();
+        String action = entry.getValue().getAction();
+        List<AbstractNode> listOfNodes = entry.getValue().getMainNodeChildren();
+        String configName = state + action;
+        makeConfigFile(listOfNodes, configName);
         goalArray.add(tab.getMainNodeParseString());
       } else if(tab instanceof GameObjectTab) {
         String state = entry.getValue().getState();
