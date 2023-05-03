@@ -202,7 +202,9 @@ public class TestGame implements GameToInterpreterAPI {
 
     @Override
     public void addObject(Ownable obj, DropZone dz, String image, double width, double height) {
-
+        idManager.addObject(obj);
+        putInDropZone(obj, dz);
+        objImages.put(obj, "assets/" + image);
     }
 
 //    @Override

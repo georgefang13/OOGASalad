@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+
+import com.google.protobuf.Value;
 import oogasalad.sharedDependencies.backend.id.IdManager;
 import oogasalad.gamerunner.backend.GameToInterpreterAPI;
 import oogasalad.gamerunner.backend.interpreter.tokens.ExpressionToken;
@@ -145,14 +147,18 @@ public class Environment {
 
     } else {
       Variable<?> var = convertTokenToVariable(val);
+      if (idManager.isObjectInUse(var)){
+        var = new Variable<>(var.get());
+      }
       idManager.addObject(var, name);
     }
   }
 
   public Token convertVariableToToken(Variable<?> var) {
     Object obj = var.get();
+    Token output;
     if (obj instanceof Integer i) {
-      return new ValueToken<>(i.doubleValue());
+      output = new ValueToken<>(i.doubleValue());
     } else if (obj instanceof List<?>) {
       ExpressionToken list = new ExpressionToken();
       for (Object o : (List<?>) obj) {
@@ -165,10 +171,12 @@ public class Environment {
           list.addToken(new ValueToken<>(o), this);
         }
       }
-      return list;
+      output = list;
     } else {
-      return new ValueToken<>(obj);
+      output = new ValueToken<>(obj);
     }
+    output.linkVariable(var);
+    return output;
   }
 
   public void removeVariable(VariableToken var) {
@@ -193,6 +201,11 @@ public class Environment {
   public Variable<?> convertTokenToVariable(Token t) {
     if (t == null) {
       return new Variable<>(null, null);
+    }
+    if (t.getLink() != null){
+        Variable v = t.getLink();
+        v.set(t.export(this));
+        return v;
     }
     Variable<?> v = new Variable<>(t.export(this));
     t.linkVariable(v);

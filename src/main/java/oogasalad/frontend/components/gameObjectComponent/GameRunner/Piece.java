@@ -1,5 +1,7 @@
 package oogasalad.frontend.components.gameObjectComponent.GameRunner;
 
+import java.util.ArrayList;
+import java.util.List;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
@@ -78,36 +80,39 @@ public class Piece extends GameRunnerObject{
         getNode().setOnMouseReleased(e -> selectDropZoneBelow());
     }
     private void selectDropZoneBelow(){
-        DropZoneVisual dropZoneVisual = getIntersectingDropZones();
-        if (dropZoneVisual == null){
+        List<DropZoneVisual> dropZoneVisuals = getIntersectingDropZones();
+        if (dropZoneVisuals.size() == 0){
             goBack();
             return;
         }
-        if (gameRunnerController.isObjectPlayable(dropZoneVisual.getObjectID())){
-            gameRunnerController.select(dropZoneVisual.getObjectID());
-            acceptDrag();
-            active = false;
-            setDraggable(playable);
-            if (playable) {
-                makePlayable();
-            } else {
-                makeUnplayable();
-            }
 
-        } else {
-            goBack();
+        for (DropZoneVisual dropZoneVisual : dropZoneVisuals) {
+            if (gameRunnerController.isObjectPlayable(dropZoneVisual.getObjectID())) {
+                gameRunnerController.select(dropZoneVisual.getObjectID());
+                acceptDrag();
+                active = false;
+                setDraggable(playable);
+                if (playable) {
+                    makePlayable();
+                } else {
+                    makeUnplayable();
+                }
+                return;
+            }
         }
+        goBack();
     }
-    private DropZoneVisual getIntersectingDropZones(){
+    private List<DropZoneVisual> getIntersectingDropZones(){
+        List<DropZoneVisual> visuals = new ArrayList<>();
         Bounds pieceBounds = getNode().localToScene(getNode().getBoundsInLocal());
         for (Node n : getNode().getParent().getChildrenUnmodifiable()) {
             if (n instanceof DropZoneVisual){
                 if (n.localToScene(n.getBoundsInLocal()).intersects(pieceBounds)){
-                    return (DropZoneVisual) n;
+                    visuals.add((DropZoneVisual) n);
                 }
             }
         }
-        return null;
+        return visuals;
     }
     private void acceptDrag() {
         Node node = getNode();

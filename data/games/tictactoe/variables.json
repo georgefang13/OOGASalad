@@ -1,0 +1,10 @@
+{
+  "testvar": {
+    "value": 1500,
+    "type": "java.lang.Integer",
+    "owner": 0,
+    "classes": [
+      "money"
+    ]
+  }
+}

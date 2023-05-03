@@ -180,6 +180,7 @@ public class GameRunnerController implements GameController {
     private void removeGameObject(String id){
         gameObjectVisualsList.remove(gameObjects.get(id).getNode());
         gameObjects.remove(id);
+        clickable.remove(id);
     }
 
     /**
@@ -204,6 +205,7 @@ public class GameRunnerController implements GameController {
      */
     @Override
     public void movePiece(String pieceID, String dropZoneID) {
+        System.out.println("Moving piece " + pieceID + " to drop zone " + dropZoneID);
             DropZoneFE dropZone = (DropZoneFE) gameObjects.get(dropZoneID);
             Piece piece = (Piece) gameObjects.get(pieceID);
 
@@ -324,13 +326,13 @@ public class GameRunnerController implements GameController {
      */
     @Override
     public void endGame(int player) {
-        AlertModal alertModal = new AlertModal("GameWinHeader", "GameWinBody", player+1);
-        alertModal.setModalType(Alert.AlertType.INFORMATION);
-        alertModal.setOnClose(e -> {
-
+        Platform.runLater(() -> {
+            AlertModal alertModal = new AlertModal("GameWinHeader", "GameWinBody", player+1);
+            alertModal.setModalTitle("GameWinTitle");
+            alertModal.setModalType(Alert.AlertType.INFORMATION);
+            alertModal.showAlert();
+            endGame.setValue(true);
         });
-        alertModal.showAlert();
-        endGame.setValue(true);
     }
 
     private void clearClickables(){
@@ -392,10 +394,10 @@ public class GameRunnerController implements GameController {
      */
     @Override
     public void addTextObject(String id, String text, String dropZoneID) {
-        TextGameRunner textGameRunner = new TextGameRunner(id);
+        TextGameRunner textGameRunner = new TextGameRunner(id, this);
         textGameRunner.setText(text);
         DropZoneFE dropZone = (DropZoneFE) gameObjects.get(dropZoneID);
-        textGameRunner.moveToXY(dropZone.getDropZoneCenter());
+        textGameRunner.setTextPosition(dropZone.getDropZoneBounds().getMinX(), dropZone.getDropZoneCenter().getY());
         addGameObject(id,textGameRunner);
     }
 
@@ -406,7 +408,8 @@ public class GameRunnerController implements GameController {
      */
     @Override
     public void updateTextObject(String id, String text) {
-
+        TextGameRunner textGameRunner = (TextGameRunner) gameObjects.get(id);
+        textGameRunner.setText(text);
     }
 }
 

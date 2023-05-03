@@ -1,0 +1,98 @@
+{
+  "Background": {
+    "x": "0",
+    "y": "0",
+    "width": "800",
+    "height": "800",
+    "unselected":{"hasImage":false,"param":"#000000"},
+    "selected":{"hasImage":false,"param":"#000000"}
+  },
+  "0,0": {
+    "x": "100",
+    "y": "100",
+    "width": "95",
+    "height": "95",
+    "unselected":{"hasImage":false,"param":"FFFFFF"},
+    "selected":{"hasImage":false,"param":"90EE90"}
+  },
+  "0,1": {
+      "x": "200",
+      "y": "100",
+      "width": "95",
+      "height": "95",
+      "unselected":{"hasImage":false,"param":"FFFFFF"},
+      "selected":{"hasImage":false,"param":"90EE90"}
+  },
+  "0,2": {
+    "x": "300",
+    "y": "100",
+    "width": "95",
+    "height": "95",
+    "unselected":{"hasImage":false,"param":"FFFFFF"},
+    "selected":{"hasImage":false,"param":"90EE90"}
+  },
+  "1,0": {
+    "x": "100",
+    "y": "200",
+    "width": "95",
+    "height": "95",
+    "unselected":{"hasImage":false,"param":"FFFFFF"},
+    "selected":{"hasImage":false,"param":"90EE90"}
+  },
+  "1,1": {
+    "x": "200",
+    "y": "200",
+    "width": "95",
+    "height": "95",
+    "unselected":{"hasImage":false,"param":"FFFFFF"},
+    "selected":{"hasImage":false,"param":"90EE90"}
+  },
+  "1,2": {
+    "x": "300",
+    "y": "200",
+    "width": "95",
+    "height": "95",
+    "unselected":{"hasImage":false,"param":"FFFFFF"},
+    "selected":{"hasImage":false,"param":"90EE90"}
+  },
+  "2,0": {
+    "x": "100",
+    "y": "300",
+    "width": "95",
+    "height": "95",
+    "unselected":{"hasImage":false,"param":"FFFFFF"},
+    "selected":{"hasImage":false,"param":"90EE90"}
+  },
+  "2,1": {
+    "x": "200",
+    "y": "300",
+    "width": "95",
+    "height": "95",
+    "unselected":{"hasImage":false,"param":"FFFFFF"},
+    "selected":{"hasImage":false,"param":"90EE90"}
+  },
+  "2,2": {
+    "x": "300",
+    "y": "300",
+    "width": "95",
+    "height": "95",
+    "unselected":{"hasImage":false,"param":"FFFFFF"},
+    "selected":{"hasImage":false,"param":"90EE90"}
+  },
+  "XDropZone": {
+    "x": "100",
+    "y": "500",
+    "width": "300",
+    "height": "100",
+    "unselected":{"hasImage":false,"param":"FFFFFF"},
+    "selected":{"hasImage":false,"param":"FFFFFF"}
+  },
+  "ODropZone": {
+    "x": "400",
+    "y": "500",
+    "width": "300",
+    "height": "100",
+    "unselected":{"hasImage":false,"param":"FFFFFF"},
+    "selected":{"hasImage":false,"param":"FFFFFF"}
+  }
+}
