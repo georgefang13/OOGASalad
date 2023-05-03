@@ -1,10 +1,23 @@
 {
-  "dz1": {
-    "connections": {},
-    "classes": "board"
+  "GreenDropZone": {
+    "connections": {
+    },
+    "classes": [
+      "zone"
+    ]
   },
-  "dz2": {
-    "connections": {},
-    "classes": "board"
+  "GrayDropZone": {
+    "connections": {
+    },
+    "classes": [
+      "zone"
+    ]
+  },
+  "StartDeck": {
+    "connections": {
+    },
+    "classes": [
+      "zone"
+    ]
   }
 }
