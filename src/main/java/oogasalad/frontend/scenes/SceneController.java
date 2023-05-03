@@ -24,7 +24,7 @@ public class SceneController implements SceneMediator{
     this.windowID = windowID;
     this.windowController = windowController;
     scenes = new HashMap<>();
-    filesController = new FilesController("Test");
+    filesController = new FilesController();
   }
 
   public void switchToScene(String sceneID) {
@@ -70,5 +70,9 @@ public class SceneController implements SceneMediator{
   @Override
   public String getGameName() {
     return getWindow().getGameName();
+  }
+
+  public void setFilesController(FilesController files){
+    filesController = files;
   }
 }

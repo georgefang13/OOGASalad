@@ -20,4 +20,5 @@ public interface SceneMediator {
     FilesController getFilesController();
     void compile();
     String getGameName();
+    void setFilesController(FilesController files);
 }

@@ -12,7 +12,7 @@ public class MakeTextObject extends OperatorToken {
 
     // var, location, classes[], reaction
     public MakeTextObject() {
-        super(3, "MakeTextObject");
+        super(4, "MakeTextObject");
     }
 
     @Override
@@ -31,7 +31,7 @@ public class MakeTextObject extends OperatorToken {
         }
 
         ValueToken<DropZone> loc = checkArgumentWithSubtype(env, t1, ValueToken.class, DropZone.class.getName());
-        ValueToken<String> clsList = checkArgumentWithSubtype(env, t2, VariableToken.class, String.class.getName());
+        ValueToken<String> clsList = checkArgumentWithSubtype(env, t2, ValueToken.class, String.class.getName());
 
         OperatorToken op;
         if (t3 instanceof OperatorToken o){
@@ -48,10 +48,14 @@ public class MakeTextObject extends OperatorToken {
             obj.addClass(cls);
         }
 
+        env.getGame().addTextObject(obj, loc.VALUE);
+
         Consumer<String> reaction = (String s) -> {
+            s = s.replace("%20", " ");
             op.passArguments(new Token[]{new ValueToken<>(s)});
             Token result = op.evaluate(env);
             ValueToken<String> b = checkArgumentWithSubtype(env, result, ValueToken.class, String.class.getName());
+            obj.setTextNoReaction(b.VALUE.replace("%20", " "));
             env.getGame().updateTextObject(obj);
         };
 
@@ -59,8 +63,6 @@ public class MakeTextObject extends OperatorToken {
         obj.linkVariable(v);
 
         obj.setText(String.valueOf(v.get()));
-
-        env.getGame().addTextObject(obj, loc.VALUE);
 
         return null;
     }

@@ -1,0 +1,10 @@
+{
+  "name": "Enchanted Forest",
+  "author": "DuVALLEY Boiz",
+  "description": "Find objects under trees in the magical forest",
+  "tags": ["all", "board game", "grid game"],
+  "players": {
+    "min": 2,
+    "max": 2
+  }
+}
