@@ -1,1 +1,23 @@
-{"states":{"INIT":{"init":"","leave":"","setValue":"","to":"make :game_state_output \"CHOOSE_PIECE"},"CHOOSE_PIECE":{"init":"makeallavailable fromgameclass \"card\n","leave":"","setValue":"make :piece_selected fromgame :game_state_input getrule :piece_selected \"flip aslist [ :piece_selected ]","to":"make :game_state_output \"DONE"},"DONE":{"init":"","leave":"gotonextplayer","setValue":"","to":"make :game_state_output \"INIT"}},"goals":[]}
+{
+  "states": {
+    "INIT": {
+      "init": "make :arr fromgameclass \"card for [ :i 0 26 ] [ make :ind rand len :arr make :card item :ind :arr movepiece :card :game_GreenDropZone delitem :ind :arr make :ind rand len :arr make :card item :ind :arr movepiece :card :game_GrayDropZone delitem :ind :arr ]",
+      "leave": "",
+      "setValue": "",
+      "to": "make :game_state_output \"CHOOSE_PIECE"
+    },
+    "CHOOSE_PIECE": {
+      "init": "makeallavailable fromgameclass \"card\n",
+      "leave": "",
+      "setValue": "make :piece_selected fromgame :game_state_input getrule :piece_selected \"flip aslist [ :piece_selected ]",
+      "to": "make :game_state_output \"DONE"
+    },
+    "DONE": {
+      "init": "",
+      "leave": "gotonextplayer",
+      "setValue": "",
+      "to": "make :game_state_output \"INIT"
+    }
+  },
+  "goals": []
+}

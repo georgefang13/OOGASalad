@@ -3,21 +3,21 @@
     "connections": {
     },
     "classes": [
-      "zone"
+      "dz"
     ]
   },
   "GrayDropZone": {
     "connections": {
     },
     "classes": [
-      "zone"
+      "dz"
     ]
   },
   "StartDeck": {
     "connections": {
     },
     "classes": [
-      "zone"
+      "dz"
     ]
   }
 }
