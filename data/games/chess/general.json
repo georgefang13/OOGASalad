@@ -1,0 +1,10 @@
+{
+  "name": "Chess",
+  "author": "DuVALLEY Boiz",
+  "description": "Standard Chess",
+  "tags": ["all", "board game", "grid game"],
+  "players": {
+    "min": 2,
+    "max": 2
+  }
+}
