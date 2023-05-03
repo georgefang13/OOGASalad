@@ -11,7 +11,6 @@ import oogasalad.Controller.DropZoneController;
 import oogasalad.frontend.components.Arrow;
 import oogasalad.frontend.components.ComponentsFactory;
 import oogasalad.frontend.components.dropzoneComponent.Dropzone;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import util.DukeApplicationTest;
 import static org.junit.jupiter.api.Assertions.assertEquals;

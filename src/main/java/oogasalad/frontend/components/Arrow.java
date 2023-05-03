@@ -58,10 +58,10 @@ public class Arrow implements Subscriber {
   public void updateArrow(){
     Node startSquare = start.getNode();
     Node endSquare = end.getNode();
-    startX = startSquare.getTranslateX() + start.getWidth()/2;
-    startY = startSquare.getTranslateY() + start.getHeight()/2;
-    endX = endSquare.getTranslateX() + end.getWidth()/2;
-    endY = endSquare.getTranslateY() + end.getHeight()/2;
+    startX = startSquare.getTranslateX() + start.getSquareWidth()/2;
+    startY = startSquare.getTranslateY() + start.getSquareHeight()/2;
+    endX = endSquare.getTranslateX() + end.getSquareWidth()/2;
+    endY = endSquare.getTranslateY() + end.getSquareHeight()/2;
     System.out.println(startX);
     System.out.println(startY);
     arrow.getChildren().clear();
