@@ -22,6 +22,8 @@ import oogasalad.frontend.nodeEditor.configuration.NodeConfiguration;
 import oogasalad.frontend.nodeEditor.configuration.NodeData;
 import oogasalad.frontend.nodeEditor.nodes.AbstractNode;
 import oogasalad.frontend.scenes.AbstractScene;
+import oogasalad.frontend.scenes.SceneController;
+import oogasalad.frontend.scenes.SceneMediator;
 
 /**
  * @author Joao Carvalho
@@ -35,13 +37,21 @@ public class NodeScene extends AbstractScene {
   Map<Tab, CodeEditorTab> tabMap;
   private NodeController nodeController;
 
+  private final String GAME_FILEPATH = "data/games/";
+  private final String GAME_NODE_SAVE_PATH = "data/games/%s/NodeConfig/";
 
-  public NodeScene(NodeController nodeController) {
+  private SceneMediator mySceneController;
+
+
+  public NodeScene(NodeController nodeController, SceneMediator sceneController){
     super();
     this.nodeController = nodeController;
     tabs.getTabs().add(makeTab("state editor", false, new StateEditorTab(nodeController)));
     setTheme();
-//    gameName = sceneController.getGameName(); //todo
+    this.mySceneController = sceneController;
+    gameName = mySceneController.getGameName().toLowerCase(); //todo
+    System.out.println("succesfully added gamename to node scene:");
+    System.out.println(gameName);
   }
 
   /**
@@ -97,12 +107,30 @@ public class NodeScene extends AbstractScene {
     Gson gson = new GsonBuilder().setPrettyPrinting().create();
     JsonObject fullObject = new JsonObject();
     JsonObject stateObject = new JsonObject();
+    JsonObject rulesObjectArr = new JsonObject();
     JsonArray goalArray = new JsonArray();
+    JsonArray gameObjectsArray = new JsonArray();
     for (Entry<Tab, CodeEditorTab> entry : tabMap.entrySet()) {
       CodeEditorTab tab = entry.getValue();
       if (tab instanceof GoalTab) {
         goalArray.add(tab.getMainNodeParseString());
-      } else {
+      } else if(tab instanceof GameObjectTab) {
+        String state = entry.getValue().getState();
+        String action = entry.getValue().getAction();
+        String content = entry.getValue().getMainNodeParseString();
+        List<AbstractNode> listOfNodes = entry.getValue().getMainNodeChildren();
+        String configName = state + action;
+        makeConfigFile(listOfNodes, configName);
+        if (!rulesObjectArr.has(state)) {
+          JsonObject ruleJson = new JsonObject();
+          ruleJson.addProperty(action, content);
+          rulesObjectArr.add(state, ruleJson);
+        } else {
+          JsonObject ruleJson = rulesObjectArr.get(state).getAsJsonObject();
+          ruleJson.addProperty(action, content);
+        }
+//        gameObjectsArray.add(tab.getMainNodeParseString());
+      }else {
         String state = entry.getValue().getState();
         String action = entry.getValue().getAction();
         String content = entry.getValue().getMainNodeParseString();
@@ -121,11 +149,19 @@ public class NodeScene extends AbstractScene {
     }
     fullObject.add("states", stateObject);
     fullObject.add("goal", goalArray);
-    try (FileWriter fileWriter = new FileWriter(INTERPRETER_FILES_PATH + "save.json")) {
+    try (FileWriter fileWriter = new FileWriter(GAME_FILEPATH + gameName + "/saveFSM.json")) {
       gson.toJson(fullObject, fileWriter);
     } catch (IOException e) {
       e.printStackTrace();
     }
+    try (FileWriter fileWriter = new FileWriter(GAME_FILEPATH + gameName + "/saveRules.json")) {
+      JsonObject rulesObject = new JsonObject();
+      rulesObject.add("Rules", rulesObjectArr);
+      gson.toJson(rulesObjectArr, fileWriter);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
   }
 
 
@@ -155,7 +191,7 @@ public class NodeScene extends AbstractScene {
         stateObject.add(i.toString(), stateJson);
         i++;
       }
-      try (FileWriter fileWriter = new FileWriter(USER_CODE_FILES_PATH + fileName + ".json")) {
+      try (FileWriter fileWriter = new FileWriter(String.format(GAME_NODE_SAVE_PATH,gameName) + fileName + ".json")) {
         gson.toJson(stateObject, fileWriter);
       } catch (IOException e) {
         e.printStackTrace();
