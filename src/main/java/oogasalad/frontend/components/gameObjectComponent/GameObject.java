@@ -23,7 +23,7 @@ public class GameObject extends AbstractComponent implements GameObjectComponent
   private int width;
   private int height;
   private double rotate;
-  private double dropzoneID;
+  private String dropzoneID;
 
   /**
    * Constructor for GameObject
