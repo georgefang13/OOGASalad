@@ -25,6 +25,8 @@ public class GameEditorLogicScene extends AbstractScene {
   public GameEditorLogicScene(SceneMediator sceneController) {
     super(sceneController);
     gameName = sceneController.getGameName();
+    System.out.println("succesfully added gamename to gameeditor logic scene:");
+    System.out.println(gameName);
   }
 
   @Override

@@ -50,6 +50,8 @@ public class NodeScene extends AbstractScene {
     setTheme();
     this.mySceneController = sceneController;
     gameName = mySceneController.getGameName(); //todo
+    System.out.println("succesfully added gamename to node scene:");
+    System.out.println(gameName);
   }
 
   /**
