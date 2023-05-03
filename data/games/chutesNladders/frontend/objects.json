@@ -1,0 +1,16 @@
+{
+  "purplePiece": {
+    "selected":{"hasSelectedImage":true,"param":"purplePiece.png"},
+    "defaultImage": "purplePiece.png",
+    "height":"31",
+    "width":"31",
+    "location": "PurpleDropZone"
+  },
+  "bluePiece": {
+    "selected":{"hasSelectedImage":true,"param":"bluePiece.png"},
+    "defaultImage": "bluePiece.png",
+    "height":"35",
+    "width":"35",
+    "location": "BlueDropZone"
+  }
+}

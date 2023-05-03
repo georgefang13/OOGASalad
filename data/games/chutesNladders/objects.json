@@ -1,0 +1,20 @@
+{
+  "purplePiece": {
+    "owner": "0",
+    "location": "purpleDropZone",
+    "classes": [
+      "Purple",
+      "piece"
+    ],
+    "owns": []
+  },
+  "bluePiece": {
+    "owner": "1",
+    "location": "blueDropZone",
+    "classes": [
+      "Blue",
+      "piece"
+    ],
+    "owns": []
+  }
+}

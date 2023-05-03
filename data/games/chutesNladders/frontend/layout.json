@@ -1,0 +1,926 @@
+{
+  "Board": {
+    "x": "50",
+    "y": "50",
+    "width": "500",
+    "height": "500",
+    "unselected":{"hasImage":true,"param":"board.png"},
+    "selected":{"hasImage":true,"param":"board.png"}
+  },
+  "100": {
+    "x": "50",
+    "y": "50",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+  },
+  "99": {
+    "x": "100",
+    "y": "50",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+  },
+  "98": {
+    "x": "150",
+    "y": "50",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+  },
+  "97": {
+    "x": "200",
+    "y": "50",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+  },
+  "96": {
+    "x": "250",
+    "y": "50",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+  },
+  "95": {
+    "x": "300",
+    "y": "50",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+  },
+  "94": {
+    "x": "350",
+    "y": "50",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+  },
+  "93": {
+    "x": "400",
+    "y": "50",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+  },
+  "92": {
+    "x": "450",
+    "y": "50",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+  },
+  "91": {
+    "x": "500",
+    "y": "50",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+  },
+  "90": {
+    "x": "500",
+    "y": "100",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+  },
+  "89": {
+    "x": "450",
+    "y": "100",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+  },
+  "88": {
+    "x": "400",
+    "y": "100",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+  },
+  "87": {
+    "x": "350",
+    "y": "100",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+  },
+  "86": {
+    "x": "300",
+    "y": "100",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+  },
+  "85": {
+    "x": "250",
+    "y": "100",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+  },
+  "84": {
+    "x": "200",
+    "y": "100",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+  },
+  "83": {
+    "x": "150",
+    "y": "100",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+  },
+  "82": {
+    "x": "100",
+    "y": "100",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+  },
+  "81": {
+    "x": "50",
+    "y": "100",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+  },
+  "80": {
+    "x": "50",
+    "y": "150",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+  },
+  "79": {
+    "x": "100",
+    "y": "150",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+  },
+  "78": {
+    "x": "150",
+    "y": "150",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+  },
+  "77": {
+    "x": "200",
+    "y": "150",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+  },
+  "76": {
+    "x": "250",
+    "y": "150",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+  },
+  "75": {
+    "x": "300",
+    "y": "150",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+  },
+  "74": {
+    "x": "350",
+    "y": "150",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+  },
+  "73": {
+    "x": "400",
+    "y": "150",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+  },
+  "72": {
+    "x": "450",
+    "y": "150",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+  },
+  "71": {
+    "x": "500",
+    "y": "150",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+  },
+  "70": {
+    "x": "500",
+    "y": "200",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+  },
+  "69": {
+    "x": "450",
+    "y": "200",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+  },
+  "68": {
+    "x": "400",
+    "y": "200",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+  },
+  "67": {
+    "x": "350",
+    "y": "200",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+  },
+  "66": {
+    "x": "300",
+    "y": "200",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+  },
+  "65": {
+    "x": "250",
+    "y": "200",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+  },
+  "64": {
+    "x": "200",
+    "y": "200",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+  },
+  "63": {
+    "x": "150",
+    "y": "200",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+  },
+  "62": {
+    "x": "100",
+    "y": "200",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+  },
+  "61": {
+    "x": "50",
+    "y": "200",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+  },
+  "60": {
+    "x": "50",
+    "y": "250",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+  },
+  "59": {
+    "x": "100",
+    "y": "250",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+  },
+  "58": {
+    "x": "150",
+    "y": "250",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+  },
+  "57": {
+    "x": "200",
+    "y": "250",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+  },
+  "56": {
+    "x": "250",
+    "y": "250",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+  },
+  "55": {
+    "x": "300",
+    "y": "250",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+  },
+  "54": {
+    "x": "350",
+    "y": "250",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+  },
+  "53": {
+    "x": "400",
+    "y": "250",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+  },
+  "52": {
+    "x": "450",
+    "y": "250",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+  },
+  "51": {
+    "x": "500",
+    "y": "250",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+  },
+  "50": {
+    "x": "500",
+    "y": "300",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+    },
+  "49": {
+    "x": "450",
+    "y": "300",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+    },
+  "48": {
+    "x": "400",
+    "y": "300",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+  },
+  "47": {
+    "x": "350",
+    "y": "300",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+  },
+  "46": {
+    "x": "300",
+    "y": "300",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+  },
+  "45": {
+    "x": "250",
+    "y": "300",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+    },
+  "44": {
+    "x": "200",
+    "y": "300",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+  },
+  "43": {
+    "x": "150",
+    "y": "300",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+    },
+  "42": {
+    "x": "100",
+    "y": "300",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+  },
+  "41": {
+    "x": "50",
+    "y": "300",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+  },
+  "40": {
+    "x": "50",
+    "y": "350",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+    },
+  "39": {
+    "x": "100",
+    "y": "350",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+  },
+  "38": {
+    "x": "150",
+    "y": "350",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+  },
+  "37": {
+    "x": "200",
+    "y": "350",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+    },
+  "36": {
+    "x": "250",
+    "y": "350",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+    },
+  "35": {
+    "x": "300",
+    "y": "350",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+  },
+  "34": {
+    "x": "350",
+    "y": "350",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+  },
+  "33": {
+    "x": "400",
+    "y": "350",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+    },
+  "32": {
+    "x": "450",
+    "y": "350",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+    },
+  "31": {
+    "x": "500",
+    "y": "350",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+  },
+  "30": {
+    "x": "500",
+    "y": "400",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+  },
+  "29": {
+    "x": "450",
+    "y": "400",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+    },
+  "28": {
+    "x": "400",
+    "y": "400",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+    },
+  "27": {
+    "x": "350",
+    "y": "400",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+  },
+  "26": {
+    "x": "300",
+    "y": "400",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+    },
+  "25": {
+    "x": "250",
+    "y": "400",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+    },
+  "24": {
+    "x": "200",
+    "y": "400",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+    },
+  "23": {
+    "x": "150",
+    "y": "400",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+    },
+  "22": {
+    "x": "100",
+    "y": "400",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+    },
+  "21": {
+    "x": "50",
+    "y": "400",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+    },
+  "20": {
+    "x": "50",
+    "y": "450",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+    },
+  "19": {
+    "x": "100",
+    "y": "450",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+    },
+  "18": {
+    "x": "150",
+    "y": "450",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+    },
+  "17": {
+    "x": "200",
+    "y": "450",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+    },
+  "16": {
+    "x": "250",
+    "y": "450",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+    },
+  "15": {
+    "x": "300",
+    "y": "450",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+  },
+  "14": {
+    "x": "350",
+    "y": "450",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+  },
+  "13": {
+    "x": "400",
+    "y": "450",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+    },
+  "12": {
+    "x": "450",
+    "y": "450",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+    },
+  "11": {
+    "x": "500",
+    "y": "450",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+    },
+  "10": {
+    "x": "500",
+    "y": "500",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+    },
+  "9": {
+    "x": "450",
+    "y": "500",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+    },
+  "8": {
+    "x": "400",
+    "y": "500",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+    },
+  "7": {
+    "x": "350",
+    "y": "500",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+    },
+  "6": {
+    "x": "300",
+    "y": "500",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+    },
+  "5": {
+    "x": "250",
+    "y": "500",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+    },
+  "4": {
+    "x": "200",
+    "y": "500",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+    },
+  "3": {
+    "x": "150",
+    "y": "500",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+    },
+  "2": {
+    "x": "100",
+    "y": "500",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+    },
+  "1": {
+    "x": "50",
+    "y": "500",
+    "width": "50",
+    "height": "50",
+    "distribution": "horizontal",
+    "unselected":{"hasImage":false,"param":"#00000000"},
+    "selected":{"hasImage":false,"param":"#00000000"}
+  },
+  "PurpleDropZone": {
+    "x": "50",
+    "y": "600",
+    "width": "50",
+    "height": "50",
+    "unselected":{"hasImage":false,"param":"#D3D3D3"},
+    "selected":{"hasImage":false,"param":"#D3D3D3"}
+  },
+  "BlueDropZone": {
+    "x": "100",
+    "y": "600",
+    "width": "50",
+    "height": "50",
+    "unselected":{"hasImage":false,"param":"#D3D3D3"},
+    "selected":{"hasImage":false,"param":"#D3D3D3"}
+  }
+}
