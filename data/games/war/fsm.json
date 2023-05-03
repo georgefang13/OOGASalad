@@ -1,22 +1,34 @@
 {
   "states": {
     "INIT": {
-      "init": "make :arr fromgameclass \"card for [ :i 0 26 ] [ make :ind rand len :arr make :card item :ind :arr movepiece :card :game_GreenDropZone delitem :ind :arr make :ind rand len :arr make :card item :ind :arr movepiece :card :game_GrayDropZone delitem :ind :arr ]",
+      "init": "make :arr fromgameclass \"card for [ :i 0 26 ] [ make :ind rand len :arr make :card item :ind :arr movepiece :card :game_GreenDropZone delitem :ind :arr setplayerowner :card getplayer 0 make :ind rand len :arr make :card item :ind :arr movepiece :card :game_GrayDropZone delitem :ind :arr setplayerowner :card getplayer 1 ]",
       "leave": "",
       "setValue": "",
-      "to": "make :game_state_output \"CHOOSE_PIECE"
+      "to": "make :game_state_output \"MOVE_CARD_TO_GREENWARDROPZONE"
     },
-    "CHOOSE_PIECE": {
-      "init": "makeallavailable fromgameclass \"card\n",
+    "MOVE_CARD_TO_GREENWARDROPZONE": {
+      "init": "makeallavailable fromplayer curplayer \"card",
       "leave": "",
-      "setValue": "make :piece_selected fromgame :game_state_input getrule :piece_selected \"flip aslist [ :piece_selected ]",
+      "setValue": "make :piece_selected fromgame :game_state_input movepiece :piece_selected :game_GreenWarDropZone",
+      "to": "make :game_state_output \"MOVE_CARD_TO_GRAYWARDROPZONE gotonextplayer"
+    },
+    "MOVE_CARD_TO_GRAYWARDROPZONE": {
+      "init": "makeallavailable fromplayer curplayer \"card",
+      "leave": "",
+      "setValue": "make :piece_selected fromgame :game_state_input movepiece :piece_selected :game_GrayWarDropZone",
+      "to": "make :game_state_output \"COMPARE_CARD_VALUES"
+    },
+    "COMPARE_CARD_VALUES": {
+      "init": "make :greenCard item 0 dzitems :game_GreenWarDropZone make :grayCard item 0 dzitems :game_GrayWarDropZone",
+      "leave": "",
+      "setValue": "getrule :greenCard \"value ",
       "to": "make :game_state_output \"DONE"
     },
     "DONE": {
       "init": "",
-      "leave": "gotonextplayer",
+      "leave": "",
       "setValue": "",
-      "to": "make :game_state_output \"INIT"
+      "to": ""
     }
   },
   "goals": []

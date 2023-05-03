@@ -20,14 +20,14 @@
       "dz"
     ]
   },
-  "WarDropZone1": {
+  "GreenWarDropZone": {
     "connections": {
     },
     "classes": [
       "dz"
     ]
   },
-  "WarDropZone2": {
+  "GrayWarDropZone": {
     "connections": {
     },
     "classes": [

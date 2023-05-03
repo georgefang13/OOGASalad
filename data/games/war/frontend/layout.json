@@ -44,12 +44,12 @@
       "param": "dz_deck.jpg"
     }
   },
-  "WarDropZone1": {
+  "GrayWarDropZone": {
     "x": "50",
     "y": "225",
     "width": "220",
     "height": "140",
-    "distribution": "vertical",
+    "distribution": "collapse",
     "unselected": {
       "hasImage": true,
       "param": "dz_gray.jpg"
@@ -59,12 +59,12 @@
       "param": "dz_gray.jpg"
     }
   },
-  "WarDropZone2": {
+  "GreenWarDropZone": {
     "x": "350",
     "y": "225",
     "width": "220",
     "height": "140",
-    "distribution": "vertical",
+    "distribution": "collapse",
     "unselected": {
       "hasImage": true,
       "param": "dz_green.jpg"

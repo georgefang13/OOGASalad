@@ -174,6 +174,9 @@ public class Game implements GameToInterpreterAPI{
             fsm.setState("INIT");
             fsm.transition();
             sendClickable();
+            if (getLog().size() > 0) {
+                LOG.info(getLog());
+            }
         } catch (Exception e) {
             LOG.error("Game log when interpreter error: " + getLog());
             LOG.error(e.getMessage());
