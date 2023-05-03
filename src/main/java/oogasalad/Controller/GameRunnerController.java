@@ -409,7 +409,10 @@ public class GameRunnerController implements GameController {
     @Override
     public void updateTextObject(String id, String text) {
         TextGameRunner textGameRunner = (TextGameRunner) gameObjects.get(id);
-        textGameRunner.setText(text);
+        if (textGameRunner != null){
+            textGameRunner.setText(text);
+        }
+
     }
 }
 
