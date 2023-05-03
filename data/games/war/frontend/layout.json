@@ -73,5 +73,35 @@
       "hasImage": true,
       "param": "dz_green.jpg"
     }
+  },
+  "GrayWinDropZone": {
+    "x": "650",
+    "y": "445",
+    "width": "220",
+    "height": "140",
+    "distribution": "horizontal",
+    "unselected": {
+      "hasImage": true,
+      "param": "dz_gray.jpg"
+    },
+    "selected": {
+      "hasImage": true,
+      "param": "dz_gray.jpg"
+    }
+  },
+  "GreenWinDropZone": {
+    "x": "650",
+    "y": "5",
+    "width": "220",
+    "height": "140",
+    "distribution": "horizontal",
+    "unselected": {
+      "hasImage": true,
+      "param": "dz_green.jpg"
+    },
+    "selected": {
+      "hasImage": true,
+      "param": "dz_green.jpg"
+    }
   }
 }

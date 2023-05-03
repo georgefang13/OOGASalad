@@ -15,14 +15,8 @@
     "MOVE_CARD_TO_GRAYWARDROPZONE": {
       "init": "makeallavailable fromplayer curplayer \"card",
       "leave": "",
-      "setValue": "make :piece_selected fromgame :game_state_input movepiece :piece_selected :game_GrayWarDropZone make :greenCard item 0 dzitems :game_GreenWarDropZone make :grayCard item 0 dzitems :game_GrayWarDropZone make :greenValue getrule :greenCard \"value [ ] make :grayValue getrule :grayCard \"value [ ] additem :greenValue :game_log ifelse >= :greenValue :grayValue [ movepiece :greenCard :game_StartDeck ] [ movepiece :grayCard :game_StartDeck ]",
-      "to": "make :game_state_output \"DONE"
-    },
-    "COMPARE_CARD_VALUES": {
-      "init": "",
-      "leave": "",
-      "setValue": "additem :greenValue :game_log ifelse >= :greenValue :grayValue [ movepiece :greenCard :game_StartDeck ] [ movepiece :grayCard :game_StartDeck ]",
-      "to": "make :game_state_output \"DONE"
+      "setValue": "make :piece_selected fromgame :game_state_input movepiece :piece_selected :game_GrayWarDropZone make :greenCard item 0 dzitems :game_GreenWarDropZone make :grayCard item 0 dzitems :game_GrayWarDropZone make :greenValue getrule :greenCard \"value [ ] make :grayValue getrule :grayCard \"value [ ] additem :greenValue :game_log ifelse >= :greenValue :grayValue [ movepiece :greenCard :game_GreenWinDropZone movepiece :grayCard :game_GreenWinDropZone ] [ movepiece :greenCard :game_GrayWinDropZone movepiece :grayCard :game_GrayWinDropZone ]",
+      "to": "make :game_state_output \"MOVE_CARD_TO_GREENWARDROPZONE gotonextplayer"
     },
     "DONE": {
       "init": "",

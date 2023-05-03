@@ -33,5 +33,19 @@
     "classes": [
       "dz"
     ]
+  },
+  "GreenWinDropZone": {
+    "connections": {
+    },
+    "classes": [
+      "dz"
+    ]
+  },
+  "GrayWinDropZone": {
+    "connections": {
+    },
+    "classes": [
+      "dz"
+    ]
   }
 }
