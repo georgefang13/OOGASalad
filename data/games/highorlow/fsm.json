@@ -1,0 +1,23 @@
+{
+  "states": {
+    "INIT": {
+      "init": "",
+      "leave": "",
+      "setValue": "",
+      "to": "make :game_state_output \"CLICK_BUTTON"
+    },
+    "CLICK_BUTTON": {
+      "init": "makeallavailable fromgameclass \"card",
+      "leave": "",
+      "setValue": "make :button fromgame :game_state_input movepiece item rand len fromgameclass \"card fromgameclass \"card :game_DropZone",
+      "to": "make :game_state_output \"DONE"
+    },
+    "DONE": {
+      "init": "",
+      "leave": "gotonextplayer",
+      "setValue": "",
+      "to": "make :game_state_output \"INIT"
+    }
+  },
+  "goals": []
+}

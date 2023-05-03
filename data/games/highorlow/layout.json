@@ -1,0 +1,30 @@
+{
+  "HighButton": {
+    "connections": {
+    },
+    "classes": [
+      "high"
+    ]
+  },
+  "LowButton": {
+    "connections": {
+    },
+    "classes": [
+      "low"
+    ]
+  },
+  "StartDeck": {
+    "connections": {
+    },
+    "classes": [
+      "zone"
+    ]
+  },
+  "DropZone": {
+    "connections": {
+    },
+    "classes": [
+      "zone"
+    ]
+  }
+}
