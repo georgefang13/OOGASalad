@@ -1,5 +1,7 @@
 package oogasalad.frontend.components.gameObjectComponent.GameRunner;
 
+import javafx.scene.paint.Color;
+import oogasalad.Controller.GameRunnerController;
 import oogasalad.frontend.components.gameObjectComponent.GameRunner.gameObjectVisuals.AbstractSelectableVisual;
 import oogasalad.frontend.components.textObjectComponent.TextObject;
 /**
@@ -11,8 +13,8 @@ public class TextGameRunner extends TextObject implements GameRunnerComponent {
      * Constructor for TextGameRunner
      * @param id
      */
-    public TextGameRunner(String id) {
-        super(id);
+    public TextGameRunner(String id, GameRunnerController gameRunnerController) {
+        super(id, gameRunnerController);
     }
 
     /**
@@ -20,7 +22,7 @@ public class TextGameRunner extends TextObject implements GameRunnerComponent {
      */
     @Override
     public void makePlayable() {
-
+        setTextColor(Color.RED);
     }
 
     /**
@@ -28,7 +30,7 @@ public class TextGameRunner extends TextObject implements GameRunnerComponent {
      */
     @Override
     public void makeUnplayable() {
-
+        setTextColor(Color.BLACK);
     }
 
     /**

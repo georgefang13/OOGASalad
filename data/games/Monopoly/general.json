@@ -1,0 +1,10 @@
+{
+  "name": "Monopoly",
+  "author": "",
+  "description": "",
+  "tags": ["all", "board game"],
+  "players": {
+    "min": "2",
+    "max": "2"
+  }
+}

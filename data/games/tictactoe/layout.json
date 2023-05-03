@@ -85,22 +85,10 @@
     "classes": "board"
   },
   "XDropZone": {
-    "position": {
-      "x": "100",
-      "y": "500",
-      "width": "300",
-      "height": "100"
-    },
     "connections": {},
     "classes": []
   },
   "ODropZone": {
-    "position": {
-      "x": "400",
-      "y": "500",
-      "width": "300",
-      "height": "100"
-    },
     "connections": {},
     "classes": []
   }

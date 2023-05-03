@@ -1,0 +1,89 @@
+{
+    "chance": {
+        "action": "\nto action [ ] [ ]\n"
+    },
+    "chance1": {
+        "action": "\n    to action [ ] [\n        make :piece item 0 fromplayer curplayer \"piece\n        movepiece :piece :game_go\n        make :moneyid getid item 0 fromplayer curplayer \"money\n        make :money fromgame :moneyid\n        make :money + :money 200\n        setfromid :moneyid :money\n        updatemoney\n    ]\n    "
+    },
+    "chance2": {
+        "action": "\n    to action [ ] [\n        make :piece item 0 fromplayer curplayer \"piece\n        movepiece :piece :game_boardwalk\n    ]\n    "
+    },
+    "chance3": {
+        "action": "\n    to action [ ] [\n        make :piece item 0 fromplayer curplayer \"piece\n        movepiece :piece :game_illinois\n    ]\n    "
+    },
+    "chance4": {
+        "action": "\n    to action [ ] [\n        make :piece item 0 fromplayer curplayer \"piece\n        for [ :i 0 40 ] [\n            make :dz objdz :piece\n            make :next dzfollow :dz [ \"Forward ]\n            movepiece :piece :next\n            if [ == getid :next \"stcharles ] [ stop ]\n            if [ == getid :next \"go ] [ \n                make :moneyid getid item 0 fromplayer curplayer \"money\n                make :money fromgame :moneyid\n                make :money + :money 200\n                setfromid :moneyid :money\n                updatemoney\n            ]\n        ]\n        movepiece :piece :game_illinois\n    ]\n    "
+    },
+    "chance5": {
+        "action": "\n    to action [ ] [\n        make :piece item 0 fromplayer curplayer \"piece\n        for [ :i 0 40 ] [\n            make :dz objdz :piece\n            make :next dzfollow :dz [ \"Forward ]\n            movepiece :piece :next\n            if [ == getid :next \"readingRR ] [ break ]\n            if [ == getid :next \"go ] [ \n                make :moneyid getid item 0 fromplayer curplayer \"money\n                make :money fromgame :moneyid\n                make :money + :money 200\n                setfromid :moneyid :money\n                updatemoney\n            ]\n        ]\n        movepiece :piece :game_illinois\n    ]\n    "
+    },
+    "chance6": {
+        "action": "\n    to action [ ] [\n        make :piece item 0 fromplayer curplayer \"piece\n        for [ :i 0 40 ] [\n            make :dz objdz :piece\n            make :next dzfollow :dz [ \"Forward ]\n            movepiece :piece :next\n            if [ hasclass :next \"railroad ] [ break ]\n            if [ == getid :next \"go ] [ \n                make :moneyid getid item 0 fromplayer curplayer \"money\n                make :money fromgame :moneyid\n                make :money + :money 200\n                setfromid :moneyid :money\n                updatemoney\n            ]\n        ]\n    ]\n    "
+    },
+    "chance8": {
+        "action": "\n    to action [ ] [\n        make :piece item 0 fromplayer curplayer \"piece\n        repeat 3 [\n            make :dz objdz :piece\n            make :next dzfollow :dz [ \"Backward ]\n            movepiece :piece :next\n        ]\n    ]\n    "
+    },
+    "chance9": {
+        "action": "\n    to action [ ] [\n        make :moneyid getid item 0 fromplayer curplayer \"money\n        make :money fromgame :moneyid\n        make :money + :money 50\n        setfromid :moneyid :money\n        updatemoney\n    ]\n    "
+    },
+    "chance10": {
+        "action": "\n    to action [ ] [\n        make :moneyid getid item 0 fromplayer curplayer \"money\n        make :money fromgame :moneyid\n        make :money + :money 150\n        setfromid :moneyid :money\n        updatemoney\n    ]\n    "
+    },
+    "chance11": {
+        "action": "\n    to action [ ] [\n        for [ :i 0 :game_playerCount ] [\n            make :moneyid getid item 0 fromplayer getplayer :i \"money\n            make :money fromgame :moneyid\n            make :money + :money 50\n            setfromid :moneyid :money\n            \n            make :moneyid getid item 0 curplayer \"money\n            make :money fromgame :moneyid\n            make :money - :money 50\n            setfromid :moneyid :money\n        ]\n        make :moneyid getid item 0 curplayer \"money\n        make :money fromgame :moneyid\n        make :money - :money 50\n        setfromid :moneyid :money\n        updatemoney\n    ]\n    "
+    },
+    "chance14": {
+        "action": "\n    to action [ ] [\n        make :piece item 0 fromplayer curplayer \"piece\n        movepiece :piece :game_jail\n    ]\n    "
+    },
+    "chance15": {
+        "action": "\n    to action [ ] [\n        make :card item 0 fromgameclass \"chance15\n        make :inventory item 0 fromplayer curplayer \"inventory\n        movepiece :card :inventory\n    ]\n    "
+    },
+    "cc": {
+        "action": "\nto action [ ] [ ]\n"
+    },
+    "cc1": {
+        "action": "\n    to action [ ] [\n        make :piece item 0 fromplayer curplayer \"piece\n        movepiece :piece :game_go\n        make :moneyid getid item 0 fromplayer curplayer \"money\n        make :money fromgame :moneyid\n        make :money + :money 200\n        setfromid :moneyid :money\n        updatemoney\n    ]\n    "
+    },
+    "cc2": {
+        "action": "\n    to action [ ] [\n        make :moneyid getid item 0 fromplayer curplayer \"money\n        make :money fromgame :moneyid\n        make :money + :money 100\n        setfromid :moneyid :money\n        updatemoney\n    ]\n    "
+    },
+    "cc3": {
+        "action": "\n    to action [ ] [\n        make :moneyid getid item 0 fromplayer curplayer \"money\n        make :money fromgame :moneyid\n        make :money + :money 10\n        setfromid :moneyid :money\n        updatemoney\n    ]\n    "
+    },
+    "cc4": {
+        "action": "\n    to action [ ] [\n        make :moneyid getid item 0 fromplayer curplayer \"money\n        make :money fromgame :moneyid\n        make :money + :money 200\n        setfromid :moneyid :money\n        updatemoney\n    ]\n    "
+    },
+    "cc5": {
+        "action": "\n    to action [ ] [\n        make :moneyid getid item 0 fromplayer curplayer \"money\n        make :money fromgame :moneyid\n        make :money + :money 45\n        setfromid :moneyid :money\n        updatemoney\n    ]\n    "
+    },
+    "cc6": {
+        "action": "\n    to action [ ] [\n        make :moneyid getid item 0 fromplayer curplayer \"money\n        make :money fromgame :moneyid\n        make :money + :money 20\n        setfromid :moneyid :money\n        updatemoney\n    ]\n    "
+    },
+    "cc7": {
+        "action": "\n    to action [ ] [\n        make :moneyid getid item 0 fromplayer curplayer \"money\n        make :money fromgame :moneyid\n        make :money + :money 25\n        setfromid :moneyid :money\n        updatemoney\n    ]\n    "
+    },
+    "cc8": {
+        "action": "\n    to action [ ] [\n        make :moneyid getid item 0 fromplayer curplayer \"money\n        make :money fromgame :moneyid\n        make :money + :money 100\n        setfromid :moneyid :money\n        updatemoney\n    ]\n    "
+    },
+    "cc9": {
+        "action": "\n    to action [ ] [\n        make :moneyid getid item 0 fromplayer curplayer \"money\n        make :money fromgame :moneyid\n        make :money + :money 100\n        setfromid :moneyid :money\n        updatemoney\n    ]\n    "
+    },
+    "cc10": {
+        "action": "\n    to action [ ] [\n        make :moneyid getid item 0 fromplayer curplayer \"money\n        make :money fromgame :moneyid\n        make :money + :money 50\n        setfromid :moneyid :money\n        updatemoney\n    ]\n    "
+    },
+    "cc11": {
+        "action": "\n    to action [ ] [\n        make :moneyid getid item 0 fromplayer curplayer \"money\n        make :money fromgame :moneyid\n        make :money + :money 50\n        setfromid :moneyid :money\n        updatemoney\n    ]\n    "
+    },
+    "cc12": {
+        "action": "\n    to action [ ] [\n        make :moneyid getid item 0 fromplayer curplayer \"money\n        make :money fromgame :moneyid\n        make :money + :money 100\n        setfromid :moneyid :money\n        updatemoney\n    ]\n    "
+    },
+    "cc13": {
+        "action": "\n    to action [ ] [\n        make :moneyid getid item 0 fromplayer curplayer \"money\n        make :money fromgame :moneyid\n        make :money + :money 150\n        setfromid :moneyid :money\n        updatemoney\n    ]\n    "
+    },
+    "cc15": {
+        "action": "\n    to action [ ] [\n        make :piece item 0 fromplayer curplayer \"piece\n        movepiece :piece :game_jail\n    ]\n    "
+    },
+    "cc16": {
+        "action": "\n    to action [ ] [\n        make :card item 0 fromgameclass \"cc16\n        make :inventory item 0 fromplayer curplayer \"inventory\n        movepiece :card :inventory\n    ]\n    "
+    }
+}

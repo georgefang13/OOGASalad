@@ -1,0 +1,17 @@
+{
+  "black": {
+    "available": "to available [ :dz ] [\n    make :moveset [ [ \"Right ] [ \"Left ] [ \"Down ] [ \"Up ] ]\n    make :ret pieceAvailable :dz :moveset\n    return :ret\n]\n"
+  },
+  "king": {
+    "available": "to available [ :dz ] [\n    make :moveset [ [ \"DownRight ] [ \"DownLeft ] [ \"UpRight ] [ \"UpLeft ] ]\n    make :ret pieceAvailable :dz :moveset\n    return :ret\n]\n"
+  },
+  "piece": {
+    "setBack": "to setBack [ :piece ] [\n    ifelse hasclass :piece \"red [\n            sethl :piece \"wizardselected.png     ] [\n         sethl :piece \"witchselected.png ]  ] \n"
+  },
+  "red": {
+    "available": "to available [ :dz ] [\n    make :moveset [ [ \"Right ] [ \"Left ] [ \"Down ] [ \"Up ] ]\n    make :ret pieceAvailable :dz :moveset\n    return :ret\n]\n"
+  },
+  "tree": {
+    "showTree": "to showTree [ :piece ] [\n    setobjimg :piece \"redKing.png\n      ]\n"
+  }
+}

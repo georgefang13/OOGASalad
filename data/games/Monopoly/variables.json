@@ -1,0 +1,1771 @@
+{
+    "p0money": {
+        "value": 1500,
+        "type": "java.lang.Integer",
+        "owner": 0,
+        "classes": [
+            "money"
+        ]
+    },
+    "p1money": {
+        "value": 1500,
+        "type": "java.lang.Integer",
+        "owner": 1,
+        "classes": [
+            "money"
+        ]
+    },
+    "p2money": {
+        "value": 1500,
+        "type": "java.lang.Integer",
+        "owner": 2,
+        "classes": [
+            "money"
+        ]
+    },
+    "p3money": {
+        "value": 1500,
+        "type": "java.lang.Integer",
+        "owner": 3,
+        "classes": [
+            "money"
+        ]
+    },
+    "atlantic_cost": {
+        "value": 260,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "cost"
+        ]
+    },
+    "atlantic_rent": {
+        "value": 22,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "rent"
+        ]
+    },
+    "atlantic_house1": {
+        "value": 110,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house1"
+        ]
+    },
+    "atlantic_house2": {
+        "value": 330,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house2"
+        ]
+    },
+    "atlantic_house3": {
+        "value": 800,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house3"
+        ]
+    },
+    "atlantic_house4": {
+        "value": 975,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house4"
+        ]
+    },
+    "atlantic_hotel": {
+        "value": 1150,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "hotel"
+        ]
+    },
+    "atlantic_mortgage": {
+        "value": 130,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "mortgage"
+        ]
+    },
+    "atlantic_houseCost": {
+        "value": 150,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "houseCost"
+        ]
+    },
+    "baltic_cost": {
+        "value": 60,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "cost"
+        ]
+    },
+    "baltic_rent": {
+        "value": 4,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "rent"
+        ]
+    },
+    "baltic_house1": {
+        "value": 20,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house1"
+        ]
+    },
+    "baltic_house2": {
+        "value": 60,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house2"
+        ]
+    },
+    "baltic_house3": {
+        "value": 180,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house3"
+        ]
+    },
+    "baltic_house4": {
+        "value": 320,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house4"
+        ]
+    },
+    "baltic_hotel": {
+        "value": 450,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "hotel"
+        ]
+    },
+    "baltic_mortgage": {
+        "value": 30,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "mortgage"
+        ]
+    },
+    "baltic_houseCost": {
+        "value": 50,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "houseCost"
+        ]
+    },
+    "boardwalk_cost": {
+        "value": 400,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "cost"
+        ]
+    },
+    "boardwalk_rent": {
+        "value": 50,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "rent"
+        ]
+    },
+    "boardwalk_house1": {
+        "value": 200,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house1"
+        ]
+    },
+    "boardwalk_house2": {
+        "value": 600,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house2"
+        ]
+    },
+    "boardwalk_house3": {
+        "value": 1400,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house3"
+        ]
+    },
+    "boardwalk_house4": {
+        "value": 1700,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house4"
+        ]
+    },
+    "boardwalk_hotel": {
+        "value": 2000,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "hotel"
+        ]
+    },
+    "boardwalk_mortgage": {
+        "value": 200,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "mortgage"
+        ]
+    },
+    "boardwalk_houseCost": {
+        "value": 200,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "houseCost"
+        ]
+    },
+    "bnoRR_cost": {
+        "value": 200,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "cost"
+        ]
+    },
+    "bnoRR_rent": {
+        "value": 25,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "rent"
+        ]
+    },
+    "bnoRR_mortgage": {
+        "value": 100,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "mortgage"
+        ]
+    },
+    "bnoRR_houseCost": {
+        "value": 0,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "houseCost"
+        ]
+    },
+    "connecticut_cost": {
+        "value": 120,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "cost"
+        ]
+    },
+    "connecticut_rent": {
+        "value": 8,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "rent"
+        ]
+    },
+    "connecticut_house1": {
+        "value": 40,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house1"
+        ]
+    },
+    "connecticut_house2": {
+        "value": 100,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house2"
+        ]
+    },
+    "connecticut_house3": {
+        "value": 300,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house3"
+        ]
+    },
+    "connecticut_house4": {
+        "value": 450,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house4"
+        ]
+    },
+    "connecticut_hotel": {
+        "value": 600,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "hotel"
+        ]
+    },
+    "connecticut_mortgage": {
+        "value": 60,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "mortgage"
+        ]
+    },
+    "connecticut_houseCost": {
+        "value": 50,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "houseCost"
+        ]
+    },
+    "electric_cost": {
+        "value": 10,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "cost"
+        ]
+    },
+    "electric_rent": {
+        "value": 0,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "rent"
+        ]
+    },
+    "electric_mortgage": {
+        "value": 75,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "mortgage"
+        ]
+    },
+    "electric_houseCost": {
+        "value": 0,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "houseCost"
+        ]
+    },
+    "illinois_cost": {
+        "value": 240,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "cost"
+        ]
+    },
+    "illinois_rent": {
+        "value": 20,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "rent"
+        ]
+    },
+    "illinois_house1": {
+        "value": 100,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house1"
+        ]
+    },
+    "illinois_house2": {
+        "value": 300,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house2"
+        ]
+    },
+    "illinois_house3": {
+        "value": 750,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house3"
+        ]
+    },
+    "illinois_house4": {
+        "value": 925,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house4"
+        ]
+    },
+    "illinois_hotel": {
+        "value": 1100,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "hotel"
+        ]
+    },
+    "illinois_mortgage": {
+        "value": 120,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "mortgage"
+        ]
+    },
+    "illinois_houseCost": {
+        "value": 150,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "houseCost"
+        ]
+    },
+    "indiana_cost": {
+        "value": 220,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "cost"
+        ]
+    },
+    "indiana_rent": {
+        "value": 18,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "rent"
+        ]
+    },
+    "indiana_house1": {
+        "value": 90,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house1"
+        ]
+    },
+    "indiana_house2": {
+        "value": 250,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house2"
+        ]
+    },
+    "indiana_house3": {
+        "value": 700,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house3"
+        ]
+    },
+    "indiana_house4": {
+        "value": 875,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house4"
+        ]
+    },
+    "indiana_hotel": {
+        "value": 1050,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "hotel"
+        ]
+    },
+    "indiana_mortgage": {
+        "value": 110,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "mortgage"
+        ]
+    },
+    "indiana_houseCost": {
+        "value": 150,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "houseCost"
+        ]
+    },
+    "kentucky_cost": {
+        "value": 220,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "cost"
+        ]
+    },
+    "kentucky_rent": {
+        "value": 18,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "rent"
+        ]
+    },
+    "kentucky_house1": {
+        "value": 90,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house1"
+        ]
+    },
+    "kentucky_house2": {
+        "value": 250,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house2"
+        ]
+    },
+    "kentucky_house3": {
+        "value": 700,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house3"
+        ]
+    },
+    "kentucky_house4": {
+        "value": 875,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house4"
+        ]
+    },
+    "kentucky_hotel": {
+        "value": 1050,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "hotel"
+        ]
+    },
+    "kentucky_mortgage": {
+        "value": 110,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "mortgage"
+        ]
+    },
+    "kentucky_houseCost": {
+        "value": 150,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "houseCost"
+        ]
+    },
+    "marvin_cost": {
+        "value": 160,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "cost"
+        ]
+    },
+    "marvin_rent": {
+        "value": 12,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "rent"
+        ]
+    },
+    "marvin_house1": {
+        "value": 60,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house1"
+        ]
+    },
+    "marvin_house2": {
+        "value": 180,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house2"
+        ]
+    },
+    "marvin_house3": {
+        "value": 500,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house3"
+        ]
+    },
+    "marvin_house4": {
+        "value": 700,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house4"
+        ]
+    },
+    "marvin_hotel": {
+        "value": 900,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "hotel"
+        ]
+    },
+    "marvin_mortgage": {
+        "value": 80,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "mortgage"
+        ]
+    },
+    "marvin_houseCost": {
+        "value": 100,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "houseCost"
+        ]
+    },
+    "mediterranean_cost": {
+        "value": 60,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "cost"
+        ]
+    },
+    "mediterranean_rent": {
+        "value": 2,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "rent"
+        ]
+    },
+    "mediterranean_house1": {
+        "value": 10,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house1"
+        ]
+    },
+    "mediterranean_house2": {
+        "value": 30,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house2"
+        ]
+    },
+    "mediterranean_house3": {
+        "value": 90,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house3"
+        ]
+    },
+    "mediterranean_house4": {
+        "value": 160,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house4"
+        ]
+    },
+    "mediterranean_hotel": {
+        "value": 250,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "hotel"
+        ]
+    },
+    "mediterranean_mortgage": {
+        "value": 30,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "mortgage"
+        ]
+    },
+    "mediterranean_houseCost": {
+        "value": 50,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "houseCost"
+        ]
+    },
+    "newyork_cost": {
+        "value": 200,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "cost"
+        ]
+    },
+    "newyork_rent": {
+        "value": 16,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "rent"
+        ]
+    },
+    "newyork_house1": {
+        "value": 80,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house1"
+        ]
+    },
+    "newyork_house2": {
+        "value": 220,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house2"
+        ]
+    },
+    "newyork_house3": {
+        "value": 600,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house3"
+        ]
+    },
+    "newyork_house4": {
+        "value": 800,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house4"
+        ]
+    },
+    "newyork_hotel": {
+        "value": 1000,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "hotel"
+        ]
+    },
+    "newyork_mortgage": {
+        "value": 100,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "mortgage"
+        ]
+    },
+    "newyork_houseCost": {
+        "value": 100,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "houseCost"
+        ]
+    },
+    "northcarolina_cost": {
+        "value": 300,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "cost"
+        ]
+    },
+    "northcarolina_rent": {
+        "value": 26,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "rent"
+        ]
+    },
+    "northcarolina_house1": {
+        "value": 130,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house1"
+        ]
+    },
+    "northcarolina_house2": {
+        "value": 390,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house2"
+        ]
+    },
+    "northcarolina_house3": {
+        "value": 900,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house3"
+        ]
+    },
+    "northcarolina_house4": {
+        "value": 1100,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house4"
+        ]
+    },
+    "northcarolina_hotel": {
+        "value": 1275,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "hotel"
+        ]
+    },
+    "northcarolina_mortgage": {
+        "value": 150,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "mortgage"
+        ]
+    },
+    "northcarolina_houseCost": {
+        "value": 200,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "houseCost"
+        ]
+    },
+    "oriental_cost": {
+        "value": 100,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "cost"
+        ]
+    },
+    "oriental_rent": {
+        "value": 6,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "rent"
+        ]
+    },
+    "oriental_house1": {
+        "value": 30,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house1"
+        ]
+    },
+    "oriental_house2": {
+        "value": 90,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house2"
+        ]
+    },
+    "oriental_house3": {
+        "value": 270,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house3"
+        ]
+    },
+    "oriental_house4": {
+        "value": 400,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house4"
+        ]
+    },
+    "oriental_hotel": {
+        "value": 550,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "hotel"
+        ]
+    },
+    "oriental_mortgage": {
+        "value": 50,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "mortgage"
+        ]
+    },
+    "oriental_houseCost": {
+        "value": 50,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "houseCost"
+        ]
+    },
+    "pacific_cost": {
+        "value": 300,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "cost"
+        ]
+    },
+    "pacific_rent": {
+        "value": 26,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "rent"
+        ]
+    },
+    "pacific_house1": {
+        "value": 130,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house1"
+        ]
+    },
+    "pacific_house2": {
+        "value": 390,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house2"
+        ]
+    },
+    "pacific_house3": {
+        "value": 900,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house3"
+        ]
+    },
+    "pacific_house4": {
+        "value": 1100,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house4"
+        ]
+    },
+    "pacific_hotel": {
+        "value": 1275,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "hotel"
+        ]
+    },
+    "pacific_mortgage": {
+        "value": 150,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "mortgage"
+        ]
+    },
+    "pacific_houseCost": {
+        "value": 200,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "houseCost"
+        ]
+    },
+    "pennsylvania_cost": {
+        "value": 320,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "cost"
+        ]
+    },
+    "pennsylvania_rent": {
+        "value": 28,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "rent"
+        ]
+    },
+    "pennsylvania_house1": {
+        "value": 150,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house1"
+        ]
+    },
+    "pennsylvania_house2": {
+        "value": 450,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house2"
+        ]
+    },
+    "pennsylvania_house3": {
+        "value": 1000,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house3"
+        ]
+    },
+    "pennsylvania_house4": {
+        "value": 1200,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house4"
+        ]
+    },
+    "pennsylvania_hotel": {
+        "value": 1400,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "hotel"
+        ]
+    },
+    "pennsylvania_mortgage": {
+        "value": 160,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "mortgage"
+        ]
+    },
+    "pennsylvania_houseCost": {
+        "value": 200,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "houseCost"
+        ]
+    },
+    "pennRR_cost": {
+        "value": 200,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "cost"
+        ]
+    },
+    "pennRR_rent": {
+        "value": 25,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "rent"
+        ]
+    },
+    "pennRR_mortgage": {
+        "value": 100,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "mortgage"
+        ]
+    },
+    "pennRR_houseCost": {
+        "value": 0,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "houseCost"
+        ]
+    },
+    "readingRR_cost": {
+        "value": 200,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "cost"
+        ]
+    },
+    "readingRR_rent": {
+        "value": 16,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "rent"
+        ]
+    },
+    "readingRR_mortgage": {
+        "value": 100,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "mortgage"
+        ]
+    },
+    "readingRR_houseCost": {
+        "value": 100,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "houseCost"
+        ]
+    },
+    "shortRR_cost": {
+        "value": 200,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "cost"
+        ]
+    },
+    "shortRR_rent": {
+        "value": 16,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "rent"
+        ]
+    },
+    "shortRR_mortgage": {
+        "value": 100,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "mortgage"
+        ]
+    },
+    "stcharles_cost": {
+        "value": 140,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "cost"
+        ]
+    },
+    "stcharles_rent": {
+        "value": 10,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "rent"
+        ]
+    },
+    "stcharles_house1": {
+        "value": 50,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house1"
+        ]
+    },
+    "stcharles_house2": {
+        "value": 150,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house2"
+        ]
+    },
+    "stcharles_house3": {
+        "value": 450,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house3"
+        ]
+    },
+    "stcharles_house4": {
+        "value": 625,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house4"
+        ]
+    },
+    "stcharles_hotel": {
+        "value": 750,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "hotel"
+        ]
+    },
+    "stcharles_mortgage": {
+        "value": 70,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "mortgage"
+        ]
+    },
+    "stcharles_houseCost": {
+        "value": 100,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "houseCost"
+        ]
+    },
+    "states_cost": {
+        "value": 140,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "cost"
+        ]
+    },
+    "states_rent": {
+        "value": 10,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "rent"
+        ]
+    },
+    "states_house1": {
+        "value": 50,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house1"
+        ]
+    },
+    "states_house2": {
+        "value": 150,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house2"
+        ]
+    },
+    "states_house3": {
+        "value": 450,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house3"
+        ]
+    },
+    "states_house4": {
+        "value": 625,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house4"
+        ]
+    },
+    "states_hotel": {
+        "value": 750,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "hotel"
+        ]
+    },
+    "states_mortgage": {
+        "value": 70,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "mortgage"
+        ]
+    },
+    "states_houseCost": {
+        "value": 100,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "houseCost"
+        ]
+    },
+    "tennessee_cost": {
+        "value": 180,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "cost"
+        ]
+    },
+    "tennessee_rent": {
+        "value": 14,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "rent"
+        ]
+    },
+    "tennessee_house1": {
+        "value": 70,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house1"
+        ]
+    },
+    "tennessee_house2": {
+        "value": 200,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house2"
+        ]
+    },
+    "tennessee_house3": {
+        "value": 550,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house3"
+        ]
+    },
+    "tennessee_house4": {
+        "value": 750,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house4"
+        ]
+    },
+    "tennessee_hotel": {
+        "value": 950,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "hotel"
+        ]
+    },
+    "tennessee_mortgage": {
+        "value": 90,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "mortgage"
+        ]
+    },
+    "tennessee_houseCost": {
+        "value": 100,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "houseCost"
+        ]
+    },
+    "vermont_cost": {
+        "value": 100,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "cost"
+        ]
+    },
+    "vermont_rent": {
+        "value": 6,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "rent"
+        ]
+    },
+    "vermont_house1": {
+        "value": 30,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house1"
+        ]
+    },
+    "vermont_house2": {
+        "value": 90,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house2"
+        ]
+    },
+    "vermont_house3": {
+        "value": 270,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house3"
+        ]
+    },
+    "vermont_house4": {
+        "value": 400,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house4"
+        ]
+    },
+    "vermont_hotel": {
+        "value": 550,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "hotel"
+        ]
+    },
+    "vermont_mortgage": {
+        "value": 50,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "mortgage"
+        ]
+    },
+    "vermont_houseCost": {
+        "value": 50,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "houseCost"
+        ]
+    },
+    "virginia_cost": {
+        "value": 160,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "cost"
+        ]
+    },
+    "virginia_rent": {
+        "value": 12,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "rent"
+        ]
+    },
+    "virginia_house1": {
+        "value": 60,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house1"
+        ]
+    },
+    "virginia_house2": {
+        "value": 180,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house2"
+        ]
+    },
+    "virginia_house3": {
+        "value": 500,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house3"
+        ]
+    },
+    "virginia_house4": {
+        "value": 700,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house4"
+        ]
+    },
+    "virginia_hotel": {
+        "value": 900,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "hotel"
+        ]
+    },
+    "virginia_mortgage": {
+        "value": 80,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "mortgage"
+        ]
+    },
+    "virginia_houseCost": {
+        "value": 100,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "houseCost"
+        ]
+    },
+    "water_cost": {
+        "value": 150,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "cost"
+        ]
+    },
+    "water_rent": {
+        "value": 0,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "rent"
+        ]
+    },
+    "water_mortgage": {
+        "value": 75,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "mortgage"
+        ]
+    }
+}

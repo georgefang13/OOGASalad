@@ -1,0 +1,267 @@
+{
+  "DropZone1": {
+    "connections": {
+      "Right": "DropZone2",
+      "Down": "DropZone6"
+    },
+    "classes": [
+      "board"
+    ]
+  },
+  "DropZone2": {
+    "connections": {
+      "Left": "DropZone1",
+      "Right": "DropZone3",
+      "Down": "DropZone7"
+    },
+    "classes": [
+      "board"
+    ]
+  },
+  "DropZone3": {
+    "connections": {
+      "Left": "DropZone2",
+      "Right": "DropZone4",
+      "Down": "DropZone8"
+    },
+    "classes": [
+      "board",
+      "tree",
+      "wolf"
+    ]
+  },
+  "DropZone4": {
+    "connections": {
+      "Left": "DropZone3",
+      "Right": "DropZone5",
+      "Down": "DropZone9"
+    },
+    "classes": [
+      "board"
+    ]
+  },
+  "DropZone5": {
+    "connections": {
+      "Left": "DropZone4",
+      "Down": "DropZone10"
+    },
+    "classes": [
+      "board"
+    ]
+  },
+  "DropZone6": {
+    "connections": {
+      "Right": "DropZone7",
+      "Up": "DropZone1",
+      "Down": "DropZone11"
+    },
+    "classes": [
+      "board"
+    ]
+  },
+  "DropZone7": {
+    "connections": {
+      "Left": "DropZone6",
+      "Right": "DropZone8",
+      "Up": "DropZone2",
+      "Down": "DropZone12"
+    },
+    "classes": [
+      "board",
+      "tree",
+      "bear"
+    ]
+  },
+  "DropZone8": {
+    "connections": {
+      "Left": "DropZone7",
+      "Right": "DropZone9",
+      "Up": "DropZone3",
+      "Down": "DropZone13"
+    },
+    "classes": [
+      "board"
+    ]
+  },
+  "DropZone9": {
+    "connections": {
+      "Left": "DropZone8",
+      "Right": "DropZone10",
+      "Up": "DropZone4",
+      "Down": "DropZone14"
+    },
+    "classes": [
+      "board"
+    ]
+  },
+  "DropZone10": {
+    "connections": {
+      "Left": "DropZone9",
+      "Up": "DropZone5",
+      "Down": "DropZone15"
+    },
+    "classes": [
+      "board"
+    ]
+  },
+  "DropZone11": {
+    "connections": {
+      "Right": "DropZone12",
+      "Up": "DropZone6",
+      "Down": "DropZone16"
+    },
+    "classes": [
+      "board"
+    ]
+  },
+  "DropZone12": {
+    "connections": {
+      "Left": "DropZone11",
+      "Right": "DropZone13",
+      "Up": "DropZone7",
+      "Down": "DropZone17"
+    },
+    "classes": [
+      "board"
+    ]
+  },
+  "DropZone13": {
+    "connections": {
+      "Left": "DropZone12",
+      "Right": "DropZone14",
+      "Up": "DropZone8",
+      "Down": "DropZone18"
+    },
+    "classes": [
+      "board"
+    ]
+  },
+  "DropZone14": {
+    "connections": {
+      "Left": "DropZone13",
+      "Right": "DropZone15",
+      "Up": "DropZone9",
+      "Down": "DropZone19"
+    },
+    "classes": [
+      "board",
+      "tree",
+      "goblin"
+    ]
+  },
+  "DropZone15": {
+    "connections": {
+      "Left": "DropZone14",
+      "Up": "DropZone10",
+      "Down": "DropZone20"
+    },
+    "classes": [
+      "board"
+    ]
+  },
+  "DropZone16": {
+    "connections": {
+      "Right": "DropZone17",
+      "Up": "DropZone11",
+      "Down": "DropZone21"
+    },
+    "classes": [
+      "board"
+    ]
+  },
+  "DropZone17": {
+    "connections": {
+      "Left": "DropZone16",
+      "Right": "DropZone18",
+      "Up": "DropZone12",
+      "Down": "DropZone22"
+    },
+    "classes": [
+      "board"
+    ]
+  },
+  "DropZone18": {
+    "connections": {
+      "Left": "DropZone17",
+      "Right": "DropZone19",
+      "Up": "DropZone13",
+      "Down": "DropZone23"
+    },
+    "classes": [
+      "board"
+    ]
+  },
+  "DropZone19": {
+    "connections": {
+      "Left": "DropZone18",
+      "Right": "DropZone20",
+      "Up": "DropZone14",
+      "Down": "DropZone24"
+    },
+    "classes": [
+      "board"
+    ]
+  },
+  "DropZone20": {
+    "connections": {
+      "Left": "DropZone19",
+      "Up": "DropZone15",
+      "Down": "DropZone25"
+    },
+    "classes": [
+      "board"
+    ]
+  },
+  "DropZone21": {
+    "connections": {
+      "Right": "DropZone22",
+      "Up": "DropZone16"
+    },
+    "classes": [
+      "board"
+    ]
+  },
+  "DropZone22": {
+    "connections": {
+      "Left": "DropZone21",
+      "Right": "DropZone23",
+      "Up": "DropZone17"
+    },
+    "classes": [
+      "board",
+      "tree",
+      "goldcoins"
+    ]
+  },
+  "DropZone23": {
+    "connections": {
+      "Left": "DropZone22",
+      "Right": "DropZone24",
+      "Up": "DropZone18"
+    },
+    "classes": [
+      "board"
+    ]
+  },
+  "DropZone24": {
+    "connections": {
+      "Left": "DropZone23",
+      "Right": "DropZone25",
+      "Up": "DropZone19"
+    },
+    "classes": [
+      "board"
+    ]
+  },
+  "DropZone25": {
+    "connections": {
+      "Left": "DropZone24",
+      "Up": "DropZone20"
+    },
+    "classes": [
+      "board",
+      "tree",
+      "horse"
+    ]
+  }
+}

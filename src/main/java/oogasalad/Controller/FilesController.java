@@ -19,8 +19,9 @@ import oogasalad.sharedDependencies.backend.filemanagers.FileManager;
  * @author Han This class is made to update any File information from the Front End to the backend
  */
 public class FilesController {
+  private final String SEPARATOR = ",";
   private final String GAMES_PATH = "data\\games\\";
-  private final String gameFolder;
+  private String gameFolder;
   private final String FILES_NAMES = "Controller/FilesConfig.properties";
   private Map<String, String> generalInfo = new HashMap<>();
   private List<Component> components = new ArrayList<>();
@@ -31,9 +32,16 @@ public class FilesController {
    *
    * @param name        Game Name
    */
-  public FilesController(String name) {
+  public FilesController() {
+  }
+
+  /**
+   * sets the game name for the backend to make files
+   * @param name
+   */
+  public void setGameName(String name){
     gameFolder = GAMES_PATH + name;
-    game = new GameInator(name);
+//    game = new GameInator(name);
   }
 
   /**
@@ -56,10 +64,10 @@ public class FilesController {
    * Saves components to frontend file
    */
   public void saveToFile(){
-    File directory = new File(gameFolder);
-    boolean valid = directory.mkdir();
-    File frontend = new File(gameFolder + "\\frontend");
-    boolean valid1 = frontend.mkdir();
+//    File directory = new File(gameFolder);
+//    boolean valid = directory.mkdir();
+//    File frontend = new File(gameFolder + "\\frontend");
+//    boolean valid1 = frontend.mkdir();
 
     ConvertingStrategy strategy = new ConvertingStrategy();
     FileManager layout = new FileManager();
@@ -75,9 +83,15 @@ public class FilesController {
         List<Dropzone> newComponents = ((GridObject) comp).getDropzones();
         componentsLater.addAll(newComponents);
       }else{
+        String id = map.get("ID");
+        for(String key : map.keySet()){
+          String remove = "unselected,hasImage";
+
+          currentManager.addContent(map.get(key), makeTagsArray(id, key));
+        }
         currentManager.addContent(map, "components", String.valueOf(count), "map");
-        currentManager.addContent(className, "components", String.valueOf(count), "className");
-        count++;
+//        currentManager.addContent(className, "components", String.valueOf(count), "className");
+//        count++;
       }
     }
 
@@ -134,5 +148,13 @@ public class FilesController {
 
   public GameInator getGame() {
     return game;
+  }
+
+  private String[] makeTagsArray(String id, String tags) {
+    String[] inputTags = tags.split(SEPARATOR);
+    String[] allTags = new String[inputTags.length + 1];
+    allTags[0] = id;
+    System.arraycopy(inputTags, 0, allTags, 1, inputTags.length);
+    return allTags;
   }
 }

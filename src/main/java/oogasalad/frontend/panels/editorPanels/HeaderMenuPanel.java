@@ -73,9 +73,13 @@ public class HeaderMenuPanel extends HBox implements Panel, ModalPanel {
 //      panelController.newSceneFromPanel()//TODO: JOAO LIKE ABOVE
 //    });
     compileButton.setOnAction(e -> {
-      panelController.compile();
+      modalController.getFilecontroller().saveToFile();
     });
     this.getChildren().addAll(visualButton, logicButton, compileButton);
+//    CreateNewModal creator = new CreateNewModal("save", modalController.dropzoneList());
+//    creator.attach(modalController);
+//    creator.showAndWait();
+//    this.panelController.getSceneController().setFilesController(modalController.getFilecontroller());
     return this;
   }
 

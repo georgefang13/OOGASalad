@@ -1,0 +1,468 @@
+{
+    "boardimg": {
+        "connections": {},
+        "classes": []
+    },
+    "playerdz1": {
+        "connections": {},
+        "classes": [
+            "inventory"
+        ]
+    },
+    "playerdz2": {
+        "connections": {},
+        "classes": [
+            "inventory"
+        ]
+    },
+    "playerdz3": {
+        "connections": {},
+        "classes": [
+            "inventory"
+        ]
+    },
+    "playerdz4": {
+        "connections": {},
+        "classes": [
+            "inventory"
+        ]
+    },
+    "playermoneydz1": {
+        "connections": {},
+        "classes": [
+            "inventory"
+        ]
+    },
+    "playermoneydz2": {
+        "connections": {},
+        "classes": [
+            "inventory"
+        ]
+    },
+    "playermoneydz3": {
+        "connections": {},
+        "classes": [
+            "inventory"
+        ]
+    },
+    "playermoneydz4": {
+        "connections": {},
+        "classes": [
+            "inventory"
+        ]
+    },
+    "cards": {
+        "connections": {},
+        "classes": [
+            "inventory"
+        ]
+    },
+    "dicedz": {
+        "connections": {},
+        "classes": []
+    },
+    "dicerolldz": {
+        "connections": {},
+        "classes": []
+    },
+    "promptdz1": {
+        "connections": {},
+        "classes": []
+    },
+    "promptdz2": {
+        "connections": {},
+        "classes": []
+    },
+    "ccdz": {
+        "connections": {},
+        "classes": []
+    },
+    "ccdiscarddz": {
+        "connections": {},
+        "classes": []
+    },
+    "chancedz": {
+        "connections": {},
+        "classes": []
+    },
+    "chancediscarddz": {
+        "connections": {},
+        "classes": []
+    },
+    "jail": {
+        "connections": {
+            "Forward": "visiting"
+        },
+        "classes": []
+    },
+    "go": {
+        "connections": {
+            "Forward": "mediterranean",
+            "Backward": "boardwalk"
+        },
+        "classes": [
+            "board"
+        ]
+    },
+    "mediterranean": {
+        "connections": {
+            "Forward": "cc1_spot",
+            "Backward": "go"
+        },
+        "classes": [
+            "board"
+        ]
+    },
+    "cc1_spot": {
+        "connections": {
+            "Forward": "baltic",
+            "Backward": "mediterranean"
+        },
+        "classes": [
+            "board",
+            "ccdz"
+        ]
+    },
+    "baltic": {
+        "connections": {
+            "Forward": "incomeTax",
+            "Backward": "cc1_spot"
+        },
+        "classes": [
+            "board"
+        ]
+    },
+    "incomeTax": {
+        "connections": {
+            "Forward": "readingRR",
+            "Backward": "baltic"
+        },
+        "classes": [
+            "board"
+        ]
+    },
+    "readingRR": {
+        "connections": {
+            "Forward": "oriental",
+            "Backward": "incomeTax"
+        },
+        "classes": [
+            "board",
+            "railroad"
+        ]
+    },
+    "oriental": {
+        "connections": {
+            "Forward": "chance1_spot",
+            "Backward": "readingRR"
+        },
+        "classes": [
+            "board"
+        ]
+    },
+    "chance1_spot": {
+        "connections": {
+            "Forward": "vermont",
+            "Backward": "oriental"
+        },
+        "classes": [
+            "board",
+            "chancedz"
+        ]
+    },
+    "vermont": {
+        "connections": {
+            "Forward": "connecticut",
+            "Backward": "chance1_spot"
+        },
+        "classes": [
+            "board"
+        ]
+    },
+    "connecticut": {
+        "connections": {
+            "Forward": "visiting",
+            "Backward": "vermont"
+        },
+        "classes": [
+            "board"
+        ]
+    },
+    "visiting": {
+        "connections": {
+            "Forward": "stcharles",
+            "Backward": "connecticut"
+        },
+        "classes": [
+            "board"
+        ]
+    },
+    "stcharles": {
+        "connections": {
+            "Forward": "electric",
+            "Backward": "visiting"
+        },
+        "classes": [
+            "board"
+        ]
+    },
+    "electric": {
+        "connections": {
+            "Forward": "states",
+            "Backward": "stcharles"
+        },
+        "classes": [
+            "board"
+        ]
+    },
+    "states": {
+        "connections": {
+            "Forward": "virginia",
+            "Backward": "electric"
+        },
+        "classes": [
+            "board"
+        ]
+    },
+    "virginia": {
+        "connections": {
+            "Forward": "pennRR",
+            "Backward": "states"
+        },
+        "classes": [
+            "board"
+        ]
+    },
+    "pennRR": {
+        "connections": {
+            "Forward": "stJames",
+            "Backward": "virginia"
+        },
+        "classes": [
+            "board",
+            "railroad"
+        ]
+    },
+    "stJames": {
+        "connections": {
+            "Forward": "cc2_spot",
+            "Backward": "pennRR"
+        },
+        "classes": [
+            "board"
+        ]
+    },
+    "cc2_spot": {
+        "connections": {
+            "Forward": "tennessee",
+            "Backward": "stJames"
+        },
+        "classes": [
+            "board",
+            "ccdz"
+        ]
+    },
+    "tennessee": {
+        "connections": {
+            "Forward": "newyork",
+            "Backward": "cc2_spot"
+        },
+        "classes": [
+            "board"
+        ]
+    },
+    "newyork": {
+        "connections": {
+            "Forward": "freeParking",
+            "Backward": "tennessee"
+        },
+        "classes": [
+            "board"
+        ]
+    },
+    "freeParking": {
+        "connections": {
+            "Forward": "kentucky",
+            "Backward": "newyork"
+        },
+        "classes": [
+            "board"
+        ]
+    },
+    "kentucky": {
+        "connections": {
+            "Forward": "chance2_spot",
+            "Backward": "freeParking"
+        },
+        "classes": [
+            "board"
+        ]
+    },
+    "chance2_spot": {
+        "connections": {
+            "Forward": "indiana",
+            "Backward": "kentucky"
+        },
+        "classes": [
+            "board",
+            "chancedz"
+        ]
+    },
+    "indiana": {
+        "connections": {
+            "Forward": "illinois",
+            "Backward": "chance2_spot"
+        },
+        "classes": [
+            "board"
+        ]
+    },
+    "illinois": {
+        "connections": {
+            "Forward": "bnoRR",
+            "Backward": "indiana"
+        },
+        "classes": [
+            "board"
+        ]
+    },
+    "bnoRR": {
+        "connections": {
+            "Forward": "atlantic",
+            "Backward": "illinois"
+        },
+        "classes": [
+            "board",
+            "railroad"
+        ]
+    },
+    "atlantic": {
+        "connections": {
+            "Forward": "ventnor",
+            "Backward": "bnoRR"
+        },
+        "classes": [
+            "board"
+        ]
+    },
+    "ventnor": {
+        "connections": {
+            "Forward": "water",
+            "Backward": "atlantic"
+        },
+        "classes": [
+            "board"
+        ]
+    },
+    "water": {
+        "connections": {
+            "Forward": "marvin",
+            "Backward": "ventnor"
+        },
+        "classes": [
+            "board"
+        ]
+    },
+    "marvin": {
+        "connections": {
+            "Forward": "goToJail",
+            "Backward": "water"
+        },
+        "classes": [
+            "board"
+        ]
+    },
+    "goToJail": {
+        "connections": {
+            "Forward": "pacific",
+            "Backward": "marvin"
+        },
+        "classes": [
+            "board"
+        ]
+    },
+    "pacific": {
+        "connections": {
+            "Forward": "northcarolina",
+            "Backward": "goToJail"
+        },
+        "classes": [
+            "board"
+        ]
+    },
+    "northcarolina": {
+        "connections": {
+            "Forward": "cc3_spot",
+            "Backward": "pacific"
+        },
+        "classes": [
+            "board"
+        ]
+    },
+    "cc3_spot": {
+        "connections": {
+            "Forward": "pennsylvania",
+            "Backward": "northcarolina"
+        },
+        "classes": [
+            "board",
+            "ccdz"
+        ]
+    },
+    "pennsylvania": {
+        "connections": {
+            "Forward": "shortRR",
+            "Backward": "cc3_spot"
+        },
+        "classes": [
+            "board"
+        ]
+    },
+    "shortRR": {
+        "connections": {
+            "Forward": "chance3_spot",
+            "Backward": "pennsylvania"
+        },
+        "classes": [
+            "board",
+            "railroad"
+        ]
+    },
+    "chance3_spot": {
+        "connections": {
+            "Forward": "parkPlace",
+            "Backward": "shortRR"
+        },
+        "classes": [
+            "board",
+            "chancedz"
+        ]
+    },
+    "parkPlace": {
+        "connections": {
+            "Forward": "luxuryTax",
+            "Backward": "chance3_spot"
+        },
+        "classes": [
+            "board"
+        ]
+    },
+    "luxuryTax": {
+        "connections": {
+            "Forward": "boardwalk",
+            "Backward": "parkPlace"
+        },
+        "classes": [
+            "board"
+        ]
+    },
+    "boardwalk": {
+        "connections": {
+            "Forward": "go",
+            "Backward": "luxuryTax"
+        },
+        "classes": [
+            "board"
+        ]
+    }
+}

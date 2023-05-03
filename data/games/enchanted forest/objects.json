@@ -1,0 +1,20 @@
+{
+  "wizard": {
+    "owner": "0",
+    "location": "DropZone21",
+    "classes": [
+      "red",
+      "piece"
+    ],
+    "owns": []
+  },
+  "witch": {
+    "owner": "1",
+    "location": "DropZone5",
+    "classes": [
+      "black",
+      "piece"
+    ],
+    "owns": []
+  }
+}

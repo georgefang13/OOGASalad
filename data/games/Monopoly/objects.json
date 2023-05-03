@@ -1,0 +1,824 @@
+{
+    "dice": {
+        "owner": -1,
+        "location": "dicedz",
+        "classes": [
+            "dice"
+        ],
+        "owns": []
+    },
+    "piece0": {
+        "owner": 0,
+        "location": "go",
+        "classes": [
+            "iron",
+            "piece"
+        ],
+        "owns": []
+    },
+    "piece1": {
+        "owner": 1,
+        "location": "go",
+        "classes": [
+            "thimble",
+            "piece"
+        ],
+        "owns": []
+    },
+    "piece2": {
+        "owner": 2,
+        "location": "go",
+        "classes": [
+            "car",
+            "piece"
+        ],
+        "owns": []
+    },
+    "piece3": {
+        "owner": 3,
+        "location": "go",
+        "classes": [
+            "hat",
+            "piece"
+        ],
+        "owns": []
+    },
+    "chance1": {
+        "owner": -1,
+        "location": "chancedz",
+        "classes": [
+            "chance",
+            "piece",
+            "chance1"
+        ],
+        "owns": []
+    },
+    "chance2": {
+        "owner": -1,
+        "location": "chancedz",
+        "classes": [
+            "chance",
+            "piece",
+            "chance2"
+        ],
+        "owns": []
+    },
+    "chance3": {
+        "owner": -1,
+        "location": "chancedz",
+        "classes": [
+            "chance",
+            "piece",
+            "chance3"
+        ],
+        "owns": []
+    },
+    "chance4": {
+        "owner": -1,
+        "location": "chancedz",
+        "classes": [
+            "chance",
+            "piece",
+            "chance4"
+        ],
+        "owns": []
+    },
+    "chance5": {
+        "owner": -1,
+        "location": "chancedz",
+        "classes": [
+            "chance",
+            "piece",
+            "chance5"
+        ],
+        "owns": []
+    },
+    "chance6": {
+        "owner": -1,
+        "location": "chancedz",
+        "classes": [
+            "chance",
+            "piece",
+            "chance6"
+        ],
+        "owns": []
+    },
+    "chance7": {
+        "owner": -1,
+        "location": "chancedz",
+        "classes": [
+            "chance",
+            "piece",
+            "chance7"
+        ],
+        "owns": []
+    },
+    "chance8": {
+        "owner": -1,
+        "location": "chancedz",
+        "classes": [
+            "chance",
+            "piece",
+            "chance8"
+        ],
+        "owns": []
+    },
+    "chance9": {
+        "owner": -1,
+        "location": "chancedz",
+        "classes": [
+            "chance",
+            "piece",
+            "chance9"
+        ],
+        "owns": []
+    },
+    "chance10": {
+        "owner": -1,
+        "location": "chancedz",
+        "classes": [
+            "chance",
+            "piece",
+            "chance10"
+        ],
+        "owns": []
+    },
+    "chance11": {
+        "owner": -1,
+        "location": "chancedz",
+        "classes": [
+            "chance",
+            "piece",
+            "chance11"
+        ],
+        "owns": []
+    },
+    "chance12": {
+        "owner": -1,
+        "location": "chancedz",
+        "classes": [
+            "chance",
+            "piece",
+            "chance12"
+        ],
+        "owns": []
+    },
+    "chance13": {
+        "owner": -1,
+        "location": "chancedz",
+        "classes": [
+            "chance",
+            "piece",
+            "chance13"
+        ],
+        "owns": []
+    },
+    "chance14": {
+        "owner": -1,
+        "location": "chancedz",
+        "classes": [
+            "chance",
+            "piece",
+            "chance14"
+        ],
+        "owns": []
+    },
+    "chance15": {
+        "owner": -1,
+        "location": "chancedz",
+        "classes": [
+            "chance",
+            "piece",
+            "chance15"
+        ],
+        "owns": []
+    },
+    "Chance": {
+        "owner": -1,
+        "location": "chancedz",
+        "classes": [
+            "piece"
+        ],
+        "owns": []
+    },
+    "cc1": {
+        "owner": -1,
+        "location": "ccdz",
+        "classes": [
+            "cc",
+            "piece"
+        ],
+        "owns": []
+    },
+    "cc2": {
+        "owner": -1,
+        "location": "ccdz",
+        "classes": [
+            "cc",
+            "piece"
+        ],
+        "owns": []
+    },
+    "cc3": {
+        "owner": -1,
+        "location": "ccdz",
+        "classes": [
+            "cc",
+            "piece"
+        ],
+        "owns": []
+    },
+    "cc4": {
+        "owner": -1,
+        "location": "ccdz",
+        "classes": [
+            "cc",
+            "piece"
+        ],
+        "owns": []
+    },
+    "cc5": {
+        "owner": -1,
+        "location": "ccdz",
+        "classes": [
+            "cc",
+            "piece"
+        ],
+        "owns": []
+    },
+    "cc6": {
+        "owner": -1,
+        "location": "ccdz",
+        "classes": [
+            "cc",
+            "piece"
+        ],
+        "owns": []
+    },
+    "cc7": {
+        "owner": -1,
+        "location": "ccdz",
+        "classes": [
+            "cc",
+            "piece"
+        ],
+        "owns": []
+    },
+    "cc8": {
+        "owner": -1,
+        "location": "ccdz",
+        "classes": [
+            "cc",
+            "piece"
+        ],
+        "owns": []
+    },
+    "cc9": {
+        "owner": -1,
+        "location": "ccdz",
+        "classes": [
+            "cc",
+            "piece"
+        ],
+        "owns": []
+    },
+    "cc10": {
+        "owner": -1,
+        "location": "ccdz",
+        "classes": [
+            "cc",
+            "piece"
+        ],
+        "owns": []
+    },
+    "cc11": {
+        "owner": -1,
+        "location": "ccdz",
+        "classes": [
+            "cc",
+            "piece"
+        ],
+        "owns": []
+    },
+    "cc12": {
+        "owner": -1,
+        "location": "ccdz",
+        "classes": [
+            "cc",
+            "piece"
+        ],
+        "owns": []
+    },
+    "cc13": {
+        "owner": -1,
+        "location": "ccdz",
+        "classes": [
+            "cc",
+            "piece"
+        ],
+        "owns": []
+    },
+    "cc14": {
+        "owner": -1,
+        "location": "ccdz",
+        "classes": [
+            "cc",
+            "piece"
+        ],
+        "owns": []
+    },
+    "cc15": {
+        "owner": -1,
+        "location": "ccdz",
+        "classes": [
+            "cc",
+            "piece"
+        ],
+        "owns": []
+    },
+    "cc16": {
+        "owner": -1,
+        "location": "ccdz",
+        "classes": [
+            "cc",
+            "piece"
+        ],
+        "owns": []
+    },
+    "CC": {
+        "owner": -1,
+        "location": "ccdz",
+        "classes": [
+            "piece"
+        ],
+        "owns": []
+    },
+    "atlanticcard": {
+        "owner": -1,
+        "location": "cards",
+        "classes": [
+            "card",
+            "property",
+            "purchase"
+        ],
+        "owns": [
+            "atlantic_cost",
+            "atlantic_rent",
+            "atlantic_house1",
+            "atlantic_house2",
+            "atlantic_house3",
+            "atlantic_house4",
+            "atlantic_hotel",
+            "atlantic_mortgage",
+            "atlantic_houseCost"
+        ]
+    },
+    "balticcard": {
+        "owner": -1,
+        "location": "cards",
+        "classes": [
+            "card",
+            "property",
+            "purchase"
+        ],
+        "owns": [
+            "baltic_cost",
+            "baltic_rent",
+            "baltic_house1",
+            "baltic_house2",
+            "baltic_house3",
+            "baltic_house4",
+            "baltic_hotel",
+            "baltic_mortgage",
+            "baltic_houseCost"
+        ]
+    },
+    "boardwalkcard": {
+        "owner": -1,
+        "location": "cards",
+        "classes": [
+            "card",
+            "property",
+            "purchase"
+        ],
+        "owns": [
+            "boardwalk_cost",
+            "boardwalk_rent",
+            "boardwalk_house1",
+            "boardwalk_house2",
+            "boardwalk_house3",
+            "boardwalk_house4",
+            "boardwalk_hotel",
+            "boardwalk_mortgage",
+            "boardwalk_houseCost"
+        ]
+    },
+    "bnoRRcard": {
+        "owner": -1,
+        "location": "cards",
+        "classes": [
+            "card",
+            "property",
+            "purchase"
+        ],
+        "owns": [
+            "bnoRR_cost",
+            "bnoRR_rent",
+            "bnoRR_mortgage",
+            "bnoRR_houseCost"
+        ]
+    },
+    "connecticutcard": {
+        "owner": -1,
+        "location": "cards",
+        "classes": [
+            "card",
+            "property",
+            "purchase"
+        ],
+        "owns": [
+            "connecticut_cost",
+            "connecticut_rent",
+            "connecticut_house1",
+            "connecticut_house2",
+            "connecticut_house3",
+            "connecticut_house4",
+            "connecticut_hotel",
+            "connecticut_mortgage",
+            "connecticut_houseCost"
+        ]
+    },
+    "electriccard": {
+        "owner": -1,
+        "location": "cards",
+        "classes": [
+            "card",
+            "property",
+            "purchase"
+        ],
+        "owns": [
+            "electric_cost",
+            "electric_rent",
+            "electric_mortgage",
+            "electric_houseCost"
+        ]
+    },
+    "illinoiscard": {
+        "owner": -1,
+        "location": "cards",
+        "classes": [
+            "card",
+            "property",
+            "purchase"
+        ],
+        "owns": [
+            "illinois_cost",
+            "illinois_rent",
+            "illinois_house1",
+            "illinois_house2",
+            "illinois_house3",
+            "illinois_house4",
+            "illinois_hotel",
+            "illinois_mortgage",
+            "illinois_houseCost"
+        ]
+    },
+    "indianacard": {
+        "owner": -1,
+        "location": "cards",
+        "classes": [
+            "card",
+            "property",
+            "purchase"
+        ],
+        "owns": [
+            "indiana_cost",
+            "indiana_rent",
+            "indiana_house1",
+            "indiana_house2",
+            "indiana_house3",
+            "indiana_house4",
+            "indiana_hotel",
+            "indiana_mortgage",
+            "indiana_houseCost"
+        ]
+    },
+    "kentuckycard": {
+        "owner": -1,
+        "location": "cards",
+        "classes": [
+            "card",
+            "property",
+            "purchase"
+        ],
+        "owns": [
+            "kentucky_cost",
+            "kentucky_rent",
+            "kentucky_house1",
+            "kentucky_house2",
+            "kentucky_house3",
+            "kentucky_house4",
+            "kentucky_hotel",
+            "kentucky_mortgage",
+            "kentucky_houseCost"
+        ]
+    },
+    "marvincard": {
+        "owner": -1,
+        "location": "cards",
+        "classes": [
+            "card",
+            "property",
+            "purchase"
+        ],
+        "owns": [
+            "marvin_cost",
+            "marvin_rent",
+            "marvin_house1",
+            "marvin_house2",
+            "marvin_house3",
+            "marvin_house4",
+            "marvin_hotel",
+            "marvin_mortgage",
+            "marvin_houseCost"
+        ]
+    },
+    "mediterraneancard": {
+        "owner": -1,
+        "location": "cards",
+        "classes": [
+            "card",
+            "property",
+            "purchase"
+        ],
+        "owns": [
+            "mediterranean_cost",
+            "mediterranean_rent",
+            "mediterranean_house1",
+            "mediterranean_house2",
+            "mediterranean_house3",
+            "mediterranean_house4",
+            "mediterranean_hotel",
+            "mediterranean_mortgage",
+            "mediterranean_houseCost"
+        ]
+    },
+    "newyorkcard": {
+        "owner": -1,
+        "location": "cards",
+        "classes": [
+            "card",
+            "property",
+            "purchase"
+        ],
+        "owns": [
+            "newyork_cost",
+            "newyork_rent",
+            "newyork_house1",
+            "newyork_house2",
+            "newyork_house3",
+            "newyork_house4",
+            "newyork_hotel",
+            "newyork_mortgage",
+            "newyork_houseCost"
+        ]
+    },
+    "northcarolinacard": {
+        "owner": -1,
+        "location": "cards",
+        "classes": [
+            "card",
+            "property",
+            "purchase"
+        ],
+        "owns": [
+            "northcarolina_cost",
+            "northcarolina_rent",
+            "northcarolina_house1",
+            "northcarolina_house2",
+            "northcarolina_house3",
+            "northcarolina_house4",
+            "northcarolina_hotel",
+            "northcarolina_mortgage",
+            "northcarolina_houseCost"
+        ]
+    },
+    "orientalcard": {
+        "owner": -1,
+        "location": "cards",
+        "classes": [
+            "card",
+            "property",
+            "purchase"
+        ],
+        "owns": [
+            "oriental_cost",
+            "oriental_rent",
+            "oriental_house1",
+            "oriental_house2",
+            "oriental_house3",
+            "oriental_house4",
+            "oriental_hotel",
+            "oriental_mortgage",
+            "oriental_houseCost"
+        ]
+    },
+    "pacificcard": {
+        "owner": -1,
+        "location": "cards",
+        "classes": [
+            "card",
+            "property",
+            "purchase"
+        ],
+        "owns": [
+            "pacific_cost",
+            "pacific_rent",
+            "pacific_house1",
+            "pacific_house2",
+            "pacific_house3",
+            "pacific_house4",
+            "pacific_hotel",
+            "pacific_mortgage",
+            "pacific_houseCost"
+        ]
+    },
+    "pennsylvaniacard": {
+        "owner": -1,
+        "location": "cards",
+        "classes": [
+            "card",
+            "property",
+            "purchase"
+        ],
+        "owns": [
+            "pennsylvania_cost",
+            "pennsylvania_rent",
+            "pennsylvania_house1",
+            "pennsylvania_house2",
+            "pennsylvania_house3",
+            "pennsylvania_house4",
+            "pennsylvania_hotel",
+            "pennsylvania_mortgage",
+            "pennsylvania_houseCost"
+        ]
+    },
+    "pennRRcard": {
+        "owner": -1,
+        "location": "cards",
+        "classes": [
+            "card",
+            "property",
+            "purchase"
+        ],
+        "owns": [
+            "pennRR_cost",
+            "pennRR_rent",
+            "pennRR_mortgage",
+            "pennRR_houseCost"
+        ]
+    },
+    "readingRRcard": {
+        "owner": -1,
+        "location": "cards",
+        "classes": [
+            "card",
+            "property",
+            "purchase"
+        ],
+        "owns": [
+            "readingRR_cost",
+            "readingRR_rent",
+            "readingRR_mortgage",
+            "readingRR_houseCost"
+        ]
+    },
+    "shortRRcard": {
+        "owner": -1,
+        "location": "cards",
+        "classes": [
+            "card",
+            "property",
+            "purchase"
+        ],
+        "owns": [
+            "shortRR_cost",
+            "shortRR_rent",
+            "shortRR_mortgage"
+        ]
+    },
+    "stcharlescard": {
+        "owner": -1,
+        "location": "cards",
+        "classes": [
+            "card",
+            "property",
+            "purchase"
+        ],
+        "owns": [
+            "stcharles_cost",
+            "stcharles_rent",
+            "stcharles_house1",
+            "stcharles_house2",
+            "stcharles_house3",
+            "stcharles_house4",
+            "stcharles_hotel",
+            "stcharles_mortgage",
+            "stcharles_houseCost"
+        ]
+    },
+    "statescard": {
+        "owner": -1,
+        "location": "cards",
+        "classes": [
+            "card",
+            "property",
+            "purchase"
+        ],
+        "owns": [
+            "states_cost",
+            "states_rent",
+            "states_house1",
+            "states_house2",
+            "states_house3",
+            "states_house4",
+            "states_hotel",
+            "states_mortgage",
+            "states_houseCost"
+        ]
+    },
+    "tennesseecard": {
+        "owner": -1,
+        "location": "cards",
+        "classes": [
+            "card",
+            "property",
+            "purchase"
+        ],
+        "owns": [
+            "tennessee_cost",
+            "tennessee_rent",
+            "tennessee_house1",
+            "tennessee_house2",
+            "tennessee_house3",
+            "tennessee_house4",
+            "tennessee_hotel",
+            "tennessee_mortgage",
+            "tennessee_houseCost"
+        ]
+    },
+    "vermontcard": {
+        "owner": -1,
+        "location": "cards",
+        "classes": [
+            "card",
+            "property",
+            "purchase"
+        ],
+        "owns": [
+            "vermont_cost",
+            "vermont_rent",
+            "vermont_house1",
+            "vermont_house2",
+            "vermont_house3",
+            "vermont_house4",
+            "vermont_hotel",
+            "vermont_mortgage",
+            "vermont_houseCost"
+        ]
+    },
+    "virginiacard": {
+        "owner": -1,
+        "location": "cards",
+        "classes": [
+            "card",
+            "property",
+            "purchase"
+        ],
+        "owns": [
+            "virginia_cost",
+            "virginia_rent",
+            "virginia_house1",
+            "virginia_house2",
+            "virginia_house3",
+            "virginia_house4",
+            "virginia_hotel",
+            "virginia_mortgage",
+            "virginia_houseCost"
+        ]
+    },
+    "watercard": {
+        "owner": -1,
+        "location": "cards",
+        "classes": [
+            "card",
+            "property",
+            "purchase"
+        ],
+        "owns": [
+            "water_cost",
+            "water_rent",
+            "water_mortgage"
+        ]
+    }
+}
