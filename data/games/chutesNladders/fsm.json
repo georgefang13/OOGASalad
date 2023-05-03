@@ -6,16 +6,22 @@
       "setValue": "",
       "to": "make :game_state_output \"SELECTPIECE"
     },
-    "SELECTPIECE": {
+    "ROLL": {
       "init": "getAvailablePieces",
       "leave": "",
       "setValue": "make :selected_piece fromgame :game_state_input",
       "to": "make :game_state_output \"SELECTZONE"
     },
-    "SELECTZONE": {
+    "CHOOSE_PIECE": {
       "init": "getAvailableSpots",
       "leave": "",
       "setValue": "movepiece :selected_piece fromgame :game_state_input",
+      "to": "make :game_state_output \"DONE"
+    },
+    "CHOOSE_SQUARE": {
+      "init": "make :available_items getrule :piece_selected \"available [ :old_dz ] make :available item 0 :available_items  if >= len :available 0 [     make :available_paths item 1 :available_items     makeallavailable :available ] ",
+      "leave": "",
+      "setValue": "make :dz fromgame :game_state_input make :choice_num index :dz :available make :chosen_path item :choice_num :available_paths movepiece :piece_selected :dz  getrule :piece_selected \"checkKing [ :piece_selected ]  if == 2 len :chosen_path [     make :dir item 0 :chosen_path     make :dz_cross dzfollow :old_dz :dir     make :piece item 0 dzitems :dz_cross     if != null :piece [         removepiece :piece     ] ] ",
       "to": "make :game_state_output \"DONE"
     },
     "DONE": {
