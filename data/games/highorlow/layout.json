@@ -3,14 +3,14 @@
     "connections": {
     },
     "classes": [
-      "zone"
+      "high"
     ]
   },
   "LowButton": {
     "connections": {
     },
     "classes": [
-      "zone"
+      "low"
     ]
   },
   "StartDeck": {

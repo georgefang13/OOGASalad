@@ -24,6 +24,7 @@ public class SceneController implements SceneMediator{
     this.windowID = windowID;
     this.windowController = windowController;
     scenes = new HashMap<>();
+    filesController = new FilesController();
   }
 
   public void switchToScene(String sceneID) {
