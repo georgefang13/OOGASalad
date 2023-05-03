@@ -20,7 +20,7 @@
     "height": "90",
     "unselected": {
       "hasImage": true,
-      "param": "cardback.png"
+      "param": "card_spot.png"
     },
     "selected": {
       "hasImage": true,
@@ -34,7 +34,7 @@
     "height": "90",
     "unselected": {
       "hasImage": true,
-      "param": "cardback.png"
+      "param": "card_spot.png"
     },
     "selected": {
       "hasImage": true,
@@ -48,7 +48,7 @@
     "height": "90",
     "unselected": {
       "hasImage": true,
-      "param": "cardback.png"
+      "param": "card_spot.png"
     },
     "selected": {
       "hasImage": true,
@@ -62,7 +62,7 @@
     "height": "90",
     "unselected": {
       "hasImage": true,
-      "param": "cardback.png"
+      "param": "card_spot.png"
     },
     "selected": {
       "hasImage": true,
@@ -76,7 +76,7 @@
     "height": "90",
     "unselected": {
       "hasImage": true,
-      "param": "cardback.png"
+      "param": "card_spot.png"
     },
     "selected": {
       "hasImage": true,
@@ -90,11 +90,11 @@
     "height": "90",
     "unselected": {
       "hasImage": true,
-      "param": "2_of_clubs.png"
+      "param": "deal-button.png"
     },
     "selected": {
       "hasImage": true,
-      "param": "2_of_clubs.png"
+      "param": "deal-button.png"
     }
   },
   "Plus" : {
@@ -104,11 +104,11 @@
     "height": "90",
     "unselected": {
       "hasImage": true,
-      "param": "3_of_clubs.png"
+      "param": "plus.png"
     },
     "selected": {
       "hasImage": true,
-      "param": "3_of_clubs.png"
+      "param": "plus.png"
     }
   },
   "Minus" : {
@@ -118,11 +118,11 @@
     "height": "90",
     "unselected": {
       "hasImage": true,
-      "param": "4_of_clubs.png"
+      "param": "minus.png"
     },
     "selected": {
       "hasImage": true,
-      "param": "4_of_clubs.png"
+      "param": "minus.png"
     }
   }
 }
