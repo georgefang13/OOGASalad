@@ -12,5 +12,15 @@
     "height":"35",
     "width":"35",
     "location": "BlueDropZone"
+  },
+  "dice": {
+    "width": 40,
+    "height": 60,
+    "location": "dicedz",
+    "selected": {
+      "hasSelectedImage": false,
+      "param": "#ff0000"
+    },
+    "defaultImage": "dice.png"
   }
 }

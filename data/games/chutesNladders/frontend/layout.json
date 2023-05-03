@@ -922,5 +922,35 @@
     "height": "50",
     "unselected":{"hasImage":false,"param":"#D3D3D3"},
     "selected":{"hasImage":false,"param":"#D3D3D3"}
+  },
+  "dicedz": {
+    "x": 600,
+    "y": 500,
+    "width": 60,
+    "height": 40,
+    "distribution": "collapse",
+    "unselected": {
+      "hasImage": false,
+      "param": "#00000000"
+    },
+    "selected": {
+      "hasImage": false,
+      "param": "#00000000"
+    }
+  },
+  "dicerolldz": {
+    "x": 650,
+    "y": 500,
+    "width": 60,
+    "height": 40,
+    "distribution": "collapse",
+    "unselected": {
+      "hasImage": false,
+      "param": "#ffffff"
+    },
+    "selected": {
+      "hasImage": false,
+      "param": "#ffffff"
+    }
   }
 }
