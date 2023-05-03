@@ -9,7 +9,7 @@
     "CLICK_BUTTON": {
       "init": "makeallavailable fromgameclass \"card\n",
       "leave": "",
-      "setValue": "make :button fromgame :game_state_input if hasclass \"high :button [make :ind rand len :arr make :card item :ind :arr movepiece :card :game_DropZone delitem :ind :arr make :ind rand len :arr make :card item :ind :arr movepiece :card :game_DropZone delitem :ind :arr]",
+      "setValue": "make :button fromgame :game_state_input if hasclass \"high :button [movepiece :selected_piece fromgame :game_state_input]",
       "to": "make :game_state_output \"DONE"
     },
     "DONE": {
