@@ -1,7 +1,7 @@
 {
   "states": {
     "INIT": {
-      "init": "\"to floor [ :x ] [\\n    return - :x % :x 1\\n]",
+      "init": "to floor [ :x ] [\n    return - :x % :x 1\n]",
       "leave": "",
       "setValue": "",
       "to": "make :game_state_output \"ROLL"

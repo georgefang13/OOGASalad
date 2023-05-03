@@ -11,6 +11,14 @@
     },
     "classes": "board"
   },
+  "dicedz": {
+    "connections": {},
+    "classes": []
+  },
+  "dicerolldz": {
+    "connections": {},
+    "classes": []
+  },
   "1": {
     "connections": {
       "Next": "2",
