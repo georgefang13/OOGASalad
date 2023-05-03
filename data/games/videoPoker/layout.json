@@ -3,36 +3,56 @@
     "connections": {},
     "classes": "background"
   },
-  "Card 1": {
+  "Card1DZ": {
     "connections": {},
     "classes": "card"
   },
-  "Card 2 ": {
+  "Card2DZ": {
     "connections": {},
     "classes": "card"
   },
-  "Card 3": {
+  "Card3DZ": {
     "connections": {},
     "classes": "card"
   },
-  "Card 4": {
+  "Card4DZ": {
     "connections": {},
     "classes": "card"
   },
-  "Card 5": {
+  "Card5DZ": {
     "connections": {},
     "classes": "card"
   },
-  "Deal": {
+  "DealDZ": {
     "connections": {},
     "classes": "button"
   },
-  "Plus": {
+  "PlusDZ": {
     "connections": {},
     "classes": "bet-button"
   },
-  "Minus": {
+  "MinusDZ": {
     "connections": {},
     "classes": "bet-button"
+  },
+  "BetDZ": {
+    "connections": {},
+    "classes": "button"
+  },
+  "BetTextDZ": {
+    "connections": {},
+    "classes": "bet-text"
+  },
+  "StartDeckDZ": {
+    "connections": {},
+    "classes": "button"
+  },
+  "BalanceDZ": {
+    "connections": {},
+    "classes": "balance"
+  },
+  "BalanceTextDZ": {
+    "connections": {},
+    "classes": "balance-text"
   }
 }

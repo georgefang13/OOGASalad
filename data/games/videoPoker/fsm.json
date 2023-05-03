@@ -1,0 +1,23 @@
+{
+  "states": {
+    "INIT": {
+      "init": "to retstr [ :s ] [ return :s ] if == null :started [ make :started true addtextobj :game_betAmount :game_BetTextDZ \"bettext fvar retstr  addtextobj :game_balance :game_BalanceTextDZ \"balancetext fvar retstr ]",
+      "leave": "",
+      "setValue": "",
+      "to": "make :game_state_output \"CHOOSE_PIECE"
+    },
+    "CHOOSE_PIECE": {
+      "init": "makeallavailable fromgameclass \"card\n",
+      "leave": "",
+      "setValue": "make :piece_selected fromgame :game_state_input getrule :piece_selected \"flip aslist [ :piece_selected ]",
+      "to": "make :game_state_output \"DONE"
+    },
+    "DONE": {
+      "init": "",
+      "leave": "gotonextplayer",
+      "setValue": "",
+      "to": "make :game_state_output \"INIT"
+    }
+  },
+  "goals": []
+}

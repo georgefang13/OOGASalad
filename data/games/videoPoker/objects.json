@@ -1,7 +1,7 @@
 {
   "Card 1": {
     "owner": "-1",
-    "location": "Card1DropZone",
+    "location": "Card1DZ",
     "classes": [
       "Card"
     ],
@@ -9,7 +9,7 @@
   },
   "Card 2": {
     "owner": "-1",
-    "location": "Card2DropZone",
+    "location": "Card2DZ",
     "classes": [
       "Card"
     ],
@@ -17,7 +17,7 @@
   },
   "Card 3": {
     "owner": "-1",
-    "location": "Card3DropZone",
+    "location": "Card3DZ",
     "classes": [
       "Card"
     ],
@@ -25,7 +25,7 @@
   },
   "Card 4": {
     "owner": "-1",
-    "location": "Card4DropZone",
+    "location": "Card4DZ",
     "classes": [
       "Card"
     ],
@@ -33,7 +33,7 @@
   },
   "Card 5": {
     "owner": "-1",
-    "location": "Card5DropZone",
+    "location": "Card5DZ",
     "classes": [
       "Card"
     ],
@@ -41,7 +41,7 @@
   },
   "Deal": {
     "owner": "-1",
-    "location": "DealDropZone",
+    "location": "DealDZ",
     "classes": [
       "Deal"
     ],
@@ -49,7 +49,7 @@
   },
   "Plus": {
     "owner": "-1",
-    "location": "PlusDropZone",
+    "location": "PlusDZ",
     "classes": [
       "Plus"
     ],
@@ -57,7 +57,7 @@
   },
   "Minus": {
     "owner": "-1",
-    "location": "MinusDropZone",
+    "location": "MinusDZ",
     "classes": [
       "Minus"
     ],

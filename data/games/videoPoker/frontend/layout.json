@@ -13,77 +13,77 @@
       "param": "videoPokerScreen.png"
     }
   },
-  "Card 1": {
+  "Card1DZ": {
     "x": "150",
     "y": "350",
     "width": "140",
     "height": "90",
     "unselected": {
       "hasImage": true,
-      "param": "card_spot.png"
+      "param": "card-spot.png"
     },
     "selected": {
       "hasImage": true,
       "param": "flippedOver.png"
     }
   },
-  "Card 2": {
+  "Card2DZ": {
     "x": "275",
     "y": "350",
     "width": "140",
     "height": "90",
     "unselected": {
       "hasImage": true,
-      "param": "card_spot.png"
+      "param": "card-spot.png"
     },
     "selected": {
       "hasImage": true,
       "param": "flippedOver.png"
     }
   },
-  "Card 3": {
+  "Card3DZ": {
     "x": "400",
     "y": "350",
     "width": "140",
     "height": "90",
     "unselected": {
       "hasImage": true,
-      "param": "card_spot.png"
+      "param": "card-spot.png"
     },
     "selected": {
       "hasImage": true,
       "param": "flippedOver.png"
     }
   },
-  "Card 4": {
+  "Card4DZ": {
     "x": "525",
     "y": "350",
     "width": "140",
     "height": "90",
     "unselected": {
       "hasImage": true,
-      "param": "card_spot.png"
+      "param": "card-spot.png"
     },
     "selected": {
       "hasImage": true,
       "param": "flippedOver.png"
     }
   },
-  "Card 5": {
+  "Card5DZ": {
     "x": "650",
     "y": "350",
     "width": "140",
     "height": "90",
     "unselected": {
       "hasImage": true,
-      "param": "card_spot.png"
+      "param": "card-spot.png"
     },
     "selected": {
       "hasImage": true,
       "param": "flippedOver.png"
     }
   },
-  "Deal": {
+  "DealDZ": {
     "x": "400",
     "y": "280",
     "width": "50",
@@ -97,7 +97,7 @@
       "param": "deal-button.png"
     }
   },
-  "Plus" : {
+  "PlusDZ" : {
     "x": "500",
     "y": "500",
     "width": "50",
@@ -111,7 +111,7 @@
       "param": "plus.png"
     }
   },
-  "Minus" : {
+  "MinusDZ" : {
     "x": "300",
     "y": "500",
     "width": "50",
@@ -123,6 +123,75 @@
     "selected": {
       "hasImage": true,
       "param": "minus.png"
+    }
+  },
+  "BetDZ" : {
+    "x": "400",
+    "y": "500",
+    "width": "50",
+    "height": "90",
+    "unselected": {
+      "hasImage": true,
+      "param": "WhiteBG.png"
+    },
+    "selected": {
+      "hasImage": true,
+      "param": "WhiteBG.png"
+    }
+  },
+  "BetTextDZ": {
+    "x": "440",
+    "y": "525",
+    "width": "3",
+    "height": "3",
+    "unselected": {
+      "hasImage": "true",
+      "param": "WhiteBG.png"
+    },
+    "selected": {
+      "hasImage": "true",
+      "param": "WhiteBG.png"
+    }
+  },
+  "StartDeckDZ" : {
+    "x": "-50",
+    "y": "-200",
+    "width": "50",
+    "height": "90",
+    "unselected": {
+      "hasImage": true,
+      "param": "cardback.png"
+    },
+    "selected": {
+      "hasImage": true,
+      "param": "cardback.png"
+    }
+  },"BalanceDZ" : {
+  "x": "600",
+  "y": "280",
+  "width": "50",
+  "height": "90",
+  "unselected": {
+    "hasImage": true,
+    "param": "WhiteBG.png"
+  },
+  "selected": {
+    "hasImage": true,
+    "param": "WhiteBG.png"
+  }
+},
+  "BalanceTextDZ": {
+    "x": "635",
+    "y": "310",
+    "width": "3",
+    "height": "3",
+    "unselected": {
+      "hasImage": "true",
+      "param": "WhiteBG.png"
+    },
+    "selected": {
+      "hasImage": "true",
+      "param": "WhiteBG.png"
     }
   }
 }
