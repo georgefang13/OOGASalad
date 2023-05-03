@@ -1,1 +1,5 @@
-{"card":{"flip":"to flip [ :piece ] [\n    ifelse hasclass :piece \"flipped [\n        removeclass \"flipped :piece\n        make :vars objchildren :piece \"img\n        make :img item 0 :vars\n        setobjimg :piece :img\n    ] [\n        setobjimg :piece \"cardback.png\n        putclass \"flipped :piece\n    ]\n]\n"}}
+{
+//  "card": {
+//    "flip": "to flip [ :piece ] [\n    ifelse hasclass :piece \"flipped [\n        removeclass \"flipped :piece\n        make :vars objchildren :piece \"img\n        make :img item 0 :vars\n        setobjimg :piece :img\n    ] [\n        setobjimg :piece \"cardback.png\n        putclass \"flipped :piece\n    ]\n]\n"
+//  }
+}
