@@ -207,7 +207,7 @@ abstract public class OperatorToken extends Token {
       }
       return op;
     } catch (Exception e) {
-      e.printStackTrace();
+//      e.printStackTrace();
 
     }
     return this;
