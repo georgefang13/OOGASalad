@@ -19,6 +19,7 @@ import oogasalad.sharedDependencies.backend.id.IdManager;
 import oogasalad.sharedDependencies.backend.ownables.Ownable;
 import oogasalad.sharedDependencies.backend.ownables.gameobjects.DropZone;
 import oogasalad.sharedDependencies.backend.ownables.gameobjects.GameObject;
+import oogasalad.sharedDependencies.backend.ownables.variables.Variable;
 import oogasalad.sharedDependencies.backend.owners.GameWorld;
 import oogasalad.sharedDependencies.backend.owners.Player;
 import org.junit.jupiter.api.BeforeEach;
@@ -81,6 +82,10 @@ class GameLoaderTest {
 
     gameLoader.loadObjectsAndVariables(idManager, players, gw);
 
+    Variable testVar = (Variable) idManager.getObject("testvar");
+    assertEquals(1500, testVar.get());
+    assertTrue(testVar.usesClass("money"));
+
     ArrayList<DropZone> dropZones = new ArrayList<>();
     ArrayList<GameObject> pieces = new ArrayList<>();
     Iterator<Entry<String, Ownable>> iterator = idManager.iterator();
@@ -89,7 +94,7 @@ class GameLoaderTest {
       if(ownable instanceof DropZone) {
         dropZones.add((DropZone) ownable);
       }
-      else {
+      else if (ownable instanceof GameObject) {
         pieces.add((GameObject) ownable);
       }
     }

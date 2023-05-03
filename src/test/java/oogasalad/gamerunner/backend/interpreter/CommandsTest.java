@@ -90,6 +90,12 @@ public class CommandsTest {
     List<Double> expected = new ArrayList<>(List.of(4., 5., 6., 1., 2., 3.));
     Variable<List<Double>> t = getVar("interpreter-:y");
     assertEquals(expected, t.get());
+
+    input = "to arr [ ] [ return [ 7 8 9 ] ] make :x [ ] addallitems arr :x";
+    interpreter.interpret(input);
+    expected = new ArrayList<>(List.of(7., 8., 9.));
+    t = getVar("interpreter-:x");
+    assertEquals(expected, t.get());
   }
 
   @Test
@@ -186,7 +192,7 @@ public class CommandsTest {
     game.addElement(dz, "dz");
 
     // add piece to game
-    String input = "addpiece curplayer [ \"test \"yes ] :game_dz \"img1 50";
+    String input = "addpiece curplayer [ \"test \"yes ] :game_dz \"img1 50 50";
     interpreter.interpret(input);
     GameObject go = getVar("GameObject");
     assertTrue(go.usesClass("test"));
@@ -195,7 +201,7 @@ public class CommandsTest {
     assertEquals("assets/img1", game.getObjImage(go));
 
     // add piece to game with non-string
-    input = "addpiece 1 1 1 1 1";
+    input = "addpiece 1 1 1 1 1 1";
     try {
       interpreter.interpret(input);
       fail();
@@ -783,7 +789,15 @@ public class CommandsTest {
     String input = "make :x getid :game_obj \"available [ ]";
     interpreter.interpret(input);
     Variable<String> x = getVar("interpreter-:x");
-    assertEquals("obj", x.get());;
+    assertEquals("obj", x.get());
+
+
+    Variable<Double> var = new Variable<>(5., null);
+    idManager.addObject(var, "var");
+    input = "make :y fromgame \"var make :varname getid :y";
+    interpreter.interpret(input);
+    Variable<String> y = getVar("interpreter-:varname");
+    assertEquals("var", y.get());
   }
 
   @Test
@@ -905,10 +919,10 @@ public class CommandsTest {
     Variable<?> xvar = new Variable<>("test");
     idManager.addObject(xvar, "0,1");
 
-    String input = "make :x fromgame + + 0 \", 1";
+    String input = "make :y fromgame + + 0 \", 1 make :x + :y 1";
     interpreter.interpret(input);
     Variable<String> x = getVar("interpreter-:x");
-    assertEquals("test", x.get());
+    assertEquals("test1", x.get());
 
     // test fromgame from string variable
     Variable<?> yvar = new Variable<>("test2");
@@ -2284,6 +2298,19 @@ public class CommandsTest {
   }
 
   @Test
+  public void setVariableFromId(){
+    game.noFSMInit(2);
+    useGameVars();
+
+    Variable<Double> x = new Variable<>(0.0, null);
+    idManager.addObject(x, "x");
+
+    String input = "setfromid \"x 5";
+    interpreter.interpret(input);
+    assertEquals(5.0, x.get());
+  }
+
+  @Test
   public void setObjectImage(){
     game.noFSMInit(2);
     useGameVars();
@@ -2523,18 +2550,18 @@ public class CommandsTest {
     Variable<Double> x = new Variable<>(5.0);
     idManager.addObject(x);
     String name = idManager.getId(x);
-    String input = "make :y :game_" + name;
+    String input = "make :y :game_" + name + " make :z + 1 :y";
     interpreter.interpret(input);
-    Variable<Double> y = getVar("interpreter-:y");
-    assertEquals(5.0, y.get());
+    Variable<Double> y = getVar("interpreter-:z");
+    assertEquals(6.0, y.get());
 
     Variable<Integer> x2 = new Variable<>(2);
     idManager.addObject(x2);
     name = idManager.getId(x2);
-    input = "make :y :game_" + name;
+    input = "make :y + 1 :game_" + name;
     interpreter.interpret(input);
     y = getVar("interpreter-:y");
-    assertEquals(2, y.get());
+    assertEquals(3, y.get());
 
     List<Integer> list = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5));
     List<Double> expected = new ArrayList<>(Arrays.asList(1., 2., 3., 4., 5.));

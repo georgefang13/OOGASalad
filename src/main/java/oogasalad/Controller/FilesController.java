@@ -20,7 +20,7 @@ import oogasalad.sharedDependencies.backend.filemanagers.FileManager;
  */
 public class FilesController {
   private final String GAMES_PATH = "data\\games\\";
-  private final String gameFolder;
+  private String gameFolder;
   private final String FILES_NAMES = "Controller/FilesConfig.properties";
   private Map<String, String> generalInfo = new HashMap<>();
   private List<Component> components = new ArrayList<>();
@@ -31,7 +31,14 @@ public class FilesController {
    *
    * @param name        Game Name
    */
-  public FilesController(String name) {
+  public FilesController() {
+  }
+
+  /**
+   * sets the game name for the backend to make files
+   * @param name
+   */
+  public void setGameName(String name){
     gameFolder = GAMES_PATH + name;
     game = new GameInator(name);
   }
