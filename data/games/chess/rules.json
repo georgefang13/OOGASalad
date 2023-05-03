@@ -24,6 +24,6 @@
         "available": "to available [ :dz ] [\n    make :moveset [ [ \"Down ] [ \"Up ] [ \"Left ] [ \"Right ] [ \"DownRight ] [ \"DownLeft ] [ \"UpRight ] [ \"UpLeft ] ]\n    make :ret pieceAvailables :dz :moveset\n    return :ret\n]\n"
     },
     "king": {
-        "available": "to available [ :dz ] [\n    make :moveset [ [ \"Down ] [ \"Up ] [ \"Left ] [ \"Right ] [ \"DownRight ] [ \"DownLeft ] [ \"UpRight ] [ \"UpLeft ] ]\n    make :ret pieceAvailables :dz :moveset\n    return :ret\n]\n"
+        "available": "to available [ :dz ] [\n    make :moveset [ [ \"Down ] [ \"Up ] [ \"Left ] [ \"Right ] [ \"DownRight ] [ \"DownLeft ] [ \"UpRight ] [ \"UpLeft ] ]\n    make :ret pieceAvailable :dz :moveset\n    return :ret\n]\n"
     }
   }
