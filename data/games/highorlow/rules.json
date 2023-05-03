@@ -1,0 +1,41 @@
+{
+  "two": {
+    "value": "to value [ ] [ return 2 ]"
+  },
+  "three": {
+    "value": "to value [ ] [ return 3 ]"
+  },
+  "four": {
+    "value": "to value [ ] [ return 4 ]"
+  },
+  "five": {
+    "value": "to value [ ] [ return 5 ]"
+  },
+  "six": {
+    "value": "to value [ ] [ return 6 ]"
+  },
+  "seven": {
+    "value": "to value [ ] [ return 7 ]"
+  },
+  "eight": {
+    "value": "to value [ ] [ return 8 ]"
+  },
+  "nine": {
+    "value": "to value [ ] [ return 9 ]"
+  },
+  "ten": {
+    "value": "to value [ ] [ return 10 ]"
+  },
+  "jack": {
+    "value": "to value [ ] [ return 11 ]"
+  },
+  "queen": {
+    "value": "to value [ ] [ return 12 ]"
+  },
+  "king": {
+    "value": "to value [ ] [ return 13 ]"
+  },
+  "ace": {
+    "value": "to value [ ] [ return 14 ]"
+  }
+}

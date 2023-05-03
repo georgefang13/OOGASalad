@@ -1,0 +1,10 @@
+{
+  "name": "Chutes and Ladders",
+  "author": "George Fang",
+  "description": "The objective of the game is to be the first player to reach square number 100.",
+  "tags": ["all", "board game"],
+  "players": {
+    "min": 2,
+    "max": 2
+  }
+}

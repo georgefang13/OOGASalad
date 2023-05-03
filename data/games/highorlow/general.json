@@ -1,0 +1,10 @@
+{
+  "name": "High or Low",
+  "author": "Aryan Kothari",
+  "description": "The classic casino game",
+  "tags": ["all", "card game"],
+  "players": {
+    "min": 1,
+    "max": 1
+  }
+}
