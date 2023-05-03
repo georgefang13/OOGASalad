@@ -578,17 +578,17 @@
     "folder": "game",
     "str": "addtextobj",
     "description": "Set a value to be an available piece to click on in the game",
-    "example": "addtextobj :x :game_dz [ \"money \"textobj ] to [ :str ] [ return + \"money%20=%20 :str ]  # makeavailable <var> <dropzone> <list[] classes] <function>",
+    "example": "addtextobj :x :game_dz money.textobj to [ :str ] [ return + \"money%20=%20 :str ]  # makeavailable <var> <dropzone> <list[] classes] <function>",
     "specs": {
       "innerBlocks": [],
       "inputs": [
         { "name": "variable", "type": ["variable"] },
         { "name": "location", "type": ["dropzone"] },
         { "name": "classes", "type": ["string"] },
-        { "name": "item", "type": ["any"] }
+        { "name": "format", "type": ["any"] }
       ],
       "outputs": [],
-      "parse": "makeavailable %s %s %s %s"
+      "parse": "addtextobj %s %s %s %s"
     }
   },
   "PutClass": {
@@ -657,6 +657,22 @@
       ],
       "outputs": [],
       "parse": "setplayerowner %s %s"
+    }
+  },
+  "SetVariableFromId": {
+    "name": "Set Variable From Id",
+    "folder": "game",
+    "str": "setfromid",
+    "description": "Sets a game variable using its string id",
+    "example": "setfromid \"id1 1 # make <var_name> <value>",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        {"name": "var_name", "type": ["string"] },
+        {"name": "value", "type": ["any"] }
+      ],
+      "outputs": [],
+      "parse": "setfromid %s %s"
     }
   },
 

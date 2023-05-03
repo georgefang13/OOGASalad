@@ -11,7 +11,8 @@ import java.util.function.Consumer;
 public class TextObject extends GameObject{
     private String text = "";
     private Consumer<String> reaction;
-    private final Map<Variable, VariableListener> listeners = new HashMap<>();
+    private Variable var = null;
+    private VariableListener listener = null;
     public TextObject(Owner owner) {
         super(owner);
         reaction = (s) -> {};
@@ -19,6 +20,10 @@ public class TextObject extends GameObject{
 
     public void setReaction(Consumer<String> reaction){
         this.reaction = reaction;
+    }
+
+    public void setTextNoReaction(String text){
+        this.text = text;
     }
 
     public void setText(String text){
@@ -31,15 +36,14 @@ public class TextObject extends GameObject{
     }
 
     public void linkVariable(Variable variable){
+        unLink();
         VariableListener listener = (s) -> setText(String.valueOf(s));
         variable.addListener(listener);
-        listeners.put(variable, listener);
+        var = variable;
+        this.listener = listener;
     }
 
-    public void unLinkVariable(Variable var){
-        if (listeners.containsKey(var)){
-            var.removeListener(listeners.get(var));
-            listeners.remove(var);
-        }
+    public void unLink(){
+        if (var != null) var.removeListener(listener);
     }
 }

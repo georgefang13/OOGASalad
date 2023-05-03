@@ -3,6 +3,7 @@ import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import oogasalad.Controller.GameRunnerController;
 import oogasalad.frontend.components.AbstractComponent;
 
 import java.util.Map;
@@ -15,21 +16,36 @@ public class TextObject extends AbstractComponent implements TextObjectComponent
     private double fontSize;
     private Color color;
     private double rotate;
+    private GameRunnerController gameRunnerController;
 
-    public TextObject(String id) {
+    public TextObject(String id, GameRunnerController gameRunnerController) {
         super(id);
+        this.gameRunnerController = gameRunnerController;
         instantiatePropFile("frontend.properties.Defaults.TextObject");
         //this.setDefault();
+        color = Color.BLACK;
+        fontSize = 12;
+        rotate = 0;
+        content = "";
+        initialize();
         this.followMouse();
-        this.getNode();
+        setClickSelection();
     }
 
-    public TextObject(String ID, Map<String, String> map){
+    public TextObject(String ID, Map<String, String> map, GameRunnerController gameRunnerController){
         super(ID);
+        this.gameRunnerController = gameRunnerController;
         setDraggable(true);
         setValuesfromMap(map);
         initialize();
         followMouse();
+        setClickSelection();
+    }
+
+    private void setClickSelection() {
+        getNode().setOnMouseClicked(e -> {
+            gameRunnerController.select(ID);
+        });
     }
 
     private void initialize() {

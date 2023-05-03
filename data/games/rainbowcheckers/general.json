@@ -1,0 +1,10 @@
+{
+  "name": "Rainbow Checkers",
+  "author": "DuVALLEY Boiz",
+  "description": "Checkers. Improved checkers. You know how to play :)",
+  "tags": ["all", "board game", "grid game"],
+  "players": {
+    "min": 2,
+    "max": 2
+  }
+}

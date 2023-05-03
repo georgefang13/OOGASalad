@@ -1,0 +1,72 @@
+{
+  "pieceX0": {
+    "selected":{"hasSelectedImage":true,"param":"X.png"},
+    "defaultImage": "X.png",
+    "height":"40",
+    "width":"40",
+    "location": "XDropZone"
+  },
+  "pieceX1": {
+    "selected":{"hasSelectedImage":true,"param":"X.png"},
+    "defaultImage": "X.png",
+    "height":"40",
+    "width":"40",
+    "location": "XDropZone"
+  },
+  "pieceX2": {
+    "selected":{"hasSelectedImage":true,"param":"X.png"},
+    "defaultImage": "X.png",
+    "height":"40",
+    "width":"40",
+    "location": "XDropZone"
+  },
+  "pieceX3": {
+    "selected":{"hasSelectedImage":true,"param":"X.png"},
+    "defaultImage": "X.png",
+    "height":"40",
+    "width":"40",
+    "location": "XDropZone"
+  },
+  "pieceX4": {
+    "selected":{"hasSelectedImage":true,"param":"X.png"},
+    "defaultImage": "X.png",
+    "height":"40",
+    "width":"40",
+    "location": "XDropZone"
+  },
+  "pieceO0": {
+    "selected":{"hasSelectedImage":true,"param":"O.png"},
+    "defaultImage": "O.png",
+    "height":"40",
+    "width":"40",
+    "location": "ODropZone"
+  },
+  "pieceO1": {
+    "selected":{"hasSelectedImage":true,"param":"O.png"},
+    "defaultImage": "O.png",
+    "height":"40",
+    "width":"40",
+    "location": "ODropZone"
+  },
+  "pieceO2": {
+    "selected":{"hasSelectedImage":true,"param":"O.png"},
+    "defaultImage": "O.png",
+    "height":"40",
+    "width":"40",
+    "location": "ODropZone"
+  },
+  "pieceO3": {
+    "selected":{"hasSelectedImage":true,"param":"O.png"},
+    "defaultImage": "O.png",
+    "height":"40",
+    "width":"40",
+    "location": "ODropZone"
+  },
+  "pieceO4": {
+    "selected":{"hasSelectedImage":true,"param":"O.png"},
+    "defaultImage": "O.png",
+    "height":"40",
+    "width":"40",
+    "location": "ODropZone"
+  }
+}

@@ -396,7 +396,7 @@
     "y": "500",
     "width": "50",
     "height": "50",
-    "distribution": "horizontal",
+    "distribution": "collapse",
     "unselected":{"hasImage":false,"param":"1e49a7"},
     "selected":{"hasImage":false,"param":"1e49a7"}
   },
@@ -405,7 +405,7 @@
     "y": "500",
     "width": "50",
     "height": "50",
-    "distribution": "vertical",
+    "distribution": "collapse",
     "unselected":{"hasImage":false,"param":"1e49a7"},
     "selected":{"hasImage":true,"param":"1e49a7"}
   }
