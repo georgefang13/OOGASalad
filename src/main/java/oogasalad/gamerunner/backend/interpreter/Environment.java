@@ -147,6 +147,9 @@ public class Environment {
 
     } else {
       Variable<?> var = convertTokenToVariable(val);
+      if (idManager.isObjectInUse(var)){
+        var = new Variable<>(var.get());
+      }
       idManager.addObject(var, name);
     }
   }
