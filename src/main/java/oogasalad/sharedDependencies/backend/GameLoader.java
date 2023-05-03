@@ -206,6 +206,10 @@ public class GameLoader {
             Owner owner = ownerNum != -1 ? players.get(ownerNum) : gameWorld;
             var = new Variable<>(obj, owner);
 
+            for (String cls : fm.getArray(id, "classes")){
+                var.addClass(cls);
+            }
+
             //reassign id to everything after the "." if it has one
             if (id.contains(".")){
                 id = id.substring(id.indexOf(".") + 1);
