@@ -2,21 +2,21 @@
   "wizard": {
     "selected": {
       "hasSelectedImage": true,
-      "param": "wizard.png"
+      "param": "wizardselected.png"
     },
     "defaultImage": "wizard.png",
-    "height": "70",
-    "width": "70",
+    "height": "40",
+    "width": "40",
     "location": "DropZone21"
   },
   "witch": {
     "selected": {
       "hasSelectedImage": true,
-      "param": "witch.png"
+      "param": "witchselected.png"
     },
     "defaultImage": "witch.png",
-    "height": "30",
-    "width": "30",
+    "height": "40",
+    "width": "40",
     "location": "DropZone5"
   }
 }

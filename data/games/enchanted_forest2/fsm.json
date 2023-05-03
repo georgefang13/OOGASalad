@@ -20,8 +20,8 @@
       "to": "ifelse < :game_movestaken  :game_totalmoves [ make :game_state_output \"CHOOSE_PIECE ] [ ifelse hasclass :dz \"tree [ make :game_state_output \"SHOW_TREE ] [ make :game_state_output \"DONE ] ]"
     },
     "SHOW_TREE": {
-      "init": "foreach [ :p fromplayer curplayer \"piece  ] [     make :possible getrule :p \"available [ objdz :p ]     if != 0 len item 0 :possible [         makeavailable :p     ] ]    ifelse hasclass :dz \"redtree [ setobjimg :piece_selected \"redKing.png ] [ setobjimg :piece_selected \"blackKing.png ] ",
-      "leave": "setobjimg :piece_selected \"red.png  sethl :piece_selected \"redselected.png",
+      "init": "foreach [ :p fromplayer curplayer \"piece  ] [     make :possible getrule :p \"available [ objdz :p ]     if != 0 len item 0 :possible [         makeavailable :p     ] ]    ifelse hasclass :dz \"redtree [ setobjimg :piece_selected \"redKing.png ] [ sethl :piece_selected \"goldcoins.png ] ",
+      "leave": "getrule :piece_selected \"setBack [ :piece_selected ]",
       "setValue": "make :piece_selected fromgame :game_state_input make :old_dz objdz :piece_selected",
       "to": "make :game_state_output \"DONE"
     },

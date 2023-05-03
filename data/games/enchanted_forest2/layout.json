@@ -26,7 +26,8 @@
     },
     "classes": [
       "board",
-      "tree"
+      "tree",
+      "wolf"
     ]
   },
   "DropZone4": {
@@ -67,7 +68,8 @@
     },
     "classes": [
       "board",
-      "tree"
+      "tree",
+      "bear"
     ]
   },
   "DropZone8": {
@@ -89,8 +91,7 @@
       "Down": "DropZone14"
     },
     "classes": [
-      "board",
-      "tree"
+      "board"
     ]
   },
   "DropZone10": {
@@ -143,7 +144,9 @@
       "Down": "DropZone19"
     },
     "classes": [
-      "board"
+      "board",
+      "tree",
+      "goblin"
     ]
   },
   "DropZone15": {
@@ -215,8 +218,7 @@
       "Up": "DropZone16"
     },
     "classes": [
-      "board",
-      "tree"
+      "board"
     ]
   },
   "DropZone22": {
@@ -226,7 +228,9 @@
       "Up": "DropZone17"
     },
     "classes": [
-      "board"
+      "board",
+      "tree",
+      "goldcoins"
     ]
   },
   "DropZone23": {
@@ -256,7 +260,8 @@
     },
     "classes": [
       "board",
-      "tree"
+      "tree",
+      "horse"
     ]
   }
 }
