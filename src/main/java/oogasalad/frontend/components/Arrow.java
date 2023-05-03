@@ -20,6 +20,10 @@ public class Arrow implements Subscriber {
   private ImageView head;
   private Line line;
   private Group arrow;
+  private double startX;
+  private double startY;
+  private double endX;
+  private double endY;
 
   private static final ResourceBundle BUNDLE = ResourceBundle.getBundle("\\frontend\\properties\\Defaults\\Arrow");
 
@@ -54,20 +58,20 @@ public class Arrow implements Subscriber {
   public void updateArrow(){
     Node startSquare = start.getNode();
     Node endSquare = end.getNode();
-    double startX = startSquare.getTranslateX() + start.getWidth()/2;
-    double startY = startSquare.getTranslateY() + start.getHeight()/2;
-    double endX = endSquare.getTranslateX() + end.getWidth()/2;
-    double endY = endSquare.getTranslateY() + end.getHeight()/2;
+    startX = startSquare.getTranslateX() + start.getWidth()/2;
+    startY = startSquare.getTranslateY() + start.getHeight()/2;
+    endX = endSquare.getTranslateX() + end.getWidth()/2;
+    endY = endSquare.getTranslateY() + end.getHeight()/2;
     System.out.println(startX);
     System.out.println(startY);
     arrow.getChildren().clear();
     line = new Line(startX, startY, endX, endY);
     arrow.getChildren().add(line);
     line.setVisible(visible);
-    createArrowHead(startX, startY, endX, endY);
+    createArrowHead();
   }
 
-  private void createArrowHead(double startX, double startY, double endX, double endY) {
+  private void createArrowHead() {
     double angle = Math.atan2(endY - startY, endX - startX);
     head = new ImageView(BUNDLE.getString("Head"));
     head.setVisible(visible);
@@ -89,12 +93,40 @@ public class Arrow implements Subscriber {
     return arrow;
   }
 
-
   /**
    * updates arrow
    */
   @Override
   public void update() {
     updateArrow();
+  }
+
+  /**
+   * The starting X point
+   * @return double
+   */
+  public double getStartX(){
+    return startX;
+  }
+  /**
+   * The starting Y point
+   * @return double
+   */
+  public double getStartY(){
+    return startY;
+  }
+  /**
+   * The ending X point
+   * @return double
+   */
+  public double getEndX(){
+    return endX;
+  }
+  /**
+   * The ending Y point
+   * @return double
+   */
+  public double getEndY(){
+    return endY;
   }
 }
