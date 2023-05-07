@@ -2,7 +2,6 @@ package oogasalad.frontend.scenes;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.scene.Scene;
@@ -12,17 +11,24 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import oogasalad.frontend.modals.subDisplayModals.AlertModal;
-import oogasalad.frontend.modals.subInputModals.CreateNewModal;
 import oogasalad.frontend.windows.WindowTypes.WindowType;
 import oogasalad.sharedDependencies.backend.database.Database;
 import oogasalad.sharedDependencies.backend.database.UserManager;
 
 /**
- * @author Connor Wells
- * @author Owen MacKenzie
+ * @author George Fang
+ *
+ *  This class is the main scene for the splash screen. It contains the login and sign up
+ *  functionality for the user to access the rest of the program. Some noteworthy features in
+ *  this class include changing color theme, and language. These are done through the theme
+ *  manager and property manager. On selecting spanish, the property manager in this scene
+ *  calls setText(). Since each panel was created with abstraction, all element are
+ *  repopulated from the setText using the new language properties file. On selecting light
+ *  mode, the theme manager notifies the theme observer interface of the new css file, then
+ *  calls setTheme. Abstract scene implements this interface, and calls setTheme which sets
+ *  the theme of each scene to the new stylesheet.
  */
 
 public class SplashMainScene extends AbstractScene {
@@ -30,8 +36,6 @@ public class SplashMainScene extends AbstractScene {
   private static final String LANGUAGE_PLACEHOLDER = "english";
   private static final String THEME_DIRECTORY_PATH = "src/main/resources/frontend/css";
   private static final String THEME_PLACEHOLDER = "dark";
-  private static final ResourceBundle ELEMENT_LABELS = ResourceBundle.getBundle(
-      "frontend/properties/text/english");
   private static final String USERNAME = "Username";
   private static final String PASSWORD = "Password";
   private static final String LOGIN = "Login";
@@ -61,10 +65,19 @@ public class SplashMainScene extends AbstractScene {
   private UserManager userManager;
   private Label title;
 
+  /**
+   * Constructor for the splash main scene, calls abstract scene contructor
+   * @param sceneController the scene controller
+   */
   public SplashMainScene(SceneMediator sceneController) {
     super(sceneController);
   }
 
+  /**
+   * Sets up the scene, sets the theme and text
+   *
+   * @return
+   */
   @Override
   public Scene makeScene() {
     root = new VBox();
@@ -187,6 +200,9 @@ public class SplashMainScene extends AbstractScene {
     return propertyFileNames;
   }
 
+  /**
+   * Sets the text of the scene, gives each component its text value from the properties file
+   */
   @Override
   public void setText() {
     title.setText(getPropertyManager().getText(TITLE));
