@@ -1,0 +1,38 @@
+
+{
+  "states": {
+    "INIT": {
+      "init": "to floor [ :x ] [\n    return - :x % :x 1\n] \n to returnstr [ :s ] [\n    return :s\n] \n",
+      "leave": "",
+      "setValue": "",
+      "to": "make :game_state_output \"ROLL"
+    },
+    "ROLL": {
+      "init": "\nmake :dice fromgame \"dice\nmakeavailable :dice\n",
+      "leave": "",
+      "setValue": "make :roll + 1 floor rand 6\nmake :piece item 0 fromplayer curplayer \"piece \n make :game_next objdz :piece \nrepeat :roll [  make :game_next dzfollow :game_next [ \"Next ]\n  additem getid :game_next :game_log ]  makeavailable :piece \n if == 0 len fromgameclass \"rolltext [\n    addtextobj :roll :game_dicerolldz \"rolltext fvar returnstr\n]\n",
+      "to": "make :game_state_output \"SELECTPIECE"
+    },
+    "SELECTPIECE": {
+      "init": "",
+      "leave": "",
+      "setValue": "make :selected_piece fromgame :game_state_input",
+      "to": "make :game_state_output \"SELECTZONE"
+    },
+    "SELECTZONE": {
+      "init": "makeavailable :game_next",
+      "leave": "",
+      "setValue": "movepiece :selected_piece fromgame :game_state_input \n make :dz objdz :piece\n if hasclass :dz \"special [ make :game_next dzfollow :dz [ \"Jump ]\n  movepiece :piece :game_next ]",
+      "to": "make :game_state_output \"DONE"
+    },
+    "DONE": {
+      "init": "",
+      "leave": "gotonextplayer",
+      "setValue": "",
+      "to": "make :game_state_output \"INIT"
+    }
+  },
+  "goals": [
+      "if == \"100 getid objdz item 0 fromplayer curplayer \"piece [ make :game_state_output curplayer ] "
+  ]
+}

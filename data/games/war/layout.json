@@ -1,10 +1,51 @@
 {
-  "dz1": {
-    "connections": {},
-    "classes": "board"
+  "GreenDropZone": {
+    "connections": {
+    },
+    "classes": [
+      "dz"
+    ]
   },
-  "dz2": {
-    "connections": {},
-    "classes": "board"
+  "GrayDropZone": {
+    "connections": {
+    },
+    "classes": [
+      "dz"
+    ]
+  },
+  "StartDeck": {
+    "connections": {
+    },
+    "classes": [
+      "dz"
+    ]
+  },
+  "GreenWarDropZone": {
+    "connections": {
+    },
+    "classes": [
+      "dz"
+    ]
+  },
+  "GrayWarDropZone": {
+    "connections": {
+    },
+    "classes": [
+      "dz"
+    ]
+  },
+  "GreenWinDropZone": {
+    "connections": {
+    },
+    "classes": [
+      "dz"
+    ]
+  },
+  "GrayWinDropZone": {
+    "connections": {
+    },
+    "classes": [
+      "dz"
+    ]
   }
 }

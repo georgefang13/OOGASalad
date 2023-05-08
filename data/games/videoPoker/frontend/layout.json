@@ -1,0 +1,197 @@
+{
+  "Background": {
+    "x": "100",
+    "y": "100",
+    "width": "456",
+    "height": "700",
+    "unselected": {
+      "hasImage": true,
+      "param": "videoPokerScreen.png"
+    },
+    "selected": {
+      "hasImage": true,
+      "param": "videoPokerScreen.png"
+    }
+  },
+  "Card1DZ": {
+    "x": "150",
+    "y": "350",
+    "width": "140",
+    "height": "90",
+    "unselected": {
+      "hasImage": true,
+      "param": "card-spot.png"
+    },
+    "selected": {
+      "hasImage": true,
+      "param": "flippedOver.png"
+    }
+  },
+  "Card2DZ": {
+    "x": "275",
+    "y": "350",
+    "width": "140",
+    "height": "90",
+    "unselected": {
+      "hasImage": true,
+      "param": "card-spot.png"
+    },
+    "selected": {
+      "hasImage": true,
+      "param": "flippedOver.png"
+    }
+  },
+  "Card3DZ": {
+    "x": "400",
+    "y": "350",
+    "width": "140",
+    "height": "90",
+    "unselected": {
+      "hasImage": true,
+      "param": "card-spot.png"
+    },
+    "selected": {
+      "hasImage": true,
+      "param": "flippedOver.png"
+    }
+  },
+  "Card4DZ": {
+    "x": "525",
+    "y": "350",
+    "width": "140",
+    "height": "90",
+    "unselected": {
+      "hasImage": true,
+      "param": "card-spot.png"
+    },
+    "selected": {
+      "hasImage": true,
+      "param": "flippedOver.png"
+    }
+  },
+  "Card5DZ": {
+    "x": "650",
+    "y": "350",
+    "width": "140",
+    "height": "90",
+    "unselected": {
+      "hasImage": true,
+      "param": "card-spot.png"
+    },
+    "selected": {
+      "hasImage": true,
+      "param": "flippedOver.png"
+    }
+  },
+  "DealDZ": {
+    "x": "400",
+    "y": "280",
+    "width": "50",
+    "height": "90",
+    "unselected": {
+      "hasImage": true,
+      "param": "deal-button.png"
+    },
+    "selected": {
+      "hasImage": true,
+      "param": "deal-button.png"
+    }
+  },
+  "PlusDZ" : {
+    "x": "500",
+    "y": "500",
+    "width": "50",
+    "height": "90",
+    "unselected": {
+      "hasImage": true,
+      "param": "plus.png"
+    },
+    "selected": {
+      "hasImage": true,
+      "param": "plus.png"
+    }
+  },
+  "MinusDZ" : {
+    "x": "300",
+    "y": "500",
+    "width": "50",
+    "height": "90",
+    "unselected": {
+      "hasImage": true,
+      "param": "minus.png"
+    },
+    "selected": {
+      "hasImage": true,
+      "param": "minus.png"
+    }
+  },
+  "BetDZ" : {
+    "x": "400",
+    "y": "500",
+    "width": "50",
+    "height": "90",
+    "unselected": {
+      "hasImage": true,
+      "param": "WhiteBG.png"
+    },
+    "selected": {
+      "hasImage": true,
+      "param": "WhiteBG.png"
+    }
+  },
+  "BetTextDZ": {
+    "x": "440",
+    "y": "525",
+    "width": "3",
+    "height": "3",
+    "unselected": {
+      "hasImage": "true",
+      "param": "WhiteBG.png"
+    },
+    "selected": {
+      "hasImage": "true",
+      "param": "WhiteBG.png"
+    }
+  },
+  "StartDeckDZ" : {
+    "x": "-50",
+    "y": "-200",
+    "width": "50",
+    "height": "90",
+    "unselected": {
+      "hasImage": true,
+      "param": "cardback.png"
+    },
+    "selected": {
+      "hasImage": true,
+      "param": "cardback.png"
+    }
+  },"BalanceDZ" : {
+  "x": "600",
+  "y": "280",
+  "width": "50",
+  "height": "90",
+  "unselected": {
+    "hasImage": true,
+    "param": "WhiteBG.png"
+  },
+  "selected": {
+    "hasImage": true,
+    "param": "WhiteBG.png"
+  }
+},
+  "BalanceTextDZ": {
+    "x": "635",
+    "y": "310",
+    "width": "3",
+    "height": "3",
+    "unselected": {
+      "hasImage": "true",
+      "param": "WhiteBG.png"
+    },
+    "selected": {
+      "hasImage": "true",
+      "param": "WhiteBG.png"
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+    "piece": {
+        "checkPromotion":"to checkPromotion [ :piece ] [ ]"
+    },
+    "white.pawn": {
+      "available": " to available [ :dz ] [\n  make :moveset [ [ \"Up ] ]\n    make :ret pieceAvailable :dz :moveset\n    return :ret\n]\n"
+    },
+    "black.pawn": {
+      "available": "to available [ :dz ] [\n    make :moveset [ [ \"Down ] ]\n    make :ret pieceAvailable :dz :moveset\n    return :ret\n]\n"
+    },
+    "pawn": {
+        "checkPromotion":"to checkPromotion [ :piece ] [\n    make :dz objdz :piece\n    if hasclass :dz \"endzone [\n        putclass \"queen :piece\n    removeclass \"pawn :piece\n    ifelse hasclass :piece \"black [\n            setobjimg :piece \"BlackQueen.png\n  sethl :piece \"BlackQueenSelected.png      ] [\n            setobjimg :piece \"WhiteQueen.png\n  sethl :piece \"WhiteQueenSelected.png       ]\n    ]\n]\n"
+    },
+    "rook": {
+        "available": "to available [ :dz ] [\n    make :moveset [ [ \"Down ] [ \"Up ] [ \"Left ] [ \"Right ] ]\n    make :ret pieceAvailables :dz :moveset\n    return :ret\n]\n"
+    },
+    "knight": {
+        "available": "to available [ :dz ] [\n    make :moveset [ [ \"Down \"DownRight ] [ \"Down \"DownLeft ] [ \"Up \"UpRight ] [ \"Up \"UpLeft ] [ \"Left \"UpLeft ] [ \"Left \"DownLeft ] [ \"Right \"UpRight ] [ \"Right \"DownRight ] ]\n    make :ret pieceAvailable :dz :moveset\n    return :ret\n]\n"
+    },
+    "bishop": {
+        "available": "to available [ :dz ] [\n    make :moveset [ [ \"DownRight ] [ \"DownLeft ] [ \"UpRight ] [ \"UpLeft ] ]\n    make :ret pieceAvailables :dz :moveset\n    return :ret\n]\n"
+    },
+    "queen": {
+        "available": "to available [ :dz ] [\n    make :moveset [ [ \"Down ] [ \"Up ] [ \"Left ] [ \"Right ] [ \"DownRight ] [ \"DownLeft ] [ \"UpRight ] [ \"UpLeft ] ]\n    make :ret pieceAvailables :dz :moveset\n    return :ret\n]\n"
+    },
+    "king": {
+        "available": "to available [ :dz ] [\n    make :moveset [ [ \"Down ] [ \"Up ] [ \"Left ] [ \"Right ] [ \"DownRight ] [ \"DownLeft ] [ \"UpRight ] [ \"UpLeft ] ]\n    make :ret pieceAvailable :dz :moveset\n    return :ret\n]\n"
+    }
+  }

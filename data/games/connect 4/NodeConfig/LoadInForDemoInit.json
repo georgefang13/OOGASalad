@@ -1,0 +1,276 @@
+{
+  "0": {
+    "name": "MainNode",
+    "type": "ControlNode",
+    "inputs": []
+  },
+  "1": {
+    "name": "Make Function",
+    "type": "JsonNode",
+    "inputs": [
+      "getAvailablePieces",
+      ""
+    ]
+  },
+  "2": {
+    "name": "StartNestNode",
+    "type": "ControlNode",
+    "inputs": []
+  },
+  "3": {
+    "name": "EndNestNode",
+    "type": "ControlNode",
+    "inputs": []
+  },
+  "4": {
+    "name": "StartNestNode",
+    "type": "ControlNode",
+    "inputs": []
+  },
+  "5": {
+    "name": "Make Variable",
+    "type": "JsonNode",
+    "inputs": [
+      "pieces"
+    ]
+  },
+  "6": {
+    "name": "Get Objects From Player",
+    "type": "JsonNode",
+    "inputs": [
+      "curplayer",
+      "\"piece "
+    ]
+  },
+  "7": {
+    "name": "For Each",
+    "type": "JsonNode",
+    "inputs": [
+      "x ",
+      ":pieces"
+    ]
+  },
+  "8": {
+    "name": "StartNestNode",
+    "type": "ControlNode",
+    "inputs": []
+  },
+  "9": {
+    "name": "Make Variable",
+    "type": "JsonNode",
+    "inputs": [
+      "dz"
+    ]
+  },
+  "10": {
+    "name": "Get Dropzone of Objects",
+    "type": "JsonNode",
+    "inputs": [
+      ":x "
+    ]
+  },
+  "11": {
+    "name": "If",
+    "type": "JsonNode",
+    "inputs": [
+      "and !\u003d null :dz not hasclass :dz \"board "
+    ]
+  },
+  "12": {
+    "name": "StartNestNode",
+    "type": "ControlNode",
+    "inputs": []
+  },
+  "13": {
+    "name": "Make Available",
+    "type": "JsonNode",
+    "inputs": [
+      ":x"
+    ]
+  },
+  "14": {
+    "name": "EndNestNode",
+    "type": "ControlNode",
+    "inputs": []
+  },
+  "15": {
+    "name": "EndNestNode",
+    "type": "ControlNode",
+    "inputs": []
+  },
+  "16": {
+    "name": "EndNestNode",
+    "type": "ControlNode",
+    "inputs": []
+  },
+  "17": {
+    "name": "Make Function",
+    "type": "JsonNode",
+    "inputs": [
+      "getAvailableSpots",
+      ""
+    ]
+  },
+  "18": {
+    "name": "StartNestNode",
+    "type": "ControlNode",
+    "inputs": []
+  },
+  "19": {
+    "name": "EndNestNode",
+    "type": "ControlNode",
+    "inputs": []
+  },
+  "20": {
+    "name": "StartNestNode",
+    "type": "ControlNode",
+    "inputs": []
+  },
+  "21": {
+    "name": "For Each",
+    "type": "JsonNode",
+    "inputs": [
+      "dz",
+      "fromgameclass \"bottom "
+    ]
+  },
+  "22": {
+    "name": "StartNestNode",
+    "type": "ControlNode",
+    "inputs": []
+  },
+  "23": {
+    "name": "If",
+    "type": "JsonNode",
+    "inputs": [
+      "dzempty :dz "
+    ]
+  },
+  "24": {
+    "name": "StartNestNode",
+    "type": "ControlNode",
+    "inputs": []
+  },
+  "25": {
+    "name": "Make Available",
+    "type": "JsonNode",
+    "inputs": [
+      ":dz "
+    ]
+  },
+  "26": {
+    "name": "Continue",
+    "type": "JsonNode",
+    "inputs": []
+  },
+  "27": {
+    "name": "EndNestNode",
+    "type": "ControlNode",
+    "inputs": []
+  },
+  "28": {
+    "name": "Make Variable",
+    "type": "JsonNode",
+    "inputs": [
+      "taken "
+    ]
+  },
+  "29": {
+    "name": "Follow Path Through Dropzones Until Blocked",
+    "type": "JsonNode",
+    "inputs": [
+      ":dz ",
+      "[ \"Up ]",
+      "to xx [ :dz ] [ return dzempty :dz ] "
+    ]
+  },
+  "30": {
+    "name": "If",
+    "type": "JsonNode",
+    "inputs": [
+      "\u003d\u003d 0 len :taken "
+    ]
+  },
+  "31": {
+    "name": "StartNestNode",
+    "type": "ControlNode",
+    "inputs": []
+  },
+  "32": {
+    "name": "Add List Item",
+    "type": "JsonNode",
+    "inputs": [
+      ":dz",
+      ":taken "
+    ]
+  },
+  "33": {
+    "name": "EndNestNode",
+    "type": "ControlNode",
+    "inputs": []
+  },
+  "34": {
+    "name": "Make Variable",
+    "type": "JsonNode",
+    "inputs": [
+      "enddz"
+    ]
+  },
+  "35": {
+    "name": "Get List Item",
+    "type": "JsonNode",
+    "inputs": [
+      "- len",
+      ":taken 1 :taken "
+    ]
+  },
+  "36": {
+    "name": "Make Variable",
+    "type": "JsonNode",
+    "inputs": [
+      "next"
+    ]
+  },
+  "37": {
+    "name": "Follow a Path Through Dropzones",
+    "type": "JsonNode",
+    "inputs": [
+      ":enddz",
+      "[ \"Up ]"
+    ]
+  },
+  "38": {
+    "name": "If",
+    "type": "JsonNode",
+    "inputs": [
+      "!\u003d null :next"
+    ]
+  },
+  "39": {
+    "name": "StartNestNode",
+    "type": "ControlNode",
+    "inputs": []
+  },
+  "40": {
+    "name": "Make Available",
+    "type": "JsonNode",
+    "inputs": [
+      ":next "
+    ]
+  },
+  "41": {
+    "name": "EndNestNode",
+    "type": "ControlNode",
+    "inputs": []
+  },
+  "42": {
+    "name": "EndNestNode",
+    "type": "ControlNode",
+    "inputs": []
+  },
+  "43": {
+    "name": "EndNestNode",
+    "type": "ControlNode",
+    "inputs": []
+  }
+}

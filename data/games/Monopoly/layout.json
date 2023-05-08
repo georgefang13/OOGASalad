@@ -89,6 +89,12 @@
         "connections": {},
         "classes": []
     },
+    "jail": {
+        "connections": {
+            "Forward": "visiting"
+        },
+        "classes": []
+    },
     "go": {
         "connections": {
             "Forward": "mediterranean",
@@ -141,7 +147,8 @@
             "Backward": "incomeTax"
         },
         "classes": [
-            "board"
+            "board",
+            "railroad"
         ]
     },
     "oriental": {
@@ -232,7 +239,8 @@
             "Backward": "virginia"
         },
         "classes": [
-            "board"
+            "board",
+            "railroad"
         ]
     },
     "stJames": {
@@ -324,7 +332,8 @@
             "Backward": "illinois"
         },
         "classes": [
-            "board"
+            "board",
+            "railroad"
         ]
     },
     "atlantic": {
@@ -415,7 +424,8 @@
             "Backward": "pennsylvania"
         },
         "classes": [
-            "board"
+            "board",
+            "railroad"
         ]
     },
     "chance3_spot": {

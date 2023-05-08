@@ -1,0 +1,10 @@
+{
+  "states": {
+    "testState": {
+      "init": "to getAvailablePieces  [  ]   [ make :pieces fromplayer curplayer \"piece foreach [ :x  :pieces ]  [ make :dz objdz :x if and !\u003d null :dz not hasclass :dz \"board   [ makeavailable :x ]   ]   ]  to getAvailableSpots  [  ]   [ foreach [ :dz fromgameclass \"bottom  ]  [ if dzempty :dz   [ makeavailable :dz continue ]  make :taken  dzfollowtoblock :dz  [ \"Up ] to xx [ :dz ] [ return dzempty :dz ] if \u003d\u003d 0 len :taken   [ additem :dz :taken   ]  make :enddz item - len :taken 1 :taken make :next dzfollow :enddz [ \"Up ] if !\u003d null :next  [ makeavailable :next  ]   ]   ]  "
+    }
+  },
+  "goal": [
+    "to blocked  [  :x   ]   [ if dzempty :x   [ return true  ]  return !\u003d curplayer owner item 0  dzitems :x  ]  make :game_log   [  ]  foreach [ :dz fromgameclass \"board  ]  [ if dzempty :dz   [ continue ]  if !\u003d curplayer owner item 0  dzitems :dz   [ continue ]  foreach [ :edge dzpaths :dz  ]  [ make :dzs dzfollowtoblock :dz [ :edge ] fvar blocked make :curspot  item 0 dzitems :dz if \u003d\u003d 2 len :dzs   [ make :game_state_output  curplayer return;   ]   ]   ]  "
+  ]
+}

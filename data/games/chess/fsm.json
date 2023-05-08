@@ -1,0 +1,28 @@
+{
+    "states":{
+        "INIT":{
+            "init":"to pieceAvailable [ :dz :moveset ] [        if == null :dz [ return [ ] ]            make :available [ ]                  foreach [ :path :moveset ] [                             make :dz1 dzfollow :dz :path                     if == null :dz1 [ continue ]                               if or dzempty :dz1 != curplayer owner item 0 dzitems :dz1 [                                               additem :dz1 :available                                             ]                ]            make :ret :available                  return :ret   ] to blockfunc [ :dz ] [         if :game_prev [ return true ]         if == null :dz [ return true ]         if dzempty :dz [ return false ]         if != curplayer owner item 0 dzitems :dz [ make :game_prev true return false ]         return true ] to pieceAvailables [ :dz :moveset ] [        make :available [ ]     additem :dz :game_log     foreach [ :path :moveset ] [           make :game_prev false         make :dzs dzfollowtoblock :dz :path fvar blockfunc          addallitems :dzs :available     ]              additem :available :game_log        return :available   ]",
+            "leave":"",
+            "setValue":"",
+            "to":"make :game_state_output \"CHOOSE_PIECE"},
+        "CHOOSE_PIECE":{
+            "init":"foreach [ :p fromplayer curplayer \"piece  ] [     make :possible getrule :p \"available [ objdz :p ]     if != 0 len :possible [      makeavailable :p     ] ] ",
+            "leave":"",
+            "setValue":"make :piece_selected fromgame :game_state_input",
+            "to":"make :game_state_output \"CHOOSE_SQUARE"},
+        "CHOOSE_SQUARE":{
+            "init":"make :available getrule :piece_selected \"available [ objdz :piece_selected ] if >= len :available 0 [ makeallavailable :available ] ",
+            "leave":"",
+            "setValue":" make :dz fromgame :game_state_input if not dzempty :dz [ removepiece item 0 dzitems :dz ]  movepiece :piece_selected fromgame :game_state_input getrule :piece_selected \"checkPromotion [ :piece_selected ]",
+            "to":"make :game_state_output \"DONE"},
+        "DONE":{
+            "init":"",
+            "leave":"gotonextplayer",
+            "setValue":"",
+            "to":"make :game_state_output \"INIT"
+        }
+    },
+    "goals": [
+        "make :num_kings 0  foreach [  :p fromplayer getplayer % + :game_turn 1 :game_playerCount \"piece  ] [     global :num_kings      if hasclass :p \"king [          make :num_kings + :num_kings 1      ]   ]  if == 0 :num_kings [ make :game_state_output getplayer :game_turn ]"
+        ]
+}

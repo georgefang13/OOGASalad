@@ -1,0 +1,90 @@
+{
+  "balance": {
+    "value": 30,
+    "type": "java.lang.Integer",
+    "owner": 0,
+    "classes": [
+      "money"
+    ]
+  },
+  "betAmount": {
+    "value": 1,
+    "type": "java.lang.Integer",
+    "owner": 0,
+    "classes": [
+      "bet"
+    ]
+  },
+  "jacksOrBetter": {
+    "value": 1,
+    "type": "java.lang.Integer",
+    "owner": -1,
+    "classes": [
+      "payout"
+    ]
+  },
+  "twoPair": {
+    "value": 2,
+    "type": "java.lang.Integer",
+    "owner": -1,
+    "classes": [
+      "payout"
+    ]
+  },
+  "threeOfAKind": {
+    "value": 3,
+    "type": "java.lang.Integer",
+    "owner": -1,
+    "classes": [
+      "payout"
+    ]
+  },
+  "straight": {
+    "value": 4,
+    "type": "java.lang.Integer",
+    "owner": -1,
+    "classes": [
+      "payout"
+    ]
+  },
+  "flush": {
+    "value": 6,
+    "type": "java.lang.Integer",
+    "owner": -1,
+    "classes": [
+      "payout"
+    ]
+  },
+  "fullHouse": {
+    "value": 9,
+    "type": "java.lang.Integer",
+    "owner": -1,
+    "classes": [
+      "payout"
+    ]
+  },
+  "fourOfAKind": {
+    "value": 25,
+    "type": "java.lang.Integer",
+    "owner": -1,
+    "classes": [
+      "payout"
+    ]
+  },
+  "straightFlush": {
+    "value": 50,
+    "type": "java.lang.Integer",
+    "owner": -1,
+    "classes": [
+      "payout"
+    ]
+  },
+  "royalFlush": {
+    "value": 250,
+    "type": "java.lang.Integer",
+    "owner": -1,
+    "classes": [
+      "payout"
+    ]
+  }
+}

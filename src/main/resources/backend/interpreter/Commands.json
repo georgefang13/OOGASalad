@@ -483,7 +483,7 @@
     }
   },
   "GetPlayer": {
-    "name": "Get Objects From Player",
+    "name": "Get Player",
     "folder": "game",
     "str": "getplayer",
     "description": "Gets the nth player in the game",
@@ -528,10 +528,10 @@
     }
   },
   "HasClass": {
-    "name": "Get Objects From Player",
+    "name": "Has Class",
     "folder": "game",
     "str": "hasclass",
-    "description": "Gets the nth player in the game",
+    "description": "Checks if something has a class",
     "example": "hasclass curplayer \"red  # hasclass <player> <string class>",
     "specs": {
       "innerBlocks": [],
@@ -544,10 +544,10 @@
     }
   },
   "MakeAllAvailable": {
-    "name": "Get Objects From Player",
+    "name": "Make All Available",
     "folder": "game",
     "str": "makeallavailable",
-    "description": "Gets the nth player in the game",
+    "description": "Makes all objects in a list clickable",
     "example": "makeallavailable [ 1 2 3 ]  # makeallavailable <list>",
     "specs": {
       "innerBlocks": [],
@@ -559,10 +559,10 @@
     }
   },
   "MakeAvailable": {
-    "name": "Get Objects From Player",
+    "name": "Make Available",
     "folder": "game",
     "str": "makeavailable",
-    "description": "Set a value to be an available piece to click on in the game",
+    "description": "Makes an Object clickable",
     "example": "makeavailable :x  # makeavailable <anything>",
     "specs": {
       "innerBlocks": [],
@@ -756,7 +756,7 @@
         { "name": "classes", "type": ["string"] }
       ],
       "outputs": ["list"],
-      "parse": "fromplayer :%s %s"
+      "parse": "fromplayer %s %s"
     }
   },
   "GetObjsByClass": {
@@ -814,10 +814,10 @@
     }
   },
   "RemovePiece": {
-    "name": "Get Dropzone of Objects",
+    "name": "Remove Piece",
     "folder": "gameobjects",
     "str": "removepiece",
-    "description": "Get the dropzone tht a GameObject is in",
+    "description": "Removes a piece",
     "example": "removepiece :x  # removepiece <obj>",
     "specs": {
       "innerBlocks": [],
@@ -1159,6 +1159,7 @@
       "parse": "aslist %s"
     }
   },
+
   "Equal": {
     "name": "Equal",
     "folder": "operators",
@@ -1428,5 +1429,6 @@
       "outputs": ["list"],
       "parse": "setitem %s %s %s"
     }
+
   }
 }

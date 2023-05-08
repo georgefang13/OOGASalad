@@ -2,12 +2,50 @@
   "List": {
     "name": "List",
     "folder": "metablocks",
-    "description" : "Create a list of items",
+    "description": "Create a list of items",
     "specs": {
-      "innerBlocks": ["contents"],
+      "innerBlocks": [
+        "contents"
+      ],
       "inputs": [],
       "outputs": [],
       "parse": "[ %s ]"
+    }
+  },
+  "Max's block": {
+    "name": "Max's Block",
+    "folder": "metablocks",
+    "description": "Create a custom text block that just adds the text you add",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        {
+          "name": "String",
+          "type": [
+            "number"
+          ]
+        }
+      ],
+      "outputs": [],
+      "parse": " %s "
+    }
+  },
+  "MaxBlock": {
+    "name": "MaxBlock",
+    "folder": "metablocks",
+    "description": "Create a custom text block that just adds the text you add",
+    "specs": {
+      "innerBlocks": [],
+      "inputs": [
+        {
+          "name": "String",
+          "type": [
+            "number"
+          ]
+        }
+      ],
+      "outputs": [],
+      "parse": " %s "
     }
   }
 }

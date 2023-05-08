@@ -26,6 +26,9 @@ public class GameEditorWindow extends AbstractWindow {
     super(windowID, windowController);
     //logger.setLogLevel(Level.ALL); // uncomment if you want to add lover level logs specific to this class
     logger.trace(String.format("Created a new GameEditorWindow Instance: ID - %s", windowID));
+    gameName = windowController.getData().toString();
+    System.out.println("inside game editor window constructor");
+    System.out.println(gameName);
   }
 
   @Override
@@ -43,6 +46,7 @@ public class GameEditorWindow extends AbstractWindow {
       return new GameEditorEditorScene(this.sceneController);
     } else if (sceneType.equals(WindowScenes.LOGIC_SCENE)) {
       logger.trace("Added new GameEditorLogicScene ↑");
+      System.out.println("I made with this: " + this.sceneController);
       return new GameEditorLogicScene(this.sceneController);
     }
     logger.warn("Invalid scene type: "); // TODO add a sceneType string

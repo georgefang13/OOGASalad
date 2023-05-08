@@ -1,0 +1,14 @@
+{
+  "0": {
+    "name": "MainNode",
+    "type": "ControlNode",
+    "inputs": []
+  },
+  "1": {
+    "name": "Del",
+    "type": "JsonNode",
+    "inputs": [
+      ""
+    ]
+  }
+}

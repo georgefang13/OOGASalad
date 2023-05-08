@@ -34,7 +34,11 @@ public class MultiplayerTest extends DukeApplicationTest {
         clickOn(".login");
         sleep(200);
         Set<ImageView> gameButtons = lookup(".game-box-image").queryAll();
-        ImageView gameButton = gameButtons.iterator().next();
+        Iterator<ImageView> iterator = gameButtons.iterator();
+        ImageView gameButton = iterator.next();
+        for (int i =0; i < 3; i++){
+            gameButton = iterator.next();
+        }
         clickOn(gameButton);
         sleep(750);
         Robot robot = new Robot();

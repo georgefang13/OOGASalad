@@ -1,0 +1,62 @@
+{
+  "HighButton": {
+    "x": "400",
+    "y": "500",
+    "width": "200",
+    "height": "200",
+    "distribution": "collapsed",
+    "unselected": {
+      "hasImage": true,
+      "param": "high.png"
+    },
+    "selected": {
+      "hasImage": true,
+      "param": "higher(selected).png"
+    }
+  },
+  "LowButton": {
+    "x": "600",
+    "y": "500",
+    "width": "200",
+    "height": "200",
+    "distribution": "collapsed",
+    "unselected": {
+      "hasImage": true,
+      "param": "low.png"
+    },
+    "selected": {
+      "hasImage": true,
+      "param": "lower(selected).png"
+    }
+  },
+  "StartDeck": {
+    "x": "50",
+    "y": "225",
+    "width": "200",
+    "height": "120",
+    "distribution": "vertical",
+    "unselected": {
+      "hasImage": true,
+      "param": "dz_deck.jpg"
+    },
+    "selected": {
+      "hasImage": true,
+      "param": "dz_deck.jpg"
+    }
+  },
+  "DropZone": {
+    "x": "550",
+    "y": "225",
+    "width": "200",
+    "height": "120",
+    "distribution": "collapsed",
+    "unselected": {
+      "hasImage": true,
+      "param": "blank.png"
+    },
+    "selected": {
+      "hasImage": true,
+      "param": "blank.png"
+    }
+  }
+}

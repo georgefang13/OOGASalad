@@ -1,0 +1,522 @@
+{
+  "ace_of_clubs": {
+    "selected": {
+      "hasSelectedImage": true,
+      "param": "ace_of_clubs.png"
+    },
+    "defaultImage": "ace_of_clubs.png",
+    "height": "110",
+    "width": "190",
+    "location": "StartDeckDZ"
+  },
+  "2_of_clubs": {
+    "selected": {
+      "hasSelectedImage": true,
+      "param": "2_of_clubs.png"
+    },
+    "defaultImage": "2_of_clubs.png",
+    "height": "110",
+    "width": "190",
+    "location": "StartDeckDZ"
+  },
+  "3_of_clubs": {
+    "selected": {
+      "hasSelectedImage": true,
+      "param": "3_of_clubs.png"
+    },
+    "defaultImage": "3_of_clubs.png",
+    "height": "110",
+    "width": "190",
+    "location": "StartDeckDZ"
+  },
+  "4_of_clubs": {
+    "selected": {
+      "hasSelectedImage": true,
+      "param": "4_of_clubs.png"
+    },
+    "defaultImage": "4_of_clubs.png",
+    "height": "110",
+    "width": "190",
+    "location": "StartDeckDZ"
+  },
+  "5_of_clubs": {
+    "selected": {
+      "hasSelectedImage": true,
+      "param": "5_of_clubs.png"
+    },
+    "defaultImage": "5_of_clubs.png",
+    "height": "110",
+    "width": "190",
+    "location": "StartDeckDZ"
+  },
+  "6_of_clubs": {
+    "selected": {
+      "hasSelectedImage": true,
+      "param": "6_of_clubs.png"
+    },
+    "defaultImage": "6_of_clubs.png",
+    "height": "110",
+    "width": "190",
+    "location": "StartDeckDZ"
+  },
+  "7_of_clubs": {
+    "selected": {
+      "hasSelectedImage": true,
+      "param": "7_of_clubs.png"
+    },
+    "defaultImage": "7_of_clubs.png",
+    "height": "110",
+    "width": "190",
+    "location": "StartDeckDZ"
+  },
+  "8_of_clubs": {
+    "selected": {
+      "hasSelectedImage": true,
+      "param": "8_of_clubs.png"
+    },
+    "defaultImage": "8_of_clubs.png",
+    "height": "110",
+    "width": "190",
+    "location": "StartDeckDZ"
+  },
+  "9_of_clubs": {
+    "selected": {
+      "hasSelectedImage": true,
+      "param": "9_of_clubs.png"
+    },
+    "defaultImage": "9_of_clubs.png",
+    "height": "110",
+    "width": "190",
+    "location": "StartDeckDZ"
+  },
+  "10_of_clubs": {
+    "selected": {
+      "hasSelectedImage": true,
+      "param": "10_of_clubs.png"
+    },
+    "defaultImage": "10_of_clubs.png",
+    "height": "110",
+    "width": "190",
+    "location": "StartDeckDZ"
+  },
+  "jack_of_clubs": {
+    "selected": {
+      "hasSelectedImage": true,
+      "param": "jack_of_clubs.png"
+    },
+    "defaultImage": "jack_of_clubs.png",
+    "height": "110",
+    "width": "190",
+    "location": "StartDeckDZ"
+  },
+  "queen_of_clubs": {
+    "selected": {
+      "hasSelectedImage": true,
+      "param": "queen_of_clubs.png"
+    },
+    "defaultImage": "queen_of_clubs.png",
+    "height": "110",
+    "width": "190",
+    "location": "StartDeckDZ"
+  },
+  "king_of_clubs": {
+    "selected": {
+      "hasSelectedImage": true,
+      "param": "king_of_clubs.png"
+    },
+    "defaultImage": "king_of_clubs.png",
+    "height": "110",
+    "width": "190",
+    "location": "StartDeckDZ"
+  },
+  "ace_of_hearts": {
+    "selected": {
+      "hasSelectedImage": true,
+      "param": "ace_of_hearts.png"
+    },
+    "defaultImage": "ace_of_hearts.png",
+    "height": "110",
+    "width": "190",
+    "location": "StartDeckDZ"
+  },
+  "2_of_hearts": {
+    "selected": {
+      "hasSelectedImage": true,
+      "param": "2_of_hearts.png"
+    },
+    "defaultImage": "2_of_hearts.png",
+    "height": "110",
+    "width": "190",
+    "location": "StartDeckDZ"
+  },
+  "3_of_hearts": {
+    "selected": {
+      "hasSelectedImage": true,
+      "param": "3_of_hearts.png"
+    },
+    "defaultImage": "3_of_hearts.png",
+    "height": "110",
+    "width": "190",
+    "location": "StartDeckDZ"
+  },
+  "4_of_hearts": {
+    "selected": {
+      "hasSelectedImage": true,
+      "param": "4_of_hearts.png"
+    },
+    "defaultImage": "4_of_hearts.png",
+    "height": "110",
+    "width": "190",
+    "location": "StartDeckDZ"
+  },
+  "5_of_hearts": {
+    "selected": {
+      "hasSelectedImage": true,
+      "param": "5_of_hearts.png"
+    },
+    "defaultImage": "5_of_hearts.png",
+    "height": "110",
+    "width": "190",
+    "location": "StartDeckDZ"
+  },
+  "6_of_hearts": {
+    "selected": {
+      "hasSelectedImage": true,
+      "param": "6_of_hearts.png"
+    },
+    "defaultImage": "6_of_hearts.png",
+    "height": "110",
+    "width": "190",
+    "location": "StartDeckDZ"
+  },
+  "7_of_hearts": {
+    "selected": {
+      "hasSelectedImage": true,
+      "param": "7_of_hearts.png"
+    },
+    "defaultImage": "7_of_hearts.png",
+    "height": "110",
+    "width": "190",
+    "location": "StartDeckDZ"
+  },
+  "8_of_hearts": {
+    "selected": {
+      "hasSelectedImage": true,
+      "param": "8_of_hearts.png"
+    },
+    "defaultImage": "8_of_hearts.png",
+    "height": "110",
+    "width": "190",
+    "location": "StartDeckDZ"
+  },
+  "9_of_hearts": {
+    "selected": {
+      "hasSelectedImage": true,
+      "param": "9_of_hearts.png"
+    },
+    "defaultImage": "9_of_hearts.png",
+    "height": "110",
+    "width": "190",
+    "location": "StartDeckDZ"
+  },
+  "10_of_hearts": {
+    "selected": {
+      "hasSelectedImage": true,
+      "param": "10_of_hearts.png"
+    },
+    "defaultImage": "10_of_hearts.png",
+    "height": "110",
+    "width": "190",
+    "location": "StartDeckDZ"
+  },
+  "jack_of_hearts": {
+    "selected": {
+      "hasSelectedImage": true,
+      "param": "jack_of_hearts.png"
+    },
+    "defaultImage": "jack_of_hearts.png",
+    "height": "110",
+    "width": "190",
+    "location": "StartDeckDZ"
+  },
+  "queen_of_hearts": {
+    "selected": {
+      "hasSelectedImage": true,
+      "param": "queen_of_hearts.png"
+    },
+    "defaultImage": "queen_of_hearts.png",
+    "height": "110",
+    "width": "190",
+    "location": "StartDeckDZ"
+  },
+  "king_of_hearts": {
+    "selected": {
+      "hasSelectedImage": true,
+      "param": "king_of_hearts.png"
+    },
+    "defaultImage": "king_of_hearts.png",
+    "height": "110",
+    "width": "190",
+    "location": "StartDeckDZ"
+  },
+  "ace_of_spades": {
+    "selected": {
+      "hasSelectedImage": true,
+      "param": "ace_of_spades.png"
+    },
+    "defaultImage": "ace_of_spades.png",
+    "height": "110",
+    "width": "190",
+    "location": "StartDeckDZ"
+  },
+  "2_of_spades": {
+    "selected": {
+      "hasSelectedImage": true,
+      "param": "2_of_spades.png"
+    },
+    "defaultImage": "2_of_spades.png",
+    "height": "110",
+    "width": "190",
+    "location": "StartDeckDZ"
+  },
+  "3_of_spades": {
+    "selected": {
+      "hasSelectedImage": true,
+      "param": "3_of_spades.png"
+    },
+    "defaultImage": "3_of_spades.png",
+    "height": "110",
+    "width": "190",
+    "location": "StartDeckDZ"
+  },
+  "4_of_spades": {
+    "selected": {
+      "hasSelectedImage": true,
+      "param": "4_of_spades.png"
+    },
+    "defaultImage": "4_of_spades.png",
+    "height": "110",
+    "width": "190",
+    "location": "StartDeckDZ"
+  },
+  "5_of_spades": {
+    "selected": {
+      "hasSelectedImage": true,
+      "param": "5_of_spades.png"
+    },
+    "defaultImage": "5_of_spades.png",
+    "height": "110",
+    "width": "190",
+    "location": "StartDeckDZ"
+  },
+  "6_of_spades": {
+    "selected": {
+      "hasSelectedImage": true,
+      "param": "6_of_spades.png"
+    },
+    "defaultImage": "6_of_spades.png",
+    "height": "110",
+    "width": "190",
+    "location": "StartDeckDZ"
+  },
+  "7_of_spades": {
+    "selected": {
+      "hasSelectedImage": true,
+      "param": "7_of_spades.png"
+    },
+    "defaultImage": "7_of_spades.png",
+    "height": "110",
+    "width": "190",
+    "location": "StartDeckDZ"
+  },
+  "8_of_spades": {
+    "selected": {
+      "hasSelectedImage": true,
+      "param": "8_of_spades.png"
+    },
+    "defaultImage": "8_of_spades.png",
+    "height": "110",
+    "width": "190",
+    "location": "StartDeckDZ"
+  },
+  "9_of_spades": {
+    "selected": {
+      "hasSelectedImage": true,
+      "param": "9_of_spades.png"
+    },
+    "defaultImage": "9_of_spades.png",
+    "height": "110",
+    "width": "190",
+    "location": "StartDeckDZ"
+  },
+  "10_of_spades": {
+    "selected": {
+      "hasSelectedImage": true,
+      "param": "10_of_spades.png"
+    },
+    "defaultImage": "10_of_spades.png",
+    "height": "110",
+    "width": "190",
+    "location": "StartDeckDZ"
+  },
+  "jack_of_spades": {
+    "selected": {
+      "hasSelectedImage": true,
+      "param": "jack_of_spades.png"
+    },
+    "defaultImage": "jack_of_spades.png",
+    "height": "110",
+    "width": "190",
+    "location": "StartDeckDZ"
+  },
+  "queen_of_spades": {
+    "selected": {
+      "hasSelectedImage": true,
+      "param": "queen_of_spades.png"
+    },
+    "defaultImage": "queen_of_spades.png",
+    "height": "110",
+    "width": "190",
+    "location": "StartDeckDZ"
+  },
+  "king_of_spades": {
+    "selected": {
+      "hasSelectedImage": true,
+      "param": "king_of_spades.png"
+    },
+    "defaultImage": "king_of_spades.png",
+    "height": "110",
+    "width": "190",
+    "location": "StartDeckDZ"
+  },
+  "ace_of_diamonds": {
+    "selected": {
+      "hasSelectedImage": true,
+      "param": "ace_of_diamonds.png"
+    },
+    "defaultImage": "ace_of_diamonds.png",
+    "height": "110",
+    "width": "190",
+    "location": "StartDeckDZ"
+  },
+  "2_of_diamonds": {
+    "selected": {
+      "hasSelectedImage": true,
+      "param": "2_of_diamonds.png"
+    },
+    "defaultImage": "2_of_diamonds.png",
+    "height": "110",
+    "width": "190",
+    "location": "StartDeckDZ"
+  },
+  "3_of_diamonds": {
+    "selected": {
+      "hasSelectedImage": true,
+      "param": "3_of_diamonds.png"
+    },
+    "defaultImage": "3_of_diamonds.png",
+    "height": "110",
+    "width": "190",
+    "location": "StartDeckDZ"
+  },
+  "4_of_diamonds": {
+    "selected": {
+      "hasSelectedImage": true,
+      "param": "4_of_diamonds.png"
+    },
+    "defaultImage": "4_of_diamonds.png",
+    "height": "110",
+    "width": "190",
+    "location": "StartDeckDZ"
+  },
+  "5_of_diamonds": {
+    "selected": {
+      "hasSelectedImage": true,
+      "param": "5_of_diamonds.png"
+    },
+    "defaultImage": "5_of_diamonds.png",
+    "height": "110",
+    "width": "190",
+    "location": "StartDeckDZ"
+  },
+  "6_of_diamonds": {
+    "selected": {
+      "hasSelectedImage": true,
+      "param": "6_of_diamonds.png"
+    },
+    "defaultImage": "6_of_diamonds.png",
+    "height": "110",
+    "width": "190",
+    "location": "StartDeckDZ"
+  },
+  "7_of_diamonds": {
+    "selected": {
+      "hasSelectedImage": true,
+      "param": "7_of_diamonds.png"
+    },
+    "defaultImage": "7_of_diamonds.png",
+    "height": "110",
+    "width": "190",
+    "location": "StartDeckDZ"
+  },
+  "8_of_diamonds": {
+    "selected": {
+      "hasSelectedImage": true,
+      "param": "8_of_diamonds.png"
+    },
+    "defaultImage": "8_of_diamonds.png",
+    "height": "110",
+    "width": "190",
+    "location": "StartDeckDZ"
+  },
+  "9_of_diamonds": {
+    "selected": {
+      "hasSelectedImage": true,
+      "param": "9_of_diamonds.png"
+    },
+    "defaultImage": "9_of_diamonds.png",
+    "height": "110",
+    "width": "190",
+    "location": "StartDeckDZ"
+  },
+  "10_of_diamonds": {
+    "selected": {
+      "hasSelectedImage": true,
+      "param": "10_of_diamonds.png"
+    },
+    "defaultImage": "10_of_diamonds.png",
+    "height": "110",
+    "width": "190",
+    "location": "StartDeckDZ"
+  },
+  "jack_of_diamonds": {
+    "selected": {
+      "hasSelectedImage": true,
+      "param": "jack_of_diamonds.png"
+    },
+    "defaultImage": "jack_of_diamonds.png",
+    "height": "110",
+    "width": "190",
+    "location": "StartDeckDZ"
+  },
+  "queen_of_diamonds": {
+    "selected": {
+      "hasSelectedImage": true,
+      "param": "queen_of_diamonds.png"
+    },
+    "defaultImage": "queen_of_diamonds.png",
+    "height": "110",
+    "width": "190",
+    "location": "StartDeckDZ"
+  },
+  "king_of_diamonds": {
+    "selected": {
+      "hasSelectedImage": true,
+      "param": "king_of_diamonds.png"
+    },
+    "defaultImage": "king_of_diamonds.png",
+    "height": "110",
+    "width": "190",
+    "location": "StartDeckDZ"
+  }
+}

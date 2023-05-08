@@ -1,0 +1,66 @@
+{
+  "Card 1": {
+    "owner": "-1",
+    "location": "Card1DZ",
+    "classes": [
+      "Card"
+    ],
+    "owns": []
+  },
+  "Card 2": {
+    "owner": "-1",
+    "location": "Card2DZ",
+    "classes": [
+      "Card"
+    ],
+    "owns": []
+  },
+  "Card 3": {
+    "owner": "-1",
+    "location": "Card3DZ",
+    "classes": [
+      "Card"
+    ],
+    "owns": []
+  },
+  "Card 4": {
+    "owner": "-1",
+    "location": "Card4DZ",
+    "classes": [
+      "Card"
+    ],
+    "owns": []
+  },
+  "Card 5": {
+    "owner": "-1",
+    "location": "Card5DZ",
+    "classes": [
+      "Card"
+    ],
+    "owns": []
+  },
+  "Deal": {
+    "owner": "-1",
+    "location": "DealDZ",
+    "classes": [
+      "Deal"
+    ],
+    "owns": []
+  },
+  "Plus": {
+    "owner": "-1",
+    "location": "PlusDZ",
+    "classes": [
+      "Plus"
+    ],
+    "owns": []
+  },
+  "Minus": {
+    "owner": "-1",
+    "location": "MinusDZ",
+    "classes": [
+      "Minus"
+    ],
+    "owns": []
+  }
+}

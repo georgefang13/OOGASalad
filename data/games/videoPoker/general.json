@@ -1,0 +1,10 @@
+{
+  "name": "Video Poker",
+  "author": "jc870",
+  "description": "The classic casino game. Video poker is a game of skill and a bit of chance as you try to get the best hand.",
+  "tags": ["all", "card game", "grid game"],
+  "players": {
+    "min": 1,
+    "max": 1
+  }
+}

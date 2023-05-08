@@ -1,0 +1,10 @@
+{
+  "name": "Connect 4",
+  "author": "DuVALLEY Boiz",
+  "description": "A nice, usual game of connect 4. Your goal is to get 4 in a row!",
+  "tags": ["all", "grid game"],
+  "players": {
+    "min": 2,
+    "max": 2
+  }
+}

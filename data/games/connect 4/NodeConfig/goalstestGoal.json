@@ -1,0 +1,246 @@
+{
+  "0": {
+    "name": "MainNode",
+    "type": "ControlNode",
+    "inputs": []
+  },
+  "1": {
+    "name": "Make Function",
+    "type": "JsonNode",
+    "inputs": [
+      "blocked",
+      ""
+    ]
+  },
+  "2": {
+    "name": "StartNestNode",
+    "type": "ControlNode",
+    "inputs": []
+  },
+  "3": {
+    "name": "MaxBlock",
+    "type": "JsonNode",
+    "inputs": [
+      ":x "
+    ]
+  },
+  "4": {
+    "name": "EndNestNode",
+    "type": "ControlNode",
+    "inputs": []
+  },
+  "5": {
+    "name": "StartNestNode",
+    "type": "ControlNode",
+    "inputs": []
+  },
+  "6": {
+    "name": "If",
+    "type": "JsonNode",
+    "inputs": [
+      "dzempty :x "
+    ]
+  },
+  "7": {
+    "name": "StartNestNode",
+    "type": "ControlNode",
+    "inputs": []
+  },
+  "8": {
+    "name": "Return from function with value",
+    "type": "JsonNode",
+    "inputs": [
+      "true "
+    ]
+  },
+  "9": {
+    "name": "EndNestNode",
+    "type": "ControlNode",
+    "inputs": []
+  },
+  "10": {
+    "name": "Return from function with value",
+    "type": "JsonNode",
+    "inputs": [
+      "!\u003d curplayer owner item 0  "
+    ]
+  },
+  "11": {
+    "name": "Get Drop Zone Items",
+    "type": "JsonNode",
+    "inputs": [
+      ":x "
+    ]
+  },
+  "12": {
+    "name": "EndNestNode",
+    "type": "ControlNode",
+    "inputs": []
+  },
+  "13": {
+    "name": "Make Variable",
+    "type": "JsonNode",
+    "inputs": [
+      "game_log "
+    ]
+  },
+  "14": {
+    "name": "StartNestNode",
+    "type": "ControlNode",
+    "inputs": []
+  },
+  "15": {
+    "name": "EndNestNode",
+    "type": "ControlNode",
+    "inputs": []
+  },
+  "16": {
+    "name": "For Each",
+    "type": "JsonNode",
+    "inputs": [
+      "dz",
+      "fromgameclass \"board "
+    ]
+  },
+  "17": {
+    "name": "StartNestNode",
+    "type": "ControlNode",
+    "inputs": []
+  },
+  "18": {
+    "name": "If",
+    "type": "JsonNode",
+    "inputs": [
+      "dzempty :dz "
+    ]
+  },
+  "19": {
+    "name": "StartNestNode",
+    "type": "ControlNode",
+    "inputs": []
+  },
+  "20": {
+    "name": "Continue",
+    "type": "JsonNode",
+    "inputs": []
+  },
+  "21": {
+    "name": "EndNestNode",
+    "type": "ControlNode",
+    "inputs": []
+  },
+  "22": {
+    "name": "If",
+    "type": "JsonNode",
+    "inputs": [
+      "!\u003d curplayer owner item 0  dzitems :dz "
+    ]
+  },
+  "23": {
+    "name": "StartNestNode",
+    "type": "ControlNode",
+    "inputs": []
+  },
+  "24": {
+    "name": "Continue",
+    "type": "JsonNode",
+    "inputs": []
+  },
+  "25": {
+    "name": "EndNestNode",
+    "type": "ControlNode",
+    "inputs": []
+  },
+  "26": {
+    "name": "For Each",
+    "type": "JsonNode",
+    "inputs": [
+      "edge",
+      "dzpaths :dz "
+    ]
+  },
+  "27": {
+    "name": "StartNestNode",
+    "type": "ControlNode",
+    "inputs": []
+  },
+  "28": {
+    "name": "Make Variable",
+    "type": "JsonNode",
+    "inputs": [
+      "dzs"
+    ]
+  },
+  "29": {
+    "name": "Follow Path Through Dropzones Until Blocked",
+    "type": "JsonNode",
+    "inputs": [
+      ":dz",
+      "[ :edge ]",
+      "fvar blocked "
+    ]
+  },
+  "30": {
+    "name": "Make Variable",
+    "type": "JsonNode",
+    "inputs": [
+      "curspot "
+    ]
+  },
+  "31": {
+    "name": "Get List Item",
+    "type": "JsonNode",
+    "inputs": [
+      "0",
+      ""
+    ]
+  },
+  "32": {
+    "name": "Get Drop Zone Items",
+    "type": "JsonNode",
+    "inputs": [
+      ":dz "
+    ]
+  },
+  "33": {
+    "name": "If",
+    "type": "JsonNode",
+    "inputs": [
+      "\u003d\u003d 2 len :dzs "
+    ]
+  },
+  "34": {
+    "name": "StartNestNode",
+    "type": "ControlNode",
+    "inputs": []
+  },
+  "35": {
+    "name": "Make Variable",
+    "type": "JsonNode",
+    "inputs": [
+      "game_state_output"
+    ]
+  },
+  "36": {
+    "name": "MaxBlock",
+    "type": "JsonNode",
+    "inputs": [
+      "curplayer return; "
+    ]
+  },
+  "37": {
+    "name": "EndNestNode",
+    "type": "ControlNode",
+    "inputs": []
+  },
+  "38": {
+    "name": "EndNestNode",
+    "type": "ControlNode",
+    "inputs": []
+  },
+  "39": {
+    "name": "EndNestNode",
+    "type": "ControlNode",
+    "inputs": []
+  }
+}

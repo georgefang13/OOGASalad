@@ -85,7 +85,7 @@ public class StateNode extends AbstractNode implements ControlNode {
    */
   private void onInitialize(ActionEvent event) {
     nodeController.openAndSwitchToTab(
-        new CodeEditorTab(nodeController, stateName.getText(), "on enter"));
+        new CodeEditorTab(nodeController, stateName.getText(), propertyManager.getText("StateNode.OnEnterLabel")));
   }
 
   /**
@@ -96,7 +96,7 @@ public class StateNode extends AbstractNode implements ControlNode {
    */
   private void onLeave(ActionEvent event) {
     nodeController.openAndSwitchToTab(
-        new CodeEditorTab(nodeController, stateName.getText(), "on leave"));
+        new CodeEditorTab(nodeController, stateName.getText(), propertyManager.getText("StateNode.OnLeaveLabel")));
   }
 
   /**
@@ -107,7 +107,7 @@ public class StateNode extends AbstractNode implements ControlNode {
    */
   private void onSetValue(ActionEvent event) {
     nodeController.openAndSwitchToTab(
-        new CodeEditorTab(nodeController, stateName.getText(), "select"));
+        new CodeEditorTab(nodeController, stateName.getText(), propertyManager.getText("StateNode.OnSetValueLabel")));
   }
 
   /**
@@ -118,6 +118,6 @@ public class StateNode extends AbstractNode implements ControlNode {
    */
   private void onNext(ActionEvent event) {
     nodeController.openAndSwitchToTab(
-        new CodeEditorTab(nodeController, stateName.getText(), "next"));
+        new CodeEditorTab(nodeController, stateName.getText(), propertyManager.getText("StateNode.OnNextLabel")));
   }
 }

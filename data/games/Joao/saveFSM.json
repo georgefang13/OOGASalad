@@ -1,0 +1,14 @@
+{
+  "states": {
+    "state1": {
+      "on enter": "",
+      "on leave": "",
+      "next": "",
+      "select": ""
+    }
+  },
+  "goal": [
+    "",
+    ""
+  ]
+}
