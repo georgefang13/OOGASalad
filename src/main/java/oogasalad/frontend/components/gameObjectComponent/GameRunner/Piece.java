@@ -70,6 +70,11 @@ public class Piece extends GameRunnerObject{
         moveToXY(dropZoneCenter);
         acceptDrag();
     }
+    /**
+     * for triggering the selection of a piece at the start of drag
+     * via the gamerunnercontroller which sends to game
+     * also for triggering the event for sending the drop zone on release
+     */
     private void setDragSelection() {
         getNode().setOnDragDetected(e -> {
             if (playable){
@@ -79,6 +84,16 @@ public class Piece extends GameRunnerObject{
         });
         getNode().setOnMouseReleased(e -> selectDropZoneBelow());
     }
+    /**
+     * for checking if there is a valid playable dropzone beneath
+     * where the piece is dropped and if so accept its position otherwise
+     * go back
+     * also pieces are made unplayable after first selected so in order
+     * to keep draggable functionality an active parameter was added so that
+     * the piece that was selected is still active until it is released in
+     * a valid spot. That is why when the drag succeeds it needs to be set
+     * to inactive and draggable functionality set back to what it is supposed to be
+     */
     private void selectDropZoneBelow(){
         List<DropZoneVisual> dropZoneVisuals = getIntersectingDropZones();
         if (dropZoneVisuals.size() == 0){
@@ -102,6 +117,9 @@ public class Piece extends GameRunnerObject{
         }
         goBack();
     }
+    /**
+     * return the first dropzone beneath a piece
+     */
     private List<DropZoneVisual> getIntersectingDropZones(){
         List<DropZoneVisual> visuals = new ArrayList<>();
         Bounds pieceBounds = getNode().localToScene(getNode().getBoundsInLocal());
@@ -114,11 +132,18 @@ public class Piece extends GameRunnerObject{
         }
         return visuals;
     }
+    /**
+     * drop zone is valid so piece stays at position in new drop
+     */
     private void acceptDrag() {
         Node node = getNode();
         lastTranslateX = node.getTranslateX();
         lastTranslateY = node.getTranslateY();
     }
+    /**
+     * drop location was invalid so needs to go back to previous spot
+     * and try again
+     */
     private void goBack() {
         Node node = getNode();
         node.setTranslateX(lastTranslateX);

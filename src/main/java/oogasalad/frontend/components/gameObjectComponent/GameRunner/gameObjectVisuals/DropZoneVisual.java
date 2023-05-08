@@ -25,6 +25,9 @@ public class DropZoneVisual extends AbstractSelectableVisual {
         initHBox(width,height,x,y);
         this.getChildren().add(unselectedVisual);
     }
+    /**
+     * for putting drop zone in an HBOX
+     */
     private void initHBox(double width, double height, double x, double y){
         this.setPrefHeight(height);
         this.setPrefWidth(width);
