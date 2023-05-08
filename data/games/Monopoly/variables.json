@@ -392,7 +392,7 @@
         ]
     },
     "electric_cost": {
-        "value": 10,
+        "value": 150,
         "type": "java.lang.Integer",
         "owner": -1,
         "classes": [
@@ -1572,6 +1572,87 @@
     },
     "tennessee_houseCost": {
         "value": 100,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "houseCost"
+        ]
+    },
+    "ventnor_cost": {
+        "value": 260,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "cost"
+        ]
+    },
+    "ventnor_rent": {
+        "value": 22,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "rent"
+        ]
+    },
+    "ventnor_house1": {
+        "value": 110,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house1"
+        ]
+    },
+    "ventnor_house2": {
+        "value": 330,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house2"
+        ]
+    },
+    "ventnor_house3": {
+        "value": 800,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house3"
+        ]
+    },
+    "ventnor_house4": {
+        "value": 975,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "house4"
+        ]
+    },
+    "ventnor_hotel": {
+        "value": 1150,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "hotel"
+        ]
+    },
+    "ventnor_mortgage": {
+        "value": 130,
+        "type": "java.lang.Integer",
+        "owner": -1,
+        "classes": [
+            "carditem",
+            "mortgage"
+        ]
+    },
+    "ventnor_houseCost": {
+        "value": 150,
         "type": "java.lang.Integer",
         "owner": -1,
         "classes": [

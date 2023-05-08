@@ -767,6 +767,26 @@
             "tennessee_houseCost"
         ]
     },
+    "ventnorcard": {
+        "owner": -1,
+        "location": "cards",
+        "classes": [
+            "card",
+            "property",
+            "purchase"
+        ],
+        "owns": [
+            "ventnor_cost",
+            "ventnor_rent",
+            "ventnor_house1",
+            "ventnor_house2",
+            "ventnor_house3",
+            "ventnor_house4",
+            "ventnor_hotel",
+            "ventnor_mortgage",
+            "ventnor_houseCost"
+        ]
+    },
     "vermontcard": {
         "owner": -1,
         "location": "cards",

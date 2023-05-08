@@ -599,6 +599,16 @@
         },
         "defaultImage": "tennessee.png"
     },
+    "ventnorcard": {
+        "width": 120,
+        "height": 100,
+        "location": "cards",
+        "selected": {
+            "hasSelectedImage": false,
+            "param": "#ff0000"
+        },
+        "defaultImage": "ventnor.png"
+    },
     "vermontcard": {
         "width": 120,
         "height": 100,

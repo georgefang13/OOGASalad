@@ -36,7 +36,7 @@
         "action": "\n    to action [ ] [\n        make :piece item 0 fromplayer curplayer \"piece\n        movepiece :piece :game_jail\n    ]\n    "
     },
     "chance15": {
-        "action": "\n    to action [ ] [\n        make :card item 0 fromgameclass \"chance15\n        make :inventory item 0 fromplayer curplayer \"inventory\n        movepiece :card :inventory\n    ]\n    "
+        "action": "\n    to action [ ] [\n        additem \"start :game_log\n        make :card item 0 fromgameclass \"chance15\n        additem \"got_card :game_log\n        make :inventory fromgame + \"playerdz + 1 :game_turn\n        additem \"got_from_inventory :game_log\n        movepiece :card :inventory\n    ]\n    "
     },
     "cc": {
         "action": "\nto action [ ] [ ]\n"

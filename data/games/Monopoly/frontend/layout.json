@@ -11,7 +11,7 @@
         },
         "selected": {
             "hasImage": true,
-            "param": "board.png"
+            "param": "#ff000040"
         }
     },
     "playerdz1": {
@@ -26,7 +26,7 @@
         },
         "selected": {
             "hasImage": false,
-            "param": "e04c41"
+            "param": "#ff000040"
         }
     },
     "playerdz2": {
@@ -41,7 +41,7 @@
         },
         "selected": {
             "hasImage": false,
-            "param": "2db023"
+            "param": "#ff000040"
         }
     },
     "playerdz3": {
@@ -56,7 +56,7 @@
         },
         "selected": {
             "hasImage": false,
-            "param": "ddc235"
+            "param": "#ff000040"
         }
     },
     "playerdz4": {
@@ -71,7 +71,7 @@
         },
         "selected": {
             "hasImage": false,
-            "param": "356cdb"
+            "param": "#ff000040"
         }
     },
     "playermoneydz1": {
@@ -86,7 +86,7 @@
         },
         "selected": {
             "hasImage": false,
-            "param": "e04c41"
+            "param": "#ff000040"
         }
     },
     "playermoneydz2": {
@@ -101,7 +101,7 @@
         },
         "selected": {
             "hasImage": false,
-            "param": "2db023"
+            "param": "#ff000040"
         }
     },
     "playermoneydz3": {
@@ -116,7 +116,7 @@
         },
         "selected": {
             "hasImage": false,
-            "param": "ddc235"
+            "param": "#ff000040"
         }
     },
     "playermoneydz4": {
@@ -131,7 +131,7 @@
         },
         "selected": {
             "hasImage": false,
-            "param": "356cdb"
+            "param": "#ff000040"
         }
     },
     "cards": {
@@ -146,7 +146,7 @@
         },
         "selected": {
             "hasImage": false,
-            "param": "#00000000"
+            "param": "#ff000040"
         }
     },
     "dicedz": {
@@ -161,7 +161,7 @@
         },
         "selected": {
             "hasImage": false,
-            "param": "#00000000"
+            "param": "#ff000040"
         }
     },
     "dicerolldz": {
@@ -176,7 +176,7 @@
         },
         "selected": {
             "hasImage": false,
-            "param": "#ffffff"
+            "param": "#ff000040"
         }
     },
     "promptdz1": {
@@ -191,7 +191,7 @@
         },
         "selected": {
             "hasImage": false,
-            "param": "#ffffff"
+            "param": "#ff000040"
         }
     },
     "promptdz2": {
@@ -206,7 +206,7 @@
         },
         "selected": {
             "hasImage": false,
-            "param": "#ffffff"
+            "param": "#ff000040"
         }
     },
     "ccdz": {
@@ -221,7 +221,7 @@
         },
         "selected": {
             "hasImage": false,
-            "param": "#00000000"
+            "param": "#ff000040"
         }
     },
     "ccdiscarddz": {
@@ -236,7 +236,7 @@
         },
         "selected": {
             "hasImage": false,
-            "param": "#00000000"
+            "param": "#ff000040"
         }
     },
     "chancedz": {
@@ -251,7 +251,7 @@
         },
         "selected": {
             "hasImage": false,
-            "param": "#00000000"
+            "param": "#ff000040"
         }
     },
     "chancediscarddz": {
@@ -266,7 +266,7 @@
         },
         "selected": {
             "hasImage": false,
-            "param": "#00000000"
+            "param": "#ff000040"
         }
     },
     "jail": {
@@ -274,14 +274,14 @@
         "y": 670,
         "width": 60,
         "height": 60,
-        "distribution": "collapse",
+        "distribution": "horizontal",
         "unselected": {
             "hasImage": false,
             "param": "#00000000"
         },
         "selected": {
             "hasImage": false,
-            "param": "#00000000"
+            "param": "#ff000040"
         }
     },
     "go": {
@@ -296,7 +296,7 @@
         },
         "selected": {
             "hasImage": false,
-            "param": "#00000000"
+            "param": "#ff000040"
         }
     },
     "mediterranean": {
@@ -311,7 +311,7 @@
         },
         "selected": {
             "hasImage": false,
-            "param": "#00000000"
+            "param": "#ff000040"
         }
     },
     "cc1_spot": {
@@ -326,7 +326,7 @@
         },
         "selected": {
             "hasImage": false,
-            "param": "#00000000"
+            "param": "#ff000040"
         }
     },
     "baltic": {
@@ -341,7 +341,7 @@
         },
         "selected": {
             "hasImage": false,
-            "param": "#00000000"
+            "param": "#ff000040"
         }
     },
     "incomeTax": {
@@ -356,7 +356,7 @@
         },
         "selected": {
             "hasImage": false,
-            "param": "#00000000"
+            "param": "#ff000040"
         }
     },
     "readingRR": {
@@ -371,7 +371,7 @@
         },
         "selected": {
             "hasImage": false,
-            "param": "#00000000"
+            "param": "#ff000040"
         }
     },
     "oriental": {
@@ -386,7 +386,7 @@
         },
         "selected": {
             "hasImage": false,
-            "param": "#00000000"
+            "param": "#ff000040"
         }
     },
     "chance1_spot": {
@@ -401,7 +401,7 @@
         },
         "selected": {
             "hasImage": false,
-            "param": "#00000000"
+            "param": "#ff000040"
         }
     },
     "vermont": {
@@ -416,7 +416,7 @@
         },
         "selected": {
             "hasImage": false,
-            "param": "#00000000"
+            "param": "#ff000040"
         }
     },
     "connecticut": {
@@ -431,7 +431,7 @@
         },
         "selected": {
             "hasImage": false,
-            "param": "#00000000"
+            "param": "#ff000040"
         }
     },
     "visiting": {
@@ -446,7 +446,7 @@
         },
         "selected": {
             "hasImage": false,
-            "param": "#00000000"
+            "param": "#ff000040"
         }
     },
     "stcharles": {
@@ -461,7 +461,7 @@
         },
         "selected": {
             "hasImage": false,
-            "param": "#00000000"
+            "param": "#ff000040"
         }
     },
     "electric": {
@@ -476,7 +476,7 @@
         },
         "selected": {
             "hasImage": false,
-            "param": "#00000000"
+            "param": "#ff000040"
         }
     },
     "states": {
@@ -491,7 +491,7 @@
         },
         "selected": {
             "hasImage": false,
-            "param": "#00000000"
+            "param": "#ff000040"
         }
     },
     "virginia": {
@@ -506,7 +506,7 @@
         },
         "selected": {
             "hasImage": false,
-            "param": "#00000000"
+            "param": "#ff000040"
         }
     },
     "pennRR": {
@@ -521,7 +521,7 @@
         },
         "selected": {
             "hasImage": false,
-            "param": "#00000000"
+            "param": "#ff000040"
         }
     },
     "stJames": {
@@ -536,7 +536,7 @@
         },
         "selected": {
             "hasImage": false,
-            "param": "#00000000"
+            "param": "#ff000040"
         }
     },
     "cc2_spot": {
@@ -551,7 +551,7 @@
         },
         "selected": {
             "hasImage": false,
-            "param": "#00000000"
+            "param": "#ff000040"
         }
     },
     "tennessee": {
@@ -566,7 +566,7 @@
         },
         "selected": {
             "hasImage": false,
-            "param": "#00000000"
+            "param": "#ff000040"
         }
     },
     "newyork": {
@@ -581,7 +581,7 @@
         },
         "selected": {
             "hasImage": false,
-            "param": "#00000000"
+            "param": "#ff000040"
         }
     },
     "freeParking": {
@@ -596,7 +596,7 @@
         },
         "selected": {
             "hasImage": false,
-            "param": "#00000000"
+            "param": "#ff000040"
         }
     },
     "kentucky": {
@@ -611,7 +611,7 @@
         },
         "selected": {
             "hasImage": false,
-            "param": "#00000000"
+            "param": "#ff000040"
         }
     },
     "chance2_spot": {
@@ -626,7 +626,7 @@
         },
         "selected": {
             "hasImage": false,
-            "param": "#00000000"
+            "param": "#ff000040"
         }
     },
     "indiana": {
@@ -641,7 +641,7 @@
         },
         "selected": {
             "hasImage": false,
-            "param": "#00000000"
+            "param": "#ff000040"
         }
     },
     "illinois": {
@@ -656,7 +656,7 @@
         },
         "selected": {
             "hasImage": false,
-            "param": "#00000000"
+            "param": "#ff000040"
         }
     },
     "bnoRR": {
@@ -671,7 +671,7 @@
         },
         "selected": {
             "hasImage": false,
-            "param": "#00000000"
+            "param": "#ff000040"
         }
     },
     "atlantic": {
@@ -686,7 +686,7 @@
         },
         "selected": {
             "hasImage": false,
-            "param": "#00000000"
+            "param": "#ff000040"
         }
     },
     "ventnor": {
@@ -701,7 +701,7 @@
         },
         "selected": {
             "hasImage": false,
-            "param": "#00000000"
+            "param": "#ff000040"
         }
     },
     "water": {
@@ -716,7 +716,7 @@
         },
         "selected": {
             "hasImage": false,
-            "param": "#00000000"
+            "param": "#ff000040"
         }
     },
     "marvin": {
@@ -731,7 +731,7 @@
         },
         "selected": {
             "hasImage": false,
-            "param": "#00000000"
+            "param": "#ff000040"
         }
     },
     "goToJail": {
@@ -746,7 +746,7 @@
         },
         "selected": {
             "hasImage": false,
-            "param": "#00000000"
+            "param": "#ff000040"
         }
     },
     "pacific": {
@@ -761,7 +761,7 @@
         },
         "selected": {
             "hasImage": false,
-            "param": "#00000000"
+            "param": "#ff000040"
         }
     },
     "northcarolina": {
@@ -776,7 +776,7 @@
         },
         "selected": {
             "hasImage": false,
-            "param": "#00000000"
+            "param": "#ff000040"
         }
     },
     "cc3_spot": {
@@ -791,7 +791,7 @@
         },
         "selected": {
             "hasImage": false,
-            "param": "#00000000"
+            "param": "#ff000040"
         }
     },
     "pennsylvania": {
@@ -806,7 +806,7 @@
         },
         "selected": {
             "hasImage": false,
-            "param": "#00000000"
+            "param": "#ff000040"
         }
     },
     "shortRR": {
@@ -821,7 +821,7 @@
         },
         "selected": {
             "hasImage": false,
-            "param": "#00000000"
+            "param": "#ff000040"
         }
     },
     "chance3_spot": {
@@ -836,7 +836,7 @@
         },
         "selected": {
             "hasImage": false,
-            "param": "#00000000"
+            "param": "#ff000040"
         }
     },
     "parkPlace": {
@@ -851,7 +851,7 @@
         },
         "selected": {
             "hasImage": false,
-            "param": "#00000000"
+            "param": "#ff000040"
         }
     },
     "luxuryTax": {
@@ -866,7 +866,7 @@
         },
         "selected": {
             "hasImage": false,
-            "param": "#00000000"
+            "param": "#ff000040"
         }
     },
     "boardwalk": {
@@ -881,7 +881,7 @@
         },
         "selected": {
             "hasImage": false,
-            "param": "#00000000"
+            "param": "#ff000040"
         }
     }
 }
