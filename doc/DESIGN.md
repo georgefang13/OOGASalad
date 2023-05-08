@@ -102,6 +102,11 @@
   processing of user input and updating the game state accordingly. Additionally, it manages the 
   interactions between game objects and handles game events such as scoring, winning, or losing. 
   Overall, the game runner controller is the central hub for managing the game logic and mechanics.
+  * The game runner objects extend the same component classes used for the game editor. Pieces and drop zones both extend the 
+    same game object class and must implement methods to make them playable or unplayable and update their visuals.
+    Setting playable and unplayable refers to making the objects highlighted or not and able to be dragged or have pieces dragged on top of them
+  * The ability to make pieces highlighted or un-highlighted is made possible by the SelectableVisual interface, abstract class and extending classes.
+    Each game object visual is designed to be able to switch between two nodes: one representing when the piece is active, and one when it is inactive.
 
 ### Backend
 * Game editor
