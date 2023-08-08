@@ -1,4 +1,15 @@
-# oogasalad
+# OOGASalad
+Description:
+* A Java program using OpenJFX (without FXML), that provides a No-Code authoring environment for game designers to build
+  2D board games and card games using a interactive, visual tools that require minimal programming, such as:
+  * choose and place game elements (i.e., what things will be in the game, their starting positions and values, etc)
+  * setup graphical elements (i.e., background, images/colors/shapes used for game elements or board spaces, etc)
+  * tweak settings (i.e., point values, game timing, projectile/obstacle/objects speed or number, etc)
+  * set game rules (i.e., what actions are allowed, what happens when two objects intersect, etc)
+  * set interaction types and reactions (i.e., what happens when a key is pressed or the mouse is moved, without hardcoding specific       keys, and what object is controlled)
+  * set goals for the game (i.e., how to advance within the game, how to win or lose the game, etc)
+  * determine the order of advancement (i.e., what level or stage follows the current one)
+  * set instructions, splash screen, player setup, level bonuses, etc
 
 ## duVALLEY BOYS
 
