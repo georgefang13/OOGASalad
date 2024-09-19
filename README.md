@@ -97,6 +97,5 @@ This project implements an authoring environment and player for multiple related
    * Online multiplayer games
    * Sorting games by type by pressing the type on the left of the window in the game library
 
-### Assignment Impressions
 
 
